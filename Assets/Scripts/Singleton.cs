@@ -9,8 +9,16 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
         {
             if (instance == null)
             {
-                Debug.LogError($"no singleton of type {typeof(T).Name} has been initialized");
-                return null;
+				T potentialFoundInstance = FindFirstObjectByType<T>();
+				if (potentialFoundInstance == null)
+				{
+					Debug.LogError($"No singleton of type {typeof(T).Name} has been initialized.");
+					return null;
+				}
+				else
+				{
+					return potentialFoundInstance;
+				}
             }
             return instance;
         }
@@ -23,13 +31,14 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 
     protected virtual void Awake()
     {
-        if (Instance != null && Instance != this)
+        if (instance != null && instance != this)
         {
             Destroy(gameObject); 
             return;
         }
 
         Instance = this as T;
+		Debug.Log("Set instance");
         DontDestroyOnLoad(gameObject); 
     }
 }

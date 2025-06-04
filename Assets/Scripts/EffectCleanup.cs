@@ -11,7 +11,6 @@ public class EffectCleanup : MonoBehaviour
         {
             Invoke(nameof(Die), timeUntilKill);
         }
-        
     }
 
     void Die()

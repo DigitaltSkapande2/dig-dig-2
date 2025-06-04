@@ -66,5 +66,5 @@
     "explorer.fileNesting.patterns": {
         "*.sln": "*.csproj"
     },
-    "dotnet.defaultSolution": "DigDig2.sln"
+    "dotnet.defaultSolution": "dig-dig-2.sln"
 }
