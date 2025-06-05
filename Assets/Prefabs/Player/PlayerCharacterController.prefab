@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3395938736747772053}
   - component: {fileID: 3732959750251247590}
   - component: {fileID: 5432956859829118675}
+  - component: {fileID: 6807297836687757261}
   m_Layer: 3
   m_Name: PlayerCharacterController
   m_TagString: Untagged
@@ -105,8 +106,24 @@ MonoBehaviour:
   slopeStickPower: 0.1
   slopeSlidePower: 7.5
   slopeSlideDecaySpeed: 2.5
+  slopeScanDistance: 0.5
+  edgeScanRaycasts: 16
+  edgeScanRadius: 0.6
+  edgeScanDistance: 1.5
   visualsParent: {fileID: 7251259118998489019}
   visualsMovementRotationSpeed: 0
+--- !u!114 &6807297836687757261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4442565222488509090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f42a2590e3aa3064e93da5b1d8a7903f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6680783016326235638
 GameObject:
   m_ObjectHideFlags: 0
