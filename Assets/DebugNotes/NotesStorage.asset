@@ -12,4 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e77de7db1b39caac8dec18d98fc2f96, type: 3}
   m_Name: NotesStorage
   m_EditorClassIdentifier: 
-  notes: []
+  notes:
+  - title: helooooo
+    note: wassap sigmas!!!
+    position: {x: 0, y: 2.08, z: 0}
+  - title: slope testing
+    note: testing some character movement on slopes
+    position: {x: 13.532085, y: 6.08, z: 0.5850257}
+  - title: open area
+    note: 'open area for testing enemies, attacks or items
+
+
+      so much room for
+      activities!!'
+    position: {x: -0.34237877, y: 6.08, z: 12.841244}
