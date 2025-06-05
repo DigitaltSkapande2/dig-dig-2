@@ -5,7 +5,11 @@ using UnityEngine.InputSystem;
 public class PlayerAttack : MonoBehaviour, GameInputSystem.IAttackActions
 {
     private GameInputSystem.AttackActions attackActions;
+
     bool attacking;
+
+    bool frozen;
+
     Vector2 mousePos;
 
     Plane playerPlane;
@@ -20,6 +24,16 @@ public class PlayerAttack : MonoBehaviour, GameInputSystem.IAttackActions
     void OnDisable()
     {
         DisableInput();
+    }
+
+    public void SetFrozen(bool value)
+    {
+        frozen = value;
+
+        if (!value)
+        {
+            attacking = false;
+        }
     }
 
     #region Input Setup
@@ -43,6 +57,8 @@ public class PlayerAttack : MonoBehaviour, GameInputSystem.IAttackActions
 
     public void OnAttack(InputAction.CallbackContext context)
     {
+        if (frozen) { return; }
+
         if (context.started)
         {
             attacking = true;
@@ -58,6 +74,8 @@ public class PlayerAttack : MonoBehaviour, GameInputSystem.IAttackActions
 
     public void OnMouse(InputAction.CallbackContext context)
     {
+        if (frozen) { return; }
+
         mousePos = context.ReadValue<Vector2>();
     }
 

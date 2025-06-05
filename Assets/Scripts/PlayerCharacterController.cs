@@ -17,6 +17,7 @@ public class PlayerCharacterController : MonoBehaviour, GameInputSystem.IPlayerA
 			frozen = value;
 
 			characterController.enabled = !frozen;
+			gameObject.GetComponent<PlayerAttack>().SetFrozen(frozen);
 		}
 	}
 	private bool frozen = false;
