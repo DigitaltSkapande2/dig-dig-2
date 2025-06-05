@@ -65,9 +65,23 @@ public class PlayerCharacterController : MonoBehaviour, GameInputSystem.IPlayerA
 
 	[Tooltip("How fast the acceleration when sliding down slopes should be. Sliding down slopes only happens when the slope's angle is above CharacterController.slopeLimit.")]
 	[SerializeField] private float slopeSlidePower = 5f;
-	
+
 	[Tooltip("How fast the slope slide velocity should decay after the character has safe footing again.")]
 	[SerializeField] private float slopeSlideDecaySpeed = 5f;
+
+	[Tooltip("How far to scan for slopes under the character's feet.")]
+	[SerializeField] private float slopeScanDistance = 0.5f;
+
+	[Space(20)]
+
+	[Tooltip("Amount of raycasts to cast in a circle around the player to detect edges, higher is better for edge detail, but worse for performance.")]
+	[SerializeField] private int edgeScanRaycasts = 16;
+	
+	[Tooltip("How far the edge raycast get cast from the player.")]
+	[SerializeField] private float edgeScanRadius = 0.6f;
+
+	[Tooltip("How far to scan for edges under the character's feet.")]
+	[SerializeField] private float edgeScanDistance = 1.5f;
 
 	[Header("Visuals")]
 
@@ -111,6 +125,7 @@ public class PlayerCharacterController : MonoBehaviour, GameInputSystem.IPlayerA
 		ProcessGravity();
 		ProcessMove();
 		ProcessSlope();
+		ProcessEdge();
 
 		if (!frozen) ApplyMovement();
 
@@ -159,7 +174,7 @@ public class PlayerCharacterController : MonoBehaviour, GameInputSystem.IPlayerA
 	private void ProcessSlope()
 	{
 		// Raycast for slope
-		Physics.Raycast(transform.position, -transform.up, out RaycastHit raycastInfo, characterController.height + 0.5f, groundLayers);
+		Physics.Raycast(transform.position, -transform.up, out RaycastHit raycastInfo, characterController.height / 2f + slopeScanDistance, groundLayers);
 		if (raycastInfo.normal != null)
 		{
 			// Get the angle of the slope the player is standing on
@@ -182,6 +197,23 @@ public class PlayerCharacterController : MonoBehaviour, GameInputSystem.IPlayerA
 		}
 
 		velocity += slopeSlideVelocity;
+	}
+
+	private void ProcessEdge()
+	{
+		for (int raycastIndex = 0; raycastIndex < edgeScanRaycasts; raycastIndex++)
+		{
+			float positionDegrees = raycastIndex * 360 / edgeScanRaycasts;
+			Vector3 raycastPosition = new(Mathf.Cos(positionDegrees * Mathf.Deg2Rad), 0f, Mathf.Sin(positionDegrees * Mathf.Deg2Rad));
+
+			Physics.Raycast(transform.position + raycastPosition * edgeScanRadius, -transform.up, out RaycastHit raycastInfo, characterController.height / 2f + edgeScanDistance, groundLayers);
+			if (!raycastInfo.collider)
+			{
+				Debug.DrawRay(transform.position + raycastPosition * edgeScanRadius, -transform.up, Color.red, 0.01f, true);
+
+				velocity -= raycastPosition * moveVector.magnitude;
+			}
+		}
 	}
 
 	// Add velocity to CharacterController
