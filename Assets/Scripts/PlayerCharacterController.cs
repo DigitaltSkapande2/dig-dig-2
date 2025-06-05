@@ -312,16 +312,6 @@ public class PlayerCharacterController : MonoBehaviour, GameInputSystem.IPlayerA
 		moveInputVector = context.ReadValue<Vector2>();
 	}
 
-    public void OnAttack(InputAction.CallbackContext context)
-    {
-		GetComponent<PlayerAttack>().OnAttack(context);
-    }
-
-    public void OnMouse(InputAction.CallbackContext context)
-    {
-        GetComponent<PlayerAttack>().OnMouse(context);
-    }
-
     public void OnInteract(InputAction.CallbackContext context)
     {
         

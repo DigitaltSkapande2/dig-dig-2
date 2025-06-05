@@ -2,14 +2,42 @@ using Mirror.BouncyCastle.Cms;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerAttack : MonoBehaviour
+public class PlayerAttack : MonoBehaviour, GameInputSystem.IAttackActions
 {
+    private GameInputSystem.AttackActions attackActions;
     bool attacking;
     Vector2 mousePos;
 
     Plane playerPlane;
 
     GameObject attackIndicator;
+
+    void Start()
+    {
+        EnableInput();
+    }
+
+    void OnDisable()
+    {
+        DisableInput();
+    }
+
+    #region Input Setup
+
+    private void EnableInput()
+    {
+        attackActions = GameInputManager.Instance.gameInputSystem.Attack;
+
+        attackActions.SetCallbacks(this);
+        attackActions.Enable();
+    }
+
+	private void DisableInput()
+	{
+		attackActions.Disable();
+	}
+
+	#endregion
 
     #region Inputs
 
