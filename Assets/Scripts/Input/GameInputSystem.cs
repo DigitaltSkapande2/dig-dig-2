@@ -126,6 +126,15 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Mouse"",
+                    ""type"": ""Value"",
+                    ""id"": ""e6ac3e88-d69e-4a12-81ae-ecdeda0a495b"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -379,6 +388,56 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""98cb7921-78f2-43f9-a8b2-4513d19fd8de"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Mouse"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""DebugNotes"",
+            ""id"": ""58488041-e640-4f61-9cc2-949b8ce13395"",
+            ""actions"": [
+                {
+                    ""name"": ""OpenPlaceNoteScreen"",
+                    ""type"": ""Button"",
+                    ""id"": ""364e4bcb-f8c2-4c88-8db1-cea7eff768b0"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""189aad52-c185-45c5-b417-c0daef1105c5"",
+                    ""path"": ""<Keyboard>/backquote"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""OpenPlaceNoteScreen"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b89a26ae-03d9-4774-ab7b-134ef7a2a493"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""OpenPlaceNoteScreen"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -970,6 +1029,10 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
         m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
+        m_Player_Mouse = m_Player.FindAction("Mouse", throwIfNotFound: true);
+        // DebugNotes
+        m_DebugNotes = asset.FindActionMap("DebugNotes", throwIfNotFound: true);
+        m_DebugNotes_OpenPlaceNoteScreen = m_DebugNotes.FindAction("OpenPlaceNoteScreen", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -987,6 +1050,7 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
     ~@GameInputSystem()
     {
         UnityEngine.Debug.Assert(!m_Player.enabled, "This will cause a leak and performance issues, GameInputSystem.Player.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_DebugNotes.enabled, "This will cause a leak and performance issues, GameInputSystem.DebugNotes.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_UI.enabled, "This will cause a leak and performance issues, GameInputSystem.UI.Disable() has not been called.");
     }
 
@@ -1067,6 +1131,7 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Attack;
     private readonly InputAction m_Player_Interact;
     private readonly InputAction m_Player_Sprint;
+    private readonly InputAction m_Player_Mouse;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -1094,6 +1159,10 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/Sprint".
         /// </summary>
         public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/Mouse".
+        /// </summary>
+        public InputAction @Mouse => m_Wrapper.m_Player_Mouse;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1132,6 +1201,9 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
             @Sprint.started += instance.OnSprint;
             @Sprint.performed += instance.OnSprint;
             @Sprint.canceled += instance.OnSprint;
+            @Mouse.started += instance.OnMouse;
+            @Mouse.performed += instance.OnMouse;
+            @Mouse.canceled += instance.OnMouse;
         }
 
         /// <summary>
@@ -1155,6 +1227,9 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
             @Sprint.started -= instance.OnSprint;
             @Sprint.performed -= instance.OnSprint;
             @Sprint.canceled -= instance.OnSprint;
+            @Mouse.started -= instance.OnMouse;
+            @Mouse.performed -= instance.OnMouse;
+            @Mouse.canceled -= instance.OnMouse;
         }
 
         /// <summary>
@@ -1188,6 +1263,102 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
     /// Provides a new <see cref="PlayerActions" /> instance referencing this action map.
     /// </summary>
     public PlayerActions @Player => new PlayerActions(this);
+
+    // DebugNotes
+    private readonly InputActionMap m_DebugNotes;
+    private List<IDebugNotesActions> m_DebugNotesActionsCallbackInterfaces = new List<IDebugNotesActions>();
+    private readonly InputAction m_DebugNotes_OpenPlaceNoteScreen;
+    /// <summary>
+    /// Provides access to input actions defined in input action map "DebugNotes".
+    /// </summary>
+    public struct DebugNotesActions
+    {
+        private @GameInputSystem m_Wrapper;
+
+        /// <summary>
+        /// Construct a new instance of the input action map wrapper class.
+        /// </summary>
+        public DebugNotesActions(@GameInputSystem wrapper) { m_Wrapper = wrapper; }
+        /// <summary>
+        /// Provides access to the underlying input action "DebugNotes/OpenPlaceNoteScreen".
+        /// </summary>
+        public InputAction @OpenPlaceNoteScreen => m_Wrapper.m_DebugNotes_OpenPlaceNoteScreen;
+        /// <summary>
+        /// Provides access to the underlying input action map instance.
+        /// </summary>
+        public InputActionMap Get() { return m_Wrapper.m_DebugNotes; }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
+        public void Enable() { Get().Enable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
+        public void Disable() { Get().Disable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
+        public bool enabled => Get().enabled;
+        /// <summary>
+        /// Implicitly converts an <see ref="DebugNotesActions" /> to an <see ref="InputActionMap" /> instance.
+        /// </summary>
+        public static implicit operator InputActionMap(DebugNotesActions set) { return set.Get(); }
+        /// <summary>
+        /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <param name="instance">Callback instance.</param>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
+        /// </remarks>
+        /// <seealso cref="DebugNotesActions" />
+        public void AddCallbacks(IDebugNotesActions instance)
+        {
+            if (instance == null || m_Wrapper.m_DebugNotesActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_DebugNotesActionsCallbackInterfaces.Add(instance);
+            @OpenPlaceNoteScreen.started += instance.OnOpenPlaceNoteScreen;
+            @OpenPlaceNoteScreen.performed += instance.OnOpenPlaceNoteScreen;
+            @OpenPlaceNoteScreen.canceled += instance.OnOpenPlaceNoteScreen;
+        }
+
+        /// <summary>
+        /// Removes <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <remarks>
+        /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
+        /// </remarks>
+        /// <seealso cref="DebugNotesActions" />
+        private void UnregisterCallbacks(IDebugNotesActions instance)
+        {
+            @OpenPlaceNoteScreen.started -= instance.OnOpenPlaceNoteScreen;
+            @OpenPlaceNoteScreen.performed -= instance.OnOpenPlaceNoteScreen;
+            @OpenPlaceNoteScreen.canceled -= instance.OnOpenPlaceNoteScreen;
+        }
+
+        /// <summary>
+        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="DebugNotesActions.UnregisterCallbacks(IDebugNotesActions)" />.
+        /// </summary>
+        /// <seealso cref="DebugNotesActions.UnregisterCallbacks(IDebugNotesActions)" />
+        public void RemoveCallbacks(IDebugNotesActions instance)
+        {
+            if (m_Wrapper.m_DebugNotesActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        /// <summary>
+        /// Replaces all existing callback instances and previously registered input action callbacks associated with them with callbacks provided via <param cref="instance" />.
+        /// </summary>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
+        /// </remarks>
+        /// <seealso cref="DebugNotesActions.AddCallbacks(IDebugNotesActions)" />
+        /// <seealso cref="DebugNotesActions.RemoveCallbacks(IDebugNotesActions)" />
+        /// <seealso cref="DebugNotesActions.UnregisterCallbacks(IDebugNotesActions)" />
+        public void SetCallbacks(IDebugNotesActions instance)
+        {
+            foreach (var item in m_Wrapper.m_DebugNotesActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_DebugNotesActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    /// <summary>
+    /// Provides a new <see cref="DebugNotesActions" /> instance referencing this action map.
+    /// </summary>
+    public DebugNotesActions @DebugNotes => new DebugNotesActions(this);
 
     // UI
     private readonly InputActionMap m_UI;
@@ -1483,6 +1654,28 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnSprint(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Mouse" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnMouse(InputAction.CallbackContext context);
+    }
+    /// <summary>
+    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "DebugNotes" which allows adding and removing callbacks.
+    /// </summary>
+    /// <seealso cref="DebugNotesActions.AddCallbacks(IDebugNotesActions)" />
+    /// <seealso cref="DebugNotesActions.RemoveCallbacks(IDebugNotesActions)" />
+    public interface IDebugNotesActions
+    {
+        /// <summary>
+        /// Method invoked when associated input action "OpenPlaceNoteScreen" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnOpenPlaceNoteScreen(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.
