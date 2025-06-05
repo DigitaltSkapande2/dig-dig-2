@@ -5276,6 +5276,10 @@ PrefabInstance:
       propertyPath: edgeScanRaycasts
       value: 16
       objectReference: {fileID: 0}
+    - target: {fileID: 6807297836687757261, guid: d5a3d3276e47631bfb60f1dda5c99ef2, type: 3}
+      propertyPath: attackArrow
+      value: 
+      objectReference: {fileID: 8755978996881620118, guid: b8dabfecd9a5bdd44b87240a33a9a7dc, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

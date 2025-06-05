@@ -1,9 +1,14 @@
 using Mirror.BouncyCastle.Cms;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerAttack : MonoBehaviour, GameInputSystem.IAttackActions
 {
+    [SerializeField] GameObject attackArrow;
+
+    GameObject arrowInstance;
+
     private GameInputSystem.AttackActions attackActions;
 
     bool attacking;
@@ -33,6 +38,12 @@ public class PlayerAttack : MonoBehaviour, GameInputSystem.IAttackActions
         if (!value)
         {
             attacking = false;
+
+            if (arrowInstance != null)
+            {
+                Destroy(arrowInstance);
+            }
+            
         }
     }
 
@@ -68,7 +79,10 @@ public class PlayerAttack : MonoBehaviour, GameInputSystem.IAttackActions
         {
             attacking = false;
 
-            Destroy(attackIndicator);
+            if (arrowInstance != null)
+            {
+                Destroy(arrowInstance);
+            }
         }
     }
 
@@ -85,12 +99,6 @@ public class PlayerAttack : MonoBehaviour, GameInputSystem.IAttackActions
     {
         if (!attacking) { return; }
 
-        if (attackIndicator == null)
-        {
-            attackIndicator = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            Destroy(attackIndicator.GetComponent<SphereCollider>());
-        }
-
         playerPlane = new Plane(Vector3.up, transform.position);
 
         Ray mouseRay = Camera.main.ScreenPointToRay(new Vector3(mousePos.x, mousePos.y, 0));
@@ -100,10 +108,15 @@ public class PlayerAttack : MonoBehaviour, GameInputSystem.IAttackActions
         if (playerPlane.Raycast(mouseRay, out hitDistance))
         {
             Vector3 hitPoint = mouseRay.GetPoint(hitDistance);
+            Vector3 attackDirection = (hitPoint - transform.position).normalized * 2;
 
-            Vector3 attackDirection = (hitPoint - transform.position).normalized;
+            if (arrowInstance == null)
+            {
+                arrowInstance = Instantiate(attackArrow, hitPoint, Quaternion.Euler(0, 0, 0));
+            }
 
-            attackIndicator.transform.position = transform.position + attackDirection * 2;
+            arrowInstance.transform.position = transform.position + attackDirection;
+            arrowInstance.transform.LookAt(transform.position + 2 * attackDirection);
         }
     }
 }
