@@ -38,7 +38,7 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
         }
 
         Instance = this as T;
-		Debug.Log("Set instance");
+		Debug.Log("Set instance of " + gameObject.name);
         DontDestroyOnLoad(gameObject); 
     }
 }

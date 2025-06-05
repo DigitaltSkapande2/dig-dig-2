@@ -131,6 +131,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   titleText: {fileID: 1429913733384370693}
   noteText: {fileID: 6696204148881746932}
+  unfocusedScale: 0.5
+  unfocusedColor: {r: 1, g: 1, b: 1, a: 0.5}
+  animationSpeed: 5
 --- !u!1 &6401506205787113673
 GameObject:
   m_ObjectHideFlags: 0
