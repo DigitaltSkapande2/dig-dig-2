@@ -1,11 +1,14 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using DigDig2.Debug;
 
+[Debug(DebugMenuToggleable.non_toggleable)]
 public class PlayerCharacterController : MonoBehaviour, GameInputSystem.IPlayerActions
 {
 	// These get set public bools are supposed to be serialized but unity or C# doesn't allow that so fix this please!
 	[Tooltip("Freezes the player (stops running ´CharacterController.Move()´) and disables the CharacterController component. Allows you to move the player by setting their transform. Use TempPlayerCharacterController.Teleport() for teleporting instead.")]
-	[SerializeField] public bool Frozen
+	[SerializeField]
+	public bool Frozen
 	{
 		get
 		{
@@ -23,7 +26,8 @@ public class PlayerCharacterController : MonoBehaviour, GameInputSystem.IPlayerA
 	private bool frozen = false;
 
 	[Tooltip("Resets the input values and stops accepting new input, use for menus or when in dialog.")]
-	[SerializeField] private bool AcceptInput
+	[SerializeField]
+	private bool AcceptInput
 	{
 		get
 		{
@@ -54,7 +58,7 @@ public class PlayerCharacterController : MonoBehaviour, GameInputSystem.IPlayerA
 	[Space(20)]
 
 	[Tooltip("The max speed the player can move.")]
-	[SerializeField] private float moveSpeed = 7.5f;
+	[DebugSerialized] private float moveSpeed = 7.5f;
 
 	[Tooltip("The move acceleration and decelleration speed, higher is faster.")]
 	[SerializeField] private float moveInputVectorLerpSpeed = 10f;
@@ -77,7 +81,7 @@ public class PlayerCharacterController : MonoBehaviour, GameInputSystem.IPlayerA
 
 	[Tooltip("Amount of raycasts to cast in a circle around the player to detect edges, higher is better for edge detail, but worse for performance.")]
 	[SerializeField] private int edgeScanRaycasts = 16;
-	
+
 	[Tooltip("How far the edge raycast get cast from the player.")]
 	[SerializeField] private float edgeScanRadius = 0.6f;
 
@@ -318,17 +322,27 @@ public class PlayerCharacterController : MonoBehaviour, GameInputSystem.IPlayerA
 	public void OnMove(InputAction.CallbackContext context)
 	{
 		moveInputVector = context.ReadValue<Vector2>();
-    }
+	}
 
-    public void OnInteract(InputAction.CallbackContext context)
-    {
-        
-    }
+	public void OnAttack(InputAction.CallbackContext context)
+	{
+		GetComponent<PlayerAttack>().OnAttack(context);
+	}
 
-    public void OnSprint(InputAction.CallbackContext context)
-    {
-        
-    }
-    
-    #endregion
+	public void OnMouse(InputAction.CallbackContext context)
+	{
+		GetComponent<PlayerAttack>().OnMouse(context);
+	}
+
+	public void OnInteract(InputAction.CallbackContext context)
+	{
+
+	}
+
+	public void OnSprint(InputAction.CallbackContext context)
+	{
+
+	}
+
+	#endregion
 }
