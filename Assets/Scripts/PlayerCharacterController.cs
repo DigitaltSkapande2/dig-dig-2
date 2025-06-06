@@ -114,6 +114,8 @@ public class PlayerCharacterController : MonoBehaviour, GameInputSystem.IPlayerA
 
 	private void Start()
 	{
+		//Application.targetFrameRate = 15;
+
 		DebugNotesManager.Instance.RegisterPlayerCharacterController(this);
 
 		EnableInput();
@@ -140,7 +142,7 @@ public class PlayerCharacterController : MonoBehaviour, GameInputSystem.IPlayerA
 	}
 	private void OnDisable()
 	{
-        DisableInput();
+		DisableInput();
 	}
 
 	#region Movement
@@ -202,6 +204,8 @@ public class PlayerCharacterController : MonoBehaviour, GameInputSystem.IPlayerA
 
 	private void ProcessEdge()
 	{
+		Vector3 totalEdgeNudge = Vector3.zero;
+		int numberOfEdgesDetected = 0;
 		for (int raycastIndex = 0; raycastIndex < edgeScanRaycasts; raycastIndex++)
 		{
 			float positionDegrees = raycastIndex * 360 / edgeScanRaycasts;
@@ -212,9 +216,12 @@ public class PlayerCharacterController : MonoBehaviour, GameInputSystem.IPlayerA
 			{
 				Debug.DrawRay(transform.position + raycastPosition * edgeScanRadius, -transform.up, Color.red, 0.01f, true);
 
-				velocity -= raycastPosition * moveVector.magnitude;
+				totalEdgeNudge += raycastPosition * moveVector.magnitude;
+				numberOfEdgesDetected++;
 			}
 		}
+
+		if (numberOfEdgesDetected > 0) velocity -= totalEdgeNudge / numberOfEdgesDetected;
 	}
 
 	// Add velocity to CharacterController
@@ -311,7 +318,7 @@ public class PlayerCharacterController : MonoBehaviour, GameInputSystem.IPlayerA
 	public void OnMove(InputAction.CallbackContext context)
 	{
 		moveInputVector = context.ReadValue<Vector2>();
-	}
+    }
 
     public void OnInteract(InputAction.CallbackContext context)
     {

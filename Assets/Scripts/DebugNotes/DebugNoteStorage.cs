@@ -13,6 +13,7 @@ public class DebugNoteData
 {
 	public string title;
 	public string note;
+	public string author;
 
 	public Vector3 position = Vector3.zero;
 }

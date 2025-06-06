@@ -5,18 +5,57 @@ using UnityEngine.InputSystem;
 
 public class DebugNotesManager : Singleton<DebugNotesManager>, GameInputSystem.IDebugNotesActions
 {
+	[Header("Note Storage")]
+
+	[Tooltip("DebugNotesStorage scriptable object used to store note data.")]
 	[SerializeField] private DebugNotesStorage debugNotesStorage;
-	[SerializeField] private DebugNoteBillboard debugNoteBillboardPrefab;
+
+	[Header("Interaction")]
+
+	[Tooltip("Distance from a note the player has to be for it to become focused.")]
 	[SerializeField] private float maxFocusDistance = 5f;
-	[SerializeField] private TMP_InputField newNoteTitleInputField;
-	[SerializeField] private TMP_InputField newNoteNoteInputField;
-	[SerializeField] private GameObject placeNoteScreen;
+
+	[Tooltip("The offset from the player's position where the note gets placed.")]
 	[SerializeField] private Vector3 notePlacePositionOffset = new(0f, 1f, 0f);
 
-	private List<DebugNoteBillboard> debugNoteBillboards = new();
-	private DebugNoteBillboard focusedNoteBillboard;
-	private PlayerCharacterController playerCharacterController;
+	[Header("Note Management Interface")]
+
+	[Tooltip("The note mangement interface's title.")]
+	[SerializeField] private TMP_Text interfaceTitle;
+
+	[Tooltip("The note mangement interface's title input field.")]
+	[SerializeField] private TMP_InputField interfaceTitleInputField;
+
+	[Tooltip("The note mangement interface's note input field.")]
+	[SerializeField] private TMP_InputField interfaceNoteInputField;
+
+	[Tooltip("The note mangement interface's author input field.")]
+	[SerializeField] private TMP_InputField interfaceAuthorInputField;
+
+	[Tooltip("The note mangement interface's canvas.")]
+	[SerializeField] private GameObject interfaceCanvas;
+
+	[Header("Prefabs")]
+
+	[Tooltip("The in-game note billboard prefab.")]
+	[SerializeField] private DebugNoteBillboard debugNoteBillboardPrefab;
+
 	private GameInputSystem.DebugNotesActions debugNotesActions;
+
+	private PlayerCharacterController playerCharacterController;
+
+	readonly private Dictionary<int, DebugNoteBillboard> debugNoteBillboards = new();
+	private int focusedNoteIndex;
+	private int editingNoteIndex;
+	private NoteManagementMode noteManagementMode = NoteManagementMode.none;
+
+	enum NoteManagementMode
+	{
+		none,
+		place,
+		edit
+	}
+
 
 
 
@@ -29,27 +68,40 @@ public class DebugNotesManager : Singleton<DebugNotesManager>, GameInputSystem.I
 
 	private void Update()
 	{
+		// Maybe not too performace friendly to check all notes in a for loop every frame, but uhhhhhhhhhhhhh i don't know any easier way :)
 		FocusNearestNote();
 	}
 
+	#region Notes Backend
+
+	// Get the nearest note and focus it, if a note is already focused then unfocus the old one
 	private void FocusNearestNote()
 	{
 		if (playerCharacterController == null)
 		{
-			if (focusedNoteBillboard) { focusedNoteBillboard.SetFocused(false); focusedNoteBillboard = null; }
+			if (focusedNoteIndex != -1)
+			{
+				DebugNoteBillboard focusedNoteBillboard = GetNoteBillboardFromNoteIndex(focusedNoteIndex);
+
+				focusedNoteBillboard.SetFocused(false);
+				focusedNoteIndex = -1;
+			}
 			return;
 		}
 
-		DebugNoteBillboard nearestNote = null;
+		DebugNoteBillboard nearestNoteBillboard = null;
+		int nearestNote = -1;
 		float nearestNoteDistance = 0;
-		foreach (DebugNoteBillboard noteBillboard in debugNoteBillboards)
+		foreach (int noteIndex in debugNoteBillboards.Keys)
 		{
+			DebugNoteBillboard noteBillboard = GetNoteBillboardFromNoteIndex(noteIndex);
 			float noteDistance = Vector3.Distance(playerCharacterController.transform.position, noteBillboard.transform.position);
 			if (noteDistance <= maxFocusDistance)
 			{
-				if (nearestNote == null)
+				if (nearestNote == -1)
 				{
-					nearestNote = noteBillboard;
+					nearestNoteBillboard = noteBillboard;
+					nearestNote = noteIndex;
 					nearestNoteDistance = noteDistance;
 
 					continue;
@@ -57,92 +109,208 @@ public class DebugNotesManager : Singleton<DebugNotesManager>, GameInputSystem.I
 
 				if (noteDistance < nearestNoteDistance)
 				{
-					nearestNote = noteBillboard;
+					nearestNoteBillboard = noteBillboard;
+					nearestNote = -1;
 				}
 			}
 		}
 
-		if (nearestNote)
+		if (nearestNote != -1)
 		{
-			if (!focusedNoteBillboard)
+			if (focusedNoteIndex == -1)
 			{
-				focusedNoteBillboard = nearestNote;
-				nearestNote.SetFocused(true);
+				focusedNoteIndex = nearestNote;
+				nearestNoteBillboard.SetFocused(true);
 			}
-			else if (nearestNote != focusedNoteBillboard)
+			else if (nearestNote != focusedNoteIndex)
 			{
+				DebugNoteBillboard focusedNoteBillboard = GetNoteBillboardFromNoteIndex(focusedNoteIndex);
+
 				focusedNoteBillboard.SetFocused(false);
-				focusedNoteBillboard = nearestNote;
-				nearestNote.SetFocused(true);
+
+				focusedNoteIndex = nearestNote;
+				nearestNoteBillboard.SetFocused(true);
 			}
 		}
 		else
 		{
-			if (focusedNoteBillboard)
+			if (focusedNoteIndex != -1)
 			{
+				DebugNoteBillboard focusedNoteBillboard = GetNoteBillboardFromNoteIndex(focusedNoteIndex);
+
 				focusedNoteBillboard.SetFocused(false);
-				focusedNoteBillboard = null;
+				focusedNoteIndex = -1;
 			}
 		}
 	}
 
-	private void PlaceDebugNote(DebugNoteData noteData)
+	private DebugNoteBillboard GetNoteBillboardFromNoteIndex(int noteIndex)
 	{
-		DebugNoteBillboard newDebugNoteBillboard = Instantiate(debugNoteBillboardPrefab, noteData.position, Quaternion.identity, transform);
-		debugNoteBillboards.Add(newDebugNoteBillboard);
-		newDebugNoteBillboard.ApplyNoteData(noteData);
+		if (debugNoteBillboards.ContainsKey(noteIndex))
+		{
+			return debugNoteBillboards[noteIndex];
+		}
+
+		return null;
+	}
+	private DebugNoteData GetNoteDataFromNoteIndex(int noteIndex)
+	{
+		if (debugNotesStorage.notes.Count > noteIndex)
+		{
+			return debugNotesStorage.notes[noteIndex];
+		}
+
+		return null;
 	}
 
+	// Place an existing note in the world, does not save a new note to the storage
+	private void PlaceStoredDebugNote(int noteIndex)
+	{
+		DebugNoteData noteData = GetNoteDataFromNoteIndex(noteIndex);
+
+		DebugNoteBillboard newNoteBillboard = Instantiate(debugNoteBillboardPrefab, noteData.position, Quaternion.identity, transform);
+		newNoteBillboard.ApplyNoteData(noteData);
+
+		debugNoteBillboards.Add(noteIndex, newNoteBillboard);
+	}
+
+	// Go through the stored notes and place them in the world
 	private void PlaceStoredDebugNotes()
 	{
-		foreach (DebugNoteData note in debugNotesStorage.notes)
+		for (int noteIndex = 0; noteIndex < debugNotesStorage.notes.Count; noteIndex++)
 		{
-			PlaceDebugNote(note);
+			PlaceStoredDebugNote(noteIndex);
 		}
 	}
 
-	public void CreateNewNote(string title, string note, Vector3 position)
+	// Create a new note in the note storage and place it in the world
+	public void CreateNewNote(string title, string note, string author, Vector3 position)
 	{
 		DebugNoteData newNoteData = new()
 		{
 			title = title,
 			note = note,
+			author = author,
 			position = position
 		};
 
 		debugNotesStorage.notes.Add(newNoteData);
+		int newNoteIndex = debugNotesStorage.notes.Count - 1;
 
-		PlaceDebugNote(newNoteData);
+		PlaceStoredDebugNote(newNoteIndex);
 	}
 
+	public void EditNote(int noteIndex, string title, string note, string author)
+	{
+		DebugNoteData noteData = GetNoteDataFromNoteIndex(noteIndex);
+		DebugNoteBillboard noteBillboard = GetNoteBillboardFromNoteIndex(noteIndex);
+
+		noteData.title = title;
+		noteData.note = note;
+		noteData.author = author;
+
+		noteBillboard.ApplyNoteData(noteData);
+	}
+
+	// Register the current player character controller to be used for getting the position and freezing the player
 	public void RegisterPlayerCharacterController(PlayerCharacterController newPlayerCharacterController)
 	{
 		playerCharacterController = newPlayerCharacterController;
 	}
 
-	public void HidePlaceNoteScreen()
+	#endregion
+
+	#region Notes Frontend
+
+	public void StartNotePlacement()
 	{
-		placeNoteScreen.SetActive(false);
+		if (noteManagementMode != NoteManagementMode.none) return;
 
-		newNoteTitleInputField.text = "";
-		newNoteNoteInputField.text = "";
-
-		playerCharacterController.Frozen = false;
+		ShowNoteManagementInterface(NoteManagementMode.place);
 	}
-	public void ShowPlaceNoteScreen()
+
+	public void StartNoteEditing()
 	{
-		placeNoteScreen.SetActive(true);
+		if (noteManagementMode != NoteManagementMode.none) return;
+		if (focusedNoteIndex == -1) return;
+
+		editingNoteIndex = focusedNoteIndex;
+		DebugNoteData editingNoteData = GetNoteDataFromNoteIndex(editingNoteIndex);
+
+		interfaceTitleInputField.text = editingNoteData.title;
+		interfaceNoteInputField.text = editingNoteData.note;
+		interfaceAuthorInputField.text = editingNoteData.author;
+
+		ShowNoteManagementInterface(NoteManagementMode.edit);
+	}
+
+	private void ShowNoteManagementInterface(NoteManagementMode managementMode)
+	{
+		noteManagementMode = managementMode;
+		switch (managementMode)
+		{
+			case NoteManagementMode.place:
+				interfaceTitle.text = "Place Note";
+				break;
+			case NoteManagementMode.edit:
+				interfaceTitle.text = "Edit Note";
+				break;
+		}
+
+		interfaceCanvas.SetActive(true);
+
 		playerCharacterController.Frozen = true;
 	}
+	private void HideNoteManagementInterface()
+	{
+		interfaceCanvas.SetActive(false);
 
-	public void OnPlaceNewNotePressed()
+		playerCharacterController.Frozen = false;
+
+		interfaceTitleInputField.text = "";
+		interfaceNoteInputField.text = "";
+		interfaceAuthorInputField.text = "";
+
+		noteManagementMode = NoteManagementMode.none;
+	}
+
+	// Player pressed the confirm button on the note management interface
+	public void OnNoteConfirmPressed()
 	{
 		if (playerCharacterController == null) return;
-		if (newNoteTitleInputField.text.Length <= 0) return;
+		if (interfaceTitleInputField.text.Length <= 0) return;
 
-		CreateNewNote(newNoteTitleInputField.text, newNoteNoteInputField.text, playerCharacterController.transform.position + notePlacePositionOffset);
-		HidePlaceNoteScreen();
+		switch (noteManagementMode)
+		{
+			case NoteManagementMode.place:
+				CreateNewNote(
+					interfaceTitleInputField.text,
+					interfaceNoteInputField.text,
+					interfaceAuthorInputField.text,
+					playerCharacterController.transform.position + notePlacePositionOffset
+				);
+				break;
+			case NoteManagementMode.edit:
+				EditNote(
+					editingNoteIndex,
+					interfaceTitleInputField.text,
+					interfaceNoteInputField.text,
+					interfaceAuthorInputField.text
+				);
+				break;
+		}
+
+		HideNoteManagementInterface();
 	}
+
+	public void OnNoteCancelPressed()
+	{
+		HideNoteManagementInterface();
+	}
+
+	#endregion
+
+	#region Input Setup
 
 	private void EnableInput()
 	{
@@ -152,8 +320,24 @@ public class DebugNotesManager : Singleton<DebugNotesManager>, GameInputSystem.I
 		debugNotesActions.Enable();
 	}
 
-	public void OnOpenPlaceNoteScreen(InputAction.CallbackContext context)
+	private void DisableInput()
 	{
-		ShowPlaceNoteScreen();
+		debugNotesActions.Disable();
 	}
+
+	#endregion
+
+	#region Input
+
+	public void OnPlaceNote(InputAction.CallbackContext context)
+	{
+		StartNotePlacement();
+	}
+
+	public void OnEditNote(InputAction.CallbackContext context)
+	{
+		StartNoteEditing();
+	}
+
+	#endregion
 }

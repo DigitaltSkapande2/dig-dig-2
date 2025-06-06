@@ -314,9 +314,18 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
             ""id"": ""58488041-e640-4f61-9cc2-949b8ce13395"",
             ""actions"": [
                 {
-                    ""name"": ""OpenPlaceNoteScreen"",
+                    ""name"": ""PlaceNote"",
                     ""type"": ""Button"",
                     ""id"": ""364e4bcb-f8c2-4c88-8db1-cea7eff768b0"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""EditNote"",
+                    ""type"": ""Button"",
+                    ""id"": ""4f13845f-a2c2-404f-9b51-17ce4d8372e6"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -331,7 +340,7 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""OpenPlaceNoteScreen"",
+                    ""action"": ""PlaceNote"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -342,7 +351,29 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Gamepad"",
-                    ""action"": ""OpenPlaceNoteScreen"",
+                    ""action"": ""PlaceNote"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""42bfc989-7233-4727-bc14-1669f1476c9c"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""EditNote"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""974bc56b-fcab-453f-945e-3aeff6a47408"",
+                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""EditNote"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1038,7 +1069,8 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
         m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
         // DebugNotes
         m_DebugNotes = asset.FindActionMap("DebugNotes", throwIfNotFound: true);
-        m_DebugNotes_OpenPlaceNoteScreen = m_DebugNotes.FindAction("OpenPlaceNoteScreen", throwIfNotFound: true);
+        m_DebugNotes_PlaceNote = m_DebugNotes.FindAction("PlaceNote", throwIfNotFound: true);
+        m_DebugNotes_EditNote = m_DebugNotes.FindAction("EditNote", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1256,7 +1288,8 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
     // DebugNotes
     private readonly InputActionMap m_DebugNotes;
     private List<IDebugNotesActions> m_DebugNotesActionsCallbackInterfaces = new List<IDebugNotesActions>();
-    private readonly InputAction m_DebugNotes_OpenPlaceNoteScreen;
+    private readonly InputAction m_DebugNotes_PlaceNote;
+    private readonly InputAction m_DebugNotes_EditNote;
     /// <summary>
     /// Provides access to input actions defined in input action map "DebugNotes".
     /// </summary>
@@ -1269,9 +1302,13 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
         /// </summary>
         public DebugNotesActions(@GameInputSystem wrapper) { m_Wrapper = wrapper; }
         /// <summary>
-        /// Provides access to the underlying input action "DebugNotes/OpenPlaceNoteScreen".
+        /// Provides access to the underlying input action "DebugNotes/PlaceNote".
         /// </summary>
-        public InputAction @OpenPlaceNoteScreen => m_Wrapper.m_DebugNotes_OpenPlaceNoteScreen;
+        public InputAction @PlaceNote => m_Wrapper.m_DebugNotes_PlaceNote;
+        /// <summary>
+        /// Provides access to the underlying input action "DebugNotes/EditNote".
+        /// </summary>
+        public InputAction @EditNote => m_Wrapper.m_DebugNotes_EditNote;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1298,9 +1335,12 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_DebugNotesActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_DebugNotesActionsCallbackInterfaces.Add(instance);
-            @OpenPlaceNoteScreen.started += instance.OnOpenPlaceNoteScreen;
-            @OpenPlaceNoteScreen.performed += instance.OnOpenPlaceNoteScreen;
-            @OpenPlaceNoteScreen.canceled += instance.OnOpenPlaceNoteScreen;
+            @PlaceNote.started += instance.OnPlaceNote;
+            @PlaceNote.performed += instance.OnPlaceNote;
+            @PlaceNote.canceled += instance.OnPlaceNote;
+            @EditNote.started += instance.OnEditNote;
+            @EditNote.performed += instance.OnEditNote;
+            @EditNote.canceled += instance.OnEditNote;
         }
 
         /// <summary>
@@ -1312,9 +1352,12 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
         /// <seealso cref="DebugNotesActions" />
         private void UnregisterCallbacks(IDebugNotesActions instance)
         {
-            @OpenPlaceNoteScreen.started -= instance.OnOpenPlaceNoteScreen;
-            @OpenPlaceNoteScreen.performed -= instance.OnOpenPlaceNoteScreen;
-            @OpenPlaceNoteScreen.canceled -= instance.OnOpenPlaceNoteScreen;
+            @PlaceNote.started -= instance.OnPlaceNote;
+            @PlaceNote.performed -= instance.OnPlaceNote;
+            @PlaceNote.canceled -= instance.OnPlaceNote;
+            @EditNote.started -= instance.OnEditNote;
+            @EditNote.performed -= instance.OnEditNote;
+            @EditNote.canceled -= instance.OnEditNote;
         }
 
         /// <summary>
@@ -1752,12 +1795,19 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
     public interface IDebugNotesActions
     {
         /// <summary>
-        /// Method invoked when associated input action "OpenPlaceNoteScreen" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "PlaceNote" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnOpenPlaceNoteScreen(InputAction.CallbackContext context);
+        void OnPlaceNote(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "EditNote" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnEditNote(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

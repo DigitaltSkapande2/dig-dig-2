@@ -3,8 +3,9 @@ using UnityEngine;
 
 public class DebugNoteBillboard : MonoBehaviour
 {
-	[SerializeField] private TextMeshProUGUI titleText;
-	[SerializeField] private TextMeshProUGUI noteText;
+	[SerializeField] private TMP_Text titleText;
+	[SerializeField] private TMP_Text noteText;
+	[SerializeField] private TMP_Text authorText;
 	[SerializeField] private float unfocusedScale = 0.5f;
 	[SerializeField] private Color unfocusedColor = new(1f, 1f, 1f, 0.5f);
 	[SerializeField] private float animationSpeed = 5f;
@@ -28,6 +29,7 @@ public class DebugNoteBillboard : MonoBehaviour
 			transform.localScale = Vector3.Lerp(Vector3.one * unfocusedScale, Vector3.one, focusAnimationProgress);
 			titleText.color = Color.Lerp(unfocusedColor, Color.white, focusAnimationProgress);
 			noteText.color = Color.Lerp(unfocusedColor, Color.white, focusAnimationProgress);
+			authorText.color = Color.Lerp(unfocusedColor, Color.white, focusAnimationProgress);
 		}
 	}
 
@@ -35,6 +37,7 @@ public class DebugNoteBillboard : MonoBehaviour
 	{
 		titleText.text = debugNoteData.title;
 		noteText.text = debugNoteData.note;
+		authorText.text = $"by {debugNoteData.author}";
 	}
 
 	public void SetFocused(bool newFocusValue)

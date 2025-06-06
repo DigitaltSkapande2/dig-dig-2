@@ -228,9 +228,18 @@
             "id": "58488041-e640-4f61-9cc2-949b8ce13395",
             "actions": [
                 {
-                    "name": "OpenPlaceNoteScreen",
+                    "name": "PlaceNote",
                     "type": "Button",
                     "id": "364e4bcb-f8c2-4c88-8db1-cea7eff768b0",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "EditNote",
+                    "type": "Button",
+                    "id": "4f13845f-a2c2-404f-9b51-17ce4d8372e6",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -245,7 +254,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "OpenPlaceNoteScreen",
+                    "action": "PlaceNote",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -256,7 +265,29 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
-                    "action": "OpenPlaceNoteScreen",
+                    "action": "PlaceNote",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "42bfc989-7233-4727-bc14-1669f1476c9c",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "EditNote",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "974bc56b-fcab-453f-945e-3aeff6a47408",
+                    "path": "<Gamepad>/dpad/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "EditNote",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
