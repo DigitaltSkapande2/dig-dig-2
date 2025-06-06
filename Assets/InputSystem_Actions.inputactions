@@ -872,6 +872,184 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "DebugConsole",
+            "id": "1c80fdce-24e3-4d87-8d27-32095298456b",
+            "actions": [
+                {
+                    "name": "OpenDebugConsole",
+                    "type": "Button",
+                    "id": "f7cae8c1-40ea-4a19-8053-b6100473ced1",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "CloseDebugConsole",
+                    "type": "Button",
+                    "id": "ff0785f1-b23d-405a-b05b-8f9b27c1d2b5",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Confirm",
+                    "type": "Button",
+                    "id": "a4e4d0b8-5cb1-443f-9b4d-8b06a179dcbb",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "CycleSuggestions",
+                    "type": "Button",
+                    "id": "f2e6017f-80ee-4252-94ff-b548991a6a3b",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "HistoryNavigation",
+                    "type": "Value",
+                    "id": "84164530-0c04-437c-8d11-c63cdfd6a017",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "446fa49b-1e20-4c24-969d-8221be89a40a",
+                    "path": "<Keyboard>/f3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OpenDebugConsole",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5b49ca83-ab05-4f0f-81b4-19c492676b5d",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CloseDebugConsole",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c3fe2e9b-226c-4b88-8a91-866b5faceb94",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Confirm",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "dbe5a18d-9385-4be5-a9c1-1374cb21819f",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CycleSuggestions",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "1D Axis",
+                    "id": "91e864e3-dcee-49ff-9724-e94c58d8d862",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "HistoryNavigation",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "81dcc6e0-914f-4f74-99e6-731fe2f1e794",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "HistoryNavigation",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "329b62d2-33a3-4238-89ad-fd3050358f61",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "HistoryNavigation",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                }
+            ]
+        },
+        {
+            "name": "DebugMenu",
+            "id": "63aba447-485c-4ab8-8217-d968827eed80",
+            "actions": [
+                {
+                    "name": "OpenDebugMenu",
+                    "type": "Button",
+                    "id": "dbf69266-10f1-412c-bb8a-446ea2ada83b",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "CloseDebugMenu",
+                    "type": "Button",
+                    "id": "7e6cf553-00fd-4aa5-9d1f-e0cea64787f1",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "8e046042-03e6-4d15-969b-1a0714adc15e",
+                    "path": "<Keyboard>/f4",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OpenDebugMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "da045956-bb71-4241-a698-fcafcf45e803",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CloseDebugMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [
