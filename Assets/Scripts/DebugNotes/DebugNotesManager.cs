@@ -1,7 +1,10 @@
 using System.Collections.Generic;
+using DigDig2.Debug;
 using TMPro;
+using UnityEditor.EditorTools;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class DebugNotesManager : Singleton<DebugNotesManager>, GameInputSystem.IDebugNotesActions
 {
@@ -20,19 +23,22 @@ public class DebugNotesManager : Singleton<DebugNotesManager>, GameInputSystem.I
 
 	[Header("Note Management Interface")]
 
-	[Tooltip("The note mangement interface's title.")]
+	[Tooltip("The note management interface's title.")]
 	[SerializeField] private TMP_Text interfaceTitle;
 
-	[Tooltip("The note mangement interface's title input field.")]
+	[Tooltip("The note management interface's title input field.")]
 	[SerializeField] private TMP_InputField interfaceTitleInputField;
 
-	[Tooltip("The note mangement interface's note input field.")]
+	[Tooltip("The note management interface's note input field.")]
 	[SerializeField] private TMP_InputField interfaceNoteInputField;
 
-	[Tooltip("The note mangement interface's author input field.")]
+	[Tooltip("The note management interface's author input field.")]
 	[SerializeField] private TMP_InputField interfaceAuthorInputField;
 
-	[Tooltip("The note mangement interface's canvas.")]
+	[Tooltip("The note management interface's archive button")]
+	[SerializeField] private Button interfaceArchiveButton;
+
+	[Tooltip("The note management interface's canvas.")]
 	[SerializeField] private GameObject interfaceCanvas;
 
 	[Header("Prefabs")]
@@ -45,9 +51,41 @@ public class DebugNotesManager : Singleton<DebugNotesManager>, GameInputSystem.I
 	private PlayerCharacterController playerCharacterController;
 
 	readonly private Dictionary<int, DebugNoteBillboard> debugNoteBillboards = new();
+	readonly private Dictionary<int, DebugNoteBillboard> archivedDebugNoteBillboards = new();
+
 	private int focusedNoteIndex;
 	private int editingNoteIndex;
 	private NoteManagementMode noteManagementMode = NoteManagementMode.none;
+
+	public bool ShowDebugNotes
+	{
+		get
+		{
+			return _showDebugNotes;
+		}
+
+		set
+		{
+			_showDebugNotes = value;
+			RefreshNoteBillboardVisibility();
+		}
+	}
+	private bool _showDebugNotes = true;
+
+	public bool ShowArchivedDebugNotes
+	{
+		get
+		{
+			return _showArchivedDebugNotes;
+		}
+
+		set
+		{
+			_showArchivedDebugNotes = value;
+			RefreshNoteBillboardVisibility();
+		}
+	}
+	private bool _showArchivedDebugNotes = false;
 
 	enum NoteManagementMode
 	{
@@ -62,6 +100,8 @@ public class DebugNotesManager : Singleton<DebugNotesManager>, GameInputSystem.I
 	private void Start()
 	{
 		PlaceStoredDebugNotes();
+
+		HideNoteManagementInterface();
 
 		EnableInput();
 	}
@@ -95,6 +135,8 @@ public class DebugNotesManager : Singleton<DebugNotesManager>, GameInputSystem.I
 		foreach (int noteIndex in debugNoteBillboards.Keys)
 		{
 			DebugNoteBillboard noteBillboard = GetNoteBillboardFromNoteIndex(noteIndex);
+			if (!noteBillboard.gameObject.activeSelf) continue;
+
 			float noteDistance = Vector3.Distance(playerCharacterController.transform.position, noteBillboard.transform.position);
 			if (noteDistance <= maxFocusDistance)
 			{
@@ -110,27 +152,22 @@ public class DebugNotesManager : Singleton<DebugNotesManager>, GameInputSystem.I
 				if (noteDistance < nearestNoteDistance)
 				{
 					nearestNoteBillboard = noteBillboard;
-					nearestNote = -1;
+					nearestNote = noteIndex;
 				}
 			}
 		}
 
 		if (nearestNote != -1)
 		{
-			if (focusedNoteIndex == -1)
-			{
-				focusedNoteIndex = nearestNote;
-				nearestNoteBillboard.SetFocused(true);
-			}
-			else if (nearestNote != focusedNoteIndex)
+			if (focusedNoteIndex != -1)
 			{
 				DebugNoteBillboard focusedNoteBillboard = GetNoteBillboardFromNoteIndex(focusedNoteIndex);
 
 				focusedNoteBillboard.SetFocused(false);
-
-				focusedNoteIndex = nearestNote;
-				nearestNoteBillboard.SetFocused(true);
 			}
+
+			focusedNoteIndex = nearestNote;
+			nearestNoteBillboard.SetFocused(true);
 		}
 		else
 		{
@@ -141,6 +178,28 @@ public class DebugNotesManager : Singleton<DebugNotesManager>, GameInputSystem.I
 				focusedNoteBillboard.SetFocused(false);
 				focusedNoteIndex = -1;
 			}
+		}
+	}
+
+	private void RefreshNoteBillboardVisibility()
+	{
+		foreach (int noteIndex in debugNoteBillboards.Keys)
+		{
+			DebugNoteBillboard noteBillboard = GetNoteBillboardFromNoteIndex(noteIndex);
+			if (!_showDebugNotes)
+			{
+				noteBillboard.gameObject.SetActive(false);
+				continue;
+			}
+
+			DebugNoteData noteData = GetNoteDataFromNoteIndex(noteIndex);
+			if (!_showArchivedDebugNotes && noteData.archived)
+			{
+				noteBillboard.gameObject.SetActive(false);
+				continue;
+			}
+
+			noteBillboard.gameObject.SetActive(true);
 		}
 	}
 
@@ -170,6 +229,15 @@ public class DebugNotesManager : Singleton<DebugNotesManager>, GameInputSystem.I
 
 		DebugNoteBillboard newNoteBillboard = Instantiate(debugNoteBillboardPrefab, noteData.position, Quaternion.identity, transform);
 		newNoteBillboard.ApplyNoteData(noteData);
+
+		if (noteData.archived)
+		{
+			newNoteBillboard.gameObject.SetActive(_showDebugNotes && _showArchivedDebugNotes);
+		}
+		else
+		{
+			newNoteBillboard.gameObject.SetActive(_showDebugNotes);
+		}
 
 		debugNoteBillboards.Add(noteIndex, newNoteBillboard);
 	}
@@ -212,6 +280,39 @@ public class DebugNotesManager : Singleton<DebugNotesManager>, GameInputSystem.I
 		noteBillboard.ApplyNoteData(noteData);
 	}
 
+	public void ArchiveNote(int noteIndex)
+	{
+		DebugNoteData noteData = GetNoteDataFromNoteIndex(noteIndex);
+		if (noteData.archived)
+		{
+			Debug.LogError($"Debug note with index \"{noteIndex}\" was requested to be archived but is already archived!");
+			return;
+		}
+
+
+		noteData.archived = true;
+
+		DebugNoteBillboard noteBillboard = GetNoteBillboardFromNoteIndex(noteIndex);
+		noteBillboard.ApplyNoteData(noteData);
+		noteBillboard.gameObject.SetActive(_showDebugNotes && _showArchivedDebugNotes);
+	}
+	
+	public void UnarchiveNote(int archivedNoteIndex)
+	{
+		DebugNoteData noteData = GetNoteDataFromNoteIndex(archivedNoteIndex);
+		if (!noteData.archived)
+		{
+			Debug.LogError($"Archived debug note with index \"{archivedNoteIndex}\" was requested to be unarchived but was not archived!");
+			return;
+		}
+
+		noteData.archived = false;
+
+		DebugNoteBillboard noteBillboard = GetNoteBillboardFromNoteIndex(archivedNoteIndex);
+		noteBillboard.ApplyNoteData(noteData);
+		noteBillboard.gameObject.SetActive(_showDebugNotes);
+	}
+
 	// Register the current player character controller to be used for getting the position and freezing the player
 	public void RegisterPlayerCharacterController(PlayerCharacterController newPlayerCharacterController)
 	{
@@ -236,6 +337,8 @@ public class DebugNotesManager : Singleton<DebugNotesManager>, GameInputSystem.I
 
 		editingNoteIndex = focusedNoteIndex;
 		DebugNoteData editingNoteData = GetNoteDataFromNoteIndex(editingNoteIndex);
+
+		interfaceArchiveButton.interactable = true;
 
 		interfaceTitleInputField.text = editingNoteData.title;
 		interfaceNoteInputField.text = editingNoteData.note;
@@ -266,6 +369,8 @@ public class DebugNotesManager : Singleton<DebugNotesManager>, GameInputSystem.I
 		interfaceCanvas.SetActive(false);
 
 		playerCharacterController.Frozen = false;
+
+		interfaceArchiveButton.interactable = false;
 
 		interfaceTitleInputField.text = "";
 		interfaceNoteInputField.text = "";
@@ -298,6 +403,23 @@ public class DebugNotesManager : Singleton<DebugNotesManager>, GameInputSystem.I
 					interfaceAuthorInputField.text
 				);
 				break;
+		}
+
+		HideNoteManagementInterface();
+	}
+
+	public void OnNoteArchivePressed()
+	{
+		if (editingNoteIndex == -1) return;
+		DebugNoteData editingNoteData = GetNoteDataFromNoteIndex(editingNoteIndex);
+
+		if (editingNoteData.archived)
+		{
+			UnarchiveNote(editingNoteIndex);
+		}
+		else
+		{
+			ArchiveNote(editingNoteIndex);
 		}
 
 		HideNoteManagementInterface();

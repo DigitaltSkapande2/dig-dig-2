@@ -6,6 +6,7 @@ public class DebugNoteBillboard : MonoBehaviour
 	[SerializeField] private TMP_Text titleText;
 	[SerializeField] private TMP_Text noteText;
 	[SerializeField] private TMP_Text authorText;
+	[SerializeField] private TMP_Text archivedText;
 	[SerializeField] private float unfocusedScale = 0.5f;
 	[SerializeField] private Color unfocusedColor = new(1f, 1f, 1f, 0.5f);
 	[SerializeField] private float animationSpeed = 5f;
@@ -38,6 +39,10 @@ public class DebugNoteBillboard : MonoBehaviour
 		titleText.text = debugNoteData.title;
 		noteText.text = debugNoteData.note;
 		authorText.text = $"by {debugNoteData.author}";
+
+		archivedText.gameObject.SetActive(debugNoteData.archived);
+
+		transform.position = debugNoteData.position;
 	}
 
 	public void SetFocused(bool newFocusValue)

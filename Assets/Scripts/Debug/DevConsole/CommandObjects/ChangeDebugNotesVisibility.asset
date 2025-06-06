@@ -9,9 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69836ee8590035840b9f2b0fb87e4392, type: 3}
-  m_Name: New SpawnItemCommand Command
+  m_Script: {fileID: 11500000, guid: f65092b8bc4a5aab097cf497697c5cc8, type: 3}
+  m_Name: ChangeDebugNotesVisibility
   m_EditorClassIdentifier: 
-  commandWord: GAYYYY
-  items: []
-  pickupPrefab: {fileID: 0}
+  commandWord: dbg_notes_vis

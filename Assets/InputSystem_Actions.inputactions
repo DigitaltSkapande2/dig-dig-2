@@ -809,8 +809,8 @@
                 }
             ]
         },
-		{
-			"name": "DebugConsole",
+        {
+            "name": "DebugConsole",
             "id": "1c80fdce-24e3-4d87-8d27-32095298456b",
             "actions": [
                 {
@@ -822,8 +822,8 @@
                     "interactions": "",
                     "initialStateCheck": false
                 },
-				{
-					"name": "CloseDebugConsole",
+                {
+                    "name": "CloseDebugConsole",
                     "type": "Button",
                     "id": "ff0785f1-b23d-405a-b05b-8f9b27c1d2b5",
                     "expectedControlType": "",
@@ -862,7 +862,7 @@
             "bindings": [
                 {
                     "name": "",
-					"id": "446fa49b-1e20-4c24-969d-8221be89a40a",
+                    "id": "446fa49b-1e20-4c24-969d-8221be89a40a",
                     "path": "<Keyboard>/f3",
                     "interactions": "",
                     "processors": "",
@@ -873,7 +873,7 @@
                 },
                 {
                     "name": "",
-					"id": "5b49ca83-ab05-4f0f-81b4-19c492676b5d",
+                    "id": "5b49ca83-ab05-4f0f-81b4-19c492676b5d",
                     "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
@@ -884,7 +884,7 @@
                 },
                 {
                     "name": "",
-					"id": "c3fe2e9b-226c-4b88-8a91-866b5faceb94",
+                    "id": "c3fe2e9b-226c-4b88-8a91-866b5faceb94",
                     "path": "<Keyboard>/enter",
                     "interactions": "",
                     "processors": "",
@@ -895,7 +895,7 @@
                 },
                 {
                     "name": "",
-					"id": "dbe5a18d-9385-4be5-a9c1-1374cb21819f",
+                    "id": "dbe5a18d-9385-4be5-a9c1-1374cb21819f",
                     "path": "<Keyboard>/tab",
                     "interactions": "",
                     "processors": "",
@@ -986,7 +986,7 @@
                     "isPartOfComposite": false
                 }
             ]
-        }
+        },
         {
             "name": "Attack",
             "id": "5f26ae09-937e-461f-8cc7-873303ec384d",

@@ -16,4 +16,6 @@ public class DebugNoteData
 	public string author;
 
 	public Vector3 position = Vector3.zero;
+
+	public bool archived = false;
 }

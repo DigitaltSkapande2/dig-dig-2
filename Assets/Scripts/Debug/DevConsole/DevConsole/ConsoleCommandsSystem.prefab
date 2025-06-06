@@ -1676,9 +1676,8 @@ MonoBehaviour:
 
 '
   commands:
-  - {fileID: 11400000, guid: 4ff9361a89157074e9e61b82939c8457, type: 2}
-  - {fileID: 11400000, guid: 1792e75a8d6550b48aea577eff3b9a54, type: 2}
-  - {fileID: 11400000, guid: 4da1d78ace0ce2445949034e6b3414a6, type: 2}
+  - {fileID: 11400000, guid: 019ecba8af87d7797913c0a0b91929ad, type: 2}
+  - {fileID: 11400000, guid: 9cb9a6124077b64c1acbb3797870d034, type: 2}
   cycleKey: 96
   confirmKey: 13
   backgroundImage: {fileID: 385749007}
