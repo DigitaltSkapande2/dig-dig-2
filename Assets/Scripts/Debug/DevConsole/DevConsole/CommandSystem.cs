@@ -5,23 +5,21 @@ using System.Linq;
 
 namespace DigDig2.Debug
 {
-    public class DeveloperConsole
+    public class CommandSystem
     {
-        private readonly string prefix;
         private readonly IEnumerable<IConsoleCommand> commands;
 
-        public DeveloperConsole(string prefix, IEnumerable<IConsoleCommand> commands)
+        public CommandSystem(IEnumerable<IConsoleCommand> commands)
         {
-            this.prefix = prefix;
             this.commands = commands;
         }
 
-        internal List<string> GetSuggestionList(string startText)
+        internal List<string> GetSuggestions(string _inputText)
         {
             return commands
-                .Where(command => command.CommandWord.StartsWith(startText, StringComparison.OrdinalIgnoreCase))
-                .OrderBy(command => LevenshteinDistance(command.CommandWord, startText))
-                .ThenBy(command => command.CommandWord.StartsWith(startText, StringComparison.OrdinalIgnoreCase) ? 0 : 1)
+                .Where(command => command.CommandWord.StartsWith(_inputText, StringComparison.OrdinalIgnoreCase))
+                .OrderBy(command => LevenshteinDistance(command.CommandWord, _inputText))
+                .ThenBy(command => command.CommandWord.StartsWith(_inputText, StringComparison.OrdinalIgnoreCase) ? 0 : 1)
                 .Select(command => command.CommandWord)
                 .ToList();
         }
@@ -45,20 +43,6 @@ namespace DigDig2.Debug
             return new List<string>();
         }
 
-        public bool ProcessCommand(string inputValue)
-        {
-            if (!inputValue.StartsWith(prefix)) { return false; }
-
-            inputValue = inputValue.Remove(0, prefix.Length);
-
-            string[] inputSplit = inputValue.Split(' ');
-
-            string commandInput = inputSplit[0];
-            string[] args = inputSplit.Skip(1).ToArray();
-
-            return ProcessCommand(commandInput, args);
-        }
-
         public bool ProcessCommand(string commandInput, string[] args)
         {
             foreach (var command in commands)
@@ -74,6 +58,22 @@ namespace DigDig2.Debug
                 }
             }
             return false;
+        }
+
+        private List<string> FuzzySort(IEnumerable<string> items, string input)
+        {
+            input = input ?? string.Empty;
+            return items
+                .OrderBy(item =>
+                {
+                    if (item.Equals(input, StringComparison.OrdinalIgnoreCase)) return 0; // exact match
+                    if (item.StartsWith(input, StringComparison.OrdinalIgnoreCase)) return 1; // prefix match
+                    if (item.IndexOf(input, StringComparison.OrdinalIgnoreCase) >= 0) return 2; // substring match
+                    return 3; // fallback to distance
+                })
+                .ThenBy(item => LevenshteinDistance(item, input))
+                .ThenBy(item => item, StringComparer.OrdinalIgnoreCase)
+                .ToList();
         }
 
         private static int LevenshteinDistance(string source, string target)
@@ -105,6 +105,7 @@ namespace DigDig2.Debug
 
             return distance[sourceLength, targetLength];
         }
+
 
     }
 }

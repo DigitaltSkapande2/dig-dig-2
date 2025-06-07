@@ -8,11 +8,11 @@ using UnityEngine.InputSystem;
 
 namespace DigDig2.Debug
 {
-    public class DeveloperConsoleBehaviour : MonoBehaviour
+    public class DebugConsole : Singleton<DebugConsole>
     {
         [SerializeField] private string prefix = string.Empty;
         [SerializeField, TextArea] private string standardSuggestion;
-        [SerializeField] private ConsoleCommand[] commands = new ConsoleCommand[0];
+        [SerializeField] private ConsoleCommand[] commands;
         [SerializeField] KeyCode cycleKey;
         [SerializeField] KeyCode confirmKey;
 
@@ -33,15 +33,14 @@ namespace DigDig2.Debug
         private TMP_Text suggestionText = null;
 
         private float pausedTimeScale;
-        private static DeveloperConsoleBehaviour instance;
 
-        private DeveloperConsole developerConsole;
-        private DeveloperConsole DeveloperConsole
+        private CommandSystem commandSystem;
+        private CommandSystem CommandSystem
         {
             get
             {
-                if (developerConsole != null) { return developerConsole; }
-                return developerConsole = new DeveloperConsole(prefix, commands);
+                if (commandSystem != null) { return commandSystem; }
+                return commandSystem = new CommandSystem(commands);
             }
         }
 
@@ -190,10 +189,9 @@ namespace DigDig2.Debug
             }
         }
 
-        // Coroutine to handle input field activation after UI updates
         private IEnumerator ActivateInputField(TMP_InputField inputField)
         {
-            yield return null; // Wait one frame to ensure UI elements are updated
+            yield return null; 
             inputField.ActivateInputField();
             inputField.caretPosition = inputField.text.Length; // Set caret to the end of the text
         }
@@ -205,29 +203,9 @@ namespace DigDig2.Debug
             if (text.Length > previousTextLength) NewLetterTyped(text[text.Length-1]);
             previousTextLength = text.Length;
 
-            if (text.Length < prefix.Length || !text.StartsWith(prefix))
-            {
-                // No Text
-                suggestionText.text = standardSuggestion;
-                highlightedText = string.Empty;
-                return;
-            }
+            var parts = text.Split(' ');
 
-            text = text.Substring(prefix.Length);
-
-            if (text.Contains(' ')) // secondary stage (check for suggestions inside commands)
-            {
-                var parts = text.Split(new[] { ' ' }, 2);
-                var command = parts[0];
-                var followingText = parts.Length > 1 ? parts[1] : string.Empty;
-
-                currentSuggestions = DeveloperConsole.GetSpecificCommandSuggestionList(command, followingText);
-                
-            }
-            else // still first command (check for command suggestions)
-            {
-                currentSuggestions = DeveloperConsole.GetSuggestionList(text);
-            }
+            currentSuggestions = commandSystem.GetSuggestions(text);
 
             currentSuggestionIndex = -1;
             UpdateSuggestionText();
@@ -243,7 +221,7 @@ namespace DigDig2.Debug
                 UpdateHistoryUI();
             }
 
-            if (DeveloperConsole.ProcessCommand(inputValue))
+            if (CommandSystem.ProcessCommand(inputValue))
             {
                 
             }
