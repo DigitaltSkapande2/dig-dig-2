@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace DigDig2.Debug
 {
-    public abstract class ConsoleCommand : ScriptableObject, IConsoleCommand
+    public abstract class ConsoleCommandBase : ScriptableObject
     {
         [SerializeField] private string commandWord = string.Empty;
 
@@ -14,7 +15,7 @@ namespace DigDig2.Debug
             return new List<string>() { "" };
         }
 
-        public abstract bool Process(string[] args);
+        public abstract UniTask<CommandResultContext> Process(string[] args);
     }
 }
 
