@@ -48,7 +48,7 @@ public class PlayerCharacterController : MonoBehaviour, GameInputSystem.IPlayerA
 
 	[Header("Movement")]
 
-	[Tooltip("To change the actual gravity value go to Project Settings > Physics > Settings > Gravity, tough this effects all physics.")]
+	[Tooltip("To change the actual gravity value go to Project Settings > Physics > Settings > Gravity, tough this affects all physics.")]
 	[SerializeField] private float gravityScale = 1f;
 
 	[Space(20)]
