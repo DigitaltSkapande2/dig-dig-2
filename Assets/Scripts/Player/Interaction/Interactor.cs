@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace DigDig2
 {
@@ -17,16 +18,22 @@ namespace DigDig2
         [SerializeField] private GameObject interactionPromptBillboardPrefab;
 
         private Interactable focusedInteractable;
-        [SerializeField] private List<Interactable> interactablesInRange = new();
+        private GameObject focusedInteractableInteractionPromptBillboard;
+        private List<Interactable> interactablesInRange = new();
 
-        private GameObject interactionPromptBillboard;
-
-
-
-        private void Awake()
+        public enum InteractionPhase
         {
-            interactionPromptBillboard = Instantiate(interactionPromptBillboardPrefab);
-            interactionPromptBillboard.SetActive(false);
+            Unknown,
+            Began,
+            Held,
+            Ended,
+        }
+
+
+
+        private void Update()
+        {
+            UpdateInteractableFocus();
         }
 
         private void OnTriggerEnter(Collider other)
@@ -51,7 +58,42 @@ namespace DigDig2
 
         public void UpdateInteractableFocus()
         {
-            
+            // Get the interactable with the angle closest to where the player is looking
+            Interactable closestInteractable = null;
+            float closestInteractableAngle = 180f;
+            foreach (Interactable interactableInRange in interactablesInRange)
+            {
+                float interactableAngle = Vector3.Angle(-interactableInRange.GetInteractableSource().forward, interactionSource.transform.forward);
+
+                if (interactableAngle > interactionAngle) { continue; }
+
+                if (closestInteractable == null)
+                {
+                    closestInteractable = interactableInRange;
+                    closestInteractableAngle = interactableAngle;
+                    continue;
+                }
+
+                if (interactableAngle < closestInteractableAngle)
+                {
+                    closestInteractable = interactableInRange;
+                    closestInteractableAngle = interactableAngle;
+                }
+            }
+
+            if (closestInteractable != focusedInteractable)
+            {
+                if (focusedInteractable) focusedInteractable.SetFocus(false);
+                if (focusedInteractableInteractionPromptBillboard) Destroy(focusedInteractableInteractionPromptBillboard.gameObject);
+
+                focusedInteractable = closestInteractable;
+
+                if (focusedInteractable)
+                {
+                    focusedInteractable.SetFocus(true);
+                    focusedInteractableInteractionPromptBillboard = Instantiate(interactionPromptBillboardPrefab, focusedInteractable.transform.position + new Vector3(0f, 2f, 0f), Quaternion.identity);
+                }
+            }
         }
 
         public Interactable GetFocusedInteractable()
@@ -62,6 +104,22 @@ namespace DigDig2
         public bool HasFocusedInteractable()
         {
             return focusedInteractable != null;
+        }
+
+        public void SendInteraction(InputActionPhase phase = InputActionPhase.Waiting)
+        {
+            if (HasFocusedInteractable())
+            {
+                InteractionPhase interactionPhase = InteractionPhase.Unknown;
+                switch (phase)
+                {
+                    case InputActionPhase.Started: interactionPhase = InteractionPhase.Began; break;
+                    case InputActionPhase.Performed: interactionPhase = InteractionPhase.Held; break;
+                    case InputActionPhase.Canceled: interactionPhase = InteractionPhase.Ended; break;
+                }
+
+                focusedInteractable.Interact(interactionPhase);
+            }
         }
     }
 }

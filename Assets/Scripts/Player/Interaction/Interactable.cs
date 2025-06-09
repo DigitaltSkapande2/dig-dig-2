@@ -8,7 +8,7 @@ namespace DigDig2
         [SerializeField] private Transform interactableSource;
 
         [Header("Events")]
-        [SerializeField] private UnityEvent onInteract = new();
+        [SerializeField] private UnityEvent<Interactor.InteractionPhase> onInteract = new();
         [SerializeField] private UnityEvent onFocused = new();
         [SerializeField] private UnityEvent onUnfocused = new();
 
@@ -24,14 +24,21 @@ namespace DigDig2
             triggerRigidbody.constraints = RigidbodyConstraints.FreezeAll;
         }
 
-        public void Interact()
+        public Transform GetInteractableSource()
         {
+            return interactableSource != null ? interactableSource : transform;
+        }
 
+        public void Interact(Interactor.InteractionPhase phase = Interactor.InteractionPhase.Unknown)
+        {
+            onInteract.Invoke(phase);
         }
 
         public void SetFocus(bool isFocused)
         {
             focused = isFocused;
+
+            if (isFocused) { onFocused.Invoke(); } else { onUnfocused.Invoke(); }
         }
 
         public bool IsFocused()

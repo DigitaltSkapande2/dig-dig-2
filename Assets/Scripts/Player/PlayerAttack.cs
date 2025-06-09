@@ -1,25 +1,24 @@
-using Mirror.BouncyCastle.Cms;
-using Unity.Mathematics;
+using DigDig2;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerAttack : MonoBehaviour, GameInputSystem.IAttackActions
 {
-    [SerializeField] GameObject attackArrow;
+    [Tooltip("The prafab used to show in what direction the player is aiming")]
+    [SerializeField] GameObject aimArrow;
 
     GameObject arrowInstance;
 
     private GameInputSystem.AttackActions attackActions;
 
-    bool attacking;
+    bool aiming;
 
     bool frozen;
 
     Vector2 mousePos;
+    Vector3 attackDirection;
 
     Plane playerPlane;
-
-    GameObject attackIndicator;
 
     void Start()
     {
@@ -30,20 +29,24 @@ public class PlayerAttack : MonoBehaviour, GameInputSystem.IAttackActions
     {
         DisableInput();
     }
-
+    /// <summary>
+    /// Used by the PlayerCharacterController to mirror the "frozen" state of the player
+    /// </summary>
+    /// <param name="value"> The current forzen state of the player </param>
     public void SetFrozen(bool value)
     {
         frozen = value;
 
         if (!value)
         {
-            attacking = false;
+            aiming = false;
 
+            // Removes the aiming indicator when frozen
             if (arrowInstance != null)
             {
                 Destroy(arrowInstance);
             }
-            
+
         }
     }
 
@@ -57,27 +60,35 @@ public class PlayerAttack : MonoBehaviour, GameInputSystem.IAttackActions
         attackActions.Enable();
     }
 
-	private void DisableInput()
-	{
-		attackActions.Disable();
-	}
+    private void DisableInput()
+    {
+        attackActions.Disable();
+    }
 
-	#endregion
+    #endregion
 
     #region Inputs
 
     public void OnAttack(InputAction.CallbackContext context)
     {
+        if (context.started)
+        {
+            Attack();
+        }
+    }
+
+    public void OnAim(InputAction.CallbackContext context)
+    {
         if (frozen) { return; }
 
         if (context.started)
         {
-            attacking = true;
+            aiming = true;
         }
 
         if (context.canceled)
         {
-            attacking = false;
+            aiming = false;
 
             if (arrowInstance != null)
             {
@@ -97,26 +108,57 @@ public class PlayerAttack : MonoBehaviour, GameInputSystem.IAttackActions
 
     private void Update()
     {
-        if (!attacking) { return; }
+        if (aiming)
+        {
+            Indicator();
+        }
+    }
 
+    void HandleAiming()
+    {   // Defines plane at the same y-coordinate as the player
         playerPlane = new Plane(Vector3.up, transform.position);
-
+        
         Ray mouseRay = Camera.main.ScreenPointToRay(new Vector3(mousePos.x, mousePos.y, 0));
 
-        float hitDistance = 0f;
+        float hitDistance;
 
+        // Check raycast and return distance along the ray at which it intersects the plane
         if (playerPlane.Raycast(mouseRay, out hitDistance))
         {
             Vector3 hitPoint = mouseRay.GetPoint(hitDistance);
-            Vector3 attackDirection = (hitPoint - transform.position).normalized * 2;
+            attackDirection = (hitPoint - transform.position).normalized * 2;
+        }
+    }
 
-            if (arrowInstance == null)
+    void Indicator()
+    {
+        HandleAiming();
+
+        if (arrowInstance == null)
+        {
+            arrowInstance = Instantiate(aimArrow, attackDirection, Quaternion.identity);
+        }
+
+        arrowInstance.transform.position = transform.position + attackDirection;
+        arrowInstance.transform.LookAt(transform.position + attackDirection * 2);
+    }
+
+    void Attack()
+    {
+        HandleAiming();
+
+        Collider[] others = Physics.OverlapSphere(transform.position + attackDirection, 1, LayerMask.GetMask("Damageable"));
+
+        Debug.Log(others.Length);
+
+        if (others.Length > 0)
+        {
+            foreach (Collider other in others)
             {
-                arrowInstance = Instantiate(attackArrow, hitPoint, Quaternion.Euler(0, 0, 0));
-            }
+                UnityEngine.Debug.Log(other.name);
 
-            arrowInstance.transform.position = transform.position + attackDirection;
-            arrowInstance.transform.LookAt(transform.position + 2 * attackDirection);
+                other.gameObject.GetComponent<Damageable>().Damage(1);
+            }
         }
     }
 }

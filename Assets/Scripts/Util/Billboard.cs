@@ -2,8 +2,18 @@ using UnityEngine;
 
 public class Billboard : MonoBehaviour
 {
-    void Update()
+    private void Awake()
     {
-		transform.rotation = Camera.main.transform.rotation;
+		UpdateRotation();
     }
+	
+    private void Update()
+	{
+		UpdateRotation();
+	}
+
+	private void UpdateRotation()
+	{
+		transform.rotation = Camera.main.transform.rotation;
+	}
 }

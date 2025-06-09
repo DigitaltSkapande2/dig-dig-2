@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using DigDig2.Debug;
+using DigDig2;
 
 [Debug(DebugMenuToggleable.non_toggleable)]
 public class PlayerCharacterController : MonoBehaviour, GameInputSystem.IPlayerActions
@@ -109,11 +110,14 @@ public class PlayerCharacterController : MonoBehaviour, GameInputSystem.IPlayerA
 
 	private Vector3 slopeSlideVelocity;
 
+	private Interactor interactor;
+
 
 
 	private void Awake()
 	{
 		characterController = GetComponent<CharacterController>();
+		interactor = GetComponentInChildren<Interactor>();
 	}
 
 	private void Start()
@@ -336,7 +340,7 @@ public class PlayerCharacterController : MonoBehaviour, GameInputSystem.IPlayerA
 
 	public void OnInteract(InputAction.CallbackContext context)
 	{
-
+		if (interactor) interactor.SendInteraction(context.phase);
 	}
 
 	public void OnSprint(InputAction.CallbackContext context)

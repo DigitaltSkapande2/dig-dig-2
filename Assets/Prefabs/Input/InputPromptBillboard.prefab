@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: interact
+  m_text: interact with the interact button
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7aecc1b101192e31eb83959a586337ce, type: 2}
   m_sharedMaterial: {fileID: 4663790430399149775, guid: 7aecc1b101192e31eb83959a586337ce, type: 2}
