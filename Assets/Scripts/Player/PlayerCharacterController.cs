@@ -2,9 +2,10 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using DigDig2.Debug;
 using DigDig2;
+using Mirror;
 
 [Debug(DebugMenuToggleable.non_toggleable)]
-public class PlayerCharacterController : MonoBehaviour, GameInputSystem.IPlayerActions
+public class PlayerCharacterController : NetworkBehaviour, GameInputSystem.IPlayerActions
 {
 	// These get set public bools are supposed to be serialized but unity or C# doesn't allow that so fix this please!
 	[Tooltip("Freezes the player (stops running ´CharacterController.Move()´) and disables the CharacterController component. Allows you to move the player by setting their transform. Use TempPlayerCharacterController.Teleport() for teleporting instead.")]
@@ -112,6 +113,8 @@ public class PlayerCharacterController : MonoBehaviour, GameInputSystem.IPlayerA
 
 	private Interactor interactor;
 
+	[SyncVar] private float targetLookRotation = 0f;
+
 
 
 	private void Awake()
@@ -122,32 +125,44 @@ public class PlayerCharacterController : MonoBehaviour, GameInputSystem.IPlayerA
 
 	private void Start()
 	{
-		//Application.targetFrameRate = 15;
+		if (isLocalPlayer)
+		{
+			DebugNotesManager.Instance.RegisterPlayerCharacterController(this);
+			EnableInput();
 
-		DebugNotesManager.Instance.RegisterPlayerCharacterController(this);
+			GameCamera gameCamera = FindFirstObjectByType<GameCamera>();
+			gameCamera.targets.Add(transform);
+		}
 
-		EnableInput();
+		RefreshVisualsRotation(false);
 	}
 
 	private void Update()
 	{
-		// Movement
-		// NOTE: Reorder movement processing order here!
-		ProcessGravity();
-		ProcessMove();
-		ProcessSlope();
-		ProcessEdge();
+		if (isLocalPlayer && isClient)
+		{
+			// Movement
+			// NOTE: Reorder movement processing order here!
+			ProcessGravity();
+			ProcessMove();
+			ProcessSlope();
+			ProcessEdge();
 
-		if (!frozen) ApplyMovement();
+			if (!frozen) ApplyMovement();
 
-		// Visuals
-		UpdateVisualsRotation();
+			// Visuals
+			UpdateVisualsRotation();
+		}
+
+		RefreshVisualsRotation();
 	}
 
+	[Client]
 	private void OnEnable()
 	{
 		//EnableInput();
 	}
+	[Client]
 	private void OnDisable()
 	{
 		DisableInput();
@@ -155,6 +170,7 @@ public class PlayerCharacterController : MonoBehaviour, GameInputSystem.IPlayerA
 
 	#region Movement
 
+	[Client]
 	private void ProcessGravity()
 	{
 		if (characterController.isGrounded)
@@ -168,6 +184,7 @@ public class PlayerCharacterController : MonoBehaviour, GameInputSystem.IPlayerA
 	}
 
 	// Add move/walk/run to current velocity
+	[Client]
 	private void ProcessMove()
 	{
 		if (Camera.main)
@@ -182,6 +199,7 @@ public class PlayerCharacterController : MonoBehaviour, GameInputSystem.IPlayerA
 		}
 	}
 
+	[Client]
 	private void ProcessSlope()
 	{
 		// Raycast for slope
@@ -210,6 +228,7 @@ public class PlayerCharacterController : MonoBehaviour, GameInputSystem.IPlayerA
 		velocity += slopeSlideVelocity;
 	}
 
+	[Client]
 	private void ProcessEdge()
 	{
 		Vector3 totalEdgeNudge = Vector3.zero;
@@ -233,6 +252,7 @@ public class PlayerCharacterController : MonoBehaviour, GameInputSystem.IPlayerA
 	}
 
 	// Add velocity to CharacterController
+	[Client]
 	private void ApplyMovement(bool isFixedUpdate = false)
 	{
 		// Set deltaTime to 1 if method is called by FixedUpdate() message, if not, set to real delta time.
@@ -288,9 +308,15 @@ public class PlayerCharacterController : MonoBehaviour, GameInputSystem.IPlayerA
 			// Rotate moveInputVector to the player's camera
 			Vector3 rotatedMoveInputVector = Quaternion.Euler(0f, Camera.main.transform.rotation.eulerAngles.y, 0f) * new Vector3(moveInputVector.x, 0f, moveInputVector.y);
 
-			Quaternion targetRotation = Quaternion.Euler(0f, Vector3.SignedAngle(transform.forward, rotatedMoveInputVector, transform.up), 0f);
-			visualsParent.transform.rotation = Quaternion.Lerp(visualsParent.transform.rotation, targetRotation, Time.deltaTime * 10f);
+			targetLookRotation = Vector3.SignedAngle(transform.forward, rotatedMoveInputVector, transform.up);
 		}
+	}
+
+	private void RefreshVisualsRotation(bool useLerp = true)
+	{
+		Quaternion targetRotation = Quaternion.Euler(0f, targetLookRotation, 0f);
+		if (useLerp) visualsParent.transform.rotation = Quaternion.Lerp(visualsParent.transform.rotation, targetRotation, Time.deltaTime * visualsMovementRotationSpeed);
+		else visualsParent.transform.rotation = targetRotation;
 	}
 
 	#endregion

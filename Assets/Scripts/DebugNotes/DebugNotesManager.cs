@@ -1,7 +1,5 @@
 using System.Collections.Generic;
-using DigDig2.Debug;
 using TMPro;
-using UnityEditor.EditorTools;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
