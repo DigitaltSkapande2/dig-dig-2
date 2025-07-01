@@ -5,7 +5,7 @@ using DigDig2;
 
 namespace DigDig2
 {
-	[Debug(DebugMenuToggleable.non_toggleable)]
+	[Debug(DebugMenuToggleable.non_toggleable), RequireComponent(typeof(CharacterController))]
 	public class EntityCharacterController : MonoBehaviour
 	{
 		// These get set public bools are supposed to be serialized but unity or C# doesn't allow that so fix this please!

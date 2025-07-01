@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 
 namespace DigDig2
 {
+    [RequireComponent(typeof(EntityCharacterController))]
     public class PlayerCharacterInputController : MonoBehaviour, GameInputSystem.IPlayerActions
     {
         // Input
