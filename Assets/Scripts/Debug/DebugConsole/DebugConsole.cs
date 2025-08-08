@@ -49,10 +49,11 @@ namespace DigDig2.Debug
 
         #region UnityMessages
 
-        private void Start()
-        {
+        private void OnEnable() {
+            UnityEngine.Debug.Log("RIZZZZ");
+
             inputMap = GameInputManager.Instance.gameInputSystem.DebugConsole;
-            inputMap.OpenDebugConsole.performed += context => CycleDevConsole();
+            inputMap.OpenDebugConsole.performed += context => ToggleDevConsole();
             inputMap.CloseDebugConsole.performed += context => CloseConsole();
             inputMap.Confirm.started += context => OnConfirm();
             inputMap.CycleSuggestions.started += OnCycleSuggestions;
@@ -228,9 +229,8 @@ namespace DigDig2.Debug
 
         #region StateManagement
 
-        void CycleDevConsole()
+        void ToggleDevConsole()
         {
-            // Cycle through the console states
             isConsoleOpen = !isConsoleOpen;
 
             if (!isConsoleOpen)
@@ -239,10 +239,8 @@ namespace DigDig2.Debug
                 return;
             }
 
-            // Update UI and activate the appropriate input field
             UpdateUI();
 
-            // Ensure that the active input field is focused
             FocusOnInputField();
         }
 
