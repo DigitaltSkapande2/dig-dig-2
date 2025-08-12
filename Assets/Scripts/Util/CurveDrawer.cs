@@ -7,7 +7,7 @@ using UnityEngine;
 public class CurveDrawer : MonoBehaviour
 {
     [SerializeField] int positions;
-    [SerializeField] Curve3D curve;
+    [SerializeField] AttackData curve;
 
 
     LineRenderer lineRenderer;

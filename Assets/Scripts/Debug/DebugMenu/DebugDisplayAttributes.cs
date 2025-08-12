@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DigDig2.Debug
+namespace DigDig2.Debugging
 {
     public enum DebugMenuToggleable
     {

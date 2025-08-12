@@ -6,7 +6,7 @@ using System.Reflection;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-namespace DigDig2.Debug
+namespace DigDig2.Debugging
 {
     public class DebugMenu : MonoBehaviour
     {

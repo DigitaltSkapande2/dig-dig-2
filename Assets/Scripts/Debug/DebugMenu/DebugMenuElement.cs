@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace DigDig2.Debug
+namespace DigDig2.Debugging
 {
     public class DebugMenuElement : MonoBehaviour
     {
