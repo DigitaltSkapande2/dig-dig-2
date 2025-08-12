@@ -25,7 +25,7 @@ namespace DigDig2.Debug
                 var commandSuggestions = GetCommandSuggestions(_inputCommand);
                 if (commandSuggestions == default || commandSuggestions.Count == 0)
                 {
-                    return null;
+                    return default;
                 }
                 return commandSuggestions
                     .Where(suggestion => suggestion.StartsWith(_inputCommand.args[_inputCommand.args.Length - 1], StringComparison.OrdinalIgnoreCase))
