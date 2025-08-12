@@ -147,6 +147,8 @@ public class PlayerAttack : MonoBehaviour, GameInputSystem.IAttackActions
     {
         HandleAiming();
 
+        GetComponentInChildren<SwingCollisionCurve>().Attack();
+
         Collider[] others = Physics.OverlapSphere(transform.position + attackDirection, 1);
 
         Debug.Log(others.Length);

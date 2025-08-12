@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aebcad52172ee6344a03c75dbe2fb84c, type: 3}
-  m_Name: GoofyCurve
+  m_Name: UpwardSwing
   m_EditorClassIdentifier: 
   X:
     serializedVersion: 2
@@ -41,48 +41,21 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1.4367981
-      inSlope: 2.9829633
-      outSlope: 2.9829633
-      tangentMode: 34
+      value: 0
+      inSlope: 0.641115
+      outSlope: 0.641115
+      tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.20788214
-      value: 2.056903
-      inSlope: -0.31449866
-      outSlope: -0.31449866
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.46586773
-    - serializedVersion: 3
-      time: 0.45140105
-      value: 1.5080645
-      inSlope: -0.7098658
-      outSlope: -0.7098658
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.6118403
-      outWeight: 0.76088864
-    - serializedVersion: 3
-      time: 0.8847721
-      value: 1.7255458
-      inSlope: -0.21258256
-      outSlope: -0.21258256
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      outWeight: 0.17083333
     - serializedVersion: 3
       time: 1
-      value: 1.4919025
-      inSlope: -1.6970909
-      outSlope: -1.6970909
+      value: 1
+      inSlope: 1.4117652
+      outSlope: 1.4117652
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.17397365
+      inWeight: 0.070833325
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -126,24 +99,24 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 1
-      outSlope: 1
-      tangentMode: 34
+      inSlope: 0.76785713
+      outSlope: 0.76785713
+      tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0
+      outWeight: 0.13333334
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 1
-      outSlope: 1
-      tangentMode: 34
+      inSlope: 1.1729323
+      outSlope: 1.1729323
+      tangentMode: 0
       weightedMode: 0
-      inWeight: 0
+      inWeight: 0.07916665
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
   step: 0.01
-  attackTime: 0.5
-  hitbox: {fileID: 8755978996881620118, guid: b8dabfecd9a5bdd44b87240a33a9a7dc, type: 3}
+  attackTime: 0.2
+  hitbox: {fileID: 1422831647425941802, guid: 9ec4a74b568160d46b8eb6decc764e9a, type: 3}

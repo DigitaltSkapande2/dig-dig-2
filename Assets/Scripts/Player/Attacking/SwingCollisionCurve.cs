@@ -16,15 +16,25 @@ namespace DigDig2
         float t;
         bool active;
 
-        public void Attack(AttackData data)
+        public void Attack()
         {
-            attackData = data;
+            if (active) return;
+
+            //attackData = data;
 
             t = 0;
             active = true;
 
-            Vector3 pos = new Vector3(attackData.X.Evaluate(0), attackData.Y.Evaluate(0), attackData.Z.Evaluate(0));
-            Vector3 stepPos = new Vector3(attackData.X.Evaluate(attackData.step), attackData.Y.Evaluate(attackData.step), attackData.Z.Evaluate(attackData.step));
+            float X = attackData.X.Evaluate(0);
+            float Y = attackData.Y.Evaluate(0);
+            float Z = attackData.Z.Evaluate(0);
+
+            float stepX = attackData.X.Evaluate(attackData.step);
+            float stepY = attackData.Y.Evaluate(attackData.step);
+            float stepZ = attackData.Z.Evaluate(attackData.step);
+
+            Vector3 pos = transform.right * X + transform.up * Y + transform.forward * Z;
+            Vector3 stepPos = transform.right * stepX + transform.up * stepY + transform.forward * stepZ;
 
             dir = (stepPos - pos).normalized;
 
@@ -32,9 +42,11 @@ namespace DigDig2
             box.forward = dir;
         }
 
-        void FixedUpdate()
+        void Update()
         {
             if (!active) return;
+
+            Debug.Log(t);
 
             t += 1 / attackData.attackTime * Time.deltaTime;
             float position = attackData.speed.Evaluate(t);
@@ -61,16 +73,7 @@ namespace DigDig2
             if (t > 1)
             {
                 active = false;
-                Destroy(box);
-            }
-        }
-
-        void Update()
-        {
-            if (!active && Input.GetKeyDown(KeyCode.J))
-            {
-                UnityEngine.Debug.Log("goon");
-                Attack(attackData);
+                Destroy(box.gameObject);
             }
         }
     }
