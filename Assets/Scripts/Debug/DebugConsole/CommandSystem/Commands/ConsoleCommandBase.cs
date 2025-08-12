@@ -2,7 +2,7 @@
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace DigDig2.Debug
+namespace DigDig2.Debugging
 {
     public abstract class ConsoleCommandBase : ScriptableObject
     {

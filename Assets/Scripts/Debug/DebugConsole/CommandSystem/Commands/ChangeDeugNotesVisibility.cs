@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace DigDig2.Debug
+namespace DigDig2.Debugging
 {
 	[CreateAssetMenu(fileName = "ChangeDebugNotesVisibility", menuName = "DeveloperConsole/Commands/ChangeDebugNotesVisibility")]
 	public class ChangeDebugNotesVisibility : ConsoleCommandBase

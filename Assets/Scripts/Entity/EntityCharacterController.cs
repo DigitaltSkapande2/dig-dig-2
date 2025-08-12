@@ -1,10 +1,11 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using DigDig2.Debug;
+using DigDig2.Debugging;
 using DigDig2;
 
 namespace DigDig2
 {
+	// This might be kaboom?
 	[Debug(DebugMenuToggleable.non_toggleable), RequireComponent(typeof(CharacterController))]
 	public class EntityCharacterController : MonoBehaviour
 	{

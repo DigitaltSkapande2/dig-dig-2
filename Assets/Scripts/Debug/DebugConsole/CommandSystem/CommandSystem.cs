@@ -6,7 +6,7 @@ using Cysharp.Threading.Tasks;
 using Mono.Cecil;
 using NUnit.Framework;
 
-namespace DigDig2.Debug
+namespace DigDig2.Debugging
 {
     public class CommandSystem
     {

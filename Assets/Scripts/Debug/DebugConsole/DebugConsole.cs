@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 
-namespace DigDig2.Debug
+namespace DigDig2.Debugging
 {
     public class DebugConsole : Singleton<DebugConsole>
     {
