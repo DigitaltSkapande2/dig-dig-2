@@ -5294,6 +5294,11 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &1226102336 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7251259118998489019, guid: d5a3d3276e47631bfb60f1dda5c99ef2, type: 3}
+  m_PrefabInstance: {fileID: 9218047543493635487}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1363248475
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5800,6 +5805,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4327746320760944597, guid: d5a3d3276e47631bfb60f1dda5c99ef2, type: 3}
+      propertyPath: visualsParent
+      value: 
+      objectReference: {fileID: 1226102336}
     - target: {fileID: 4442565222488509090, guid: d5a3d3276e47631bfb60f1dda5c99ef2, type: 3}
       propertyPath: m_Name
       value: PlayerCharacterController
