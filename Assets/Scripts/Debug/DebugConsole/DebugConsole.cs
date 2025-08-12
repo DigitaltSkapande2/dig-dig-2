@@ -49,7 +49,7 @@ namespace DigDig2.Debugging
 
         #region UnityMessages
 
-        private void OnEnable() {
+        private void Start() {
             UnityEngine.Debug.Log("RIZZZZ");
 
             inputMap = GameInputManager.Instance.gameInputSystem.DebugConsole;
@@ -64,6 +64,10 @@ namespace DigDig2.Debugging
                 else HandleHistoryNavigationDown();
             };
             inputMap.Enable();
+        }
+
+        private void OnEnable() {
+            
         }
 
         private void OnDisable()
