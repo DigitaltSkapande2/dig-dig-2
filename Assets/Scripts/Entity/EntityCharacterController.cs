@@ -105,6 +105,8 @@ namespace DigDig2
 
 		private void Start()
 		{
+			Application.targetFrameRate = 60;
+
 			DebugNotesManager.Instance.RegisterPlayerCharacterController(this);
 		}
 
@@ -217,11 +219,11 @@ namespace DigDig2
 				{
 					if (Vector3.Dot(moveVector, -edgeAdjustment.Key) < 0)
 					{
-						velocity -= new Vector3(-edgeAdjustment.Key.x * moveVector.x, -edgeAdjustment.Key.y * moveVector.y, -edgeAdjustment.Key.z * moveVector.z);
+						velocity -= new Vector3(Mathf.Abs(edgeAdjustment.Key.x) * velocity.x, Mathf.Abs(edgeAdjustment.Key.y) * velocity.y, Mathf.Abs(edgeAdjustment.Key.z) * velocity.z);
 					}
 
 					Debug.DrawRay(transform.position, -edgeAdjustment.Key, Color.green, 0.01f, true);
-					characterController.Move(-edgeAdjustment.Key * edgeAdjustment.Value);
+					characterController.Move(-edgeAdjustment.Key * (edgeAdjustment.Value - 0.001f));
 				}
 			}
 		}
