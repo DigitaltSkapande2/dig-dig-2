@@ -2,6 +2,8 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using DigDig2.Debugging;
 using DigDig2;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace DigDig2
 {
@@ -74,6 +76,9 @@ namespace DigDig2
 		[Tooltip("How far to scan for edges under the character's feet.")]
 		[SerializeField] private float edgeScanDistance = 1.5f;
 
+		[Tooltip("Like CharacterController.slopeLimit but for edge detection")]
+		[SerializeField] private float edgeScanSlopeLimit = 75f;
+
 		[Header("Visuals")]
 
 		[Tooltip("Add the GameObject which holds all of the visuals here.")]
@@ -100,8 +105,6 @@ namespace DigDig2
 
 		private void Start()
 		{
-			//Application.targetFrameRate = 15;
-
 			DebugNotesManager.Instance.RegisterPlayerCharacterController(this);
 		}
 
@@ -173,24 +176,54 @@ namespace DigDig2
 
 		private void ProcessEdge()
 		{
-			Vector3 totalEdgeNudge = Vector3.zero;
-			int numberOfEdgesDetected = 0;
+			Dictionary<Vector3, float> edgeAdjustments = new();
+
+			Vector3 centerRaycastEndPoint = transform.position + -transform.up * (characterController.height / 2f + edgeScanDistance);
 			for (int raycastIndex = 0; raycastIndex < edgeScanRaycasts; raycastIndex++)
 			{
 				float positionDegrees = raycastIndex * 360 / edgeScanRaycasts;
-				Vector3 raycastPosition = new(Mathf.Cos(positionDegrees * Mathf.Deg2Rad), 0f, Mathf.Sin(positionDegrees * Mathf.Deg2Rad));
+				Vector3 raycastLocalPosition = new(Mathf.Cos(positionDegrees * Mathf.Deg2Rad), 0f, Mathf.Sin(positionDegrees * Mathf.Deg2Rad));
+				Vector3 raycastGlobalPosition = transform.position + raycastLocalPosition * edgeScanRadius;
 
-				Physics.Raycast(transform.position + raycastPosition * edgeScanRadius, -transform.up, out RaycastHit raycastInfo, characterController.height / 2f + edgeScanDistance, groundLayers);
-				if (!raycastInfo.collider)
+				Physics.Raycast(raycastGlobalPosition, -transform.up, out RaycastHit downRaycastInfo, characterController.height / 2f + edgeScanDistance, groundLayers);
+				if (!downRaycastInfo.collider)
 				{
-					UnityEngine.Debug.DrawRay(transform.position + raycastPosition * edgeScanRadius, -transform.up, Color.red, 0.01f, true);
+					Vector3 downRaycastEndPoint = raycastGlobalPosition + -transform.up * (characterController.height / 2f + edgeScanDistance);
+					Vector3 centerRaycastDirection = (centerRaycastEndPoint - downRaycastEndPoint).normalized;
+					Physics.Raycast(downRaycastEndPoint, centerRaycastDirection, out RaycastHit centerRaycastInfo, edgeScanRadius * 2f, groundLayers);
 
-					totalEdgeNudge += raycastPosition * moveVector.magnitude;
-					numberOfEdgesDetected++;
+					if (!centerRaycastInfo.collider) continue;
+					float slopeAngle = Vector3.Angle(transform.up, centerRaycastInfo.normal);
+					if (slopeAngle <= edgeScanSlopeLimit) continue;
+
+					Debug.DrawRay(raycastGlobalPosition, -transform.up * (characterController.height / 2f + edgeScanDistance), Color.red, 0.01f, true);
+					Debug.DrawRay(downRaycastEndPoint, centerRaycastDirection, Color.red, 0.01f, true);
+					Debug.DrawRay(centerRaycastInfo.point, centerRaycastInfo.normal, Color.blue, 0.01f, true);
+
+					if (edgeAdjustments.Keys.Contains(centerRaycastInfo.normal))
+					{
+						if (edgeAdjustments[centerRaycastInfo.normal] < centerRaycastInfo.distance) edgeAdjustments[centerRaycastInfo.normal] = centerRaycastInfo.distance;
+					}
+					else
+					{
+						edgeAdjustments[centerRaycastInfo.normal] = centerRaycastInfo.distance;
+					}
 				}
 			}
 
-			if (numberOfEdgesDetected > 0) velocity -= totalEdgeNudge / numberOfEdgesDetected;
+			if (edgeAdjustments.Count > 0)
+			{
+				foreach (KeyValuePair<Vector3, float> edgeAdjustment in edgeAdjustments)
+				{
+					if (Vector3.Dot(moveVector, -edgeAdjustment.Key) < 0)
+					{
+						velocity -= new Vector3(-edgeAdjustment.Key.x * moveVector.x, -edgeAdjustment.Key.y * moveVector.y, -edgeAdjustment.Key.z * moveVector.z);
+					}
+
+					Debug.DrawRay(transform.position, -edgeAdjustment.Key, Color.green, 0.01f, true);
+					characterController.Move(-edgeAdjustment.Key * edgeAdjustment.Value);
+				}
+			}
 		}
 
 		// Add velocity to CharacterController
