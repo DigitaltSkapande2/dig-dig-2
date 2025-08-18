@@ -33,6 +33,8 @@ namespace DigDig2
                 EnableInput();
                 hasStarted = true;
 
+                DebugNotesManager.Instance.RegisterPlayerCharacterController(entityCharacterController);
+
                 // Temporary fix to add the character to the camera
                 GameCamera gameCamera = FindFirstObjectByType<GameCamera>();
                 gameCamera.targets.Add(transform);

@@ -110,11 +110,6 @@ namespace DigDig2
 		{
 			if (isClient)
 			{
-				if (isLocalPlayer)
-				{
-					DebugNotesManager.Instance.RegisterPlayerCharacterController(this);
-				}
-
 				RefreshVisualsRotation(false);
 			}
 		}
