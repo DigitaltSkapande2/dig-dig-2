@@ -4,12 +4,13 @@ using DigDig2.Debugging;
 using DigDig2;
 using System.Collections.Generic;
 using System.Linq;
+using Mirror;
 
 namespace DigDig2
 {
 	// This might be kaboom?
 	[Debug(DebugMenuToggleable.non_toggleable), RequireComponent(typeof(CharacterController))]
-	public class EntityCharacterController : MonoBehaviour
+	public class EntityCharacterController : NetworkBehaviour
 	{
 		// These get set public bools are supposed to be serialized but unity or C# doesn't allow that so fix this please!
 		[Tooltip("Freezes the entity (stops running ´CharacterController.Move()´) and disables the CharacterController component. Allows you to move the entity by setting their transform. Use EntityCharacterController.Teleport() for teleporting instead.")]
@@ -96,6 +97,8 @@ namespace DigDig2
 
 		private Vector3 slopeSlideVelocity;
 
+		[SyncVar] private float targetLookRotation = 0f;
+
 
 
 		private void Awake()
@@ -105,28 +108,44 @@ namespace DigDig2
 
 		private void Start()
 		{
-			Application.targetFrameRate = 10;
-			DebugNotesManager.Instance.RegisterPlayerCharacterController(this);
+			if (isClient)
+			{
+				if (isLocalPlayer)
+				{
+					DebugNotesManager.Instance.RegisterPlayerCharacterController(this);
+				}
+
+				RefreshVisualsRotation(false);
+			}
 		}
 
 		private void Update()
 		{
-			// Movement
-			// NOTE: Reorder movement processing order here!
-			ProcessGravity();
-			ProcessMove();
-			ProcessSlope();
+			if (isClient)
+			{
+				if (isLocalPlayer)
+				{
+					// Movement
+					// NOTE: Reorder movement processing order here!
+					ProcessGravity();
+					ProcessMove();
+					ProcessSlope();
 
-			if (!frozen) ApplyMovement();
+					if (!frozen) ApplyMovement();
 
-			ProcessEdge();
+					ProcessEdge();
 
-			// Visuals
-			UpdateVisualsRotation();
+					// Visuals
+					UpdateVisualsRotation();
+				}
+
+				RefreshVisualsRotation();
+			}
 		}
 
 		#region Movement
 
+		[Client]
 		private void ProcessGravity()
 		{
 			if (characterController.isGrounded)
@@ -140,6 +159,7 @@ namespace DigDig2
 		}
 
 		// Add move/walk/run to current velocity
+		[Client]
 		private void ProcessMove()
 		{
 			// Lerp move input vector to create smooth acceleration and decelleration
@@ -148,6 +168,7 @@ namespace DigDig2
 			velocity = new(moveVector.x, velocity.y, moveVector.z);
 		}
 
+		[Client]
 		private void ProcessSlope()
 		{
 			// Raycast for slope
@@ -176,6 +197,7 @@ namespace DigDig2
 			velocity += slopeSlideVelocity;
 		}
 
+		[Client]
 		private void ProcessEdge()
 		{
 			Dictionary<Vector3, float> edgeAdjustments = new();
@@ -222,6 +244,7 @@ namespace DigDig2
 		}
 
 		// Add velocity to CharacterController
+		[Client]
 		private void ApplyMovement(bool isFixedUpdate = false)
 		{
 			// Set deltaTime to 1 if method is called by FixedUpdate() message, if not, set to real delta time.
@@ -274,9 +297,17 @@ namespace DigDig2
 		{
 			if (inputMoveVector.magnitude > 0 && !frozen)
 			{
-				Quaternion targetRotation = Quaternion.Euler(0f, Vector3.SignedAngle(transform.forward, inputMoveVector, transform.up), 0f);
-				visualsParent.transform.rotation = Quaternion.Lerp(visualsParent.transform.rotation, targetRotation, Time.deltaTime * 10f);
+				targetLookRotation = Vector3.SignedAngle(transform.forward, inputMoveVector, transform.up);
 			}
+		}
+
+		private void RefreshVisualsRotation(bool useLerp = true)
+		{
+			Quaternion targetRotation = Quaternion.Euler(0f, targetLookRotation, 0f);
+			Debug.Log(targetLookRotation);
+
+			if (useLerp) visualsParent.transform.rotation = Quaternion.Lerp(visualsParent.transform.rotation, targetRotation, Time.deltaTime * visualsMovementRotationSpeed);
+			else visualsParent.transform.rotation = targetRotation;
 		}
 
 		#endregion
