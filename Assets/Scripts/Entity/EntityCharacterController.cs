@@ -105,8 +105,7 @@ namespace DigDig2
 
 		private void Start()
 		{
-			Application.targetFrameRate = 60;
-
+			Application.targetFrameRate = 10;
 			DebugNotesManager.Instance.RegisterPlayerCharacterController(this);
 		}
 
@@ -117,9 +116,10 @@ namespace DigDig2
 			ProcessGravity();
 			ProcessMove();
 			ProcessSlope();
-			ProcessEdge();
 
 			if (!frozen) ApplyMovement();
+
+			ProcessEdge();
 
 			// Visuals
 			UpdateVisualsRotation();
@@ -213,18 +213,11 @@ namespace DigDig2
 				}
 			}
 
-			if (edgeAdjustments.Count > 0)
+			foreach (KeyValuePair<Vector3, float> edgeAdjustment in edgeAdjustments)
 			{
-				foreach (KeyValuePair<Vector3, float> edgeAdjustment in edgeAdjustments)
-				{
-					if (Vector3.Dot(moveVector, -edgeAdjustment.Key) < 0)
-					{
-						velocity -= new Vector3(Mathf.Abs(edgeAdjustment.Key.x) * velocity.x, Mathf.Abs(edgeAdjustment.Key.y) * velocity.y, Mathf.Abs(edgeAdjustment.Key.z) * velocity.z);
-					}
-
-					Debug.DrawRay(transform.position, -edgeAdjustment.Key, Color.green, 0.01f, true);
-					characterController.Move(-edgeAdjustment.Key * (edgeAdjustment.Value - 0.001f));
-				}
+				Vector3 adjustment = -edgeAdjustment.Key * Mathf.Max(0, edgeAdjustment.Value);
+				characterController.Move(adjustment);
+				Debug.DrawRay(transform.position, adjustment, Color.purple, 0.01f, true);
 			}
 		}
 
