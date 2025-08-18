@@ -304,7 +304,6 @@ namespace DigDig2
 		private void RefreshVisualsRotation(bool useLerp = true)
 		{
 			Quaternion targetRotation = Quaternion.Euler(0f, targetLookRotation, 0f);
-			Debug.Log(targetLookRotation);
 
 			if (useLerp) visualsParent.transform.rotation = Quaternion.Lerp(visualsParent.transform.rotation, targetRotation, Time.deltaTime * visualsMovementRotationSpeed);
 			else visualsParent.transform.rotation = targetRotation;
