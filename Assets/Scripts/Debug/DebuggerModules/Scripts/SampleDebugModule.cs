@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace DigDig2.Debug
+namespace DigDig2.Debugging
 {
     // Attribute to mark this class as "for Debug"
     [Debug]

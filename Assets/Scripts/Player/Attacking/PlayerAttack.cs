@@ -147,7 +147,9 @@ public class PlayerAttack : MonoBehaviour, GameInputSystem.IAttackActions
     {
         HandleAiming();
 
-        Collider[] others = Physics.OverlapSphere(transform.position + attackDirection, 1, LayerMask.GetMask("Damageable"));
+        GetComponentInChildren<SwingCollisionCurve>().Attack();
+
+        Collider[] others = Physics.OverlapSphere(transform.position + attackDirection, 1);
 
         Debug.Log(others.Length);
 
@@ -157,6 +159,8 @@ public class PlayerAttack : MonoBehaviour, GameInputSystem.IAttackActions
             {
                 UnityEngine.Debug.Log(other.name);
 
+                if (other.GetComponent<Damageable>() == null) { return; }
+                
                 other.gameObject.GetComponent<Damageable>().Damage(1);
             }
         }

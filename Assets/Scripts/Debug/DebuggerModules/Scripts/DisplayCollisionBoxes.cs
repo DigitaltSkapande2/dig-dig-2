@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace DigDig2.Debug
+namespace DigDig2.Debugging
 {
-    [DigDig2.Debug.Debug]
+    [DigDig2.Debugging.Debug]
     public class DisplayCollisionBoxes : MonoBehaviour
     {
         private List<Collider2D> colliders = new List<Collider2D>();
