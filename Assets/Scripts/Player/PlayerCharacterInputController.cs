@@ -1,10 +1,11 @@
+using Mirror;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace DigDig2
 {
     [RequireComponent(typeof(EntityCharacterController))]
-    public class PlayerCharacterInputController : MonoBehaviour, GameInputSystem.IPlayerActions
+    public class PlayerCharacterInputController : NetworkBehaviour, GameInputSystem.IPlayerActions
     {
         // Input
         private GameInputSystem.PlayerActions playerActions;
@@ -27,13 +28,20 @@ namespace DigDig2
 
         private void Start()
         {
-            EnableInput();
-            hasStarted = true;
+            if (isLocalPlayer)
+            {
+                EnableInput();
+                hasStarted = true;
+
+                // Temporary fix to add the character to the camera
+                GameCamera gameCamera = FindFirstObjectByType<GameCamera>();
+                gameCamera.targets.Add(transform);
+            }
         }
 
         private void Update()
         {
-            if (Camera.main)
+            if (isLocalPlayer && Camera.main)
             {
                 Vector3 rotatedInputMoveVector = Quaternion.Euler(0f, Camera.main.transform.rotation.eulerAngles.y, 0f) * new Vector3(inputMoveVector.x, 0f, inputMoveVector.y);
                 entityCharacterController.inputMoveVector = rotatedInputMoveVector;
