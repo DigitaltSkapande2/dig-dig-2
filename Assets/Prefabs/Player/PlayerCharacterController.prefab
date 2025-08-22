@@ -135,10 +135,11 @@ MonoBehaviour:
     m_Bits: 64
   inputMoveVector: {x: 0, y: 0, z: 0}
   moveInputVectorLerpSpeed: 10
+  isSprinting: 0
   slopeStickPower: 0.1
   slopeSlidePower: 5
   slopeSlideDecaySpeed: 5
-  slopeScanDistance: 0.5
+  slopeScanDistance: 1
   edgeScanRaycasts: 64
   edgeScanRadius: 0.6
   edgeScanDistance: 0.25
