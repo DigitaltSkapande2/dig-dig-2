@@ -43,14 +43,20 @@ namespace DigDig2
 
 		[Space(20)]
 
-		[Tooltip("The max speed the entity can move.")]
-		[DebugSerialized] private float moveSpeed = 7.5f;
+		[Tooltip("The max speed the entity can walk at.")]
+		[SerializeField, DebugSerialized] private float moveSpeed = 5f;
+
+		[Tooltip("The mac speed the entity can sprint at.")]
+		[SerializeField, DebugSerialized] private float sprintMoveSpeed = 7.5f;
 
 		[Tooltip("The direction the entity is currently moving.")]
 		[SerializeField] public Vector3 inputMoveVector = Vector3.zero;
 
 		[Tooltip("The move acceleration and decelleration speed, higher is faster.")]
 		[SerializeField] private float moveInputVectorLerpSpeed = 10f;
+
+		[Tooltip("If the entity is sprinting or not, moveSpeed is default speed, sprintMoveSpeed is sprint speed.")]
+		[SerializeField] public bool isSprinting = false;
 
 		[Space(20)]
 
@@ -64,7 +70,7 @@ namespace DigDig2
 		[SerializeField] private float slopeSlideDecaySpeed = 5f;
 
 		[Tooltip("How far to scan for slopes under the character's feet.")]
-		[SerializeField] private float slopeScanDistance = 0.5f;
+		[SerializeField] private float slopeScanDistance = 1f;
 
 		[Space(20)]
 
@@ -157,8 +163,10 @@ namespace DigDig2
 		[Client]
 		private void ProcessMove()
 		{
+			float speed = isSprinting ? sprintMoveSpeed : moveSpeed;
+
 			// Lerp move input vector to create smooth acceleration and decelleration
-			moveVector = Vector3.Lerp(moveVector, inputMoveVector * moveSpeed, Time.deltaTime * moveInputVectorLerpSpeed);
+			moveVector = Vector3.Lerp(moveVector, inputMoveVector * speed, Time.deltaTime * moveInputVectorLerpSpeed);
 
 			velocity = new(moveVector.x, velocity.y, moveVector.z);
 		}
