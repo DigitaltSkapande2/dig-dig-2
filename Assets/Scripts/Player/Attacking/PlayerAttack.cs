@@ -4,21 +4,17 @@ using UnityEngine.InputSystem;
 
 public class PlayerAttack : MonoBehaviour, GameInputSystem.IAttackActions
 {
-    [Tooltip("The prafab used to show in what direction the player is aiming")]
-    [SerializeField] GameObject aimArrow;
-
-    GameObject arrowInstance;
+    [SerializeField] AttackData attackData;
 
     private GameInputSystem.AttackActions attackActions;
-
-    bool aiming;
-
+    Vector2 mousePos;
     bool frozen;
 
-    Vector2 mousePos;
-    Vector3 attackDirection;
+    Transform box;
 
-    Plane playerPlane;
+    Vector3 dir;
+    float t;
+    bool active;
 
     void Start()
     {
@@ -36,18 +32,6 @@ public class PlayerAttack : MonoBehaviour, GameInputSystem.IAttackActions
     public void SetFrozen(bool value)
     {
         frozen = value;
-
-        if (!value)
-        {
-            aiming = false;
-
-            // Removes the aiming indicator when frozen
-            if (arrowInstance != null)
-            {
-                Destroy(arrowInstance);
-            }
-
-        }
     }
 
     #region Input Setup
@@ -79,22 +63,7 @@ public class PlayerAttack : MonoBehaviour, GameInputSystem.IAttackActions
 
     public void OnAim(InputAction.CallbackContext context)
     {
-        if (frozen) { return; }
 
-        if (context.started)
-        {
-            aiming = true;
-        }
-
-        if (context.canceled)
-        {
-            aiming = false;
-
-            if (arrowInstance != null)
-            {
-                Destroy(arrowInstance);
-            }
-        }
     }
 
     public void OnMouse(InputAction.CallbackContext context)
@@ -108,61 +77,62 @@ public class PlayerAttack : MonoBehaviour, GameInputSystem.IAttackActions
 
     private void Update()
     {
-        if (aiming)
-        {
-            Indicator();
-        }
-    }
-
-    void HandleAiming()
-    {   // Defines plane at the same y-coordinate as the player
-        playerPlane = new Plane(Vector3.up, transform.position);
-        
-        Ray mouseRay = Camera.main.ScreenPointToRay(new Vector3(mousePos.x, mousePos.y, 0));
-
-        float hitDistance;
-
-        // Check raycast and return distance along the ray at which it intersects the plane
-        if (playerPlane.Raycast(mouseRay, out hitDistance))
-        {
-            Vector3 hitPoint = mouseRay.GetPoint(hitDistance);
-            attackDirection = (hitPoint - transform.position).normalized * 2;
-        }
-    }
-
-    void Indicator()
-    {
-        HandleAiming();
-
-        if (arrowInstance == null)
-        {
-            arrowInstance = Instantiate(aimArrow, attackDirection, Quaternion.identity);
-        }
-
-        arrowInstance.transform.position = transform.position + attackDirection;
-        arrowInstance.transform.LookAt(transform.position + attackDirection * 2);
+        if (active) HandleSwing();
     }
 
     void Attack()
     {
-        HandleAiming();
+        if (active) return;
 
-        GetComponentInChildren<SwingCollisionCurve>().Attack();
+        t = 0;
+        active = true;
 
-        Collider[] others = Physics.OverlapSphere(transform.position + attackDirection, 1);
+        float X = attackData.X.Evaluate(0);
+        float Y = attackData.Y.Evaluate(0);
+        float Z = attackData.Z.Evaluate(0);
 
-        Debug.Log(others.Length);
+        float stepX = attackData.X.Evaluate(attackData.step);
+        float stepY = attackData.Y.Evaluate(attackData.step);
+        float stepZ = attackData.Z.Evaluate(attackData.step);
 
-        if (others.Length > 0)
+        Vector3 pos = transform.right * X + transform.up * Y + transform.forward * Z;
+        Vector3 stepPos = transform.right * stepX + transform.up * stepY + transform.forward * stepZ;
+
+        dir = (stepPos - pos).normalized;
+
+        box = Instantiate(attackData.hitbox, transform.position + pos, Quaternion.identity, transform).transform;
+        box.forward = dir;
+    }
+
+    void HandleSwing()
+    {
+        t += 1 / attackData.attackTime * Time.deltaTime;
+        float position = attackData.speed.Evaluate(t);
+
+        float X = attackData.X.Evaluate(position);
+        float Y = attackData.Y.Evaluate(position);
+        float Z = attackData.Z.Evaluate(position);
+
+        float stepX = attackData.X.Evaluate(position + attackData.step);
+        float stepY = attackData.Y.Evaluate(position + attackData.step);
+        float stepZ = attackData.Z.Evaluate(position + attackData.step);
+
+        Vector3 pos = transform.right * X + transform.up * Y + transform.forward * Z;
+        Vector3 stepPos = transform.right * stepX + transform.up * stepY + transform.forward * stepZ;
+
+        if (position + attackData.step < 1)
         {
-            foreach (Collider other in others)
-            {
-                UnityEngine.Debug.Log(other.name);
+            dir = (stepPos - pos).normalized;
+        }
 
-                if (other.GetComponent<Damageable>() == null) { return; }
-                
-                other.gameObject.GetComponent<Damageable>().Damage(1);
-            }
+        box.position = transform.position + pos;
+        box.forward = dir;
+
+        if (t > 1)
+        {
+            active = false;
+            Destroy(box.gameObject);
         }
     }
+
 }

@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 1739590071971828897}
   - component: {fileID: 4327746320760944597}
   - component: {fileID: 1459444429970365189}
-  - component: {fileID: 6807297836687757261}
   m_Layer: 3
   m_Name: PlayerCharacterController
   m_TagString: Untagged
@@ -161,19 +160,6 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
---- !u!114 &6807297836687757261
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4442565222488509090}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f42a2590e3aa3064e93da5b1d8a7903f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  aimArrow: {fileID: 8755978996881620118, guid: b8dabfecd9a5bdd44b87240a33a9a7dc, type: 3}
 --- !u!1 &4933219036402945239
 GameObject:
   m_ObjectHideFlags: 0
@@ -255,7 +241,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6683684807395102275}
-  - component: {fileID: 5076341959871090254}
+  - component: {fileID: 4387449056696668007}
   m_Layer: 3
   m_Name: Visuals
   m_TagString: Untagged
@@ -279,7 +265,7 @@ Transform:
   - {fileID: 9179220790761755164}
   m_Father: {fileID: 3368673675683253185}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5076341959871090254
+--- !u!114 &4387449056696668007
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -288,7 +274,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7251259118998489019}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f61e678e580f0f74ca520f7cbb8f18c5, type: 3}
+  m_Script: {fileID: 11500000, guid: f42a2590e3aa3064e93da5b1d8a7903f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   attackData: {fileID: 11400000, guid: 39cb1cf5fbd2ad54d8f2eadd8f79efbf, type: 2}

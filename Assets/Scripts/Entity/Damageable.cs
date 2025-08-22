@@ -5,7 +5,17 @@ namespace DigDig2
 {
     public class Damageable : MonoBehaviour
     {
-        [Tooltip("Starting healt and eventual cap for healing")]
+        enum DamageType
+        {
+            Player,
+            Enemy,
+            Object
+        }
+
+        [SerializeField] DamageType damageType;
+
+
+        [Tooltip("Starting health and eventual cap for healing")]
         [SerializeField] int maxHealth;
 
 
@@ -33,15 +43,21 @@ namespace DigDig2
             Damage(0);
         }
 
-        public void Damage(int damage)
+        void OnCollisionEnter(Collision collision)
+        {
+            
+        }
+
+        void Damage(int damage)
         {
             hp -= damage;
 
             if (hp <= 0)
             {
-                PlayDeathEffects();
                 deathEvent.Invoke();
                 Invoke(nameof(Die), 0);
+                if (deathEffects.Length < 1) return;
+                PlayDeathEffects();
                 return;
             }
 
