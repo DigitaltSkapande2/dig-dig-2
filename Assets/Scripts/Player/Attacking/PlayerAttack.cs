@@ -87,21 +87,22 @@ public class PlayerAttack : MonoBehaviour, GameInputSystem.IAttackActions
         t = 0;
         active = true;
 
-        float X = attackData.X.Evaluate(0);
-        float Y = attackData.Y.Evaluate(0);
-        float Z = attackData.Z.Evaluate(0);
+        float xCurveValue = attackData.X.Evaluate(0);
+        float yCurveValue = attackData.Y.Evaluate(0);
+        float zCurveValue = attackData.Z.Evaluate(0);
 
         float stepX = attackData.X.Evaluate(attackData.step);
         float stepY = attackData.Y.Evaluate(attackData.step);
         float stepZ = attackData.Z.Evaluate(attackData.step);
 
-        Vector3 pos = transform.right * X + transform.up * Y + transform.forward * Z;
+        Vector3 pos = transform.right * xCurveValue + transform.up * yCurveValue + transform.forward * zCurveValue;
         Vector3 stepPos = transform.right * stepX + transform.up * stepY + transform.forward * stepZ;
 
         dir = (stepPos - pos).normalized;
 
         box = Instantiate(attackData.hitbox, transform.position + pos, Quaternion.identity, transform).transform;
         box.forward = dir;
+        box.GetComponent<Hitbox>().SetAttackData(attackData);
     }
 
     void HandleSwing()
@@ -109,15 +110,15 @@ public class PlayerAttack : MonoBehaviour, GameInputSystem.IAttackActions
         t += 1 / attackData.attackTime * Time.deltaTime;
         float position = attackData.speed.Evaluate(t);
 
-        float X = attackData.X.Evaluate(position);
-        float Y = attackData.Y.Evaluate(position);
-        float Z = attackData.Z.Evaluate(position);
+        float xCurveValue = attackData.X.Evaluate(position);
+        float yCurveValue = attackData.Y.Evaluate(position);
+        float zCurveValue = attackData.Z.Evaluate(position);
 
         float stepX = attackData.X.Evaluate(position + attackData.step);
         float stepY = attackData.Y.Evaluate(position + attackData.step);
         float stepZ = attackData.Z.Evaluate(position + attackData.step);
 
-        Vector3 pos = transform.right * X + transform.up * Y + transform.forward * Z;
+        Vector3 pos = transform.right * xCurveValue + transform.up * yCurveValue + transform.forward * zCurveValue;
         Vector3 stepPos = transform.right * stepX + transform.up * stepY + transform.forward * stepZ;
 
         if (position + attackData.step < 1)

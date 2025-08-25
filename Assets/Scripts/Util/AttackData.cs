@@ -14,6 +14,8 @@ namespace DigDig2
         public float step;
         public float attackTime;
 
+        public int damage;
+
         public GameObject hitbox;
     }
 }

@@ -119,4 +119,5 @@ MonoBehaviour:
     m_RotationOrder: 4
   step: 0.01
   attackTime: 0.2
+  damage: 1
   hitbox: {fileID: 1422831647425941802, guid: 9ec4a74b568160d46b8eb6decc764e9a, type: 3}

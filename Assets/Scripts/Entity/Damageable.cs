@@ -43,9 +43,9 @@ namespace DigDig2
             Damage(0);
         }
 
-        void OnCollisionEnter(Collision collision)
+        public void OnHit(AttackData data)
         {
-            
+            Damage(data.damage);
         }
 
         void Damage(int damage)
@@ -82,7 +82,10 @@ namespace DigDig2
 
         void PlayDeathEffects()
         {
-
+            foreach (GameObject effect in deathEffects)
+            {
+                Instantiate(effect, transform.position, Quaternion.identity);
+            }
         }
 
         void Die()
