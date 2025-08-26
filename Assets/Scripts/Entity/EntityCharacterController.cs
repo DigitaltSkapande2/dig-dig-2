@@ -61,7 +61,7 @@ namespace DigDig2
 		[Space(20)]
 
 		[Tooltip("How strong the stick force when going down slopes should be.")]
-		[SerializeField] private float slopeStickPower = 0.001f;
+		[SerializeField] private float slopeStickPower = 0.1f;
 
 		[Tooltip("How fast the acceleration when sliding down slopes should be. Sliding down slopes only happens when the slope's angle is above CharacterController.slopeLimit.")]
 		[SerializeField] private float slopeSlidePower = 5f;
@@ -122,24 +122,23 @@ namespace DigDig2
 
 		private void Update()
 		{
-			if (isClient)
+			if (isLocalPlayer || isServer)
 			{
-				if (isLocalPlayer)
-				{
-					// Movement
-					// NOTE: Reorder movement processing order here!
-					ProcessGravity();
-					ProcessMove();
-					ProcessSlope();
+				// Movement
+				// NOTE: Reorder movement processing order here!
+				ProcessGravity();
+				ProcessMove();
+				ProcessSlope();
 
-					if (!frozen) ApplyMovement();
+				if (!frozen) ApplyMovement();
 
-					ProcessEdge();
+				ProcessEdge();
 
-					// Visuals
-					UpdateVisualsRotation();
-				}
+				// Visuals
+				UpdateVisualsRotation();
+			}
 
+			if (isClient) {
 				RefreshVisualsRotation();
 			}
 		}
