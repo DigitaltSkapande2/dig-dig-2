@@ -3,7 +3,7 @@ using UnityEngine.Events;
 
 namespace DigDig2
 {
-    public class Damageable : MonoBehaviour
+    public class Health : MonoBehaviour
     {
         enum DamageType
         {

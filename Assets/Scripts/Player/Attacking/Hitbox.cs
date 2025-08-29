@@ -13,10 +13,10 @@ namespace DigDig2
 
         void OnTriggerEnter(Collider other)
         {
-            Damageable damageable = other.GetComponent<Damageable>();
+            Attackable damageable = other.GetComponent<Attackable>();
             if (damageable == null) return;
 
-            damageable.OnHit(attackData);
+            damageable.Hit(attackData);
         }
     }
 }
