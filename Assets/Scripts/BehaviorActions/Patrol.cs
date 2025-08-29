@@ -3,19 +3,18 @@ using System;
 using Unity.Behavior;
 using Unity.Properties;
 using System.Collections.Generic;
-using UnityEngine.AI;
 
 namespace DigDig2
 {
     [Serializable, GeneratePropertyBag]
     [NodeDescription(
-        name: "Custom Patrol",
+        name: "WotT Patrol",
         description: "goon",
-        category: "Action/Navigation",
+        category: "Action/WotT",
         story: "[Agent] patrols along [Waypoints]",
-        id: "456798546g9786452978n"
+        id: "5b4m09854m06m776m7"
     )]
-    public partial class CustomPatrol : Unity.Behavior.Action
+    public partial class WotTPatrol : Unity.Behavior.Action
     {
         [SerializeReference] public BlackboardVariable<GameObject> Agent;
         [SerializeReference] public BlackboardVariable<List<GameObject>> Waypoints;
@@ -28,8 +27,6 @@ namespace DigDig2
 
         private EntityCharacterBehaviorInputController m_AgentCharacterBehaviorInputController;
         [CreateProperty] private Vector3 m_CurrentTarget;
-        [CreateProperty] private float m_OriginalStoppingDistance = -1f;
-        [CreateProperty] private float m_OriginalSpeed = -1f;
         [CreateProperty] private float m_WaypointWaitTimer;
         [CreateProperty] private int m_CurrentPatrolPoint = 0;
         [CreateProperty] private bool m_Waiting;

@@ -54,8 +54,6 @@ namespace DigDig2
                         Array.Clear(currentWaypoints, 0, currentWaypoints.Length);
 
                         entityCharacterController.inputMoveVector = Vector3.zero;
-
-                        Debug.Log("Goon");
                     }
                 }
             }
