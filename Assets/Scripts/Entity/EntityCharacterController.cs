@@ -5,6 +5,7 @@ using DigDig2;
 using System.Collections.Generic;
 using System.Linq;
 using Mirror;
+using UnityEditor.EditorTools;
 
 namespace DigDig2
 {
@@ -86,6 +87,14 @@ namespace DigDig2
 		[Tooltip("Like CharacterController.slopeLimit but for edge detection")]
 		[SerializeField] private float edgeScanSlopeLimit = 75f;
 
+		[Header("Combat")]
+
+		[Tooltip("Knockback multiplier")]
+		[SerializeField] private float knockbackMultiplier;
+
+		[Tooltip("How fast you return to stationary after taking knockback")]
+		[SerializeField] private float knockbackFallofSpeed;
+
 		[Header("Visuals")]
 
 		[Tooltip("Add the GameObject which holds all of the visuals here.")]
@@ -102,6 +111,8 @@ namespace DigDig2
 		private Vector3 moveVector;
 
 		private Vector3 slopeSlideVelocity;
+
+		private Vector3 knockbackVelocity;
 
 		[SyncVar] private float targetLookRotation = 0f;
 
@@ -131,6 +142,7 @@ namespace DigDig2
 					ProcessGravity();
 					ProcessMove();
 					ProcessSlope();
+					ProcessKnockback();
 
 					if (!frozen) ApplyMovement();
 
@@ -198,6 +210,13 @@ namespace DigDig2
 			}
 
 			velocity += slopeSlideVelocity;
+		}
+
+		[Client]
+		private void ProcessKnockback()
+		{
+			velocity += knockbackVelocity;
+			knockbackVelocity = Vector3.Lerp(knockbackVelocity, Vector3.zero, knockbackFallofSpeed * Time.deltaTime);
 		}
 
 		[Client]
@@ -290,6 +309,15 @@ namespace DigDig2
 			transform.rotation = Quaternion.Euler(currentRotation);
 
 			Frozen = false;
+		}
+
+		#endregion
+
+		#region Combat
+
+		public void ApplyKnockback(Vector3 knockbackForce)
+		{
+			knockbackVelocity = knockbackForce * knockbackMultiplier;
 		}
 
 		#endregion
