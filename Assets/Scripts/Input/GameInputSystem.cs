@@ -1078,7 +1078,7 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
             ""id"": ""5f26ae09-937e-461f-8cc7-873303ec384d"",
             ""actions"": [
                 {
-                    ""name"": ""Attack"",
+                    ""name"": ""Attack1"",
                     ""type"": ""Button"",
                     ""id"": ""690c06f7-f69f-499f-8449-90ddafba4b50"",
                     ""expectedControlType"": """",
@@ -1087,7 +1087,7 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Aim"",
+                    ""name"": ""Attack2"",
                     ""type"": ""Button"",
                     ""id"": ""2db9ff37-e277-4cde-94dd-684ff227bdfd"",
                     ""expectedControlType"": """",
@@ -1113,7 +1113,7 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Gamepad"",
-                    ""action"": ""Attack"",
+                    ""action"": ""Attack1"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -1124,7 +1124,7 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Attack"",
+                    ""action"": ""Attack1"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -1135,7 +1135,7 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Touch"",
-                    ""action"": ""Attack"",
+                    ""action"": ""Attack1"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -1146,7 +1146,7 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Joystick"",
-                    ""action"": ""Attack"",
+                    ""action"": ""Attack1"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -1157,7 +1157,7 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""XR"",
-                    ""action"": ""Attack"",
+                    ""action"": ""Attack1"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -1168,7 +1168,7 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Attack"",
+                    ""action"": ""Attack1"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -1190,7 +1190,7 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Aim"",
+                    ""action"": ""Attack2"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1294,8 +1294,8 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
         m_DebugMenu_CloseDebugMenu = m_DebugMenu.FindAction("CloseDebugMenu", throwIfNotFound: true);
         // Attack
         m_Attack = asset.FindActionMap("Attack", throwIfNotFound: true);
-        m_Attack_Attack = m_Attack.FindAction("Attack", throwIfNotFound: true);
-        m_Attack_Aim = m_Attack.FindAction("Aim", throwIfNotFound: true);
+        m_Attack_Attack1 = m_Attack.FindAction("Attack1", throwIfNotFound: true);
+        m_Attack_Attack2 = m_Attack.FindAction("Attack2", throwIfNotFound: true);
         m_Attack_Mouse = m_Attack.FindAction("Mouse", throwIfNotFound: true);
     }
 
@@ -2049,8 +2049,8 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
     // Attack
     private readonly InputActionMap m_Attack;
     private List<IAttackActions> m_AttackActionsCallbackInterfaces = new List<IAttackActions>();
-    private readonly InputAction m_Attack_Attack;
-    private readonly InputAction m_Attack_Aim;
+    private readonly InputAction m_Attack_Attack1;
+    private readonly InputAction m_Attack_Attack2;
     private readonly InputAction m_Attack_Mouse;
     /// <summary>
     /// Provides access to input actions defined in input action map "Attack".
@@ -2064,13 +2064,13 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
         /// </summary>
         public AttackActions(@GameInputSystem wrapper) { m_Wrapper = wrapper; }
         /// <summary>
-        /// Provides access to the underlying input action "Attack/Attack".
+        /// Provides access to the underlying input action "Attack/Attack1".
         /// </summary>
-        public InputAction @Attack => m_Wrapper.m_Attack_Attack;
+        public InputAction @Attack1 => m_Wrapper.m_Attack_Attack1;
         /// <summary>
-        /// Provides access to the underlying input action "Attack/Aim".
+        /// Provides access to the underlying input action "Attack/Attack2".
         /// </summary>
-        public InputAction @Aim => m_Wrapper.m_Attack_Aim;
+        public InputAction @Attack2 => m_Wrapper.m_Attack_Attack2;
         /// <summary>
         /// Provides access to the underlying input action "Attack/Mouse".
         /// </summary>
@@ -2101,12 +2101,12 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_AttackActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_AttackActionsCallbackInterfaces.Add(instance);
-            @Attack.started += instance.OnAttack;
-            @Attack.performed += instance.OnAttack;
-            @Attack.canceled += instance.OnAttack;
-            @Aim.started += instance.OnAim;
-            @Aim.performed += instance.OnAim;
-            @Aim.canceled += instance.OnAim;
+            @Attack1.started += instance.OnAttack1;
+            @Attack1.performed += instance.OnAttack1;
+            @Attack1.canceled += instance.OnAttack1;
+            @Attack2.started += instance.OnAttack2;
+            @Attack2.performed += instance.OnAttack2;
+            @Attack2.canceled += instance.OnAttack2;
             @Mouse.started += instance.OnMouse;
             @Mouse.performed += instance.OnMouse;
             @Mouse.canceled += instance.OnMouse;
@@ -2121,12 +2121,12 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
         /// <seealso cref="AttackActions" />
         private void UnregisterCallbacks(IAttackActions instance)
         {
-            @Attack.started -= instance.OnAttack;
-            @Attack.performed -= instance.OnAttack;
-            @Attack.canceled -= instance.OnAttack;
-            @Aim.started -= instance.OnAim;
-            @Aim.performed -= instance.OnAim;
-            @Aim.canceled -= instance.OnAim;
+            @Attack1.started -= instance.OnAttack1;
+            @Attack1.performed -= instance.OnAttack1;
+            @Attack1.canceled -= instance.OnAttack1;
+            @Attack2.started -= instance.OnAttack2;
+            @Attack2.performed -= instance.OnAttack2;
+            @Attack2.canceled -= instance.OnAttack2;
             @Mouse.started -= instance.OnMouse;
             @Mouse.performed -= instance.OnMouse;
             @Mouse.canceled -= instance.OnMouse;
@@ -2430,19 +2430,19 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
     public interface IAttackActions
     {
         /// <summary>
-        /// Method invoked when associated input action "Attack" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "Attack1" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnAttack(InputAction.CallbackContext context);
+        void OnAttack1(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "Aim" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "Attack2" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnAim(InputAction.CallbackContext context);
+        void OnAttack2(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "Mouse" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>

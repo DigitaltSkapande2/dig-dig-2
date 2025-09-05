@@ -48,12 +48,12 @@ public class PlayerAttack : MonoBehaviour, GameInputSystem.IAttackActions
     {
         attackActions.Disable();
     }
-
+//sigma was here
     #endregion
 
     #region Inputs
 
-    public void OnAttack(InputAction.CallbackContext context)
+    public void OnAttack1(InputAction.CallbackContext context)
     {
         if (context.started)
         {
@@ -61,7 +61,7 @@ public class PlayerAttack : MonoBehaviour, GameInputSystem.IAttackActions
         }
     }
 
-    public void OnAim(InputAction.CallbackContext context)
+    public void OnAttack2(InputAction.CallbackContext context)
     {
 
     }
