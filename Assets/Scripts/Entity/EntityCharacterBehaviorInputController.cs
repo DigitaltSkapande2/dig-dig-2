@@ -9,12 +9,14 @@ namespace DigDig2
     {
         [SerializeField] float distanceTolerance = 1f;
 
+        public bool directionPending = false;
         public bool pathPending = false;
         public float remainingDistance = 0f;
 
         private Vector3 currentDesitation = Vector3.zero;
+        private Vector3 currentDirection = Vector3.zero;
         private NavMeshPath navMeshPath;
-        private Vector3[] currentWaypoints = {};
+        private Vector3[] currentWaypoints = { };
         private int currentWaypointIndex = 0;
 
         private EntityCharacterController entityCharacterController;
@@ -57,14 +59,29 @@ namespace DigDig2
                     }
                 }
             }
+            else if (directionPending)
+            {
+                entityCharacterController.inputMoveVector = currentDirection;
+            }
             else
             {
                 entityCharacterController.inputMoveVector = Vector3.zero;
             }
         }
 
+        public void ResetPathing()
+        {
+            pathPending = false;
+            directionPending = false;
+            currentDesitation = Vector3.zero;
+            Array.Clear(currentWaypoints, 0, currentWaypoints.Length);
+            currentWaypointIndex = 0;
+        }
+
         public void SetDestination(Vector3 destination)
         {
+            ResetPathing();
+
             currentDesitation = destination;
 
             if (navMeshPath != null)
@@ -75,6 +92,14 @@ namespace DigDig2
 
                 pathPending = true;
             }
+        }
+
+        public void SetDirection(Vector3 direction)
+        {
+            ResetPathing();
+            directionPending = true;
+
+            currentDirection = direction;
         }
     }
 }
