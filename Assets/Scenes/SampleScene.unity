@@ -5738,10 +5738,11 @@ MonoBehaviour:
   slopeScanDistance: 1
   edgeScanRaycasts: 16
   edgeScanRadius: 0.6
-  edgeScanDistance: 1.5
+  edgeScanDistance: 0.25
   edgeScanSlopeLimit: 75
   visualsParent: {fileID: 1179798348}
-  visualsMovementRotationSpeed: 10
+  visualsRotationSpeed: 15
+  automaticLookRotationLocked: 0
 --- !u!114 &963754045
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5756,16 +5757,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Graph: {fileID: 5585291459702331616, guid: e61f7705ed91bad23a3430ef27686a16, type: 2}
   m_BlackboardVariableOverridesList:
-  - rid: 6426737233524949021
-  - rid: 6426737398567403680
-  - rid: 6426737398567403960
-  - rid: 6426737399304028209
+  - rid: 1217018901321220182
+  - rid: 1217018901321220183
+  - rid: 1217018901321220184
+  - rid: 1217018901321220253
   m_IsInitialised: 0
   m_IsStarted: 0
   references:
     version: 2
     RefIds:
-    - rid: 6426737233524949021
+    - rid: 1217018901321220182
       type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -5773,15 +5774,7 @@ MonoBehaviour:
           m_Value1: 0
         Name: Self
         m_Value: {fileID: 963754043}
-    - rid: 6426737398567403680
-      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        GUID:
-          m_Value0: 6185853582079718337
-          m_Value1: 16468564652571363867
-        Name: Enemy
-        m_Value: {fileID: 1663128655}
-    - rid: 6426737398567403960
+    - rid: 1217018901321220183
       type: {class: 'BlackboardVariable`1[[System.Collections.Generic.List`1[[UnityEngine.GameObject, UnityEngine.CoreModule]], mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -5794,13 +5787,21 @@ MonoBehaviour:
         - {fileID: 1035800983}
         - {fileID: 2006306604}
         - {fileID: 482064631}
-    - rid: 6426737399304028209
-      type: {class: 'BlackboardVariable`1[[System.Boolean, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+    - rid: 1217018901321220184
+      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
-          m_Value0: 12459616986357799895
-          m_Value1: 17129852867522991358
-        Name: EnemySpotted
+          m_Value0: 6185853582079718337
+          m_Value1: 16468564652571363867
+        Name: Enemy
+        m_Value: {fileID: 1663128655}
+    - rid: 1217018901321220253
+      type: {class: 'BlackboardVariable`1[[BehaviorTestType, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 8333448519615864380
+          m_Value1: 7244335908673377373
+        Name: Behavior Test Type
         m_Value: 1
 --- !u!143 &963754047
 CharacterController:
@@ -5853,7 +5854,7 @@ Transform:
   m_GameObject: {fileID: 963754043}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7, y: 5, z: 25}
+  m_LocalPosition: {x: -14.101, y: 5, z: 22.116}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5872,9 +5873,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c835a598b542dcd0baf8ad9ea31b8a21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distanceTolerance: 1.25
-  pathPending: 0
-  remainingDistance: 0
+  pathWaypointDistanceTolerance: 0.5
+  movementState: 0
 --- !u!114 &963754053
 MonoBehaviour:
   m_ObjectHideFlags: 0

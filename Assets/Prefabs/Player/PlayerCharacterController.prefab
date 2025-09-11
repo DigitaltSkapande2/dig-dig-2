@@ -147,7 +147,8 @@ MonoBehaviour:
   edgeScanDistance: 0.25
   edgeScanSlopeLimit: 75
   visualsParent: {fileID: 7251259118998489019}
-  visualsMovementRotationSpeed: 10
+  visualsRotationSpeed: 15
+  automaticLookRotationLocked: 0
 --- !u!114 &1459444429970365189
 MonoBehaviour:
   m_ObjectHideFlags: 0

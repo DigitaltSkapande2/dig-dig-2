@@ -8,23 +8,19 @@ namespace DigDig2
     [Serializable, GeneratePropertyBag]
     [NodeDescription(
         name: "WotT Avoid",
-        description: "goon",
-        category: "Action/WotT",
+        description: "Runs away from the target for a certain amount of seconds.",
+        category: "WotT/Navigation",
         story: "[Agent] avoids [Target] for [Time] seconds",
-        id: "94872g53jf2425j892450n8924j598"
+        id: "WotT_Avoid"
     )]
     public partial class WotTAvoid : Unity.Behavior.Action
     {
         [SerializeReference] public BlackboardVariable<GameObject> Agent;
         [SerializeReference] public BlackboardVariable<GameObject> Target;
         [SerializeReference] public BlackboardVariable<float> Time;
-        [SerializeReference] public BlackboardVariable<float> DistanceThreshold = new(0.2f);
-        [SerializeReference] public BlackboardVariable<float> AllowedTargetDistanceError = new(8f);
 
-        private float avoidTimer;
-
-        private EntityCharacterBehaviorInputController m_AgentCharacterBehaviorInputController;
-        [CreateProperty] private Vector3 m_CurrentTarget;
+        private EntityCharacterBehaviorAgent m_AgentCharacterBehaviorInputController;
+        [CreateProperty] private float avoidTimer;
 
         protected override Status OnStart()
         {
@@ -59,6 +55,7 @@ namespace DigDig2
             if (avoidTimer <= 0)
             {
                 avoidTimer = 0;
+                m_AgentCharacterBehaviorInputController.Stop();
                 return Status.Success;
             }
             else
@@ -69,19 +66,14 @@ namespace DigDig2
             return Status.Running;
         }
 
-        protected override void OnEnd()
-        {
-
-        }
-
         protected override void OnDeserialize()
         {
-            
+            Initialize();
         }
 
         private void Initialize()
         {
-            m_AgentCharacterBehaviorInputController = Agent.Value.GetComponentInChildren<EntityCharacterBehaviorInputController>();
+            m_AgentCharacterBehaviorInputController = Agent.Value.GetComponentInChildren<EntityCharacterBehaviorAgent>();
         }
 
         private void UpdateAvoidDirection()

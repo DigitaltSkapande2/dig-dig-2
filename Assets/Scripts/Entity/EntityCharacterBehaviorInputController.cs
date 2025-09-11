@@ -5,21 +5,35 @@ using UnityEngine.AI;
 namespace DigDig2
 {
     [RequireComponent(typeof(EntityCharacterController))]
-    public class EntityCharacterBehaviorInputController : MonoBehaviour
+    public class EntityCharacterBehaviorAgent : MonoBehaviour
     {
-        [SerializeField] float distanceTolerance = 1f;
+        [Header("Following Path State")]
+        [Tooltip("The distance that the entity marks a waypoint as passed.")]
+        [SerializeField] private float pathWaypointDistanceTolerance = 1f;
 
-        public bool directionPending = false;
-        public bool pathPending = false;
-        public float remainingDistance = 0f;
+        #region Movement State Variables
 
-        private Vector3 currentDesitation = Vector3.zero;
-        private Vector3 currentDirection = Vector3.zero;
+        [SerializeField] public MovementState movementState = MovementState.Idle;
+
+        // Following Path
+        [NonSerialized] public Vector3 currentDesitation = Vector3.zero;
+        [NonSerialized] public Vector3[] currentPathWaypoints = { };
+        [NonSerialized] public int currentPathWaypointIndex = 0;
         private NavMeshPath navMeshPath;
-        private Vector3[] currentWaypoints = { };
-        private int currentWaypointIndex = 0;
+
+        // Following Direction
+        [NonSerialized] public Vector3 currentDirection = Vector3.zero;
+
+        #endregion
 
         private EntityCharacterController entityCharacterController;
+
+        public enum MovementState
+        {
+            Idle,
+            FollowingPath,
+            FollowingDirection,
+        }
 
         private void Awake()
         {
@@ -33,73 +47,126 @@ namespace DigDig2
 
         private void Update()
         {
-            if (currentWaypoints.Length > 0 && pathPending)
+            switch (movementState)
             {
-                Vector3 currentWaypoint = currentWaypoints[currentWaypointIndex];
-                Vector3 positionDifference = currentWaypoint - transform.position;
-                float distanceToWaypoint = positionDifference.magnitude;
-
-                positionDifference.y = 0f;
-                entityCharacterController.inputMoveVector = positionDifference.normalized;
-
-                if (distanceToWaypoint <= distanceTolerance)
-                {
-                    if (currentWaypoints.Length > currentWaypointIndex + 1)
+                case MovementState.FollowingPath:
+                    if (currentPathWaypoints.Length > 0)
                     {
-                        currentWaypointIndex++;
-                    }
-                    else
-                    {
-                        pathPending = false;
-                        currentDesitation = Vector3.zero;
-                        currentWaypointIndex = 0;
-                        Array.Clear(currentWaypoints, 0, currentWaypoints.Length);
+                        Vector3 currentPathWaypoint = currentPathWaypoints[currentPathWaypointIndex];
+                        Vector3 positionDifference = currentPathWaypoint - transform.position;
 
-                        entityCharacterController.inputMoveVector = Vector3.zero;
+                        positionDifference.y = 0f;
+                        float distanceToWaypoint = positionDifference.magnitude;
+                        if (currentPathWaypointIndex >= currentPathWaypoints.Length - 1)
+                        {
+                            entityCharacterController.inputMoveVector = positionDifference.normalized * Mathf.Min(distanceToWaypoint / (pathWaypointDistanceTolerance + 1f), 1f);
+                        }
+                        else
+                        {
+                            entityCharacterController.inputMoveVector = positionDifference.normalized;
+                        }
+
+                        if (distanceToWaypoint <= pathWaypointDistanceTolerance)
+                        {
+                            if (currentPathWaypoints.Length > currentPathWaypointIndex + 1)
+                            {
+                                // More waypoints to follow, go to next one
+                                currentPathWaypointIndex++;
+                            }
+                            else
+                            {
+                                // No more waypoints to follow, entity has finished, reset path
+                                Debug.Log("Stopped");
+                                Stop();
+                            }
+                        }
                     }
-                }
-            }
-            else if (directionPending)
-            {
-                entityCharacterController.inputMoveVector = currentDirection;
-            }
-            else
-            {
-                entityCharacterController.inputMoveVector = Vector3.zero;
+
+                    break;
+                case MovementState.FollowingDirection:
+                    entityCharacterController.inputMoveVector = currentDirection;
+                    break;
+                default:
+                    entityCharacterController.inputMoveVector = Vector3.zero;
+                    break;
             }
         }
 
-        public void ResetPathing()
+        private void OnDrawGizmosSelected()
         {
-            pathPending = false;
-            directionPending = false;
+            if (!entityCharacterController) return;
+            switch (movementState)
+            {
+                case MovementState.FollowingPath:
+                    for (int pathWaypointIndex = currentPathWaypointIndex + 1; pathWaypointIndex < currentPathWaypoints.Length; pathWaypointIndex++)
+                    {
+                        Gizmos.color = Color.gray;
+                        Gizmos.DrawSphere(currentPathWaypoints[pathWaypointIndex], 0.25f);
+                    }
+                    Gizmos.color = Color.red;
+                    Gizmos.DrawSphere(currentPathWaypoints[currentPathWaypointIndex], 0.5f);
+                    break;
+            }
+
+            Gizmos.DrawLine(transform.position, transform.position + entityCharacterController.inputMoveVector);
+        }
+
+        #region State Management
+
+        public void Stop()
+        {
+            movementState = MovementState.Idle;
+
+            // Reset Following Path State
             currentDesitation = Vector3.zero;
-            Array.Clear(currentWaypoints, 0, currentWaypoints.Length);
-            currentWaypointIndex = 0;
+            Array.Clear(currentPathWaypoints, 0, currentPathWaypoints.Length);
+            currentPathWaypointIndex = 0;
+            navMeshPath.ClearCorners();
+
+            // Reset Follow Direction State
+            currentDirection = Vector3.zero;
         }
 
-        public void SetDestination(Vector3 destination)
+        public bool SetDestination(Vector3 destination)
         {
-            ResetPathing();
+            Stop();
 
+            if (navMeshPath == null) return false;
+            bool validPathFound = NavMesh.CalculatePath(transform.position, destination, 1, navMeshPath);
+            if (!validPathFound) Debug.LogWarning("Path could not be calculated.");
             currentDesitation = destination;
+            currentPathWaypoints = navMeshPath.corners;
 
-            if (navMeshPath != null)
-            {
-                NavMesh.CalculatePath(transform.position, destination, 1, navMeshPath);
-                currentWaypoints = navMeshPath.corners;
-                currentWaypointIndex = 0;
+            movementState = MovementState.FollowingPath;
 
-                pathPending = true;
-            }
+            return true;
         }
 
-        public void SetDirection(Vector3 direction)
+        public bool SetDirection(Vector3 direction)
         {
-            ResetPathing();
-            directionPending = true;
+            Stop();
 
             currentDirection = direction;
+
+            movementState = MovementState.FollowingDirection;
+
+            return true;
         }
+
+        public bool LookTowards(Vector3 target)
+        {
+            entityCharacterController.LookTowards(target);
+
+            return true;
+        }
+
+        public bool SetAutomaticLookRotationLock(bool isLocked)
+        {
+            entityCharacterController.SetAutomaticLookRotationLock(isLocked);
+
+            return true;
+        }
+        
+        #endregion
     }
 }
