@@ -26,6 +26,12 @@ namespace DigDig2
 
         #endregion
 
+        #region Visuals State Variables
+
+        private Transform focusedTransform;
+
+        #endregion
+
         private EntityCharacterController entityCharacterController;
 
         public enum MovementState
@@ -47,6 +53,12 @@ namespace DigDig2
 
         private void Update()
         {
+            if (focusedTransform != null)
+            {
+                Debug.Log("Looker");
+                LookTowards(focusedTransform.position);
+            }
+            
             switch (movementState)
             {
                 case MovementState.FollowingPath:
@@ -76,7 +88,6 @@ namespace DigDig2
                             else
                             {
                                 // No more waypoints to follow, entity has finished, reset path
-                                Debug.Log("Stopped");
                                 Stop();
                             }
                         }
@@ -160,9 +171,23 @@ namespace DigDig2
             return true;
         }
 
+        public bool SetFocusedLookTransform(Transform newFocusedTransform)
+        {
+            focusedTransform = newFocusedTransform;
+
+            return true;
+        }
+
         public bool SetAutomaticLookRotationLock(bool isLocked)
         {
             entityCharacterController.SetAutomaticLookRotationLock(isLocked);
+
+            return true;
+        }
+
+        public bool SetSprintMode(bool isSprinting)
+        {
+            entityCharacterController.isSprinting = isSprinting;
 
             return true;
         }
