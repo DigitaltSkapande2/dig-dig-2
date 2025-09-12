@@ -3,7 +3,7 @@ using UnityEngine.Events;
 
 namespace DigDig2
 {
-    public class Damageable : MonoBehaviour
+    public class Health : MonoBehaviour
     {
         enum DamageType
         {
@@ -43,9 +43,9 @@ namespace DigDig2
             Damage(0);
         }
 
-        void OnCollisionEnter(Collision collision)
+        public void OnHit(AttackData data)
         {
-            
+            Damage(data.damage);
         }
 
         void Damage(int damage)
@@ -82,7 +82,10 @@ namespace DigDig2
 
         void PlayDeathEffects()
         {
-
+            foreach (GameObject effect in deathEffects)
+            {
+                Instantiate(effect, transform.position, Quaternion.identity);
+            }
         }
 
         void Die()
