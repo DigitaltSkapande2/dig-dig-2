@@ -2,8 +2,9 @@ using DigDig2;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerAttack : MonoBehaviour, GameInputSystem.IAttackActions
+public class PlayerAttack : MonoBehaviour //GameInputSystem.IAttackActions
 {
+    /*
     [SerializeField] AttackData attackData;
 
     private GameInputSystem.AttackActions attackActions;
@@ -66,11 +67,16 @@ public class PlayerAttack : MonoBehaviour, GameInputSystem.IAttackActions
 
     }
 
-    public void OnMouse(InputAction.CallbackContext context)
+    public void OnMouseAim(InputAction.CallbackContext context)
     {
         if (frozen) { return; }
 
         mousePos = context.ReadValue<Vector2>();
+    }
+
+    public void OnJoystickAim(InputAction.CallbackContext context)
+    {
+        
     }
 
     #endregion
@@ -135,5 +141,6 @@ public class PlayerAttack : MonoBehaviour, GameInputSystem.IAttackActions
             Destroy(box.gameObject);
         }
     }
+    */
 
 }

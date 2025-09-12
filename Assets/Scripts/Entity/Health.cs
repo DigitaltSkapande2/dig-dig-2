@@ -3,6 +3,7 @@ using UnityEngine.Events;
 
 namespace DigDig2
 {
+    [RequireComponent(typeof(Attackable))]
     public class Health : MonoBehaviour
     {
         enum DamageType
@@ -41,9 +42,11 @@ namespace DigDig2
         {
             hp = maxHealth;
             Damage(0);
+
+            GetComponent<Attackable>().hit.AddListener(OnHit);
         }
 
-        public void OnHit(AttackData data)
+        void OnHit(AttackData data)
         {
             Damage(data.damage);
         }

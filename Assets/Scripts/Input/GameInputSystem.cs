@@ -1096,9 +1096,18 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Mouse"",
+                    ""name"": ""JoystickAim"",
                     ""type"": ""Value"",
                     ""id"": ""167710a6-17ac-4c19-8d4e-cedea33debfa"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""MouseAim"",
+                    ""type"": ""Value"",
+                    ""id"": ""0a8ad2ae-31a3-4b5f-9259-47a43d10a4fc"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -1174,12 +1183,12 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""05c36913-533b-4460-aab8-69f10dc58036"",
-                    ""path"": ""<Mouse>/position"",
+                    ""id"": ""47403358-1678-4f77-8f61-9e3e82dbb06d"",
+                    ""path"": ""<Gamepad>/leftStick"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Mouse"",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""JoystickAim"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -1191,6 +1200,17 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
                     ""action"": ""Attack2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""486ca93e-f08f-4731-9cb1-ad7d59ef2ab7"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""MouseAim"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1296,7 +1316,8 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
         m_Attack = asset.FindActionMap("Attack", throwIfNotFound: true);
         m_Attack_Attack1 = m_Attack.FindAction("Attack1", throwIfNotFound: true);
         m_Attack_Attack2 = m_Attack.FindAction("Attack2", throwIfNotFound: true);
-        m_Attack_Mouse = m_Attack.FindAction("Mouse", throwIfNotFound: true);
+        m_Attack_JoystickAim = m_Attack.FindAction("JoystickAim", throwIfNotFound: true);
+        m_Attack_MouseAim = m_Attack.FindAction("MouseAim", throwIfNotFound: true);
     }
 
     ~@GameInputSystem()
@@ -2051,7 +2072,8 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
     private List<IAttackActions> m_AttackActionsCallbackInterfaces = new List<IAttackActions>();
     private readonly InputAction m_Attack_Attack1;
     private readonly InputAction m_Attack_Attack2;
-    private readonly InputAction m_Attack_Mouse;
+    private readonly InputAction m_Attack_JoystickAim;
+    private readonly InputAction m_Attack_MouseAim;
     /// <summary>
     /// Provides access to input actions defined in input action map "Attack".
     /// </summary>
@@ -2072,9 +2094,13 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @Attack2 => m_Wrapper.m_Attack_Attack2;
         /// <summary>
-        /// Provides access to the underlying input action "Attack/Mouse".
+        /// Provides access to the underlying input action "Attack/JoystickAim".
         /// </summary>
-        public InputAction @Mouse => m_Wrapper.m_Attack_Mouse;
+        public InputAction @JoystickAim => m_Wrapper.m_Attack_JoystickAim;
+        /// <summary>
+        /// Provides access to the underlying input action "Attack/MouseAim".
+        /// </summary>
+        public InputAction @MouseAim => m_Wrapper.m_Attack_MouseAim;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -2107,9 +2133,12 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
             @Attack2.started += instance.OnAttack2;
             @Attack2.performed += instance.OnAttack2;
             @Attack2.canceled += instance.OnAttack2;
-            @Mouse.started += instance.OnMouse;
-            @Mouse.performed += instance.OnMouse;
-            @Mouse.canceled += instance.OnMouse;
+            @JoystickAim.started += instance.OnJoystickAim;
+            @JoystickAim.performed += instance.OnJoystickAim;
+            @JoystickAim.canceled += instance.OnJoystickAim;
+            @MouseAim.started += instance.OnMouseAim;
+            @MouseAim.performed += instance.OnMouseAim;
+            @MouseAim.canceled += instance.OnMouseAim;
         }
 
         /// <summary>
@@ -2127,9 +2156,12 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
             @Attack2.started -= instance.OnAttack2;
             @Attack2.performed -= instance.OnAttack2;
             @Attack2.canceled -= instance.OnAttack2;
-            @Mouse.started -= instance.OnMouse;
-            @Mouse.performed -= instance.OnMouse;
-            @Mouse.canceled -= instance.OnMouse;
+            @JoystickAim.started -= instance.OnJoystickAim;
+            @JoystickAim.performed -= instance.OnJoystickAim;
+            @JoystickAim.canceled -= instance.OnJoystickAim;
+            @MouseAim.started -= instance.OnMouseAim;
+            @MouseAim.performed -= instance.OnMouseAim;
+            @MouseAim.canceled -= instance.OnMouseAim;
         }
 
         /// <summary>
@@ -2444,11 +2476,18 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnAttack2(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "Mouse" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "JoystickAim" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnMouse(InputAction.CallbackContext context);
+        void OnJoystickAim(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "MouseAim" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnMouseAim(InputAction.CallbackContext context);
     }
 }

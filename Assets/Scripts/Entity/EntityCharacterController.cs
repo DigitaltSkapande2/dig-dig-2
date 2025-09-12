@@ -28,7 +28,7 @@ namespace DigDig2
 				frozen = value;
 
 				characterController.enabled = !frozen;
-				gameObject.GetComponent<PlayerAttack>().SetFrozen(frozen);
+				//gameObject.GetComponent<PlayerAttack>().SetFrozen(frozen);
 			}
 		}
 		private bool frozen = false;

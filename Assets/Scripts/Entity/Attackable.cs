@@ -8,6 +8,6 @@ public class Attackable : MonoBehaviour
 
     public void Hit(AttackData attackData)
     {
-        
+        hit.Invoke(attackData);
     }
 }
