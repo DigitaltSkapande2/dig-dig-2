@@ -72,7 +72,7 @@ using UnityEngine.InputSystem.Utilities;
 /// }
 /// </code>
 /// </example>
-public partial class @GameInputSystem: IInputActionCollection2, IDisposable
+public partial class @ProjectWideInputActions: IInputActionCollection2, IDisposable
 {
     /// <summary>
     /// Provides access to the underlying asset instance.
@@ -82,7 +82,7 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
     /// <summary>
     /// Constructs a new instance.
     /// </summary>
-    public @GameInputSystem()
+    public @ProjectWideInputActions()
     {
         asset = InputActionAsset.FromJson(@"{
     ""name"": ""InputSystem_Actions"",
@@ -1299,14 +1299,14 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
         m_Attack_Mouse = m_Attack.FindAction("Mouse", throwIfNotFound: true);
     }
 
-    ~@GameInputSystem()
+    ~@ProjectWideInputActions()
     {
-        UnityEngine.Debug.Assert(!m_Player.enabled, "This will cause a leak and performance issues, GameInputSystem.Player.Disable() has not been called.");
-        UnityEngine.Debug.Assert(!m_DebugNotes.enabled, "This will cause a leak and performance issues, GameInputSystem.DebugNotes.Disable() has not been called.");
-        UnityEngine.Debug.Assert(!m_UI.enabled, "This will cause a leak and performance issues, GameInputSystem.UI.Disable() has not been called.");
-        UnityEngine.Debug.Assert(!m_DebugConsole.enabled, "This will cause a leak and performance issues, GameInputSystem.DebugConsole.Disable() has not been called.");
-        UnityEngine.Debug.Assert(!m_DebugMenu.enabled, "This will cause a leak and performance issues, GameInputSystem.DebugMenu.Disable() has not been called.");
-        UnityEngine.Debug.Assert(!m_Attack.enabled, "This will cause a leak and performance issues, GameInputSystem.Attack.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_Player.enabled, "This will cause a leak and performance issues, ProjectWideInputActions.Player.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_DebugNotes.enabled, "This will cause a leak and performance issues, ProjectWideInputActions.DebugNotes.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_UI.enabled, "This will cause a leak and performance issues, ProjectWideInputActions.UI.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_DebugConsole.enabled, "This will cause a leak and performance issues, ProjectWideInputActions.DebugConsole.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_DebugMenu.enabled, "This will cause a leak and performance issues, ProjectWideInputActions.DebugMenu.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_Attack.enabled, "This will cause a leak and performance issues, ProjectWideInputActions.Attack.Disable() has not been called.");
     }
 
     /// <summary>
@@ -1390,12 +1390,12 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
     /// </summary>
     public struct PlayerActions
     {
-        private @GameInputSystem m_Wrapper;
+        private @ProjectWideInputActions m_Wrapper;
 
         /// <summary>
         /// Construct a new instance of the input action map wrapper class.
         /// </summary>
-        public PlayerActions(@GameInputSystem wrapper) { m_Wrapper = wrapper; }
+        public PlayerActions(@ProjectWideInputActions wrapper) { m_Wrapper = wrapper; }
         /// <summary>
         /// Provides access to the underlying input action "Player/Move".
         /// </summary>
@@ -1507,12 +1507,12 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
     /// </summary>
     public struct DebugNotesActions
     {
-        private @GameInputSystem m_Wrapper;
+        private @ProjectWideInputActions m_Wrapper;
 
         /// <summary>
         /// Construct a new instance of the input action map wrapper class.
         /// </summary>
-        public DebugNotesActions(@GameInputSystem wrapper) { m_Wrapper = wrapper; }
+        public DebugNotesActions(@ProjectWideInputActions wrapper) { m_Wrapper = wrapper; }
         /// <summary>
         /// Provides access to the underlying input action "DebugNotes/PlaceNote".
         /// </summary>
@@ -1622,12 +1622,12 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
     /// </summary>
     public struct UIActions
     {
-        private @GameInputSystem m_Wrapper;
+        private @ProjectWideInputActions m_Wrapper;
 
         /// <summary>
         /// Construct a new instance of the input action map wrapper class.
         /// </summary>
-        public UIActions(@GameInputSystem wrapper) { m_Wrapper = wrapper; }
+        public UIActions(@ProjectWideInputActions wrapper) { m_Wrapper = wrapper; }
         /// <summary>
         /// Provides access to the underlying input action "UI/Navigate".
         /// </summary>
@@ -1812,12 +1812,12 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
     /// </summary>
     public struct DebugConsoleActions
     {
-        private @GameInputSystem m_Wrapper;
+        private @ProjectWideInputActions m_Wrapper;
 
         /// <summary>
         /// Construct a new instance of the input action map wrapper class.
         /// </summary>
-        public DebugConsoleActions(@GameInputSystem wrapper) { m_Wrapper = wrapper; }
+        public DebugConsoleActions(@ProjectWideInputActions wrapper) { m_Wrapper = wrapper; }
         /// <summary>
         /// Provides access to the underlying input action "DebugConsole/OpenDebugConsole".
         /// </summary>
@@ -1949,12 +1949,12 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
     /// </summary>
     public struct DebugMenuActions
     {
-        private @GameInputSystem m_Wrapper;
+        private @ProjectWideInputActions m_Wrapper;
 
         /// <summary>
         /// Construct a new instance of the input action map wrapper class.
         /// </summary>
-        public DebugMenuActions(@GameInputSystem wrapper) { m_Wrapper = wrapper; }
+        public DebugMenuActions(@ProjectWideInputActions wrapper) { m_Wrapper = wrapper; }
         /// <summary>
         /// Provides access to the underlying input action "DebugMenu/OpenDebugMenu".
         /// </summary>
@@ -2057,12 +2057,12 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
     /// </summary>
     public struct AttackActions
     {
-        private @GameInputSystem m_Wrapper;
+        private @ProjectWideInputActions m_Wrapper;
 
         /// <summary>
         /// Construct a new instance of the input action map wrapper class.
         /// </summary>
-        public AttackActions(@GameInputSystem wrapper) { m_Wrapper = wrapper; }
+        public AttackActions(@ProjectWideInputActions wrapper) { m_Wrapper = wrapper; }
         /// <summary>
         /// Provides access to the underlying input action "Attack/Attack".
         /// </summary>

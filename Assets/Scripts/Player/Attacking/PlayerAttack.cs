@@ -2,11 +2,10 @@ using DigDig2;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerAttack : MonoBehaviour, GameInputSystem.IAttackActions
+public class PlayerAttack : MonoBehaviour, ProjectWideInputActions.IAttackActions
 {
     [SerializeField] AttackData attackData;
 
-    private GameInputSystem.AttackActions attackActions;
     Vector2 mousePos;
     bool frozen;
 
@@ -21,10 +20,6 @@ public class PlayerAttack : MonoBehaviour, GameInputSystem.IAttackActions
         EnableInput();
     }
 
-    void OnDisable()
-    {
-        DisableInput();
-    }
     /// <summary>
     /// Used by the PlayerCharacterController to mirror the "frozen" state of the player
     /// </summary>
@@ -38,16 +33,16 @@ public class PlayerAttack : MonoBehaviour, GameInputSystem.IAttackActions
 
     private void EnableInput()
     {
-        attackActions = GameInputManager.Instance.gameInputSystem.Attack;
+        ProjectWideInputActions.AttackActions attackActions = InputManager.Instance.inputActions.Attack;
 
         attackActions.SetCallbacks(this);
-        attackActions.Enable();
     }
 
-    private void DisableInput()
+    void OnDisable()
     {
-        attackActions.Disable();
+        InputManager.Instance.inputActions.Attack.RemoveCallbacks(this);
     }
+
 
     #endregion
 

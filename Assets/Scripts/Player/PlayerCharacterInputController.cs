@@ -5,10 +5,10 @@ using UnityEngine.InputSystem;
 namespace DigDig2
 {
     [RequireComponent(typeof(EntityCharacterController))]
-    public class PlayerCharacterInputController : NetworkBehaviour, GameInputSystem.IPlayerActions
+    public class PlayerCharacterInputController : NetworkBehaviour, ProjectWideInputActions.IPlayerActions
     {
         // Input
-        private GameInputSystem.PlayerActions playerActions;
+        private ProjectWideInputActions.PlayerActions playerActions;
         private bool hasStarted = false;
 
         // Character Controller
@@ -36,8 +36,8 @@ namespace DigDig2
                 DebugNotesManager.Instance.RegisterPlayerCharacterController(entityCharacterController);
 
                 // Temporary fix to add the character to the camera
-                GameCamera gameCamera = FindFirstObjectByType<GameCamera>();
-                gameCamera.targets.Add(transform);
+                //GameCamera gameCamera = FindFirstObjectByType<GameCamera>();
+                //gameCamera.targets.Add(transform);
             }
         }
 
@@ -64,15 +64,14 @@ namespace DigDig2
 
         private void EnableInput()
         {
-            playerActions = GameInputManager.Instance.gameInputSystem.Player;
+            playerActions = InputManager.Instance.inputActions.Player;
 
             playerActions.SetCallbacks(this);
-            playerActions.Enable();
         }
 
         private void DisableInput()
         {
-            playerActions.Disable();
+            playerActions.RemoveCallbacks(this);
         }
 
         #endregion
