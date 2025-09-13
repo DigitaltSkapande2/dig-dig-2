@@ -28,7 +28,7 @@ namespace DigDig2
 				frozen = value;
 
 				characterController.enabled = !frozen;
-				gameObject.GetComponent<PlayerAttack>().SetFrozen(frozen);
+				//gameObject.GetComponent<PlayerAttack>().SetFrozen(frozen);
 			}
 		}
 		private bool frozen = false;
@@ -62,7 +62,7 @@ namespace DigDig2
 		[Space(20)]
 
 		[Tooltip("How strong the stick force when going down slopes should be.")]
-		[SerializeField] private float slopeStickPower = 0.001f;
+		[SerializeField] private float slopeStickPower = 0.1f;
 
 		[Tooltip("How fast the acceleration when sliding down slopes should be. Sliding down slopes only happens when the slope's angle is above CharacterController.slopeLimit.")]
 		[SerializeField] private float slopeSlidePower = 5f;
@@ -100,8 +100,11 @@ namespace DigDig2
 		[Tooltip("Add the GameObject which holds all of the visuals here.")]
 		[SerializeField] private GameObject visualsParent;
 
-		[Tooltip("The lerp speed the visuals rotate at when the entity moves.")]
-		[SerializeField] private float visualsMovementRotationSpeed;
+		[Tooltip("The lerp speed the visuals rotate at when the entity moves or is told to look somewhere.")]
+		[SerializeField] private float visualsRotationSpeed = 15f;
+
+		[Tooltip("Locks the automatic visuals rotation when input is detected.")]
+		[SerializeField] private bool automaticLookRotationLocked = false;
 
 		// Movement
 		private CharacterController characterController;
@@ -133,6 +136,22 @@ namespace DigDig2
 
 		private void Update()
 		{
+			if (isLocalPlayer || isServer)
+			{
+				// Movement
+				// NOTE: Reorder movement processing order here!
+				ProcessGravity();
+				ProcessMove();
+				ProcessSlope();
+
+				if (!frozen) ApplyMovement();
+
+				ProcessEdge();
+
+				// Visuals
+				UpdateVisualsRotation();
+			}
+
 			if (isClient)
 			{
 				if (isLocalPlayer)
@@ -326,7 +345,7 @@ namespace DigDig2
 
 		private void UpdateVisualsRotation()
 		{
-			if (inputMoveVector.magnitude > 0 && !frozen)
+			if (inputMoveVector.magnitude > 0 && !frozen && !automaticLookRotationLocked)
 			{
 				targetLookRotation = Vector3.SignedAngle(transform.forward, inputMoveVector, transform.up);
 			}
@@ -336,8 +355,18 @@ namespace DigDig2
 		{
 			Quaternion targetRotation = Quaternion.Euler(0f, targetLookRotation, 0f);
 
-			if (useLerp) visualsParent.transform.rotation = Quaternion.Lerp(visualsParent.transform.rotation, targetRotation, Time.deltaTime * visualsMovementRotationSpeed);
+			if (useLerp) visualsParent.transform.rotation = Quaternion.Lerp(visualsParent.transform.rotation, targetRotation, Time.deltaTime * visualsRotationSpeed);
 			else visualsParent.transform.rotation = targetRotation;
+		}
+
+		public void LookTowards(Vector3 target)
+		{
+			targetLookRotation = Vector3.SignedAngle(transform.forward, target - transform.position, transform.up);
+		}
+
+		public void SetAutomaticLookRotationLock(bool isLocked)
+		{
+			automaticLookRotationLocked = isLocked;
 		}
 
 		#endregion

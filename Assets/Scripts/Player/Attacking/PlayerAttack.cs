@@ -2,10 +2,12 @@ using DigDig2;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerAttack : MonoBehaviour, ProjectWideInputActions.IAttackActions
+public class PlayerAttack : MonoBehaviour //GameInputSystem.IAttackActions
 {
+    /*
     [SerializeField] AttackData attackData;
 
+    private GameInputSystem.AttackActions attackActions;
     Vector2 mousePos;
     bool frozen;
 
@@ -20,6 +22,10 @@ public class PlayerAttack : MonoBehaviour, ProjectWideInputActions.IAttackAction
         EnableInput();
     }
 
+    void OnDisable()
+    {
+        DisableInput();
+    }
     /// <summary>
     /// Used by the PlayerCharacterController to mirror the "frozen" state of the player
     /// </summary>
@@ -33,22 +39,22 @@ public class PlayerAttack : MonoBehaviour, ProjectWideInputActions.IAttackAction
 
     private void EnableInput()
     {
-        ProjectWideInputActions.AttackActions attackActions = InputManager.Instance.inputActions.Attack;
+        attackActions = GameInputManager.Instance.gameInputSystem.Attack;
 
         attackActions.SetCallbacks(this);
+        attackActions.Enable();
     }
 
-    void OnDisable()
+    private void DisableInput()
     {
-        InputManager.Instance.inputActions.Attack.RemoveCallbacks(this);
+        attackActions.Disable();
     }
-
-
+//sigma was here
     #endregion
 
     #region Inputs
 
-    public void OnAttack(InputAction.CallbackContext context)
+    public void OnAttack1(InputAction.CallbackContext context)
     {
         if (context.started)
         {
@@ -56,16 +62,21 @@ public class PlayerAttack : MonoBehaviour, ProjectWideInputActions.IAttackAction
         }
     }
 
-    public void OnAim(InputAction.CallbackContext context)
+    public void OnAttack2(InputAction.CallbackContext context)
     {
 
     }
 
-    public void OnMouse(InputAction.CallbackContext context)
+    public void OnMouseAim(InputAction.CallbackContext context)
     {
         if (frozen) { return; }
 
         mousePos = context.ReadValue<Vector2>();
+    }
+
+    public void OnJoystickAim(InputAction.CallbackContext context)
+    {
+        
     }
 
     #endregion
@@ -130,5 +141,6 @@ public class PlayerAttack : MonoBehaviour, ProjectWideInputActions.IAttackAction
             Destroy(box.gameObject);
         }
     }
+    */
 
 }
