@@ -6,6 +6,8 @@ namespace DigDig2
     public class AttackData : ScriptableObject
     {
         public int damage;
+
+        public float invincibilityTime;
         public float knockbackPower;
         public float invicibilityTime;
         public float cooldown;
