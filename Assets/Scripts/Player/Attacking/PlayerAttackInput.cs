@@ -32,15 +32,15 @@ namespace DigDig2
         [SerializeField] AttackData[] lightRangedAttacks;
         [SerializeField] AttackData[] heavyRangedAttacks;
 
-        Vector2 mousePos;
-        Vector2 joystickVector;
-
-        float attackCooldown;
-
         AttackInfo lightMeleeInfo;
         AttackInfo heavyMeleeInfo;
         AttackInfo lightRangedInfo;
         AttackInfo heavyRangedInfo;
+
+        Vector2 mousePos;
+        Vector2 joystickVector;
+
+        float attackCooldown;
 
         bool aiming;
         bool rangedAttackCharging;
@@ -65,7 +65,6 @@ namespace DigDig2
             attackActions = InputManager.Instance.inputActions.Attack;
 
             attackActions.SetCallbacks(this);
-
         }
 
         private void DisableInput()

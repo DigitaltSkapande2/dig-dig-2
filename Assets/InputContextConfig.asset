@@ -15,14 +15,14 @@ MonoBehaviour:
   inputActions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   mapContexts:
   - mapName: Player
-    context: 0
+    context: 2
   - mapName: DebugNotes
-    context: 0
+    context: 2
   - mapName: UI
     context: 0
   - mapName: DebugConsole
-    context: 0
+    context: 8
   - mapName: DebugMenu
-    context: 0
+    context: 2
   - mapName: Attack
-    context: 0
+    context: 2
