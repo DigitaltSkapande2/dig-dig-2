@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Ocean_Mat
+  m_Name: TEST
   m_Shader: {fileID: -6465566751694194690, guid: 1910ca8dcdfddc141a70768b9ff1649a, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -67,8 +67,8 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _DepthDistance: 0.98
-    - _DepthStrength: 0.09
+    - _DepthDistance: 0.02
+    - _DepthStrength: 0.008
     - _DisplaceStrength: 0.06
     - _FlowSize: 3.55
     - _FlowSpeed: 0.08
