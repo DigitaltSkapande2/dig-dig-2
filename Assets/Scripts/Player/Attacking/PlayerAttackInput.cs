@@ -4,9 +4,9 @@ using UnityEngine.Rendering.Universal;
 
 namespace DigDig2
 {
-    public class PlayerAttackInput : MonoBehaviour, GameInputSystem.IAttackActions
+    public class PlayerAttackInput : MonoBehaviour, ProjectWideInputActions.IAttackActions
     {
-        private GameInputSystem.AttackActions attackActions;
+        private ProjectWideInputActions.AttackActions attackActions;
         private Animator animator;
         private EntityCharacterController entityCharacterController;
 
@@ -62,15 +62,15 @@ namespace DigDig2
 
         private void EnableInput()
         {
-            attackActions = GameInputManager.Instance.gameInputSystem.Attack;
+            attackActions = InputManager.Instance.inputActions.Attack;
 
             attackActions.SetCallbacks(this);
-            attackActions.Enable();
+
         }
 
         private void DisableInput()
         {
-            attackActions.Disable();
+            attackActions.RemoveCallbacks(this);
         }
 
         #endregion
