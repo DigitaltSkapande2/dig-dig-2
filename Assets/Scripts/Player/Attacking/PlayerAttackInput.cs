@@ -4,9 +4,9 @@ using UnityEngine.Rendering.Universal;
 
 namespace DigDig2
 {
-    public class PlayerAttackInput : MonoBehaviour, GameInputSystem.IAttackActions
+    public class PlayerAttackInput : MonoBehaviour, ProjectWideInputActions.IAttackActions
     {
-        private GameInputSystem.AttackActions attackActions;
+        private ProjectWideInputActions.AttackActions attackActions;
         private Animator animator;
         private EntityCharacterController entityCharacterController;
 
@@ -32,15 +32,15 @@ namespace DigDig2
         [SerializeField] AttackData[] lightRangedAttacks;
         [SerializeField] AttackData[] heavyRangedAttacks;
 
-        Vector2 mousePos;
-        Vector2 joystickVector;
-
-        float attackCooldown;
-
         AttackInfo lightMeleeInfo;
         AttackInfo heavyMeleeInfo;
         AttackInfo lightRangedInfo;
         AttackInfo heavyRangedInfo;
+
+        Vector2 mousePos;
+        Vector2 joystickVector;
+
+        float attackCooldown;
 
         bool aiming;
         bool rangedAttackCharging;
@@ -62,15 +62,14 @@ namespace DigDig2
 
         private void EnableInput()
         {
-            attackActions = GameInputManager.Instance.gameInputSystem.Attack;
+            attackActions = InputManager.Instance.inputActions.Attack;
 
             attackActions.SetCallbacks(this);
-            attackActions.Enable();
         }
 
         private void DisableInput()
         {
-            attackActions.Disable();
+            attackActions.RemoveCallbacks(this);
         }
 
         #endregion
