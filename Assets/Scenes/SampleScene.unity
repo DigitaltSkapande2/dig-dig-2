@@ -5762,6 +5762,7 @@ MonoBehaviour:
   - rid: 1217018901321220182
   - rid: 1217018901321220183
   - rid: 1217018901321220184
+  - rid: 8122051051056005428
   m_IsInitialised: 0
   m_IsStarted: 0
   references:
@@ -5796,6 +5797,14 @@ MonoBehaviour:
           m_Value1: 16468564652571363867
         Name: Enemy
         m_Value: {fileID: 1663128655}
+    - rid: 8122051051056005428
+      type: {class: 'BlackboardVariable`1[[BehaviorTestType, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 8333448519615864380
+          m_Value1: 7244335908673377373
+        Name: Behavior Test Type
+        m_Value: 3
 --- !u!143 &963754047
 CharacterController:
   m_ObjectHideFlags: 0
@@ -6534,7 +6543,6 @@ GameObject:
   - component: {fileID: 1663128657}
   - component: {fileID: 1663128656}
   - component: {fileID: 1663128660}
-  - component: {fileID: 1663128661}
   m_Layer: 0
   m_Name: Cube (1)
   m_TagString: Untagged
@@ -6652,21 +6660,6 @@ MonoBehaviour:
       m_Calls: []
   deathEffects: []
   deathEvent:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!114 &1663128661
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1663128655}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a5eb71039f853af4bb9e8027626f0a29, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hit:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &1720988796

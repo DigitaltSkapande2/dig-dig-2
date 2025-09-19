@@ -51,6 +51,7 @@ namespace DigDig2.CinemaCamera {
         void Update()
         {
             Vector3 targetPos = Vector3.zero;
+            Quaternion targetRotation = Quaternion.identity;
 
             foreach (var effector in effectiveCameraEffectors)
             {
@@ -58,10 +59,12 @@ namespace DigDig2.CinemaCamera {
 
             }
 
-            
+
 
 
             transform.position = Vector3.Lerp(transform.position, targetPos, followSpeed);
+
+            //transform.rotation = targetRotation;
         }
     }
 }
