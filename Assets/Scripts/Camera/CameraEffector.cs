@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using DigDig2.CinemaCamera;
 using UnityEngine;
@@ -9,14 +10,14 @@ namespace DigDig2.CinemaCamera
     {
         public bool isActive;
 
-        public Vector3 position;
-        public bool overridePosition;
+        [NonSerialized] public Vector3 position;
+        [NonSerialized] public bool overridePosition;
 
-        public Vector3 rotation;
-        public bool overrideRotation;
+        [NonSerialized] public Vector3 rotation;
+        [NonSerialized] public bool overrideRotation;
 
-        public float frustumSize;
-        public bool overrideFrustumSize;
+        [NonSerialized] public float frustumSize;
+        [NonSerialized] public bool overrideFrustumSize;
 
         [SerializeField] private int priorityLevel;
         public int PriorityLevel
@@ -35,9 +36,9 @@ namespace DigDig2.CinemaCamera
             }
         }
 
-        public CameraEffector()
+        private void Start()
         {
-            
+            GameCamera.AddCameraEffector(this);
         }
     }
 }

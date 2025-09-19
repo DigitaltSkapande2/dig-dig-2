@@ -22,6 +22,7 @@ namespace DigDig2.CinemaCamera {
         {
             allCameraEffectors.Add(effector);
             ReCompileEffectiveEffectors();
+            Debug.Log(effectiveCameraEffectors[0]);
         }
 
         public static void RemoveCameraEffector(CameraEffector effector)
@@ -34,15 +35,15 @@ namespace DigDig2.CinemaCamera {
         {
             // Find the highest priority level among effectors with any override
             int highestPriority = allCameraEffectors
-            .Where(e => e.overridePosition || e.overrideRotation || e.overrideFrustumSize)
             .Select(e => e.PriorityLevel)
             .DefaultIfEmpty(0)
             .Max();
 
+            Debug.Log(highestPriority);
+
             // Filter effectors with the highest priority and any override
             effectiveCameraEffectors = allCameraEffectors
-            .Where(e => e.PriorityLevel == highestPriority &&
-                    (e.overridePosition || e.overrideRotation || e.overrideFrustumSize))
+            .Where(e => e.PriorityLevel == highestPriority)
             .OrderByDescending(e => e.PriorityLevel)
             .ToList();
         }

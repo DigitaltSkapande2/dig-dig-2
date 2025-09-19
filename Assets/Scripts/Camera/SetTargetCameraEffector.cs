@@ -4,7 +4,7 @@ namespace DigDig2.CinemaCamera
 {
     public class SetTargetCameraEffector : CameraEffector
     {
-        Transform targetTransform;
+        [SerializeField] Transform targetTransform;
 
         void Update()
         {
