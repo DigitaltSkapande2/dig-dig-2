@@ -5740,6 +5740,8 @@ MonoBehaviour:
   edgeScanRadius: 0.6
   edgeScanDistance: 0.25
   edgeScanSlopeLimit: 75
+  knockbackMultiplier: 0
+  knockbackFallofSpeed: 0
   visualsParent: {fileID: 1179798348}
   visualsRotationSpeed: 15
   automaticLookRotationLocked: 0
@@ -5760,7 +5762,7 @@ MonoBehaviour:
   - rid: 1217018901321220182
   - rid: 1217018901321220183
   - rid: 1217018901321220184
-  - rid: 1217018901321220253
+  - rid: 8122051051056005428
   m_IsInitialised: 0
   m_IsStarted: 0
   references:
@@ -5795,14 +5797,14 @@ MonoBehaviour:
           m_Value1: 16468564652571363867
         Name: Enemy
         m_Value: {fileID: 1663128655}
-    - rid: 1217018901321220253
+    - rid: 8122051051056005428
       type: {class: 'BlackboardVariable`1[[BehaviorTestType, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
           m_Value0: 8333448519615864380
           m_Value1: 7244335908673377373
         Name: Behavior Test Type
-        m_Value: 1
+        m_Value: 3
 --- !u!143 &963754047
 CharacterController:
   m_ObjectHideFlags: 0

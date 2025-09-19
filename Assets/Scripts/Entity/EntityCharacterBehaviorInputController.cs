@@ -55,7 +55,6 @@ namespace DigDig2
         {
             if (focusedTransform != null)
             {
-                Debug.Log("Looker");
                 LookTowards(focusedTransform.position);
             }
             
@@ -115,7 +114,7 @@ namespace DigDig2
                         Gizmos.DrawSphere(currentPathWaypoints[pathWaypointIndex], 0.25f);
                     }
                     Gizmos.color = Color.red;
-                    Gizmos.DrawSphere(currentPathWaypoints[currentPathWaypointIndex], 0.5f);
+                    if (currentPathWaypoints.Length - 1 >= currentPathWaypointIndex) Gizmos.DrawSphere(currentPathWaypoints[currentPathWaypointIndex], 0.5f);
                     break;
             }
 
