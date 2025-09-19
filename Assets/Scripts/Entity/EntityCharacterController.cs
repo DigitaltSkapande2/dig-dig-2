@@ -2,12 +2,16 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using DigDig2.Debugging;
 using DigDig2;
+using System.Collections.Generic;
+using System.Linq;
+using Mirror;
+using UnityEditor.EditorTools;
 
 namespace DigDig2
 {
 	// This might be kaboom?
 	[Debug(DebugMenuToggleable.non_toggleable), RequireComponent(typeof(CharacterController))]
-	public class EntityCharacterController : MonoBehaviour
+	public class EntityCharacterController : NetworkBehaviour
 	{
 		// These get set public bools are supposed to be serialized but unity or C# doesn't allow that so fix this please!
 		[Tooltip("Freezes the entity (stops running ´CharacterController.Move()´) and disables the CharacterController component. Allows you to move the entity by setting their transform. Use EntityCharacterController.Teleport() for teleporting instead.")]
@@ -24,7 +28,7 @@ namespace DigDig2
 				frozen = value;
 
 				characterController.enabled = !frozen;
-				gameObject.GetComponent<PlayerAttack>().SetFrozen(frozen);
+				//gameObject.GetComponent<PlayerAttack>().SetFrozen(frozen);
 			}
 		}
 		private bool frozen = false;
@@ -40,8 +44,11 @@ namespace DigDig2
 
 		[Space(20)]
 
-		[Tooltip("The max speed the entity can move.")]
-		[DebugSerialized] private float moveSpeed = 7.5f;
+		[Tooltip("The max speed the entity can walk at.")]
+		[SerializeField, DebugSerialized] private float moveSpeed = 5f;
+
+		[Tooltip("The mac speed the entity can sprint at.")]
+		[SerializeField, DebugSerialized] private float sprintMoveSpeed = 7.5f;
 
 		[Tooltip("The direction the entity is currently moving.")]
 		[SerializeField] public Vector3 inputMoveVector = Vector3.zero;
@@ -49,10 +56,13 @@ namespace DigDig2
 		[Tooltip("The move acceleration and decelleration speed, higher is faster.")]
 		[SerializeField] private float moveInputVectorLerpSpeed = 10f;
 
+		[Tooltip("If the entity is sprinting or not, moveSpeed is default speed, sprintMoveSpeed is sprint speed.")]
+		[SerializeField] public bool isSprinting = false;
+
 		[Space(20)]
 
 		[Tooltip("How strong the stick force when going down slopes should be.")]
-		[SerializeField] private float slopeStickPower = 0.001f;
+		[SerializeField] private float slopeStickPower = 0.1f;
 
 		[Tooltip("How fast the acceleration when sliding down slopes should be. Sliding down slopes only happens when the slope's angle is above CharacterController.slopeLimit.")]
 		[SerializeField] private float slopeSlidePower = 5f;
@@ -61,7 +71,7 @@ namespace DigDig2
 		[SerializeField] private float slopeSlideDecaySpeed = 5f;
 
 		[Tooltip("How far to scan for slopes under the character's feet.")]
-		[SerializeField] private float slopeScanDistance = 0.5f;
+		[SerializeField] private float slopeScanDistance = 1f;
 
 		[Space(20)]
 
@@ -74,13 +84,27 @@ namespace DigDig2
 		[Tooltip("How far to scan for edges under the character's feet.")]
 		[SerializeField] private float edgeScanDistance = 1.5f;
 
+		[Tooltip("Like CharacterController.slopeLimit but for edge detection")]
+		[SerializeField] private float edgeScanSlopeLimit = 75f;
+
+		[Header("Combat")]
+
+		[Tooltip("Knockback multiplier")]
+		[SerializeField] private float knockbackMultiplier;
+
+		[Tooltip("How fast you return to stationary after taking knockback")]
+		[SerializeField] private float knockbackFallofSpeed;
+
 		[Header("Visuals")]
 
 		[Tooltip("Add the GameObject which holds all of the visuals here.")]
 		[SerializeField] private GameObject visualsParent;
 
-		[Tooltip("The lerp speed the visuals rotate at when the entity moves.")]
-		[SerializeField] private float visualsMovementRotationSpeed;
+		[Tooltip("The lerp speed the visuals rotate at when the entity moves or is told to look somewhere.")]
+		[SerializeField] private float visualsRotationSpeed = 15f;
+
+		[Tooltip("Locks the automatic visuals rotation when input is detected.")]
+		[SerializeField] private bool automaticLookRotationLocked = false;
 
 		// Movement
 		private CharacterController characterController;
@@ -91,6 +115,10 @@ namespace DigDig2
 
 		private Vector3 slopeSlideVelocity;
 
+		private Vector3 knockbackVelocity;
+
+		[SyncVar] private float targetLookRotation = 0f;
+
 
 
 		private void Awake()
@@ -100,28 +128,56 @@ namespace DigDig2
 
 		private void Start()
 		{
-			//Application.targetFrameRate = 15;
-
-			DebugNotesManager.Instance.RegisterPlayerCharacterController(this);
+			if (isClient)
+			{
+				RefreshVisualsRotation(false);
+			}
 		}
 
 		private void Update()
 		{
-			// Movement
-			// NOTE: Reorder movement processing order here!
-			ProcessGravity();
-			ProcessMove();
-			ProcessSlope();
-			ProcessEdge();
+			if (isLocalPlayer || isServer)
+			{
+				// Movement
+				// NOTE: Reorder movement processing order here!
+				ProcessGravity();
+				ProcessMove();
+				ProcessSlope();
 
-			if (!frozen) ApplyMovement();
+				if (!frozen) ApplyMovement();
 
-			// Visuals
-			UpdateVisualsRotation();
+				ProcessEdge();
+
+				// Visuals
+				UpdateVisualsRotation();
+			}
+
+			if (isClient)
+			{
+				if (isLocalPlayer)
+				{
+					// Movement
+					// NOTE: Reorder movement processing order here!
+					ProcessGravity();
+					ProcessMove();
+					ProcessSlope();
+					ProcessKnockback();
+
+					if (!frozen) ApplyMovement();
+
+					ProcessEdge();
+
+					// Visuals
+					UpdateVisualsRotation();
+				}
+
+				RefreshVisualsRotation();
+			}
 		}
 
 		#region Movement
 
+		[Client]
 		private void ProcessGravity()
 		{
 			if (characterController.isGrounded)
@@ -135,14 +191,18 @@ namespace DigDig2
 		}
 
 		// Add move/walk/run to current velocity
+		[Client]
 		private void ProcessMove()
 		{
+			float speed = isSprinting ? sprintMoveSpeed : moveSpeed;
+
 			// Lerp move input vector to create smooth acceleration and decelleration
-			moveVector = Vector3.Lerp(moveVector, inputMoveVector * moveSpeed, Time.deltaTime * moveInputVectorLerpSpeed);
+			moveVector = Vector3.Lerp(moveVector, inputMoveVector * speed, Time.deltaTime * moveInputVectorLerpSpeed);
 
 			velocity = new(moveVector.x, velocity.y, moveVector.z);
 		}
 
+		[Client]
 		private void ProcessSlope()
 		{
 			// Raycast for slope
@@ -171,29 +231,61 @@ namespace DigDig2
 			velocity += slopeSlideVelocity;
 		}
 
+		[Client]
+		private void ProcessKnockback()
+		{
+			velocity += knockbackVelocity;
+			knockbackVelocity = Vector3.Lerp(knockbackVelocity, Vector3.zero, knockbackFallofSpeed * Time.deltaTime);
+		}
+
+		[Client]
 		private void ProcessEdge()
 		{
-			Vector3 totalEdgeNudge = Vector3.zero;
-			int numberOfEdgesDetected = 0;
+			Dictionary<Vector3, float> edgeAdjustments = new();
+
+			Vector3 centerRaycastEndPoint = transform.position + -transform.up * (characterController.height / 2f + edgeScanDistance);
 			for (int raycastIndex = 0; raycastIndex < edgeScanRaycasts; raycastIndex++)
 			{
 				float positionDegrees = raycastIndex * 360 / edgeScanRaycasts;
-				Vector3 raycastPosition = new(Mathf.Cos(positionDegrees * Mathf.Deg2Rad), 0f, Mathf.Sin(positionDegrees * Mathf.Deg2Rad));
+				Vector3 raycastLocalPosition = new(Mathf.Cos(positionDegrees * Mathf.Deg2Rad), 0f, Mathf.Sin(positionDegrees * Mathf.Deg2Rad));
+				Vector3 raycastGlobalPosition = transform.position + raycastLocalPosition * edgeScanRadius;
 
-				Physics.Raycast(transform.position + raycastPosition * edgeScanRadius, -transform.up, out RaycastHit raycastInfo, characterController.height / 2f + edgeScanDistance, groundLayers);
-				if (!raycastInfo.collider)
+				Physics.Raycast(raycastGlobalPosition, -transform.up, out RaycastHit downRaycastInfo, characterController.height / 2f + edgeScanDistance, groundLayers);
+				if (!downRaycastInfo.collider)
 				{
-					UnityEngine.Debug.DrawRay(transform.position + raycastPosition * edgeScanRadius, -transform.up, Color.red, 0.01f, true);
+					Vector3 downRaycastEndPoint = raycastGlobalPosition + -transform.up * (characterController.height / 2f + edgeScanDistance);
+					Vector3 centerRaycastDirection = (centerRaycastEndPoint - downRaycastEndPoint).normalized;
+					Physics.Raycast(downRaycastEndPoint, centerRaycastDirection, out RaycastHit centerRaycastInfo, edgeScanRadius * 2f, groundLayers);
 
-					totalEdgeNudge += raycastPosition * moveVector.magnitude;
-					numberOfEdgesDetected++;
+					if (!centerRaycastInfo.collider) continue;
+					float slopeAngle = Vector3.Angle(transform.up, centerRaycastInfo.normal);
+					if (slopeAngle <= edgeScanSlopeLimit) continue;
+
+					Debug.DrawRay(raycastGlobalPosition, -transform.up * (characterController.height / 2f + edgeScanDistance), Color.red, 0.01f, true);
+					Debug.DrawRay(downRaycastEndPoint, centerRaycastDirection, Color.red, 0.01f, true);
+					Debug.DrawRay(centerRaycastInfo.point, centerRaycastInfo.normal, Color.blue, 0.01f, true);
+
+					if (edgeAdjustments.Keys.Contains(centerRaycastInfo.normal))
+					{
+						if (edgeAdjustments[centerRaycastInfo.normal] < centerRaycastInfo.distance) edgeAdjustments[centerRaycastInfo.normal] = centerRaycastInfo.distance;
+					}
+					else
+					{
+						edgeAdjustments[centerRaycastInfo.normal] = centerRaycastInfo.distance;
+					}
 				}
 			}
 
-			if (numberOfEdgesDetected > 0) velocity -= totalEdgeNudge / numberOfEdgesDetected;
+			foreach (KeyValuePair<Vector3, float> edgeAdjustment in edgeAdjustments)
+			{
+				Vector3 adjustment = -edgeAdjustment.Key * Mathf.Max(0, edgeAdjustment.Value);
+				characterController.Move(adjustment);
+				Debug.DrawRay(transform.position, adjustment, Color.purple, 0.01f, true);
+			}
 		}
 
 		// Add velocity to CharacterController
+		[Client]
 		private void ApplyMovement(bool isFixedUpdate = false)
 		{
 			// Set deltaTime to 1 if method is called by FixedUpdate() message, if not, set to real delta time.
@@ -240,15 +332,41 @@ namespace DigDig2
 
 		#endregion
 
+		#region Combat
+
+		public void ApplyKnockback(Vector3 knockbackForce)
+		{
+			knockbackVelocity = knockbackForce * knockbackMultiplier;
+		}
+
+		#endregion
+
 		#region Visuals
 
 		private void UpdateVisualsRotation()
 		{
-			if (inputMoveVector.magnitude > 0 && !frozen)
+			if (inputMoveVector.magnitude > 0 && !frozen && !automaticLookRotationLocked)
 			{
-				Quaternion targetRotation = Quaternion.Euler(0f, Vector3.SignedAngle(transform.forward, inputMoveVector, transform.up), 0f);
-				visualsParent.transform.rotation = Quaternion.Lerp(visualsParent.transform.rotation, targetRotation, Time.deltaTime * 10f);
+				targetLookRotation = Vector3.SignedAngle(transform.forward, inputMoveVector, transform.up);
 			}
+		}
+
+		private void RefreshVisualsRotation(bool useLerp = true)
+		{
+			Quaternion targetRotation = Quaternion.Euler(0f, targetLookRotation, 0f);
+
+			if (useLerp) visualsParent.transform.rotation = Quaternion.Lerp(visualsParent.transform.rotation, targetRotation, Time.deltaTime * visualsRotationSpeed);
+			else visualsParent.transform.rotation = targetRotation;
+		}
+
+		public void LookTowards(Vector3 target)
+		{
+			targetLookRotation = Vector3.SignedAngle(transform.forward, target - transform.position, transform.up);
+		}
+
+		public void SetAutomaticLookRotationLock(bool isLocked)
+		{
+			automaticLookRotationLocked = isLocked;
 		}
 
 		#endregion

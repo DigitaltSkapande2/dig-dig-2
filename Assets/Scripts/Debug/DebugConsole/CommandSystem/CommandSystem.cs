@@ -3,8 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
-using Mono.Cecil;
-using NUnit.Framework;
 
 namespace DigDig2.Debugging
 {

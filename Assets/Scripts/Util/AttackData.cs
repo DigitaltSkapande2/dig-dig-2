@@ -5,15 +5,9 @@ namespace DigDig2
     [CreateAssetMenu(fileName = "AttackData", menuName = "ScriptableObjects/AttackData")]
     public class AttackData : ScriptableObject
     {
-        public AnimationCurve X;
-        public AnimationCurve Y;
-        public AnimationCurve Z;
-
-        public AnimationCurve speed;
-
-        public float step;
-        public float attackTime;
-
-        public GameObject hitbox;
+        public int damage;
+        public float knockbackPower;
+        public float invicibilityTime;
+        public float cooldown;
     }
 }

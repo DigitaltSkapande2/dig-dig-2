@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace DigDig2
 {
-	public class DebugNotesManager : Singleton<DebugNotesManager>, GameInputSystem.IDebugNotesActions
+	public class DebugNotesManager : Singleton<DebugNotesManager>, ProjectWideInputActions.IDebugNotesActions
 	{
 		[Header("Note Storage")]
 
@@ -46,7 +46,7 @@ namespace DigDig2
 		[Tooltip("The in-game note billboard prefab.")]
 		[SerializeField] private DebugNoteBillboard debugNoteBillboardPrefab;
 
-		private GameInputSystem.DebugNotesActions debugNotesActions;
+		private ProjectWideInputActions.DebugNotesActions debugNotesActions;
 
 		private EntityCharacterController playerCharacterController;
 
@@ -349,34 +349,40 @@ namespace DigDig2
 
 		private void ShowNoteManagementInterface(NoteManagementMode managementMode)
 		{
-			noteManagementMode = managementMode;
-			switch (managementMode)
+			if (playerCharacterController)
 			{
-				case NoteManagementMode.place:
-					interfaceTitle.text = "Place Note";
-					break;
-				case NoteManagementMode.edit:
-					interfaceTitle.text = "Edit Note";
-					break;
+				noteManagementMode = managementMode;
+				switch (managementMode)
+				{
+					case NoteManagementMode.place:
+						interfaceTitle.text = "Place Note";
+						break;
+					case NoteManagementMode.edit:
+						interfaceTitle.text = "Edit Note";
+						break;
+				}
+
+				interfaceCanvas.SetActive(true);
+
+				playerCharacterController.Frozen = true;
 			}
-
-			interfaceCanvas.SetActive(true);
-
-			playerCharacterController.Frozen = true;
 		}
 		private void HideNoteManagementInterface()
 		{
-			interfaceCanvas.SetActive(false);
+			if (playerCharacterController)
+			{
+				interfaceCanvas.SetActive(false);
 
-			playerCharacterController.Frozen = false;
+				playerCharacterController.Frozen = false;
 
-			interfaceArchiveButton.interactable = false;
+				interfaceArchiveButton.interactable = false;
 
-			interfaceTitleInputField.text = "";
-			interfaceNoteInputField.text = "";
-			interfaceAuthorInputField.text = "";
+				interfaceTitleInputField.text = "";
+				interfaceNoteInputField.text = "";
+				interfaceAuthorInputField.text = "";
 
-			noteManagementMode = NoteManagementMode.none;
+				noteManagementMode = NoteManagementMode.none;
+			}
 		}
 
 		// Player pressed the confirm button on the note management interface
@@ -436,22 +442,22 @@ namespace DigDig2
 
 		private void EnableInput()
 		{
-			debugNotesActions = GameInputManager.Instance.gameInputSystem.DebugNotes;
+			debugNotesActions = InputManager.Instance.inputActions.DebugNotes;
 
 			debugNotesActions.SetCallbacks(this);
-			debugNotesActions.Enable();
 		}
 
-		private void DisableInput()
-		{
-			debugNotesActions.Disable();
-		}
+        void OnDisable()
+        {
+			debugNotesActions.RemoveCallbacks(this);
+        }
 
-		#endregion
 
-		#region Input
+        #endregion
 
-		public void OnPlaceNote(InputAction.CallbackContext context)
+        #region Input
+
+        public void OnPlaceNote(InputAction.CallbackContext context)
 		{
 			StartNotePlacement();
 		}

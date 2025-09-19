@@ -1,13 +1,14 @@
+using Mirror;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace DigDig2
 {
     [RequireComponent(typeof(EntityCharacterController))]
-    public class PlayerCharacterInputController : MonoBehaviour, GameInputSystem.IPlayerActions
+    public class PlayerCharacterInputController : NetworkBehaviour, ProjectWideInputActions.IPlayerActions
     {
         // Input
-        private GameInputSystem.PlayerActions playerActions;
+        private ProjectWideInputActions.PlayerActions playerActions;
         private bool hasStarted = false;
 
         // Character Controller
@@ -27,13 +28,22 @@ namespace DigDig2
 
         private void Start()
         {
-            EnableInput();
-            hasStarted = true;
+            if (isLocalPlayer)
+            {
+                EnableInput();
+                hasStarted = true;
+
+                DebugNotesManager.Instance.RegisterPlayerCharacterController(entityCharacterController);
+
+                // Temporary fix to add the character to the camera
+                //GameCamera gameCamera = FindFirstObjectByType<GameCamera>();
+                //gameCamera.targets.Add(transform);
+            }
         }
 
         private void Update()
         {
-            if (Camera.main)
+            if (isLocalPlayer && Camera.main)
             {
                 Vector3 rotatedInputMoveVector = Quaternion.Euler(0f, Camera.main.transform.rotation.eulerAngles.y, 0f) * new Vector3(inputMoveVector.x, 0f, inputMoveVector.y);
                 entityCharacterController.inputMoveVector = rotatedInputMoveVector;
@@ -54,15 +64,14 @@ namespace DigDig2
 
         private void EnableInput()
         {
-            playerActions = GameInputManager.Instance.gameInputSystem.Player;
+            playerActions = InputManager.Instance.inputActions.Player;
 
             playerActions.SetCallbacks(this);
-            playerActions.Enable();
         }
 
         private void DisableInput()
         {
-            playerActions.Disable();
+            playerActions.RemoveCallbacks(this);
         }
 
         #endregion
@@ -74,16 +83,6 @@ namespace DigDig2
             inputMoveVector = context.ReadValue<Vector2>();
         }
 
-        public void OnAttack(InputAction.CallbackContext context)
-        {
-            GetComponent<PlayerAttack>().OnAttack(context);
-        }
-
-        public void OnMouse(InputAction.CallbackContext context)
-        {
-            GetComponent<PlayerAttack>().OnMouse(context);
-        }
-
         public void OnInteract(InputAction.CallbackContext context)
         {
             if (interactor) interactor.SendInteraction(context.phase);
@@ -91,7 +90,7 @@ namespace DigDig2
 
         public void OnSprint(InputAction.CallbackContext context)
         {
-
+            entityCharacterController.isSprinting = context.performed;
         }
 
         #endregion

@@ -72,7 +72,7 @@ using UnityEngine.InputSystem.Utilities;
 /// }
 /// </code>
 /// </example>
-public partial class @GameInputSystem: IInputActionCollection2, IDisposable
+public partial class @ProjectWideInputActions: IInputActionCollection2, IDisposable
 {
     /// <summary>
     /// Provides access to the underlying asset instance.
@@ -82,7 +82,7 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
     /// <summary>
     /// Constructs a new instance.
     /// </summary>
-    public @GameInputSystem()
+    public @ProjectWideInputActions()
     {
         asset = InputActionAsset.FromJson(@"{
     ""name"": ""InputSystem_Actions"",
@@ -1078,7 +1078,7 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
             ""id"": ""5f26ae09-937e-461f-8cc7-873303ec384d"",
             ""actions"": [
                 {
-                    ""name"": ""Attack"",
+                    ""name"": ""Attack1"",
                     ""type"": ""Button"",
                     ""id"": ""690c06f7-f69f-499f-8449-90ddafba4b50"",
                     ""expectedControlType"": """",
@@ -1087,7 +1087,7 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Aim"",
+                    ""name"": ""Attack2"",
                     ""type"": ""Button"",
                     ""id"": ""2db9ff37-e277-4cde-94dd-684ff227bdfd"",
                     ""expectedControlType"": """",
@@ -1096,9 +1096,18 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Mouse"",
+                    ""name"": ""JoystickAim"",
                     ""type"": ""Value"",
                     ""id"": ""167710a6-17ac-4c19-8d4e-cedea33debfa"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""MouseAim"",
+                    ""type"": ""Value"",
+                    ""id"": ""0a8ad2ae-31a3-4b5f-9259-47a43d10a4fc"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -1113,7 +1122,7 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Gamepad"",
-                    ""action"": ""Attack"",
+                    ""action"": ""Attack1"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -1124,7 +1133,7 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Attack"",
+                    ""action"": ""Attack1"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -1135,7 +1144,7 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Touch"",
-                    ""action"": ""Attack"",
+                    ""action"": ""Attack1"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -1146,7 +1155,7 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Joystick"",
-                    ""action"": ""Attack"",
+                    ""action"": ""Attack1"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -1157,7 +1166,7 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""XR"",
-                    ""action"": ""Attack"",
+                    ""action"": ""Attack1"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -1168,18 +1177,18 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Attack"",
+                    ""action"": ""Attack1"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""05c36913-533b-4460-aab8-69f10dc58036"",
-                    ""path"": ""<Mouse>/position"",
+                    ""id"": ""47403358-1678-4f77-8f61-9e3e82dbb06d"",
+                    ""path"": ""<Gamepad>/leftStick"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Mouse"",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""JoystickAim"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -1190,7 +1199,18 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Aim"",
+                    ""action"": ""Attack2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""486ca93e-f08f-4731-9cb1-ad7d59ef2ab7"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""MouseAim"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1294,19 +1314,20 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
         m_DebugMenu_CloseDebugMenu = m_DebugMenu.FindAction("CloseDebugMenu", throwIfNotFound: true);
         // Attack
         m_Attack = asset.FindActionMap("Attack", throwIfNotFound: true);
-        m_Attack_Attack = m_Attack.FindAction("Attack", throwIfNotFound: true);
-        m_Attack_Aim = m_Attack.FindAction("Aim", throwIfNotFound: true);
-        m_Attack_Mouse = m_Attack.FindAction("Mouse", throwIfNotFound: true);
+        m_Attack_Attack1 = m_Attack.FindAction("Attack1", throwIfNotFound: true);
+        m_Attack_Attack2 = m_Attack.FindAction("Attack2", throwIfNotFound: true);
+        m_Attack_JoystickAim = m_Attack.FindAction("JoystickAim", throwIfNotFound: true);
+        m_Attack_MouseAim = m_Attack.FindAction("MouseAim", throwIfNotFound: true);
     }
 
-    ~@GameInputSystem()
+    ~@ProjectWideInputActions()
     {
-        UnityEngine.Debug.Assert(!m_Player.enabled, "This will cause a leak and performance issues, GameInputSystem.Player.Disable() has not been called.");
-        UnityEngine.Debug.Assert(!m_DebugNotes.enabled, "This will cause a leak and performance issues, GameInputSystem.DebugNotes.Disable() has not been called.");
-        UnityEngine.Debug.Assert(!m_UI.enabled, "This will cause a leak and performance issues, GameInputSystem.UI.Disable() has not been called.");
-        UnityEngine.Debug.Assert(!m_DebugConsole.enabled, "This will cause a leak and performance issues, GameInputSystem.DebugConsole.Disable() has not been called.");
-        UnityEngine.Debug.Assert(!m_DebugMenu.enabled, "This will cause a leak and performance issues, GameInputSystem.DebugMenu.Disable() has not been called.");
-        UnityEngine.Debug.Assert(!m_Attack.enabled, "This will cause a leak and performance issues, GameInputSystem.Attack.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_Player.enabled, "This will cause a leak and performance issues, ProjectWideInputActions.Player.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_DebugNotes.enabled, "This will cause a leak and performance issues, ProjectWideInputActions.DebugNotes.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_UI.enabled, "This will cause a leak and performance issues, ProjectWideInputActions.UI.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_DebugConsole.enabled, "This will cause a leak and performance issues, ProjectWideInputActions.DebugConsole.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_DebugMenu.enabled, "This will cause a leak and performance issues, ProjectWideInputActions.DebugMenu.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_Attack.enabled, "This will cause a leak and performance issues, ProjectWideInputActions.Attack.Disable() has not been called.");
     }
 
     /// <summary>
@@ -1390,12 +1411,12 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
     /// </summary>
     public struct PlayerActions
     {
-        private @GameInputSystem m_Wrapper;
+        private @ProjectWideInputActions m_Wrapper;
 
         /// <summary>
         /// Construct a new instance of the input action map wrapper class.
         /// </summary>
-        public PlayerActions(@GameInputSystem wrapper) { m_Wrapper = wrapper; }
+        public PlayerActions(@ProjectWideInputActions wrapper) { m_Wrapper = wrapper; }
         /// <summary>
         /// Provides access to the underlying input action "Player/Move".
         /// </summary>
@@ -1507,12 +1528,12 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
     /// </summary>
     public struct DebugNotesActions
     {
-        private @GameInputSystem m_Wrapper;
+        private @ProjectWideInputActions m_Wrapper;
 
         /// <summary>
         /// Construct a new instance of the input action map wrapper class.
         /// </summary>
-        public DebugNotesActions(@GameInputSystem wrapper) { m_Wrapper = wrapper; }
+        public DebugNotesActions(@ProjectWideInputActions wrapper) { m_Wrapper = wrapper; }
         /// <summary>
         /// Provides access to the underlying input action "DebugNotes/PlaceNote".
         /// </summary>
@@ -1622,12 +1643,12 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
     /// </summary>
     public struct UIActions
     {
-        private @GameInputSystem m_Wrapper;
+        private @ProjectWideInputActions m_Wrapper;
 
         /// <summary>
         /// Construct a new instance of the input action map wrapper class.
         /// </summary>
-        public UIActions(@GameInputSystem wrapper) { m_Wrapper = wrapper; }
+        public UIActions(@ProjectWideInputActions wrapper) { m_Wrapper = wrapper; }
         /// <summary>
         /// Provides access to the underlying input action "UI/Navigate".
         /// </summary>
@@ -1812,12 +1833,12 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
     /// </summary>
     public struct DebugConsoleActions
     {
-        private @GameInputSystem m_Wrapper;
+        private @ProjectWideInputActions m_Wrapper;
 
         /// <summary>
         /// Construct a new instance of the input action map wrapper class.
         /// </summary>
-        public DebugConsoleActions(@GameInputSystem wrapper) { m_Wrapper = wrapper; }
+        public DebugConsoleActions(@ProjectWideInputActions wrapper) { m_Wrapper = wrapper; }
         /// <summary>
         /// Provides access to the underlying input action "DebugConsole/OpenDebugConsole".
         /// </summary>
@@ -1949,12 +1970,12 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
     /// </summary>
     public struct DebugMenuActions
     {
-        private @GameInputSystem m_Wrapper;
+        private @ProjectWideInputActions m_Wrapper;
 
         /// <summary>
         /// Construct a new instance of the input action map wrapper class.
         /// </summary>
-        public DebugMenuActions(@GameInputSystem wrapper) { m_Wrapper = wrapper; }
+        public DebugMenuActions(@ProjectWideInputActions wrapper) { m_Wrapper = wrapper; }
         /// <summary>
         /// Provides access to the underlying input action "DebugMenu/OpenDebugMenu".
         /// </summary>
@@ -2049,32 +2070,37 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
     // Attack
     private readonly InputActionMap m_Attack;
     private List<IAttackActions> m_AttackActionsCallbackInterfaces = new List<IAttackActions>();
-    private readonly InputAction m_Attack_Attack;
-    private readonly InputAction m_Attack_Aim;
-    private readonly InputAction m_Attack_Mouse;
+    private readonly InputAction m_Attack_Attack1;
+    private readonly InputAction m_Attack_Attack2;
+    private readonly InputAction m_Attack_JoystickAim;
+    private readonly InputAction m_Attack_MouseAim;
     /// <summary>
     /// Provides access to input actions defined in input action map "Attack".
     /// </summary>
     public struct AttackActions
     {
-        private @GameInputSystem m_Wrapper;
+        private @ProjectWideInputActions m_Wrapper;
 
         /// <summary>
         /// Construct a new instance of the input action map wrapper class.
         /// </summary>
-        public AttackActions(@GameInputSystem wrapper) { m_Wrapper = wrapper; }
+        public AttackActions(@ProjectWideInputActions wrapper) { m_Wrapper = wrapper; }
         /// <summary>
-        /// Provides access to the underlying input action "Attack/Attack".
+        /// Provides access to the underlying input action "Attack/Attack1".
         /// </summary>
-        public InputAction @Attack => m_Wrapper.m_Attack_Attack;
+        public InputAction @Attack1 => m_Wrapper.m_Attack_Attack1;
         /// <summary>
-        /// Provides access to the underlying input action "Attack/Aim".
+        /// Provides access to the underlying input action "Attack/Attack2".
         /// </summary>
-        public InputAction @Aim => m_Wrapper.m_Attack_Aim;
+        public InputAction @Attack2 => m_Wrapper.m_Attack_Attack2;
         /// <summary>
-        /// Provides access to the underlying input action "Attack/Mouse".
+        /// Provides access to the underlying input action "Attack/JoystickAim".
         /// </summary>
-        public InputAction @Mouse => m_Wrapper.m_Attack_Mouse;
+        public InputAction @JoystickAim => m_Wrapper.m_Attack_JoystickAim;
+        /// <summary>
+        /// Provides access to the underlying input action "Attack/MouseAim".
+        /// </summary>
+        public InputAction @MouseAim => m_Wrapper.m_Attack_MouseAim;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -2101,15 +2127,18 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_AttackActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_AttackActionsCallbackInterfaces.Add(instance);
-            @Attack.started += instance.OnAttack;
-            @Attack.performed += instance.OnAttack;
-            @Attack.canceled += instance.OnAttack;
-            @Aim.started += instance.OnAim;
-            @Aim.performed += instance.OnAim;
-            @Aim.canceled += instance.OnAim;
-            @Mouse.started += instance.OnMouse;
-            @Mouse.performed += instance.OnMouse;
-            @Mouse.canceled += instance.OnMouse;
+            @Attack1.started += instance.OnAttack1;
+            @Attack1.performed += instance.OnAttack1;
+            @Attack1.canceled += instance.OnAttack1;
+            @Attack2.started += instance.OnAttack2;
+            @Attack2.performed += instance.OnAttack2;
+            @Attack2.canceled += instance.OnAttack2;
+            @JoystickAim.started += instance.OnJoystickAim;
+            @JoystickAim.performed += instance.OnJoystickAim;
+            @JoystickAim.canceled += instance.OnJoystickAim;
+            @MouseAim.started += instance.OnMouseAim;
+            @MouseAim.performed += instance.OnMouseAim;
+            @MouseAim.canceled += instance.OnMouseAim;
         }
 
         /// <summary>
@@ -2121,15 +2150,18 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
         /// <seealso cref="AttackActions" />
         private void UnregisterCallbacks(IAttackActions instance)
         {
-            @Attack.started -= instance.OnAttack;
-            @Attack.performed -= instance.OnAttack;
-            @Attack.canceled -= instance.OnAttack;
-            @Aim.started -= instance.OnAim;
-            @Aim.performed -= instance.OnAim;
-            @Aim.canceled -= instance.OnAim;
-            @Mouse.started -= instance.OnMouse;
-            @Mouse.performed -= instance.OnMouse;
-            @Mouse.canceled -= instance.OnMouse;
+            @Attack1.started -= instance.OnAttack1;
+            @Attack1.performed -= instance.OnAttack1;
+            @Attack1.canceled -= instance.OnAttack1;
+            @Attack2.started -= instance.OnAttack2;
+            @Attack2.performed -= instance.OnAttack2;
+            @Attack2.canceled -= instance.OnAttack2;
+            @JoystickAim.started -= instance.OnJoystickAim;
+            @JoystickAim.performed -= instance.OnJoystickAim;
+            @JoystickAim.canceled -= instance.OnJoystickAim;
+            @MouseAim.started -= instance.OnMouseAim;
+            @MouseAim.performed -= instance.OnMouseAim;
+            @MouseAim.canceled -= instance.OnMouseAim;
         }
 
         /// <summary>
@@ -2430,25 +2462,32 @@ public partial class @GameInputSystem: IInputActionCollection2, IDisposable
     public interface IAttackActions
     {
         /// <summary>
-        /// Method invoked when associated input action "Attack" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "Attack1" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnAttack(InputAction.CallbackContext context);
+        void OnAttack1(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "Aim" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "Attack2" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnAim(InputAction.CallbackContext context);
+        void OnAttack2(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "Mouse" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "JoystickAim" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnMouse(InputAction.CallbackContext context);
+        void OnJoystickAim(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "MouseAim" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnMouseAim(InputAction.CallbackContext context);
     }
 }

@@ -10,7 +10,7 @@ using UnityEngine.InputSystem;
 
 namespace DigDig2.Debugging
 {
-    public class DebugConsole : Singleton<DebugConsole>
+    public class DebugConsole : Singleton<DebugConsole>, ProjectWideInputActions.IDebugConsoleActions
     {
         [SerializeField, TextArea] private string standardSuggestion;
         [SerializeField] private ConsoleCommandBase[] commands;
@@ -45,34 +45,20 @@ namespace DigDig2.Debugging
         bool isConsoleOpen = false;
 
         // Input handling
-        private GameInputSystem.DebugConsoleActions inputMap;
+        private ProjectWideInputActions.DebugConsoleActions inputMap;
 
         #region UnityMessages
 
         private void Start() {
             UnityEngine.Debug.Log("RIZZZZ");
 
-            inputMap = GameInputManager.Instance.gameInputSystem.DebugConsole;
-            inputMap.OpenDebugConsole.performed += context => ToggleDevConsole();
-            inputMap.CloseDebugConsole.performed += context => CloseConsole();
-            inputMap.Confirm.started += context => OnConfirm();
-            inputMap.CycleSuggestions.started += OnCycleSuggestions;
-            inputMap.HistoryNavigation.started += context =>
-            {
-                if (!isConsoleOpen) return;
-                if (context.ReadValue<float>() > 0) HandleHistoryNavigationUp();
-                else HandleHistoryNavigationDown();
-            };
-            inputMap.Enable();
-        }
-
-        private void OnEnable() {
-            
+            inputMap = InputManager.Instance.inputActions.DebugConsole;
+            inputMap.SetCallbacks(this);
         }
 
         private void OnDisable()
         {
-            inputMap.Disable();
+            inputMap.RemoveCallbacks(this);
         }
 
         #endregion
@@ -116,8 +102,9 @@ namespace DigDig2.Debugging
 
         #region InputHandling
 
-        void OnConfirm()
+        public void OnConfirm(InputAction.CallbackContext context)
         {
+            if (!context.performed) return;
             if (!isConsoleOpen || inputField.text == string.Empty) return;
 
             if (currentSuggestionIndex != -1 && currentSuggestions.Count > 0)
@@ -134,7 +121,7 @@ namespace DigDig2.Debugging
         }
 
 
-        void OnCycleSuggestions(InputAction.CallbackContext context)
+        public void OnCycleSuggestions(InputAction.CallbackContext context)
         {
             if (!isConsoleOpen) return;
 
@@ -142,6 +129,23 @@ namespace DigDig2.Debugging
             {
                 CycleSuggestionSelection();
             }
+        }
+        
+        public void OnOpenDebugConsole(InputAction.CallbackContext context)
+        {
+            if (context.performed) ToggleDevConsole();
+        }
+
+        public void OnCloseDebugConsole(InputAction.CallbackContext context)
+        {
+            if (context.performed) CloseConsole();
+        }
+
+        public void OnHistoryNavigation(InputAction.CallbackContext context)
+        {
+                if (!isConsoleOpen) return;
+                if (context.ReadValue<float>() > 0) HandleHistoryNavigationUp();
+                else HandleHistoryNavigationDown();
         }
 
         #endregion
@@ -162,7 +166,7 @@ namespace DigDig2.Debugging
             }
 
             // Get suggestions from the command system
-            currentSuggestionIndex = -1; 
+            currentSuggestionIndex = -1;
             UpdateSuggestionText();
         }
 
@@ -346,7 +350,5 @@ namespace DigDig2.Debugging
                 InsertCurrentlySelectedSuggestion();
             }
         }
-
-
     }
 }
