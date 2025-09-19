@@ -303,10 +303,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackType: 0
   chainMargin: 1
+  crossFadeTransitionTime: 0.05
   lightMeleeAttacks:
   - {fileID: 11400000, guid: 5db0230ddc7758f4aaa4b00733fa2497, type: 2}
-  - {fileID: 11400000, guid: 5db0230ddc7758f4aaa4b00733fa2497, type: 2}
-  - {fileID: 11400000, guid: 5db0230ddc7758f4aaa4b00733fa2497, type: 2}
+  - {fileID: 11400000, guid: 2efd94fb2a3a76d48bebca453a122a6d, type: 2}
+  - {fileID: 11400000, guid: ca020beab6fc83b40a102f522f81d558, type: 2}
   heavyMeleeAttacks: []
   lightRangedAttacks: []
   heavyRangedAttacks: []

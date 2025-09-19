@@ -26,6 +26,7 @@ namespace DigDig2
 
         [SerializeField] AttackType attackType;
         [SerializeField] float chainMargin;
+        [SerializeField] float crossFadeTransitionTime;
 
         [SerializeField] AttackData[] lightMeleeAttacks;
         [SerializeField] AttackData[] heavyMeleeAttacks;
@@ -149,6 +150,8 @@ namespace DigDig2
             }
         }
 
+        #region Attacks
+
         void LightMeleeAttack()
         {
             if (lightMeleeAttacks.Length == 0)
@@ -156,9 +159,10 @@ namespace DigDig2
                 Debug.LogError("There are no assigned light melee attacks");
                 return;
             }
+
             if (Time.time - lightMeleeInfo.lastAttackTime > attackCooldown + chainMargin) lightMeleeInfo.chainIndex = 0;
-            
-            Debug.Log(lightMeleeInfo.chainIndex);
+
+            animator.CrossFade(lightMeleeAttacks[lightMeleeInfo.chainIndex].animation.name, crossFadeTransitionTime, 0, 0, 0);
             lightMeleeInfo.lastAttackTime = Time.time;
             attackCooldown = lightMeleeAttacks[lightMeleeInfo.chainIndex].cooldown;
 
@@ -180,12 +184,12 @@ namespace DigDig2
                 return;
             }
             if (Time.time - heavyMeleeInfo.lastAttackTime > attackCooldown + chainMargin) heavyMeleeInfo.chainIndex = 0;
-            
-            Debug.Log(heavyMeleeInfo.chainIndex);
-            heavyMeleeInfo.lastAttackTime = Time.time;
-            attackCooldown = lightMeleeAttacks[heavyMeleeInfo.chainIndex].cooldown;
 
-            if (heavyMeleeInfo.chainIndex >= lightMeleeAttacks.Length - 1)
+            animator.CrossFade(heavyMeleeAttacks[heavyMeleeInfo.chainIndex].animation.name, crossFadeTransitionTime, 0, 0, 0);
+            heavyMeleeInfo.lastAttackTime = Time.time;
+            attackCooldown = heavyMeleeAttacks[heavyMeleeInfo.chainIndex].cooldown;
+
+            if (heavyMeleeInfo.chainIndex >= heavyMeleeAttacks.Length - 1)
             {
                 heavyMeleeInfo.chainIndex = 0;
             }
@@ -197,12 +201,52 @@ namespace DigDig2
 
         void LightRangedAttack()
         {
+            if (lightRangedAttacks.Length == 0)
+            {
+                Debug.LogError("There are no assigned light ranged attacks");
+                return;
+            }
 
+            if (Time.time - lightRangedInfo.lastAttackTime > attackCooldown + chainMargin) lightRangedInfo.chainIndex = 0;
+
+            animator.CrossFade(lightRangedAttacks[lightRangedInfo.chainIndex].animation.name, crossFadeTransitionTime, 0, 0, 0);
+            lightRangedInfo.lastAttackTime = Time.time;
+            attackCooldown = lightRangedAttacks[lightRangedInfo.chainIndex].cooldown;
+
+            if (lightRangedInfo.chainIndex >= lightRangedAttacks.Length - 1)
+            {
+                lightRangedInfo.chainIndex = 0;
+            }
+            else
+            {
+                lightRangedInfo.chainIndex++;
+            }
         }
 
         void HeavyRangedAttack(float chargeValue)
         {
+            if (heavyRangedAttacks.Length == 0)
+            {
+                Debug.LogError("There are no assigned light ranged attacks");
+                return;
+            }
 
+            if (Time.time - heavyRangedInfo.lastAttackTime > attackCooldown + chainMargin) heavyRangedInfo.chainIndex = 0;
+
+            animator.CrossFade(heavyRangedAttacks[heavyRangedInfo.chainIndex].animation.name, crossFadeTransitionTime, 0, 0, 0);
+            heavyRangedInfo.lastAttackTime = Time.time;
+            attackCooldown = heavyRangedAttacks[heavyRangedInfo.chainIndex].cooldown;
+
+            if (heavyRangedInfo.chainIndex >= heavyRangedAttacks.Length - 1)
+            {
+                heavyRangedInfo.chainIndex = 0;
+            }
+            else
+            {
+                heavyRangedInfo.chainIndex++;
+            }
         }
+        
+        #endregion
     }
 }

@@ -9,5 +9,6 @@ namespace DigDig2
         public float knockbackPower;
         public float invicibilityTime;
         public float cooldown;
+        public AnimationClip animation;
     }
 }
