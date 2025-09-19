@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3395938736747772053}
   - component: {fileID: 4327746320760944597}
   - component: {fileID: 1459444429970365189}
+  - component: {fileID: 3598614305935570039}
   m_Layer: 3
   m_Name: PlayerCharacterController
   m_TagString: Untagged
@@ -166,6 +167,21 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
+--- !u!114 &3598614305935570039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4442565222488509090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa20fb2225ac6b64bbe8508896de8c83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isActive: 1
+  priorityLevel: 1
+  targetTransform: {fileID: 3368673675683253185}
 --- !u!1 &4933219036402945239
 GameObject:
   m_ObjectHideFlags: 0
