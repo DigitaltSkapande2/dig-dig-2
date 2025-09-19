@@ -280,6 +280,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2609356722885718918, guid: bab1e4510371eea4ca79e6010cb2355c, type: 3}
+      propertyPath: near clip plane
+      value: 550
+      objectReference: {fileID: 0}
     - target: {fileID: 4739365238837224391, guid: bab1e4510371eea4ca79e6010cb2355c, type: 3}
       propertyPath: m_Name
       value: GameCamera
@@ -6543,6 +6547,7 @@ GameObject:
   - component: {fileID: 1663128657}
   - component: {fileID: 1663128656}
   - component: {fileID: 1663128660}
+  - component: {fileID: 1663128661}
   m_Layer: 0
   m_Name: Cube (1)
   m_TagString: Untagged
@@ -6660,6 +6665,21 @@ MonoBehaviour:
       m_Calls: []
   deathEffects: []
   deathEvent:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &1663128661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1663128655}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5eb71039f853af4bb9e8027626f0a29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hit:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &1720988796

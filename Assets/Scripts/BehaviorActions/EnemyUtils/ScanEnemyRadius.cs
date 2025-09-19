@@ -17,7 +17,16 @@ namespace DigDig2
     {
         [SerializeReference] public BlackboardVariable<GameObject> Agent;
         [SerializeReference] public BlackboardVariable<float> Radius = new(5f);
-        [SerializeReference] public BlackboardVariable<BlackboardVariable> Variable;
+        [SerializeReference] public BlackboardVariable Variable;
+        [SerializeReference] public BlackboardVariable<LayerMask> EnemyLayer;
+        [SerializeReference] public BlackboardVariable<EnemyPriorityMode> EnemySelectionPriorityMode;
+
+        public enum EnemyPriorityMode
+        {
+            Closest,
+            Strongest,
+            Random,
+        }
 
         private EntityCharacterBehaviorAgent m_AgentCharacterBehaviorInputController;
 
@@ -30,7 +39,32 @@ namespace DigDig2
             }
 
             Initialize();
-            Debug.LogWarning("ScanEnemyRadius is unfinished.");
+
+            Collider[] foundEnemyColliders = Physics.OverlapSphere(m_AgentCharacterBehaviorInputController.transform.position, Radius, EnemyLayer.Value);
+            GameObject selectedEnemy = null;
+            switch (EnemySelectionPriorityMode.Value)
+            {
+                case EnemyPriorityMode.Closest:
+                    float closestEnemyDistance = -1f;
+                    foreach (Collider enemyCollider in foundEnemyColliders)
+                    {
+                        if (selectedEnemy == null || Vector3.Distance(enemyCollider.transform.position, m_AgentCharacterBehaviorInputController.transform.position) < closestEnemyDistance)
+                        {
+                            selectedEnemy = enemyCollider.gameObject;
+                            closestEnemyDistance = Vector3.Distance(selectedEnemy.transform.position, m_AgentCharacterBehaviorInputController.transform.position);
+                        }
+                    }
+
+                    break;
+                case EnemyPriorityMode.Strongest:
+                    LogFailure("Strongest priority mode has not been implemented yet.");
+                    return Status.Failure;
+                case EnemyPriorityMode.Random:
+                    selectedEnemy = foundEnemyColliders[UnityEngine.Random.Range(0, foundEnemyColliders.Length - 1)].gameObject;
+                    break;
+            }
+
+            Variable.ObjectValue = new BlackboardVariable<GameObject>(selectedEnemy);
 
             return Status.Failure;
         }
