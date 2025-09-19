@@ -1,6 +1,6 @@
+using Mirror;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Rendering.Universal;
 
 namespace DigDig2
 {
@@ -37,6 +37,8 @@ namespace DigDig2
         AttackInfo heavyMeleeInfo;
         AttackInfo lightRangedInfo;
         AttackInfo heavyRangedInfo;
+
+        float lastAttackCooldown;
 
         Vector2 mousePos;
         Vector2 joystickVector;
@@ -160,11 +162,12 @@ namespace DigDig2
                 return;
             }
 
-            if (Time.time - lightMeleeInfo.lastAttackTime > attackCooldown + chainMargin) lightMeleeInfo.chainIndex = 0;
+            if (Time.time - lightMeleeInfo.lastAttackTime > lastAttackCooldown + chainMargin) lightMeleeInfo.chainIndex = 0;
 
             animator.CrossFade(lightMeleeAttacks[lightMeleeInfo.chainIndex].animation.name, crossFadeTransitionTime, 0, 0, 0);
             lightMeleeInfo.lastAttackTime = Time.time;
             attackCooldown = lightMeleeAttacks[lightMeleeInfo.chainIndex].cooldown;
+            lastAttackCooldown = lightMeleeAttacks[lightMeleeInfo.chainIndex].cooldown;
 
             if (lightMeleeInfo.chainIndex >= lightMeleeAttacks.Length - 1)
             {
@@ -183,11 +186,13 @@ namespace DigDig2
                 Debug.LogError("There are no assigned heavy melee attacks");
                 return;
             }
-            if (Time.time - heavyMeleeInfo.lastAttackTime > attackCooldown + chainMargin) heavyMeleeInfo.chainIndex = 0;
+
+            if (Time.time - heavyMeleeInfo.lastAttackTime > lastAttackCooldown + chainMargin) heavyMeleeInfo.chainIndex = 0;
 
             animator.CrossFade(heavyMeleeAttacks[heavyMeleeInfo.chainIndex].animation.name, crossFadeTransitionTime, 0, 0, 0);
             heavyMeleeInfo.lastAttackTime = Time.time;
             attackCooldown = heavyMeleeAttacks[heavyMeleeInfo.chainIndex].cooldown;
+            lastAttackCooldown = heavyMeleeAttacks[heavyMeleeInfo.chainIndex].cooldown;
 
             if (heavyMeleeInfo.chainIndex >= heavyMeleeAttacks.Length - 1)
             {
@@ -207,11 +212,12 @@ namespace DigDig2
                 return;
             }
 
-            if (Time.time - lightRangedInfo.lastAttackTime > attackCooldown + chainMargin) lightRangedInfo.chainIndex = 0;
+            if (Time.time - lightRangedInfo.lastAttackTime > lastAttackCooldown + chainMargin) lightRangedInfo.chainIndex = 0;
 
             animator.CrossFade(lightRangedAttacks[lightRangedInfo.chainIndex].animation.name, crossFadeTransitionTime, 0, 0, 0);
             lightRangedInfo.lastAttackTime = Time.time;
             attackCooldown = lightRangedAttacks[lightRangedInfo.chainIndex].cooldown;
+            lastAttackCooldown = lightRangedAttacks[lightRangedInfo.chainIndex].cooldown;
 
             if (lightRangedInfo.chainIndex >= lightRangedAttacks.Length - 1)
             {
@@ -231,11 +237,12 @@ namespace DigDig2
                 return;
             }
 
-            if (Time.time - heavyRangedInfo.lastAttackTime > attackCooldown + chainMargin) heavyRangedInfo.chainIndex = 0;
+            if (Time.time - heavyRangedInfo.lastAttackTime > lastAttackCooldown + chainMargin) heavyRangedInfo.chainIndex = 0;
 
             animator.CrossFade(heavyRangedAttacks[heavyRangedInfo.chainIndex].animation.name, crossFadeTransitionTime, 0, 0, 0);
             heavyRangedInfo.lastAttackTime = Time.time;
             attackCooldown = heavyRangedAttacks[heavyRangedInfo.chainIndex].cooldown;
+            lastAttackCooldown = heavyRangedAttacks[heavyRangedInfo.chainIndex].cooldown;
 
             if (heavyRangedInfo.chainIndex >= heavyRangedAttacks.Length - 1)
             {
