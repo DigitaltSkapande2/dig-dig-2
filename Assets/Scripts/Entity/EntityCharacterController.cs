@@ -1,11 +1,8 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 using DigDig2.Debugging;
-using DigDig2;
 using System.Collections.Generic;
 using System.Linq;
 using Mirror;
-using UnityEditor.EditorTools;
 
 namespace DigDig2
 {
