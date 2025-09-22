@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Ocean_Mat
-  m_Shader: {fileID: -6465566751694194690, guid: 1910ca8dcdfddc141a70768b9ff1649a, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 7f71be1e02981d36995992d51023937c, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
