@@ -68,7 +68,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _DepthDistance: 0.99
-    - _DepthStrength: 0.03
+    - _DepthStrength: 0.13
     - _DisplaceStrength: 0.06
     - _FlowIntensity: 1.5
     - _FlowSize: 4
@@ -81,7 +81,7 @@ Material:
     - _FoamOpacity: 1
     - _FoamScale: 148.39
     - _FoamSpeed: 0.01
-    - _NormalStrength: 0.27
+    - _NormalStrength: 0.1
     - _NormalTiling: 2
     - _QueueControl: 0
     - _QueueOffset: 0

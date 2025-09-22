@@ -7,13 +7,13 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: 2 1
+  m_Name: TorchHandle
   m_Shader: {fileID: -6465566751694194690, guid: 411568d35f6bd0c41966c3226ce7d340, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords: []
-  m_LightmapFlags: 4
+  m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -46,20 +46,21 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _NoiseScale: 3.1
+    - _Metallic: 0
+    - _NoiseScale: 15
     - _NoiseStrength: 1
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _TextureIntensity: 3.54
-    - _TextureStrength: 0.741
-    - _TextureTiling: 0.21
+    - _Smoothness: 0
+    - _TextureIntensity: 1
+    - _TextureStrength: 1
+    - _TextureTiling: 1
     m_Colors:
-    - _BaseColor: {r: 0.046671372, g: 0.2603773, b: 0.07632181, a: 1}
-    - _TextureColor: {r: 0.072687745, g: 0.4641509, b: 0.15997127, a: 1}
-    - _TextureTiling: {r: 0.1, g: 0.1, b: 0, a: 0}
+    - _BaseColor: {r: 0.12452829, g: 0.102395035, b: 0.097508, a: 1}
+    - _TextureColor: {r: 0.240121, g: 0.2679245, b: 0.25346667, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
---- !u!114 &6317847466682676668
+--- !u!114 &8874348769641905334
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
