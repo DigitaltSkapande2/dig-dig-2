@@ -6,7 +6,7 @@ using Edgegap.Editor.Api.Models.Results;
 using UnityEngine;
 
 namespace DigDig2.CinemaCamera {
-    public class GameCamera : MonoBehaviour
+    public class GameCamera : Singleton<GameCamera>
     {
         private static List<CameraEffector> allCameraEffectors = new();
         private static List<CameraEffector> effectiveCameraEffectors = new();
