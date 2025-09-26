@@ -304,6 +304,7 @@ MonoBehaviour:
   attackType: 0
   chainMargin: 1
   crossFadeTransitionTime: 0.05
+  hitbox: {fileID: 7450309467125132612}
   lightMeleeAttacks:
   - {fileID: 11400000, guid: 5db0230ddc7758f4aaa4b00733fa2497, type: 2}
   - {fileID: 11400000, guid: 2efd94fb2a3a76d48bebca453a122a6d, type: 2}
@@ -403,6 +404,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4658790041644560610, guid: 9ec4a74b568160d46b8eb6decc764e9a, type: 3}
   m_PrefabInstance: {fileID: 7023143440062221927}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7450309467125132612 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 437947864694334243, guid: 9ec4a74b568160d46b8eb6decc764e9a, type: 3}
+  m_PrefabInstance: {fileID: 7023143440062221927}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 269f86873b7f7d74395dbca43e41b005, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &8712668477422401015
 PrefabInstance:
   m_ObjectHideFlags: 0

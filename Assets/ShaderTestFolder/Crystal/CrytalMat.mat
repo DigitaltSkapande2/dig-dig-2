@@ -58,6 +58,6 @@ Material:
     - _frensel_power: 0.77
     m_Colors:
     - _BaseColor: {r: 0.111963905, g: 0.06465594, b: 0.18725492, a: 1}
-    - _Color: {r: 0.15555884, g: 0, b: 0.6226415, a: 1}
+    - _Color: {r: 0.62223536, g: 0, b: 2.490566, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

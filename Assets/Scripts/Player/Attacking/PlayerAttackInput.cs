@@ -10,8 +10,6 @@ namespace DigDig2
         private Animator animator;
         private EntityCharacterController entityCharacterController;
 
-        private Hitbox hitbox;
-
         private struct AttackInfo
         {
             public int chainIndex;
@@ -27,6 +25,8 @@ namespace DigDig2
         [SerializeField] AttackType attackType;
         [SerializeField] float chainMargin;
         [SerializeField] float crossFadeTransitionTime;
+
+        [SerializeField] Hitbox hitbox;
 
         [SerializeField] AttackData[] lightMeleeAttacks;
         [SerializeField] AttackData[] heavyMeleeAttacks;
@@ -57,7 +57,6 @@ namespace DigDig2
 
         void Start()
         {
-            hitbox = GetComponentInChildren<Hitbox>();
             EnableInput();
         }
 
@@ -165,6 +164,8 @@ namespace DigDig2
             if (Time.time - lightMeleeInfo.lastAttackTime > lastAttackCooldown + chainMargin) lightMeleeInfo.chainIndex = 0;
 
             animator.CrossFade(lightMeleeAttacks[lightMeleeInfo.chainIndex].animation.name, crossFadeTransitionTime, 0, 0, 0);
+            hitbox.SetAttackData(lightMeleeAttacks[lightMeleeInfo.chainIndex]);
+
             lightMeleeInfo.lastAttackTime = Time.time;
             attackCooldown = lightMeleeAttacks[lightMeleeInfo.chainIndex].cooldown;
             lastAttackCooldown = lightMeleeAttacks[lightMeleeInfo.chainIndex].cooldown;
@@ -190,6 +191,8 @@ namespace DigDig2
             if (Time.time - heavyMeleeInfo.lastAttackTime > lastAttackCooldown + chainMargin) heavyMeleeInfo.chainIndex = 0;
 
             animator.CrossFade(heavyMeleeAttacks[heavyMeleeInfo.chainIndex].animation.name, crossFadeTransitionTime, 0, 0, 0);
+            hitbox.SetAttackData(heavyMeleeAttacks[heavyMeleeInfo.chainIndex]);
+
             heavyMeleeInfo.lastAttackTime = Time.time;
             attackCooldown = heavyMeleeAttacks[heavyMeleeInfo.chainIndex].cooldown;
             lastAttackCooldown = heavyMeleeAttacks[heavyMeleeInfo.chainIndex].cooldown;
@@ -215,6 +218,8 @@ namespace DigDig2
             if (Time.time - lightRangedInfo.lastAttackTime > lastAttackCooldown + chainMargin) lightRangedInfo.chainIndex = 0;
 
             animator.CrossFade(lightRangedAttacks[lightRangedInfo.chainIndex].animation.name, crossFadeTransitionTime, 0, 0, 0);
+            //Instantiate Projectile
+
             lightRangedInfo.lastAttackTime = Time.time;
             attackCooldown = lightRangedAttacks[lightRangedInfo.chainIndex].cooldown;
             lastAttackCooldown = lightRangedAttacks[lightRangedInfo.chainIndex].cooldown;
@@ -233,13 +238,15 @@ namespace DigDig2
         {
             if (heavyRangedAttacks.Length == 0)
             {
-                Debug.LogError("There are no assigned light ranged attacks");
+                Debug.LogError("There are no assigned heavy ranged attacks");
                 return;
             }
 
             if (Time.time - heavyRangedInfo.lastAttackTime > lastAttackCooldown + chainMargin) heavyRangedInfo.chainIndex = 0;
 
             animator.CrossFade(heavyRangedAttacks[heavyRangedInfo.chainIndex].animation.name, crossFadeTransitionTime, 0, 0, 0);
+            //Instantiate Projectile
+
             heavyRangedInfo.lastAttackTime = Time.time;
             attackCooldown = heavyRangedAttacks[heavyRangedInfo.chainIndex].cooldown;
             lastAttackCooldown = heavyRangedAttacks[heavyRangedInfo.chainIndex].cooldown;

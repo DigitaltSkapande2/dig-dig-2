@@ -46,12 +46,13 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _NoiseScale: 10
+    - _NoiseScale: 2.9
     - _NoiseStrength: 0.5
     - _QueueControl: 0
     - _QueueOffset: 0
     - _TextureIntensity: 5
     - _TextureStrength: 0.75
+    - _TextureTiling: 0.11
     m_Colors:
     - _BaseColor: {r: 0.13223922, g: 0.4641509, b: 0.14177391, a: 1}
     - _TextureColor: {r: 0.06751866, g: 0.4113207, b: 0.1825439, a: 1}

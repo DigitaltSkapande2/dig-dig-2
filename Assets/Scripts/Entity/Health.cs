@@ -37,6 +37,7 @@ namespace DigDig2
 
 
         int hp;
+        bool invincible;
 
         void Awake()
         {
@@ -48,6 +49,11 @@ namespace DigDig2
 
         void OnHit(AttackData data)
         {
+            if (invincible) return;
+
+            invincible = true;
+            Invoke(nameof(DisableInvincibility), data.invicibilityTime);
+
             Damage(data.damage);
         }
 
@@ -89,6 +95,11 @@ namespace DigDig2
             {
                 Instantiate(effect, transform.position, Quaternion.identity);
             }
+        }
+
+        void DisableInvincibility()
+        {
+            invincible = false;
         }
 
         void Die()

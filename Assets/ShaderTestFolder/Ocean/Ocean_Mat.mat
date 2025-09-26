@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Ocean_Mat
-  m_Shader: {fileID: -6465566751694194690, guid: 1910ca8dcdfddc141a70768b9ff1649a, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 7f71be1e02981d36995992d51023937c, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -67,20 +67,21 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _DepthDistance: 0.98
-    - _DepthStrength: 0.09
+    - _DepthDistance: 0.99
+    - _DepthStrength: 0.13
     - _DisplaceStrength: 0.06
-    - _FlowSize: 3.55
+    - _FlowIntensity: 1.5
+    - _FlowSize: 4
     - _FlowSpeed: 0.08
     - _FlowStrength: 0.01
     - _FlowThickness: 4
-    - _FoamAmount: 2.9
-    - _FoamCutOff: 6
+    - _FoamAmount: 2.2
+    - _FoamCutOff: 2.71
     - _FoamCutoff: 1
     - _FoamOpacity: 1
-    - _FoamScale: 135
+    - _FoamScale: 148.39
     - _FoamSpeed: 0.01
-    - _NormalStrength: 0.15
+    - _NormalStrength: 0.1
     - _NormalTiling: 2
     - _QueueControl: 0
     - _QueueOffset: 0
@@ -88,12 +89,12 @@ Material:
     - _Speed: 1
     - _WaterDepth: 2.1
     m_Colors:
-    - _BottomColor: {r: 0, g: 0.20928338, b: 0.30980393, a: 1}
+    - _BottomColor: {r: 0, g: 0.23465002, b: 0.4339623, a: 1}
     - _FlowColor: {r: 0.18220717, g: 0.41809848, b: 0.5924529, a: 1}
-    - _FoamColor: {r: 0.5504183, g: 0.8725505, b: 0.8773585, a: 1}
-    - _FoamDirection: {r: 0, g: 0, b: 0, a: 0}
+    - _FoamColor: {r: 0.6396227, g: 0.99570984, b: 1, a: 1}
+    - _FoamDirection: {r: -1, g: -1, b: 0, a: 0}
     - _Tiling: {r: 0.1, g: 0.1, b: 0, a: 0}
     - _TilingDirection: {r: 0.1, g: 0.1, b: 0, a: 0}
-    - _TopColor: {r: 0.14391243, g: 0.48946127, b: 0.6226415, a: 1}
+    - _TopColor: {r: 0.110879265, g: 0.530096, b: 0.6754716, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
