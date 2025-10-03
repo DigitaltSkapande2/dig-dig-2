@@ -134,8 +134,8 @@ MonoBehaviour:
   groundLayers:
     serializedVersion: 2
     m_Bits: 64
-  moveSpeed: 5
-  sprintMoveSpeed: 7.5
+  moveSpeed: 8
+  sprintMoveSpeed: 15
   inputMoveVector: {x: 0, y: 0, z: 0}
   moveInputVectorLerpSpeed: 10
   isSprinting: 0
@@ -152,6 +152,7 @@ MonoBehaviour:
   visualsParent: {fileID: 7251259118998489019}
   visualsRotationSpeed: 15
   automaticLookRotationLocked: 0
+  knockbackVelocity: {x: 0, y: 0, z: 0}
 --- !u!114 &1459444429970365189
 MonoBehaviour:
   m_ObjectHideFlags: 0

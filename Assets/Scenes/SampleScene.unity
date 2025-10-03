@@ -232,11 +232,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0083d9cd5230bde45b6290423d4a1d0d, type: 3}
---- !u!4 &183317015 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 268625382850607440, guid: bab1e4510371eea4ca79e6010cb2355c, type: 3}
-  m_PrefabInstance: {fileID: 324458851}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &195025202
 GameObject:
   m_ObjectHideFlags: 0
@@ -268,7 +263,7 @@ Transform:
   m_LocalScale: {x: 18.757, y: 18.757, z: 18.757}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 183317015}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &195025204
 MeshRenderer:
@@ -377,10 +372,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 268625382850607440, guid: bab1e4510371eea4ca79e6010cb2355c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 195025203}
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bab1e4510371eea4ca79e6010cb2355c, type: 3}
 --- !u!1 &358834627
@@ -5795,6 +5787,8 @@ GameObject:
   - component: {fileID: 963754044}
   - component: {fileID: 963754052}
   - component: {fileID: 963754045}
+  - component: {fileID: 963754055}
+  - component: {fileID: 963754054}
   m_Layer: 0
   m_Name: TestEnemy
   m_TagString: Untagged
@@ -5834,11 +5828,12 @@ MonoBehaviour:
   edgeScanRadius: 0.6
   edgeScanDistance: 0.25
   edgeScanSlopeLimit: 75
-  knockbackMultiplier: 0
-  knockbackFallofSpeed: 0
+  knockbackMultiplier: 1
+  knockbackFallofSpeed: 2
   visualsParent: {fileID: 1179798348}
   visualsRotationSpeed: 15
   automaticLookRotationLocked: 0
+  knockbackVelocity: {x: 0, y: 0, z: 0}
 --- !u!114 &963754045
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6005,6 +6000,45 @@ MonoBehaviour:
   positionSensitivity: 0.01
   rotationSensitivity: 0.01
   scaleSensitivity: 0.01
+--- !u!114 &963754054
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963754043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 809a18945f58a064abeeb94658cb72d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageType: 1
+  maxHealth: 5
+  damagedEffects:
+  - {fileID: 900025642660281898, guid: 565fe03e66511a84c95b09b1d718120e, type: 3}
+  damagedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  deathEffects:
+  - {fileID: 900025642660281898, guid: 565fe03e66511a84c95b09b1d718120e, type: 3}
+  deathEvent:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &963754055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963754043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5eb71039f853af4bb9e8027626f0a29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hit:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &986688609
 GameObject:
   m_ObjectHideFlags: 0
@@ -6016,7 +6050,6 @@ GameObject:
   - component: {fileID: 986688610}
   - component: {fileID: 986688613}
   - component: {fileID: 986688612}
-  - component: {fileID: 986688611}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -6039,27 +6072,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1179798349}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
---- !u!65 &986688611
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 986688609}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &986688612
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -6637,6 +6649,7 @@ GameObject:
   - component: {fileID: 1663128657}
   - component: {fileID: 1663128656}
   - component: {fileID: 1663128660}
+  - component: {fileID: 1663128661}
   m_Layer: 0
   m_Name: Cube (1)
   m_TagString: Untagged
@@ -6754,6 +6767,21 @@ MonoBehaviour:
       m_Calls: []
   deathEffects: []
   deathEvent:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &1663128661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1663128655}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5eb71039f853af4bb9e8027626f0a29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hit:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &1720988796
@@ -6988,6 +7016,7 @@ SceneRoots:
   - {fileID: 2467262548377666243}
   - {fileID: 410087041}
   - {fileID: 832575519}
+  - {fileID: 195025203}
   - {fileID: 894599366}
   - {fileID: 1720988799}
   - {fileID: 324458851}

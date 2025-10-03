@@ -164,6 +164,7 @@ namespace DigDig2
             if (Time.time - lightMeleeInfo.lastAttackTime > lastAttackCooldown + chainMargin) lightMeleeInfo.chainIndex = 0;
 
             animator.CrossFade(lightMeleeAttacks[lightMeleeInfo.chainIndex].animation.name, crossFadeTransitionTime, 0, 0, 0);
+            lightMeleeAttacks[lightMeleeInfo.chainIndex].attackOrigin = transform.position;
             hitbox.SetAttackData(lightMeleeAttacks[lightMeleeInfo.chainIndex]);
 
             lightMeleeInfo.lastAttackTime = Time.time;
@@ -191,6 +192,7 @@ namespace DigDig2
             if (Time.time - heavyMeleeInfo.lastAttackTime > lastAttackCooldown + chainMargin) heavyMeleeInfo.chainIndex = 0;
 
             animator.CrossFade(heavyMeleeAttacks[heavyMeleeInfo.chainIndex].animation.name, crossFadeTransitionTime, 0, 0, 0);
+            heavyMeleeAttacks[heavyMeleeInfo.chainIndex].attackOrigin = transform.position;
             hitbox.SetAttackData(heavyMeleeAttacks[heavyMeleeInfo.chainIndex]);
 
             heavyMeleeInfo.lastAttackTime = Time.time;

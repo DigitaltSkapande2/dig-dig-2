@@ -55,6 +55,13 @@ namespace DigDig2
             Invoke(nameof(DisableInvincibility), data.invicibilityTime);
 
             Damage(data.damage);
+
+            EntityCharacterController entity = GetComponent<EntityCharacterController>();
+            if (entity != null)
+            {
+                Vector3 knockbackDirection = (transform.position - data.attackOrigin).normalized;
+                entity.ApplyKnockback(knockbackDirection * data.knockbackPower);
+            }
         }
 
         void Damage(int damage)
