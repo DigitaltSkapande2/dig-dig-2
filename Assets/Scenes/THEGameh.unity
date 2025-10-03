@@ -1517,6 +1517,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -3944365486034235401, guid: 9ab8b93fb5870fdbb8dcb96f5d3acf85, type: 3}
+      propertyPath: sceneId
+      value: 561223591
+      objectReference: {fileID: 0}
     - target: {fileID: 974789193605697982, guid: 9ab8b93fb5870fdbb8dcb96f5d3acf85, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2735,29 +2739,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2609356722885718918, guid: bab1e4510371eea4ca79e6010cb2355c, type: 3}
-      propertyPath: m_FocalLength
-      value: 1375.0638
-      objectReference: {fileID: 0}
-    - target: {fileID: 2609356722885718918, guid: bab1e4510371eea4ca79e6010cb2355c, type: 3}
-      propertyPath: near clip plane
-      value: 520
-      objectReference: {fileID: 0}
-    - target: {fileID: 2609356722885718918, guid: bab1e4510371eea4ca79e6010cb2355c, type: 3}
-      propertyPath: m_projectionMatrixMode
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4739365238837224391, guid: bab1e4510371eea4ca79e6010cb2355c, type: 3}
       propertyPath: m_Name
       value: GameCamera
-      objectReference: {fileID: 0}
-    - target: {fileID: 7891321004096141777, guid: bab1e4510371eea4ca79e6010cb2355c, type: 3}
-      propertyPath: m_Dithering
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7891321004096141777, guid: bab1e4510371eea4ca79e6010cb2355c, type: 3}
-      propertyPath: m_Antialiasing
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

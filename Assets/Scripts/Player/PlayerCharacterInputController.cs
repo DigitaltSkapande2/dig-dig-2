@@ -1,3 +1,4 @@
+using System;
 using Mirror;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -7,6 +8,9 @@ namespace DigDig2
     [RequireComponent(typeof(EntityCharacterController))]
     public class PlayerCharacterInputController : NetworkBehaviour, ProjectWideInputActions.IPlayerActions
     {
+        // Singleplayer flags
+        [NonSerialized] public bool isSinglePlayerFocus; // if the currently controlled player is this one
+
         // Input
         private ProjectWideInputActions.PlayerActions playerActions;
         private bool hasStarted = false;
@@ -19,7 +23,6 @@ namespace DigDig2
         private Interactor interactor;
 
 
-
         private void Awake()
         {
             entityCharacterController = GetComponent<EntityCharacterController>();
@@ -28,7 +31,7 @@ namespace DigDig2
 
         private void Start()
         {
-            if (isLocalPlayer)
+            if (isLocalPlayer || isSinglePlayerFocus)
             {
                 EnableInput();
                 hasStarted = true;
