@@ -16,8 +16,10 @@ namespace DigDig2
     public partial class WotTAvoid : Unity.Behavior.Action
     {
         [SerializeReference] public BlackboardVariable<GameObject> Agent;
+        [Tooltip("The target to avoid.")]
         [SerializeReference] public BlackboardVariable<GameObject> Target;
-        [SerializeReference] public BlackboardVariable<float> Time;
+        [Tooltip("How long the agent will avoid the target for.")]
+        [SerializeReference] public BlackboardVariable<float> Duration;
 
         private EntityCharacterBehaviorAgent m_AgentCharacterBehaviorInputController;
         [CreateProperty] private float avoidTimer;
@@ -36,7 +38,7 @@ namespace DigDig2
                 return Status.Failure;
             }
 
-            avoidTimer = Time.Value;
+            avoidTimer = Duration.Value;
 
             Initialize();
             UpdateAvoidDirection();
@@ -51,7 +53,7 @@ namespace DigDig2
                 return Status.Failure;
             }
 
-            avoidTimer -= UnityEngine.Time.deltaTime;
+            avoidTimer -= Time.deltaTime;
             if (avoidTimer <= 0)
             {
                 avoidTimer = 0;

@@ -1,6 +1,7 @@
+using Mirror;
 using UnityEngine;
 
-public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
+public class Singleton<T> : NetworkBehaviour where T : NetworkBehaviour
 {
     private static T instance;
     public static T Instance

@@ -16,8 +16,11 @@ namespace DigDig2
     public partial class WotTWaypointPatrol : Unity.Behavior.Action
     {
         [SerializeReference] public BlackboardVariable<GameObject> Agent;
+        [Tooltip("The waypoints to patrol around.")]
         [SerializeReference] public BlackboardVariable<List<GameObject>> Waypoints;
+        [Tooltip("How long the agent will wait after reaching a waypoint to find a new waypoint.")]
         [SerializeReference] public BlackboardVariable<float> WaypointWaitTime = new(1.0f);
+        [Tooltip("If the agent should select a waypoint in the list at random, or in order. This will not select the same waypoint that the agent just patrolled to.")]
         [SerializeReference] public BlackboardVariable<bool> RandomizeWaypointSelection = new(false);
 
         private EntityCharacterBehaviorAgent m_AgentCharacterBehaviorInputController;
