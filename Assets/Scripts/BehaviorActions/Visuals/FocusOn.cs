@@ -28,6 +28,12 @@ namespace DigDig2
                 return Status.Failure;
             }
 
+            if (Transform.Value == null)
+            {
+                LogFailure("No transform assigned.");
+                return Status.Failure;
+            }
+
             Initialize();
             m_AgentCharacterBehaviorInputController.SetFocusedLookTransform(Transform.Value);
 

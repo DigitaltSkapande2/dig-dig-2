@@ -28,6 +28,12 @@ namespace DigDig2
                 return Status.Failure;
             }
 
+            if (Point.Value == null)
+            {
+                LogFailure("No point assigned.");
+                return Status.Failure;
+            }
+
             Initialize();
             m_AgentCharacterBehaviorInputController.LookTowards(Point.Value);
 

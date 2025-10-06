@@ -3,6 +3,7 @@ using DigDig2.Debugging;
 using System.Collections.Generic;
 using System.Linq;
 using Mirror;
+using UnityEngine.PlayerLoop;
 
 namespace DigDig2
 {
@@ -106,7 +107,7 @@ namespace DigDig2
 		// Movement
 		private CharacterController characterController;
 
-		private Vector3 velocity;
+		[SerializeField] private Vector3 velocity;
 
 		private Vector3 moveVector;
 
@@ -140,8 +141,9 @@ namespace DigDig2
 				ProcessGravity();
 				ProcessMove();
 				ProcessSlope();
+				ProcessKnockback();
 
-				if (!frozen) ApplyMovement();
+				ApplyMovement();
 
 				ProcessEdge();
 
@@ -151,23 +153,6 @@ namespace DigDig2
 
 			if (isClient)
 			{
-				if (isLocalPlayer)
-				{
-					// Movement
-					// NOTE: Reorder movement processing order here!
-					ProcessGravity();
-					ProcessMove();
-					ProcessSlope();
-					ProcessKnockback();
-
-					if (!frozen) ApplyMovement();
-
-					ProcessEdge();
-
-					// Visuals
-					UpdateVisualsRotation();
-				}
-
 				RefreshVisualsRotation();
 			}
 		}
@@ -334,6 +319,8 @@ namespace DigDig2
 		public void ApplyKnockback(Vector3 knockbackForce)
 		{
 			knockbackVelocity = knockbackForce * knockbackMultiplier;
+			characterController.Move(Vector3.up / 10);
+			velocity += Vector3.up * knockbackForce.magnitude/2;
 		}
 
 		#endregion

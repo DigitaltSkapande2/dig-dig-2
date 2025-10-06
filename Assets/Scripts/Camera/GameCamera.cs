@@ -12,7 +12,7 @@ namespace DigDig2.CinemaCamera {
         private static List<CameraEffector> effectiveCameraEffectors = new();
         [SerializeField] public List<Transform> targets;
         [Tooltip("the time in seconds it will take for the camera to get to the target position")]
-        [SerializeField] public float followSpeed = 0.1f;
+        [SerializeField] public float followSpeed = 5f;
 
         private Vector3 targetPos;
         private Quaternion targetRotation;
@@ -62,7 +62,7 @@ namespace DigDig2.CinemaCamera {
 
 
 
-            transform.position = Vector3.Lerp(transform.position, targetPos, followSpeed);
+            transform.position = Vector3.Lerp(transform.position, targetPos, followSpeed * Time.deltaTime);
 
             //transform.rotation = targetRotation;
         }

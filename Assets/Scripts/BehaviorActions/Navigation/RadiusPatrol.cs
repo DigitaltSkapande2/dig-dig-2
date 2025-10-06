@@ -15,11 +15,17 @@ namespace DigDig2
     public partial class WotTRadiusPatrol : Unity.Behavior.Action
     {
         [SerializeReference] public BlackboardVariable<GameObject> Agent;
+        [Tooltip("The middle point of the patrol circle/radius.")]
         [SerializeReference] public BlackboardVariable<Transform> Transform;
+        [Tooltip("The max distance from the middle point that the agent will patrol to.")]
         [SerializeReference] public BlackboardVariable<float> MaxRadius = new(5f);
+        [Tooltip("The min distance from the middle point that the agent will patrol to.")]
         [SerializeReference] public BlackboardVariable<float> MinRadius = new(0.1f);
+        [Tooltip("How long the agent will wait after reaching a waypoint to find a new waypoint.")]
         [SerializeReference] public BlackboardVariable<float> WaypointWaitTime = new(1.0f);
+        [Tooltip("The minimum distance that the new waypoint has to be from the last waypoint to be considered a valid patrol waypoint.")]
         [SerializeReference] public BlackboardVariable<float> AllowedDistanceBetweenLastAndNewPoint = new(1.5f);
+        [Tooltip("The maximum amount of tries the agent will attempt to select a new waypoint.")]
         [SerializeReference] public BlackboardVariable<int> MaxPointSelectionAttempts = new(5);
 
         private EntityCharacterBehaviorAgent m_AgentCharacterBehaviorInputController;
@@ -111,7 +117,11 @@ namespace DigDig2
                 if (Vector3.Distance(targetPoint, m_LastPoint) >= AllowedDistanceBetweenLastAndNewPoint.Value) break;
 
                 targetPointSelectionAttempts++;
-                if (targetPointSelectionAttempts >= MaxPointSelectionAttempts.Value) break;
+                if (targetPointSelectionAttempts >= MaxPointSelectionAttempts.Value)
+                {
+                    Debug.LogWarning("Agent radius patrol reached maximum point selection attempts, please consider lowering the Allowed Distance Between Last And New Point or increase the Max Point Selection Attempts.");
+                    break;
+                }
             }
 
             m_AgentCharacterBehaviorInputController.SetDestination(targetPoint);

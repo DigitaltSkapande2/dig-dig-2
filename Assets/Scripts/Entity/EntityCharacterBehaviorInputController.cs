@@ -65,17 +65,8 @@ namespace DigDig2
                     {
                         Vector3 currentPathWaypoint = currentPathWaypoints[currentPathWaypointIndex];
                         Vector3 positionDifference = currentPathWaypoint - transform.position;
-
                         positionDifference.y = 0f;
                         float distanceToWaypoint = positionDifference.magnitude;
-                        if (currentPathWaypointIndex >= currentPathWaypoints.Length - 1)
-                        {
-                            entityCharacterController.inputMoveVector = positionDifference.normalized * Mathf.Min(distanceToWaypoint / (pathWaypointDistanceTolerance + 1f), 1f);
-                        }
-                        else
-                        {
-                            entityCharacterController.inputMoveVector = positionDifference.normalized;
-                        }
 
                         if (distanceToWaypoint <= pathWaypointDistanceTolerance)
                         {
@@ -83,12 +74,25 @@ namespace DigDig2
                             {
                                 // More waypoints to follow, go to next one
                                 currentPathWaypointIndex++;
+                                currentPathWaypoint = currentPathWaypoints[currentPathWaypointIndex];
+                                positionDifference = currentPathWaypoint - transform.position;
+                                positionDifference.y = 0f;
+                                distanceToWaypoint = positionDifference.magnitude;
                             }
                             else
                             {
                                 // No more waypoints to follow, entity has finished, reset path
                                 Stop();
                             }
+                        }
+
+                        if (currentPathWaypointIndex >= currentPathWaypoints.Length - 1)
+                        {
+                            entityCharacterController.inputMoveVector = positionDifference.normalized * Mathf.Min(distanceToWaypoint / (pathWaypointDistanceTolerance + 1f), 1f);
+                        }
+                        else
+                        {
+                            entityCharacterController.inputMoveVector = positionDifference.normalized;
                         }
                     }
 

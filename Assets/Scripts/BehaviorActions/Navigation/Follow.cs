@@ -17,10 +17,12 @@ namespace DigDig2
     {
         [SerializeReference] public BlackboardVariable<GameObject> Agent;
         [SerializeReference] public BlackboardVariable<GameObject> Target;
-        [SerializeReference] public BlackboardVariable<float> FollowDistance = new(2f);
+        [Tooltip("The distance to the target that the agent calculates it's path to.")]
+        [SerializeReference] public BlackboardVariable<float> FollowDistance = new(0.5f);
+        [Tooltip("The distance to the target that the agent deems close enough to skip calculating a new path.")]
+        [SerializeReference] public BlackboardVariable<float> DistanceTolerance = new(1f);
         [Tooltip("The max allowed distance from the navigation target to the actual target. When distance is above this number the path gets recalculated.")]
         [SerializeReference] public BlackboardVariable<float> AllowedTargetErrorDistance = new(8f);
-        [SerializeReference] public BlackboardVariable<float> DistanceTolerance = new(1f);
 
         private EntityCharacterBehaviorAgent m_AgentCharacterBehaviorInputController;
         [CreateProperty] private Vector3 m_CurrentTarget;
@@ -39,6 +41,23 @@ namespace DigDig2
                 return Status.Failure;
             }
 
+            if (DistanceTolerance.Value <= FollowDistance.Value)
+            {
+                LogFailure("Distance Tolerence is lower or equal to Follow Distance, this will cause jittering when the agent reaches it's target and is not allowed.");
+                return Status.Failure;
+            }
+
+            if (AllowedTargetErrorDistance.Value < 1)
+            {
+                LogFailure("Allowed Target Error Distance is lower than 1 and will cause the agent to recalculate it's path very often, please keep it above 1.");
+                return Status.Failure;
+            }
+
+            if (GetDistanceToCurrentTarget() <= DistanceTolerance.Value)
+            {
+                return Status.Success;
+            }
+
             Initialize();
             UpdateFollowDestination();
 
@@ -52,7 +71,6 @@ namespace DigDig2
                 return Status.Failure;
             }
 
-            GetFollowTarget();
             if (GetDistanceToCurrentTarget() <= DistanceTolerance.Value)
             {
                 return Status.Success;
@@ -65,6 +83,7 @@ namespace DigDig2
             else
             {
                 float targetDistanceError = GetCurrentTargetDistanceToFollowedTarget();
+                Debug.Log($"target distance error: {targetDistanceError}");
                 if (targetDistanceError >= AllowedTargetErrorDistance.Value) UpdateFollowDestination();
             }
 
@@ -92,7 +111,7 @@ namespace DigDig2
         }
 
         private float GetDistanceToCurrentTarget() {
-            return (m_CurrentTarget - Agent.Value.transform.position).magnitude;
+            return (Target.Value.transform.position - Agent.Value.transform.position).magnitude;
         }
 
         private Vector3 GetFollowTarget()
