@@ -6,56 +6,21 @@ namespace DigDig2
 {
     public class PlayerAttackInput : MonoBehaviour, ProjectWideInputActions.IAttackActions
     {
+        private Attacker attacker;
+
         private ProjectWideInputActions.AttackActions attackActions;
-        private Animator animator;
-        private EntityCharacterController entityCharacterController;
 
-        private struct AttackInfo
+        private Vector2 mousePos;
+        private Vector2 joystickVector;
+
+
+
+        private void Awake()
         {
-            public int chainIndex;
-            public float lastAttackTime;
+            attacker = GetComponent<Attacker>();
         }
 
-        enum AttackType
-        {
-            Melee,
-            Ranged
-        }
-
-        [SerializeField] AttackType attackType;
-        [SerializeField] float chainMargin;
-        [SerializeField] float crossFadeTransitionTime;
-
-        [SerializeField] Hitbox hitbox;
-
-        [SerializeField] AttackData[] lightMeleeAttacks;
-        [SerializeField] AttackData[] heavyMeleeAttacks;
-        [SerializeField] AttackData[] lightRangedAttacks;
-        [SerializeField] AttackData[] heavyRangedAttacks;
-
-        AttackInfo lightMeleeInfo;
-        AttackInfo heavyMeleeInfo;
-        AttackInfo lightRangedInfo;
-        AttackInfo heavyRangedInfo;
-
-        float lastAttackCooldown;
-
-        Vector2 mousePos;
-        Vector2 joystickVector;
-
-        float attackCooldown;
-
-        bool aiming;
-        bool rangedAttackCharging;
-        float chargeStartedTime;
-
-        void Awake()
-        {
-            animator = GetComponent<Animator>();
-            entityCharacterController = transform.parent.GetComponent<EntityCharacterController>();
-        }
-
-        void Start()
+		void Start()
         {
             EnableInput();
         }
@@ -80,46 +45,11 @@ namespace DigDig2
 
         public void OnAttack1(InputAction.CallbackContext context)
         {
-            if (attackType == AttackType.Melee && context.started && !(attackCooldown > 0))
-            {
-                LightMeleeAttack();
-            }
-
-            else if (attackType == AttackType.Ranged && context.started && !(attackCooldown > 0))
-            {
-                if (aiming)
-                {
-                    chargeStartedTime = Time.time;
-                    rangedAttackCharging = true;
-                }
-                else
-                {
-                    LightRangedAttack();
-                }
-            }
-
-            else if (attackType == AttackType.Ranged && context.canceled && aiming && rangedAttackCharging)
-            {
-                rangedAttackCharging = false;
-                HeavyRangedAttack(Time.time - chargeStartedTime);
-            }
+            attacker.Attack(0);
         }
         public void OnAttack2(InputAction.CallbackContext context)
         {
-            if (attackType == AttackType.Melee && context.started && !(attackCooldown > 0))
-            {
-                HeavyMeleeAttack();
-                return;
-            }
-
-            else if (attackType == AttackType.Ranged && context.started)
-            {
-                aiming = true;
-            }
-            else if (attackType == AttackType.Ranged && context.canceled)
-            {
-                aiming = false;
-            }
+            attacker.Attack(0);
         }
 
         public void OnMouseAim(InputAction.CallbackContext context)
@@ -134,7 +64,7 @@ namespace DigDig2
 
         #endregion
 
-        void Update()
+        /* void Update()
         {
             attackCooldown -= Time.deltaTime;
             HandleRotation();
@@ -149,11 +79,11 @@ namespace DigDig2
             {
                 entityCharacterController.LookTowards(hit.point);
             }
-        }
+        } */
 
         #region Attacks
 
-        void LightMeleeAttack()
+        /* void LightMeleeAttack()
         {
             if (lightMeleeAttacks.Length == 0)
             {
@@ -261,7 +191,7 @@ namespace DigDig2
             {
                 heavyRangedInfo.chainIndex++;
             }
-        }
+        } */
         
         #endregion
     }
