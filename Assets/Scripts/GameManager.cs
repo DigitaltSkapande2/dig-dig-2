@@ -1,15 +1,16 @@
 using System.Linq;
 using Mirror;
+using NUnit.Framework;
 using UnityEngine;
 
 namespace DigDig2
 {
-    public class GameManager : MonoBehaviour
+    public class GameManager : Singleton<GameManager>
     {
         [SerializeField] public bool isSinglePlayer = false;
 
         [SerializeField] private GameObject playerPrefab;
-        private PlayerCharacterInputController[] singleplayerPlayerControllers = new PlayerCharacterInputController[2];
+        private PlayerCharacterInputController[] playerControllers = new PlayerCharacterInputController[2];
         private int singleplayerCharacterFocus = 0;
 
         void Start()
@@ -18,21 +19,20 @@ namespace DigDig2
         }
 
         [Server]
-        private void StartSinglePlayer()
+        private void InitializePlayers()
         {
-            isSinglePlayer = true;
-
-            for (int i = 0; i < singleplayerPlayerControllers.Count(); i++)
+            
+            for (int i = 0; i < playerControllers.Count(); i++)
             {
-                singleplayerPlayerControllers[i] = Instantiate(playerPrefab).GetComponent<PlayerCharacterInputController>();
+                playerControllers[i] = Instantiate(playerPrefab).GetComponent<PlayerCharacterInputController>();
             }
 
-            singleplayerPlayerControllers[singleplayerCharacterFocus].isSinglePlayerFocus = true;
+            playerControllers[singleplayerCharacterFocus].isSinglePlayerFocus = true;
         }
 
         public void ToggleSinglePlayerFocus()
         {
-            singleplayerCharacterFocus = (singleplayerCharacterFocus + 1) % singleplayerPlayerControllers.Count() - 1;
+            singleplayerCharacterFocus = (singleplayerCharacterFocus + 1) % playerControllers.Count() - 1;
         }
 
 
