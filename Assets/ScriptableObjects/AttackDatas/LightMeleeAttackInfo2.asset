@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aebcad52172ee6344a03c75dbe2fb84c, type: 3}
   m_Name: LightMeleeAttackInfo2
   m_EditorClassIdentifier: 
-  attackOrigin: {x: -11.680753, y: 5.08, z: 19.866909}
+  attackOrigin: {x: -16.134693, y: 5.08, z: 23.938072}
   damage: 1
   invincibilityTime: 0.2
   knockbackPower: 5
-  invicibilityTime: 1
+  invicibilityTime: 0.2
   cooldown: 0.5
   animation: {fileID: 7400000, guid: 0c3fd220b2492bb4bb94a30ff4aba271, type: 2}

@@ -68,9 +68,9 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _DepthDistance: 0.8
-    - _DepthStrength: 0.13
-    - _DisplaceStrength: 0.02
+    - _DepthDistance: 0.76
+    - _DepthStrength: 0.1
+    - _DisplaceStrength: 0.06
     - _FlowIntensity: 1.5
     - _FlowSize: 4
     - _FlowSpeed: 0.08
