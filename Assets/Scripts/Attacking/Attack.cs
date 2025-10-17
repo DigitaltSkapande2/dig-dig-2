@@ -4,6 +4,6 @@ namespace DigDig2
 {
     public abstract class Attack : ScriptableObject
     {
-        public abstract void Trigger(EntityCharacterController entityCharacterController, AttackGroup attackGroup, float chargeTime);
+        public abstract void Trigger(Attacker attacker, AttackGroup attackGroup, float chargeTime);
     }
 }

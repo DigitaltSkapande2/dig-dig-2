@@ -7,7 +7,7 @@ namespace DigDig2
 	{
 		public string testMessage;
 
-		public override void Trigger(EntityCharacterController entityCharacterController, AttackGroup attackGroup, float chargeTime)
+		public override void Trigger(Attacker attacker, AttackGroup attackGroup, float chargeTime)
 		{
 			Debug.Log(testMessage);
 		}

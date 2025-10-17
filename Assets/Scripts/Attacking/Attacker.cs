@@ -61,7 +61,7 @@ namespace DigDig2
 
 			IncrementAttackChain();
 
-			currentPerformingAttack.chain[currentAttackChain].Trigger(entityCharacterController, currentPerformingAttack, Time.time - chargeStartTime);
+			currentPerformingAttack.chain[currentAttackChain].Trigger(this, currentPerformingAttack, Time.time - chargeStartTime);
 			lastPerformedAttack = currentPerformingAttack;
 		}
 		public void CancelAttack()
