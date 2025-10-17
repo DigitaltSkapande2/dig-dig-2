@@ -59,6 +59,11 @@ namespace DigDig2
 
 			if (!IsPerformingAttack()) currentPerformingAttack = GetAttackFromAttackIndex(attackIndex);
 
+			if (currentPerformingAttack.chargeTime != 0)
+			{
+				ChargeAttack(attackIndex);
+			}
+			
 			IncrementAttackChain();
 
 			currentPerformingAttack.chain[currentAttackChain].Trigger(this, currentPerformingAttack, Time.time - chargeStartTime);

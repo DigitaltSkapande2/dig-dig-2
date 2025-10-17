@@ -61,6 +61,7 @@ namespace DigDig2
             {
                 Vector3 knockbackDirection = (transform.position - data.attackOrigin).normalized;
                 entity.ApplyKnockback(knockbackDirection * data.knockbackPower);
+                
             }
         }
 

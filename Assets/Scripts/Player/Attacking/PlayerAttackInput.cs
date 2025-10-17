@@ -45,11 +45,11 @@ namespace DigDig2
 
         public void OnAttack1(InputAction.CallbackContext context)
         {
-            attacker.Attack(0);
+            if (context.started) attacker.Attack(0);
         }
         public void OnAttack2(InputAction.CallbackContext context)
         {
-            attacker.Attack(0);
+            if (context.started) attacker.Attack(0);
         }
 
         public void OnMouseAim(InputAction.CallbackContext context)
