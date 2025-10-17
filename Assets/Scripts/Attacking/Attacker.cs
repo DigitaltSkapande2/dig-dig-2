@@ -2,6 +2,7 @@ using UnityEngine;
 
 namespace DigDig2
 {
+	[RequireComponent(typeof(EntityCharacterController), typeof(Animator))]
 	public class Attacker : MonoBehaviour
 	{
 		[SerializeField] private EntityInfo entityInfo; // This should be gotten from the entity character controller instead :3
@@ -26,8 +27,8 @@ namespace DigDig2
 
 		private void Awake()
 		{
-			animator = GetComponent<Animator>();
 			entityCharacterController = GetComponent<EntityCharacterController>();
+			animator = GetComponent<Animator>();
 		}
 
 		private AttackGroup GetAttackFromAttackIndex(int attackIndex)
@@ -89,6 +90,16 @@ namespace DigDig2
 		public bool IsPerformingAttack()
 		{
 			return currentPerformingAttack != null;
+		}
+
+		public EntityCharacterController GetEntityCharacterController()
+		{
+			return entityCharacterController;
+		}
+
+		public Animator GetAnimator()
+		{
+			return animator;
 		}
 	}
 }
