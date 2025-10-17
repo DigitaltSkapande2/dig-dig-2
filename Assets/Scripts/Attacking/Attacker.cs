@@ -7,7 +7,7 @@ namespace DigDig2
 	{
 		[SerializeField] private EntityInfo entityInfo; // This should be gotten from the entity character controller instead :3
 		[SerializeField] private float chainTimeWindowAfterAttackEnd = 0.25f;
-		[SerializeField] private float chainTimeWindowBeforeAttackEnd = 0.5f;
+		[SerializeField] private float chainTimeWindowBeforeAttackEnd = 0.25f;
 
 		private Animator animator;
 		private EntityCharacterController entityCharacterController;
@@ -46,10 +46,11 @@ namespace DigDig2
 
 		public void ChargeAttack(int attackIndex)
 		{
-			if (IsPerformingAttack()) { Debug.LogWarning("An attack is currently being performed and is not being charged, can't attack right now."); return; }
+			if (IsPerformingAttack() && !HasMetChainRequirement()) { Debug.LogWarning("An attack is currently being performed and is not being charged, can't attack right now."); return; }
 			if (IsChargingAttack()) { Debug.LogWarning("An attack charge is already ongoing, please end it before charging again."); return; }
 
 			EndAttack();
+			IncrementAttackChain();
 
 			AttackGroup attack = GetAttackFromAttackIndex(attackIndex);
 			if (attack == null) return;
@@ -74,11 +75,22 @@ namespace DigDig2
 			if (!IsChargingAttack()) { Debug.LogWarning("There is no attack being charged."); return -1; }
 			return Time.time - chargeStartTime;
 		}
-		public bool HasMetAttackChargeRequirement()
+		public bool IsAttackChargable(int attackIndex)
+		{
+			AttackGroup attack = GetAttackFromAttackIndex(attackIndex);
+			if (attack == null) return false;
+			return attack.chargeDuration > 0;
+		}
+		public bool IsAttackChargable(AttackGroup attack)
+		{
+			return attack.chargeDuration > 0;
+		}
+		public bool HasMetAttackChargeRequirement(AttackGroup attack)
 		{
 			if (!IsChargingAttack()) { Debug.LogWarning("There is no attack being charged."); return false; }
+			if (!IsAttackChargable(attack)) return false;
 			float chargeTime = GetAttackChargeTime();
-			if (currentChargingAttack.requireCharge && chargeTime < currentChargingAttack.chargeDuration) { return false; }
+			if (attack.requireCharge && chargeTime < attack.chargeDuration) return false;
 
 			return true;
 		}
@@ -89,17 +101,24 @@ namespace DigDig2
 
 		public void Attack(int attackIndex)
 		{
-			if (IsPerformingAttack()) { Debug.Log("An attack is currently being performed and is not being charged, can't attack right now."); return; }
+			if (IsPerformingAttack() && !HasMetChainRequirement()) { Debug.Log("An attack is currently being performed and is not being charged, can't attack right now."); return; }
 
-			if (IsChargingAttack() && HasMetAttackChargeRequirement())
+			EndAttack();
+
+			if (IsChargingAttack() && HasMetAttackChargeRequirement(currentChargingAttack))
 			{
 				currentPerformingAttack = currentChargingAttack;
 				EndAttackCharge();
 			}
 			else if (GetAttackFromAttackIndex(attackIndex))
 			{
-				currentPerformingAttack = GetAttackFromAttackIndex(attackIndex);
+				AttackGroup attack = GetAttackFromAttackIndex(attackIndex);
+				if (attack != null && IsAttackChargable(attack) == false) currentPerformingAttack = attack;
+
+				IncrementAttackChain();
 			}
+
+			if (currentPerformingAttack == null) { EndAttack(); return; }
 
 			currentPerformingAttack.chain[currentAttackChain].Trigger(this, currentPerformingAttack, Time.time - chargeStartTime);
 			lastPerformedAttack = currentPerformingAttack;
