@@ -6,16 +6,6 @@ namespace DigDig2
     [RequireComponent(typeof(Attackable))]
     public class Health : MonoBehaviour
     {
-        enum DamageType
-        {
-            Player,
-            Enemy,
-            Object
-        }
-
-        [SerializeField] DamageType damageType;
-
-
         [Tooltip("Starting health and eventual cap for healing")]
         [SerializeField] int maxHealth;
 
