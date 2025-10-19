@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4876867688951789281}
   - component: {fileID: 1535422486776055637}
+  - component: {fileID: 7834252549490271399}
   m_Layer: 0
   m_Name: CrystalLine
   m_TagString: Untagged
@@ -85,7 +86,7 @@ LineRenderer:
   - {x: 0, y: 0, z: 1}
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 1
+    widthMultiplier: 0.3
     widthCurve:
       serializedVersion: 2
       m_Curve:
@@ -142,3 +143,19 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
+--- !u!114 &7834252549490271399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2737389797727682940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e77937cf959c08b439a60b438971448a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DigDig2.CrystalLine
+  controlPointDefaultPosition: 0.8
+  controlPointResetSpeed: 0.9
+  lineSegmentsPerUnit: 5
+  line: {fileID: 1535422486776055637}
