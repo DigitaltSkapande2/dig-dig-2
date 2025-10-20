@@ -120,8 +120,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Crystal
   linePrefab: {fileID: 2737389797727682940, guid: 39c911a686f973c4fabe982863ac4797, type: 3}
-  enemies:
-  - enemy: {fileID: 0}
+  enemies: []
 --- !u!1 &7172170040830579778
 GameObject:
   m_ObjectHideFlags: 0
