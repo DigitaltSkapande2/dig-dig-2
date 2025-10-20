@@ -16,8 +16,7 @@ namespace DigDig2
     public partial class WotTAttack : Unity.Behavior.Action
     {
         [SerializeReference] public BlackboardVariable<GameObject> Agent;
-        [SerializeReference] public BlackboardVariable<AttackData> Attack;
-        [SerializeReference] public BlackboardVariable<Hitbox> Hitbox;
+        [SerializeReference] public BlackboardVariable<Attack> Attack;
 
         private EntityCharacterBehaviorAgent m_AgentCharacterBehaviorInputController;
 
@@ -35,15 +34,7 @@ namespace DigDig2
                 return Status.Failure;
             }
 
-            if (Hitbox.Value == null)
-            {
-                LogFailure("No hitbox assigned.");
-                return Status.Failure;
-            }
-
             Initialize();
-
-            Hitbox.Value.SetAttackData(Attack.Value);
 
             return Status.Success;
         }

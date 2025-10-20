@@ -16,10 +16,8 @@ namespace DigDig2
 		private AttackGroup currentPerformingAttack;
 		private AttackGroup lastPerformedAttack;
 		private float chargeStartTime = -1;
-		private float performedAttackEndTime = -1;
+		private float performingAttackEndTime = -1;
 		private int currentAttackChain;
-
-		private bool aiming;
 
 		public struct AttackInfo
 		{
@@ -34,6 +32,11 @@ namespace DigDig2
 			entityCharacterController = GetComponent<EntityCharacterController>();
 			animator = GetComponent<Animator>();
 		}
+
+		private void Update()
+        {
+            if (IsPerformingAttack() && Time.time >= performingAttackEndTime) EndAttack();
+        }
 
 		private AttackGroup GetAttackFromAttackIndex(int attackIndex)
 		{
@@ -121,12 +124,15 @@ namespace DigDig2
 			if (currentPerformingAttack == null) { EndAttack(); return; }
 
 			currentPerformingAttack.chain[currentAttackChain].Trigger(this, currentPerformingAttack, Time.time - chargeStartTime);
+			performingAttackEndTime = Time.time + currentPerformingAttack.chain[currentAttackChain].GetAttackDuration();
 			lastPerformedAttack = currentPerformingAttack;
 		}
 		public void EndAttack()
 		{
 			if (currentPerformingAttack == null) { Debug.LogWarning("Can't end attack, no attack is being performed right now."); return; }
 			currentPerformingAttack = null;
+
+			Debug.Log("Ended attack.");
 
 			if (IsChargingAttack()) EndAttackCharge();
 		}
@@ -155,7 +161,7 @@ namespace DigDig2
 		}
 		public bool HasMetChainRequirement()
 		{
-			float chainWindowMarginOfError = Time.time - performedAttackEndTime;
+			float chainWindowMarginOfError = Time.time - performingAttackEndTime;
 			if (!(chainWindowMarginOfError <= chainTimeWindowAfterAttackEnd && chainWindowMarginOfError >= -chainTimeWindowBeforeAttackEnd)) return false;
 			if (lastPerformedAttack != currentPerformingAttack) return false;
 
