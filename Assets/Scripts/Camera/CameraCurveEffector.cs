@@ -3,7 +3,7 @@ using UnityEngine.Splines;
 
 namespace DigDig2.CinemaCamera
 {
-    public class CameraCurveEffector : CameraZoneEffector
+    public class CameraCurveEffector : TriggerZoneCameraEffectorBase
     {
         [SerializeField] SplineContainer splineContainer;
 

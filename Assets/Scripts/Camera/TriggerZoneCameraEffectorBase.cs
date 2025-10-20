@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace DigDig2.CinemaCamera
 {
-    public abstract class CameraZoneEffector : CameraEffector
+    public abstract class TriggerZoneCameraEffectorBase : CameraEffector
     {
         Transform target;
         Collider collider;
