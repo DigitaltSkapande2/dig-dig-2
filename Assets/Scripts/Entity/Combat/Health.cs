@@ -7,10 +7,10 @@ namespace DigDig2
     public class Health : MonoBehaviour
     {
         [Tooltip("Starting health and eventual cap for healing.")]
-        [SerializeField] private int maxHealth;
+        [SerializeField] private int maxHealth = 1;
 
         [Tooltip("The entity's current health.")]
-        [SerializeField] private int health;
+        [SerializeField] private int health = 1;
 
         [Tooltip("Effects to be played when health is below 0.")]
         [SerializeField] private GameObject[] deathEffects;
@@ -20,6 +20,10 @@ namespace DigDig2
 
 
 
+        private void Start()
+        {
+            SetHealth(health);
+        }
 
         public void Damage(int damage)
         {

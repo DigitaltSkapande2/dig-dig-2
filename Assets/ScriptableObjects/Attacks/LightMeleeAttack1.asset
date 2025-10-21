@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f5ed39e383cd89469a2f7e39aceb432, type: 3}
-  m_Name: PlayerRangedAttackInfo
-  m_EditorClassIdentifier: Assembly-CSharp::DigDig2.EntityInfo
-  attacks:
-  - {fileID: 11400000, guid: 554a7201707c2ce4087b6f692cb08e8b, type: 2}
+  m_Script: {fileID: 11500000, guid: 40883c0a7bfea94ea80ecef5fa952cae, type: 3}
+  m_Name: LightMeleeAttack1
+  m_EditorClassIdentifier: Assembly-CSharp::DigDig2.MeleeAttack
+  attackDuration: 0.1
+  animationStateName: LightMeleeAttack1

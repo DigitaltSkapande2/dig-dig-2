@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace DigDig2
@@ -9,6 +10,8 @@ namespace DigDig2
 		[SerializeField] private float chainTimeWindowAfterAttackEnd = 0.25f;
 		[SerializeField] private float chainTimeWindowBeforeAttackEnd = 0.25f;
 
+		[SerializeField] private List<Transform> bindableTransforms = new();
+
 		private Animator animator;
 		private EntityCharacterController entityCharacterController;
 
@@ -19,11 +22,15 @@ namespace DigDig2
 		private float performingAttackEndTime = -1;
 		private int currentAttackChain;
 
-		public struct AttackInfo
-		{
-			public int chainIndex;
-			public float lastAttackTime;
-		}
+		private Dictionary<string, AttackHitbox> activeAttackHitboxes = new();
+
+		public struct AttackHitbox
+        {
+			public Vector3 size;
+			public Transform boundTransform;
+			public Attack boundAttack;
+			public List<Attackable> attackedEnemies;
+        }
 
 
 
@@ -34,11 +41,41 @@ namespace DigDig2
 		}
 
 		private void Update()
+		{
+			if (IsPerformingAttack() && Time.time >= performingAttackEndTime) EndAttack();
+		}
+
+        private void FixedUpdate()
         {
-            if (IsPerformingAttack() && Time.time >= performingAttackEndTime) EndAttack();
+            foreach (KeyValuePair<string, AttackHitbox> attackHitboxPair in activeAttackHitboxes)
+			{
+				AttackHitbox attackHitbox = attackHitboxPair.Value;
+				Collider[] colliders = Physics.OverlapBox(attackHitbox.boundTransform.position, attackHitbox.size / 2, attackHitbox.boundTransform.rotation);;
+				foreach (Collider collider in colliders)
+				{
+					Attackable attackable = collider.GetComponent<Attackable>();
+					if (!attackable) continue;
+					if (attackable == this) continue;
+					if (attackHitbox.attackedEnemies.Contains(attackable)) continue;
+
+					attackHitbox.attackedEnemies.Add(attackable);
+					attackable.Hit(attackHitbox.boundAttack, this);
+                }
+            }
         }
 
-		private AttackGroup GetAttackFromAttackIndex(int attackIndex)
+        private void OnDrawGizmos()
+		{
+			foreach (KeyValuePair<string, AttackHitbox> attackHitboxPair in activeAttackHitboxes)
+			{
+				AttackHitbox attackHitbox = attackHitboxPair.Value;
+				Gizmos.matrix = attackHitbox.boundTransform.localToWorldMatrix;
+				Gizmos.color = Color.red;
+				Gizmos.DrawWireCube(attackHitbox.boundTransform.localPosition, attackHitbox.size);
+            }
+        }
+
+        private AttackGroup GetAttackFromAttackIndex(int attackIndex)
 		{
 			if (!(entityInfo.attacks.Count > attackIndex)) { Debug.LogWarning($"{entityInfo} does not have an attack win index {attackIndex}."); return null; }
 
@@ -52,7 +89,7 @@ namespace DigDig2
 			if (IsPerformingAttack() && !HasMetChainRequirement()) { Debug.LogWarning("An attack is currently being performed and is not being charged, can't attack right now."); return; }
 			if (IsChargingAttack()) { Debug.LogWarning("An attack charge is already ongoing, please end it before charging again."); return; }
 
-			EndAttack();
+			EndAttack(true);
 			IncrementAttackChain();
 
 			AttackGroup attack = GetAttackFromAttackIndex(attackIndex);
@@ -106,7 +143,7 @@ namespace DigDig2
 		{
 			if (IsPerformingAttack() && !HasMetChainRequirement()) { Debug.Log("An attack is currently being performed and is not being charged, can't attack right now."); return; }
 
-			EndAttack();
+			EndAttack(true);
 
 			if (IsChargingAttack() && HasMetAttackChargeRequirement(currentChargingAttack))
 			{
@@ -127,9 +164,14 @@ namespace DigDig2
 			performingAttackEndTime = Time.time + currentPerformingAttack.chain[currentAttackChain].GetAttackDuration();
 			lastPerformedAttack = currentPerformingAttack;
 		}
-		public void EndAttack()
+		public void EndAttack(bool ignoreWarning = false)
 		{
-			if (currentPerformingAttack == null) { Debug.LogWarning("Can't end attack, no attack is being performed right now."); return; }
+			if (currentPerformingAttack == null)
+			{
+				if (!ignoreWarning) Debug.LogWarning("Can't end attack, no attack is being performed right now.");
+				return;
+			}
+			currentPerformingAttack.chain[currentAttackChain].Ended(this, currentPerformingAttack);
 			currentPerformingAttack = null;
 
 			Debug.Log("Ended attack.");
@@ -170,13 +212,45 @@ namespace DigDig2
 
 		#endregion
 
-		public EntityCharacterController GetEntityCharacterController()
+		#region Animation
+
+		public void PlayAnimation(string animationStateName)
 		{
-			return entityCharacterController;
+			animator.Play(animationStateName, -1, 0);
 		}
-		public Animator GetAnimator()
+
+		#endregion
+
+		#region Attack Hit Detection
+
+		public AttackHitbox AddAttackHitbox(Attack attack, string id, Vector3 size, Transform boundTransform)
 		{
-			return animator;
+            AttackHitbox newAttackHitbox = new()
+			{
+				size = size,
+				boundTransform = boundTransform,
+				boundAttack = attack,
+				attackedEnemies = new()
+			};
+
+            activeAttackHitboxes[id] = newAttackHitbox;
+
+			return newAttackHitbox;
 		}
+
+		public void RemoveAttackHitbox(string id)
+		{
+			if (activeAttackHitboxes.ContainsKey(id))
+			{
+				activeAttackHitboxes.Remove(id);
+			}
+		}
+		
+		public Transform GetBindableTransform(int index)
+        {
+			return bindableTransforms[index];
+        }
+
+		#endregion
 	}
 }

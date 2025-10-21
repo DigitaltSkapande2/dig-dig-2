@@ -94,6 +94,7 @@ Material:
     - _FlowColor: {r: 0.18220717, g: 0.41809848, b: 0.5924529, a: 1}
     - _FoamColor: {r: 0.7783019, g: 0.99759024, b: 1, a: 1}
     - _FoamDirection: {r: -1, g: -1, b: 0, a: 0}
+    - _FoamTiling: {r: 1, g: 1, b: 0, a: 0}
     - _Tiling: {r: 0.1, g: 0.1, b: 0, a: 0}
     - _TilingDirection: {r: 0.1, g: 0.1, b: 0, a: 0}
     - _TopColor: {r: 0.110879265, g: 0.530096, b: 0.6754716, a: 1}

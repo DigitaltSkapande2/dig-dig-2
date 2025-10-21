@@ -34,6 +34,7 @@ namespace DigDig2
 
         public void Hit(Attack attack, Attacker attacker = null)
         {
+            if (invincibilityTimer > 0) return;
             invincibilityTimer = invincibilityTime;
 
             if (attack) attack.Hit(attacker, this, healthComponent, entityCharacterController);
