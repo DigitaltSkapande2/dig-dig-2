@@ -13,6 +13,7 @@ namespace DigDig2
         [SerializeField] float controlPointDefaultPosition;
         [SerializeField] float controlPointResetSpeed;
         [SerializeField] int lineSegmentsPerUnit;
+        [SerializeField] float shieldDistance;
 
         int segments;
 
@@ -38,7 +39,9 @@ namespace DigDig2
 
             controlPoint = Vector3.Lerp(controlPoint, Vector3.Lerp(crystal, enemy, controlPointDefaultPosition), Time.deltaTime * controlPointResetSpeed);
 
-            for (int i = 0; i <=segments; i++)
+            int index = 0;
+
+            for (int i = 0; i <= segments; i++)
             {
                 float value = 1f / segments * i;
 
@@ -46,7 +49,25 @@ namespace DigDig2
                 Vector3 p2 = Vector3.Lerp(controlPoint, enemy, value);
                 Vector3 p3 = Vector3.Lerp(p1, p2, value);
 
-                line.SetPosition(i, p3);
+                if (Vector3.Distance(crystal, p3) < shieldDistance)
+                {
+                    line.positionCount -= 1;
+                    continue;
+                }
+
+                if (index == 0)
+                {
+                    Vector3 offset = p3 - crystal;
+                    p3 = crystal + offset.normalized * shieldDistance;
+
+                    line.SetPosition(index, p3);
+                    index++;
+                    
+                    continue;
+                }
+
+                line.SetPosition(index, p3);
+                index++;
             }
         }
     }

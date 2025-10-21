@@ -5916,11 +5916,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Health
   maxHealth: 5
-  damagedEffects:
-  - {fileID: 900025642660281898, guid: 565fe03e66511a84c95b09b1d718120e, type: 3}
-  damagedEvent:
-    m_PersistentCalls:
-      m_Calls: []
+  health: 0
   deathEffects:
   - {fileID: 900025642660281898, guid: 565fe03e66511a84c95b09b1d718120e, type: 3}
   deathEvent:
@@ -5941,6 +5937,8 @@ MonoBehaviour:
   hit:
     m_PersistentCalls:
       m_Calls: []
+  hitEffects: []
+  invincibilityTime: 0
 --- !u!114 &1116703936
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5958,7 +5956,8 @@ MonoBehaviour:
   - rid: 1217018901321220182
   - rid: 1217018901321220183
   - rid: 1217018901321220184
-  - rid: 8122051051056005428
+  - rid: 7699448313966755915
+  - rid: 7699448313966755916
   m_IsInitialised: 0
   m_IsStarted: 0
   references:
@@ -5993,14 +5992,22 @@ MonoBehaviour:
           m_Value1: 16468564652571363867
         Name: Enemy
         m_Value: {fileID: 1663128655}
-    - rid: 8122051051056005428
-      type: {class: 'BlackboardVariable`1[[BehaviorTestType, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
+    - rid: 7699448313966755915
+      type: {class: 'BlackboardVariable`1[[System.Boolean, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
-          m_Value0: 8333448519615864380
-          m_Value1: 7244335908673377373
-        Name: Behavior Test Type
-        m_Value: 3
+          m_Value0: 10526478792159006688
+          m_Value1: 13148673768015250524
+        Name: Random Waypoint Patrol
+        m_Value: 1
+    - rid: 7699448313966755916
+      type: {class: 'BlackboardVariable`1[[UnityEngine.Transform, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 15102707721157522427
+          m_Value1: 14870566543952440657
+        Name: Look Point
+        m_Value: {fileID: 706248561}
 --- !u!114 &1116703937
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6734,11 +6741,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 10
-  damagedEffects:
-  - {fileID: 900025642660281898, guid: 565fe03e66511a84c95b09b1d718120e, type: 3}
-  damagedEvent:
-    m_PersistentCalls:
-      m_Calls: []
+  health: 0
   deathEffects: []
   deathEvent:
     m_PersistentCalls:
@@ -6758,6 +6761,8 @@ MonoBehaviour:
   hit:
     m_PersistentCalls:
       m_Calls: []
+  hitEffects: []
+  invincibilityTime: 0
 --- !u!1 &1720988796
 GameObject:
   m_ObjectHideFlags: 0
@@ -6901,6 +6906,79 @@ Transform:
   - {fileID: 1475724052}
   m_Father: {fileID: 1116703942}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &2075025134
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2002717688747189687, guid: c98535c2c3fee2e4288903087bfb0f6c, type: 3}
+      propertyPath: enemies.Array.data[0].enemy
+      value: 
+      objectReference: {fileID: 1116703933}
+    - target: {fileID: 3029974045897394988, guid: c98535c2c3fee2e4288903087bfb0f6c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -14.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3029974045897394988, guid: c98535c2c3fee2e4288903087bfb0f6c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 5.32
+      objectReference: {fileID: 0}
+    - target: {fileID: 3029974045897394988, guid: c98535c2c3fee2e4288903087bfb0f6c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 22.57
+      objectReference: {fileID: 0}
+    - target: {fileID: 3029974045897394988, guid: c98535c2c3fee2e4288903087bfb0f6c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3029974045897394988, guid: c98535c2c3fee2e4288903087bfb0f6c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3029974045897394988, guid: c98535c2c3fee2e4288903087bfb0f6c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3029974045897394988, guid: c98535c2c3fee2e4288903087bfb0f6c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3029974045897394988, guid: c98535c2c3fee2e4288903087bfb0f6c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3029974045897394988, guid: c98535c2c3fee2e4288903087bfb0f6c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3029974045897394988, guid: c98535c2c3fee2e4288903087bfb0f6c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3821140945852151295, guid: c98535c2c3fee2e4288903087bfb0f6c, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3821140945852151295, guid: c98535c2c3fee2e4288903087bfb0f6c, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3821140945852151295, guid: c98535c2c3fee2e4288903087bfb0f6c, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6291972602155261083, guid: c98535c2c3fee2e4288903087bfb0f6c, type: 3}
+      propertyPath: m_Name
+      value: Crystal
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c98535c2c3fee2e4288903087bfb0f6c, type: 3}
 --- !u!1001 &2467262548377666243
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7112,3 +7190,4 @@ SceneRoots:
   - {fileID: 1035800984}
   - {fileID: 2006306605}
   - {fileID: 482064632}
+  - {fileID: 2075025134}

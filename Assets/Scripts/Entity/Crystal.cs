@@ -27,7 +27,7 @@ namespace DigDig2
             GetComponent<Attackable>().hit.AddListener(OnHit);
         }
 
-        void OnHit(AttackData data)
+        void OnHit()
         {
             if (hasShield)
             {
