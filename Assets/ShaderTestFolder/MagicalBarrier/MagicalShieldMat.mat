@@ -42,13 +42,9 @@ Material:
     - _BottomNoisePower: 0.8
     - _BottomNoiseSize: 27
     - _BottomNoiseSpeed: 0.05
-    - _FrenselPower: 0.78
-    - _NoisePower: 1.7
-    - _NoiseSize: 50
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Speed: 0.07
-    - _TopFrenselPower: 1
+    - _TopFrenselPower: 1.5
     - _TopNoisePower: 2
     - _TopNoiseSize: 50
     - _TopNoiseSpeed: 0.07
@@ -56,17 +52,14 @@ Material:
     - _VoronoiScale: 15
     - _VoronoiSpeed: 1.1
     m_Colors:
-    - _BottomNoiseColor: {r: 0.0003458547, g: 0.000048304144, b: 0.0007314643, a: 1}
+    - _BottomNoiseColor: {r: 0.00003251035, g: 0.000001717408, b: 0.00004790683, a: 1}
     - _BottomNoiseScale: {r: 0.38, g: 1, b: 0, a: 0}
-    - _Color: {r: 0.98459244, g: 0, b: 4, a: 1}
-    - _NoiseScale: {r: 0.79, g: 1, b: 0, a: 0}
-    - _TopColor: {r: 0.2774439, g: 0, b: 1, a: 1}
-    - _TopNoiseColor: {r: 6.087293, g: 0, b: 23.968628, a: 1}
+    - _TopNoiseColor: {r: 8.878204, g: 0, b: 32, a: 1}
     - _TopNoiseScale: {r: 0.45, g: 1, b: 0, a: 0}
-    - _VoronoiColor: {r: 0.7795296, g: 0, b: 2.1185474, a: 1}
+    - _VoronoiColor: {r: 1.02132, g: 0.2103828, b: 2.511446, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
---- !u!114 &2147145839779641942
+--- !u!114 &4897501306259095289
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -77,5 +70,5 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Editor::UnityEditor.Rendering.Universal.AssetVersion
   version: 10

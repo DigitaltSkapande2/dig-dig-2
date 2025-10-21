@@ -262,7 +262,7 @@ namespace DigDig2
 			{
 				Vector3 adjustment = -edgeAdjustment.Key * Mathf.Max(0, edgeAdjustment.Value);
 				characterController.Move(adjustment);
-				Debug.DrawRay(transform.position, adjustment, Color.purple, 0.01f, true);
+				Debug.DrawRay(transform.position, adjustment, Color.red, 0.01f, true);
 			}
 		}
 
@@ -319,9 +319,14 @@ namespace DigDig2
 		public void ApplyKnockback(Vector3 knockbackForce)
 		{
 			knockbackVelocity = knockbackForce * knockbackMultiplier;
-			characterController.Move(Vector3.up / 10);
-			velocity += Vector3.up * knockbackForce.magnitude/2;
 		}
+		
+		public void Stun(float stunDuration)
+		{
+			if (stunDuration <= 0) return;
+
+			Debug.LogWarning("Stunning is not added yet!");
+        }
 
 		#endregion
 
