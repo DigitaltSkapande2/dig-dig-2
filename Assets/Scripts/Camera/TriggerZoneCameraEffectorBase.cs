@@ -7,26 +7,47 @@ namespace DigDig2.CinemaCamera
         Transform target;
         Collider collider;
 
-        private void Start()
+        protected new void Start()
         {
-            Collider collider = GetComponent<Collider>();
+            Debug.Log("ZINKKKKK");
+            base.Start();
+
+            collider = GetComponent<Collider>();
             if (collider == null)
-            {
+            {   
                 Debug.LogError("CinematicZoneEffector requires a Collider component.");
             }
 
-            target = GameCamera.Instance.transform;
+            target = GameCamera.Instance.GetComponent<Transform>();
         }
 
         private void Update()
         {
-            isActive = collider.bounds.Contains(target.position);
-            if (isActive)
+            if (target == null || collider == null) return;
+            
+            bool shouldActive = collider.bounds.Contains(target.position);
+
+            if (shouldActive != IsActive)
+            {
+                IsActive = shouldActive;
+                if (shouldActive)
+                {
+                    OnZoneEnter();
+                }
+                else
+                {
+                    OnZoneExit();
+                }
+            }
+
+            if (IsActive)
             {
                 WhileActiveUpdate();
             }
         }
-
+        
+        protected abstract void OnZoneEnter();
+        protected abstract void OnZoneExit();
         protected abstract void WhileActiveUpdate();
     }
 }

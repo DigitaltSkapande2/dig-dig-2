@@ -3,10 +3,11 @@ using UnityEngine;
 
 namespace DigDig2
 {
+    // Do NOT handle stuff specific to game scene
     public class OurNetworkManager : NetworkManager
     {
         public static OurNetworkManager instance;
-        [SerializeField] public bool isSinglePlayer = false;
+        [SerializeField] public bool isSinglePlayer = true;
         private PlayerCharacterInputController[] playerControllers = new PlayerCharacterInputController[2];
 
         #region Overrides
@@ -27,19 +28,25 @@ namespace DigDig2
         public override void Start()
         {
             base.Start();
-
         }
 
-        public override void OnServerAddPlayer(NetworkConnectionToClient conn)
+        public override void OnServerConnect(NetworkConnectionToClient conn)
         {
-            
+            Debug.Log("NETWORKING - Client Connected: " + conn.connectionId);
+            if (NetworkServer.connections.Count > 1)
+            {
+                isSinglePlayer = false;
+            }
+
+            base.OnServerConnect(conn);
         }
+
 
         #endregion
 
 
         [Server]
-        private void InitializePlayers(Vector3 Position)
+        public void InitializePlayers(Vector3 Position)
         {
             if (NetworkServer.connections.Values.Count > 2)
             {

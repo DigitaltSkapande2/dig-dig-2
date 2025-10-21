@@ -34,9 +34,9 @@ namespace DigDig2
         [Command]
         private void ServerSetClientCharacterSelection(CharacterType characterType)
         {
-            clientCharacterTypeSellection.Add(clientCharacterTypeSellection);
+            //clientCharacterTypeSellection.Add(, characterType);
         }
 
-
+        
     }
 }
