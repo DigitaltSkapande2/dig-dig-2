@@ -11,7 +11,7 @@ namespace DigDig2
         [Tooltip("Effects that are played when the entity is hit.")]
         [SerializeField] private List<GameObject> hitEffects = new();
 
-        [SerializeField] private float invincibilityTime = 0;
+        [SerializeField] private float invincibilityTime = 0.05f;
 
         private float invincibilityTimer = 0;
 
