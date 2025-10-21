@@ -7,13 +7,13 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: MagicalShieldMat
-  m_Shader: {fileID: -6465566751694194690, guid: 4dc73dab3597cc0478ebf6fb5e6530e7, type: 3}
+  m_Name: EvilMagicalLine
+  m_Shader: {fileID: -6465566751694194690, guid: 979b11c4fdbbbf64dad08a8fb8f42ee9, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords: []
-  m_LightmapFlags: 4
+  m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -24,6 +24,14 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _Gradient:
+        m_Texture: {fileID: 2800000, guid: de4a67f3e2ed30e41a8667b857bf9cf8, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture:
+        m_Texture: {fileID: 2800000, guid: 13eef93c044c8c1479c7ac5f85b7d24b, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -38,28 +46,20 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _BottomFrenselPower: 0.25
-    - _BottomNoisePower: 0.8
-    - _BottomNoiseSize: 27
-    - _BottomNoiseSpeed: 0.05
+    - _DissolveScale: 35
+    - _GradientStrength: 0.1
+    - _NoiseStrength: 0.06
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _TopFrenselPower: 1.5
-    - _TopNoisePower: 2
-    - _TopNoiseSize: 50
-    - _TopNoiseSpeed: 0.07
-    - _VoronoiPower: 5
-    - _VoronoiScale: 15
-    - _VoronoiSpeed: 1.1
+    - _Strength: 222.48
     m_Colors:
-    - _BottomNoiseColor: {r: 0.00003251035, g: 0.000001717408, b: 0.00004790683, a: 1}
-    - _BottomNoiseScale: {r: 0.38, g: 1, b: 0, a: 0}
-    - _TopNoiseColor: {r: 8.878204, g: 0, b: 32, a: 1}
-    - _TopNoiseScale: {r: 0.45, g: 1, b: 0, a: 0}
-    - _VoronoiColor: {r: 1.02132, g: 0.2103828, b: 2.511446, a: 1}
+    - _Color1: {r: 0.30872515, g: 0, b: 0.7490196, a: 1}
+    - _Color2: {r: 0, g: 0.006531148, b: 0.16981131, a: 1}
+    - _NoiseSpeed: {r: -0.3, g: 0, b: 0, a: 0}
+    - _TextureSPeed: {r: 0.2, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
---- !u!114 &4897501306259095289
+--- !u!114 &1109027112447733719
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
