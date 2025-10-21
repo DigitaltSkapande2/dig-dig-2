@@ -27,10 +27,12 @@ namespace DigDig2
 
         public void Damage(int damage)
         {
+            if (!enabled) return;
             SetHealth(health - damage);
         }
         public void Heal(int amount)
         {
+            if (!enabled) return;
             SetHealth(health + amount);
         }
 

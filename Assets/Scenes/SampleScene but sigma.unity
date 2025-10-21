@@ -5916,9 +5916,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Health
   maxHealth: 5
-  health: 0
-  deathEffects:
-  - {fileID: 900025642660281898, guid: 565fe03e66511a84c95b09b1d718120e, type: 3}
+  health: 5
+  deathEffects: []
   deathEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -5937,7 +5936,8 @@ MonoBehaviour:
   hit:
     m_PersistentCalls:
       m_Calls: []
-  hitEffects: []
+  hitEffects:
+  - {fileID: 900025642660281898, guid: 565fe03e66511a84c95b09b1d718120e, type: 3}
   invincibilityTime: 0
 --- !u!114 &1116703936
 MonoBehaviour:
@@ -6958,6 +6958,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3213830340879485965, guid: c98535c2c3fee2e4288903087bfb0f6c, type: 3}
+      propertyPath: hitEffects.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3213830340879485965, guid: c98535c2c3fee2e4288903087bfb0f6c, type: 3}
+      propertyPath: 'hitEffects.Array.data[0]'
+      value: 
+      objectReference: {fileID: 900025642660281898, guid: 565fe03e66511a84c95b09b1d718120e, type: 3}
     - target: {fileID: 3821140945852151295, guid: c98535c2c3fee2e4288903087bfb0f6c, type: 3}
       propertyPath: m_LocalScale.x
       value: 2.5
@@ -6969,6 +6977,18 @@ PrefabInstance:
     - target: {fileID: 3821140945852151295, guid: c98535c2c3fee2e4288903087bfb0f6c, type: 3}
       propertyPath: m_LocalScale.z
       value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4018930690133570384, guid: c98535c2c3fee2e4288903087bfb0f6c, type: 3}
+      propertyPath: health
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4018930690133570384, guid: c98535c2c3fee2e4288903087bfb0f6c, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4018930690133570384, guid: c98535c2c3fee2e4288903087bfb0f6c, type: 3}
+      propertyPath: deathEffects.Array.size
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6291972602155261083, guid: c98535c2c3fee2e4288903087bfb0f6c, type: 3}
       propertyPath: m_Name

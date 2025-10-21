@@ -20,7 +20,7 @@ namespace DigDig2
         }
         [SerializeField] List<Line> enemies = new();
 
-        bool hasShield;
+        bool hasShield = true;
 
         void Awake()
         {
@@ -59,6 +59,7 @@ namespace DigDig2
 
             if (enemies.Count <= 0 && hasShield)
             {
+                Debug.Log(GetComponent<Health>().enabled);
                 GetComponent<Health>().enabled = true;
                 hasShield = false;
             }

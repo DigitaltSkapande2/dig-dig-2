@@ -189,10 +189,7 @@ namespace DigDig2
 
 		private void IncrementAttackChain()
 		{
-			AttackGroup incrementingAttack = currentPerformingAttack;
-			if (currentPerformingAttack == null) incrementingAttack = currentChargingAttack;
-
-			if (HasMetChainRequirement() && incrementingAttack.chain.Count - 1 > currentAttackChain)
+			if (HasMetChainRequirement())
 			{
 				currentAttackChain++;
 			}
@@ -206,6 +203,7 @@ namespace DigDig2
 			float chainWindowMarginOfError = Time.time - performingAttackEndTime;
 			if (!(chainWindowMarginOfError <= chainTimeWindowAfterAttackEnd && chainWindowMarginOfError >= -chainTimeWindowBeforeAttackEnd)) return false;
 			if (lastPerformedAttack != currentPerformingAttack) return false;
+			if (currentAttackChain >= currentPerformingAttack.chain.Count - 1) return false;
 
 			return true;
 		}

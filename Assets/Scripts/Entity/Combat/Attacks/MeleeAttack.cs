@@ -25,7 +25,7 @@ namespace DigDig2
         }
 
         public override void Hit(Attacker attacker, Attackable attackable, Health healthComponent, EntityCharacterController entityCharacterController)
-        {
+		{
 			healthComponent.Damage(damage);
         }
 	}
