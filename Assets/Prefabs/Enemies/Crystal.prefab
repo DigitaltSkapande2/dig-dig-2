@@ -161,7 +161,8 @@ MonoBehaviour:
   hit:
     m_PersistentCalls:
       m_Calls: []
-  hitEffects: []
+  hitEffects:
+  - {fileID: 900025642660281898, guid: 565fe03e66511a84c95b09b1d718120e, type: 3}
   invincibilityTime: 0
 --- !u!114 &4018930690133570384
 MonoBehaviour:
@@ -175,10 +176,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 809a18945f58a064abeeb94658cb72d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Health
-  maxHealth: 5
-  health: 0
-  deathEffects:
-  - {fileID: 900025642660281898, guid: 565fe03e66511a84c95b09b1d718120e, type: 3}
+  maxHealth: 3
+  health: 3
+  deathEffects: []
   deathEvent:
     m_PersistentCalls:
       m_Calls:
@@ -206,6 +206,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 744cb76ac4c9fd540a9eb0faed82fa5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Crystal
+  crystal: {fileID: 2519747040841795025}
+  shield: {fileID: 6672083611941458192}
   linePrefab: {fileID: 2737389797727682940, guid: 39c911a686f973c4fabe982863ac4797, type: 3}
   enemies:
   - enemy: {fileID: 0}
@@ -237,7 +239,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0.33807787, y: 0.8598004, z: 0.14003643, w: 0.35614097}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.76, y: 2.76, z: 2.76}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 2489549238134287283}

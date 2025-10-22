@@ -62,7 +62,7 @@ Material:
     - _NoiseScale: 10.5
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Seethrough: 0.05
+    - _Seethrough: 0
     - _Smoothness: 0.5
     - _frensel_power: 1.511
     m_Colors:

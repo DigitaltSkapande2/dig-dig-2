@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Mirror.BouncyCastle.Asn1.Cmp;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -8,6 +7,8 @@ namespace DigDig2
 {
     public class Crystal : MonoBehaviour
     {
+        [SerializeField] GameObject crystal;
+        [SerializeField] GameObject shield;
         [SerializeField] GameObject linePrefab;
 
         [Serializable]
@@ -32,7 +33,13 @@ namespace DigDig2
             if (hasShield)
             {
                 Debug.Log("BONK");
+                return;
             }
+
+            Material material = crystal.GetComponent<MeshRenderer>().material;
+
+            if (material.GetFloat("_CrackStage") == 0.015f) material.SetFloat("_CrackStage", 0.001f);
+            if (material.GetFloat("_CrackStage") == 0.2f) material.SetFloat("_CrackStage", 0.015f);
         }
 
         void Update()
@@ -61,6 +68,7 @@ namespace DigDig2
             {
                 Debug.Log(GetComponent<Health>().enabled);
                 GetComponent<Health>().enabled = true;
+                shield.SetActive(false);
                 hasShield = false;
             }
         }
