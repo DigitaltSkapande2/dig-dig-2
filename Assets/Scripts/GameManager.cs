@@ -11,7 +11,7 @@ namespace DigDig2
     // HANDELS STUFF SPECIFIC TO GAME SCENE/SEQUENCE
     public class GameManager : Singleton<GameManager>
     {
-        [SerializeField] TMP_Text debugStartGameText;
+        [SerializeField] GameObject debugStartGameContainer;
 
 
         OurNetworkManager networkManager;
@@ -25,16 +25,22 @@ namespace DigDig2
 
             if (NetworkServer.active)
             {
-                Destroy(debugStartGameText);
+                Destroy(debugStartGameContainer);
             }
-            else
-            {
-                
-            }
+        }
 
+        // Called by the DebugStart Game Screen
+        void DebugHostGame()
+        {
 
         }
 
+        // Called by the DebugStart Game Screen
+        void DebugTryJoinGame()
+        {
+
+        }
+        
         public void StartGame() // Spawn players, etc
         {
             if (!NetworkServer.active) networkManager.StartHost();
