@@ -5816,6 +5816,8 @@ MonoBehaviour:
   - rid: 1217018901321220183
   - rid: 1217018901321220184
   - rid: 8122051051056005428
+  - rid: 1606303436205457498
+  - rid: 1606303436205457499
   m_IsInitialised: 0
   m_IsStarted: 0
   references:
@@ -5849,7 +5851,23 @@ MonoBehaviour:
           m_Value0: 6185853582079718337
           m_Value1: 16468564652571363867
         Name: Enemy
-        m_Value: {fileID: 0}
+        m_Value: {fileID: 1409110972}
+    - rid: 1606303436205457498
+      type: {class: 'BlackboardVariable`1[[UnityEngine.Transform, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 15102707721157522427
+          m_Value1: 14870566543952440657
+        Name: Look Point
+        m_Value: {fileID: 1409110973}
+    - rid: 1606303436205457499
+      type: {class: 'BlackboardVariable`1[[System.Boolean, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 10526478792159006688
+          m_Value1: 13148673768015250524
+        Name: Random Waypoint Patrol
+        m_Value: 1
     - rid: 8122051051056005428
       type: {class: 'BlackboardVariable`1[[BehaviorTestType, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
@@ -5857,7 +5875,7 @@ MonoBehaviour:
           m_Value0: 8333448519615864380
           m_Value1: 7244335908673377373
         Name: Behavior Test Type
-        m_Value: 3
+        m_Value: 0
 --- !u!143 &963754047
 CharacterController:
   m_ObjectHideFlags: 0

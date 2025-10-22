@@ -7,8 +7,8 @@ namespace DigDig2
 	public class Attacker : MonoBehaviour
 	{
 		[SerializeField] private EntityInfo entityInfo; // This should be gotten from the entity character controller instead :3
-		[SerializeField] private float chainTimeWindowAfterAttackEnd = 0.25f;
-		[SerializeField] private float chainTimeWindowBeforeAttackEnd = 0.25f;
+		[SerializeField] private float chainTimeWindowAfterAttackEnd = 0.05f;
+		[SerializeField] private float chainTimeWindowBeforeAttackEnd = 0.5f;
 
 		[SerializeField] private List<Transform> bindableTransforms = new();
 
@@ -18,9 +18,12 @@ namespace DigDig2
 		private AttackGroup currentChargingAttack;
 		private AttackGroup currentPerformingAttack;
 		private AttackGroup lastPerformedAttack;
+		private int lastPerformedAttackIndex;
 		private float chargeStartTime = -1;
 		private float performingAttackEndTime = -1;
 		private int currentAttackChain;
+		private bool chainAttackQueued = false;
+		private float attackCooldownTimer = 0f;
 
 		private Dictionary<string, AttackHitbox> activeAttackHitboxes = new();
 
@@ -42,7 +45,21 @@ namespace DigDig2
 
 		private void Update()
 		{
-			if (IsPerformingAttack() && Time.time >= performingAttackEndTime) EndAttack();
+			if (IsPerformingAttack() && Time.time >= performingAttackEndTime)
+			{
+				EndAttack();
+				if (chainAttackQueued)
+				{
+					Attack(lastPerformedAttackIndex, true);
+					chainAttackQueued = false;
+				}
+				else
+				{
+					attackCooldownTimer = lastPerformedAttack.endCooldown;
+				}
+			}
+
+			if (attackCooldownTimer > 0) attackCooldownTimer -= Time.deltaTime;
 		}
 
         private void FixedUpdate()
@@ -71,7 +88,7 @@ namespace DigDig2
 				AttackHitbox attackHitbox = attackHitboxPair.Value;
 				Gizmos.matrix = attackHitbox.boundTransform.localToWorldMatrix;
 				Gizmos.color = Color.red;
-				Gizmos.DrawWireCube(attackHitbox.boundTransform.localPosition, attackHitbox.size);
+				Gizmos.DrawWireCube(Vector3.zero, attackHitbox.size);
             }
         }
 
@@ -86,7 +103,7 @@ namespace DigDig2
 
 		public void ChargeAttack(int attackIndex)
 		{
-			if (IsPerformingAttack() && !HasMetChainRequirement()) { Debug.LogWarning("An attack is currently being performed and is not being charged, can't attack right now."); return; }
+			if (IsPerformingAttack()) { Debug.LogWarning("An attack is currently being performed and is not being charged, can't attack right now."); return; }
 			if (IsChargingAttack()) { Debug.LogWarning("An attack charge is already ongoing, please end it before charging again."); return; }
 
 			EndAttack(true);
@@ -139,9 +156,18 @@ namespace DigDig2
 
 		#region Attacking
 
-		public void Attack(int attackIndex)
+		public void Attack(int attackIndex, bool skipChainCheck = false)
 		{
-			if (IsPerformingAttack() && !HasMetChainRequirement()) { Debug.Log("An attack is currently being performed and is not being charged, can't attack right now."); return; }
+			if (attackCooldownTimer > 0) { Debug.LogWarning("Attack is on cooldown, can't attack right now"); return; }
+
+			if (IsPerformingAttack())
+			{
+				Debug.Log("Checking for chain...");
+				if (!skipChainCheck && HasMetChainRequirement(currentAttackChain)) { chainAttackQueued = true; Debug.Log("Queuing chain attack!"); }
+
+				Debug.Log("An attack is currently being performed and is not being charged, can't attack right now.");
+				return;
+			}
 
 			EndAttack(true);
 
@@ -157,9 +183,9 @@ namespace DigDig2
 
 				IncrementAttackChain();
 			}
-
 			if (currentPerformingAttack == null) { EndAttack(); return; }
 
+			lastPerformedAttackIndex = attackIndex;
 			currentPerformingAttack.chain[currentAttackChain].Trigger(this, currentPerformingAttack, Time.time - chargeStartTime);
 			performingAttackEndTime = Time.time + currentPerformingAttack.chain[currentAttackChain].GetAttackDuration();
 			lastPerformedAttack = currentPerformingAttack;
@@ -198,12 +224,19 @@ namespace DigDig2
 				currentAttackChain = 0;
 			}
 		}
-		public bool HasMetChainRequirement()
+		public bool HasMetChainRequirement(int attackChain = -1)
 		{
+			if (attackChain == -1) attackChain = currentAttackChain;
+
 			float chainWindowMarginOfError = Time.time - performingAttackEndTime;
+			Debug.Log($"the attack chain: {attackChain}, moe: {chainWindowMarginOfError}");
 			if (!(chainWindowMarginOfError <= chainTimeWindowAfterAttackEnd && chainWindowMarginOfError >= -chainTimeWindowBeforeAttackEnd)) return false;
+			Debug.Log("pass 1");
 			if (lastPerformedAttack != currentPerformingAttack) return false;
-			if (currentAttackChain >= currentPerformingAttack.chain.Count - 1) return false;
+			Debug.Log("pass 2");
+			Debug.Log($"attackChain: {attackChain}, count: {currentPerformingAttack.chain.Count - 1}");
+			if (attackChain >= currentPerformingAttack.chain.Count - 1) return false;
+			Debug.Log("pass 3");
 
 			return true;
 		}

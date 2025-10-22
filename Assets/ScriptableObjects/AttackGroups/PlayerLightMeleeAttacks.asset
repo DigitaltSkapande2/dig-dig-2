@@ -16,3 +16,4 @@ MonoBehaviour:
   requireCharge: 0
   chain:
   - {fileID: 11400000, guid: 39c807a16f0a98623ae9e0b3cba5ce9b, type: 2}
+  - {fileID: 11400000, guid: 39c807a16f0a98623ae9e0b3cba5ce9b, type: 2}

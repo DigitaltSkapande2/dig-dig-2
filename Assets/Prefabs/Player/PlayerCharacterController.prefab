@@ -199,8 +199,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Attacker
   entityInfo: {fileID: 11400000, guid: fa15988092a05fa40bf2e5d6b1755795, type: 2}
-  chainTimeWindowAfterAttackEnd: 0.25
-  chainTimeWindowBeforeAttackEnd: 0.25
+  chainTimeWindowAfterAttackEnd: 0.05
+  chainTimeWindowBeforeAttackEnd: 0.5
   bindableTransforms:
   - {fileID: 2436569871897591429}
 --- !u!114 &1195255877809228181

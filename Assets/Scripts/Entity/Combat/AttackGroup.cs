@@ -6,8 +6,9 @@ namespace DigDig2
     [CreateAssetMenu(fileName = "AttackGroup", menuName = "Scriptable Objects/Attack Group")]
     public class AttackGroup : ScriptableObject
     {
-        public float chargeDuration = 0f;
-        public bool requireCharge = false;
-        public List<Attack> chain;
+        [SerializeField] public float endCooldown = 0.05f;
+        [SerializeField] public float chargeDuration = 0f;
+        [SerializeField] public bool requireCharge = false;
+        [SerializeField] public List<Attack> chain;
     }
 }
