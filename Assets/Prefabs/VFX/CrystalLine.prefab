@@ -160,8 +160,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e77937cf959c08b439a60b438971448a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.CrystalLine
+  crystal: {x: 0, y: 0, z: 0}
+  enemy: {x: 0, y: 0, z: 5}
   controlPointDefaultPosition: 0.8
   controlPointResetSpeed: 0.9
   lineSegmentsPerUnit: 5
+  randomOffset: 2
   shieldDistance: 1.25
   line: {fileID: 1535422486776055637}

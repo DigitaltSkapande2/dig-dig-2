@@ -1,18 +1,18 @@
 using UnityEngine;
-using UnityEngine.UIElements.Experimental;
 
 namespace DigDig2
 {
     public class CrystalLine : MonoBehaviour
     {
-        Vector3 crystal;
-        Vector3 enemy;
+        [SerializeField] Vector3 crystal;
+        [SerializeField] Vector3 enemy;
 
         Vector3 controlPoint;
 
         [SerializeField] float controlPointDefaultPosition;
         [SerializeField] float controlPointResetSpeed;
         [SerializeField] int lineSegmentsPerUnit;
+        [SerializeField] float randomOffset;
         [SerializeField] float shieldDistance;
 
         int segments;
@@ -48,6 +48,8 @@ namespace DigDig2
                 Vector3 p1 = Vector3.Lerp(crystal, controlPoint, value);
                 Vector3 p2 = Vector3.Lerp(controlPoint, enemy, value);
                 Vector3 p3 = Vector3.Lerp(p1, p2, value);
+
+                p3 += Vector3.up * (Mathf.PerlinNoise1D(value + Time.time)-0.5f) * randomOffset * (1-Mathf.Pow(value, 2));
 
                 if (Vector3.Distance(crystal, p3) < shieldDistance)
                 {
