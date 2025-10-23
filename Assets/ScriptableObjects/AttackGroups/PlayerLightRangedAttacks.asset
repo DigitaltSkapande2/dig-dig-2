@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b860433e6bd2b354fa9257ca241def15, type: 3}
   m_Name: PlayerLightRangedAttacks
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.AttackGroup
-  chargeTime: 0
+  endCooldown: 0.05
+  chargeDuration: 0
   requireCharge: 0
   chain:
-  - {fileID: 11400000, guid: f185cbe781df6ca4ebcbcebfc7762d46, type: 2}
+  - {fileID: 11400000, guid: dae86fe97c04ea6489ce1f39902f51ac, type: 2}

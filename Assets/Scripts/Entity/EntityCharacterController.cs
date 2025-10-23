@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Mirror;
 using UnityEngine.PlayerLoop;
+using Unity.Mathematics;
 
 namespace DigDig2
 {
@@ -136,6 +137,8 @@ namespace DigDig2
 		{
 			if (isLocalPlayer || isServer)
 			{
+				Debug.DrawLine(transform.position, transform.position + GetForwardVector(), Color.red);
+
 				// Movement
 				// NOTE: Reorder movement processing order here!
 				ProcessGravity();
@@ -352,6 +355,11 @@ namespace DigDig2
 		{
 			targetLookRotation = Vector3.SignedAngle(transform.forward, target - transform.position, transform.up);
 		}
+
+		public Vector3 GetForwardVector()
+        {
+			return new Vector3(-Mathf.Cos(targetLookRotation * Mathf.Deg2Rad + Mathf.PI/2), 0, Mathf.Sin(targetLookRotation * Mathf.Deg2Rad + Mathf.PI/2));
+        }
 
 		public void SetAutomaticLookRotationLock(bool isLocked)
 		{

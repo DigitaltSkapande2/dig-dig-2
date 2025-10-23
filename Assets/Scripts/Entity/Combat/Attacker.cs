@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace DigDig2
 {
@@ -256,7 +257,7 @@ namespace DigDig2
 
 		public AttackHitbox AddAttackHitbox(Attack attack, string id, Vector3 size, Transform boundTransform)
 		{
-            AttackHitbox newAttackHitbox = new()
+			AttackHitbox newAttackHitbox = new()
 			{
 				size = size,
 				boundTransform = boundTransform,
@@ -264,7 +265,7 @@ namespace DigDig2
 				attackedEnemies = new()
 			};
 
-            activeAttackHitboxes[id] = newAttackHitbox;
+			activeAttackHitboxes[id] = newAttackHitbox;
 
 			return newAttackHitbox;
 		}
