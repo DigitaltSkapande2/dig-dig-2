@@ -22,16 +22,14 @@ namespace DigDig2.CinemaCamera {
             foreach (var effector in CameraEffector.GetEffectiveCameraEffectors())
             {
                 targetPos += effector.position;
-                if (effector.rotation.magnitude > float.Epsilon)
-                targetRotation = Quaternion.Euler(effector.rotation);
+                if (effector.rotation.eulerAngles.magnitude > float.Epsilon)
+                    targetRotation = effector.rotation;
             }
-
-
 
 
             transform.position = Vector3.Lerp(transform.position, targetPos, followSpeed * Time.deltaTime);
 
-            //transform.rotation = targetRotation;
+            transform.rotation = targetRotation;
         }
     }
 }

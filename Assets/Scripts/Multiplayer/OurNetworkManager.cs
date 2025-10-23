@@ -1,5 +1,6 @@
 using Mirror;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace DigDig2
 {
@@ -7,8 +8,11 @@ namespace DigDig2
     public class OurNetworkManager : NetworkManager
     {
         public static OurNetworkManager instance;
+        [SerializeField] bool showDebugClinetList = false;
         [SerializeField] public bool isSinglePlayer = true;
         private PlayerCharacterInputController[] playerControllers = new PlayerCharacterInputController[2];
+
+        public UnityEvent onClientListUpdated = new UnityEvent();
 
         #region Overrides
 
@@ -45,6 +49,8 @@ namespace DigDig2
         #endregion
 
 
+
+
         [Server]
         public void InitializePlayers(Vector3 Position)
         {
@@ -65,6 +71,11 @@ namespace DigDig2
         public void ToggleSinglePlayerFocus()
         {
 
+        }
+
+        public PlayerCharacterInputController GetLocalPlayerController()
+        {
+            return playerControllers[0];
         }
     }
 }

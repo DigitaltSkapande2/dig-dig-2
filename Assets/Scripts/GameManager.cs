@@ -1,9 +1,7 @@
-using System.Linq;
+
 using Mirror;
-using NUnit.Framework;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 namespace DigDig2
 {
@@ -12,6 +10,12 @@ namespace DigDig2
     public class GameManager : Singleton<GameManager>
     {
         [SerializeField] GameObject debugStartGameContainer;
+
+        [Header("Character Select Screen")]
+        [SerializeField] GameObject characterSelectScreenContainer;
+        [SerializeField] Button selectMinisButton;
+        [SerializeField] Button selectMaxButton;
+        [SerializeField] Button readyButton;
 
 
         OurNetworkManager networkManager;
@@ -25,44 +29,67 @@ namespace DigDig2
 
             if (NetworkServer.active)
             {
-                Destroy(debugStartGameContainer);
+                debugStartGameContainer.SetActive(false);
+                characterSelectScreenContainer.SetActive(true);
             }
         }
 
         // Called by the DebugStart Game Screen
-        void DebugHostGame()
+        public void DebugHostGame()
         {
-
+            networkManager.StartHost();
+            ShowCharacterSelectScreen();
+            debugStartGameContainer.SetActive(false);
         }
 
         // Called by the DebugStart Game Screen
-        void DebugTryJoinGame()
+        public void DebugTryJoinGame()
         {
-
+            networkManager.StartClient();
+            ShowCharacterSelectScreen();
+            debugStartGameContainer.SetActive(false);
         }
-        
+
         public void StartGame() // Spawn players, etc
         {
             if (!NetworkServer.active) networkManager.StartHost();
 
             if (isServer)
             {
-                print("is server, initializing players");
+                print("is server; initializing players");
                 OurNetworkManager.instance.InitializePlayers(new Vector3(0, 5, 0));
             }
         }
-        
+
+
+        #region CharacterSelect Screen
+
 
         public void ShowCharacterSelectScreen()
         {
             if (hasCharacterSelectScreenShown) return;
+
+            if (NetworkServer.active)
+            {
+                characterSelectScreenContainer.SetActive(true);
+            }
+
+            selectMinisButton.onClick.AddListener(() =>
+            {
+                
+            });
+
+            readyButton.onClick.AddListener(() =>
+            {
+                characterSelectScreenContainer.SetActive(false);
+                StartGame();
+            });
             
-            // TODO: Implement shit
+            characterSelectScreenContainer.SetActive(true);
 
             hasCharacterSelectScreenShown = true;
         }
         
-        
-
+        #endregion
     }
 }

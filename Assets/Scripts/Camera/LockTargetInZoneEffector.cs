@@ -22,7 +22,7 @@ namespace DigDig2.CinemaCamera
             if (targetTransform != null)
             {
                 position = targetTransform.position;
-                rotation = targetTransform.eulerAngles;
+                rotation = targetTransform.rotation;
                 frustumSize = targetFrustumSize;
             }
         }

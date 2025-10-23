@@ -15,7 +15,8 @@ namespace DigDig2.CinemaCamera
 
         // -- Instance Fields -- //
 
-        [SerializeField] private bool isActive = false;
+        [SerializeField] public bool overridesLowerPriority = false;
+        [SerializeField] private bool isActive = true;
         public bool IsActive
         {
             get
@@ -31,9 +32,10 @@ namespace DigDig2.CinemaCamera
             }
         }
 
-        [NonSerialized] public Vector3 position;
-        [NonSerialized] public Vector3 rotation;
-        [NonSerialized] public float frustumSize;
+        public Vector3 position;
+        //public Vector2 cameraLocalPlanarOffset;
+        public Quaternion rotation;
+        public float frustumSize;
 
         [SerializeField] private int priorityLevel;
         public int PriorityLevel
@@ -72,7 +74,7 @@ namespace DigDig2.CinemaCamera
         {
             // Find the highest priority level among effectors with any override
             int highestPriority = allCameraEffectors
-            .Where(e => e.IsActive)
+            .Where(e => e.overridesLowerPriority && e.IsActive)
             .Select(e => e.PriorityLevel)
             .DefaultIfEmpty(0)
             .Max();
@@ -82,9 +84,11 @@ namespace DigDig2.CinemaCamera
             // Filter effectors with the highest priority and any override
             effectiveCameraEffectors = allCameraEffectors
             .Where(e => e.IsActive)
-            .Where(e => e.PriorityLevel == highestPriority)
+            .Where(e => e.PriorityLevel >= highestPriority)
             .OrderByDescending(e => e.PriorityLevel)
             .ToList();
+
+            Debug.Log($"Effective Effectors Count: {effectiveCameraEffectors.Count}");
         }
 
         public static List<CameraEffector> GetEffectiveCameraEffectors()
