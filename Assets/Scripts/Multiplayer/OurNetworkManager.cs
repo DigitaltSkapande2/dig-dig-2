@@ -45,6 +45,11 @@ namespace DigDig2
             base.OnServerConnect(conn);
         }
 
+        public void StartSinglePlayer()
+        {
+            StartHost(); // TODO: fix singleplayer xD
+        }
+
 
         #endregion
 

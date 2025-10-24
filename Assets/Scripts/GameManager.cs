@@ -11,6 +11,8 @@ namespace DigDig2
     {
         [SerializeField] GameObject debugStartGameContainer;
 
+        [SerializeField] bool startSinglePlayerOnStart = false;
+
         [Header("Character Select Screen")]
         [SerializeField] GameObject characterSelectScreenContainer;
         [SerializeField] Button selectMinisButton;
@@ -26,6 +28,13 @@ namespace DigDig2
         void Start()
         {
             networkManager = OurNetworkManager.instance;
+
+            if (startSinglePlayerOnStart) {
+                networkManager.StartSinglePlayer();
+                networkManager.InitializePlayers(new Vector3(0, 2, 0));
+                debugStartGameContainer.SetActive(false);
+                return;
+            }
 
             if (NetworkServer.active)
             {

@@ -1649,6 +1649,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   debugStartGameContainer: {fileID: 5808918988234047206}
+  startSinglePlayerOnStart: 1
   characterSelectScreenContainer: {fileID: 2406227879720967963}
   selectMinisButton: {fileID: 1923836232411123841}
   selectMaxButton: {fileID: 7509483440152984302}

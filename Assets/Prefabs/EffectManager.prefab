@@ -268,9 +268,9 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    lowValue: 0.1
-    midValue: 0.3
-    highValue: 0.9
+    lowValue: 0.02
+    midValue: 0.05
+    highValue: 0.1
   vignetteDuration:
     curve:
       serializedVersion: 2

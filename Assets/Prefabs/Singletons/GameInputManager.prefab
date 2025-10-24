@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2588531598960594254}
   - component: {fileID: 8718928146796026867}
+  - component: {fileID: 8043604732136706973}
   m_Layer: 0
   m_Name: GameInputManager
   m_TagString: Untagged
@@ -44,6 +45,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a486f8bc6a6c9d4abeb045aa0b69c4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
   inputContextConfig: {fileID: 11400000, guid: ef3e68a6e394772409f488a22a7901c6, type: 2}
   initialContext: 2
   currentInputState: 0
+--- !u!114 &8043604732136706973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4926445381038683340}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Mirror::Mirror.NetworkIdentity
+  sceneId: 0
+  _assetId: 2558581329
+  serverOnly: 1
+  visibility: 0
+  hasSpawned: 0
