@@ -1,6 +1,4 @@
-using System;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -57,6 +55,8 @@ namespace DigDig2
         }
     }
 
+#if UNITY_EDITOR
+
     [CustomEditor(typeof(InputManager))]
     public class InputManagerEditor : Editor
     {
@@ -71,4 +71,6 @@ namespace DigDig2
             }
         }
     }
+    
+    #endif
 }

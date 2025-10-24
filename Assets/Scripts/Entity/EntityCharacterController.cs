@@ -3,8 +3,6 @@ using DigDig2.Debugging;
 using System.Collections.Generic;
 using System.Linq;
 using Mirror;
-using UnityEngine.PlayerLoop;
-using Unity.Mathematics;
 
 namespace DigDig2
 {
