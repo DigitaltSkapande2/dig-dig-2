@@ -56,7 +56,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _CrackStage: 0.2
+    - _CrackStage: 0.001
     - _FrenselPower: 2.41
     - _Metallic: 1
     - _NoiseScale: 10.5
