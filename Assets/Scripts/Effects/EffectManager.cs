@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.Rendering;
 using UnityEngine;
+using System.Collections;
+using System;
 
 
 namespace DigDig2.Effects
@@ -19,7 +21,7 @@ namespace DigDig2.Effects
         [System.Serializable]
         private struct EffectValueIntensityDecoder<T>
         {
-            [SerializeField] AnimationCurve curve;
+            [SerializeField] public AnimationCurve curve;
             [SerializeField] T lowValue;
             [SerializeField] T midValue;
             [SerializeField] T highValue;
@@ -60,26 +62,31 @@ namespace DigDig2.Effects
         private ChromaticAberration chromaticAberration;
         private Bloom bloom;
         private Vignette vignette;
+        private Vignette defaultVignette;
 
         private LensDistortion lensDistortion;
         private MotionBlur motionBlur;
         private ColorAdjustments colorAdjustments;
 
 
+        // ScreenShake Effector Refeence
+        private CinemaCamera.ScreenShakeEffector screenShakeEffector;
+
         void Start()
         {
-
+            screenShakeEffector = gameObject.AddComponent<CinemaCamera.ScreenShakeEffector>();
+            InitializeVignette();
         }
 
 
-        public void PlayScreenShake()
-        {
 
-        }
 
         #region ScreenShake
 
-
+        public void PlayScreenShake(EffectIntensity intensity = EffectIntensity.mid)
+        {
+            screenShakeEffector.Shake(screenShakeIntensity.GetValue(intensity));
+        }
 
         #endregion
 
@@ -99,10 +106,30 @@ namespace DigDig2.Effects
                 vignette = volume.profile.Add<Vignette>();
                 vignette.active = true;
             }
+            // Store the default vignette settings
+            defaultVignette = ScriptableObject.CreateInstance<Vignette>();
+            defaultVignette.intensity.value = vignette.intensity.value;
+            defaultVignette.color.value = vignette.color.value;
 
+            // Set override states
             vignette.color.overrideState = true;
             vignette.intensity.overrideState = true;
             vignette.smoothness.overrideState = true;
+        }
+
+        public void PlayVignettePulse(EffectIntensity intensity = EffectIntensity.mid, Color color = default)
+        {
+            StartCoroutine(CurvePulseRoutine(vignetteIntensity.curve, vignetteDuration.GetValue(intensity), (float curveValue) =>
+            {
+                print("curveValue: " + curveValue);
+                float targetIntensity = vignetteIntensity.GetValue(intensity);
+                vignette.color.value = Color.Lerp(defaultVignette.color.value, color == default ? Color.black : color, curveValue * 2);
+                vignette.intensity.value = (targetIntensity * (1-defaultVignette.intensity.value) * curveValue) + defaultVignette.intensity.value;
+
+            }, () => {
+                vignette.intensity.value = defaultVignette.intensity.value;
+                vignette.color.value = defaultVignette.color.value;
+            }));
         }
 
         #endregion
@@ -112,5 +139,51 @@ namespace DigDig2.Effects
 
 
         #endregion
+
+
+
+        private IEnumerator CurvePulseRoutine(AnimationCurve curve, float duration, Action<float> action, Action onComplete = null)
+        {
+            float progress = 0f;
+            while (progress < duration)
+            {
+                float curveValue = curve.Evaluate(progress / duration);
+                action?.Invoke(curveValue);
+
+                progress += Time.deltaTime;
+                yield return null; // Skip to next frame
+            }
+
+            onComplete?.Invoke();
+
+            yield break;
+        }
     }
+
+
+#if UNITY_EDITOR
+
+    [UnityEditor.CustomEditor(typeof(EffectManager))]
+    public class EffectManagerEditor : UnityEditor.Editor
+    {
+        public override void OnInspectorGUI()
+        {
+            DrawDefaultInspector();
+
+            EffectManager effectManager = (EffectManager)target;
+
+            if (GUILayout.Button("Play ScreenShake"))
+            {
+                effectManager.PlayScreenShake(EffectIntensity.mid);
+            }
+
+            if (GUILayout.Button("Play Vignette Pulse"))
+            {
+                effectManager.PlayVignettePulse(EffectIntensity.mid, Color.red);
+            }
+
+        }
+    }
+
+    #endif
 }

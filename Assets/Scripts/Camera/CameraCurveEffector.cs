@@ -3,7 +3,7 @@ using UnityEngine.Splines;
 
 namespace DigDig2.CinemaCamera
 {
-    public class CameraCurveEffector : CameraZoneEffector
+    public class CameraCurveEffector : TriggerZoneCameraEffectorBase
     {
         [SerializeField] SplineContainer splineContainer;
 
@@ -26,6 +26,16 @@ namespace DigDig2.CinemaCamera
 
         }
 
+        protected override void OnZoneEnter()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        protected override void OnZoneExit()
+        {
+            throw new System.NotImplementedException();
+        }
+
         // private float GetClosestPositionOnSpline(Spline spline, Vector3 point, int iterations = 10)
         // {
         //     float currentT = 0.5f; //Start in the middle of the spline
@@ -45,6 +55,6 @@ namespace DigDig2.CinemaCamera
 
         //     }
         // }
-        
+
     }
 }

@@ -1,17 +1,18 @@
 using Mirror;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace DigDig2
 {
+    // Do NOT handle stuff specific to game scene
     public class OurNetworkManager : NetworkManager
     {
         public static OurNetworkManager instance;
-        [SerializeField] GameObject player1Prefab;
-        [SerializeField] GameObject player2Prefab;
-
-        [SerializeField] public bool isSinglePlayer = false;
+        [SerializeField] bool showDebugClinetList = false;
+        [SerializeField] public bool isSinglePlayer = true;
         private PlayerCharacterInputController[] playerControllers = new PlayerCharacterInputController[2];
-        private int singleplayerCharacterFocus = 0;
+
+        public UnityEvent onClientListUpdated = new UnityEvent();
 
         #region Overrides
 
@@ -31,51 +32,50 @@ namespace DigDig2
         public override void Start()
         {
             base.Start();
-
         }
 
-        public override void OnServerAddPlayer(NetworkConnectionToClient conn)
+        public override void OnServerConnect(NetworkConnectionToClient conn)
         {
-            Transform startPos = GetStartPosition();
-            GameObject player = startPos != null
-                ? Instantiate(playerPrefab, startPos.position, startPos.rotation)
-                : Instantiate(playerPrefab);
+            Debug.Log("NETWORKING - Client Connected: " + conn.connectionId);
+            if (NetworkServer.connections.Count > 1)
+            {
+                isSinglePlayer = false;
+            }
 
-            // instantiating a "Player" prefab gives it the name "Player(clone)"
-            // => appending the connectionId is WAY more useful for debugging!
-            player.name = $"{playerPrefab.name} [connId={conn.connectionId}]";
-            NetworkServer.AddPlayerForConnection(conn, player);
+            base.OnServerConnect(conn);
         }
+
 
         #endregion
 
 
-        [Server]
-        private void InitializePlayers()
-        {
-            playerControllers[0] = Instantiate(player1Prefab).GetComponent<PlayerCharacterInputController>();
-            playerControllers[1] = Instantiate(player2Prefab).GetComponent<PlayerCharacterInputController>();
 
-            playerControllers[singleplayerCharacterFocus].isSinglePlayerFocus = true;
+
+        [Server]
+        public void InitializePlayers(Vector3 Position)
+        {
+            if (NetworkServer.connections.Values.Count > 2)
+            {
+                Debug.LogError("More than 2 Connected Clients, This is NOT INTENDED");
+                return;
+            }
+            
+            foreach (NetworkConnectionToClient conn in NetworkServer.connections.Values)
+            {
+                GameObject player = Instantiate(playerPrefab, Position, Quaternion.identity);
+
+                NetworkServer.AddPlayerForConnection(conn, player);
+            }
         }
 
         public void ToggleSinglePlayerFocus()
         {
-            playerControllers[singleplayerCharacterFocus].isSinglePlayerFocus = false;
-            singleplayerCharacterFocus = (singleplayerCharacterFocus + 1) % (playerControllers.Length - 1);
-            playerControllers[singleplayerCharacterFocus].isSinglePlayerFocus = true;
+
         }
 
-
-
-        public PlayerCharacterInputController[] GetSinglePlayerCharacters()
+        public PlayerCharacterInputController GetLocalPlayerController()
         {
-            return playerControllers;
-        }
-
-        public PlayerCharacterInputController GetFocusedSinglePlayerCharacter()
-        {
-            return playerControllers[singleplayerCharacterFocus];
+            return playerControllers[0];
         }
     }
 }
