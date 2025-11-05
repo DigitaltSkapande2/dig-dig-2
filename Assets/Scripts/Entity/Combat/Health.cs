@@ -7,53 +7,64 @@ namespace DigDig2
     public class Health : MonoBehaviour
     {
         [Tooltip("Starting health and eventual cap for healing.")]
-        [SerializeField] private int maxHealth = 1;
+        [SerializeField] private int maxHealthPoints = 1;
 
         [Tooltip("The entity's current health.")]
-        [SerializeField] private int health = 1;
+        public int HealthPoints
+		{
+            get
+            {
+                return healthPoints;
+            }
+            set
+			{
+                SetHealth(value);
+			}
+		}
+        [SerializeField] private int healthPoints = 1;
 
         [Tooltip("Effects to be played when health is below 0.")]
         [SerializeField] private GameObject[] deathEffects;
 
         [Tooltip("Event is called when health is below 0.")]
-        [SerializeField] private UnityEvent deathEvent;
+        [SerializeField] private UnityEvent death;
 
 
 
         private void Start()
         {
-            SetHealth(health);
+            SetHealth(healthPoints);
         }
 
         public void Damage(int damage)
         {
             if (!enabled) return;
-            SetHealth(health - damage);
+            SetHealth(healthPoints - damage);
         }
         public void Heal(int amount)
         {
             if (!enabled) return;
-            SetHealth(health + amount);
+            SetHealth(healthPoints + amount);
         }
 
         public void SetHealth(int newHealth)
         {
-            health = Mathf.Clamp(newHealth, 0, maxHealth);
+            healthPoints = Mathf.Clamp(newHealth, 0, maxHealthPoints);
             CheckState();
         }
 
         public void Kill()
         {
-            health = 0;
+            healthPoints = 0;
 
-            deathEvent.Invoke();
+            death.Invoke();
             PlayDeathEffects();
             Destroy(gameObject);
         }
 
         private void CheckState()
         {
-            if (health <= 0) Kill();
+            if (healthPoints <= 0) Kill();
         }
 
         #region Effects

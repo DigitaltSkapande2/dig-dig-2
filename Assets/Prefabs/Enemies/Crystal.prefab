@@ -177,23 +177,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Health
   maxHealth: 3
-  health: 3
+  healthPoints: 3
   deathEffects: []
-  deathEvent:
+  death:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &2002717688747189687
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -209,8 +197,7 @@ MonoBehaviour:
   crystal: {fileID: 2519747040841795025}
   shield: {fileID: 6672083611941458192}
   linePrefab: {fileID: 2737389797727682940, guid: 39c911a686f973c4fabe982863ac4797, type: 3}
-  enemies:
-  - enemy: {fileID: 0}
+  lines: []
 --- !u!1 &6672083611941458192
 GameObject:
   m_ObjectHideFlags: 0

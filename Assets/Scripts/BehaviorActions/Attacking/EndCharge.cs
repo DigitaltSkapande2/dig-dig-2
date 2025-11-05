@@ -7,16 +7,15 @@ namespace DigDig2
 {
     [Serializable, GeneratePropertyBag]
     [NodeDescription(
-        name: "WotT Attack",
-        description: "Trigger an attack action.",
+        name: "WotT End Charge",
+        description: "Ends the current attack charge action.",
         category: "WotT/Attacking",
-        story: "[Agent] attacks with attack #[AttackIndex]",
-        id: "WotT_Trigger Attack"
+        story: "[Agent] ends attack charge",
+        id: "WotT_Charge_Attack"
     )]
-    public partial class WotTAttack : Unity.Behavior.Action
+    public partial class WotTEndCharge : Unity.Behavior.Action
     {
         [SerializeReference] public BlackboardVariable<GameObject> Agent;
-        [SerializeReference] public BlackboardVariable<int> AttackIndex = new(0);
 
         private EntityCharacterBehaviorAgent m_AgentCharacterBehaviorInputController;
         private Attacker m_AgentAttacker;
@@ -31,7 +30,7 @@ namespace DigDig2
 
             Initialize();
 
-            m_AgentAttacker.Attack(AttackIndex.Value);
+            m_AgentAttacker.EndAttackCharge();
 
             return Status.Success;
         }

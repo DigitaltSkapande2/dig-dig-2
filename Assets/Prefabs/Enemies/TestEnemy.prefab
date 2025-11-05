@@ -418,6 +418,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5eb71039f853af4bb9e8027626f0a29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Attackable
+  hit:
+    m_PersistentCalls:
+      m_Calls: []
+  hitEffects: []
+  invincibilityTime: 0.05
 --- !u!114 &6762114074386312621
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -430,16 +435,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 809a18945f58a064abeeb94658cb72d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Health
-  damageType: 1
-  maxHealth: 5
-  damagedEffects:
-  - {fileID: 900025642660281898, guid: 565fe03e66511a84c95b09b1d718120e, type: 3}
-  damagedEvent:
-    m_PersistentCalls:
-      m_Calls: []
+  maxHealthPoints: 5
+  healthPoints: 5
   deathEffects:
   - {fileID: 900025642660281898, guid: 565fe03e66511a84c95b09b1d718120e, type: 3}
-  deathEvent:
+  death:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &6919876567945806958

@@ -7,17 +7,17 @@ namespace DigDig2
 	{
 		public string testMessage;
 
-		public override void Charge(Attacker attacker, AttackGroup attackGroup)
+		public override void Charge(Attacker attacker, AttackType attackGroup)
 		{
 
 		}
 
-		public override void Trigger(Attacker attacker, AttackGroup attackGroup, float chargeTime)
+		public override void Trigger(Attacker attacker, AttackType attackGroup, float chargeTime)
 		{
 			Debug.Log(testMessage);
 		}
 
-        public override void Ended(Attacker attacker, AttackGroup attackGroup)
+        public override void Ended(Attacker attacker, AttackType attackGroup)
         {
             
         }

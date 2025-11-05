@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b860433e6bd2b354fa9257ca241def15, type: 3}
-  m_Name: PlayerLightMeleeAttacks
+  m_Name: PlayerLightRanged
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.AttackGroup
+  endCooldown: 0.05
   chargeDuration: 0
   requireCharge: 0
   chain:
-  - {fileID: 11400000, guid: 39c807a16f0a98623ae9e0b3cba5ce9b, type: 2}
-  - {fileID: 11400000, guid: 39c807a16f0a98623ae9e0b3cba5ce9b, type: 2}
+  - {fileID: 11400000, guid: dae86fe97c04ea6489ce1f39902f51ac, type: 2}

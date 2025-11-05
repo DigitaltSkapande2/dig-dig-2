@@ -6,17 +6,21 @@ namespace DigDig2
 {
     public class Attackable : MonoBehaviour
     {
-        [SerializeField] public UnityEvent hit = new();
+        [Tooltip("Duration of invincibility after a hit.")]
+        [SerializeField] private float invincibilityTime = 0.05f;
 
         [Tooltip("Effects that are played when the entity is hit.")]
         [SerializeField] private List<GameObject> hitEffects = new();
 
-        [SerializeField] private float invincibilityTime = 0.05f;
+        [Tooltip("An event that gets emitted when this entity gets hit.")]
+        [SerializeField] public UnityEvent hit = new();
 
         private float invincibilityTimer = 0;
 
         private Health healthComponent;
         private EntityCharacterController entityCharacterController;
+
+        
 
         private void Awake()
         {

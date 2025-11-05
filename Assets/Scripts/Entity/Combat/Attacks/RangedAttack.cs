@@ -12,12 +12,12 @@ namespace DigDig2
         [SerializeField] private float projectileSpeed;
         [SerializeField] private float projectileifetime;
 
-		public override void Charge(Attacker attacker, AttackGroup attackGroup)
+		public override void Charge(Attacker attacker, AttackType attackGroup)
 		{
 
 		}
 		
-		public override void Trigger(Attacker attacker, AttackGroup attackGroup, float chargeTime)
+		public override void Trigger(Attacker attacker, AttackType attackGroup, float chargeTime)
 		{
             attacker.PlayAnimation(animationStateName);
             Vector3 forward = attacker.GetComponent<EntityCharacterController>().GetForwardVector();
@@ -27,7 +27,7 @@ namespace DigDig2
 			attacker.AddAttackHitbox(this, id, Vector3.one, projectile.transform);
 		}
 
-        public override void Ended(Attacker attacker, AttackGroup attackGroup)
+        public override void Ended(Attacker attacker, AttackType attackGroup)
         {
 
         }

@@ -8,18 +8,18 @@ namespace DigDig2
 		[SerializeField] private string animationStateName;
 		[SerializeField] private int damage = 1;
 
-		public override void Charge(Attacker attacker, AttackGroup attackGroup)
+		public override void Charge(Attacker attacker, AttackType attackGroup)
 		{
 
 		}
 		
-		public override void Trigger(Attacker attacker, AttackGroup attackGroup, float chargeTime)
+		public override void Trigger(Attacker attacker, AttackType attackGroup, float chargeTime)
 		{
 			attacker.PlayAnimation(animationStateName);
 			attacker.AddAttackHitbox(this, animationStateName, Vector3.one, attacker.GetBindableTransform(0));
 		}
 
-        public override void Ended(Attacker attacker, AttackGroup attackGroup)
+        public override void Ended(Attacker attacker, AttackType attackGroup)
         {
             attacker.RemoveAttackHitbox(animationStateName);
         }

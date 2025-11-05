@@ -1371,9 +1371,25 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2002717688747189687, guid: c98535c2c3fee2e4288903087bfb0f6c, type: 3}
+      propertyPath: lines.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2002717688747189687, guid: c98535c2c3fee2e4288903087bfb0f6c, type: 3}
       propertyPath: enemies.Array.size
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 2002717688747189687, guid: c98535c2c3fee2e4288903087bfb0f6c, type: 3}
+      propertyPath: lines.Array.data[0].enemy
+      value: 
+      objectReference: {fileID: 1547463804}
+    - target: {fileID: 2002717688747189687, guid: c98535c2c3fee2e4288903087bfb0f6c, type: 3}
+      propertyPath: lines.Array.data[1].enemy
+      value: 
+      objectReference: {fileID: 576722932}
+    - target: {fileID: 2002717688747189687, guid: c98535c2c3fee2e4288903087bfb0f6c, type: 3}
+      propertyPath: lines.Array.data[2].enemy
+      value: 
+      objectReference: {fileID: 1907719337}
     - target: {fileID: 2002717688747189687, guid: c98535c2c3fee2e4288903087bfb0f6c, type: 3}
       propertyPath: enemies.Array.data[0].enemy
       value: 
@@ -1427,8 +1443,28 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4018930690133570384, guid: c98535c2c3fee2e4288903087bfb0f6c, type: 3}
+      propertyPath: death.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4018930690133570384, guid: c98535c2c3fee2e4288903087bfb0f6c, type: 3}
+      propertyPath: death.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4018930690133570384, guid: c98535c2c3fee2e4288903087bfb0f6c, type: 3}
+      propertyPath: death.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1099007454}
+    - target: {fileID: 4018930690133570384, guid: c98535c2c3fee2e4288903087bfb0f6c, type: 3}
+      propertyPath: death.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4018930690133570384, guid: c98535c2c3fee2e4288903087bfb0f6c, type: 3}
       propertyPath: deathEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4018930690133570384, guid: c98535c2c3fee2e4288903087bfb0f6c, type: 3}
+      propertyPath: death.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: LowerWater
       objectReference: {fileID: 0}
     - target: {fileID: 4018930690133570384, guid: c98535c2c3fee2e4288903087bfb0f6c, type: 3}
       propertyPath: deathEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -1439,12 +1475,24 @@ PrefabInstance:
       value: LowerWater
       objectReference: {fileID: 0}
     - target: {fileID: 4018930690133570384, guid: c98535c2c3fee2e4288903087bfb0f6c, type: 3}
+      propertyPath: death.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: DigDig2.OceanFollow, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4018930690133570384, guid: c98535c2c3fee2e4288903087bfb0f6c, type: 3}
+      propertyPath: death.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_FloatArgument
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4018930690133570384, guid: c98535c2c3fee2e4288903087bfb0f6c, type: 3}
       propertyPath: deathEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: DigDig2.OceanFollow, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 4018930690133570384, guid: c98535c2c3fee2e4288903087bfb0f6c, type: 3}
       propertyPath: deathEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_FloatArgument
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4018930690133570384, guid: c98535c2c3fee2e4288903087bfb0f6c, type: 3}
+      propertyPath: death.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 4018930690133570384, guid: c98535c2c3fee2e4288903087bfb0f6c, type: 3}
       propertyPath: deathEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -6701,7 +6749,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1400271444230443633, guid: 40f41833e691d5c45ad20fe763e2949e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -27.5
+      value: -27.301
       objectReference: {fileID: 0}
     - target: {fileID: 1400271444230443633, guid: 40f41833e691d5c45ad20fe763e2949e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -6709,7 +6757,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1400271444230443633, guid: 40f41833e691d5c45ad20fe763e2949e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -20.62
+      value: -20.878
       objectReference: {fileID: 0}
     - target: {fileID: 1400271444230443633, guid: 40f41833e691d5c45ad20fe763e2949e, type: 3}
       propertyPath: m_LocalRotation.w
