@@ -11,7 +11,7 @@ namespace DigDig2
         description: "Trigger an attack action.",
         category: "WotT/Attacking",
         story: "[Agent] attacks with attack [AttackIndex]",
-        id: "WotT_Trigger Attack"
+        id: "WotT_Trigger_Attack"
     )]
     public partial class WotTAttack : Unity.Behavior.Action
     {

@@ -11,7 +11,7 @@ namespace DigDig2
         description: "Ends the current attack charge action.",
         category: "WotT/Attacking",
         story: "[Agent] ends attack charge",
-        id: "WotT_Charge_Attack"
+        id: "WotT_End_Attack_Charge"
     )]
     public partial class WotTEndCharge : Unity.Behavior.Action
     {
