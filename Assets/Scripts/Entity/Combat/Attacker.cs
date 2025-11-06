@@ -17,6 +17,8 @@ namespace DigDig2
 		[Tooltip("The \"anchor points\" that an attack can use to create hitboxes.")]
 		[SerializeField] private List<Transform> bindableTransforms = new();
 
+		[SerializeField] private bool verboseLogging = false;
+
 		private Animator animator;
 
 		private AttackType currentChargingAttackType;
@@ -84,7 +86,7 @@ namespace DigDig2
             }
         }
 
-        private void OnDrawGizmos()
+		private void OnDrawGizmos()
 		{
 			foreach (KeyValuePair<string, AttackHitbox> attackHitboxPair in activeAttackHitboxes)
 			{
@@ -92,12 +94,17 @@ namespace DigDig2
 				Gizmos.matrix = attackHitbox.boundTransform.localToWorldMatrix;
 				Gizmos.color = Color.red;
 				Gizmos.DrawWireCube(Vector3.zero, attackHitbox.size);
-            }
-        }
+			}
+		}
+		
+		private void LogWarningVerbose(string message)
+		{
+			if (verboseLogging) Debug.LogWarning(message);
+		}
 
         private AttackType GetAttackTypeFromIndex(int attackTypeIndex)
 		{
-			if (!(attackTypes.Count > attackTypeIndex)) { Debug.LogWarning($"{name} does not have an attack type index of {attackTypeIndex}."); return null; }
+			if (!(attackTypes.Count > attackTypeIndex)) { Debug.LogError($"{name} does not have an attack type index of {attackTypeIndex}."); return null; }
 
 			return attackTypes[attackTypeIndex];
 		}
@@ -106,22 +113,22 @@ namespace DigDig2
 
 		public void ChargeAttack(int attackTypeIndex)
 		{
-			if (IsPerformingAttack()) { Debug.LogWarning("An attack is currently being performed and is not being charged, can't attack right now."); return; }
-			if (IsChargingAttack()) { Debug.LogWarning("An attack charge is already ongoing, please end it before charging again."); return; }
+			if (IsPerformingAttack()) { LogWarningVerbose("An attack is currently being performed and is not being charged, can't attack right now."); return; }
+			if (IsChargingAttack()) { LogWarningVerbose("An attack charge is already ongoing, please end it before charging again."); return; }
 
 			EndAttack(true);
 			IncrementAttackChain();
 
 			AttackType attackType = GetAttackTypeFromIndex(attackTypeIndex);
 			if (attackType == null) return;
-			if (attackType.chargeDuration <= 0) { Debug.LogWarning("This attack does not have a charge time."); return; }
+			if (attackType.chargeDuration <= 0) { Debug.LogError("This attack does not have a charge time."); return; }
 
 			currentChargingAttackType = attackType;
 			chargeStartTime = Time.time;
 		}
 		public void EndAttackCharge()
 		{
-			if (!IsChargingAttack()) { Debug.LogWarning("Could not cancel attack charge, there is no attack being charged."); return; }
+			if (!IsChargingAttack()) { Debug.LogError("Could not cancel attack charge, there is no attack being charged."); return; }
 
 			currentChargingAttackType = null;
 			chargeStartTime = -1;
@@ -132,7 +139,7 @@ namespace DigDig2
 		}
 		public float GetAttackChargeTime()
 		{
-			if (!IsChargingAttack()) { Debug.LogWarning("There is no attack being charged."); return -1; }
+			if (!IsChargingAttack()) { LogWarningVerbose("There is no attack being charged."); return -1; }
 			return Time.time - chargeStartTime;
 		}
 		public bool IsAttackChargable(int attackTypeIndex)
@@ -147,7 +154,7 @@ namespace DigDig2
 		}
 		public bool HasMetAttackChargeRequirement(AttackType attackType)
 		{
-			if (!IsChargingAttack()) { Debug.LogWarning("There is no attack being charged."); return false; }
+			if (!IsChargingAttack()) { Debug.LogError("There is no attack being charged."); return false; }
 			if (!IsAttackTypeChargable(attackType)) return false;
 			float chargeTime = GetAttackChargeTime();
 			if (attackType.requireCharge && chargeTime < attackType.chargeDuration) return false;
@@ -161,14 +168,13 @@ namespace DigDig2
 
 		public void Attack(int attackTypeIndex, bool skipChainCheck = false)
 		{
-			if (attackCooldownTimer > 0) { Debug.LogWarning("Attack is on cooldown, can't attack right now"); return; }
+			if (attackCooldownTimer > 0) { LogWarningVerbose("Attack is on cooldown, can't attack right now"); return; }
 
 			if (IsPerformingAttack())
 			{
-				Debug.Log("Checking for chain...");
-				if (!skipChainCheck && HasMetChainRequirement(currentAttackChain)) { chainAttackQueued = true; Debug.Log("Queuing chain attack!"); }
+				if (!skipChainCheck && HasMetChainRequirement(currentAttackChain)) { chainAttackQueued = true; LogWarningVerbose("Queuing chain attack!"); }
 
-				Debug.Log("An attack is currently being performed and is not being charged, can't attack right now.");
+				LogWarningVerbose("An attack is currently being performed and is not being charged, can't attack right now.");
 				return;
 			}
 
@@ -197,13 +203,11 @@ namespace DigDig2
 		{
 			if (currentPerformingAttackType == null)
 			{
-				if (!ignoreWarning) Debug.LogWarning("Can't end attack, no attack is being performed right now.");
+				if (!ignoreWarning) Debug.LogError("Can't end attack, no attack is being performed right now.");
 				return;
 			}
 			currentPerformingAttackType.chain[currentAttackChain].Ended(this, currentPerformingAttackType);
 			currentPerformingAttackType = null;
-
-			Debug.Log("Ended attack.");
 
 			if (IsChargingAttack()) EndAttackCharge();
 		}
@@ -232,14 +236,9 @@ namespace DigDig2
 			if (attackChain == -1) attackChain = currentAttackChain;
 
 			float chainWindowMarginOfError = Time.time - performingAttackEndTime;
-			Debug.Log($"the attack chain: {attackChain}, moe: {chainWindowMarginOfError}");
 			if (!(chainWindowMarginOfError <= chainTimeWindowAfterAttackEnd && chainWindowMarginOfError >= -chainTimeWindowBeforeAttackEnd)) return false;
-			Debug.Log("pass 1");
 			if (lastPerformedAttackType != currentPerformingAttackType) return false;
-			Debug.Log("pass 2");
-			Debug.Log($"attackChain: {attackChain}, count: {currentPerformingAttackType.chain.Count - 1}");
 			if (attackChain >= currentPerformingAttackType.chain.Count - 1) return false;
-			Debug.Log("pass 3");
 
 			return true;
 		}

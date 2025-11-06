@@ -147,7 +147,7 @@ namespace DigDig2
 
             if (navMeshPath == null) return false;
             bool validPathFound = NavMesh.CalculatePath(transform.position, destination, 1, navMeshPath);
-            if (!validPathFound) Debug.LogWarning("Path could not be calculated.");
+            if (!validPathFound) { Debug.LogWarning("Path could not be calculated."); return false; }
             currentDesitation = destination;
             currentPathWaypoints = navMeshPath.corners;
 

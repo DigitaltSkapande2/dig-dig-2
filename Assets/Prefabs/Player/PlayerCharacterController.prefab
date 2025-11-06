@@ -17,6 +17,8 @@ GameObject:
   - component: {fileID: 3598614305935570039}
   - component: {fileID: 8839264378030991054}
   - component: {fileID: 1195255877809228181}
+  - component: {fileID: 1621004928720741753}
+  - component: {fileID: 440174058403782015}
   - component: {fileID: 2972415487380094671}
   m_Layer: 3
   m_Name: PlayerCharacterController
@@ -221,6 +223,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6131312a667f03449029662d2f690ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.PlayerAttackInput
+--- !u!114 &1621004928720741753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4442565222488509090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5eb71039f853af4bb9e8027626f0a29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Attackable
+  invincibilityTime: 0.05
+  group: player
+  hitEffects: []
+  hit:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &440174058403782015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4442565222488509090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 809a18945f58a064abeeb94658cb72d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Health
+  maxHealthPoints: 5
+  healthPoints: 5
+  deathEffects: []
+  death:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!95 &2972415487380094671
 Animator:
   serializedVersion: 7

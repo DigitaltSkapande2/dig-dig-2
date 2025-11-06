@@ -9,10 +9,20 @@ namespace DigDig2
         [Tooltip("Duration of invincibility after a hit.")]
         [SerializeField] private float invincibilityTime = 0.05f;
 
-        [Tooltip("Effects that are played when the entity is hit.")]
+        public string Group
+		{
+			get
+			{
+                return group;
+			}
+		}
+        [Tooltip("The group that this attackable is in. Used to filter attacks to only damage certain attackables.")]
+        [SerializeField] private string group = "none";
+
+        [Tooltip("Effects that are played when the attackable is hit.")]
         [SerializeField] private List<GameObject> hitEffects = new();
 
-        [Tooltip("An event that gets emitted when this entity gets hit.")]
+        [Tooltip("An event that gets emitted when this attackable gets hit.")]
         [SerializeField] public UnityEvent hit = new();
 
         private float invincibilityTimer = 0;

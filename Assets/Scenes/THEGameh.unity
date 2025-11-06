@@ -362,9 +362,21 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5976209809697749524, guid: 971e1460c89dbde4598eca0f2e5c3a7e, type: 3}
+      propertyPath: m_BlackboardVariableOverridesList.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5976209809697749524, guid: 971e1460c89dbde4598eca0f2e5c3a7e, type: 3}
       propertyPath: managedReferences[1217018901321220184].m_Value
       value: 
       objectReference: {fileID: 1556444251}
+    - target: {fileID: 5976209809697749524, guid: 971e1460c89dbde4598eca0f2e5c3a7e, type: 3}
+      propertyPath: managedReferences[8122051051056005428].m_Value
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5976209809697749524, guid: 971e1460c89dbde4598eca0f2e5c3a7e, type: 3}
+      propertyPath: 'm_BlackboardVariableOverridesList.Array.data[2]'
+      value: 8122051051056005428
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -801,9 +813,21 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5976209809697749524, guid: 971e1460c89dbde4598eca0f2e5c3a7e, type: 3}
+      propertyPath: m_BlackboardVariableOverridesList.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5976209809697749524, guid: 971e1460c89dbde4598eca0f2e5c3a7e, type: 3}
       propertyPath: managedReferences[1217018901321220184].m_Value
       value: 
       objectReference: {fileID: 1556444251}
+    - target: {fileID: 5976209809697749524, guid: 971e1460c89dbde4598eca0f2e5c3a7e, type: 3}
+      propertyPath: managedReferences[8122051051056005428].m_Value
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5976209809697749524, guid: 971e1460c89dbde4598eca0f2e5c3a7e, type: 3}
+      propertyPath: 'm_BlackboardVariableOverridesList.Array.data[2]'
+      value: 8122051051056005428
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1402,6 +1426,22 @@ PrefabInstance:
       propertyPath: enemies.Array.data[2].enemy
       value: 
       objectReference: {fileID: 1907719337}
+    - target: {fileID: 2002717688747189687, guid: c98535c2c3fee2e4288903087bfb0f6c, type: 3}
+      propertyPath: enemyConnections.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2002717688747189687, guid: c98535c2c3fee2e4288903087bfb0f6c, type: 3}
+      propertyPath: enemyConnections.Array.data[0].enemy
+      value: 
+      objectReference: {fileID: 1547463804}
+    - target: {fileID: 2002717688747189687, guid: c98535c2c3fee2e4288903087bfb0f6c, type: 3}
+      propertyPath: enemyConnections.Array.data[1].enemy
+      value: 
+      objectReference: {fileID: 576722932}
+    - target: {fileID: 2002717688747189687, guid: c98535c2c3fee2e4288903087bfb0f6c, type: 3}
+      propertyPath: enemyConnections.Array.data[2].enemy
+      value: 
+      objectReference: {fileID: 1907719337}
     - target: {fileID: 3029974045897394988, guid: c98535c2c3fee2e4288903087bfb0f6c, type: 3}
       propertyPath: m_LocalPosition.x
       value: -32
@@ -1968,9 +2008,21 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5976209809697749524, guid: 971e1460c89dbde4598eca0f2e5c3a7e, type: 3}
+      propertyPath: m_BlackboardVariableOverridesList.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5976209809697749524, guid: 971e1460c89dbde4598eca0f2e5c3a7e, type: 3}
       propertyPath: managedReferences[1217018901321220184].m_Value
       value: 
       objectReference: {fileID: 525460957}
+    - target: {fileID: 5976209809697749524, guid: 971e1460c89dbde4598eca0f2e5c3a7e, type: 3}
+      propertyPath: managedReferences[8122051051056005428].m_Value
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5976209809697749524, guid: 971e1460c89dbde4598eca0f2e5c3a7e, type: 3}
+      propertyPath: 'm_BlackboardVariableOverridesList.Array.data[2]'
+      value: 8122051051056005428
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2091,9 +2143,21 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5976209809697749524, guid: 971e1460c89dbde4598eca0f2e5c3a7e, type: 3}
+      propertyPath: m_BlackboardVariableOverridesList.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5976209809697749524, guid: 971e1460c89dbde4598eca0f2e5c3a7e, type: 3}
       propertyPath: managedReferences[1217018901321220184].m_Value
       value: 
       objectReference: {fileID: 525460957}
+    - target: {fileID: 5976209809697749524, guid: 971e1460c89dbde4598eca0f2e5c3a7e, type: 3}
+      propertyPath: managedReferences[8122051051056005428].m_Value
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5976209809697749524, guid: 971e1460c89dbde4598eca0f2e5c3a7e, type: 3}
+      propertyPath: 'm_BlackboardVariableOverridesList.Array.data[2]'
+      value: 8122051051056005428
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5983,9 +6047,21 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5976209809697749524, guid: 971e1460c89dbde4598eca0f2e5c3a7e, type: 3}
+      propertyPath: m_BlackboardVariableOverridesList.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5976209809697749524, guid: 971e1460c89dbde4598eca0f2e5c3a7e, type: 3}
       propertyPath: managedReferences[1217018901321220184].m_Value
       value: 
       objectReference: {fileID: 525460957}
+    - target: {fileID: 5976209809697749524, guid: 971e1460c89dbde4598eca0f2e5c3a7e, type: 3}
+      propertyPath: managedReferences[8122051051056005428].m_Value
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5976209809697749524, guid: 971e1460c89dbde4598eca0f2e5c3a7e, type: 3}
+      propertyPath: 'm_BlackboardVariableOverridesList.Array.data[2]'
+      value: 8122051051056005428
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6296,9 +6372,21 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5976209809697749524, guid: 971e1460c89dbde4598eca0f2e5c3a7e, type: 3}
+      propertyPath: m_BlackboardVariableOverridesList.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5976209809697749524, guid: 971e1460c89dbde4598eca0f2e5c3a7e, type: 3}
       propertyPath: managedReferences[1217018901321220184].m_Value
       value: 
       objectReference: {fileID: 1556444251}
+    - target: {fileID: 5976209809697749524, guid: 971e1460c89dbde4598eca0f2e5c3a7e, type: 3}
+      propertyPath: managedReferences[8122051051056005428].m_Value
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5976209809697749524, guid: 971e1460c89dbde4598eca0f2e5c3a7e, type: 3}
+      propertyPath: 'm_BlackboardVariableOverridesList.Array.data[2]'
+      value: 8122051051056005428
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -12,7 +12,7 @@ namespace DigDig2
         story: "[Agent] patrols around [Transform] with a max radius of [MaxRadius]",
         id: "WotT_Radius_Patrol"
     )]
-    public partial class WotTRadiusPatrol : Unity.Behavior.Action
+    public partial class WotTRadiusPatrol : Action
     {
         [SerializeReference] public BlackboardVariable<GameObject> Agent;
         [Tooltip("The middle point of the patrol circle/radius.")]
@@ -68,7 +68,6 @@ namespace DigDig2
                 if (m_WaypointWaitTimer > 0.0f)
                 {
                     m_WaypointWaitTimer -= Time.deltaTime;
-                    Debug.Log(m_WaypointWaitTimer); 
                 }
                 else
                 {

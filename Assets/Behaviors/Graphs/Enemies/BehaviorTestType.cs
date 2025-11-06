@@ -4,8 +4,9 @@ using Unity.Behavior;
 [BlackboardEnum]
 public enum BehaviorTestType
 {
-    WaypointPatrol,
+	WaypointPatrol,
 	Follow,
 	Avoid,
-	RadiusPatrol
+	RadiusPatrol,
+	Attack
 }

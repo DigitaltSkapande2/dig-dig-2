@@ -193,8 +193,10 @@ GameObject:
   - component: {fileID: 4606330902297098520}
   - component: {fileID: 8863147776240216943}
   - component: {fileID: 5976209809697749524}
+  - component: {fileID: 6573185137410320209}
   - component: {fileID: 6435232985193985838}
   - component: {fileID: 6762114074386312621}
+  - component: {fileID: 4427047692297429573}
   m_Layer: 0
   m_Name: TestEnemy
   m_TagString: Untagged
@@ -361,9 +363,6 @@ MonoBehaviour:
   m_Graph: {fileID: 5585291459702331616, guid: e61f7705ed91bad23a3430ef27686a16, type: 2}
   m_BlackboardVariableOverridesList:
   - rid: 1217018901321220182
-  - rid: 1217018901321220183
-  - rid: 1217018901321220184
-  - rid: 8122051051056005428
   m_IsInitialised: 0
   m_IsStarted: 0
   references:
@@ -377,35 +376,23 @@ MonoBehaviour:
           m_Value1: 0
         Name: Self
         m_Value: {fileID: 5585277213094831744}
-    - rid: 1217018901321220183
-      type: {class: 'BlackboardVariable`1[[System.Collections.Generic.List`1[[UnityEngine.GameObject, UnityEngine.CoreModule]], mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        GUID:
-          m_Value0: 17861714729743965130
-          m_Value1: 9646020218999388181
-        Name: Waypoints
-        m_Value:
-        - {fileID: 0}
-        - {fileID: 0}
-        - {fileID: 0}
-        - {fileID: 0}
-        - {fileID: 0}
-    - rid: 1217018901321220184
-      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        GUID:
-          m_Value0: 6185853582079718337
-          m_Value1: 16468564652571363867
-        Name: Enemy
-        m_Value: {fileID: 0}
-    - rid: 8122051051056005428
-      type: {class: 'BlackboardVariable`1[[BehaviorTestType, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        GUID:
-          m_Value0: 8333448519615864380
-          m_Value1: 7244335908673377373
-        Name: Behavior Test Type
-        m_Value: 3
+--- !u!114 &6573185137410320209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5585277213094831744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9159de995a6f4794dbddc1f67ad7f200, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Attacker
+  attackTypes:
+  - {fileID: 11400000, guid: 554a7201707c2ce4087b6f692cb08e8b, type: 2}
+  chainTimeWindowAfterAttackEnd: 0.05
+  chainTimeWindowBeforeAttackEnd: 0.5
+  bindableTransforms: []
 --- !u!114 &6435232985193985838
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -418,11 +405,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5eb71039f853af4bb9e8027626f0a29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Attackable
+  invincibilityTime: 0.05
+  group: enemy
+  hitEffects: []
   hit:
     m_PersistentCalls:
       m_Calls: []
-  hitEffects: []
-  invincibilityTime: 0.05
 --- !u!114 &6762114074386312621
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -442,6 +430,28 @@ MonoBehaviour:
   death:
     m_PersistentCalls:
       m_Calls: []
+--- !u!95 &4427047692297429573
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5585277213094831744}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6919876567945806958
 GameObject:
   m_ObjectHideFlags: 0

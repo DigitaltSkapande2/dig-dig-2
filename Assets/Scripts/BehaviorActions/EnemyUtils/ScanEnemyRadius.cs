@@ -2,6 +2,7 @@ using UnityEngine;
 using System;
 using Unity.Behavior;
 using Unity.Properties;
+using System.Collections.Generic;
 
 namespace DigDig2
 {
@@ -15,10 +16,12 @@ namespace DigDig2
     )]
     public partial class WotTScanEnemyRadius: Unity.Behavior.Action
     {
+        private const int MAX_RANDOM_SCAN_TRIES = 10;
+
         [SerializeReference] public BlackboardVariable<GameObject> Agent;
         [SerializeReference] public BlackboardVariable<float> Radius = new(5f);
         [SerializeReference] public BlackboardVariable Variable;
-        [SerializeReference] public BlackboardVariable<LayerMask> EnemyLayer;
+        [SerializeReference] public BlackboardVariable<List<string>> AttackableFilter = new();
         [SerializeReference] public BlackboardVariable<EnemyPriorityMode> EnemySelectionPriorityMode;
 
         public enum EnemyPriorityMode
@@ -38,19 +41,28 @@ namespace DigDig2
                 return Status.Failure;
             }
 
+            if (AttackableFilter.Value.Count <= 0)
+			{
+                LogFailure("Attackable filter is empty.");
+                return Status.Failure;
+			}
+
             Initialize();
 
-            Collider[] foundEnemyColliders = Physics.OverlapSphere(m_AgentCharacterBehaviorInputController.transform.position, Radius, EnemyLayer.Value);
-            GameObject selectedEnemy = null;
+            Collider[] colliders = Physics.OverlapSphere(m_AgentCharacterBehaviorInputController.transform.position, Radius);
+            Attackable selectedEnemy = null;
             switch (EnemySelectionPriorityMode.Value)
             {
                 case EnemyPriorityMode.Closest:
                     float closestEnemyDistance = -1f;
-                    foreach (Collider enemyCollider in foundEnemyColliders)
+                    foreach (Collider enemyCollider in colliders)
                     {
+                        Attackable enemyAttackable = enemyCollider.GetComponent<Attackable>();
+                        if (enemyAttackable == null) continue;
+                        if (!AttackableFilter.Value.Contains(enemyAttackable.Group)) continue;
                         if (selectedEnemy == null || Vector3.Distance(enemyCollider.transform.position, m_AgentCharacterBehaviorInputController.transform.position) < closestEnemyDistance)
                         {
-                            selectedEnemy = enemyCollider.gameObject;
+                            selectedEnemy = enemyAttackable;
                             closestEnemyDistance = Vector3.Distance(selectedEnemy.transform.position, m_AgentCharacterBehaviorInputController.transform.position);
                         }
                     }
@@ -60,13 +72,23 @@ namespace DigDig2
                     LogFailure("Strongest priority mode has not been implemented yet.");
                     return Status.Failure;
                 case EnemyPriorityMode.Random:
-                    selectedEnemy = foundEnemyColliders[UnityEngine.Random.Range(0, foundEnemyColliders.Length - 1)].gameObject;
+                    int random_scan_tries = 0;
+                    while (true) {
+                        random_scan_tries += 1;
+                        if (random_scan_tries >= MAX_RANDOM_SCAN_TRIES) break;
+
+                        Attackable candidateAttackable = colliders[UnityEngine.Random.Range(0, colliders.Length - 1)].GetComponent<Attackable>();
+                        if (candidateAttackable == null) continue;
+                        if (!AttackableFilter.Value.Contains(candidateAttackable.Group)) continue;
+                        selectedEnemy = candidateAttackable;
+                        break;
+					}
                     break;
             }
 
-            Variable.ObjectValue = new BlackboardVariable<GameObject>(selectedEnemy);
+            Variable.ObjectValue = selectedEnemy;
 
-            return Status.Failure;
+            return Status.Success;
         }
 
         protected override void OnDeserialize()
