@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using UnityEngine;
+
 namespace DigDig2
 {
     [CreateAssetMenu(fileName = "AttackType", menuName = "Scriptable Objects/Attack Group")]
