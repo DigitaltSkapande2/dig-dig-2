@@ -211,6 +211,7 @@ MonoBehaviour:
   chainTimeWindowBeforeAttackEnd: 0.5
   bindableTransforms:
   - {fileID: 2436569871897591429}
+  verboseLogging: 0
 --- !u!114 &1195255877809228181
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -453,7 +454,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6eb187c4b1673c50ea17b6e98058fe7f, type: 2}
+  - {fileID: 2100000, guid: 0291efcb87a030e4e8eb8d381261b1b5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

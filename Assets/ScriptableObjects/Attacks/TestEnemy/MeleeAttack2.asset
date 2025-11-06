@@ -9,7 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 002cc84d08d728c4ab4f9c9746d2d998, type: 3}
-  m_Name: TestAttack2
-  m_EditorClassIdentifier: Assembly-CSharp::DigDig2.TestAttack
-  testMessage: oooohhhh im chaining it
+  m_Script: {fileID: 11500000, guid: 40883c0a7bfea94ea80ecef5fa952cae, type: 3}
+  m_Name: MeleeAttack2
+  m_EditorClassIdentifier: Assembly-CSharp::DigDig2.MeleeAttack
+  attackDuration: 0.5
+  animationStateName: MeleeAttack2
+  damage: 1

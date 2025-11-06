@@ -10,10 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b860433e6bd2b354fa9257ca241def15, type: 3}
-  m_Name: TestEnemyTest
+  m_Name: TestEnemyMelee
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.AttackGroup
-  chargeTime: 0
+  endCooldown: 0.05
+  chargeDuration: 0
   requireCharge: 0
   chain:
-  - {fileID: 11400000, guid: c2da9735966d8e441b50b448e9d7a499, type: 2}
-  - {fileID: 11400000, guid: c190353ba160c9f48a6c89bc3195d2b1, type: 2}
+  - {fileID: 11400000, guid: 2808283f438a86b4abaf59380a879927, type: 2}
+  - {fileID: 11400000, guid: 6422799007e92b5419692b6ac479e4f1, type: 2}
