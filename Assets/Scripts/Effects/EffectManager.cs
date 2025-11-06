@@ -118,17 +118,23 @@ namespace DigDig2.Effects
 
         public void PlayVignettePulse(EffectIntensity intensity = EffectIntensity.mid, Color color = default)
         {
-            StartCoroutine(CurvePulseRoutine(vignetteIntensity.curve, vignetteDuration.GetValue(intensity), (float curveValue) =>
-            {
-                print("curveValue: " + curveValue);
-                float targetIntensity = vignetteIntensity.GetValue(intensity);
-                vignette.color.value = Color.Lerp(defaultVignette.color.value, color == default ? Color.black : color, curveValue * 2);
-                vignette.intensity.value = (targetIntensity * (1-defaultVignette.intensity.value) * curveValue) + defaultVignette.intensity.value;
+            StartCoroutine(CurvePulseRoutine(
+                vignetteIntensity.curve,
+                vignetteDuration.GetValue(intensity),
+                (float curveValue) =>
+                {
+                    print("curveValue: " + curveValue);
+                    float targetIntensity = vignetteIntensity.GetValue(intensity);
+                    vignette.color.value = Color.Lerp(defaultVignette.color.value, color == default ? Color.black : color, curveValue * 2);
+                    vignette.intensity.value = (targetIntensity * (1 - defaultVignette.intensity.value) * curveValue) + defaultVignette.intensity.value;
 
-            }, () => {
-                vignette.intensity.value = defaultVignette.intensity.value;
-                vignette.color.value = defaultVignette.color.value;
-            }));
+                },
+                () => // called on curve pulse completed
+                {
+                    vignette.intensity.value = defaultVignette.intensity.value;
+                    vignette.color.value = defaultVignette.color.value;
+                })
+            );
         }
 
         #endregion

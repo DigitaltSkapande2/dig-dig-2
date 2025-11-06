@@ -9,27 +9,35 @@ namespace DigDig2.CinemaCamera {
         [Tooltip("the time in seconds it will take for the camera to get to the target position")]
         [SerializeField] public float followSpeed = 5f;
 
-        private Vector3 targetPos;
-        private Quaternion targetRotation;
-        private float targetFrustumSize;
-
+        Camera camera;
+        private void Start()
+        {
+            camera = GetComponentInChildren<Camera>();
+        }
 
         void Update()
         {
             Vector3 targetPos = Vector3.zero;
             Quaternion targetRotation = Quaternion.identity;
+            float targetFrustumSize = 0;
 
-            foreach (var effector in CameraEffector.GetEffectiveCameraEffectors())
+            // Loop through all Camera effectors that are currently effective
+            foreach (CameraEffector effector in CameraEffector.GetEffectiveCameraEffectors())
             {
+                // Position
                 targetPos += effector.position;
-                if (effector.rotation.eulerAngles.magnitude > float.Epsilon)
-                    targetRotation = effector.rotation;
+
+                // Rotation
+                if (effector.rotation.eulerAngles.magnitude > float.Epsilon) targetRotation = effector.rotation;
+
+                // Frustum Size
+                targetFrustumSize += effector.frustumSize;
             }
 
-
+            // Apply Position
             transform.position = Vector3.Lerp(transform.position, targetPos, followSpeed * Time.deltaTime);
-
             transform.rotation = targetRotation;
+            // 
         }
     }
 }

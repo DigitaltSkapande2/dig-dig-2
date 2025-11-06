@@ -1,4 +1,7 @@
 using Mirror;
+using System.Collections.Generic;
+using UnityEditor;
+using UnityEditor.Build;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -10,7 +13,7 @@ namespace DigDig2
         public static OurNetworkManager instance;
         [SerializeField] bool showDebugClinetList = false;
         [SerializeField] public bool isSinglePlayer = true;
-        private PlayerCharacterInputController[] playerControllers = new PlayerCharacterInputController[2];
+        private Dictionary<int, PlayerCharacterInputController> playerControllers = new Dictionary<int, PlayerCharacterInputController>();
 
         public UnityEvent onClientListUpdated = new UnityEvent();
 
@@ -45,6 +48,19 @@ namespace DigDig2
             base.OnServerConnect(conn);
         }
 
+        public override void OnClientConnect()
+        {
+            base.OnClientConnect();
+            Debug.Log("ClientConnected");
+            onClientListUpdated.Invoke();
+        }
+
+        public override void OnClientDisconnect()
+        {
+            base.OnClientDisconnect();
+            onClientListUpdated.Invoke();
+        }
+
         public void StartSinglePlayer()
         {
             StartHost(); // TODO: fix singleplayer xD
@@ -68,6 +84,8 @@ namespace DigDig2
             foreach (NetworkConnectionToClient conn in NetworkServer.connections.Values)
             {
                 GameObject player = Instantiate(playerPrefab, Position, Quaternion.identity);
+
+                playerControllers.Add(conn.connectionId, player.GetComponent<PlayerCharacterInputController>());
 
                 NetworkServer.AddPlayerForConnection(conn, player);
             }
