@@ -29,10 +29,9 @@ namespace DigDig2
         {
             networkManager = OurNetworkManager.instance;
 
-            if (startSinglePlayerOnStart) {
-                networkManager.StartSinglePlayer();
-                networkManager.InitializePlayers(new Vector3(0, 2, 0));
-                debugStartGameContainer.SetActive(false);
+            if (startSinglePlayerOnStart)
+            {
+                Invoke("StartShit", 0.5f);
                 return;
             }
 
@@ -41,6 +40,13 @@ namespace DigDig2
                 debugStartGameContainer.SetActive(false);
                 characterSelectScreenContainer.SetActive(true);
             }
+        }
+        
+        void StartShit()
+        {
+            networkManager.StartSinglePlayer();
+            networkManager.InitializePlayers(new Vector3(0, 2, 0));
+            debugStartGameContainer.SetActive(false);
         }
 
         // Called by the DebugStart Game Screen

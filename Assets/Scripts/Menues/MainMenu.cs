@@ -23,6 +23,8 @@ namespace DigDig2
         public void StartJoin()
         {
             OurNetworkManager.instance.StartClient();
+            mainMenuContainer.SetActive(false);
+            multiplayerLobbyPanel.SetActive(true);
         }
 
     }
