@@ -7,7 +7,7 @@ namespace DigDig2.Debugging
     [Debug]
     public abstract class ConsoleCommandBase : ScriptableObject
     {
-        [DebugSerialized] private string commandWord = string.Empty;
+        [SerializeField] private string commandWord = string.Empty;
 
         public string CommandWord => commandWord;
 

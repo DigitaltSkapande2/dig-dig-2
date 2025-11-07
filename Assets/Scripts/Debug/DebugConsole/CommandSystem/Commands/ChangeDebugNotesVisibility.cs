@@ -4,18 +4,22 @@ using UnityEngine;
 
 namespace DigDig2.Debugging
 {
-	[CreateAssetMenu(fileName = "ChangeDebugNotesVisibility", menuName = "DeveloperConsole/Commands/ChangeDebugNotesVisibility")]
+	[CreateAssetMenu(fileName = "ChangeDebugNotesVisibility", menuName = "Developer Console/Commands/Change Debug Notes Visibility")]
 	public class ChangeDebugNotesVisibility : ConsoleCommandBase
 	{
+		[SerializeField] private bool changeArchivedVisibility = false;
+
 		public override async UniTask<CommandResultContext> Process(string[] args)
 		{
 			switch (args[0])
 			{
 				case "show":
-					DebugNotesManager.Instance.ShowDebugNotes = true;
+					if (!changeArchivedVisibility) DebugNotesManager.Instance.ShowDebugNotes = true;
+					else DebugNotesManager.Instance.ShowArchivedDebugNotes = true;
 					break;
 				case "hide":
-					DebugNotesManager.Instance.ShowDebugNotes = false;
+					if (!changeArchivedVisibility) DebugNotesManager.Instance.ShowDebugNotes = false;
+					else DebugNotesManager.Instance.ShowArchivedDebugNotes = false;
 					break;
 				default:
 					return CommandResultContext.InvalidArguments;
