@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace DigDig2
 {
-    [CreateAssetMenu(fileName = "AttackType", menuName = "Scriptable Objects/Attack Group")]
+    [CreateAssetMenu(fileName = "AttackType", menuName = "Scriptable Objects/Attack Type")]
     public class AttackType : ScriptableObject
     {
         [SerializeField] public float endCooldown = 0.05f;
