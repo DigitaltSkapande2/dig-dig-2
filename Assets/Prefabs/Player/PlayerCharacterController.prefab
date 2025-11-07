@@ -206,8 +206,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Attacker
   attackTypes:
   - {fileID: 11400000, guid: c28775eabcff21659ba26ee1d8ff494e, type: 2}
-  - {fileID: 11400000, guid: 8d36a78c7110fab4abafe9da0195274e, type: 2}
-  chainTimeWindowAfterAttackEnd: 0.05
+  - {fileID: 11400000, guid: 15bb4810038dbd741919439570275ac5, type: 2}
+  chainTimeWindowAfterAttackEnd: 0.2
   chainTimeWindowBeforeAttackEnd: 0.5
   bindableTransforms:
   - {fileID: 2436569871897591429}
@@ -415,7 +415,7 @@ Transform:
   m_GameObject: {fileID: 8271386728221630285}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 1, y: 0, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -454,7 +454,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0291efcb87a030e4e8eb8d381261b1b5, type: 2}
+  - {fileID: 2100000, guid: 1ce5247e882577b49a1b0296d0bb186d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

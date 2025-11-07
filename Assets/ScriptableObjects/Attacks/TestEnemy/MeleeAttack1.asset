@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40883c0a7bfea94ea80ecef5fa952cae, type: 3}
   m_Name: MeleeAttack1
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.MeleeAttack
-  attackDuration: 0.5
+  attackDuration: 0.25
   animationStateName: MeleeAttack1
   damage: 1

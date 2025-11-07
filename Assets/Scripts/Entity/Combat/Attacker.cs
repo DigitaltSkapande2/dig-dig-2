@@ -55,17 +55,14 @@ namespace DigDig2
 		{
 			if (IsPerformingAttack() && Time.time >= performingAttackEndTime)
 			{
+				attackCooldownTimer = lastPerformedAttackType.endCooldown;
 				EndAttack();
-				if (chainAttackQueued)
-				{
-					Attack(lastPerformedAttackIndex, true);
-					chainAttackQueued = false;
-				}
-				else
-				{
-					attackCooldownTimer = lastPerformedAttackType.endCooldown;
-				}
 			}
+
+			if (chainAttackQueued)
+			{
+				PerformChainAttack(lastPerformedAttackIndex);
+            }
 
 			if (attackCooldownTimer > 0) attackCooldownTimer -= Time.deltaTime;
 		}
@@ -99,6 +96,11 @@ namespace DigDig2
 				Gizmos.DrawWireCube(Vector3.zero, attackHitbox.size);
 			}
 		}
+
+		private void LogVerbose(string message)
+        {
+			if (verboseLogging) Debug.Log(message);
+        }
 		
 		private void LogWarningVerbose(string message)
 		{
@@ -120,7 +122,7 @@ namespace DigDig2
 			if (IsChargingAttack()) { LogWarningVerbose("An attack charge is already ongoing, please end it before charging again."); return; }
 
 			EndAttack(true);
-			IncrementAttackChain();
+			IncrementAttackChain(attackTypeIndex);
 
 			AttackType attackType = GetAttackTypeFromIndex(attackTypeIndex);
 			if (attackType == null) return;
@@ -169,17 +171,10 @@ namespace DigDig2
 
 		#region Attacking
 
-		public void Attack(int attackTypeIndex, bool skipChainCheck = false)
+		public void Attack(int attackTypeIndex, bool isChain = false)
 		{
-			if (attackCooldownTimer > 0) { LogWarningVerbose("Attack is on cooldown, can't attack right now"); return; }
-
-			if (IsPerformingAttack())
-			{
-				if (!skipChainCheck && HasMetChainRequirement(currentAttackChain)) { chainAttackQueued = true; LogWarningVerbose("Queuing chain attack!"); }
-
-				LogWarningVerbose("An attack is currently being performed and is not being charged, can't attack right now.");
-				return;
-			}
+			if (!isChain && HasMetChainRequirement(currentAttackChain) && !chainAttackQueued) { LogVerbose("Queuing chain attack!"); chainAttackQueued = true; }
+			if (!isChain && (IsPerformingAttack() || attackCooldownTimer > 0)) { LogWarningVerbose("An attack is currently being performed and is not being charged or attacking is on cooldown, can't attack right now."); return; }
 
 			EndAttack(true);
 
@@ -193,7 +188,7 @@ namespace DigDig2
 				AttackType attack = GetAttackTypeFromIndex(attackTypeIndex);
 				if (attack != null && IsAttackTypeChargable(attack) == false) currentPerformingAttackType = attack;
 
-				IncrementAttackChain();
+				IncrementAttackChain(attackTypeIndex);
 			}
 			if (currentPerformingAttackType == null) { EndAttack(); return; }
 
@@ -223,9 +218,9 @@ namespace DigDig2
 
 		#region Chaining
 
-		private void IncrementAttackChain()
+		private void IncrementAttackChain(int attackTypeIndex)
 		{
-			if (HasMetChainRequirement())
+			if (HasMetChainRequirement(attackTypeIndex))
 			{
 				currentAttackChain++;
 			}
@@ -234,17 +229,30 @@ namespace DigDig2
 				currentAttackChain = 0;
 			}
 		}
-		public bool HasMetChainRequirement(int attackChain = -1)
+		public bool HasMetChainRequirement(int chainingAttackTypeIndex, int attackChain = -1)
 		{
 			if (attackChain == -1) attackChain = currentAttackChain;
 
+			AttackType chainingAttackType = GetAttackTypeFromIndex(chainingAttackTypeIndex);
+
 			float chainWindowMarginOfError = Time.time - performingAttackEndTime;
+			LogVerbose($"Attack chain margin of error: {chainWindowMarginOfError}");
 			if (!(chainWindowMarginOfError <= chainTimeWindowAfterAttackEnd && chainWindowMarginOfError >= -chainTimeWindowBeforeAttackEnd)) return false;
-			if (lastPerformedAttackType != currentPerformingAttackType) return false;
-			if (attackChain >= currentPerformingAttackType.chain.Count - 1) return false;
+			if (lastPerformedAttackType != chainingAttackType) return false;
+			if (attackChain >= chainingAttackType.chain.Count - 1) return false;
 
 			return true;
 		}
+
+		private void PerformChainAttack(int attackTypeIndex)
+		{
+			if (!chainAttackQueued) { Debug.LogError("Attemped to perform a chain attack when no chain attack was queued."); return; }
+
+			LogVerbose("Performing chain attack");
+
+			Attack(attackTypeIndex, true);
+			chainAttackQueued = false;
+        }
 
 		#endregion
 

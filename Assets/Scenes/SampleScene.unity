@@ -6077,10 +6077,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 809a18945f58a064abeeb94658cb72d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Health
-  maxHealth: 3
-  health: 3
+  maxHealthPoints: 1
+  healthPoints: 1
   deathEffects: []
-  deathEvent:
+  death:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &963754056
@@ -6095,12 +6095,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5eb71039f853af4bb9e8027626f0a29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Attackable
+  invincibilityTime: 0
+  hitEffects:
+  - {fileID: 900025642660281898, guid: 565fe03e66511a84c95b09b1d718120e, type: 3}
   hit:
     m_PersistentCalls:
       m_Calls: []
-  hitEffects:
-  - {fileID: 900025642660281898, guid: 565fe03e66511a84c95b09b1d718120e, type: 3}
-  invincibilityTime: 0
 --- !u!1 &986688609
 GameObject:
   m_ObjectHideFlags: 0

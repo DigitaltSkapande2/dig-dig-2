@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b860433e6bd2b354fa9257ca241def15, type: 3}
   m_Name: TestEnemyMelee
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.AttackGroup
-  endCooldown: 0.05
+  endCooldown: 0.5
   chargeDuration: 0
   requireCharge: 0
   chain:

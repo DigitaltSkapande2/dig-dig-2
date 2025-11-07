@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b860433e6bd2b354fa9257ca241def15, type: 3}
   m_Name: PlayerLightMelee
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.AttackGroup
+  endCooldown: 0.5
   chargeDuration: 0
   requireCharge: 0
   chain:
   - {fileID: 11400000, guid: 39c807a16f0a98623ae9e0b3cba5ce9b, type: 2}
-  - {fileID: 11400000, guid: 39c807a16f0a98623ae9e0b3cba5ce9b, type: 2}
+  - {fileID: 11400000, guid: a92d4a8532e88d7b2813de8ea118b735, type: 2}
