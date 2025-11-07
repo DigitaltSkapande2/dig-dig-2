@@ -2,8 +2,14 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Data", menuName = "Scriptable Objects/Debug Notes Storage", order = 1)]
+[CreateAssetMenu(fileName = "DebugNotesStorage", menuName = "Scriptable Objects/Debug Notes Storage", order = 1)]
 public class DebugNotesStorage : ScriptableObject
+{
+	public SerializableDictionary<string, DebugNoteScene> scenes = new();
+}
+
+[Serializable]
+public class DebugNoteScene
 {
 	public List<DebugNoteData> notes = new();
 }
