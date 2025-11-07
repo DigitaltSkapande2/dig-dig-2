@@ -206,7 +206,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Attacker
   attackTypes:
   - {fileID: 11400000, guid: c28775eabcff21659ba26ee1d8ff494e, type: 2}
-  - {fileID: 11400000, guid: 15bb4810038dbd741919439570275ac5, type: 2}
+  - {fileID: 11400000, guid: 8d36a78c7110fab4abafe9da0195274e, type: 2}
   chainTimeWindowAfterAttackEnd: 0.05
   chainTimeWindowBeforeAttackEnd: 0.5
   bindableTransforms:

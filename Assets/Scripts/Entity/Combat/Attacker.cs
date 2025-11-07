@@ -21,6 +21,8 @@ namespace DigDig2
 
 		private Animator animator;
 
+		private Attackable attackable;
+
 		private AttackType currentChargingAttackType;
 		private AttackType currentPerformingAttackType;
 		private AttackType lastPerformedAttackType;
@@ -46,6 +48,7 @@ namespace DigDig2
 		private void Awake()
 		{
 			animator = GetComponent<Animator>();
+			attackable = GetComponent<Attackable>();
 		}
 
 		private void Update()
@@ -75,13 +78,13 @@ namespace DigDig2
 				Collider[] colliders = Physics.OverlapBox(attackHitbox.boundTransform.position, attackHitbox.size / 2, attackHitbox.boundTransform.rotation);;
 				foreach (Collider collider in colliders)
 				{
-					Attackable attackable = collider.GetComponent<Attackable>();
-					if (!attackable) continue;
-					if (attackable == this) continue;
-					if (attackHitbox.attackedEnemies.Contains(attackable)) continue;
+					Attackable enemyAttackable = collider.GetComponent<Attackable>();
+					if (!enemyAttackable) continue;
+					if (enemyAttackable == attackable) continue;
+					if (attackHitbox.attackedEnemies.Contains(enemyAttackable)) continue;
 
-					attackHitbox.attackedEnemies.Add(attackable);
-					attackable.Hit(attackHitbox.boundAttack, this);
+					attackHitbox.attackedEnemies.Add(enemyAttackable);
+					enemyAttackable.Hit(attackHitbox.boundAttack, this);
                 }
             }
         }
