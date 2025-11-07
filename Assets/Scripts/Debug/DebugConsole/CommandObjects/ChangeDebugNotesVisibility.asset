@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f65092b8bc4a5aab097cf497697c5cc8, type: 3}
   m_Name: ChangeDebugNotesVisibility
   m_EditorClassIdentifier: 
-  commandWord: dbg_notes_vis
+  commandWord: dbg_notes_visibility
+  changeArchivedVisibility: 0

@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace DigDig2
 {
-	public class DebugNotesManager : Singleton<DebugNotesManager>, ProjectWideInputActions.IDebugNotesActions
+	public class DebugNotesManager : Singleton<DebugNotesManager>
 	{
 		[Header("Note Storage")]
 
@@ -46,8 +46,6 @@ namespace DigDig2
 
 		[Tooltip("The in-game note billboard prefab.")]
 		[SerializeField] private DebugNoteBillboard debugNoteBillboardPrefab;
-
-		private ProjectWideInputActions.DebugNotesActions debugNotesActions;
 
 		private EntityCharacterController playerCharacterController;
 
@@ -103,8 +101,6 @@ namespace DigDig2
 			PlaceStoredDebugNotes();
 
 			HideNoteManagementInterface();
-
-			EnableInput();
 		}
 
 		private void Update()
@@ -452,37 +448,6 @@ namespace DigDig2
 		public void OnNoteCancelPressed()
 		{
 			HideNoteManagementInterface();
-		}
-
-		#endregion
-
-		#region Input Setup
-
-		private void EnableInput()
-		{
-			debugNotesActions = InputManager.Instance.inputActions.DebugNotes;
-
-			debugNotesActions.SetCallbacks(this);
-		}
-
-        void OnDisable()
-        {
-			debugNotesActions.RemoveCallbacks(this);
-        }
-
-
-        #endregion
-
-        #region Input
-
-        public void OnPlaceNote(InputAction.CallbackContext context)
-		{
-			StartNotePlacement();
-		}
-
-		public void OnEditNote(InputAction.CallbackContext context)
-		{
-			StartNoteEditing();
 		}
 
 		#endregion
