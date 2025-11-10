@@ -27,7 +27,7 @@ namespace DigDig2
 
         void Start()
         {
-            networkManager = OurNetworkManager.instance;
+            networkManager = OurNetworkManager.singleton;
 
             if (startSinglePlayerOnStart)
             {
@@ -44,8 +44,7 @@ namespace DigDig2
         
         void StartShit()
         {
-            networkManager.StartSinglePlayer();
-            networkManager.InitializePlayers(new Vector3(0, 2, 0));
+            InitializePlayers();
             debugStartGameContainer.SetActive(false);
         }
 
@@ -72,7 +71,7 @@ namespace DigDig2
             if (isServer)
             {
                 print("is server; initializing players");
-                OurNetworkManager.instance.InitializePlayers(new Vector3(0, 5, 0));
+                InitializePlayers();
             }
         }
 
@@ -91,7 +90,7 @@ namespace DigDig2
 
             selectMinisButton.onClick.AddListener(() =>
             {
-                
+
             });
 
             readyButton.onClick.AddListener(() =>
@@ -99,12 +98,18 @@ namespace DigDig2
                 characterSelectScreenContainer.SetActive(false);
                 StartGame();
             });
-            
+
             characterSelectScreenContainer.SetActive(true);
 
             hasCharacterSelectScreenShown = true;
         }
         
         #endregion
+        
+
+        private void InitializePlayers()
+        {
+            //TODO
+        }
     }
 }

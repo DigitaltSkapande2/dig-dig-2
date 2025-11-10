@@ -1,3 +1,4 @@
+using System.Linq;
 using Mirror;
 using TMPro;
 using Unity.AppUI.UI;
@@ -5,28 +6,53 @@ using UnityEngine;
 
 namespace DigDig2
 {
-    public class MultiplayerLobby : MonoBehaviour
+    public class MultiplayerLobby : NetworkBehaviour
     {
         [SerializeField] int targetPlayerCount = 2;
         [SerializeField] Button lobbyUIContainer;
         [SerializeField] TMP_Text lobbyPlayerListText;
 
         OurNetworkManager networkManager;
+
+        [SyncVar] int[] serverConnectionIDs;
+
         void Start()
         {
-            networkManager = OurNetworkManager.instance;
-            networkManager.onClientListUpdated.AddListener(OnClientListUpdated);
+            if (NetworkServer.active)
+            {
+                Die();
+            }
+
+            if (isServer) OurNetworkManager.singleton.OnServerConnectAction += OnServerConnect;
         }
 
-        void OnClientListUpdated()
+        void Update()
         {
-            if (!NetworkServer.active) return;
-
-            
+            UpdateConnectionsListText();
         }
-        
+
+        [Server]
+        public void OnServerConnect(NetworkConnectionToClient conn)
+        {
+            serverConnectionIDs = NetworkServer.connections.Keys.ToArray();
+        }
+
+        void UpdateConnectionsListText()
+        {
+            string gay = "";
+            foreach (int clID in serverConnectionIDs)
+            {
+                gay += $"{clID.ToString()}\n";
+            }
+            lobbyPlayerListText.text = gay;
+        }
 
 
+        private void Die()
+        {
+            gameObject.SetActive(false);
+            Destroy(gameObject);
+        }
 
     }
 }

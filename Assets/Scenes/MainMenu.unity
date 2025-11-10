@@ -283,8 +283,12 @@ PrefabInstance:
       value: NetworkManager
       objectReference: {fileID: 0}
     - target: {fileID: 8293981545127765460, guid: 9ab8b93fb5870fdbb8dcb96f5d3acf85, type: 3}
+      propertyPath: transport
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8293981545127765460, guid: 9ab8b93fb5870fdbb8dcb96f5d3acf85, type: 3}
       propertyPath: spawnPrefabs.Array.size
-      value: 9
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8293981545127765460, guid: 9ab8b93fb5870fdbb8dcb96f5d3acf85, type: 3}
       propertyPath: 'spawnPrefabs.Array.data[2]'
@@ -309,12 +313,17 @@ PrefabInstance:
     - target: {fileID: 8293981545127765460, guid: 9ab8b93fb5870fdbb8dcb96f5d3acf85, type: 3}
       propertyPath: 'spawnPrefabs.Array.data[7]'
       value: 
-      objectReference: {fileID: 4442565222488509090, guid: d5a3d3276e47631bfb60f1dda5c99ef2, type: 3}
+      objectReference: {fileID: 5585277213094831744, guid: 971e1460c89dbde4598eca0f2e5c3a7e, type: 3}
     - target: {fileID: 8293981545127765460, guid: 9ab8b93fb5870fdbb8dcb96f5d3acf85, type: 3}
       propertyPath: 'spawnPrefabs.Array.data[8]'
       value: 
       objectReference: {fileID: 5585277213094831744, guid: 971e1460c89dbde4598eca0f2e5c3a7e, type: 3}
-    m_RemovedComponents: []
+    - target: {fileID: 8521146795780915358, guid: 9ab8b93fb5870fdbb8dcb96f5d3acf85, type: 3}
+      propertyPath: sceneId
+      value: 3926118367
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 7969015085946032306, guid: 9ab8b93fb5870fdbb8dcb96f5d3acf85, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -1945,7 +1954,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &799227815
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2020,6 +2029,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05264d241c06a6a238dc6aa2348530ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.MultiplayerLobby
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
   targetPlayerCount: 2
   lobbyPlayerListText: {fileID: 953574722}
 --- !u!1 &953574720
@@ -2322,7 +2334,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.MainMenu
   LoadingScreenPrefab: {fileID: 0}
   mainMenuContainer: {fileID: 1435828335}
-  multiplayerLobbyPanel: {fileID: 799227814}
+  multiplayerLobbyPrefab: {fileID: 0}
 --- !u!4 &1349624583
 Transform:
   m_ObjectHideFlags: 0

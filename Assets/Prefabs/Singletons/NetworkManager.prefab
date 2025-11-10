@@ -324,7 +324,6 @@ GameObject:
   m_Component:
   - component: {fileID: 974789193605697982}
   - component: {fileID: 8293981545127765460}
-  - component: {fileID: 7969015085946032306}
   - component: {fileID: 4441169598214695161}
   m_Layer: 0
   m_Name: NetworkManager
@@ -369,7 +368,7 @@ MonoBehaviour:
   offlineScene: 
   onlineScene: 
   offlineSceneLoadDelay: 0
-  transport: {fileID: 7969015085946032306}
+  transport: {fileID: 0}
   networkAddress: localhost
   maxConnections: 100
   disconnectInactiveConnections: 0
@@ -381,10 +380,11 @@ MonoBehaviour:
   spawnPrefabs:
   - {fileID: 5808037607912292054, guid: 0083d9cd5230bde45b6290423d4a1d0d, type: 3}
   - {fileID: 3856020505058697848, guid: 505e1d94a60d80dedb307ff251f78a25, type: 3}
+  - {fileID: 8286765975674870269, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
   - {fileID: 4739365238837224391, guid: bab1e4510371eea4ca79e6010cb2355c, type: 3}
   - {fileID: 4926445381038683340, guid: 6674aa8d5e425fa388ba9da11694ca00, type: 3}
   - {fileID: 6097956373199808459, guid: c4def05584750e44487f095b637b62b5, type: 3}
-  - {fileID: 7554196915854692088}
+  - {fileID: 5585277213094831744, guid: 971e1460c89dbde4598eca0f2e5c3a7e, type: 3}
   exceptionsDisconnect: 1
   snapshotSettings:
     bufferTimeMultiplier: 2
@@ -400,40 +400,6 @@ MonoBehaviour:
   evaluationMethod: 0
   evaluationInterval: 3
   timeInterpolationGui: 0
-  showDebugClinetList: 0
-  isSinglePlayer: 1
-  onClientListUpdated:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!114 &7969015085946032306
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7554196915854692088}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b0fecffa3f624585964b0d0eb21b18e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  port: 7777
-  DualMode: 1
-  NoDelay: 1
-  Interval: 10
-  Timeout: 10000
-  RecvBufferSize: 7361536
-  SendBufferSize: 7361536
-  FastResend: 2
-  ReceiveWindowSize: 4096
-  SendWindowSize: 4096
-  MaxRetransmit: 40
-  MaximizeSocketBuffers: 1
-  ReliableMaxMessageSize: 297433
-  UnreliableMaxMessageSize: 1194
-  debugLog: 0
-  statisticsGUI: 0
-  statisticsLog: 0
 --- !u!114 &4441169598214695161
 MonoBehaviour:
   m_ObjectHideFlags: 0

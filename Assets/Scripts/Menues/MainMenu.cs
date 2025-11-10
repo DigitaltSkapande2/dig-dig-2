@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
+using Mirror;
 using TMPro;
 using UnityEngine;
 
@@ -11,21 +12,24 @@ namespace DigDig2
         [SerializeField] GameObject LoadingScreenPrefab;
         [Header("Scene References")]
         [SerializeField] GameObject mainMenuContainer;
-        [SerializeField] GameObject multiplayerLobbyPanel;
+        [SerializeField] Canvas multiplayerLobbyPrefab;
+
 
         public void StartHost()
         {
-            OurNetworkManager.instance.StartHost();
+            OurNetworkManager.singleton.StartHost();
             mainMenuContainer.SetActive(false);
-            multiplayerLobbyPanel.SetActive(true);
+            Instantiate(multiplayerLobbyPrefab);    
         }
-        
+
         public void StartJoin()
         {
-            OurNetworkManager.instance.StartClient();
+            OurNetworkManager.singleton.StartClient();
             mainMenuContainer.SetActive(false);
-            multiplayerLobbyPanel.SetActive(true);
+            Instantiate(multiplayerLobbyPrefab);
         }
+        
+    
 
     }
 }
