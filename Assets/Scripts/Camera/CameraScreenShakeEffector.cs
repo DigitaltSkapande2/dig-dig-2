@@ -24,6 +24,10 @@ namespace DigDig2.CinemaCamera
 
             rotation = Quaternion.Euler(shakeOffset.y, shakeOffset.x, 0f);
 
+            //position 
+            Vector2 offset = UnityEngine.Random.insideUnitCircle * ShakeIntensity;
+            position = (GameCamera.Instance.transform.up * offset.y) + (GameCamera.Instance.transform.right * offset.x);
+
             ShakeIntensity = ShakeIntensity < 0.001f ? 0f : Mathf.Lerp(ShakeIntensity, 0f, Time.deltaTime * 2f);
         }
 

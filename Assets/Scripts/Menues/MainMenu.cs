@@ -11,26 +11,35 @@ namespace DigDig2
     {
         [SerializeField] GameObject LoadingScreenPrefab;
         [Header("Scene References")]
+        [SerializeField] Canvas mainMenuCanvas;
         [SerializeField] GameObject mainMenuContainer;
-        [SerializeField] Canvas multiplayerLobbyPrefab;
+        [SerializeField] GameObject multiplayerLobbyPrefab;
 
 
         public void StartHost()
         {
-            OurNetworkManager.singleton.StartHost();
             mainMenuContainer.SetActive(false);
-            Instantiate(multiplayerLobbyPrefab);    
+            Instantiate(multiplayerLobbyPrefab, mainMenuCanvas.transform);
+            Debug.Log("Spawned multiplayerlobby, Starting Host...");
+            OurNetworkManager.singleton.StartHost();
+            Debug.Log("Host started.");
         }
 
         public void StartJoin()
         {
-            OurNetworkManager.singleton.StartClient();
+
             mainMenuContainer.SetActive(false);
-            Instantiate(multiplayerLobbyPrefab);
+            Instantiate(multiplayerLobbyPrefab, mainMenuCanvas.transform);
+            Debug.Log("Spawned multiplayerlobby, Starting Client...");
+            OurNetworkManager.singleton.StartClient();
+            Debug.Log("Client started.");
         }
         
-    
-
+        public void QuitGame()
+        {
+            Debug.Log("Quitting game...");
+            Application.Quit();
+        }
     }
 }
 

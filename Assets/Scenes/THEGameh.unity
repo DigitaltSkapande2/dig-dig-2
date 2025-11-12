@@ -6008,6 +6008,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
+    - target: {fileID: 6443512540634913117, guid: c4def05584750e44487f095b637b62b5, type: 3}
+      propertyPath: playerPrefab
+      value: 
+      objectReference: {fileID: 4442565222488509090, guid: d5a3d3276e47631bfb60f1dda5c99ef2, type: 3}
     - target: {fileID: 7820914129462654369, guid: c4def05584750e44487f095b637b62b5, type: 3}
       propertyPath: sceneId
       value: 925607650

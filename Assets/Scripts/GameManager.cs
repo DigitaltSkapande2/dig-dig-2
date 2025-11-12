@@ -1,4 +1,5 @@
-
+using System.Collections.Generic;
+using System.Linq;
 using Mirror;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,6 +20,11 @@ namespace DigDig2
         [SerializeField] Button selectMaxButton;
         [SerializeField] Button readyButton;
 
+        [Header("Player")]
+        [SerializeField] GameObject playerPrefab;
+
+        Dictionary<int, PlayerCharacterInputController> playerInputToNetworkPlayerMap = new Dictionary<int, PlayerCharacterInputController>();
+
 
         OurNetworkManager networkManager;
 
@@ -31,7 +37,7 @@ namespace DigDig2
 
             if (startSinglePlayerOnStart)
             {
-                Invoke("StartShit", 0.5f);
+                Invoke(nameof(StartShit), 0.5f);
                 return;
             }
 
@@ -106,10 +112,27 @@ namespace DigDig2
         
         #endregion
         
-
+        [Server]
         private void InitializePlayers()
         {
-            //TODO
+
+            foreach (NetworkConnectionToClient player in NetworkServer.connections.Values)
+            {
+                if (playerInputToNetworkPlayerMap.Keys.Contains(player.connectionId)) continue;
+
+                playerInputToNetworkPlayerMap.Add(
+                    player.connectionId,
+                    Instantiate(playerPrefab).GetComponent<PlayerCharacterInputController>()
+                );
+            }
+            
+            if (!playerInputToNetworkPlayerMap.Keys.Contains(0))
+            {
+                playerInputToNetworkPlayerMap.Add(
+                    0,
+                    Instantiate(playerPrefab).GetComponent<PlayerCharacterInputController>()
+                );
+            }
         }
     }
 }
