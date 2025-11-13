@@ -8,7 +8,19 @@ namespace DigDig2
     {
         [SerializeField] public float endCooldown = 0.05f;
         [SerializeField] public float chargeDuration = 0f;
-        [SerializeField] public bool requireCharge = false;
+        [SerializeField] public ChargeMode chargeMode = ChargeMode.NoCharge;
         [SerializeField] public List<Attack> chain;
+
+        public enum ChargeMode
+        {
+            NoCharge,
+            RequireCharge,
+            RequireFullCharge,
+        }
+
+        public Attack GetAttackFromIndex(int attackIndex)
+        {
+            return chain[attackIndex];
+        }
     }
 }
