@@ -7,18 +7,16 @@ namespace DigDig2
 {
     [Serializable, GeneratePropertyBag]
     [NodeDescription(
-        name: "WotT Attack",
-        description: "Trigger an attack action.",
+        name: "WotT Request Attack End",
+        description: "Request an attacks end.",
         category: "WotT/Attacking",
-        story: "[Agent] attacks with attack [AttackIndex]",
-        id: "WotT_Trigger_Attack"
+        story: "[Agent] requests to end their attack",
+        id: "WotT_Request_Attack_end"
     )]
-    public partial class WotTAttack : Unity.Behavior.Action
+    public partial class WotTCharge : Unity.Behavior.Action
     {
         [SerializeReference] public BlackboardVariable<GameObject> Agent;
-        [SerializeReference] public BlackboardVariable<int> AttackIndex = new(0);
 
-        private EntityCharacterBehaviorAgent m_AgentCharacterBehaviorInputController;
         private Attacker m_AgentAttacker;
 
         protected override Status OnStart()
@@ -31,7 +29,7 @@ namespace DigDig2
 
             Initialize();
 
-            m_AgentAttacker.Attack(AttackIndex.Value);
+            m_AgentAttacker.RequestAttackEnd();
 
             return Status.Success;
         }
@@ -43,7 +41,6 @@ namespace DigDig2
 
         private void Initialize()
         {
-            m_AgentCharacterBehaviorInputController = Agent.Value.GetComponentInChildren<EntityCharacterBehaviorAgent>();
             m_AgentAttacker = Agent.Value.GetComponentInChildren<Attacker>();
         }
     }

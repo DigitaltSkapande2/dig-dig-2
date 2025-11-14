@@ -8,9 +8,19 @@ namespace DigDig2
 		[SerializeField] private string animationStateName;
 		[SerializeField] private int damage = 1;
 
-		public override void Charge(Attacker attacker, AttackType attackGroup)
+		public override void ChargeStart(Attacker attacker, AttackType attackType)
 		{
+			
+		}
 
+		public override void Charge(Attacker attacker, AttackType attackType, float chargeTime)
+		{
+			
+		}
+
+		public override void ChargeFull(Attacker attacker, AttackType attackType)
+		{
+			
 		}
 		
 		public override void Trigger(Attacker attacker, AttackType attackGroup, float chargeTime)

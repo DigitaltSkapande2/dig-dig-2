@@ -12,9 +12,19 @@ namespace DigDig2
         [SerializeField] private float projectileSpeed;
         [SerializeField] private float projectileifetime;
 
-		public override void Charge(Attacker attacker, AttackType attackGroup)
+		public override void ChargeStart(Attacker attacker, AttackType attackType)
 		{
+			
+		}
 
+		public override void Charge(Attacker attacker, AttackType attackType, float chargeTime)
+		{
+			
+		}
+
+		public override void ChargeFull(Attacker attacker, AttackType attackType)
+		{
+			
 		}
 		
 		public override void Trigger(Attacker attacker, AttackType attackGroup, float chargeTime)
