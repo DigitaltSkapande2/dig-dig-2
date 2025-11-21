@@ -1033,6 +1033,7 @@ GameObject:
   m_Component:
   - component: {fileID: 981976114766360839}
   - component: {fileID: 1685250647}
+  - component: {fileID: 5684968824702371150}
   m_Layer: 0
   m_Name: DebugConsole
   m_TagString: Untagged
@@ -1068,15 +1069,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f30758f307b05384e9a9ff460034d4be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
   standardSuggestion: 'Type something '
   commands:
   - {fileID: 11400000, guid: 019ecba8af87d7797913c0a0b91929ad, type: 2}
+  - {fileID: 11400000, guid: 18181c64a134ef74aacb1c53e45805e9, type: 2}
   - {fileID: 11400000, guid: 9cb9a6124077b64c1acbb3797870d034, type: 2}
+  - {fileID: 11400000, guid: 3701366d790d3d44a8a2ca99f805a2d4, type: 2}
   canvas: {fileID: 1005529010}
   inputField: {fileID: 8864510848425877358}
   suggestionText: {fileID: 6280824988467330036}
   consoleMessagePrefab: {fileID: 6428242112197148731, guid: 41f3c54797b0e977d8e00b7e9dd36daf, type: 3}
   consoleMessageParent: {fileID: 5247303478738789925}
+--- !u!114 &5684968824702371150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5808037607912292054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Mirror::Mirror.NetworkIdentity
+  sceneId: 0
+  _assetId: 4075463579
+  serverOnly: 0
+  visibility: 0
+  hasSpawned: 0
 --- !u!1 &6062925738514614009
 GameObject:
   m_ObjectHideFlags: 0

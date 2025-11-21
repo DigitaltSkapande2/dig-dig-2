@@ -21,7 +21,7 @@ MonoBehaviour:
   - mapName: UI
     context: 0
   - mapName: DebugConsole
-    context: 8
+    context: 10
   - mapName: DebugMenu
     context: 2
   - mapName: Attack

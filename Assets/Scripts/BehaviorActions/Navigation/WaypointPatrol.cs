@@ -13,7 +13,7 @@ namespace DigDig2
         story: "[Agent] patrols along [Waypoints]",
         id: "WotT_Waypoint_Patrol"
     )]
-    public partial class WotTWaypointPatrol : Unity.Behavior.Action
+    public partial class WotTWaypointPatrol : Action
     {
         [SerializeReference] public BlackboardVariable<GameObject> Agent;
         [Tooltip("The waypoints to patrol around.")]

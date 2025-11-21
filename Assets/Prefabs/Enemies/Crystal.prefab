@@ -158,12 +158,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5eb71039f853af4bb9e8027626f0a29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Attackable
+  invincibilityTime: 0
+  hitEffects:
+  - {fileID: 900025642660281898, guid: 565fe03e66511a84c95b09b1d718120e, type: 3}
   hit:
     m_PersistentCalls:
       m_Calls: []
-  hitEffects:
-  - {fileID: 900025642660281898, guid: 565fe03e66511a84c95b09b1d718120e, type: 3}
-  invincibilityTime: 0
 --- !u!114 &4018930690133570384
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -176,24 +176,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 809a18945f58a064abeeb94658cb72d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Health
-  maxHealth: 3
-  health: 3
+  maxHealthPoints: 3
+  healthPoints: 3
   deathEffects: []
-  deathEvent:
+  death:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &2002717688747189687
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -206,11 +194,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 744cb76ac4c9fd540a9eb0faed82fa5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Crystal
+  enemyConnections: []
   crystal: {fileID: 2519747040841795025}
   shield: {fileID: 6672083611941458192}
   linePrefab: {fileID: 2737389797727682940, guid: 39c911a686f973c4fabe982863ac4797, type: 3}
-  enemies:
-  - enemy: {fileID: 0}
 --- !u!1 &6672083611941458192
 GameObject:
   m_ObjectHideFlags: 0

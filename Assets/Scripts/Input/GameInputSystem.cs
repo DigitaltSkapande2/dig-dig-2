@@ -311,76 +311,6 @@ public partial class @ProjectWideInputActions: IInputActionCollection2, IDisposa
             ]
         },
         {
-            ""name"": ""DebugNotes"",
-            ""id"": ""58488041-e640-4f61-9cc2-949b8ce13395"",
-            ""actions"": [
-                {
-                    ""name"": ""PlaceNote"",
-                    ""type"": ""Button"",
-                    ""id"": ""364e4bcb-f8c2-4c88-8db1-cea7eff768b0"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""EditNote"",
-                    ""type"": ""Button"",
-                    ""id"": ""4f13845f-a2c2-404f-9b51-17ce4d8372e6"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                }
-            ],
-            ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""189aad52-c185-45c5-b417-c0daef1105c5"",
-                    ""path"": ""<Keyboard>/backquote"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""PlaceNote"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""b89a26ae-03d9-4774-ab7b-134ef7a2a493"",
-                    ""path"": ""<Gamepad>/dpad/up"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Gamepad"",
-                    ""action"": ""PlaceNote"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""42bfc989-7233-4727-bc14-1669f1476c9c"",
-                    ""path"": ""<Keyboard>/e"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""EditNote"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""974bc56b-fcab-453f-945e-3aeff6a47408"",
-                    ""path"": ""<Gamepad>/dpad/down"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Gamepad"",
-                    ""action"": ""EditNote"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                }
-            ]
-        },
-        {
             ""name"": ""UI"",
             ""id"": ""272f6d14-89ba-496f-b7ff-215263d3219f"",
             ""actions"": [
@@ -950,7 +880,7 @@ public partial class @ProjectWideInputActions: IInputActionCollection2, IDisposa
                 {
                     ""name"": """",
                     ""id"": ""446fa49b-1e20-4c24-969d-8221be89a40a"",
-                    ""path"": ""<Keyboard>/f3"",
+                    ""path"": ""<Keyboard>/backquote"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -1286,10 +1216,6 @@ public partial class @ProjectWideInputActions: IInputActionCollection2, IDisposa
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
-        // DebugNotes
-        m_DebugNotes = asset.FindActionMap("DebugNotes", throwIfNotFound: true);
-        m_DebugNotes_PlaceNote = m_DebugNotes.FindAction("PlaceNote", throwIfNotFound: true);
-        m_DebugNotes_EditNote = m_DebugNotes.FindAction("EditNote", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1324,7 +1250,6 @@ public partial class @ProjectWideInputActions: IInputActionCollection2, IDisposa
     ~@ProjectWideInputActions()
     {
         UnityEngine.Debug.Assert(!m_Player.enabled, "This will cause a leak and performance issues, ProjectWideInputActions.Player.Disable() has not been called.");
-        UnityEngine.Debug.Assert(!m_DebugNotes.enabled, "This will cause a leak and performance issues, ProjectWideInputActions.DebugNotes.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_UI.enabled, "This will cause a leak and performance issues, ProjectWideInputActions.UI.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_DebugConsole.enabled, "This will cause a leak and performance issues, ProjectWideInputActions.DebugConsole.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_DebugMenu.enabled, "This will cause a leak and performance issues, ProjectWideInputActions.DebugMenu.Disable() has not been called.");
@@ -1518,113 +1443,6 @@ public partial class @ProjectWideInputActions: IInputActionCollection2, IDisposa
     /// Provides a new <see cref="PlayerActions" /> instance referencing this action map.
     /// </summary>
     public PlayerActions @Player => new PlayerActions(this);
-
-    // DebugNotes
-    private readonly InputActionMap m_DebugNotes;
-    private List<IDebugNotesActions> m_DebugNotesActionsCallbackInterfaces = new List<IDebugNotesActions>();
-    private readonly InputAction m_DebugNotes_PlaceNote;
-    private readonly InputAction m_DebugNotes_EditNote;
-    /// <summary>
-    /// Provides access to input actions defined in input action map "DebugNotes".
-    /// </summary>
-    public struct DebugNotesActions
-    {
-        private @ProjectWideInputActions m_Wrapper;
-
-        /// <summary>
-        /// Construct a new instance of the input action map wrapper class.
-        /// </summary>
-        public DebugNotesActions(@ProjectWideInputActions wrapper) { m_Wrapper = wrapper; }
-        /// <summary>
-        /// Provides access to the underlying input action "DebugNotes/PlaceNote".
-        /// </summary>
-        public InputAction @PlaceNote => m_Wrapper.m_DebugNotes_PlaceNote;
-        /// <summary>
-        /// Provides access to the underlying input action "DebugNotes/EditNote".
-        /// </summary>
-        public InputAction @EditNote => m_Wrapper.m_DebugNotes_EditNote;
-        /// <summary>
-        /// Provides access to the underlying input action map instance.
-        /// </summary>
-        public InputActionMap Get() { return m_Wrapper.m_DebugNotes; }
-        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
-        public void Enable() { Get().Enable(); }
-        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
-        public void Disable() { Get().Disable(); }
-        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
-        public bool enabled => Get().enabled;
-        /// <summary>
-        /// Implicitly converts an <see ref="DebugNotesActions" /> to an <see ref="InputActionMap" /> instance.
-        /// </summary>
-        public static implicit operator InputActionMap(DebugNotesActions set) { return set.Get(); }
-        /// <summary>
-        /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
-        /// </summary>
-        /// <param name="instance">Callback instance.</param>
-        /// <remarks>
-        /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
-        /// </remarks>
-        /// <seealso cref="DebugNotesActions" />
-        public void AddCallbacks(IDebugNotesActions instance)
-        {
-            if (instance == null || m_Wrapper.m_DebugNotesActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_DebugNotesActionsCallbackInterfaces.Add(instance);
-            @PlaceNote.started += instance.OnPlaceNote;
-            @PlaceNote.performed += instance.OnPlaceNote;
-            @PlaceNote.canceled += instance.OnPlaceNote;
-            @EditNote.started += instance.OnEditNote;
-            @EditNote.performed += instance.OnEditNote;
-            @EditNote.canceled += instance.OnEditNote;
-        }
-
-        /// <summary>
-        /// Removes <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
-        /// </summary>
-        /// <remarks>
-        /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
-        /// </remarks>
-        /// <seealso cref="DebugNotesActions" />
-        private void UnregisterCallbacks(IDebugNotesActions instance)
-        {
-            @PlaceNote.started -= instance.OnPlaceNote;
-            @PlaceNote.performed -= instance.OnPlaceNote;
-            @PlaceNote.canceled -= instance.OnPlaceNote;
-            @EditNote.started -= instance.OnEditNote;
-            @EditNote.performed -= instance.OnEditNote;
-            @EditNote.canceled -= instance.OnEditNote;
-        }
-
-        /// <summary>
-        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="DebugNotesActions.UnregisterCallbacks(IDebugNotesActions)" />.
-        /// </summary>
-        /// <seealso cref="DebugNotesActions.UnregisterCallbacks(IDebugNotesActions)" />
-        public void RemoveCallbacks(IDebugNotesActions instance)
-        {
-            if (m_Wrapper.m_DebugNotesActionsCallbackInterfaces.Remove(instance))
-                UnregisterCallbacks(instance);
-        }
-
-        /// <summary>
-        /// Replaces all existing callback instances and previously registered input action callbacks associated with them with callbacks provided via <param cref="instance" />.
-        /// </summary>
-        /// <remarks>
-        /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
-        /// </remarks>
-        /// <seealso cref="DebugNotesActions.AddCallbacks(IDebugNotesActions)" />
-        /// <seealso cref="DebugNotesActions.RemoveCallbacks(IDebugNotesActions)" />
-        /// <seealso cref="DebugNotesActions.UnregisterCallbacks(IDebugNotesActions)" />
-        public void SetCallbacks(IDebugNotesActions instance)
-        {
-            foreach (var item in m_Wrapper.m_DebugNotesActionsCallbackInterfaces)
-                UnregisterCallbacks(item);
-            m_Wrapper.m_DebugNotesActionsCallbackInterfaces.Clear();
-            AddCallbacks(instance);
-        }
-    }
-    /// <summary>
-    /// Provides a new <see cref="DebugNotesActions" /> instance referencing this action map.
-    /// </summary>
-    public DebugNotesActions @DebugNotes => new DebugNotesActions(this);
 
     // UI
     private readonly InputActionMap m_UI;
@@ -2289,28 +2107,6 @@ public partial class @ProjectWideInputActions: IInputActionCollection2, IDisposa
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnSprint(InputAction.CallbackContext context);
-    }
-    /// <summary>
-    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "DebugNotes" which allows adding and removing callbacks.
-    /// </summary>
-    /// <seealso cref="DebugNotesActions.AddCallbacks(IDebugNotesActions)" />
-    /// <seealso cref="DebugNotesActions.RemoveCallbacks(IDebugNotesActions)" />
-    public interface IDebugNotesActions
-    {
-        /// <summary>
-        /// Method invoked when associated input action "PlaceNote" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnPlaceNote(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "EditNote" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnEditNote(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.
