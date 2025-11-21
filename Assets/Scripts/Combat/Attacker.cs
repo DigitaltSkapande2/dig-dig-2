@@ -42,7 +42,7 @@ namespace DigDig2
 
 		private AttackType heldAttackType = null;
 		private bool attackRequestProcessed = true;
-		private bool attackRequestIsChain = false;
+		private int attackRequestChain = 0;
 
 		private Dictionary<string, AttackHitbox> activeAttackHitboxes = new();
 
@@ -76,15 +76,12 @@ namespace DigDig2
 
 		private void Update()
 		{
-			if (state == CombatState.Idle || attackRequestIsChain)
+			if ((state == CombatState.Idle || attackRequestChain > 0) && !attackRequestProcessed)
 			{
-				if (heldAttackType == null)
+				if (heldAttackType != null)
 				{
-					attackRequestProcessed = true;
-					attackRequestIsChain = false;
-				}
-				else
-				{
+					currentAttackChain = attackRequestChain;
+
 					if (heldAttackType.chargeMode == AttackType.ChargeMode.NoCharge)
 					{
 						PerformAttack(heldAttackType);
@@ -93,10 +90,10 @@ namespace DigDig2
 					{
 						ChargeAttack(heldAttackType);
 					}
-
-					attackRequestProcessed = true;
-					attackRequestIsChain = false;
 				}
+
+				attackRequestProcessed = true;
+				attackRequestChain = -1;
 			}
 
 			if (state == CombatState.Charging)
@@ -173,27 +170,32 @@ namespace DigDig2
 		{
 			heldAttackType = GetAttackTypeFromIndex(attackTypeIndex);
 
-			attackRequestIsChain = HasMetChainRequirement(heldAttackType);
-			if (attackRequestIsChain)
+			LogVerbose($"Attack request started. Held Attack Type: {heldAttackType}");
+			bool isValidChain = HasMetChainRequirement(heldAttackType);
+			if (isValidChain)
 			{
-				currentAttackChain++;
-				EndAttack();
+				attackRequestChain = currentAttackChain + 1;
+				LogVerbose("Incrementing chain!");
+				EndAttack(false, true);
 			}
-			else if (!attackRequestIsChain && state == CombatState.Idle)
+			else
 			{
-				currentAttackChain = 0;
+				LogVerbose("Resetting chain!");
+				attackRequestChain = 0;
 			}
 
-			LogVerbose($"Attack requested! Held Attack Type: {heldAttackType}, Is Chain: {attackRequestIsChain}");
-
+			LogVerbose($"Attack requested! Held Attack Type: {heldAttackType}, Is Chain: {isValidChain}, State: {state}");
 			attackRequestProcessed = false;
 		}
 		
 		public void RequestAttackEnd()
         {
+			// Perform the Charged attack (if there is one and it's valid)
 			if (IsChargeValid()) PerformAttack(heldAttackType);
 
 			heldAttackType = null;
+			attackRequestProcessed = true;
+			attackRequestChain = 0;
 
 			LogVerbose("Attack end requested!");
         }
@@ -256,6 +258,7 @@ namespace DigDig2
 			}
 			else if (attackType != null) // Attack is not charged, trigger attack
 			{
+				LogVerbose($"Attacking with chain {currentAttackChain}!");
 				currentPerformingAttackType = attackType;
 				currentPerformingAttack = currentPerformingAttackType.GetAttackFromIndex(currentAttackChain);
 			}
@@ -300,7 +303,6 @@ namespace DigDig2
 		}
 		public float GetAttackPerformanceTime()
 		{
-			if (!IsPerformingAttack()) { LogWarningVerbose("There is no attack being performed."); return -1; }
 			return Time.time - performanceStartTime;
 		}
 
@@ -310,14 +312,17 @@ namespace DigDig2
 
 		public bool HasMetChainRequirement(AttackType attackType)
 		{
-			LogVerbose($"Is it the same as the last? {lastPerformedAttackType == attackType}");
+			LogVerbose("Checking attack chain requirement:");
+			LogVerbose($"> Is it the same as the last? {lastPerformedAttackType == attackType}");
 			if (lastPerformedAttackType != attackType) return false;
 
 			float chainWindowMarginOfError = GetAttackPerformanceTime() - lastPerformedAttack.AttackDuration;
-			LogVerbose($"Is it in the margin of error? {chainWindowMarginOfError <= chainTimeWindowAfterAttackEnd && chainWindowMarginOfError >= -chainTimeWindowBeforeAttackEnd}, MoE: {chainWindowMarginOfError}");
+			LogVerbose($"> Is it in the margin of error? {chainWindowMarginOfError <= chainTimeWindowAfterAttackEnd && chainWindowMarginOfError >= -chainTimeWindowBeforeAttackEnd}, MoE: {chainWindowMarginOfError}");
 			if (!(chainWindowMarginOfError <= chainTimeWindowAfterAttackEnd && chainWindowMarginOfError >= -chainTimeWindowBeforeAttackEnd)) return false;
-			LogVerbose($"Is it at the end of the chain? {currentAttackChain >= attackType.chain.Count - 1}");
-			if (currentAttackChain >= attackType.chain.Count - 1) return false;
+			LogVerbose($"> Is it at the end of the chain? {currentAttackChain >= attackType.chain.Count - 1} ({currentAttackChain + 1}, {attackType.chain.Count})");
+			if (currentAttackChain + 1 >= attackType.chain.Count) return false;
+
+			LogVerbose("Chain is valid!");
 
 			return true;
 		}
