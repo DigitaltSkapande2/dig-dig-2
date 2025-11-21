@@ -491,7 +491,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7a50390543e69bf4e9b811e3022c15bf, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.978
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7a50390543e69bf4e9b811e3022c15bf, type: 3}
       propertyPath: m_LocalPosition.z
@@ -531,7 +531,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 1ce5247e882577b49a1b0296d0bb186d, type: 2}
     - target: {fileID: 919132149155446097, guid: 7a50390543e69bf4e9b811e3022c15bf, type: 3}
       propertyPath: m_Name
-      value: finished_Big_Cat_With_Sword2
+      value: Max
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
