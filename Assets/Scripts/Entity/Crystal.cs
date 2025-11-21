@@ -88,14 +88,5 @@ namespace DigDig2
                 enemyConnection.lineComponent.SetPositions(transform.position, enemyConnection.enemy.transform.position);
             }
         }
-
-		private void OnDrawGizmosSelected()
-		{
-			foreach (EnemyConnections enemyConnection in enemyConnections)
-            {
-                Gizmos.color = Color.pink;
-                Gizmos.DrawLine(transform.position, enemyConnection.enemy.transform.position);
-			}
-		}
 	}
 }
