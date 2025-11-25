@@ -17,16 +17,21 @@ namespace DigDig2
     public class CharacterSelectScreen : NetworkBehaviour
     {
         [SerializeField] Button startGameButton;
+        [SerializeField] CharacterType characterType;
         private Dictionary<int, CharacterType> clientCharacterTypeSellection = new();
 
         private void Start()
         {
             startGameButton.interactable = isServer;
+            startGameButton.onClick.AddListener(() =>
+            {
+                Destroy(gameObject);
+                GameManager.Instance.StartGame();
+            });
         }
 
 
-        [Client]
-        public void ClientSellectCharacter(CharacterType characterType)
+        public void ClientSelectCharacter(CharacterType characterType)
         {
             ServerSetClientCharacterSelection(characterType);
         }
@@ -34,7 +39,7 @@ namespace DigDig2
         [Command]
         private void ServerSetClientCharacterSelection(CharacterType characterType)
         {
-            //clientCharacterTypeSellection.Add(, characterType);
+            clientCharacterTypeSellection.Add(connectionToClient.connectionId, characterType);
         }
 
         

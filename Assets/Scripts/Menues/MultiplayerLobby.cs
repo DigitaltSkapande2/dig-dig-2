@@ -9,10 +9,7 @@ namespace DigDig2
     public class MultiplayerLobby : NetworkBehaviour
     {
         [SerializeField] int targetPlayerCount = 2;
-        [SerializeField] Button lobbyUIContainer;
         [SerializeField] TMP_Text lobbyPlayerListText;
-
-        OurNetworkManager networkManager;
 
         [SyncVar] int[] serverConnectionIDs;
 

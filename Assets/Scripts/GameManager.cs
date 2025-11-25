@@ -22,6 +22,8 @@ namespace DigDig2
 
         [Header("Player")]
         [SerializeField] GameObject playerPrefab;
+        [Header("Debug")]
+        [SerializeField] bool verboseLogging;
 
         Dictionary<int, PlayerCharacterInputController> playerInputToNetworkPlayerMap = new Dictionary<int, PlayerCharacterInputController>();
 
@@ -50,6 +52,7 @@ namespace DigDig2
         
         void StartShit()
         {
+            networkManager.StartHost();
             InitializePlayers();
             debugStartGameContainer.SetActive(false);
         }
@@ -84,7 +87,6 @@ namespace DigDig2
 
         #region CharacterSelect Screen
 
-
         public void ShowCharacterSelectScreen()
         {
             if (hasCharacterSelectScreenShown) return;
@@ -94,13 +96,19 @@ namespace DigDig2
                 characterSelectScreenContainer.SetActive(true);
             }
 
+            selectMaxButton.onClick.AddListener(() =>
+            {
+                
+            });
+
             selectMinisButton.onClick.AddListener(() =>
             {
-
+                
             });
 
             readyButton.onClick.AddListener(() =>
             {
+                if (isServer) return;
                 characterSelectScreenContainer.SetActive(false);
                 StartGame();
             });
@@ -109,30 +117,47 @@ namespace DigDig2
 
             hasCharacterSelectScreenShown = true;
         }
-        
+
         #endregion
-        
+
         [Server]
         private void InitializePlayers()
         {
-
-            foreach (NetworkConnectionToClient player in NetworkServer.connections.Values)
+            Log("--- InitializingPlayerControllers ---");
+            foreach (NetworkConnectionToClient conn in NetworkServer.connections.Values)
             {
-                if (playerInputToNetworkPlayerMap.Keys.Contains(player.connectionId)) continue;
+                Log($"Spawning player for conn: {conn.connectionId}");
+                if (playerInputToNetworkPlayerMap.Keys.Contains(conn.connectionId)) continue;
+
+                var playerInstance = Instantiate(playerPrefab);
 
                 playerInputToNetworkPlayerMap.Add(
-                    player.connectionId,
-                    Instantiate(playerPrefab).GetComponent<PlayerCharacterInputController>()
+                    conn.connectionId,
+                    playerInstance.GetComponent<PlayerCharacterInputController>()
                 );
+
+                playerInstance.name = $"{playerPrefab.name} [connId={conn.connectionId}]";
+                NetworkServer.AddPlayerForConnection(conn, playerInstance);
             }
-            
+
             if (!playerInputToNetworkPlayerMap.Keys.Contains(0))
             {
+                var playerInstance = Instantiate(playerPrefab);
+
                 playerInputToNetworkPlayerMap.Add(
                     0,
-                    Instantiate(playerPrefab).GetComponent<PlayerCharacterInputController>()
+                    playerInstance.GetComponent<PlayerCharacterInputController>()
                 );
+
+                playerInstance.name = $"{playerPrefab.name} [connId={NetworkServer.localConnection.connectionId}]";
+                NetworkServer.AddPlayerForConnection(NetworkServer.localConnection, playerInstance);
             }
         }
+        
+
+        private void Log(string msg)
+        {
+            if (verboseLogging) Debug.Log(msg);
+        } 
     }
 }
