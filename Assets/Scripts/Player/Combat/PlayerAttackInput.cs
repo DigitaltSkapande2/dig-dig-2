@@ -45,11 +45,13 @@ namespace DigDig2
 
         public void OnAttack1(InputAction.CallbackContext context)
         {
-            if (context.started) attacker.Attack(0);
+            if (context.performed) attacker.RequestAttackStart(0);
+            else attacker.RequestAttackEnd();
         }
         public void OnAttack2(InputAction.CallbackContext context)
         {
-            if (context.started) attacker.Attack(1);
+            if (context.performed) attacker.RequestAttackStart(1);
+            else attacker.RequestAttackEnd();
         }
 
         public void OnMouseAim(InputAction.CallbackContext context)

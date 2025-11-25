@@ -133,28 +133,31 @@ namespace DigDig2
 
 		private void Update()
 		{
-			if (isLocalPlayer || isServer)
+			if (!frozen)
 			{
-				Debug.DrawLine(transform.position, transform.position + GetForwardVector(), Color.red);
+				if (isLocalPlayer || isServer)
+				{
+					Debug.DrawLine(transform.position, transform.position + GetForwardVector(), Color.red);
 
-				// Movement
-				// NOTE: Reorder movement processing order here!
-				ProcessGravity();
-				ProcessMove();
-				ProcessSlope();
-				ProcessKnockback();
+					// Movement
+					// NOTE: Reorder movement processing order here!
+					ProcessGravity();
+					ProcessMove();
+					ProcessSlope();
+					ProcessKnockback();
 
-				ApplyMovement();
+					ApplyMovement();
 
-				ProcessEdge();
+					ProcessEdge();
 
-				// Visuals
-				UpdateVisualsRotation();
-			}
+					// Visuals
+					UpdateVisualsRotation();
+				}
 
-			if (isClient)
-			{
-				RefreshVisualsRotation();
+				if (isClient)
+				{
+					RefreshVisualsRotation();
+				}
 			}
 		}
 

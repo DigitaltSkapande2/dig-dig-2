@@ -50,8 +50,6 @@ namespace DigDig2.Debugging
         #region UnityMessages
 
         private void Start() {
-            UnityEngine.Debug.Log("RIZZZZ");
-
             inputMap = InputManager.Instance.inputActions.DebugConsole;
             inputMap.SetCallbacks(this);
         }

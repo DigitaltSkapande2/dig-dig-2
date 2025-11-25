@@ -9,14 +9,14 @@ namespace DigDig2
         name: "WotT Radius Patrol",
         description: "Randomly patrols the agent around a point with a certain radius.",
         category: "WotT/Navigation",
-        story: "[Agent] patrols around [Transform] with a max radius of [MaxRadius]",
+        story: "[Agent] patrols around [Center] with a max radius of [MaxRadius]",
         id: "WotT_Radius_Patrol"
     )]
-    public partial class WotTRadiusPatrol : Unity.Behavior.Action
+    public partial class WotTRadiusPatrol : Action
     {
         [SerializeReference] public BlackboardVariable<GameObject> Agent;
         [Tooltip("The middle point of the patrol circle/radius.")]
-        [SerializeReference] public BlackboardVariable<Transform> Transform;
+        [SerializeReference] public BlackboardVariable<Vector3> Center;
         [Tooltip("The max distance from the middle point that the agent will patrol to.")]
         [SerializeReference] public BlackboardVariable<float> MaxRadius = new(5f);
         [Tooltip("The min distance from the middle point that the agent will patrol to.")]
@@ -41,9 +41,9 @@ namespace DigDig2
                 return Status.Failure;
             }
 
-            if (Transform.Value == null)
+            if (Center.Value == null)
             {
-                LogFailure("No center transform assigned.");
+                LogFailure("No center position assigned.");
                 return Status.Failure;
             }
 
@@ -68,7 +68,6 @@ namespace DigDig2
                 if (m_WaypointWaitTimer > 0.0f)
                 {
                     m_WaypointWaitTimer -= Time.deltaTime;
-                    Debug.Log(m_WaypointWaitTimer); 
                 }
                 else
                 {
@@ -112,7 +111,7 @@ namespace DigDig2
                 float randomRadius = Random.Range(MinRadius.Value, MaxRadius.Value);
                 Vector3 directionNormal = new(Mathf.Cos(randomRotation * Mathf.Deg2Rad), 0f, Mathf.Sin(randomRotation * Mathf.Deg2Rad));
 
-                targetPoint = Transform.Value.position + directionNormal * randomRadius;
+                targetPoint = Center.Value + directionNormal * randomRadius;
 
                 if (Vector3.Distance(targetPoint, m_LastPoint) >= AllowedDistanceBetweenLastAndNewPoint.Value) break;
 

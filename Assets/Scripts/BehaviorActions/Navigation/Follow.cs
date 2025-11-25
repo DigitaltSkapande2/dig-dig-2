@@ -83,7 +83,6 @@ namespace DigDig2
             else
             {
                 float targetDistanceError = GetCurrentTargetDistanceToFollowedTarget();
-                Debug.Log($"target distance error: {targetDistanceError}");
                 if (targetDistanceError >= AllowedTargetErrorDistance.Value) UpdateFollowDestination();
             }
 
