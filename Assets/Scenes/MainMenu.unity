@@ -274,15 +274,27 @@ PrefabInstance:
       value: NetworkManager
       objectReference: {fileID: 0}
     - target: {fileID: 8293981545127765460, guid: 9ab8b93fb5870fdbb8dcb96f5d3acf85, type: 3}
-      propertyPath: spawnPrefabs.Array.size
-      value: 8
+      propertyPath: playerPrefab
+      value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 8293981545127765460, guid: 9ab8b93fb5870fdbb8dcb96f5d3acf85, type: 3}
+      propertyPath: spawnPrefabs.Array.size
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8293981545127765460, guid: 9ab8b93fb5870fdbb8dcb96f5d3acf85, type: 3}
+      propertyPath: 'spawnPrefabs.Array.data[6]'
+      value: 
+      objectReference: {fileID: 4442565222488509090, guid: f53ac0c57755f4b41b5aa5d7c92693b1, type: 3}
     - target: {fileID: 8293981545127765460, guid: 9ab8b93fb5870fdbb8dcb96f5d3acf85, type: 3}
       propertyPath: 'spawnPrefabs.Array.data[7]'
       value: 
-      objectReference: {fileID: 5585277213094831744, guid: 971e1460c89dbde4598eca0f2e5c3a7e, type: 3}
+      objectReference: {fileID: 5727981848312723814, guid: 5fa16e0249f2ef438afdaa503fe7da95, type: 3}
     - target: {fileID: 8293981545127765460, guid: 9ab8b93fb5870fdbb8dcb96f5d3acf85, type: 3}
       propertyPath: 'spawnPrefabs.Array.data[8]'
+      value: 
+      objectReference: {fileID: 5585277213094831744, guid: 971e1460c89dbde4598eca0f2e5c3a7e, type: 3}
+    - target: {fileID: 8293981545127765460, guid: 9ab8b93fb5870fdbb8dcb96f5d3acf85, type: 3}
+      propertyPath: 'spawnPrefabs.Array.data[9]'
       value: 
       objectReference: {fileID: 5585277213094831744, guid: 971e1460c89dbde4598eca0f2e5c3a7e, type: 3}
     m_RemovedComponents: []
@@ -1550,6 +1562,7 @@ MonoBehaviour:
   mainMenuCanvas: {fileID: 443618}
   mainMenuContainer: {fileID: 1435828335}
   multiplayerLobbyPrefab: {fileID: 5727981848312723814, guid: 5fa16e0249f2ef438afdaa503fe7da95, type: 3}
+  multiplayerLobbySceneName: MultiplayerLobby
 --- !u!4 &1349624583
 Transform:
   m_ObjectHideFlags: 0

@@ -645,6 +645,7 @@ MonoBehaviour:
   syncInterval: 0
   targetPlayerCount: 2
   lobbyPlayerListText: {fileID: 5269654080566362648}
+  verboseLogging: 0
 --- !u!1 &5973530227846755761
 GameObject:
   m_ObjectHideFlags: 0
@@ -967,7 +968,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Player 1
+  m_text: <NA>
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
