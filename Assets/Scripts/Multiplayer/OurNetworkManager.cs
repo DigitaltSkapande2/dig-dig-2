@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 using Mirror;
 
 /*
@@ -11,33 +12,32 @@ using Mirror;
 public class OurNetworkManager : NetworkManager
 {
     // You can adjust the parameters of the Actions below to suit your needs and pass the values through the Invoke() method.
-    public event Action OnDestroyAction;
+    [NonSerialized] public UnityEvent onDestroy = new();
 
-    public event Action<string> ServerChangeSceneAction;
-    public event Action<string> OnServerChangeSceneAction;
-    public event Action<string> OnServerSceneChangedAction;
-    public event Action<string, SceneOperation, bool> OnClientChangeSceneAction;
-    public event Action OnClientSceneChangedAction;
+    [NonSerialized] public UnityEvent<string> serverChangeScene = new();
+    [NonSerialized] public UnityEvent<string> serverSceneChanged = new();
+    [NonSerialized] public UnityEvent<string, SceneOperation, bool> clientChangeScene = new();
+    [NonSerialized] public UnityEvent clientSceneChanged = new();
 
-    public event Action<NetworkConnectionToClient> OnServerConnectAction;
-    public event Action<NetworkConnectionToClient> OnServerReadyAction;
-    public event Action<NetworkConnectionToClient> OnServerAddPlayerAction;
-    public event Action<NetworkConnectionToClient> OnServerDisconnectAction;
-    public event Action<NetworkConnectionToClient, TransportError, string> OnServerErrorAction;
-    public event Action<NetworkConnectionToClient, Exception> OnServerTransportExceptionAction;
+    [NonSerialized] public UnityEvent<NetworkConnectionToClient> serverConnect = new();
+    [NonSerialized] public UnityEvent<NetworkConnectionToClient> serverReady = new();
+    [NonSerialized] public UnityEvent<NetworkConnectionToClient> serverAddPlayer = new();
+    [NonSerialized] public UnityEvent<NetworkConnectionToClient> serverDisconnect = new();
+    [NonSerialized] public UnityEvent<NetworkConnectionToClient, TransportError, string> serverError = new();
+    [NonSerialized] public UnityEvent<NetworkConnectionToClient, Exception> serverTransportException = new();
 
-    public event Action OnClientConnectAction;
-    public event Action OnClientDisconnectAction;
-    public event Action OnClientNotReadyAction;
-    public event Action<TransportError, string> OnClientErrorAction;
-    public event Action<Exception> OnClientTransportExceptionAction;
+    [NonSerialized] public UnityEvent clientConnect = new();
+    [NonSerialized] public UnityEvent clientDisconnect = new();
+    [NonSerialized] public UnityEvent clientNotReady = new();
+    [NonSerialized] public UnityEvent<TransportError, string> clientError = new();
+    [NonSerialized] public UnityEvent<Exception> clientTransportException = new();
 
-    public event Action OnStartServerAction;
-    public event Action OnStopServerAction;
-    public event Action OnStartHostAction;
-    public event Action OnStopHostAction;
-    public event Action OnStartClientAction;
-    public event Action OnStopClientAction;
+    [NonSerialized] public UnityEvent startServer = new();
+    [NonSerialized] public UnityEvent stopServer = new();
+    [NonSerialized] public UnityEvent startHost = new();
+    [NonSerialized] public UnityEvent stopHost = new();
+    [NonSerialized] public UnityEvent startClient = new();
+    [NonSerialized] public UnityEvent stopClient = new();
 
     // Overrides the base singleton so we don't have to cast to this type everywhere.
     public static new OurNetworkManager singleton => (OurNetworkManager)NetworkManager.singleton;
@@ -80,7 +80,7 @@ public class OurNetworkManager : NetworkManager
     /// </summary>
     public override void OnDestroy()
     {
-        OnDestroyAction?.Invoke();
+        onDestroy?.Invoke();
         base.OnDestroy();
     }
 
@@ -108,7 +108,6 @@ public class OurNetworkManager : NetworkManager
     /// <param name="newSceneName"></param>
     public override void ServerChangeScene(string newSceneName)
     {
-        ServerChangeSceneAction?.Invoke(newSceneName);
         base.ServerChangeScene(newSceneName);
     }
 
@@ -119,7 +118,7 @@ public class OurNetworkManager : NetworkManager
     /// <param name="newSceneName">Name of the scene that's about to be loaded</param>
     public override void OnServerChangeScene(string newSceneName)
     {
-        OnServerChangeSceneAction?.Invoke(newSceneName);
+        serverChangeScene?.Invoke(newSceneName);
     }
 
     /// <summary>
@@ -128,7 +127,7 @@ public class OurNetworkManager : NetworkManager
     /// <param name="sceneName">The name of the new scene.</param>
     public override void OnServerSceneChanged(string sceneName)
     {
-        OnServerSceneChangedAction?.Invoke(sceneName);
+        serverSceneChanged?.Invoke(sceneName);
     }
 
     /// <summary>
@@ -140,7 +139,7 @@ public class OurNetworkManager : NetworkManager
     /// <param name="customHandling">true to indicate that scene loading will be handled through overrides</param>
     public override void OnClientChangeScene(string newSceneName, SceneOperation sceneOperation, bool customHandling)
     {
-        OnClientChangeSceneAction?.Invoke(newSceneName, sceneOperation, customHandling);
+        clientChangeScene?.Invoke(newSceneName, sceneOperation, customHandling);
     }
 
     /// <summary>
@@ -149,7 +148,7 @@ public class OurNetworkManager : NetworkManager
     /// </summary>
     public override void OnClientSceneChanged()
     {
-        OnClientSceneChangedAction?.Invoke();
+        clientSceneChanged?.Invoke();
         base.OnClientSceneChanged();
     }
 
@@ -164,7 +163,7 @@ public class OurNetworkManager : NetworkManager
     /// <param name="conn">Connection from client.</param>
     public override void OnServerConnect(NetworkConnectionToClient conn)
     {
-        OnServerConnectAction?.Invoke(conn);
+        serverConnect?.Invoke(conn);
     }
 
     /// <summary>
@@ -174,7 +173,7 @@ public class OurNetworkManager : NetworkManager
     /// <param name="conn">Connection from client.</param>
     public override void OnServerReady(NetworkConnectionToClient conn)
     {
-        OnServerReadyAction?.Invoke(conn);
+        serverReady?.Invoke(conn);
         base.OnServerReady(conn);
     }
 
@@ -185,7 +184,7 @@ public class OurNetworkManager : NetworkManager
     /// <param name="conn">Connection from client.</param>
     public override void OnServerAddPlayer(NetworkConnectionToClient conn)
     {
-        OnServerAddPlayerAction?.Invoke(conn);
+        serverAddPlayer?.Invoke(conn);
         base.OnServerAddPlayer(conn);
     }
 
@@ -196,7 +195,7 @@ public class OurNetworkManager : NetworkManager
     /// <param name="conn">Connection from client.</param>
     public override void OnServerDisconnect(NetworkConnectionToClient conn)
     {
-        OnServerDisconnectAction?.Invoke(conn);
+        serverDisconnect?.Invoke(conn);
         base.OnServerDisconnect(conn);
     }
 
@@ -209,7 +208,7 @@ public class OurNetworkManager : NetworkManager
     /// <param name="message">String message of the error.</param>
     public override void OnServerError(NetworkConnectionToClient conn, TransportError transportError, string message)
     {
-        OnServerErrorAction?.Invoke(conn, transportError, message);
+        serverError?.Invoke(conn, transportError, message);
     }
 
     /// <summary>
@@ -220,7 +219,7 @@ public class OurNetworkManager : NetworkManager
     /// <param name="exception">Exception thrown from the Transport.</param>
     public override void OnServerTransportException(NetworkConnectionToClient conn, Exception exception)
     {
-        OnServerTransportExceptionAction?.Invoke(conn, exception);
+        serverTransportException?.Invoke(conn, exception);
     }
 
     #endregion
@@ -233,7 +232,7 @@ public class OurNetworkManager : NetworkManager
     /// </summary>
     public override void OnClientConnect()
     {
-        OnClientConnectAction?.Invoke();
+        clientConnect?.Invoke();
         base.OnClientConnect();
     }
 
@@ -243,7 +242,7 @@ public class OurNetworkManager : NetworkManager
     /// </summary>
     public override void OnClientDisconnect()
     {
-        OnClientDisconnectAction?.Invoke();
+        clientDisconnect?.Invoke();
     }
 
     /// <summary>
@@ -252,7 +251,7 @@ public class OurNetworkManager : NetworkManager
     /// </summary>
     public override void OnClientNotReady()
     {
-        OnClientNotReadyAction?.Invoke();
+        clientNotReady?.Invoke();
     }
 
     /// <summary>
@@ -262,7 +261,7 @@ public class OurNetworkManager : NetworkManager
     /// <param name="message">String message of the error.</param>
     public override void OnClientError(TransportError transportError, string message)
     {
-        OnClientErrorAction?.Invoke(transportError, message);
+        clientError?.Invoke(transportError, message);
     }
 
     /// <summary>
@@ -271,7 +270,7 @@ public class OurNetworkManager : NetworkManager
     /// <param name="exception">Exception thrown from the Transport.</param>
     public override void OnClientTransportException(Exception exception)
     {
-        OnClientTransportExceptionAction?.Invoke(exception);
+        clientTransportException?.Invoke(exception);
     }
 
     #endregion
@@ -288,7 +287,7 @@ public class OurNetworkManager : NetworkManager
     /// </summary>
     public override void OnStartServer()
     {
-        OnStartServerAction?.Invoke();
+        startServer?.Invoke();
     }
 
     /// <summary>
@@ -296,7 +295,7 @@ public class OurNetworkManager : NetworkManager
     /// </summary>
     public override void OnStopServer()
     {
-        OnStopServerAction?.Invoke();
+        stopServer?.Invoke();
     }
 
     /// <summary>
@@ -305,7 +304,7 @@ public class OurNetworkManager : NetworkManager
     /// </summary>
     public override void OnStartHost()
     {
-        OnStartHostAction?.Invoke();
+        startHost?.Invoke();
     }
 
     /// <summary>
@@ -313,7 +312,7 @@ public class OurNetworkManager : NetworkManager
     /// </summary>
     public override void OnStopHost()
     {
-        OnStopHostAction?.Invoke();
+        stopHost?.Invoke();
     }
 
     /// <summary>
@@ -321,7 +320,7 @@ public class OurNetworkManager : NetworkManager
     /// </summary>
     public override void OnStartClient()
     {
-        OnStartClientAction?.Invoke();
+        startClient?.Invoke();
     }
 
     /// <summary>
@@ -329,7 +328,7 @@ public class OurNetworkManager : NetworkManager
     /// </summary>
     public override void OnStopClient()
     {
-        OnStopClientAction?.Invoke();
+        stopClient?.Invoke();
     }
 
     #endregion

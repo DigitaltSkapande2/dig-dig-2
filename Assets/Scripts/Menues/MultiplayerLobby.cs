@@ -1,34 +1,47 @@
-using System.Text;
 using Mirror;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace DigDig2
 {   
     public class MultiplayerLobby : NetworkBehaviour
     {
-        [SerializeField] int targetPlayerCount = 2;
-        [SerializeField] TMP_Text lobbyPlayerListText;
+        [SerializeField] private TMP_Text maxPlayerNameText;
+        [SerializeField] private TMP_Text miniPlayerNameText;
 
-        [SerializeField] bool verboseLogging = false;
+        [SerializeField] private Button startButton;
+        [SerializeField] private Button switchButton;
 
-        // Use a SyncList so the server can modify the list and it will be synced to clients.
-        public readonly SyncList<int> serverConnectionIDs = new SyncList<int>();
+        private NetworkConnectionToClient maxPlayerConnection;
+        [SerializeField, SyncVar(hook = nameof(UpdatePlayerCharacters))] private string maxPlayerName = "";
+        private NetworkConnectionToClient miniPlayerConnection;
+        [SerializeField, SyncVar(hook = nameof(UpdatePlayerCharacters))] private string miniPlayerName = "";
 
-        #region Server-side Init
 
 
         public override void OnStartServer()
         {
             if (OurNetworkManager.singleton != null)
             {
-                OurNetworkManager.singleton.OnServerConnectAction += OnServerConnect;
-                OurNetworkManager.singleton.OnServerDisconnectAction += OnServerDisconnect;
+                OurNetworkManager.singleton.serverConnect.AddListener(OnServerConnect);
+                OurNetworkManager.singleton.serverDisconnect.AddListener(OnServerDisconnect);
             }
 
             if (!NetworkServer.active) return;
-            if (isServer) UpdateServerConnectionIDs();
-            UpdateConnectionsListText();
+
+            if (isServer)
+            {
+                switchButton.interactable = true;
+                maxPlayerConnection = NetworkClient.localPlayer.connectionToClient;
+                UpdatePlayers();
+            }
+            else
+            {
+                switchButton.interactable = false;
+                UpdatePlayerCharacters();
+            }
         }
 
         private void OnDestroy()
@@ -37,93 +50,100 @@ namespace DigDig2
             {
                 if (OurNetworkManager.singleton != null)
                 {
-                    OurNetworkManager.singleton.OnServerConnectAction -= OnServerConnect;
-                    OurNetworkManager.singleton.OnServerDisconnectAction -= OnServerDisconnect;
+                    OurNetworkManager.singleton.serverConnect.RemoveListener(OnServerConnect);
+                    OurNetworkManager.singleton.serverDisconnect.RemoveListener(OnServerDisconnect);
                 }
-            }
-            if (isClient)
-            {
-                serverConnectionIDs.Callback -= OnServerConnectionIDsChanged;
             }
 
         }
-
-        #endregion
-        #region Client-side Init
         
         public override void OnStartClient()
         {
             base.OnStartClient();
-            Log("OnClient Start");
-            // subscribe to list changes so UI updates automatically when the server changes the list
-            serverConnectionIDs.Callback += OnServerConnectionIDsChanged;
-            UpdateConnectionsListText();
-        }
-
-
-        #endregion
-        #region Sync Communication
-
-        [Server]
-        void OnServerConnect(NetworkConnectionToClient conn)
-        {
-            Log("OnServerConnect");
-            UpdateServerConnectionIDs();
+            UpdatePlayerCharacters();
         }
 
         [Server]
-        void OnServerDisconnect(NetworkConnectionToClient conn)
+        private void OnServerConnect(NetworkConnectionToClient conn)
         {
-            Log("OnServerDisconnect");
-            UpdateServerConnectionIDs();
+            if (maxPlayerConnection == null)
+            {
+                maxPlayerConnection = conn;
+                maxPlayerName = conn.connectionId.ToString();
+            }
+            else if (miniPlayerConnection == null)
+            {
+                miniPlayerConnection = conn;
+                miniPlayerName = conn.connectionId.ToString();
+            }
+            else
+            {
+                Debug.LogError("Could not assign a character to new connection because there was no assignable character, are there more than 2 connections?");
+            }
+
+            UpdatePlayers();
+        }
+        [Server]
+        private void OnServerDisconnect(NetworkConnectionToClient conn)
+        {
+            if (maxPlayerConnection == conn)
+            {
+                maxPlayerConnection = null;
+                maxPlayerName = "";
+            }
+            else if (miniPlayerConnection == conn)
+            {
+                miniPlayerConnection = null;
+                miniPlayerName = "";
+            }
+            UpdatePlayers();
+        }
+        [Server]
+        private void UpdatePlayers()
+        {
+            maxPlayerName = maxPlayerConnection != null ? maxPlayerConnection.connectionId.ToString() : "";
+            miniPlayerName = miniPlayerConnection != null ? miniPlayerConnection.connectionId.ToString() : "";
+
+            startButton.interactable = maxPlayerConnection != null && miniPlayerConnection != null;
+
+            UpdatePlayerCharacters();
+        }
+
+        private void UpdatePlayerCharacters(string oldValue = "", string newValue = "")
+        {
+            maxPlayerNameText.text = maxPlayerName != "" ? maxPlayerName : "Waiting for Player...";
+            miniPlayerNameText.text = miniPlayerName != "" ? miniPlayerName : "Waiting for Player...";
+        }
+
+        public void Disconnect()
+        {
+            if (isServer)
+            {
+                OurNetworkManager.singleton.StopServer();
+            }
+
+            if (isClient)
+            {
+                OurNetworkManager.singleton.StopClient();
+            }
         }
 
         [Server]
-        void UpdateServerConnectionIDs()
+        public void SwitchCharacters()
         {
-            Log("OnServer Update Connection IDs");
-            serverConnectionIDs.Clear();
-            foreach (var kv in NetworkServer.connections)
-            {
-                serverConnectionIDs.Add(kv.Key);
-            }
+            NetworkConnectionToClient preSwitchMax = maxPlayerConnection;
+            NetworkConnectionToClient preSwitchMini = miniPlayerConnection;
 
-            UpdateConnectionsListText();
+            maxPlayerConnection = preSwitchMini;
+            miniPlayerConnection = preSwitchMax;
+
+            UpdatePlayers();
         }
 
-        void OnServerConnectionIDsChanged(SyncList<int>.Operation op, int index, int oldItem, int newItem)
+        [Server]
+        public void StartLobby()
         {
-            Log("connections uppdated");
-            UpdateConnectionsListText();
+            SceneManager.LoadSceneAsync(2);
         }
-
-        #endregion
-        #region Misc
-
-        void UpdateConnectionsListText()
-        {
-            if (lobbyPlayerListText == null) return;
-
-            if (serverConnectionIDs == null || serverConnectionIDs.Count == 0)
-            {
-                lobbyPlayerListText.text = "No players";
-                return;
-            }
-
-            var sb = new StringBuilder();
-            foreach (int clID in serverConnectionIDs)
-            {
-                sb.AppendLine(clID.ToString());
-            }
-
-            lobbyPlayerListText.text = sb.ToString();
-        }
-
-        void Log(string msg) 
-        {
-            Debug.Log(msg);
-        }
-
-        #endregion
     }
 }
