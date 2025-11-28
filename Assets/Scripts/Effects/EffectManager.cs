@@ -46,6 +46,9 @@ namespace DigDig2.Effects
         [Header("Screen Shake")]
         [SerializeField] EffectValueIntensityDecoder<float> screenShakeIntensity = new EffectValueIntensityDecoder<float>(0.1f, 0.3f, 0.9f);
         [SerializeField] EffectValueIntensityDecoder<float> screenShakeDuration = new EffectValueIntensityDecoder<float>(0.1f, 0.3f, 0.5f);
+        [Header("ZoomBounce")]
+        [SerializeField] EffectValueIntensityDecoder<float> zoomBounceIntensity = new EffectValueIntensityDecoder<float>(0.1f, 0.3f, 0.9f);
+        [SerializeField] EffectValueIntensityDecoder<float> zoomBounceDuration = new EffectValueIntensityDecoder<float>(0.1f, 0.3f, 0.5f);
         [Header("Chromatic Aberration")]
         [SerializeField] EffectValueIntensityDecoder<float> chromaticAberrationIntensity = new EffectValueIntensityDecoder<float>(0.1f, 0.3f, 0.9f);
         [SerializeField] EffectValueIntensityDecoder<float> chromaticAberrationDuration = new EffectValueIntensityDecoder<float>(0.1f, 0.3f, 0.5f);
@@ -70,10 +73,12 @@ namespace DigDig2.Effects
 
         // ScreenShake Effector Refeence
         private CinemaCamera.ScreenShakeEffector screenShakeEffector;
+        private CinemaCamera.CameraEffector zoomBounceCameraEffector;
 
         void Start()
         {
             screenShakeEffector = gameObject.AddComponent<CinemaCamera.ScreenShakeEffector>();
+            zoomBounceCameraEffector = gameObject.AddComponent<CinemaCamera.CameraEffector>();
             InitializeVignette();
         }
 
@@ -92,6 +97,31 @@ namespace DigDig2.Effects
         #region Bloom
 
 
+
+        #endregion
+
+        #region ZoomBounce
+
+        void InitializeZoomBounce()
+        {
+
+        }
+
+        public void PlayZoomBounce(EffectIntensity intensity = EffectIntensity.mid)
+        {
+            StartCoroutine(CurvePulseRoutine(
+                zoomBounceIntensity.curve,
+                zoomBounceDuration.GetValue(intensity),
+                (float curveValue) =>
+                {
+                    zoomBounceCameraEffector.frustumSize = zoomBounceIntensity.curve.Evaluate(curveValue) * zoomBounceIntensity.GetValue(intensity);
+                },
+                () => // called on curve pulse completed
+                {
+                    zoomBounceCameraEffector.frustumSize = 0;
+                })
+            );
+        }
 
         #endregion
 
@@ -118,17 +148,23 @@ namespace DigDig2.Effects
 
         public void PlayVignettePulse(EffectIntensity intensity = EffectIntensity.mid, Color color = default)
         {
-            StartCoroutine(CurvePulseRoutine(vignetteIntensity.curve, vignetteDuration.GetValue(intensity), (float curveValue) =>
-            {
-                print("curveValue: " + curveValue);
-                float targetIntensity = vignetteIntensity.GetValue(intensity);
-                vignette.color.value = Color.Lerp(defaultVignette.color.value, color == default ? Color.black : color, curveValue * 2);
-                vignette.intensity.value = (targetIntensity * (1-defaultVignette.intensity.value) * curveValue) + defaultVignette.intensity.value;
+            StartCoroutine(CurvePulseRoutine(
+                vignetteIntensity.curve,
+                vignetteDuration.GetValue(intensity),
+                (float curveValue) =>
+                {
+                    print("curveValue: " + curveValue);
+                    float targetIntensity = vignetteIntensity.GetValue(intensity);
+                    vignette.color.value = Color.Lerp(defaultVignette.color.value, color == default ? Color.black : color, curveValue * 2);
+                    vignette.intensity.value = (targetIntensity * (1 - defaultVignette.intensity.value) * curveValue) + defaultVignette.intensity.value;
 
-            }, () => {
-                vignette.intensity.value = defaultVignette.intensity.value;
-                vignette.color.value = defaultVignette.color.value;
-            }));
+                },
+                () => // called on curve pulse completed
+                {
+                    vignette.intensity.value = defaultVignette.intensity.value;
+                    vignette.color.value = defaultVignette.color.value;
+                })
+            );
         }
 
         #endregion
@@ -179,6 +215,11 @@ namespace DigDig2.Effects
             if (GUILayout.Button("Play Vignette Pulse"))
             {
                 effectManager.PlayVignettePulse(EffectIntensity.mid, Color.red);
+            }
+
+            if (GUILayout.Button("Play ZoomBounce"))
+            {
+                effectManager.PlayZoomBounce(EffectIntensity.mid);
             }
 
         }
