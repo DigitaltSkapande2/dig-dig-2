@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Mirror;
 using System.Collections;
+using Mirror.BouncyCastle.Crypto.Modes;
 
 namespace DigDig2
 {
@@ -46,7 +47,7 @@ namespace DigDig2
 		[SerializeField, DebugSerialized] private float moveSpeed = 5f;
 
 		[Tooltip("The mac speed the entity can sprint at.")]
-		[SerializeField, DebugSerialized] private float attackMoveSpeed = 1f;
+		[SerializeField, DebugSerialized] private float attackMoveSpeed = 0.5f;
 
 		[Tooltip("The direction the entity is currently moving.")]
 		[SerializeField] public Vector3 inputMoveVector = Vector3.zero;
@@ -110,6 +111,8 @@ namespace DigDig2
 		[SerializeField] private Vector3 velocity;
 
 		private Vector3 moveVector;
+
+		private float slowDownTimer;
 
 		private Vector3 slopeSlideVelocity;
 
@@ -181,6 +184,9 @@ namespace DigDig2
 		[Client]
 		private void ProcessMove()
 		{
+			slowDownTimer -= Time.deltaTime;
+			isAttacking = slowDownTimer > 0;
+
 			float speed = isAttacking ? attackMoveSpeed : moveSpeed;
 
 			// Lerp move input vector to create smooth acceleration and decelleration
@@ -319,17 +325,9 @@ namespace DigDig2
 
 		public void AttackSlowdown(float time)
         {
-            StartCoroutine(Attacking(time));
+            slowDownTimer = time;
         }
 
-		IEnumerator Attacking(float time)
-        {
-            isAttacking = true;
-			Debug.Log("started");
-			yield return new WaitForSeconds(time);
-			isAttacking = false;
-			Debug.Log("ended");
-        }
 
 		#endregion
 

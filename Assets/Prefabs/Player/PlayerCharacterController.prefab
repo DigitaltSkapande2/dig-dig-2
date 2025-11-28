@@ -140,10 +140,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   moveSpeed: 8
-  sprintMoveSpeed: 15
+  attackMoveSpeed: 0.5
   inputMoveVector: {x: 0, y: 0, z: 0}
   moveInputVectorLerpSpeed: 10
-  isSprinting: 0
+  isAttacking: 0
   slopeStickPower: 0.1
   slopeSlidePower: 5
   slopeSlideDecaySpeed: 5
