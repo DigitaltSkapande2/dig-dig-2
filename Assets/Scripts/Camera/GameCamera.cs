@@ -2,11 +2,11 @@ using System;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.Splines.Interpolators;
 
 namespace DigDig2.CinemaCamera {
     public class GameCamera : Singleton<GameCamera>
     {
-        [SerializeField] public List<Transform> targets;
         [Tooltip("the time in seconds it will take for the camera to get to the target position")]
         [SerializeField] public float followSpeed = 5f;
         [SerializeField] public float roatationSpeed = 1;
@@ -16,6 +16,14 @@ namespace DigDig2.CinemaCamera {
         private Quaternion baseTargetRotation;
         private float targetFrustumSize;
 
+        Camera mainCamera;
+        private float defaultFrustumHeight;
+
+        void Start()
+        {
+            mainCamera = GetComponentInChildren<Camera>();
+            defaultFrustumHeight = mainCamera.orthographicSize;
+        }
 
         void Update()
         {
@@ -23,12 +31,15 @@ namespace DigDig2.CinemaCamera {
 
             Vector3 targetPos = Vector3.zero;
             Quaternion targetRotation = Quaternion.identity;
+            float frustumSize = defaultFrustumHeight;
 
             foreach (var effector in CameraEffector.GetEffectiveCameraEffectors())
             {
                 targetPos += effector.position;
                 if (effector.rotation.eulerAngles.magnitude > float.Epsilon)
                     targetRotation.eulerAngles += effector.rotation.eulerAngles;
+
+                frustumSize += effector.frustumSize;
             }
 
 
@@ -36,6 +47,8 @@ namespace DigDig2.CinemaCamera {
             targetRotation.eulerAngles += this.targetRotation.eulerAngles;
 
             transform.rotation = targetRotation;
+
+            mainCamera.orthographicSize = frustumSize;
         }
 
         public void SetTargetRotation(float angle)
