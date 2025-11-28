@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 
 namespace DigDig2
-{
+{   
     public class MultiplayerLobby : NetworkBehaviour
     {
         [SerializeField] int targetPlayerCount = 2;
@@ -15,7 +15,7 @@ namespace DigDig2
         // Use a SyncList so the server can modify the list and it will be synced to clients.
         public readonly SyncList<int> serverConnectionIDs = new SyncList<int>();
 
-#region Server-side Init
+        #region Server-side Init
 
 
         public override void OnStartServer()
@@ -48,8 +48,8 @@ namespace DigDig2
 
         }
 
-#endregion
-#region Client-side Init
+        #endregion
+        #region Client-side Init
         
         public override void OnStartClient()
         {
@@ -61,8 +61,8 @@ namespace DigDig2
         }
 
 
-#endregion
-#region Sync Communication
+        #endregion
+        #region Sync Communication
 
         [Server]
         void OnServerConnect(NetworkConnectionToClient conn)
@@ -97,8 +97,8 @@ namespace DigDig2
             UpdateConnectionsListText();
         }
 
-#endregion
-#region Misc
+        #endregion
+        #region Misc
 
         void UpdateConnectionsListText()
         {
@@ -124,6 +124,6 @@ namespace DigDig2
             Debug.Log(msg);
         }
 
-#endregion
+        #endregion
     }
 }

@@ -831,7 +831,7 @@ GameObject:
   - component: {fileID: 652965808761300015}
   - component: {fileID: 8004231469486852150}
   m_Layer: 0
-  m_Name: '"Players" heder'
+  m_Name: '"Players" Header'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1221,7 +1221,7 @@ GameObject:
   - component: {fileID: 5217252802329547224}
   - component: {fileID: 8720250712394689072}
   m_Layer: 0
-  m_Name: '"Lobby"Header'
+  m_Name: '"Lobby" Header'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

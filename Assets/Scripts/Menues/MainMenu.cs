@@ -14,8 +14,9 @@ namespace DigDig2
         [Header("Scene References")]
         [SerializeField] Canvas mainMenuCanvas;
         [SerializeField] GameObject mainMenuContainer;
-        [SerializeField] GameObject multiplayerLobbyPrefab;
         [SerializeField] string multiplayerLobbySceneName;
+
+        [SerializeField] GameObject multiplayerLobby;
 
 
         public async void StartHost()
@@ -28,17 +29,20 @@ namespace DigDig2
 
             await UniTask.WaitUntil(() => NetworkServer.active);
 
-            NetworkServer.Spawn(Instantiate(multiplayerLobbyPrefab, mainMenuCanvas.transform));
+            multiplayerLobby.SetActive(true);
             
             Debug.Log("StartHost complete!!");
         }
 
-        public void StartJoin()
+		public async void StartJoin()
         {
 
             mainMenuContainer.SetActive(false);
             OurNetworkManager.singleton.StartClient();
 
+            await UniTask.WaitUntil(() => NetworkClient.active);
+
+            multiplayerLobby.SetActive(true);
             
             Debug.Log("Client started.");
         }
