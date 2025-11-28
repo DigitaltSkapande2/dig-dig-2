@@ -18,7 +18,7 @@ namespace DigDig2
 #region Server-side Init
 
 
-        private void Start()
+        public override void OnStartServer()
         {
             if (OurNetworkManager.singleton != null)
             {
@@ -33,11 +33,19 @@ namespace DigDig2
 
         private void OnDestroy()
         {
-            if (OurNetworkManager.singleton != null)
+            if (isServer)
             {
-                OurNetworkManager.singleton.OnServerConnectAction -= OnServerConnect;
-                OurNetworkManager.singleton.OnServerDisconnectAction -= OnServerDisconnect;
+                if (OurNetworkManager.singleton != null)
+                {
+                    OurNetworkManager.singleton.OnServerConnectAction -= OnServerConnect;
+                    OurNetworkManager.singleton.OnServerDisconnectAction -= OnServerDisconnect;
+                }
             }
+            if (isClient)
+            {
+                serverConnectionIDs.Callback -= OnServerConnectionIDsChanged;
+            }
+
         }
 
 #endregion
@@ -52,11 +60,6 @@ namespace DigDig2
             UpdateConnectionsListText();
         }
 
-        public override void OnStopClient()
-        {
-            base.OnStopClient();
-            serverConnectionIDs.Callback -= OnServerConnectionIDsChanged;
-        }
 
 #endregion
 #region Sync Communication

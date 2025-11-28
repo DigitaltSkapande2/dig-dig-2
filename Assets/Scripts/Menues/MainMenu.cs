@@ -28,7 +28,8 @@ namespace DigDig2
 
             await UniTask.WaitUntil(() => NetworkServer.active);
 
-            await SceneManager.LoadSceneAsync(multiplayerLobbySceneName);
+            NetworkServer.Spawn(Instantiate(multiplayerLobbyPrefab, mainMenuCanvas.transform));
+            
             Debug.Log("StartHost complete!!");
         }
 
