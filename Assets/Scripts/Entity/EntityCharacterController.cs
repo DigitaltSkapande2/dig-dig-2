@@ -3,6 +3,7 @@ using DigDig2.Debugging;
 using System.Collections.Generic;
 using System.Linq;
 using Mirror;
+using System.Collections;
 
 namespace DigDig2
 {
@@ -45,7 +46,7 @@ namespace DigDig2
 		[SerializeField, DebugSerialized] private float moveSpeed = 5f;
 
 		[Tooltip("The mac speed the entity can sprint at.")]
-		[SerializeField, DebugSerialized] private float sprintMoveSpeed = 7.5f;
+		[SerializeField, DebugSerialized] private float attackMoveSpeed = 1f;
 
 		[Tooltip("The direction the entity is currently moving.")]
 		[SerializeField] public Vector3 inputMoveVector = Vector3.zero;
@@ -54,7 +55,7 @@ namespace DigDig2
 		[SerializeField] private float moveInputVectorLerpSpeed = 10f;
 
 		[Tooltip("If the entity is sprinting or not, moveSpeed is default speed, sprintMoveSpeed is sprint speed.")]
-		[SerializeField] public bool isSprinting = false;
+		[SerializeField] public bool isAttacking = false;
 
 		[Space(20)]
 
@@ -180,7 +181,7 @@ namespace DigDig2
 		[Client]
 		private void ProcessMove()
 		{
-			float speed = isSprinting ? sprintMoveSpeed : moveSpeed;
+			float speed = isAttacking ? attackMoveSpeed : moveSpeed;
 
 			// Lerp move input vector to create smooth acceleration and decelleration
 			moveVector = Vector3.Lerp(moveVector, inputMoveVector * speed, Time.deltaTime * moveInputVectorLerpSpeed);
@@ -315,6 +316,20 @@ namespace DigDig2
 
 			Frozen = false;
 		}
+
+		public void AttackSlowdown(float time)
+        {
+            StartCoroutine(Attacking(time));
+        }
+
+		IEnumerator Attacking(float time)
+        {
+            isAttacking = true;
+			Debug.Log("started");
+			yield return new WaitForSeconds(time);
+			isAttacking = false;
+			Debug.Log("ended");
+        }
 
 		#endregion
 

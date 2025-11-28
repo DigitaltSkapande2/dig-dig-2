@@ -187,13 +187,6 @@ namespace DigDig2
 
             return true;
         }
-
-        public bool SetSprintMode(bool isSprinting)
-        {
-            entityCharacterController.isSprinting = isSprinting;
-
-            return true;
-        }
         
         #endregion
     }

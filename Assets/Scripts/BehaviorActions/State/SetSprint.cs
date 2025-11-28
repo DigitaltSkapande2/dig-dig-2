@@ -29,7 +29,7 @@ namespace DigDig2
             }
 
             Initialize();
-            m_AgentCharacterBehaviorInputController.SetSprintMode(State.Value);
+            //m_AgentCharacterBehaviorInputController.SetSprintMode(State.Value);
 
             return Status.Success;
         }

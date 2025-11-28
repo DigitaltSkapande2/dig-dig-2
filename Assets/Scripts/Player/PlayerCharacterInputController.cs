@@ -93,7 +93,7 @@ namespace DigDig2
 
         public void OnSprint(InputAction.CallbackContext context)
         {
-            entityCharacterController.isSprinting = context.performed;
+            
         }
 
         #endregion
