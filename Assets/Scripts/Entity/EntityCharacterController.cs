@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Mirror;
 using System.Collections;
-using Mirror.BouncyCastle.Crypto.Modes;
+using System;
 
 namespace DigDig2
 {
@@ -108,6 +108,8 @@ namespace DigDig2
 		// Movement
 		private CharacterController characterController;
 
+		private Animator animator;
+
 		[SerializeField] private Vector3 velocity;
 
 		private Vector3 moveVector;
@@ -120,11 +122,18 @@ namespace DigDig2
 
 		[SyncVar] private float targetLookRotation = 0f;
 
+		private enum PlayerState
+        {
+            Idle,
+			Sprinting,
+        }
 
+		private PlayerState state;
 
 		private void Awake()
 		{
 			characterController = GetComponent<CharacterController>();
+			animator = GetComponentInChildren<Animator>();
 		}
 
 		private void Start()
@@ -156,6 +165,7 @@ namespace DigDig2
 
 					// Visuals
 					UpdateVisualsRotation();
+					UpdateAnimation();
 				}
 
 				if (isClient)
@@ -364,6 +374,25 @@ namespace DigDig2
 			if (useLerp) visualsParent.transform.rotation = Quaternion.Lerp(visualsParent.transform.rotation, targetRotation, Time.deltaTime * visualsRotationSpeed);
 			else visualsParent.transform.rotation = targetRotation;
 		}
+
+		private void UpdateAnimation()
+        {
+            if (new Vector3(inputMoveVector.x, 0, inputMoveVector.z).magnitude > 0f)
+            {
+				if (state == PlayerState.Sprinting) return;
+
+                animator.CrossFadeInFixedTime("Sprint", 0.1f, 0);
+				animator.CrossFadeInFixedTime("SwordSprint", 0.1f, 1);
+				state = PlayerState.Sprinting;
+				return;
+            }
+
+			if (state == PlayerState.Idle) return;
+
+			state = PlayerState.Idle;
+			animator.CrossFadeInFixedTime("Idle", 0.1f, 0);
+			animator.CrossFadeInFixedTime("SwordIdle", 0.1f, 1);
+        }
 
 		public void LookTowards(Vector3 target)
 		{

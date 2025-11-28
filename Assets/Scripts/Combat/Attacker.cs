@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace DigDig2
 {
-	[RequireComponent(typeof(EntityCharacterController), typeof(Animator))]
+	[RequireComponent(typeof(EntityCharacterController))]
 	public class Attacker : MonoBehaviour
 	{
 		[Tooltip("The attack types that this entity has access to.")]
@@ -70,7 +70,7 @@ namespace DigDig2
 
 		private void Awake()
 		{
-			animator = GetComponent<Animator>();
+			animator = GetComponentInChildren<Animator>();
 			attackable = GetComponent<Attackable>();
 		}
 
