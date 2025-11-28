@@ -278,6 +278,8 @@ namespace DigDig2
 			state = CombatState.Performing;
 			performanceStartTime = Time.time;
 
+			GetComponent<EntityCharacterController>().AttackSlowdown(currentPerformingAttack.AttackDuration);
+
 			lastPerformedAttackType = currentPerformingAttackType;
 			lastPerformedAttack = currentPerformingAttack;
 		}
