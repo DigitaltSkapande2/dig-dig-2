@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace DigDig2.Debugging
 {
+    [Debug]
     public abstract class ConsoleCommandBase : ScriptableObject
     {
         [SerializeField] private string commandWord = string.Empty;

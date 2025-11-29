@@ -2,11 +2,12 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace DigDig2
 {
-	public class DebugNotesManager : Singleton<DebugNotesManager>, GameInputSystem.IDebugNotesActions
+	public class DebugNotesManager : Singleton<DebugNotesManager>
 	{
 		[Header("Note Storage")]
 
@@ -46,15 +47,13 @@ namespace DigDig2
 		[Tooltip("The in-game note billboard prefab.")]
 		[SerializeField] private DebugNoteBillboard debugNoteBillboardPrefab;
 
-		private GameInputSystem.DebugNotesActions debugNotesActions;
-
 		private EntityCharacterController playerCharacterController;
 
 		readonly private Dictionary<int, DebugNoteBillboard> debugNoteBillboards = new();
 		readonly private Dictionary<int, DebugNoteBillboard> archivedDebugNoteBillboards = new();
 
-		private int focusedNoteIndex;
-		private int editingNoteIndex;
+		private int focusedNoteIndex = -1;
+		private int editingNoteIndex = -1;
 		private NoteManagementMode noteManagementMode = NoteManagementMode.none;
 
 		public bool ShowDebugNotes
@@ -102,8 +101,6 @@ namespace DigDig2
 			PlaceStoredDebugNotes();
 
 			HideNoteManagementInterface();
-
-			EnableInput();
 		}
 
 		private void Update()
@@ -113,6 +110,20 @@ namespace DigDig2
 		}
 
 		#region Notes Backend
+
+		private DebugNoteScene GetCurrentSceneNoteStorage()
+		{
+			if (debugNotesStorage.scenes.ContainsKey(SceneManager.GetActiveScene().path))
+			{
+				return debugNotesStorage.scenes[SceneManager.GetActiveScene().path];
+			}
+			else
+			{
+				DebugNoteScene newDebugNoteScene = new();
+				debugNotesStorage.scenes[SceneManager.GetActiveScene().path] = newDebugNoteScene;
+				return newDebugNoteScene;
+			}
+		} 
 
 		// Get the nearest note and focus it, if a note is already focused then unfocus the old one
 		private void FocusNearestNote()
@@ -214,9 +225,10 @@ namespace DigDig2
 		}
 		private DebugNoteData GetNoteDataFromNoteIndex(int noteIndex)
 		{
-			if (debugNotesStorage.notes.Count > noteIndex)
+			DebugNoteScene currentDebugNoteSceneStorage = GetCurrentSceneNoteStorage();
+			if (currentDebugNoteSceneStorage.notes.Count > noteIndex)
 			{
-				return debugNotesStorage.notes[noteIndex];
+				return currentDebugNoteSceneStorage.notes[noteIndex];
 			}
 
 			return null;
@@ -245,7 +257,7 @@ namespace DigDig2
 		// Go through the stored notes and place them in the world
 		private void PlaceStoredDebugNotes()
 		{
-			for (int noteIndex = 0; noteIndex < debugNotesStorage.notes.Count; noteIndex++)
+			for (int noteIndex = 0; noteIndex < GetCurrentSceneNoteStorage().notes.Count; noteIndex++)
 			{
 				PlaceStoredDebugNote(noteIndex);
 			}
@@ -254,6 +266,8 @@ namespace DigDig2
 		// Create a new note in the note storage and place it in the world
 		public void CreateNewNote(string title, string note, string author, Vector3 position)
 		{
+			DebugNoteScene currentDebugNoteSceneStorage = GetCurrentSceneNoteStorage();
+
 			DebugNoteData newNoteData = new()
 			{
 				title = title,
@@ -262,8 +276,8 @@ namespace DigDig2
 				position = position
 			};
 
-			debugNotesStorage.notes.Add(newNoteData);
-			int newNoteIndex = debugNotesStorage.notes.Count - 1;
+			currentDebugNoteSceneStorage.notes.Add(newNoteData);
+			int newNoteIndex = currentDebugNoteSceneStorage.notes.Count - 1;
 
 			PlaceStoredDebugNote(newNoteIndex);
 		}
@@ -285,7 +299,7 @@ namespace DigDig2
 			DebugNoteData noteData = GetNoteDataFromNoteIndex(noteIndex);
 			if (noteData.archived)
 			{
-				UnityEngine.Debug.LogError($"Debug note with index \"{noteIndex}\" was requested to be archived but is already archived!");
+				Debug.LogError($"Debug note with index \"{noteIndex}\" was requested to be archived but is already archived!");
 				return;
 			}
 
@@ -302,7 +316,7 @@ namespace DigDig2
 			DebugNoteData noteData = GetNoteDataFromNoteIndex(archivedNoteIndex);
 			if (!noteData.archived)
 			{
-				UnityEngine.Debug.LogError($"Archived debug note with index \"{archivedNoteIndex}\" was requested to be unarchived but was not archived!");
+				Debug.LogError($"Archived debug note with index \"{archivedNoteIndex}\" was requested to be unarchived but was not archived!");
 				return;
 			}
 
@@ -349,34 +363,40 @@ namespace DigDig2
 
 		private void ShowNoteManagementInterface(NoteManagementMode managementMode)
 		{
-			noteManagementMode = managementMode;
-			switch (managementMode)
+			if (playerCharacterController)
 			{
-				case NoteManagementMode.place:
-					interfaceTitle.text = "Place Note";
-					break;
-				case NoteManagementMode.edit:
-					interfaceTitle.text = "Edit Note";
-					break;
+				noteManagementMode = managementMode;
+				switch (managementMode)
+				{
+					case NoteManagementMode.place:
+						interfaceTitle.text = "Place Note";
+						break;
+					case NoteManagementMode.edit:
+						interfaceTitle.text = "Edit Note";
+						break;
+				}
+
+				interfaceCanvas.SetActive(true);
+
+				playerCharacterController.Frozen = true;
 			}
-
-			interfaceCanvas.SetActive(true);
-
-			playerCharacterController.Frozen = true;
 		}
 		private void HideNoteManagementInterface()
 		{
-			interfaceCanvas.SetActive(false);
+			if (playerCharacterController)
+			{
+				interfaceCanvas.SetActive(false);
 
-			playerCharacterController.Frozen = false;
+				playerCharacterController.Frozen = false;
 
-			interfaceArchiveButton.interactable = false;
+				interfaceArchiveButton.interactable = false;
 
-			interfaceTitleInputField.text = "";
-			interfaceNoteInputField.text = "";
-			interfaceAuthorInputField.text = "";
+				interfaceTitleInputField.text = "";
+				interfaceNoteInputField.text = "";
+				interfaceAuthorInputField.text = "";
 
-			noteManagementMode = NoteManagementMode.none;
+				noteManagementMode = NoteManagementMode.none;
+			}
 		}
 
 		// Player pressed the confirm button on the note management interface
@@ -428,37 +448,6 @@ namespace DigDig2
 		public void OnNoteCancelPressed()
 		{
 			HideNoteManagementInterface();
-		}
-
-		#endregion
-
-		#region Input Setup
-
-		private void EnableInput()
-		{
-			debugNotesActions = GameInputManager.Instance.gameInputSystem.DebugNotes;
-
-			debugNotesActions.SetCallbacks(this);
-			debugNotesActions.Enable();
-		}
-
-		private void DisableInput()
-		{
-			debugNotesActions.Disable();
-		}
-
-		#endregion
-
-		#region Input
-
-		public void OnPlaceNote(InputAction.CallbackContext context)
-		{
-			StartNotePlacement();
-		}
-
-		public void OnEditNote(InputAction.CallbackContext context)
-		{
-			StartNoteEditing();
 		}
 
 		#endregion

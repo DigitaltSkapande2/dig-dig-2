@@ -1,4 +1,5 @@
 {
+    "version": 1,
     "name": "InputSystem_Actions",
     "maps": [
         {
@@ -218,76 +219,6 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "Interact",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                }
-            ]
-        },
-        {
-            "name": "DebugNotes",
-            "id": "58488041-e640-4f61-9cc2-949b8ce13395",
-            "actions": [
-                {
-                    "name": "PlaceNote",
-                    "type": "Button",
-                    "id": "364e4bcb-f8c2-4c88-8db1-cea7eff768b0",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "EditNote",
-                    "type": "Button",
-                    "id": "4f13845f-a2c2-404f-9b51-17ce4d8372e6",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                }
-            ],
-            "bindings": [
-                {
-                    "name": "",
-                    "id": "189aad52-c185-45c5-b417-c0daef1105c5",
-                    "path": "<Keyboard>/backquote",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "PlaceNote",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "b89a26ae-03d9-4774-ab7b-134ef7a2a493",
-                    "path": "<Gamepad>/dpad/up",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Gamepad",
-                    "action": "PlaceNote",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "42bfc989-7233-4727-bc14-1669f1476c9c",
-                    "path": "<Keyboard>/e",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "EditNote",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "974bc56b-fcab-453f-945e-3aeff6a47408",
-                    "path": "<Gamepad>/dpad/down",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Gamepad",
-                    "action": "EditNote",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -863,7 +794,7 @@
                 {
                     "name": "",
                     "id": "446fa49b-1e20-4c24-969d-8221be89a40a",
-                    "path": "<Keyboard>/f3",
+                    "path": "<Keyboard>/backquote",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -992,7 +923,7 @@
             "id": "5f26ae09-937e-461f-8cc7-873303ec384d",
             "actions": [
                 {
-                    "name": "Attack",
+                    "name": "Attack1",
                     "type": "Button",
                     "id": "690c06f7-f69f-499f-8449-90ddafba4b50",
                     "expectedControlType": "",
@@ -1001,7 +932,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Aim",
+                    "name": "Attack2",
                     "type": "Button",
                     "id": "2db9ff37-e277-4cde-94dd-684ff227bdfd",
                     "expectedControlType": "",
@@ -1010,9 +941,18 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Mouse",
+                    "name": "JoystickAim",
                     "type": "Value",
                     "id": "167710a6-17ac-4c19-8d4e-cedea33debfa",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "MouseAim",
+                    "type": "Value",
+                    "id": "0a8ad2ae-31a3-4b5f-9259-47a43d10a4fc",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
@@ -1027,7 +967,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
-                    "action": "Attack",
+                    "action": "Attack1",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -1038,7 +978,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "Attack",
+                    "action": "Attack1",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -1049,7 +989,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Touch",
-                    "action": "Attack",
+                    "action": "Attack1",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -1060,7 +1000,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Joystick",
-                    "action": "Attack",
+                    "action": "Attack1",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -1071,7 +1011,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "XR",
-                    "action": "Attack",
+                    "action": "Attack1",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -1082,18 +1022,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Attack",
+                    "action": "Attack1",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "05c36913-533b-4460-aab8-69f10dc58036",
-                    "path": "<Mouse>/position",
+                    "id": "47403358-1678-4f77-8f61-9e3e82dbb06d",
+                    "path": "<Gamepad>/leftStick",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "Mouse",
+                    "groups": ";Gamepad",
+                    "action": "JoystickAim",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -1104,7 +1044,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "Aim",
+                    "action": "Attack2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "486ca93e-f08f-4731-9cb1-ad7d59ef2ab7",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "MouseAim",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

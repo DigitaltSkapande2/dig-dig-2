@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 646c568138afd454fb3cdfd4d433b498, type: 3}
+  m_Name: LightRangedAttack1
+  m_EditorClassIdentifier: Assembly-CSharp::DigDig2.RangedAttack
+  attackDuration: 1
+  animationStateName: Goon
+  damage: 1
+  projectilePrefab: {fileID: 2449068539807903354, guid: 4d8765dee0d501e42834aad8e63b0be8, type: 3}
+  projectileSpeed: 45
+  projectileifetime: 0.8

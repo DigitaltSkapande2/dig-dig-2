@@ -1,3 +1,4 @@
+using System;
 using Mirror;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -5,10 +6,10 @@ using UnityEngine.InputSystem;
 namespace DigDig2
 {
     [RequireComponent(typeof(EntityCharacterController))]
-    public class PlayerCharacterInputController : NetworkBehaviour, GameInputSystem.IPlayerActions
+    public class PlayerCharacterInputController : NetworkBehaviour, ProjectWideInputActions.IPlayerActions
     {
         // Input
-        private GameInputSystem.PlayerActions playerActions;
+        private ProjectWideInputActions.PlayerActions playerActions;
         private bool hasStarted = false;
 
         // Character Controller
@@ -19,7 +20,6 @@ namespace DigDig2
         private Interactor interactor;
 
 
-
         private void Awake()
         {
             entityCharacterController = GetComponent<EntityCharacterController>();
@@ -28,23 +28,24 @@ namespace DigDig2
 
         private void Start()
         {
-            if (isLocalPlayer)
+            if (!NetworkClient.active || isLocalPlayer)
             {
                 EnableInput();
                 hasStarted = true;
 
-                // Temporary fix to add the character to the camera
-                GameCamera gameCamera = FindFirstObjectByType<GameCamera>();
-                gameCamera.targets.Add(transform);
+                DebugNotesManager.Instance.RegisterPlayerCharacterController(entityCharacterController);
             }
         }
 
         private void Update()
         {
-            if (isLocalPlayer && Camera.main)
+            if (!NetworkClient.active || isLocalPlayer)
             {
-                Vector3 rotatedInputMoveVector = Quaternion.Euler(0f, Camera.main.transform.rotation.eulerAngles.y, 0f) * new Vector3(inputMoveVector.x, 0f, inputMoveVector.y);
-                entityCharacterController.inputMoveVector = rotatedInputMoveVector;
+                if (Camera.main)
+                {
+                    Vector3 rotatedInputMoveVector = Quaternion.Euler(0f, Camera.main.transform.rotation.eulerAngles.y, 0f) * new Vector3(inputMoveVector.x, 0f, inputMoveVector.y);
+                    entityCharacterController.inputMoveVector = rotatedInputMoveVector;
+                }
             }
         }
 
@@ -62,15 +63,14 @@ namespace DigDig2
 
         private void EnableInput()
         {
-            playerActions = GameInputManager.Instance.gameInputSystem.Player;
+            playerActions = InputManager.Instance.inputActions.Player;
 
             playerActions.SetCallbacks(this);
-            playerActions.Enable();
         }
 
         private void DisableInput()
         {
-            playerActions.Disable();
+            playerActions.RemoveCallbacks(this);
         }
 
         #endregion
@@ -82,16 +82,6 @@ namespace DigDig2
             inputMoveVector = context.ReadValue<Vector2>();
         }
 
-        public void OnAttack(InputAction.CallbackContext context)
-        {
-            GetComponent<PlayerAttack>().OnAttack(context);
-        }
-
-        public void OnMouse(InputAction.CallbackContext context)
-        {
-            GetComponent<PlayerAttack>().OnMouse(context);
-        }
-
         public void OnInteract(InputAction.CallbackContext context)
         {
             if (interactor) interactor.SendInteraction(context.phase);
@@ -99,7 +89,7 @@ namespace DigDig2
 
         public void OnSprint(InputAction.CallbackContext context)
         {
-
+            entityCharacterController.isSprinting = context.performed;
         }
 
         #endregion

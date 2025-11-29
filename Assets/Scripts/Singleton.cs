@@ -1,6 +1,8 @@
+using Mirror;
 using UnityEngine;
 
-public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
+[RequireComponent(typeof(NetworkIdentity))]
+public class Singleton<T> : NetworkBehaviour where T : NetworkBehaviour
 {
     private static T instance;
     public static T Instance
@@ -9,23 +11,23 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
         {
             if (instance == null)
             {
-				T potentialFoundInstance = FindFirstObjectByType<T>();
-				if (potentialFoundInstance == null)
-				{
-					Debug.LogError($"No singleton of type {typeof(T).Name} has been initialized.");
-					return null;
-				}
-				else
-				{
-					return potentialFoundInstance;
-				}
+                T potentialFoundInstance = FindFirstObjectByType<T>();
+                if (potentialFoundInstance == null)
+                {
+                    Debug.LogError($"No singleton of type {typeof(T).Name} has been initialized.");
+                    return null;
+                }
+                else
+                {
+                    return potentialFoundInstance;
+                }
             }
             return instance;
         }
 
         private set
         {
-            instance = value; 
+            instance = value;
         }
     }
 
@@ -33,12 +35,12 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
     {
         if (instance != null && instance != this)
         {
-            Destroy(gameObject); 
+            Destroy(gameObject);
             return;
         }
 
         Instance = this as T;
-		Debug.Log("Set instance of " + gameObject.name);
-        DontDestroyOnLoad(gameObject); 
+        Debug.Log("Set instance of " + gameObject.name);
+        DontDestroyOnLoad(gameObject);
     }
 }
