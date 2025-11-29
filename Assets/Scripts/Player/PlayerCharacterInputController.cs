@@ -8,9 +8,6 @@ namespace DigDig2
     [RequireComponent(typeof(EntityCharacterController))]
     public class PlayerCharacterInputController : NetworkBehaviour, ProjectWideInputActions.IPlayerActions
     {
-        // Singleplayer flags
-        [NonSerialized] public bool isSinglePlayerFocus; // if the currently controlled player is this one
-
         // Input
         private ProjectWideInputActions.PlayerActions playerActions;
         private bool hasStarted = false;
@@ -31,25 +28,24 @@ namespace DigDig2
 
         private void Start()
         {
-            if (isLocalPlayer || isSinglePlayerFocus)
+            if (!NetworkClient.active || isLocalPlayer)
             {
                 EnableInput();
                 hasStarted = true;
 
                 DebugNotesManager.Instance.RegisterPlayerCharacterController(entityCharacterController);
-
-                // Temporary fix to add the character to the camera
-                //GameCamera gameCamera = FindFirstObjectByType<GameCamera>();
-                //gameCamera.targets.Add(transform);
             }
         }
 
         private void Update()
         {
-            if (isLocalPlayer && Camera.main)
+            if (!NetworkClient.active || isLocalPlayer)
             {
-                Vector3 rotatedInputMoveVector = Quaternion.Euler(0f, Camera.main.transform.rotation.eulerAngles.y, 0f) * new Vector3(inputMoveVector.x, 0f, inputMoveVector.y);
-                entityCharacterController.inputMoveVector = rotatedInputMoveVector;
+                if (Camera.main)
+                {
+                    Vector3 rotatedInputMoveVector = Quaternion.Euler(0f, Camera.main.transform.rotation.eulerAngles.y, 0f) * new Vector3(inputMoveVector.x, 0f, inputMoveVector.y);
+                    entityCharacterController.inputMoveVector = rotatedInputMoveVector;
+                }
             }
         }
 

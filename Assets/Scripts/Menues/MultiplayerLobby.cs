@@ -23,10 +23,10 @@ namespace DigDig2
 
         public override void OnStartServer()
         {
-            if (OurNetworkManager.singleton != null)
+            if (NetworkManager.singleton != null)
             {
-                OurNetworkManager.singleton.serverConnect.AddListener(OnServerConnect);
-                OurNetworkManager.singleton.serverDisconnect.AddListener(OnServerDisconnect);
+                NetworkManager.singleton.serverConnect.AddListener(OnServerConnect);
+                NetworkManager.singleton.serverDisconnect.AddListener(OnServerDisconnect);
             }
 
             if (!NetworkServer.active) return;
@@ -48,10 +48,10 @@ namespace DigDig2
         {
             if (isServer)
             {
-                if (OurNetworkManager.singleton != null)
+                if (NetworkManager.singleton != null)
                 {
-                    OurNetworkManager.singleton.serverConnect.RemoveListener(OnServerConnect);
-                    OurNetworkManager.singleton.serverDisconnect.RemoveListener(OnServerDisconnect);
+                    NetworkManager.singleton.serverConnect.RemoveListener(OnServerConnect);
+                    NetworkManager.singleton.serverDisconnect.RemoveListener(OnServerDisconnect);
                 }
             }
 
@@ -119,12 +119,12 @@ namespace DigDig2
         {
             if (isServer)
             {
-                OurNetworkManager.singleton.StopServer();
+                NetworkManager.singleton.StopServer();
             }
 
             if (isClient)
             {
-                OurNetworkManager.singleton.StopClient();
+                NetworkManager.singleton.StopClient();
             }
         }
 
@@ -143,7 +143,8 @@ namespace DigDig2
         [Server]
         public void StartLobby()
         {
-            SceneManager.LoadSceneAsync(2);
+            NetworkManager.singleton.SetCharacters(maxPlayerConnection, miniPlayerConnection);
+            NetworkManager.singleton.ServerChangeScene("THEGameh");
         }
     }
 }
