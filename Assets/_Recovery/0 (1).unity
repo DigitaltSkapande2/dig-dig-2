@@ -184,8 +184,24 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
+      propertyPath: zoomBounceEffect.intensityDecoder.midValue
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
       propertyPath: vignettePulseEffect.curve.m_Curve.Array.size
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
+      propertyPath: vignettePulseEffect.intensityDecoder.lowValue
+      value: 0.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
+      propertyPath: vignettePulseEffect.intensityDecoder.midValue
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
+      propertyPath: vignettePulseEffect.intensityDecoder.highValue
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
       propertyPath: zoomBounceEffect.curve.m_Curve.Array.data[1].time

@@ -14,7 +14,6 @@ namespace DigDig2.CinemaCamera
         private static List<CameraEffector> effectiveCameraEffectors = new();
 
         // -- Instance Fields -- //
-
         [SerializeField] public bool overridesLowerPriority = false;
         [SerializeField] private bool isActive = true;
         public bool IsActive
