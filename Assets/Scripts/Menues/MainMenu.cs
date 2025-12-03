@@ -1,10 +1,6 @@
-using System;
-using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using Mirror;
-using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace DigDig2
 {

@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 
 namespace DigDig2
 {
+    [RequireComponent(typeof(Attacker))]
     public class PlayerAttackInput : MonoBehaviour, ProjectWideInputActions.IAttackActions
     {
         private Attacker attacker;

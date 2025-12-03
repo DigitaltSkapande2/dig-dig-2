@@ -106,7 +106,7 @@ namespace DigDig2
 		// Movement
 		private CharacterController characterController;
 
-		[SerializeField] private Vector3 velocity;
+		private Vector3 velocity;
 
 		private Vector3 moveVector;
 
@@ -135,12 +135,7 @@ namespace DigDig2
 		{
 			if (!frozen)
 			{
-				if (!isLocalPlayer)
-				{
-					frozen = true;
-				}
-
-				if (isLocalPlayer || (!isOwned && isServer))
+				if (authority)
 				{
 					Debug.DrawLine(transform.position, transform.position + GetForwardVector(), Color.red);
 
@@ -158,6 +153,10 @@ namespace DigDig2
 					// Visuals
 					UpdateVisualsRotation();
 				}
+				else
+                {
+                    frozen = true;
+                }
 			}
 
 			if (isClient)
