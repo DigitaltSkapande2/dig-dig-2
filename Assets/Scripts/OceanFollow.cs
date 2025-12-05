@@ -1,9 +1,11 @@
 using DigDig2.Effects;
+using Mirror;
 using UnityEngine;
 
 namespace DigDig2
 {
-    public class OceanFollow : MonoBehaviour
+    [RequireComponent(typeof(NetworkIdentity))]
+    public class OceanFollow : NetworkBehaviour
     {
 
         [Tooltip("the object to follow")]
@@ -13,13 +15,19 @@ namespace DigDig2
 
         [SerializeField] float verticalSpeed;
 
-        private float targetY;
+        [SyncVar] private float targetY;
 
+        [Server]
         public void LowerWater(float amount)
         {
             targetY -= amount;
-            EffectManager.Instance.PlayScreenShake(EffectIntensity.mid);
+            RpcLowerWater();
         }
+        [ClientRpc]
+        private void RpcLowerWater()
+		{
+			EffectManager.Instance.PlayScreenShake(EffectIntensity.mid);
+		}
 
         void Start()
         {

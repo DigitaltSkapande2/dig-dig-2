@@ -28,7 +28,7 @@ namespace DigDig2
 
         private void Start()
         {
-            if (!NetworkClient.active || isLocalPlayer)
+            if (isLocalPlayer)
             {
                 EnableInput();
                 hasStarted = true;
@@ -39,7 +39,7 @@ namespace DigDig2
 
         private void Update()
         {
-            if (!NetworkClient.active || isLocalPlayer)
+            if (isLocalPlayer)
             {
                 if (Camera.main)
                 {

@@ -2092,6 +2092,10 @@ PrefabInstance:
       propertyPath: deathEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 5421616739005844539, guid: c98535c2c3fee2e4288903087bfb0f6c, type: 3}
+      propertyPath: sceneId
+      value: 906803368
+      objectReference: {fileID: 0}
     - target: {fileID: 6291972602155261083, guid: c98535c2c3fee2e4288903087bfb0f6c, type: 3}
       propertyPath: m_Name
       value: Crystal
@@ -6731,6 +6735,7 @@ GameObject:
   - component: {fileID: 1722383311}
   - component: {fileID: 1722383310}
   - component: {fileID: 1722383309}
+  - component: {fileID: 1722383313}
   m_Layer: 0
   m_Name: Trigger
   m_TagString: Untagged
@@ -6765,6 +6770,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5eb71039f853af4bb9e8027626f0a29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Attackable
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
   invincibilityTime: 0.05
   group: none
   hitEffects:
@@ -6861,6 +6869,23 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1722383307}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1722383313
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1722383307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Mirror::Mirror.NetworkIdentity
+  sceneId: 2783535938
+  _assetId: 0
+  serverOnly: 0
+  visibility: 0
+  hasSpawned: 0
 --- !u!1 &1745324816
 GameObject:
   m_ObjectHideFlags: 0
@@ -7132,6 +7157,7 @@ GameObject:
   - component: {fileID: 1784950531}
   - component: {fileID: 1784950530}
   - component: {fileID: 1784950529}
+  - component: {fileID: 1784950534}
   m_Layer: 0
   m_Name: Trigger
   m_TagString: Untagged
@@ -7151,6 +7177,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5eb71039f853af4bb9e8027626f0a29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Attackable
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
   invincibilityTime: 0.05
   group: none
   hitEffects:
@@ -7262,6 +7291,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1349906099}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1784950534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1784950528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Mirror::Mirror.NetworkIdentity
+  sceneId: 520653793
+  _assetId: 0
+  serverOnly: 0
+  visibility: 0
+  hasSpawned: 0
 --- !u!1001 &1846879485
 PrefabInstance:
   m_ObjectHideFlags: 0
