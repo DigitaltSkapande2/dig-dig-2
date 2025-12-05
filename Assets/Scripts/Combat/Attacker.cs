@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
+using Mirror;
+using NUnit.Framework;
 using UnityEngine;
 
 namespace DigDig2
 {
-	[RequireComponent(typeof(EntityCharacterController))]
-	public class Attacker : MonoBehaviour
+	[RequireComponent(typeof(EntityCharacterController), typeof(Animator), typeof(NetworkIdentity))]
+	public class Attacker : NetworkBehaviour
 	{
 		[Tooltip("The attack types that this entity has access to.")]
 		[SerializeField] private List<AttackType> attackTypes;
@@ -70,80 +72,87 @@ namespace DigDig2
 
 		private void Awake()
 		{
-			animator = GetComponentInChildren<Animator>();
-			attackable = GetComponent<Attackable>();
+			animator = GetComponent<Animator>();
+			TryGetComponent(out attackable);
 		}
 
 		private void Update()
 		{
-			if ((state == CombatState.Idle || attackRequestChain > 0) && !attackRequestProcessed)
-			{
-				if (heldAttackType != null)
+			if (authority)
+				if ((state == CombatState.Idle || attackRequestChain > 0) && !attackRequestProcessed)
 				{
-					currentAttackChain = attackRequestChain;
-
-					if (heldAttackType.chargeMode == AttackType.ChargeMode.NoCharge)
+					if (heldAttackType != null)
 					{
-						PerformAttack(heldAttackType);
+						currentAttackChain = attackRequestChain;
+
+						if (heldAttackType.chargeMode == AttackType.ChargeMode.NoCharge)
+						{
+							PerformAttack(heldAttackType);
+						}
+						else
+						{
+							ChargeAttack(heldAttackType);
+						}
 					}
-					else
+
+					attackRequestProcessed = true;
+					attackRequestChain = -1;
+				}
+
+				if (state == CombatState.Charging)
+				{
+					currentPerformingAttack.Charge(this, currentPerformingAttackType, Mathf.Clamp(Time.time - chargeStartTime, 0, currentPerformingAttackType.chargeDuration));
+					if (Time.time - chargeStartTime >= currentPerformingAttackType.chargeDuration)
 					{
-						ChargeAttack(heldAttackType);
+						state = CombatState.FullyCharged;
+						currentPerformingAttack.ChargeFull(this, currentPerformingAttackType);
+					}
+				}
+				else if (state == CombatState.Performing)
+				{
+					if (Time.time - performanceStartTime >= currentPerformingAttack.AttackDuration)
+					{
+						EndAttack(true);
 					}
 				}
 
-				attackRequestProcessed = true;
-				attackRequestChain = -1;
-			}
-
-			if (state == CombatState.Charging)
-			{
-				currentPerformingAttack.Charge(this, currentPerformingAttackType, Mathf.Clamp(Time.time - chargeStartTime, 0, currentPerformingAttackType.chargeDuration));
-				if (Time.time - chargeStartTime >= currentPerformingAttackType.chargeDuration)
-				{
-					state = CombatState.FullyCharged;
-					currentPerformingAttack.ChargeFull(this, currentPerformingAttackType);
-				}
-			}
-			else if (state == CombatState.Performing)
-			{
-				if (Time.time - performanceStartTime >= currentPerformingAttack.AttackDuration)
-				{
-					EndAttack(true);
-				}
-			}
-
-			if (attackCooldownTimer > 0) attackCooldownTimer -= Time.deltaTime;
-			if (state == CombatState.OnCooldown && attackCooldownTimer <= 0) state = CombatState.Idle;
+				if (attackCooldownTimer > 0) attackCooldownTimer -= Time.deltaTime;
+				if (state == CombatState.OnCooldown && attackCooldownTimer <= 0) state = CombatState.Idle;
 		}
 
         private void FixedUpdate()
-        {
-            foreach (KeyValuePair<string, AttackHitbox> attackHitboxPair in activeAttackHitboxes)
+		{
+			if (authority)
 			{
-				AttackHitbox attackHitbox = attackHitboxPair.Value;
-				Collider[] colliders = Physics.OverlapBox(attackHitbox.boundTransform.position, attackHitbox.size / 2, attackHitbox.boundTransform.rotation);;
-				foreach (Collider collider in colliders)
+				foreach (KeyValuePair<string, AttackHitbox> attackHitboxPair in activeAttackHitboxes)
 				{
-					Attackable enemyAttackable = collider.GetComponent<Attackable>();
-					if (!enemyAttackable) continue;
-					if (enemyAttackable == attackable) continue;
-					if (attackHitbox.attackedEnemies.Contains(enemyAttackable)) continue;
+					AttackHitbox attackHitbox = attackHitboxPair.Value;
+					Collider[] colliders = Physics.OverlapBox(attackHitbox.boundTransform.position, attackHitbox.size / 2, attackHitbox.boundTransform.rotation); ;
+					foreach (Collider collider in colliders)
+					{
+						Attackable enemyAttackable = collider.GetComponent<Attackable>();
+						if (!enemyAttackable) continue;
+						if (enemyAttackable == attackable) continue;
+						if (attackHitbox.attackedEnemies.Contains(enemyAttackable)) continue;
 
-					attackHitbox.attackedEnemies.Add(enemyAttackable);
-					enemyAttackable.Hit(attackHitbox.boundAttack, this);
-                }
-            }
+						attackHitbox.attackedEnemies.Add(enemyAttackable);
+						enemyAttackable.Hit(attackHitbox.boundAttack, this);
+					}
+				}
+			}
         }
 
 		private void OnDrawGizmos()
 		{
-			foreach (KeyValuePair<string, AttackHitbox> attackHitboxPair in activeAttackHitboxes)
+			if (authority)
 			{
-				AttackHitbox attackHitbox = attackHitboxPair.Value;
-				Gizmos.matrix = attackHitbox.boundTransform.localToWorldMatrix;
-				Gizmos.color = Color.red;
-				Gizmos.DrawWireCube(Vector3.zero, attackHitbox.size);
+				foreach (KeyValuePair<string, AttackHitbox> attackHitboxPair in activeAttackHitboxes)
+				{
+					AttackHitbox attackHitbox = attackHitboxPair.Value;
+					Gizmos.matrix = attackHitbox.boundTransform.localToWorldMatrix;
+					Gizmos.color = Color.red;
+					Gizmos.DrawWireCube(Vector3.zero, attackHitbox.size);
+				}
 			}
 		}
 
@@ -168,6 +177,8 @@ namespace DigDig2
 
 		public void RequestAttackStart(int attackTypeIndex)
 		{
+			if (!authority) return;
+
 			heldAttackType = GetAttackTypeFromIndex(attackTypeIndex);
 
 			LogVerbose($"Attack request started. Held Attack Type: {heldAttackType}");
@@ -189,7 +200,9 @@ namespace DigDig2
 		}
 		
 		public void RequestAttackEnd()
-        {
+		{
+			if (!authority) return;
+
 			// Perform the Charged attack (if there is one and it's valid)
 			if (IsChargeValid()) PerformAttack(heldAttackType);
 
@@ -342,8 +355,10 @@ namespace DigDig2
 
 		#region Attack Hit Detection
 
-		public AttackHitbox AddAttackHitbox(Attack attack, string id, Vector3 size, Transform boundTransform)
+		public void AddAttackHitbox(Attack attack, string id, Vector3 size, Transform boundTransform)
 		{
+			if (!authority) return;
+
 			AttackHitbox newAttackHitbox = new()
 			{
 				size = size,
@@ -353,12 +368,12 @@ namespace DigDig2
 			};
 
 			activeAttackHitboxes[id] = newAttackHitbox;
-
-			return newAttackHitbox;
 		}
 
 		public void RemoveAttackHitbox(string id)
 		{
+			if (!authority) return;
+
 			if (activeAttackHitboxes.ContainsKey(id))
 			{
 				activeAttackHitboxes.Remove(id);
@@ -366,7 +381,9 @@ namespace DigDig2
 		}
 		
 		public Transform GetBindableTransform(int index)
-        {
+		{
+			if (!authority) return null;
+
 			return bindableTransforms[index];
         }
 

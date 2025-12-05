@@ -176,68 +176,212 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1078995557}
     - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
-      propertyPath: zoomBounceDuration.midValue
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
-      propertyPath: zoomBounceIntensity.curve.m_Curve.Array.size
+      propertyPath: zoomBounceEffect.curve.m_Curve.Array.size
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
-      propertyPath: zoomBounceIntensity.curve.m_Curve.Array.data[0].time
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
-      propertyPath: zoomBounceIntensity.curve.m_Curve.Array.data[1].time
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
-      propertyPath: zoomBounceIntensity.curve.m_Curve.Array.data[2].time
-      value: 1.0037537
-      objectReference: {fileID: 0}
-    - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
-      propertyPath: zoomBounceIntensity.curve.m_Curve.Array.data[0].value
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
-      propertyPath: zoomBounceIntensity.curve.m_Curve.Array.data[1].value
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
-      propertyPath: zoomBounceIntensity.curve.m_Curve.Array.data[0].inSlope
-      value: -4.698938
-      objectReference: {fileID: 0}
-    - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
-      propertyPath: zoomBounceIntensity.curve.m_Curve.Array.data[2].inSlope
-      value: 0.00096248655
-      objectReference: {fileID: 0}
-    - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
-      propertyPath: zoomBounceIntensity.curve.m_Curve.Array.data[0].outSlope
-      value: -4.698938
-      objectReference: {fileID: 0}
-    - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
-      propertyPath: zoomBounceIntensity.curve.m_Curve.Array.data[1].inWeight
-      value: 0.33333334
-      objectReference: {fileID: 0}
-    - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
-      propertyPath: zoomBounceIntensity.curve.m_Curve.Array.data[2].inWeight
-      value: 0.95686483
-      objectReference: {fileID: 0}
-    - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
-      propertyPath: zoomBounceIntensity.curve.m_Curve.Array.data[2].outSlope
-      value: 0.00096248655
-      objectReference: {fileID: 0}
-    - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
-      propertyPath: zoomBounceIntensity.curve.m_Curve.Array.data[0].outWeight
-      value: 0.090748906
-      objectReference: {fileID: 0}
-    - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
-      propertyPath: zoomBounceIntensity.curve.m_Curve.Array.data[1].outWeight
-      value: 0.33333334
-      objectReference: {fileID: 0}
-    - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
-      propertyPath: zoomBounceIntensity.curve.m_Curve.Array.data[2].weightedMode
+      propertyPath: screenShakeEffect.curve.m_Curve.Array.size
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
+      propertyPath: vignettePulseEffect.curve.m_Curve.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
+      propertyPath: zoomBounceEffect.curve.m_Curve.Array.data[1].time
+      value: 0.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
+      propertyPath: zoomBounceEffect.curve.m_Curve.Array.data[2].time
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
+      propertyPath: screenShakeEffect.curve.m_Curve.Array.data[1].time
+      value: 0.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
+      propertyPath: screenShakeEffect.curve.m_Curve.Array.data[2].time
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
+      propertyPath: zoomBounceEffect.curve.m_Curve.Array.data[0].value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
+      propertyPath: zoomBounceEffect.curve.m_Curve.Array.data[1].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
+      propertyPath: zoomBounceEffect.curve.m_Curve.Array.data[2].value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
+      propertyPath: screenShakeEffect.curve.m_Curve.Array.data[0].value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
+      propertyPath: vignettePulseEffect.curve.m_Curve.Array.data[1].time
+      value: 0.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
+      propertyPath: vignettePulseEffect.curve.m_Curve.Array.data[2].time
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
+      propertyPath: zoomBounceEffect.curve.m_Curve.Array.data[0].inSlope
+      value: 8.333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
+      propertyPath: zoomBounceEffect.curve.m_Curve.Array.data[1].inSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
+      propertyPath: zoomBounceEffect.curve.m_Curve.Array.data[2].inSlope
+      value: 0.0035370018
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
+      propertyPath: screenShakeEffect.curve.m_Curve.Array.data[0].inSlope
+      value: 8.333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
+      propertyPath: screenShakeEffect.curve.m_Curve.Array.data[2].inSlope
+      value: 0.0035370018
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
+      propertyPath: vignettePulseEffect.curve.m_Curve.Array.data[0].value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
+      propertyPath: vignettePulseEffect.curve.m_Curve.Array.data[1].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
+      propertyPath: vignettePulseEffect.curve.m_Curve.Array.data[2].value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
+      propertyPath: zoomBounceEffect.curve.m_Curve.Array.data[0].outSlope
+      value: 8.333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
+      propertyPath: zoomBounceEffect.curve.m_Curve.Array.data[1].inWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
+      propertyPath: zoomBounceEffect.curve.m_Curve.Array.data[1].outSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
+      propertyPath: zoomBounceEffect.curve.m_Curve.Array.data[2].inWeight
+      value: 0.62447625
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
+      propertyPath: zoomBounceEffect.curve.m_Curve.Array.data[2].outSlope
+      value: 0.0035370018
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
+      propertyPath: screenShakeEffect.curve.m_Curve.Array.data[0].outSlope
+      value: 8.333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
+      propertyPath: screenShakeEffect.curve.m_Curve.Array.data[1].inWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
+      propertyPath: screenShakeEffect.curve.m_Curve.Array.data[2].inWeight
+      value: 0.62447625
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
+      propertyPath: screenShakeEffect.curve.m_Curve.Array.data[2].outSlope
+      value: 0.0035370018
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
+      propertyPath: zoomBounceEffect.curve.m_Curve.Array.data[0].outWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
+      propertyPath: zoomBounceEffect.curve.m_Curve.Array.data[1].outWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
+      propertyPath: screenShakeEffect.curve.m_Curve.Array.data[0].outWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
+      propertyPath: screenShakeEffect.curve.m_Curve.Array.data[1].outWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
+      propertyPath: vignettePulseEffect.curve.m_Curve.Array.data[0].inSlope
+      value: 8.333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
+      propertyPath: vignettePulseEffect.curve.m_Curve.Array.data[1].inSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
+      propertyPath: vignettePulseEffect.curve.m_Curve.Array.data[2].inSlope
+      value: 0.0035370018
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
+      propertyPath: vignettePulseEffect.curve.m_Curve.Array.data[0].outSlope
+      value: 8.333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
+      propertyPath: vignettePulseEffect.curve.m_Curve.Array.data[1].inWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
+      propertyPath: vignettePulseEffect.curve.m_Curve.Array.data[1].outSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
+      propertyPath: vignettePulseEffect.curve.m_Curve.Array.data[2].inWeight
+      value: 0.62447625
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
+      propertyPath: vignettePulseEffect.curve.m_Curve.Array.data[2].outSlope
+      value: 0.0035370018
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
+      propertyPath: zoomBounceEffect.curve.m_Curve.Array.data[1].tangentMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
+      propertyPath: zoomBounceEffect.curve.m_Curve.Array.data[2].tangentMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
+      propertyPath: screenShakeEffect.curve.m_Curve.Array.data[1].tangentMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
+      propertyPath: vignettePulseEffect.curve.m_Curve.Array.data[0].outWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
+      propertyPath: vignettePulseEffect.curve.m_Curve.Array.data[1].outWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
+      propertyPath: zoomBounceEffect.curve.m_Curve.Array.data[2].weightedMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
+      propertyPath: screenShakeEffect.curve.m_Curve.Array.data[2].weightedMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
+      propertyPath: vignettePulseEffect.curve.m_Curve.Array.data[1].tangentMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
+      propertyPath: vignettePulseEffect.curve.m_Curve.Array.data[2].tangentMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245897840861142697, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
+      propertyPath: vignettePulseEffect.curve.m_Curve.Array.data[2].weightedMode
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8286765975674870269, guid: e4ae4047341e03d5e997a3a310a1f261, type: 3}
       propertyPath: m_Name
