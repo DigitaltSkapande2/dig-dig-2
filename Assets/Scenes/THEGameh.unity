@@ -2891,6 +2891,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1743599393324649339, guid: f6d8ac41c2983d449a5ae1e62a1218ff, type: 3}
+      propertyPath: sceneId
+      value: 107305664
+      objectReference: {fileID: 0}
     - target: {fileID: 2355047589607723158, guid: f6d8ac41c2983d449a5ae1e62a1218ff, type: 3}
       propertyPath: m_Name
       value: Water
