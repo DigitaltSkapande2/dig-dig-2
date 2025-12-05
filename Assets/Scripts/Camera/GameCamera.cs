@@ -1,8 +1,5 @@
-using System;
-using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
-using UnityEngine.Splines.Interpolators;
 
 namespace DigDig2.CinemaCamera {
     public class GameCamera : Singleton<GameCamera>
