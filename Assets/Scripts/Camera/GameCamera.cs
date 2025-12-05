@@ -9,7 +9,7 @@ namespace DigDig2.CinemaCamera {
     {
         [Tooltip("the time in seconds it will take for the camera to get to the target position")]
         [SerializeField] public float followSpeed = 5f;
-        [SerializeField] public float roatationSpeed = 1;
+        [SerializeField] public float rotationSpeed = 1;
 
         private Vector3 targetPos;
         private Quaternion targetRotation;
@@ -27,7 +27,7 @@ namespace DigDig2.CinemaCamera {
 
         void Update()
         {
-            this.targetRotation = Quaternion.Slerp(this.targetRotation, baseTargetRotation, Time.deltaTime * roatationSpeed);
+            this.targetRotation = Quaternion.Slerp(this.targetRotation, baseTargetRotation, Time.deltaTime * rotationSpeed);
 
             Vector3 targetPos = Vector3.zero;
             Quaternion targetRotation = Quaternion.identity;
@@ -49,6 +49,11 @@ namespace DigDig2.CinemaCamera {
             transform.rotation = targetRotation;
 
             mainCamera.orthographicSize = frustumSize;
+        }
+
+        public void SetRotationSpeed(float speed)
+        {
+            rotationSpeed = speed;
         }
 
         public void SetTargetRotation(float angle)
