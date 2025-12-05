@@ -1,11 +1,12 @@
 using System;
+using Mirror;
 using UnityEngine;
 using UnityEngine.AI;
 
 namespace DigDig2
 {
-    [RequireComponent(typeof(EntityCharacterController))]
-    public class EntityCharacterBehaviorAgent : MonoBehaviour
+    [RequireComponent(typeof(EntityCharacterController), typeof(NetworkIdentity))]
+    public class EntityCharacterBehaviorAgent : NetworkBehaviour
     {
         [Header("Following Path State")]
         [Tooltip("The distance that the entity marks a waypoint as passed.")]
@@ -28,7 +29,7 @@ namespace DigDig2
 
         #region Visuals State Variables
 
-        private Transform focusedTransform;
+        [SyncVar] private Transform focusedTransform;
 
         #endregion
 
@@ -53,56 +54,59 @@ namespace DigDig2
 
         private void Update()
         {
-            if (focusedTransform != null)
+            if (authority)
             {
-                LookTowards(focusedTransform.position);
-            }
-            
-            switch (movementState)
-            {
-                case MovementState.FollowingPath:
-                    if (currentPathWaypoints.Length > 0)
-                    {
-                        Vector3 currentPathWaypoint = currentPathWaypoints[currentPathWaypointIndex];
-                        Vector3 positionDifference = currentPathWaypoint - transform.position;
-                        positionDifference.y = 0f;
-                        float distanceToWaypoint = positionDifference.magnitude;
+                if (focusedTransform != null)
+                {
+                    LookTowards(focusedTransform.position);
+                }
 
-                        if (distanceToWaypoint <= pathWaypointDistanceTolerance)
+                switch (movementState)
+                {
+                    case MovementState.FollowingPath:
+                        if (currentPathWaypoints.Length > 0)
                         {
-                            if (currentPathWaypoints.Length > currentPathWaypointIndex + 1)
+                            Vector3 currentPathWaypoint = currentPathWaypoints[currentPathWaypointIndex];
+                            Vector3 positionDifference = currentPathWaypoint - transform.position;
+                            positionDifference.y = 0f;
+                            float distanceToWaypoint = positionDifference.magnitude;
+
+                            if (distanceToWaypoint <= pathWaypointDistanceTolerance)
                             {
-                                // More waypoints to follow, go to next one
-                                currentPathWaypointIndex++;
-                                currentPathWaypoint = currentPathWaypoints[currentPathWaypointIndex];
-                                positionDifference = currentPathWaypoint - transform.position;
-                                positionDifference.y = 0f;
-                                distanceToWaypoint = positionDifference.magnitude;
+                                if (currentPathWaypoints.Length > currentPathWaypointIndex + 1)
+                                {
+                                    // More waypoints to follow, go to next one
+                                    currentPathWaypointIndex++;
+                                    currentPathWaypoint = currentPathWaypoints[currentPathWaypointIndex];
+                                    positionDifference = currentPathWaypoint - transform.position;
+                                    positionDifference.y = 0f;
+                                    distanceToWaypoint = positionDifference.magnitude;
+                                }
+                                else
+                                {
+                                    // No more waypoints to follow, entity has finished, reset path
+                                    Stop();
+                                }
+                            }
+
+                            if (currentPathWaypointIndex >= currentPathWaypoints.Length - 1)
+                            {
+                                entityCharacterController.inputMoveVector = positionDifference.normalized * Mathf.Min(distanceToWaypoint / (pathWaypointDistanceTolerance + 1f), 1f);
                             }
                             else
                             {
-                                // No more waypoints to follow, entity has finished, reset path
-                                Stop();
+                                entityCharacterController.inputMoveVector = positionDifference.normalized;
                             }
                         }
 
-                        if (currentPathWaypointIndex >= currentPathWaypoints.Length - 1)
-                        {
-                            entityCharacterController.inputMoveVector = positionDifference.normalized * Mathf.Min(distanceToWaypoint / (pathWaypointDistanceTolerance + 1f), 1f);
-                        }
-                        else
-                        {
-                            entityCharacterController.inputMoveVector = positionDifference.normalized;
-                        }
-                    }
-
-                    break;
-                case MovementState.FollowingDirection:
-                    entityCharacterController.inputMoveVector = currentDirection;
-                    break;
-                default:
-                    entityCharacterController.inputMoveVector = Vector3.zero;
-                    break;
+                        break;
+                    case MovementState.FollowingDirection:
+                        entityCharacterController.inputMoveVector = currentDirection;
+                        break;
+                    default:
+                        entityCharacterController.inputMoveVector = Vector3.zero;
+                        break;
+                }
             }
         }
 
@@ -179,6 +183,11 @@ namespace DigDig2
             focusedTransform = newFocusedTransform;
 
             return true;
+        }
+
+        public Transform GetFocusedLookTransform()
+        {
+            return focusedTransform;
         }
 
         public bool SetAutomaticLookRotationLock(bool isLocked)

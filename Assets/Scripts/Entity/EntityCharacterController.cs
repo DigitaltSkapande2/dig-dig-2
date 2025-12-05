@@ -108,7 +108,7 @@ namespace DigDig2
 		// Movement
 		private CharacterController characterController;
 
-		[SerializeField] private Vector3 velocity;
+		private Vector3 velocity;
 
 		private Vector3 moveVector;
 
@@ -139,7 +139,7 @@ namespace DigDig2
 		{
 			if (!frozen)
 			{
-				if (isLocalPlayer || isServer)
+				if (authority)
 				{
 					Debug.DrawLine(transform.position, transform.position + GetForwardVector(), Color.red);
 
@@ -157,17 +157,20 @@ namespace DigDig2
 					// Visuals
 					UpdateVisualsRotation();
 				}
+				else
+                {
+                    frozen = true;
+                }
+			}
 
-				if (isClient)
-				{
-					RefreshVisualsRotation();
-				}
+			if (isClient)
+			{
+				RefreshVisualsRotation();
 			}
 		}
 
 		#region Movement
 
-		[Client]
 		private void ProcessGravity()
 		{
 			if (characterController.isGrounded)
@@ -181,7 +184,6 @@ namespace DigDig2
 		}
 
 		// Add move/walk/run to current velocity
-		[Client]
 		private void ProcessMove()
 		{
 			slowDownTimer -= Time.deltaTime;
@@ -195,7 +197,6 @@ namespace DigDig2
 			velocity = new(moveVector.x, velocity.y, moveVector.z);
 		}
 
-		[Client]
 		private void ProcessSlope()
 		{
 			// Raycast for slope
@@ -224,14 +225,12 @@ namespace DigDig2
 			velocity += slopeSlideVelocity;
 		}
 
-		[Client]
 		private void ProcessKnockback()
 		{
 			velocity += knockbackVelocity;
 			knockbackVelocity = Vector3.Lerp(knockbackVelocity, Vector3.zero, knockbackFallofSpeed * Time.deltaTime);
 		}
 
-		[Client]
 		private void ProcessEdge()
 		{
 			Dictionary<Vector3, float> edgeAdjustments = new();
@@ -278,7 +277,6 @@ namespace DigDig2
 		}
 
 		// Add velocity to CharacterController
-		[Client]
 		private void ApplyMovement(bool isFixedUpdate = false)
 		{
 			// Set deltaTime to 1 if method is called by FixedUpdate() message, if not, set to real delta time.
@@ -351,7 +349,7 @@ namespace DigDig2
 
 		private void UpdateVisualsRotation()
 		{
-			if (inputMoveVector.magnitude > 0 && !frozen && !automaticLookRotationLocked)
+			if (inputMoveVector.magnitude > 0 && !automaticLookRotationLocked)
 			{
 				targetLookRotation = Vector3.SignedAngle(transform.forward, inputMoveVector, transform.up);
 			}

@@ -1,104 +1,83 @@
-
 using Mirror;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace DigDig2
 {
-
-    // HANDELS STUFF SPECIFIC TO GAME SCENE/SEQUENCE
     public class GameManager : Singleton<GameManager>
     {
-        [SerializeField] GameObject debugStartGameContainer;
+        [Header("Player Prefabs")]
+        [SerializeField] private CharacterType singleplayerStartingCharacter = CharacterType.Max;
+        [SerializeField] private GameObject maxPrefab;
+        [SerializeField] private GameObject miniPrefab;
 
-        [SerializeField] bool startSinglePlayerOnStart = false;
-
-        [Header("Character Select Screen")]
-        [SerializeField] GameObject characterSelectScreenContainer;
-        [SerializeField] Button selectMinisButton;
-        [SerializeField] Button selectMaxButton;
-        [SerializeField] Button readyButton;
-
-
-        OurNetworkManager networkManager;
-
-        // Flags
-        bool hasCharacterSelectScreenShown = false;
-
-        void Start()
-        {
-            networkManager = OurNetworkManager.instance;
-
-            if (startSinglePlayerOnStart) {
-                networkManager.StartSinglePlayer();
-                networkManager.InitializePlayers(new Vector3(0, 2, 0));
-                debugStartGameContainer.SetActive(false);
-                return;
-            }
-
-            if (NetworkServer.active)
-            {
-                debugStartGameContainer.SetActive(false);
-                characterSelectScreenContainer.SetActive(true);
-            }
-        }
-
-        // Called by the DebugStart Game Screen
-        public void DebugHostGame()
-        {
-            networkManager.StartHost();
-            ShowCharacterSelectScreen();
-            debugStartGameContainer.SetActive(false);
-        }
-
-        // Called by the DebugStart Game Screen
-        public void DebugTryJoinGame()
-        {
-            networkManager.StartClient();
-            ShowCharacterSelectScreen();
-            debugStartGameContainer.SetActive(false);
-        }
-
-        public void StartGame() // Spawn players, etc
-        {
-            if (!NetworkServer.active) networkManager.StartHost();
-
-            if (isServer)
-            {
-                print("is server; initializing players");
-                OurNetworkManager.instance.InitializePlayers(new Vector3(0, 5, 0));
-            }
-        }
-
-
-        #region CharacterSelect Screen
-
-
-        public void ShowCharacterSelectScreen()
-        {
-            if (hasCharacterSelectScreenShown) return;
-
-            if (NetworkServer.active)
-            {
-                characterSelectScreenContainer.SetActive(true);
-            }
-
-            selectMinisButton.onClick.AddListener(() =>
-            {
-                
-            });
-
-            readyButton.onClick.AddListener(() =>
-            {
-                characterSelectScreenContainer.SetActive(false);
-                StartGame();
-            });
-            
-            characterSelectScreenContainer.SetActive(true);
-
-            hasCharacterSelectScreenShown = true;
+        public enum CharacterType {
+            Max,
+            Mini,
         }
         
+
+
+        public GameObject CurrentCharacter
+        {
+            get
+            {
+                if (NetworkClient.localPlayer) return NetworkClient.localPlayer.gameObject;
+
+                return null;
+            }
+        }
+
+
+
+        private void Start()
+        {
+            if (NetworkServer.active)
+            {
+                if (NetworkManager.singleton.IsMultiplayer) InitializeMultiplayer();
+                else InitializeSingleplayer();
+            }
+        }
+
+        private GameObject GetCharacterPrefabFromCharacterType(CharacterType characterType)
+        {
+            return characterType switch
+            {
+                CharacterType.Max => maxPrefab,
+                CharacterType.Mini => miniPrefab,
+                _ => null,
+            };
+        }
+
+        #region Singleplayer
+
+        private void InitializeSingleplayer()
+        {
+            Debug.Log("Initializing Singleplayer...");
+            GameObject playerCharacter = Instantiate(GetCharacterPrefabFromCharacterType(singleplayerStartingCharacter));
+            NetworkServer.ReplacePlayerForConnection(NetworkServer.connections[0], playerCharacter, ReplacePlayerOptions.KeepAuthority);
+            Debug.Log("Singleplayer Initialization Finished!");
+        }
+
+        #endregion
+
+        #region Multiplayer
+
+        private void InitializeMultiplayer()
+        {
+            Debug.Log("Initializing Multiplayer...");
+            InitializeMultiplayerPlayers();
+            Debug.Log("Multiplayer Initialization Finished!");
+        }
+
+        private void InitializeMultiplayerPlayers()
+        {
+            GameObject maxPlayerCharacter = Instantiate(maxPrefab);
+            NetworkServer.ReplacePlayerForConnection(NetworkManager.singleton.MaxPlayerConnection, maxPlayerCharacter, ReplacePlayerOptions.KeepAuthority);
+
+            GameObject miniPlayerCharacter = Instantiate(miniPrefab);
+            NetworkServer.ReplacePlayerForConnection(NetworkManager.singleton.MiniPlayerConnection, miniPlayerCharacter, ReplacePlayerOptions.KeepAuthority);
+        }
+
         #endregion
     }
 }
