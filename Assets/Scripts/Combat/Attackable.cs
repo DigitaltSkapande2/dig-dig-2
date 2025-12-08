@@ -1,10 +1,12 @@
 using System.Collections.Generic;
+using Mirror;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace DigDig2
 {
-    public class Attackable : MonoBehaviour
+    [RequireComponent(typeof(NetworkIdentity))]
+    public class Attackable : NetworkBehaviour
     {
         [Tooltip("Duration of invincibility after a hit.")]
         [SerializeField] private float invincibilityTime = 0.05f;
@@ -40,12 +42,16 @@ namespace DigDig2
 
         private void Update()
         {
-            if (invincibilityTimer > 0)
-            {
-                invincibilityTimer -= Time.deltaTime;
-            }
+            if (isServer)
+			{
+				if (invincibilityTimer > 0)
+                {
+                    invincibilityTimer -= Time.deltaTime;
+                }
+			}
         }
 
+        [Server]
         public void Hit(Attack attack, Attacker attacker = null)
         {
             if (invincibilityTimer > 0) return;
@@ -54,8 +60,14 @@ namespace DigDig2
             if (attack) attack.Hit(attacker, this, healthComponent, entityCharacterController);
 
             hit.Invoke();
-            PlayHitEffect();
+            RpcHit();
         }
+        [ClientRpc]
+        private void RpcHit()
+		{
+            hit.Invoke();
+			PlayHitEffect();
+		}
 
         public bool IsInvincible()
         {

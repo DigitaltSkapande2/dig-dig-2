@@ -25,7 +25,7 @@ namespace DigDig2
 		
 		public override void Trigger(Attacker attacker, AttackType attackGroup, float chargeTime)
 		{
-			attacker.PlayAnimation(animationStateName);
+			attacker.RpcPlayAnimation(animationStateName);
 			attacker.AddAttackHitbox(this, animationStateName, Vector3.one, attacker.GetBindableTransform(0));
 		}
 

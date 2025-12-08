@@ -65,6 +65,7 @@ namespace DigDig2
 			OnCooldown,
 		}
 
+		private EntityCharacterController entityCharacterController;
 		private Animator animator;
 		private Attackable attackable;
 
@@ -72,13 +73,14 @@ namespace DigDig2
 
 		private void Awake()
 		{
+			entityCharacterController = GetComponent<EntityCharacterController>();
 			animator = GetComponent<Animator>();
 			TryGetComponent(out attackable);
 		}
 
 		private void Update()
 		{
-			if (authority)
+			if (isServer)
 				if ((state == CombatState.Idle || attackRequestChain > 0) && !attackRequestProcessed)
 				{
 					if (heldAttackType != null)
@@ -122,7 +124,7 @@ namespace DigDig2
 
         private void FixedUpdate()
 		{
-			if (authority)
+			if (isServer)
 			{
 				foreach (KeyValuePair<string, AttackHitbox> attackHitboxPair in activeAttackHitboxes)
 				{
@@ -144,15 +146,12 @@ namespace DigDig2
 
 		private void OnDrawGizmos()
 		{
-			if (authority)
+			foreach (KeyValuePair<string, AttackHitbox> attackHitboxPair in activeAttackHitboxes)
 			{
-				foreach (KeyValuePair<string, AttackHitbox> attackHitboxPair in activeAttackHitboxes)
-				{
-					AttackHitbox attackHitbox = attackHitboxPair.Value;
-					Gizmos.matrix = attackHitbox.boundTransform.localToWorldMatrix;
-					Gizmos.color = Color.red;
-					Gizmos.DrawWireCube(Vector3.zero, attackHitbox.size);
-				}
+				AttackHitbox attackHitbox = attackHitboxPair.Value;
+				Gizmos.matrix = attackHitbox.boundTransform.localToWorldMatrix;
+				Gizmos.color = Color.red;
+				Gizmos.DrawWireCube(Vector3.zero, attackHitbox.size);
 			}
 		}
 
@@ -175,10 +174,14 @@ namespace DigDig2
 
 		#region Input
 
+		[Command]
+		public void ClientRequestAttackStart(int attackTypeIndex)
+		{
+			RequestAttackStart(attackTypeIndex);
+		}
+		[Server]
 		public void RequestAttackStart(int attackTypeIndex)
 		{
-			if (!authority) return;
-
 			heldAttackType = GetAttackTypeFromIndex(attackTypeIndex);
 
 			LogVerbose($"Attack request started. Held Attack Type: {heldAttackType}");
@@ -199,10 +202,14 @@ namespace DigDig2
 			attackRequestProcessed = false;
 		}
 		
+		[Command]
+		public void ClientRequestAttackEnd()
+		{
+			RequestAttackEnd();
+		}
+		[Server]
 		public void RequestAttackEnd()
 		{
-			if (!authority) return;
-
 			// Perform the Charged attack (if there is one and it's valid)
 			if (IsChargeValid()) PerformAttack(heldAttackType);
 
@@ -231,17 +238,17 @@ namespace DigDig2
 			state = CombatState.Charging;
 			chargeStartTime = Time.time;
 		}
-		public void EndAttackCharge()
+		private void EndAttackCharge()
 		{
 			if (!IsChargingAttack()) { Debug.LogError("Could not cancel attack charge, there is no attack being charged."); return; }
 
 			chargeStartTime = -1;
 		}
-		public bool IsChargingAttack()
+		private bool IsChargingAttack()
 		{
 			return chargeStartTime != -1;
 		}
-		public float GetAttackChargeTime()
+		private float GetAttackChargeTime()
 		{
 			if (!IsChargingAttack()) { LogWarningVerbose("There is no attack being charged."); return -1; }
 			return Time.time - chargeStartTime;
@@ -291,12 +298,12 @@ namespace DigDig2
 			state = CombatState.Performing;
 			performanceStartTime = Time.time;
 
-			GetComponent<EntityCharacterController>().AttackSlowdown(currentPerformingAttack.AttackDuration);
+			entityCharacterController.AttackSlowdown(currentPerformingAttack.AttackDuration);
 
 			lastPerformedAttackType = currentPerformingAttackType;
 			lastPerformedAttack = currentPerformingAttack;
 		}
-		public void EndAttack(bool applyCooldown = false, bool ignoreWarning = false)
+		private void EndAttack(bool applyCooldown = false, bool ignoreWarning = false)
 		{
 			if (currentPerformingAttackType == null)
 			{
@@ -312,11 +319,11 @@ namespace DigDig2
 
 			LogVerbose("Attack ended!");
 		}
-		public bool IsPerformingAttack()
+		private bool IsPerformingAttack()
 		{
 			return currentPerformingAttackType != null;
 		}
-		public float GetAttackPerformanceTime()
+		private float GetAttackPerformanceTime()
 		{
 			return Time.time - performanceStartTime;
 		}
@@ -325,7 +332,7 @@ namespace DigDig2
 
 		#region Chaining
 
-		public bool HasMetChainRequirement(AttackType attackType)
+		private bool HasMetChainRequirement(AttackType attackType)
 		{
 			LogVerbose("Checking attack chain requirement:");
 			LogVerbose($"> Is it the same as the last? {lastPerformedAttackType == attackType}");
@@ -346,7 +353,8 @@ namespace DigDig2
 
 		#region Animation
 
-		public void PlayAnimation(string animationStateName)
+		[ClientRpc]
+		public void RpcPlayAnimation(string animationStateName)
 		{
 			animator.Play(animationStateName, 0, 0);
 		}
@@ -355,6 +363,7 @@ namespace DigDig2
 
 		#region Attack Hit Detection
 
+		[Server]
 		public void AddAttackHitbox(Attack attack, string id, Vector3 size, Transform boundTransform)
 		{
 			if (!authority) return;
@@ -370,6 +379,7 @@ namespace DigDig2
 			activeAttackHitboxes[id] = newAttackHitbox;
 		}
 
+		[Server]
 		public void RemoveAttackHitbox(string id)
 		{
 			if (!authority) return;

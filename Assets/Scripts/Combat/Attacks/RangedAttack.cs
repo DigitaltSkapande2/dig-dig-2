@@ -29,7 +29,7 @@ namespace DigDig2
 		
 		public override void Trigger(Attacker attacker, AttackType attackGroup, float chargeTime)
 		{
-            attacker.PlayAnimation(animationStateName);
+            attacker.RpcPlayAnimation(animationStateName);
             Vector3 forward = attacker.GetComponent<EntityCharacterController>().GetForwardVector();
             Projectile projectile = Instantiate(projectilePrefab, attacker.transform.position + forward, quaternion.LookRotation(forward, Vector3.up)).GetComponent<Projectile>();
             string id = Time.time.ToString();

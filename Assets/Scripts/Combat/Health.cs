@@ -1,10 +1,11 @@
+using Mirror;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace DigDig2
 {
-    [RequireComponent(typeof(Attackable))]
-    public class Health : MonoBehaviour
+    [RequireComponent(typeof(Attackable), typeof(NetworkIdentity))]
+    public class Health : NetworkBehaviour
     {
         [Tooltip("Starting health and eventual cap for healing.")]
         [SerializeField] private int maxHealthPoints = 1;
@@ -33,34 +34,50 @@ namespace DigDig2
 
         private void Start()
         {
-            SetHealth(healthPoints);
+            if (isServer) SetHealth(healthPoints);
         }
 
+        [Server]
         public void Damage(int damage)
         {
             if (!enabled) return;
             SetHealth(healthPoints - damage);
         }
+        [Server]
         public void Heal(int amount)
         {
             if (!enabled) return;
             SetHealth(healthPoints + amount);
         }
 
+        [Server]
         public void SetHealth(int newHealth)
         {
             healthPoints = Mathf.Clamp(newHealth, 0, maxHealthPoints);
+            RpcSetHealth(healthPoints);
             CheckState();
         }
+        [ClientRpc]
+        private void RpcSetHealth(int newHealth)
+		{
+			healthPoints = newHealth;
+		}
 
+        [Server]
         public void Kill()
         {
             healthPoints = 0;
 
             death.Invoke();
-            PlayDeathEffects();
+            RpcKill();
             Destroy(gameObject);
         }
+        [ClientRpc]
+        private void RpcKill()
+		{
+			death.Invoke();
+            PlayDeathEffects();
+		}
 
         private void CheckState()
         {
