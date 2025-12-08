@@ -376,6 +376,10 @@ PrefabInstance:
       value: NetworkManager
       objectReference: {fileID: 0}
     - target: {fileID: 8293981545127765460, guid: 9ab8b93fb5870fdbb8dcb96f5d3acf85, type: 3}
+      propertyPath: transport
+      value: 
+      objectReference: {fileID: 470419783}
+    - target: {fileID: 8293981545127765460, guid: 9ab8b93fb5870fdbb8dcb96f5d3acf85, type: 3}
       propertyPath: onlineScene
       value: 
       objectReference: {fileID: 0}
@@ -383,10 +387,14 @@ PrefabInstance:
       propertyPath: offlineScene
       value: 
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8409939387374728056, guid: 9ab8b93fb5870fdbb8dcb96f5d3acf85, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7554196915854692088, guid: 9ab8b93fb5870fdbb8dcb96f5d3acf85, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 470419783}
   m_SourcePrefab: {fileID: 100100000, guid: 9ab8b93fb5870fdbb8dcb96f5d3acf85, type: 3}
 --- !u!1 &345825680
 GameObject:
@@ -928,6 +936,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 422947030}
   m_CullTransparentMesh: 1
+--- !u!1 &470419779 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7554196915854692088, guid: 9ab8b93fb5870fdbb8dcb96f5d3acf85, type: 3}
+  m_PrefabInstance: {fileID: 299105497}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &470419783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 470419779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6e55fca1f4e4844593a3dd65a3ecb39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: FizzySteamworks::Mirror.FizzySteam.FizzySteamworks
+  Channels: 0200000001000000
+  Timeout: 25
+  AllowSteamRelay: 1
+  UseNextGenSteamNetworking: 1
 --- !u!1 &492172720
 GameObject:
   m_ObjectHideFlags: 0

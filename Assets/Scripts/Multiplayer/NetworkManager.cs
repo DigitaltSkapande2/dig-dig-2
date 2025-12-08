@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Events;
 using Mirror;
+using Steamworks;
 
 /*
 	Documentation: https://mirror-networking.gitbook.io/docs/components/network-manager
@@ -55,6 +56,7 @@ namespace DigDig2
         /// </summary>
         public override void Awake()
         {
+            SteamAPI.Init();
             base.Awake();
         }
 
@@ -88,6 +90,7 @@ namespace DigDig2
         public override void OnDestroy()
         {
             onDestroy?.Invoke();
+            SteamAPI.Shutdown();
             base.OnDestroy();
         }
 
