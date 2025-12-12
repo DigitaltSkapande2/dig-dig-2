@@ -3078,6 +3078,110 @@ MonoBehaviour:
       TangentIn:
         x: 0
         y: 0
+        z: -27.286558
+      TangentOut:
+        x: 0
+        y: 0
+        z: 27.286558
+      Rotation:
+        value:
+          x: 0.21372694
+          y: 0.6466816
+          z: -0.28602564
+          w: 0.67402756
+    - Position:
+        x: 7.24
+        y: 8.47
+        z: -13.15
+      TangentIn:
+        x: 0
+        y: 0
+        z: -20.430529
+      TangentOut:
+        x: 0
+        y: 0
+        z: 20.430529
+      Rotation:
+        value:
+          x: 0.01693907
+          y: 0.6211744
+          z: -0.12065438
+          w: 0.7741434
+    m_MetaData:
+    - Mode: 2
+      Tension: 0.5
+    - Mode: 2
+      Tension: 0.5
+    m_Closed: 0
+    m_IntData:
+      m_Data: []
+    m_FloatData:
+      m_Data: []
+    m_Float4Data:
+      m_Data: []
+    m_ObjectData:
+      m_Data: []
+  - m_EditModeType: 1
+    m_Knots:
+    - Position:
+        x: 7.24
+        y: 8.47
+        z: -13.15
+      TangentIn:
+        x: 0
+        y: 0
+        z: 0
+      TangentOut:
+        x: 0
+        y: 0
+        z: 0
+      Rotation:
+        value:
+          x: 0
+          y: 0.3724808
+          z: 0
+          w: 0.9280399
+    - Position:
+        x: 0
+        y: 8
+        z: 0
+      TangentIn:
+        x: 0
+        y: 0
+        z: 0
+      TangentOut:
+        x: 0
+        y: 0
+        z: 0
+      Rotation:
+        value:
+          x: 0
+          y: 0.3724808
+          z: 0
+          w: 0.9280399
+    m_MetaData:
+    - Mode: 1
+      Tension: 0.5
+    - Mode: 1
+      Tension: 0.5
+    m_Closed: 0
+    m_IntData:
+      m_Data: []
+    m_FloatData:
+      m_Data: []
+    m_Float4Data:
+      m_Data: []
+    m_ObjectData:
+      m_Data: []
+  - m_EditModeType: 1
+    m_Knots:
+    - Position:
+        x: 0
+        y: 8
+        z: 0
+      TangentIn:
+        x: 0
+        y: 0
         z: 0
       TangentOut:
         x: 0
@@ -7639,7 +7743,7 @@ Transform:
   m_GameObject: {fileID: 1942400548}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.9, y: -16.73, z: -57.94}
+  m_LocalPosition: {x: 8.64, y: -0.01, z: -7.31}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

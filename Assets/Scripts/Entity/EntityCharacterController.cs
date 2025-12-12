@@ -86,6 +86,11 @@ namespace DigDig2
 		[Tooltip("Like CharacterController.slopeLimit but for edge detection")]
 		[SerializeField] private float edgeScanSlopeLimit = 75f;
 
+		[Space(20)]
+
+		[Tooltip("How far the ground raycast should cast")]
+		[SerializeField] private float movingPlatformGroundRaycastDistance = 2f;
+
 		[Header("Combat")]
 
 		[Tooltip("Knockback multiplier")]
@@ -93,6 +98,9 @@ namespace DigDig2
 
 		[Tooltip("How fast you return to stationary after taking knockback")]
 		[SerializeField] private float knockbackFallofSpeed;
+
+		[Tooltip("How long the stun timer can be")]
+		[SerializeField] private float maxStunTime = 3f;
 
 		[Header("Visuals")]
 
@@ -118,6 +126,12 @@ namespace DigDig2
 		private Vector3 slopeSlideVelocity;
 
 		private Vector3 knockbackVelocity;
+
+		private float stunTimer = 0;
+
+		private Transform ground;
+		private Transform lastGround;
+		private Vector3 lastGroundPosition = Vector3.zero;
 
 		[SyncVar] private float targetLookRotation = 0f;
 
@@ -154,12 +168,13 @@ namespace DigDig2
 					// Movement
 					// NOTE: Reorder movement processing order here!
 					ProcessGravity();
-					ProcessMove();
+					if (stunTimer <= 0) ProcessMove();
 					ProcessSlope();
 					ProcessKnockback();
 
 					ApplyMovement();
 
+					ProcessMovingPlatform();
 					ProcessEdge();
 
 					// Visuals
@@ -175,6 +190,14 @@ namespace DigDig2
 			if (isClient)
 			{
 				RefreshVisualsRotation();
+			}
+
+			if (authority)
+			{
+				if (stunTimer != 0)
+				{
+					stunTimer = Mathf.Clamp(stunTimer - Time.deltaTime, 0, maxStunTime);
+				}
 			}
 		}
 
@@ -285,6 +308,38 @@ namespace DigDig2
 			}
 		}
 
+		private void ProcessMovingPlatform()
+		{
+			Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, movingPlatformGroundRaycastDistance, groundLayers);
+			if (hit.collider)
+			{
+				ground = hit.collider.transform;
+				if (ground == lastGround)
+				{
+					if (lastGroundPosition != Vector3.zero)
+					{
+						Vector3 movement = ground.position - lastGroundPosition;
+						characterController.Move(movement);
+
+						Debug.DrawLine(transform.position, transform.position + movement * 20, Color.green);
+					}
+				}
+				else
+				{
+					lastGroundPosition = Vector3.zero;
+				}
+
+				lastGroundPosition = ground.position;
+			}
+			else
+			{
+				ground = null;
+				lastGroundPosition = Vector3.zero;
+			}
+
+			lastGround = ground;
+		}
+
 		// Add velocity to CharacterController
 		private void ApplyMovement(bool isFixedUpdate = false)
 		{
@@ -347,9 +402,7 @@ namespace DigDig2
 		
 		public void Stun(float stunDuration)
 		{
-			if (stunDuration <= 0) return;
-
-			Debug.LogWarning("Stunning is not added yet!");
+			stunTimer += stunDuration;
         }
 
 		#endregion
