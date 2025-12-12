@@ -86,6 +86,11 @@ namespace DigDig2
 		[Tooltip("Like CharacterController.slopeLimit but for edge detection")]
 		[SerializeField] private float edgeScanSlopeLimit = 75f;
 
+		[Space(20)]
+
+		[Tooltip("How far the ground raycast should cast")]
+		[SerializeField] private float movingPlatformGroundRaycastDistance = 2f;
+
 		[Header("Combat")]
 
 		[Tooltip("Knockback multiplier")]
@@ -123,6 +128,10 @@ namespace DigDig2
 		private Vector3 knockbackVelocity;
 
 		private float stunTimer = 0;
+
+		private Transform ground;
+		private Transform lastGround;
+		private Vector3 lastGroundPosition = Vector3.zero;
 
 		[SyncVar] private float targetLookRotation = 0f;
 
@@ -165,6 +174,7 @@ namespace DigDig2
 
 					ApplyMovement();
 
+					ProcessMovingPlatform();
 					ProcessEdge();
 
 					// Visuals
@@ -296,6 +306,38 @@ namespace DigDig2
 				characterController.Move(adjustment);
 				Debug.DrawRay(transform.position, adjustment, Color.red, 0.01f, true);
 			}
+		}
+
+		private void ProcessMovingPlatform()
+		{
+			Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, movingPlatformGroundRaycastDistance, groundLayers);
+			if (hit.collider)
+			{
+				ground = hit.collider.transform;
+				if (ground == lastGround)
+				{
+					if (lastGroundPosition != Vector3.zero)
+					{
+						Vector3 movement = ground.position - lastGroundPosition;
+						characterController.Move(movement);
+
+						Debug.DrawLine(transform.position, transform.position + movement * 20, Color.green);
+					}
+				}
+				else
+				{
+					lastGroundPosition = Vector3.zero;
+				}
+
+				lastGroundPosition = ground.position;
+			}
+			else
+			{
+				ground = null;
+				lastGroundPosition = Vector3.zero;
+			}
+
+			lastGround = ground;
 		}
 
 		// Add velocity to CharacterController
