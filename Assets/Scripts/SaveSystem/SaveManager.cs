@@ -9,11 +9,6 @@ namespace DigDig2
 {
     public class SaveManager : MonoBehaviour
     {
-        private static readonly List<Type> blacklistedTypes = new List<Type>()
-        {
-            typeof(NetworkIdentity),
-        };
-
         private static UnityEvent save = new();
         private static UnityEvent load = new();
 
