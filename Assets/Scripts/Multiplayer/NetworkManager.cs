@@ -6,6 +6,7 @@ using Mirror;
 using Steamworks;
 using Mirror.FizzySteam;
 using Edgegap;
+using System.Net.Mail;
 
 /*
 	Documentation: https://mirror-networking.gitbook.io/docs/components/network-manager
@@ -52,6 +53,7 @@ namespace DigDig2
         protected Callback<LobbyCreated_t> lobbyCreated;
         protected Callback<GameLobbyJoinRequested_t> gameLobbyJoinRequested;
         protected Callback<LobbyEnter_t> lobbyEntered;
+        private bool steamInitialized = false;
 
         // Overrides the base singleton so we don't have to cast to this type everywhere.
         public static new NetworkManager singleton => (NetworkManager)Mirror.NetworkManager.singleton;
@@ -73,6 +75,11 @@ namespace DigDig2
             base.OnValidate();
         }
 
+        public void OnEnable()
+        {
+            
+        }
+
         /// <summary>
         /// Runs on both Server and Client
         /// Networking is NOT initialized when this fires
@@ -88,6 +95,14 @@ namespace DigDig2
         public override void LateUpdate()
         {
             base.LateUpdate();
+            if (steamInitialized)
+            {
+                try {
+                    SteamAPI.RunCallbacks();
+                } catch (Exception ex) {
+                    Debug.LogError($"SteamAPI.RunCallbacks() threw: {ex}");
+                }
+            }
         }
 
         /// <summary>
@@ -107,6 +122,7 @@ namespace DigDig2
         public void StartHost(bool isMultiplayer = true)
         {
             IsMultiplayer = isMultiplayer;
+            StartSteamLobby();
             base.StartHost();
         }
 
@@ -374,8 +390,19 @@ namespace DigDig2
 
         private void InitializeSteam()
         {
-            if (SteamAPI.IsSteamRunning()) Debug.LogError("Steam not running");
-            SteamAPI.Init();
+            Debug.Log("initializing steam");
+            if (!SteamAPI.IsSteamRunning()) Debug.LogError("Steam not running");
+            try
+            {
+                steamInitialized = SteamAPI.Init();
+            }
+            catch(Exception e) 
+            {
+                Debug.LogError("Failed to initialize steamAPI: " + e);
+                return;
+            }
+            
+
             lobbyCreated = Callback<LobbyCreated_t>.Create(OnSteamLobbyCreated);
             gameLobbyJoinRequested = Callback<GameLobbyJoinRequested_t>.Create(OnSteamLobbyJoinRequested);
             lobbyEntered = Callback<LobbyEnter_t>.Create(OnSteamLobbyEntered);
@@ -387,13 +414,18 @@ namespace DigDig2
             gameLobbyJoinRequested?.Dispose();
             lobbyEntered?.Dispose();
 
-            SteamAPI.Shutdown();
+            if (steamInitialized) {
+                SteamAPI.Shutdown();
+                steamInitialized = false;
+            }
             //SteamMatchmaking.LeaveLobby();   
         }
-
+        bool isSteamHost = false;
         private void StartSteamLobby()
         {
+            Debug.Log("Starting lobby....");
             SteamMatchmaking.CreateLobby(ELobbyType.k_ELobbyTypeFriendsOnly, 2);
+            isSteamHost = true;
         }
 
         protected void OnSteamLobbyCreated(LobbyCreated_t pCallback)
@@ -413,6 +445,9 @@ namespace DigDig2
         protected void OnSteamLobbyEntered(LobbyEnter_t pCallback)
         {
             Debug.Log("LOBBY ENTERED");
+            if (isSteamHost) return;
+            networkAddress = pCallback.m_ulSteamIDLobby.ToString();
+            StartClient();
         }
         
         #endregion
