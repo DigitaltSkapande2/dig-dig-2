@@ -440,14 +440,15 @@ namespace DigDig2
         protected void OnSteamLobbyJoinRequested(GameLobbyJoinRequested_t pCallback)
         {
             Debug.Log($"LOBBY REQUEST RECIEVED {SteamFriends.GetFriendPersonaName(pCallback.m_steamIDFriend)}");
+            networkAddress = ((ulong)pCallback.m_steamIDLobby).ToString();
+            StartClient();
+            
+
         }
 
         protected void OnSteamLobbyEntered(LobbyEnter_t pCallback)
         {
             Debug.Log("LOBBY ENTERED");
-            if (isSteamHost) return;
-            networkAddress = pCallback.m_ulSteamIDLobby.ToString();
-            StartClient();
         }
         
         #endregion
