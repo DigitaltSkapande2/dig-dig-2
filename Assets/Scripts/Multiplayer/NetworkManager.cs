@@ -4,6 +4,8 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Events;
 using Mirror;
 using Steamworks;
+using Mirror.FizzySteam;
+using Edgegap;
 
 /*
 	Documentation: https://mirror-networking.gitbook.io/docs/components/network-manager
@@ -47,6 +49,10 @@ namespace DigDig2
         public NetworkConnectionToClient MiniPlayerConnection { get; private set; }
         public bool CharactersSelected { get; private set; } = false;
 
+        protected Callback<LobbyCreated_t> lobbyCreated;
+        protected Callback<GameLobbyJoinRequested_t> gameLobbyJoinRequested;
+        protected Callback<LobbyEnter_t> lobbyEntered;
+
         // Overrides the base singleton so we don't have to cast to this type everywhere.
         public static new NetworkManager singleton => (NetworkManager)Mirror.NetworkManager.singleton;
 
@@ -56,7 +62,7 @@ namespace DigDig2
         /// </summary>
         public override void Awake()
         {
-            SteamAPI.Init();
+            InitializeSteam();
             base.Awake();
         }
 
@@ -90,7 +96,7 @@ namespace DigDig2
         public override void OnDestroy()
         {
             onDestroy?.Invoke();
-            SteamAPI.Shutdown();
+            CleanupSteam();
             base.OnDestroy();
         }
 
@@ -363,6 +369,52 @@ namespace DigDig2
             MiniPlayerConnection = miniPlayerConnection;
         }
 
+        #endregion
+        #region Steam
+
+        private void InitializeSteam()
+        {
+            if (SteamAPI.IsSteamRunning()) Debug.LogError("Steam not running");
+            SteamAPI.Init();
+            lobbyCreated = Callback<LobbyCreated_t>.Create(OnSteamLobbyCreated);
+            gameLobbyJoinRequested = Callback<GameLobbyJoinRequested_t>.Create(OnSteamLobbyJoinRequested);
+            lobbyEntered = Callback<LobbyEnter_t>.Create(OnSteamLobbyEntered);
+        }
+
+        private void CleanupSteam()
+        {
+            lobbyCreated?.Dispose();
+            gameLobbyJoinRequested?.Dispose();
+            lobbyEntered?.Dispose();
+
+            SteamAPI.Shutdown();
+            //SteamMatchmaking.LeaveLobby();   
+        }
+
+        private void StartSteamLobby()
+        {
+            SteamMatchmaking.CreateLobby(ELobbyType.k_ELobbyTypeFriendsOnly, 2);
+        }
+
+        protected void OnSteamLobbyCreated(LobbyCreated_t pCallback)
+        {
+            if (pCallback.m_eResult == EResult.k_EResultOK) {
+                Debug.Log("Lobby created successfully!");
+            } else {
+                Debug.Log("Failed to create lobby.");
+            }
+        }
+
+        protected void OnSteamLobbyJoinRequested(GameLobbyJoinRequested_t pCallback)
+        {
+            Debug.Log($"LOBBY REQUEST RECIEVED {SteamFriends.GetFriendPersonaName(pCallback.m_steamIDFriend)}");
+        }
+
+        protected void OnSteamLobbyEntered(LobbyEnter_t pCallback)
+        {
+            Debug.Log("LOBBY ENTERED");
+        }
+        
         #endregion
     }
 }
