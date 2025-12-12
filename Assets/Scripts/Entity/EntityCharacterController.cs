@@ -94,6 +94,9 @@ namespace DigDig2
 		[Tooltip("How fast you return to stationary after taking knockback")]
 		[SerializeField] private float knockbackFallofSpeed;
 
+		[Tooltip("How long the stun timer can be")]
+		[SerializeField] private float maxStunTime = 3f;
+
 		[Header("Visuals")]
 
 		[Tooltip("Add the GameObject which holds all of the visuals here.")]
@@ -118,6 +121,8 @@ namespace DigDig2
 		private Vector3 slopeSlideVelocity;
 
 		private Vector3 knockbackVelocity;
+
+		private float stunTimer = 0;
 
 		[SyncVar] private float targetLookRotation = 0f;
 
@@ -154,7 +159,7 @@ namespace DigDig2
 					// Movement
 					// NOTE: Reorder movement processing order here!
 					ProcessGravity();
-					ProcessMove();
+					if (stunTimer <= 0) ProcessMove();
 					ProcessSlope();
 					ProcessKnockback();
 
@@ -175,6 +180,14 @@ namespace DigDig2
 			if (isClient)
 			{
 				RefreshVisualsRotation();
+			}
+
+			if (authority)
+			{
+				if (stunTimer != 0)
+				{
+					stunTimer = Mathf.Clamp(stunTimer - Time.deltaTime, 0, maxStunTime);
+				}
 			}
 		}
 
@@ -347,9 +360,7 @@ namespace DigDig2
 		
 		public void Stun(float stunDuration)
 		{
-			if (stunDuration <= 0) return;
-
-			Debug.LogWarning("Stunning is not added yet!");
+			stunTimer += stunDuration;
         }
 
 		#endregion
