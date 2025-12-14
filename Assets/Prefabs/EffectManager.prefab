@@ -67,62 +67,10 @@ MonoBehaviour:
   syncInterval: 0
   volume: {fileID: 0}
   screenShakeIntensity:
-    curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    lowValue: 0.8
-    midValue: 1
-    highValue: 1.2
-  screenShakeDuration:
-    curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
     lowValue: 0.1
     midValue: 0.3
-    highValue: 0.5
-  chromaticAberrationIntensity:
+    highValue: 0.6
+  timeSlowEffect:
     curve:
       serializedVersion: 2
       m_Curve:
@@ -131,7 +79,7 @@ MonoBehaviour:
         value: 1
         inSlope: 0
         outSlope: 0
-        tangentMode: 0
+        tangentMode: 34
         weightedMode: 0
         inWeight: 0
         outWeight: 0
@@ -140,147 +88,73 @@ MonoBehaviour:
         value: 1
         inSlope: 0
         outSlope: 0
-        tangentMode: 0
+        tangentMode: 34
         weightedMode: 0
         inWeight: 0
         outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    lowValue: 0.1
-    midValue: 0.3
-    highValue: 0.9
-  chromaticAberrationDuration:
-    curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    lowValue: 0.1
-    midValue: 0.3
-    highValue: 0.5
-  bloomIntensity:
-    curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    lowValue: 0.1
-    midValue: 0.3
-    highValue: 0.9
-  bloomDuration:
-    curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    lowValue: 0.1
-    midValue: 0.3
-    highValue: 0.5
-  vignetteIntensity:
+    intensityDecoder:
+      lowValue: 0.3
+      midValue: 0.6
+      highValue: 0.9
+    durationDecoder:
+      lowValue: 0.3
+      midValue: 0.6
+      highValue: 0.9
+  zoomBounceEffect:
     curve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
         time: 0
         value: 0
-        inSlope: 2.9028435
-        outSlope: 2.9028435
-        tangentMode: 0
+        inSlope: 8.333334
+        outSlope: 8.333334
+        tangentMode: 34
         weightedMode: 0
         inWeight: 0
-        outWeight: 0.100728996
+        outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.13194785
-        value: 0.993528
-        inSlope: 0.00064388115
-        outSlope: 0.00064388115
+        time: 0.12
+        value: 1
+        inSlope: 0
+        outSlope: 0
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.95
-        value: 0.012048185
-        inSlope: -0.034490764
-        outSlope: -0.034490764
+        time: 1
+        value: 0
+        inSlope: 0.0035370018
+        outSlope: 0.0035370018
         tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.32416004
+        weightedMode: 1
+        inWeight: 0.62447625
         outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    lowValue: 0.02
-    midValue: 0.05
-    highValue: 0.1
-  vignetteDuration:
+    intensityDecoder:
+      lowValue: 0.3
+      midValue: -1
+      highValue: 0.9
+    durationDecoder:
+      lowValue: 0.3
+      midValue: 0.6
+      highValue: 0.9
+  chromaticAberrationEffect:
     curve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.016666412
-        value: 0.9507141
+        time: 0
+        value: 1
         inSlope: 0
         outSlope: 0
-        tangentMode: 0
+        tangentMode: 34
         weightedMode: 0
         inWeight: 0
         outWeight: 0
@@ -289,13 +163,93 @@ MonoBehaviour:
         value: 1
         inSlope: 0
         outSlope: 0
-        tangentMode: 0
+        tangentMode: 34
         weightedMode: 0
         inWeight: 0
         outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    lowValue: 0.3
-    midValue: 0.5
-    highValue: 0.7
+    intensityDecoder:
+      lowValue: 0.3
+      midValue: 0.6
+      highValue: 0.9
+    durationDecoder:
+      lowValue: 0.3
+      midValue: 0.6
+      highValue: 0.9
+  bloomEffect:
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    intensityDecoder:
+      lowValue: 0.3
+      midValue: 0.6
+      highValue: 0.9
+    durationDecoder:
+      lowValue: 0.3
+      midValue: 0.6
+      highValue: 0.9
+  vignettePulseEffect:
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 8.333334
+        outSlope: 8.333334
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.12
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0.0035370018
+        outSlope: 0.0035370018
+        tangentMode: 0
+        weightedMode: 1
+        inWeight: 0.62447625
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    intensityDecoder:
+      lowValue: 0.03
+      midValue: 0.1
+      highValue: 0.2
+    durationDecoder:
+      lowValue: 0.3
+      midValue: 0.6
+      highValue: 0.9

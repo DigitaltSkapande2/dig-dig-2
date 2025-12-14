@@ -34,8 +34,8 @@ namespace DigDig2
 
         private void Awake()
         {
-            healthComponent = GetComponent<Health>();
-            entityCharacterController = GetComponent<EntityCharacterController>();
+            TryGetComponent(out healthComponent);
+            TryGetComponent(out entityCharacterController);
         }
 
         private void Update()

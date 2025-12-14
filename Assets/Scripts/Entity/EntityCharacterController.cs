@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Mirror;
 using System.Collections;
-using Mirror.BouncyCastle.Crypto.Modes;
+using System;
 
 namespace DigDig2
 {
@@ -108,7 +108,8 @@ namespace DigDig2
 		// Movement
 		private CharacterController characterController;
 
-		[SerializeField] private Vector3 velocity;
+		private Vector3 velocity;
+		private Animator animator;
 
 		private Vector3 moveVector;
 
@@ -120,11 +121,18 @@ namespace DigDig2
 
 		[SyncVar] private float targetLookRotation = 0f;
 
+		private enum PlayerState
+        {
+            Idle,
+			Sprinting,
+        }
 
+		private PlayerState state;
 
 		private void Awake()
 		{
 			characterController = GetComponent<CharacterController>();
+			animator = GetComponentInChildren<Animator>();
 		}
 
 		private void Start()
@@ -139,7 +147,7 @@ namespace DigDig2
 		{
 			if (!frozen)
 			{
-				if (isLocalPlayer || isServer)
+				if (authority)
 				{
 					Debug.DrawLine(transform.position, transform.position + GetForwardVector(), Color.red);
 
@@ -156,18 +164,22 @@ namespace DigDig2
 
 					// Visuals
 					UpdateVisualsRotation();
+					UpdateAnimation();
 				}
+				else
+                {
+                    frozen = true;
+                }
+			}
 
-				if (isClient)
-				{
-					RefreshVisualsRotation();
-				}
+			if (isClient)
+			{
+				RefreshVisualsRotation();
 			}
 		}
 
 		#region Movement
 
-		[Client]
 		private void ProcessGravity()
 		{
 			if (characterController.isGrounded)
@@ -181,7 +193,6 @@ namespace DigDig2
 		}
 
 		// Add move/walk/run to current velocity
-		[Client]
 		private void ProcessMove()
 		{
 			slowDownTimer -= Time.deltaTime;
@@ -195,7 +206,6 @@ namespace DigDig2
 			velocity = new(moveVector.x, velocity.y, moveVector.z);
 		}
 
-		[Client]
 		private void ProcessSlope()
 		{
 			// Raycast for slope
@@ -224,14 +234,12 @@ namespace DigDig2
 			velocity += slopeSlideVelocity;
 		}
 
-		[Client]
 		private void ProcessKnockback()
 		{
 			velocity += knockbackVelocity;
 			knockbackVelocity = Vector3.Lerp(knockbackVelocity, Vector3.zero, knockbackFallofSpeed * Time.deltaTime);
 		}
 
-		[Client]
 		private void ProcessEdge()
 		{
 			Dictionary<Vector3, float> edgeAdjustments = new();
@@ -278,7 +286,6 @@ namespace DigDig2
 		}
 
 		// Add velocity to CharacterController
-		[Client]
 		private void ApplyMovement(bool isFixedUpdate = false)
 		{
 			// Set deltaTime to 1 if method is called by FixedUpdate() message, if not, set to real delta time.
@@ -351,7 +358,7 @@ namespace DigDig2
 
 		private void UpdateVisualsRotation()
 		{
-			if (inputMoveVector.magnitude > 0 && !frozen && !automaticLookRotationLocked)
+			if (inputMoveVector.magnitude > 0 && !automaticLookRotationLocked)
 			{
 				targetLookRotation = Vector3.SignedAngle(transform.forward, inputMoveVector, transform.up);
 			}
@@ -364,6 +371,25 @@ namespace DigDig2
 			if (useLerp) visualsParent.transform.rotation = Quaternion.Lerp(visualsParent.transform.rotation, targetRotation, Time.deltaTime * visualsRotationSpeed);
 			else visualsParent.transform.rotation = targetRotation;
 		}
+
+		private void UpdateAnimation()
+        {
+            if (new Vector3(inputMoveVector.x, 0, inputMoveVector.z).magnitude > 0f)
+            {
+				if (state == PlayerState.Sprinting) return;
+
+                animator.CrossFadeInFixedTime("Sprint", 0.1f, 0);
+				animator.CrossFadeInFixedTime("SwordSprint", 0.1f, 1);
+				state = PlayerState.Sprinting;
+				return;
+            }
+
+			if (state == PlayerState.Idle) return;
+
+			state = PlayerState.Idle;
+			animator.CrossFadeInFixedTime("Idle", 0.1f, 0);
+			animator.CrossFadeInFixedTime("SwordIdle", 0.1f, 1);
+        }
 
 		public void LookTowards(Vector3 target)
 		{
