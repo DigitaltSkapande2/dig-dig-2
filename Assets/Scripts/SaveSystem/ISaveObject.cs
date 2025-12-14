@@ -2,10 +2,10 @@ using System;
 
 namespace DigDig2
 {
-    public interface ISaveObject
+    public struct SaveFile
     {
-        public void OnLoad();
-        public void OnSave();
+        string SaveName;
+        int checkPointID;
     }
 
 }
