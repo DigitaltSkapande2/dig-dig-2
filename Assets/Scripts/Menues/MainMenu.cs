@@ -49,7 +49,7 @@ namespace DigDig2
 
             await UniTask.WaitUntil(() => NetworkServer.active);
 
-            NetworkManager.singleton.ServerChangeScene("THEGameh");
+            NetworkManager.singleton.ServerChangeScene("ActuallyGameThisTime");
         }
         
         public void QuitGame()

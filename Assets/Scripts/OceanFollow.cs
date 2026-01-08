@@ -18,7 +18,7 @@ namespace DigDig2
         public void LowerWater(float amount)
         {
             targetY -= amount;
-            EffectManager.Instance.PlayScreenShake(EffectIntensity.mid);
+            EffectManager.Instance.PlayScreenShake(EffectIntensity.high);
         }
 
         void Start()

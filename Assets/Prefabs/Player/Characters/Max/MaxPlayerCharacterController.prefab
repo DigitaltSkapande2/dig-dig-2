@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 1195255877809228181}
   - component: {fileID: 1621004928720741753}
   - component: {fileID: 440174058403782015}
+  - component: {fileID: 2972415487380094671}
   m_Layer: 3
   m_Name: MaxPlayerCharacterController
   m_TagString: Player
@@ -156,7 +157,6 @@ MonoBehaviour:
   visualsParent: {fileID: 7251259118998489019}
   visualsRotationSpeed: 15
   automaticLookRotationLocked: 0
-  velocity: {x: 0, y: 0, z: 0}
 --- !u!114 &1459444429970365189
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -190,7 +190,6 @@ MonoBehaviour:
   rotation: {x: 0, y: 0, z: 0, w: 0}
   frustumSize: 0
   priorityLevel: 1
-  targetTransform: {fileID: 3368673675683253185}
 --- !u!114 &8839264378030991054
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -203,6 +202,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9159de995a6f4794dbddc1f67ad7f200, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Attacker
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
   attackTypes:
   - {fileID: 11400000, guid: c28775eabcff21659ba26ee1d8ff494e, type: 2}
   - {fileID: 11400000, guid: 15bb4810038dbd741919439570275ac5, type: 2}
@@ -259,6 +261,28 @@ MonoBehaviour:
   death:
     m_PersistentCalls:
       m_Calls: []
+--- !u!95 &2972415487380094671
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4442565222488509090}
+  m_Enabled: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9b8084bf1bad11e45a24668dd3af7c2f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &4933219036402945239
 GameObject:
   m_ObjectHideFlags: 0

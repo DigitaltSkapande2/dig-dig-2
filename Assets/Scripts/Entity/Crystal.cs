@@ -27,11 +27,19 @@ namespace DigDig2
         [Tooltip("The line prefab.")]
         [SerializeField] private GameObject linePrefab;
 
+        [Tooltip("How far the crystal bobs up and down")]
+        [SerializeField] float bobStrength;
+
+        [Tooltip("How fast the crystal bobs up and down")]
+        [SerializeField] float bobSpeed;
+
         private bool hasShield = true;
 
         private Attackable attackable;
         private Health health;
         private MeshRenderer crystalMeshRenderer;
+
+        Vector3 originalPos;
 
 
 
@@ -47,6 +55,8 @@ namespace DigDig2
         {
             if (crystal == null) { Debug.LogError("Crystal has not been assigned."); return; }
             crystalMeshRenderer = crystal.GetComponent<MeshRenderer>();
+
+            originalPos = transform.position;
 		}
 
 		private void OnHit()
@@ -61,6 +71,8 @@ namespace DigDig2
 
         private void Update()
         {
+            HeightBob();
+
             shield.SetActive(hasShield);
             health.enabled = !hasShield;
 
@@ -80,13 +92,22 @@ namespace DigDig2
                     Destroy(enemyConnection.lineDrawer);
                     enemyConnections.RemoveAt(index);
 
-                    if (enemyConnections.Count <= 0) hasShield = false;
-
                     continue;
                 }
 
                 enemyConnection.lineComponent.SetPositions(transform.position, enemyConnection.enemy.transform.position);
             }
+
+            if (enemyConnections.Count <= 0) hasShield = false;
+        }
+
+        void HeightBob()
+        {
+            float sine = Mathf.Sin(Time.time * bobSpeed);
+            float offset = sine * bobStrength;
+            offset += bobStrength;
+
+            crystal.transform.parent.position = originalPos + offset * Vector3.up;
         }
 	}
 }

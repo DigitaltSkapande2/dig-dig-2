@@ -159,6 +159,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Attackable
   invincibilityTime: 0
+  group: none
   hitEffects:
   - {fileID: 900025642660281898, guid: 565fe03e66511a84c95b09b1d718120e, type: 3}
   hit:
@@ -198,6 +199,8 @@ MonoBehaviour:
   crystal: {fileID: 2519747040841795025}
   shield: {fileID: 6672083611941458192}
   linePrefab: {fileID: 2737389797727682940, guid: 39c911a686f973c4fabe982863ac4797, type: 3}
+  bobStrength: 0.4
+  bobSpeed: 1.5
 --- !u!1 &6672083611941458192
 GameObject:
   m_ObjectHideFlags: 0
