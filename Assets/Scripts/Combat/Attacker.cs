@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace DigDig2
 {
-	[RequireComponent(typeof(EntityCharacterController), typeof(Animator), typeof(NetworkIdentity))]
+	[RequireComponent(typeof(EntityCharacterController), typeof(NetworkIdentity))]
 	public class Attacker : NetworkBehaviour
 	{
 		[Tooltip("The attack types that this entity has access to.")]
@@ -72,7 +72,7 @@ namespace DigDig2
 
 		private void Awake()
 		{
-			animator = GetComponent<Animator>();
+			animator = GetComponentInChildren<Animator>();
 			TryGetComponent(out attackable);
 		}
 
