@@ -18,7 +18,7 @@ namespace DigDig2
 		[SerializeField] private float chainTimeWindowBeforeAttackEnd = 0.5f;
 
 		[Tooltip("The \"anchor points\" that an attack can use to create hitboxes.")]
-		[SerializeField] private List<Transform> bindableTransforms = new();
+		[SerializeField] private List<BindableAttackHitbox> bindableAttackHitboxes = new();
 
 		[SerializeField] private bool verboseLogging = false;
 
@@ -46,15 +46,7 @@ namespace DigDig2
 		private bool attackRequestProcessed = true;
 		private int attackRequestChain = 0;
 
-		private Dictionary<string, AttackHitbox> activeAttackHitboxes = new();
-
-		public struct AttackHitbox
-		{
-			public Vector3 size;
-			public Transform boundTransform;
-			public Attack boundAttack;
-			public List<Attackable> attackedEnemies;
-		}
+		private Dictionary<string, BindableAttackHitbox> activeAttacks = new();
 
 		public enum CombatState
 		{
@@ -124,37 +116,12 @@ namespace DigDig2
 		{
 			if (authority)
 			{
-				foreach (KeyValuePair<string, AttackHitbox> attackHitboxPair in activeAttackHitboxes)
+				foreach (KeyValuePair<string, BindableAttackHitbox> activeAttack in activeAttacks)
 				{
-					AttackHitbox attackHitbox = attackHitboxPair.Value;
-					Collider[] colliders = Physics.OverlapBox(attackHitbox.boundTransform.position, attackHitbox.size / 2, attackHitbox.boundTransform.rotation); ;
-					foreach (Collider collider in colliders)
-					{
-						Attackable enemyAttackable = collider.GetComponent<Attackable>();
-						if (!enemyAttackable) continue;
-						if (enemyAttackable == attackable) continue;
-						if (attackHitbox.attackedEnemies.Contains(enemyAttackable)) continue;
-
-						attackHitbox.attackedEnemies.Add(enemyAttackable);
-						enemyAttackable.Hit(attackHitbox.boundAttack, this);
-					}
+					activeAttack.Value.Attack(activeAttack.Key);
 				}
 			}
         }
-
-		private void OnDrawGizmos()
-		{
-			if (authority)
-			{
-				foreach (KeyValuePair<string, AttackHitbox> attackHitboxPair in activeAttackHitboxes)
-				{
-					AttackHitbox attackHitbox = attackHitboxPair.Value;
-					Gizmos.matrix = attackHitbox.boundTransform.localToWorldMatrix;
-					Gizmos.color = Color.red;
-					Gizmos.DrawWireCube(Vector3.zero, attackHitbox.size);
-				}
-			}
-		}
 
 		private void LogVerbose(string message)
         {
@@ -349,42 +316,37 @@ namespace DigDig2
 		public void PlayAnimation(string animationStateName)
 		{
 			animator.Play(animationStateName, 0, 0);
+			animator.Play(animationStateName, 1, 0);
 		}
 
 		#endregion
 
 		#region Attack Hit Detection
 
-		public void AddAttackHitbox(Attack attack, string id, Vector3 size, Transform boundTransform)
+		public void StartHitboxAttack(Attack attack, string id, BindableAttackHitbox bindableAttackHitbox)
 		{
 			if (!authority) return;
 
-			AttackHitbox newAttackHitbox = new()
-			{
-				size = size,
-				boundTransform = boundTransform,
-				boundAttack = attack,
-				attackedEnemies = new()
-			};
-
-			activeAttackHitboxes[id] = newAttackHitbox;
+			bindableAttackHitbox.StartAttack(id, this, attack);
+			activeAttacks[id] = bindableAttackHitbox;
 		}
 
-		public void RemoveAttackHitbox(string id)
+		public void EndHitboxAttack(string id)
 		{
 			if (!authority) return;
 
-			if (activeAttackHitboxes.ContainsKey(id))
+			if (activeAttacks.ContainsKey(id))
 			{
-				activeAttackHitboxes.Remove(id);
+				activeAttacks[id].EndAttack(id);
+				activeAttacks.Remove(id);
 			}
 		}
 		
-		public Transform GetBindableTransform(int index)
+		public BindableAttackHitbox GetBindableAttackHitbox(int index)
 		{
 			if (!authority) return null;
 
-			return bindableTransforms[index];
+			return bindableAttackHitboxes[index];
         }
 
 		#endregion

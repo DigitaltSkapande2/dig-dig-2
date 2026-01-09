@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: LightMeleeAttack2
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.MeleeAttack
   attackDuration: 0.5
-  animationStateName: LightMeleeAttack2
+  animationStateName: LightAttack2
   damage: 1

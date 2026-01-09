@@ -34,7 +34,7 @@ namespace DigDig2
             Projectile projectile = Instantiate(projectilePrefab, attacker.transform.position + forward, quaternion.LookRotation(forward, Vector3.up)).GetComponent<Projectile>();
             string id = Time.time.ToString();
             projectile.SetInfo(id, attacker, projectileSpeed, projectileifetime);
-			attacker.AddAttackHitbox(this, id, Vector3.one, projectile.transform);
+			//attacker.AddAttackHitbox(this, id, Vector3.one, projectile.transform);
 		}
 
         public override void Ended(Attacker attacker, AttackType attackGroup)
