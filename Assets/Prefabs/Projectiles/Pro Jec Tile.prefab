@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5157565281986007563}
   - component: {fileID: 965105614557781448}
   - component: {fileID: 3043321307816187339}
+  - component: {fileID: 6157267824931984468}
   m_Layer: 0
   m_Name: Pro Jec Tile
   m_TagString: Untagged
@@ -102,3 +103,18 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &6157267824931984468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2449068539807903354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f34981b6f187eedd5a6b03e7f76f142b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DigDig2.BindableAttackHitbox
+  shape: 0
+  boxSize: {x: 1, y: 1, z: 1}
+  sphereRadius: 1
