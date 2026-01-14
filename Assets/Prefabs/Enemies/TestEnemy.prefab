@@ -189,6 +189,7 @@ GameObject:
   - component: {fileID: 8984983235129451501}
   - component: {fileID: 1989106006002429718}
   - component: {fileID: 3502649725806462910}
+  - component: {fileID: 6767000601036238277}
   m_Layer: 0
   m_Name: MeleeAttackHitbox
   m_TagString: Untagged
@@ -267,6 +268,21 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &6767000601036238277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4785428804303766485}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f34981b6f187eedd5a6b03e7f76f142b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DigDig2.BindableAttackHitbox
+  shape: 0
+  boxSize: {x: 1, y: 1, z: 1}
+  sphereRadius: 1
 --- !u!1 &5585277213094831744
 GameObject:
   m_ObjectHideFlags: 0
@@ -405,10 +421,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   moveSpeed: 5
-  sprintMoveSpeed: 7.5
+  attackMoveSpeed: 0.5
   inputMoveVector: {x: 0, y: 0, z: 0}
   moveInputVectorLerpSpeed: 10
-  isSprinting: 0
+  isAttacking: 0
   slopeStickPower: 0.1
   slopeSlidePower: 5
   slopeSlideDecaySpeed: 5
@@ -417,12 +433,13 @@ MonoBehaviour:
   edgeScanRadius: 0.6
   edgeScanDistance: 0.25
   edgeScanSlopeLimit: 75
+  movingPlatformGroundRaycastDistance: 2
   knockbackMultiplier: 1
   knockbackFallofSpeed: 2
+  maxStunTime: 3
   visualsParent: {fileID: 6919876567945806958}
   visualsRotationSpeed: 15
   automaticLookRotationLocked: 0
-  velocity: {x: 0, y: 0, z: 0}
 --- !u!114 &8863147776240216943
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -435,6 +452,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c835a598b542dcd0baf8ad9ea31b8a21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
   pathWaypointDistanceTolerance: 0.5
   movementState: 0
 --- !u!114 &5976209809697749524
@@ -477,12 +497,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9159de995a6f4794dbddc1f67ad7f200, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Attacker
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
   attackTypes:
   - {fileID: 11400000, guid: 554a7201707c2ce4087b6f692cb08e8b, type: 2}
   chainTimeWindowAfterAttackEnd: 0.05
   chainTimeWindowBeforeAttackEnd: 0.5
-  bindableTransforms:
-  - {fileID: 8984983235129451501}
+  bindableAttackHitboxes:
+  - {fileID: 6767000601036238277}
   verboseLogging: 0
 --- !u!114 &6435232985193985838
 MonoBehaviour:
