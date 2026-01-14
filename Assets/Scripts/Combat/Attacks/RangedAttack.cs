@@ -10,7 +10,7 @@ namespace DigDig2
         [SerializeField] private int damage = 1;
         [SerializeField] private GameObject projectilePrefab;
         [SerializeField] private float projectileSpeed;
-        [SerializeField] private float projectileifetime;
+        [SerializeField] private float projectileLifetime;
 
 		public override void ChargeStart(Attacker attacker, AttackType attackType)
 		{
@@ -29,12 +29,11 @@ namespace DigDig2
 		
 		public override void Trigger(Attacker attacker, AttackType attackGroup, float chargeTime)
 		{
+			Debug.Log("Hello i am a ranged attack");
             attacker.PlayAnimation(animationStateName);
             Vector3 forward = attacker.GetComponent<EntityCharacterController>().GetForwardVector();
             Projectile projectile = Instantiate(projectilePrefab, attacker.transform.position + forward, quaternion.LookRotation(forward, Vector3.up)).GetComponent<Projectile>();
-            string id = Time.time.ToString();
-            projectile.SetInfo(id, attacker, projectileSpeed, projectileifetime);
-			//attacker.AddAttackHitbox(this, id, Vector3.one, projectile.transform);
+            projectile.SetInfo(this, attacker, projectileSpeed, projectileLifetime);
 		}
 
         public override void Ended(Attacker attacker, AttackType attackGroup)
