@@ -36,7 +36,7 @@ namespace DigDig2
 
         private void DestroyProjectile()
         {
-            attacker.RemoveAttackHitbox(hitboxID);
+            attacker.EndHitboxAttack(hitboxID);
             Destroy(gameObject);
         }
     }
