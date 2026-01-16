@@ -11,6 +11,8 @@
   <Project Path="Mirror.Transports.csproj" />
   <Project Path="EncryptionTransportEditor.csproj" />
   <Project Path="Telepathy.csproj" />
+  <Project Path="EZhex1991.EZSoftBone.Editor.csproj" />
+  <Project Path="EZhex1991.EZSoftBone.csproj" />
   <Project Path="Mirror.CompilerSymbols.csproj" />
   <Project Path="Assembly-CSharp-Editor.csproj" />
 </Solution>
