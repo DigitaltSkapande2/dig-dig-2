@@ -3018,17 +3018,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca17ce0d9cb34a4458f62a525af60d12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.SaveManager
-  syncDirection: 0
-  syncMode: 0
-  syncInterval: 0
-  lastSyncTime: 0
-  <netIdentity>k__BackingField: {fileID: 0}
-  <ComponentIndex>k__BackingField: 0
-  syncVarDirtyBits: 0
-  syncObjectDirtyBits: 0
-  syncVarHookGuard: 0
-  SAVE_DIR: 
-  savePaths: []
 --- !u!114 &1993231489
 MonoBehaviour:
   m_ObjectHideFlags: 0
