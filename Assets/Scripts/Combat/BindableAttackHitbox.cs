@@ -17,13 +17,17 @@ namespace DigDig2
             public Attackable attackerAttackable;
             public Attack attack;
             public List<Attackable> attackedEntities;
+            public bool hasCheckedOnce;
+            public Vector3 lastPosition;
+            public Quaternion lastRotation;
         }
 
-        [SerializeField] AttackHitboxShape shape = AttackHitboxShape.Box;
-        [SerializeField] Vector3 boxSize = Vector3.one;
-        [SerializeField] float sphereRadius = 1.0f;
+        [SerializeField] private AttackHitboxShape shape = AttackHitboxShape.Box;
+        [SerializeField] private Vector3 boxSize = Vector3.one;
+        [SerializeField] private float sphereRadius = 1.0f;
+        [SerializeField] private float unitsPerIntermediateCheck = 0.001f;
 
-        Dictionary<string, AttackInfo> activeAttacks = new();
+        private Dictionary<string, AttackInfo> activeAttacks = new();
 
 
 
@@ -31,6 +35,7 @@ namespace DigDig2
         {
             Gizmos.matrix = transform.localToWorldMatrix;
             Gizmos.color = Color.red;
+            if (activeAttacks.Count > 0) Gizmos.color = Color.blue;
             switch ( shape )
             {
                 case AttackHitboxShape.Box: Gizmos.DrawWireCube(Vector3.zero, boxSize); break;
@@ -47,7 +52,8 @@ namespace DigDig2
                 attacker = attacker,
                 attackerAttackable = attackerAttackable,
                 attack = attack,
-                attackedEntities = new()
+                attackedEntities = new(),
+                hasCheckedOnce = false
             };
         }
 
@@ -55,23 +61,47 @@ namespace DigDig2
         {
             AttackInfo attackInfo = activeAttacks[attackId];
 
-            Collider[] colliders = shape switch
+            float distanceBetweenChecks = 1f;
+            int intermediateAttacks = 0;
+            Debug.Log("Has attacked once: " + attackInfo.hasCheckedOnce);
+            if (attackInfo.hasCheckedOnce)
             {
-                AttackHitboxShape.Box => Physics.OverlapBox(transform.position, boxSize / 2, transform.rotation),
-                AttackHitboxShape.Sphere => Physics.OverlapSphere(transform.position, sphereRadius),
-                _ => new Collider[0],
-            };
-
-            foreach (Collider collider in colliders)
-            {
-                Attackable enemyAttackable = collider.GetComponent<Attackable>();
-                if (!enemyAttackable) continue;
-                if (enemyAttackable == attackInfo.attackerAttackable) continue;
-                if (attackInfo.attackedEntities.Contains(enemyAttackable)) continue;
-
-                attackInfo.attackedEntities.Add(enemyAttackable);
-                enemyAttackable.Hit(attackInfo.attack, attackInfo.attacker);
+                distanceBetweenChecks = Vector3.Distance(attackInfo.lastPosition, transform.position);
+                intermediateAttacks = Mathf.CeilToInt(distanceBetweenChecks / unitsPerIntermediateCheck);
             }
+            
+            Debug.Log("Intermediate attacks: " + intermediateAttacks);
+            
+            for (int intermediateAttackIndex = 0;
+                 intermediateAttackIndex < intermediateAttacks;
+                 intermediateAttackIndex++)
+            {
+                Vector3 intermediatePosition = Vector3.Lerp(attackInfo.lastPosition, transform.position, (float)intermediateAttackIndex / intermediateAttacks);
+                Quaternion intermediateRotation = Quaternion.Slerp(attackInfo.lastRotation, transform.rotation, (float)intermediateAttackIndex / intermediateAttacks);
+                Debug.DrawLine(intermediatePosition, intermediatePosition + Vector3.up / 10f, Color.blue, 1f);
+                Collider[] colliders = shape switch
+                {
+                    AttackHitboxShape.Box => Physics.OverlapBox(intermediatePosition, boxSize / 2, intermediateRotation),
+                    AttackHitboxShape.Sphere => Physics.OverlapSphere(intermediatePosition, sphereRadius),
+                    _ => new Collider[0],
+                };
+
+                foreach (Collider collider in colliders)
+                {
+                    Attackable enemyAttackable = collider.GetComponent<Attackable>();
+                    if (!enemyAttackable) continue;
+                    if (enemyAttackable == attackInfo.attackerAttackable) continue;
+                    if (attackInfo.attackedEntities.Contains(enemyAttackable)) continue;
+
+                    attackInfo.attackedEntities.Add(enemyAttackable);
+                    enemyAttackable.Hit(attackInfo.attack, attackInfo.attacker);
+                }
+            }
+            
+            attackInfo.lastPosition = transform.position;
+            attackInfo.lastRotation = transform.rotation;
+            attackInfo.hasCheckedOnce = true;
+            activeAttacks[attackId] = attackInfo;
         }
 
         public void EndAttack(string attackId)
