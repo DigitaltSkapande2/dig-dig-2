@@ -1,6 +1,7 @@
 using Cysharp.Threading.Tasks;
 using Mirror;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace DigDig2
 {
@@ -49,7 +50,7 @@ namespace DigDig2
 
             await UniTask.WaitUntil(() => NetworkServer.active);
 
-            NetworkManager.singleton.ServerChangeScene("ActuallyGameThisTime");
+            NetworkManager.singleton.ServerChangeScene(SceneManager.GetSceneByBuildIndex(1).name);
         }
         
         public void QuitGame()

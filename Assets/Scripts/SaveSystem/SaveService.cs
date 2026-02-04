@@ -2,20 +2,22 @@ using System;
 using System.IO;
 using UnityEngine;
 using System.Collections.Generic;
-using Mirror;
-using UnityEngine.Events;
-using UnityEditor;
 using System.Linq;
 
 namespace DigDig2
 {
-    public static class SaveService 
+    public class SaveService : Singleton<SaveService> 
     {
         private const string SAVE_DIR = "saves";
-        private static Dictionary<string, ISaveable> registeredSavables = new();
-        private static SaveFile loadedSave;
-        private static bool hasLoadedSave; // FLAG
-        private static List<string> uniqueNames = new();
+        private Dictionary<string, ISaveable> registeredSavables = new();
+        private SaveFile loadedSave;
+        private bool hasLoadedSave; // FLAG
+        private List<string> uniqueNames = new();
+
+#if DEBUG
+        [Tooltip("Binds 1-6 keys, to loading saves AND shift+1-6 keys to Saving")]
+        [SerializeField] private bool debugKeybinds = false;
+#endif
 
         private struct SaveFile
         {
@@ -24,20 +26,60 @@ namespace DigDig2
             public Dictionary<string, object> state_data;
         }
 
+        #region UnityCallbacks
+
+#if DEBUG
+        void Update()
+        {
+            if (!debugKeybinds) return;
+            bool shift = Input.GetKeyDown(KeyCode.LeftShift);
+            string saveName = "";
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                saveName = "1";
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                saveName = "2";
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha3))
+            {
+                saveName = "3";
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha4))
+            {
+                saveName = "4";
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha5))
+            {
+                saveName = "5";
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha6))
+            {
+                saveName = "6";
+            }
+            
+            if (shift) SaveAllAndWriteToFile(saveName);
+            else LoadSave(saveName);
+        }
+#endif
+
+
+        #endregion
         #region Saving
 
-        public static void SaveAllAndWriteToFile()
+        public void SaveAllAndWriteToFile(string saveName = "")
         {
             SaveAll();
-            WriteSaveToFile();
+            WriteSaveToFile(saveName);
         }
 
-        public static void WriteSaveToFile()
+        public void WriteSaveToFile(string saveName = "")
         {
-            FileSystem.WriteDataToFile(loadedSave, loadedSave.saveName);
+            FileSystem.WriteDataToFile(loadedSave, saveName != string.Empty ? saveName : loadedSave.saveName);
         }
 
-        public static void SaveAll()
+        public void SaveAll()
         {
             foreach (KeyValuePair<string, ISaveable> saveablePair in registeredSavables)
             {
@@ -46,7 +88,7 @@ namespace DigDig2
 
         }
 
-        public static void WriteToSaveData(string uniqueName, object data)
+        public void WriteToSaveData(string uniqueName, object data)
         {
             loadedSave.state_data[uniqueName] = data;
         }
@@ -54,9 +96,9 @@ namespace DigDig2
         #endregion
 
         #region LoadSave
-        public static void LoadSave(string saveName)
+        public void LoadSave(string saveName)
         {
-            loadedSave = (SaveFile)FileSystem.ReadDataFromFile(Path.Join(saveName, SAVE_DIR));
+            loadedSave = (SaveFile)FileSystem.ReadDataFromFile(Path.Join(SAVE_DIR, saveName));
             if (loadedSave.saveName != saveName)
             {
                 Debug.LogWarning("Save Loaded has missmatching saveName property, Overwriting the loaded save's saveName");
@@ -65,7 +107,7 @@ namespace DigDig2
             hasLoadedSave = true;
         }
 
-        public static void UnloadCurrentlyLoadedSave()
+        public void UnloadCurrentlyLoadedSave()
         {
             hasLoadedSave = false;
         }
@@ -74,11 +116,11 @@ namespace DigDig2
 
         #region ISaveable interaction
 
-        public static void RegisterSavable(string uniqueName, ISaveable saveable, bool restoreOnRegister = true)
+        public void RegisterSavable(string uniqueName, ISaveable saveable, bool restoreOnRegister = true)
         {
             if (uniqueNames.Contains(uniqueName))
             {
-                Debug.LogError($"trying to register Savable with already registered uniqueName: {uniqueName}");
+                Debug.LogWarning($"trying to register Savable with already registered uniqueName: {uniqueName}, Aborting");
                 return;
             }
 
@@ -89,7 +131,7 @@ namespace DigDig2
 
         }
 
-        public static void RestoreISavable(string uniqueName, ISaveable saveable = null)
+        public void RestoreISavable(string uniqueName, ISaveable saveable = null)
         {
             if (hasLoadedSave)
             {

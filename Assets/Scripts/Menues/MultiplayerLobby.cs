@@ -144,7 +144,7 @@ namespace DigDig2
         public void StartLobby()
         {
             NetworkManager.singleton.SetCharacters(maxPlayerConnection, miniPlayerConnection);
-            NetworkManager.singleton.ServerChangeScene("THEGameh");
+            NetworkManager.singleton.ServerChangeScene("ActuallyGameThisTime");
         }
     }
 }
