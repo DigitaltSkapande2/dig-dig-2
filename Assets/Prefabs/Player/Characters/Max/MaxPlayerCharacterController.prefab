@@ -434,7 +434,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.BindableTransform
   shape: 0
-  boxSize: {x: 0.005, y: 0.0175, z: 0.002}
+  boxSize: {x: 0.005, y: 0.02, z: 0.01}
   sphereRadius: 0.001
 --- !u!1001 &1784136708688929209
 PrefabInstance:
@@ -487,6 +487,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 4cc903fbfd372d7d4b66da2323cc97a6, type: 3}
       propertyPath: m_Name
       value: Max
+      objectReference: {fileID: 0}
+    - target: {fileID: 4796815017218142542, guid: 4cc903fbfd372d7d4b66da2323cc97a6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -6.218
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

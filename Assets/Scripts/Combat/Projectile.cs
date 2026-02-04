@@ -24,12 +24,15 @@ namespace DigDig2
 			}
         }
 
-        public void SetInfo(string id, Attacker attacker, float speed, float lifeTime)
+        public void SetInfo(Attack attack, Attacker attacker, float speed, float lifeTime)
         {
-            hitboxID = id;
+            hitboxID = Time.time.ToString();
             this.attacker = attacker;
             this.speed = speed;
             this.lifeTime = lifeTime;
+
+            BindableAttackHitbox projectileBindableAttackHitbox = GetComponent<BindableAttackHitbox>();
+			attacker.StartHitboxAttack(attack, hitboxID, projectileBindableAttackHitbox);
 
             Invoke(nameof(DestroyProjectile), lifeTime);
         }
