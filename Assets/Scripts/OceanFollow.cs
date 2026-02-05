@@ -10,6 +10,7 @@ namespace DigDig2
         [SerializeField] private Transform target;
         [Tooltip("the interval at witch to snap to. The sice of one grid piece")]
         [SerializeField] private Vector2 gridSize = new Vector2(1f, 1f);
+        [SerializeField] private EffectPlayer onWaterLowerEffect;
 
         [SerializeField] float verticalSpeed;
 
@@ -18,7 +19,7 @@ namespace DigDig2
         public void LowerWater(float amount)
         {
             targetY -= amount;
-            EffectManager.Instance.PlayScreenShake(EffectIntensity.high);
+            onWaterLowerEffect.Play();
         }
 
         void Start()

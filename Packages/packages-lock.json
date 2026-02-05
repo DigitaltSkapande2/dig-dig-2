@@ -7,6 +7,15 @@
       "dependencies": {},
       "hash": "f213ff497e4ff462a77319cf677cf20cc0860ca9"
     },
+    "com.maligan.unity-zed": {
+      "version": "https://github.com/maligan/unity-zed.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.ide.visualstudio": "2.0.20"
+      },
+      "hash": "25f1b97fedb6cf7b4b566c4a83ec8311b68d3e82"
+    },
     "com.unity.ai.navigation": {
       "version": "2.0.9",
       "depth": 0,
