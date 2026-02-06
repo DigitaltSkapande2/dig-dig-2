@@ -15,8 +15,8 @@ TagManager:
   - Interactable
   - PlayerHitbox
   - EnemyHitbox
-  - 
-  - 
+  - Enemy
+  - Crystal
   - 
   - 
   - 

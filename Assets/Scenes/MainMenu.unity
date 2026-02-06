@@ -2304,6 +2304,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.MainMenu
   mainMenuContainer: {fileID: 1435828335}
   multiplayerLobbyContainer: {fileID: 8425992884871980480}
+  gameSceneName: ActuallyGameThisTime
 --- !u!4 &1349624583
 Transform:
   m_ObjectHideFlags: 0

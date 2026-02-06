@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6015282146029581569}
   - component: {fileID: 7073413166819997495}
   - component: {fileID: 8215939891320007985}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,7 +100,7 @@ GameObject:
   - component: {fileID: 1233086801670116446}
   - component: {fileID: 7082346098683382850}
   - component: {fileID: 5467771968731801444}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -190,7 +190,7 @@ GameObject:
   - component: {fileID: 1989106006002429718}
   - component: {fileID: 3502649725806462910}
   - component: {fileID: 6767000601036238277}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: MeleeAttackHitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -283,6 +283,7 @@ MonoBehaviour:
   shape: 0
   boxSize: {x: 1, y: 1, z: 1}
   sphereRadius: 1
+  unitsPerIntermediateCheck: 0.001
 --- !u!1 &5585277213094831744
 GameObject:
   m_ObjectHideFlags: 0
@@ -302,7 +303,7 @@ GameObject:
   - component: {fileID: 6435232985193985838}
   - component: {fileID: 6762114074386312621}
   - component: {fileID: 4427047692297429573}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: TestEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -575,7 +576,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9056734433506333632}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Visuals
   m_TagString: Untagged
   m_Icon: {fileID: 0}

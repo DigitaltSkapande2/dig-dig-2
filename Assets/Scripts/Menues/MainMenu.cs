@@ -9,6 +9,7 @@ namespace DigDig2
     {
         [SerializeField] GameObject mainMenuContainer;
         [SerializeField] GameObject multiplayerLobbyContainer;
+        [SerializeField] string gameSceneName = "ActuallyGameThisTime";
 
 
 
@@ -50,7 +51,7 @@ namespace DigDig2
 
             await UniTask.WaitUntil(() => NetworkServer.active);
 
-            NetworkManager.singleton.ServerChangeScene(SceneManager.GetSceneByBuildIndex(1).name);
+            NetworkManager.singleton.ServerChangeScene(gameSceneName);
         }
         
         public void QuitGame()
