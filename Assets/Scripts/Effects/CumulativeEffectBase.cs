@@ -60,7 +60,7 @@ namespace DigDig2.Effects
                 // the assignment for class-based EffectInstanceData.
             }
 
-            UpdateEffect(cumulativeCurveValue);
+            if (effectInstances.Count > 0) UpdateEffect(cumulativeCurveValue);
         }
 
         internal virtual void OnEffectStart(T effect)
