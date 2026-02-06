@@ -92,6 +92,11 @@ namespace DigDig2
             
         }
 
+        public void OnSwitchCharacter(InputAction.CallbackContext context)
+        {
+            
+        }
+
         #endregion
     }
 }

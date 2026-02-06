@@ -350,5 +350,11 @@ namespace DigDig2
         }
 
 		#endregion
+
+		public void SetAttackTypes(AttackType[] attackTypes)
+		{
+			this.attackTypes[0] = attackTypes[0];
+			this.attackTypes[1] = attackTypes[1];
+		}
 	}
 }
