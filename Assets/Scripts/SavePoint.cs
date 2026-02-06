@@ -50,7 +50,7 @@ namespace DigDig2
                 highestReachedSavePointIndex = savePointIndex;
             }
         }
-        
+
         private void KillCollider()
         {
             Destroy(collider);
