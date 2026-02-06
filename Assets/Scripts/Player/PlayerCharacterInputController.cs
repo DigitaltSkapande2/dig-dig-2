@@ -19,11 +19,14 @@ namespace DigDig2
         // Interactors
         private Interactor interactor;
 
+        SingleplayerCharacterSwitching characterSwitching;
+
 
         private void Awake()
         {
             entityCharacterController = GetComponent<EntityCharacterController>();
             interactor = GetComponentInChildren<Interactor>();
+            characterSwitching = GetComponent<SingleplayerCharacterSwitching>();
         }
 
         private void Start()
@@ -79,6 +82,7 @@ namespace DigDig2
 
         public void OnMove(InputAction.CallbackContext context)
         {
+            if (context.performed) Debug.Log("fggggg");
             inputMoveVector = context.ReadValue<Vector2>();
         }
 
@@ -94,7 +98,10 @@ namespace DigDig2
 
         public void OnSwitchCharacter(InputAction.CallbackContext context)
         {
-            
+            if (context.performed && characterSwitching != null)
+            {
+                characterSwitching.SwitchCharacter();
+            }
         }
 
         #endregion
