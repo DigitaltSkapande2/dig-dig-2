@@ -29,6 +29,7 @@ namespace DigDig2
             }
 
             Initialize();
+            // Commented out becuase we might not need sprinting
             //m_AgentCharacterBehaviorInputController.SetSprintMode(State.Value);
 
             return Status.Success;

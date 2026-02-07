@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace DigDig2
@@ -7,13 +6,13 @@ namespace DigDig2
     [RequireComponent(typeof(Collider))]
     public class SavePoint : MonoBehaviour, ISaveable
     {
-        [SerializeField] Collider saveTriggerreaCollider;
-        [SerializeField] int savePointIndex = 0;
+        [SerializeField] private Collider saveTriggerreaCollider;
+        [SerializeField] private int savePointIndex = 0;
 
         private static Dictionary<int, SavePoint> allSavePoints;
         private static int highestReachedSavePointIndex;
 
-        private Collider collider;
+        private new Collider collider;
 
         private static SavePoint GetHighestReachedSpawnPoint()
         {
@@ -28,12 +27,12 @@ namespace DigDig2
             }
         }
 
-        void Awake()
+        private void Awake()
         {
-            SaveService.Instance.RegisterSavable("SavePointIndex", this);
+            SaveManager.Instance.RegisterSavable("SavePointIndex", this);
         }
 
-        void Start()
+        private void Start()
         {
             collider = GetComponent<Collider>();
             if (savePointIndex < highestReachedSavePointIndex)
@@ -43,7 +42,7 @@ namespace DigDig2
         }
 
 
-        void OnTriggerEnter(Collider other)
+        private void OnTriggerEnter(Collider other)
         {
             if (savePointIndex > highestReachedSavePointIndex)
             {

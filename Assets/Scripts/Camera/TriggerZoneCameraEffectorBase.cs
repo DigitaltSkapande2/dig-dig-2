@@ -4,8 +4,8 @@ namespace DigDig2.CinemaCamera
 {
     public abstract class TriggerZoneCameraEffectorBase : CameraEffector
     {
-        Transform target;
-        Collider collider;
+        private Transform target;
+        private new Collider collider;
 
         protected new void Start()
         {

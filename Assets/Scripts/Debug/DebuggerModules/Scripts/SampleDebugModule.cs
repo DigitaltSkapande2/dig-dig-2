@@ -7,7 +7,7 @@ namespace DigDig2.Debugging
     public class SampleDebugModule : MonoBehaviour
     {
         // Will appear and be editable through the Debug Menu
-        [DebugSerialized] private string name = "walter white";
+        [DebugSerialized] private new string name = "walter white";
 
         // private variable
         private int beans; 
