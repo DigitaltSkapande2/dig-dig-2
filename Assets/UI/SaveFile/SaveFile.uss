@@ -1,0 +1,56 @@
+:root {
+}
+
+.saveFile {
+    margin-bottom: 10px;
+    margin-top: 10px;
+    background-color: rgb(30, 30, 30);
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 10px;
+    border-top-width: 2px;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+}
+
+.saveFile:checked {
+    margin-bottom: 10px;
+    margin-top: 10px;
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 10px;
+    border-top-width: 2px;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+    border-left-color: rgb(194, 219, 42);
+    border-right-color: rgb(194, 219, 42);
+    border-top-color: rgb(194, 219, 42);
+    border-bottom-color: rgb(194, 219, 42);
+}
+
+.saveFile.selected {
+    margin-bottom: 10px;
+    margin-top: 10px;
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 10px;
+    background-color: rgb(90, 90, 90);
+}
+
+.saveFile > #saveInfo {
+    font-size: 20px;
+}
+
+.saveFile > Label {
+    -unity-font-definition: url("project://database/Assets/Fonts/Roboto/static/Roboto-Medium.ttf?fileID=12800000&guid=5f15a61a79254b59d852a42bc1313680&type=3#Roboto-Medium");
+    color: rgb(255, 255, 255);
+}
+
+.saveFile > #saveName {
+    font-size: 42px;
+}

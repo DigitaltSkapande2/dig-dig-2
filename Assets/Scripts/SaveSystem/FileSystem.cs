@@ -7,32 +7,39 @@ namespace DigDig2
 {
     public static class FileSystem
     {
-
-
-        public static void WriteDataToFile(string fileName, object data)
+        public static string GetDataPath()
         {
-            string filePath = GetFilePath(fileName + ".json");
-            string dataText = JsonUtility.ToJson(data);
-
-            File.WriteAllText(filePath, dataText);
+            return Application.persistentDataPath;
         }
 
-        public static T ReadDataFromFile<T>(string fileName)
+        public static void WriteDataToFile(string filePath, object data)
         {
-            string filePath = GetFilePath(fileName + ".json");
-            string dataAsText = File.ReadAllText(filePath);
+            string extension = Path.GetExtension(filePath);
+            string dataString = "";
+            switch (extension)
+            {
+                case ".json": dataString = JsonUtility.ToJson(data); break;
+            }
 
-            return JsonUtility.FromJson<T>(dataAsText); // SERIALIZATION ABSTRACTION???
+            File.WriteAllText(filePath, dataString);
         }
 
-        public static string GetFilePath(string fileName)
+        public static T ReadDataFromFile<T>(string filePath)
         {
-            return Path.Join(Application.persistentDataPath, fileName);
+            string extension = Path.GetExtension(filePath);
+            string dataString = File.ReadAllText(filePath);
+
+            switch (extension)
+            {
+                case ".json": return JsonUtility.FromJson<T>(dataString);
+                default: return default;
+            }
         }
+
         
         public static List<string> GetFilesInDirectory(string directoryPath)
         {
-            return Directory.GetFiles(GetFilePath(directoryPath)).ToList();
+            return Directory.GetFiles(directoryPath).ToList();
         }
     }
 }

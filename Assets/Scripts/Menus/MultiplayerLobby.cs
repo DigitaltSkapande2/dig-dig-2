@@ -32,13 +32,13 @@ namespace DigDig2
 
             if (isServer)
             {
-                switchButton.interactable = true;
+                //switchButton.interactable = true;
                 maxPlayerConnection = NetworkClient.localPlayer.connectionToClient;
                 UpdatePlayers();
             }
             else
             {
-                switchButton.interactable = false;
+                //switchButton.interactable = false;
                 UpdatePlayerCharacters();
             }
         }
@@ -103,15 +103,15 @@ namespace DigDig2
             maxPlayerName = maxPlayerConnection != null ? maxPlayerConnection.connectionId.ToString() : "";
             miniPlayerName = miniPlayerConnection != null ? miniPlayerConnection.connectionId.ToString() : "";
 
-            startButton.interactable = maxPlayerConnection != null && miniPlayerConnection != null;
+            //startButton.interactable = maxPlayerConnection != null && miniPlayerConnection != null;
 
             UpdatePlayerCharacters();
         }
 
         private void UpdatePlayerCharacters(string oldValue = "", string newValue = "")
         {
-            maxPlayerNameText.text = maxPlayerName != "" ? maxPlayerName : "Waiting for Player...";
-            miniPlayerNameText.text = miniPlayerName != "" ? miniPlayerName : "Waiting for Player...";
+            //maxPlayerNameText.text = maxPlayerName != "" ? maxPlayerName : "Waiting for Player...";
+            //miniPlayerNameText.text = miniPlayerName != "" ? miniPlayerName : "Waiting for Player...";
         }
 
         public void Disconnect()
