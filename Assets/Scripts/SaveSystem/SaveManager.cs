@@ -8,19 +8,22 @@ namespace DigDig2
 {
     public class SaveManager : Singleton<SaveManager> 
     {
-        private const string SAVE_DIR = "saves";
+        private const string SAVES_DIRECTORY_NAME = "saves";
+        private const string SAVE_FILE_EXTENSION = ".json";
+        private const string NEW_SAVE_PREFIX = "Save";
+
         private Dictionary<string, ISaveable> registeredSavables = new();
-        private SaveFile loadedSave = null;
+        private GameSave loadedGameSave = null;
         private bool HasLoadedSave
         {
             get
             {
-                return loadedSave != null;
+                return loadedGameSave != null;
             }
         }
         private List<string> uniqueNames = new();
 
-        private class SaveFile
+        public class GameSave
         {
             public string saveName;
             public string version;
@@ -31,27 +34,56 @@ namespace DigDig2
 
         private void Start()
         {
-            Debug.Log($"Saving files in: {Path.Join(Application.persistentDataPath, SAVE_DIR)}");
-
-            string saveDirectoryPath = FileSystem.GetFilePath(SAVE_DIR);
+            string saveDirectoryPath = GetSavesDirectoryPath();
+            Debug.Log($"Saving files in: {saveDirectoryPath}");
             if (!Directory.Exists(saveDirectoryPath)) Directory.CreateDirectory(saveDirectoryPath);
-
-            loadedSave = new SaveFile();
         }
 
-        #region Save Management
+        #region Directory Management
 
-        public List<string> GetSaveFileNames()
+        public string GetSavesDirectoryPath()
+        {
+            return Path.Join(FileSystem.GetDataPath(), SAVES_DIRECTORY_NAME);
+        }
+        public string GetSaveFilePathFromName(string saveName)
+        {
+            return Path.Join(GetSavesDirectoryPath(), saveName, SAVE_FILE_EXTENSION);
+        }
+
+        public List<string> GetSaveFiles()
+        {
+            return FileSystem.GetFilesInDirectory(GetSavesDirectoryPath());
+        }
+        public List<string> GetSaveFileSaveNames()
         {
             List<string> saveFileNames = new();
-            List<string> saveFiles = FileSystem.GetFilesInDirectory(SAVE_DIR);
-            foreach (string saveFile in saveFiles)
+            List<string> saveFiles = GetSaveFiles();
+            foreach (string saveFilePath in saveFiles)
             {
-                SaveFile saveFileData = FileSystem.ReadDataFromFile<SaveFile>(Path.Join(SAVE_DIR, Path.GetFileNameWithoutExtension(saveFile)));
+                GameSave saveFileData = FileSystem.ReadDataFromFile<GameSave>(saveFilePath);
                 saveFileNames.Add(saveFileData.saveName);
             }
 
             return saveFileNames;
+        }
+
+        #endregion
+
+        #region Save Creation
+
+        public void CreateNewSave(string saveName = "")
+        {
+            if (saveName == string.Empty) saveName = GetNextFreeSaveName();
+
+            loadedGameSave = new()
+            {
+                saveName = saveName,
+                version = Application.version
+            };
+        }
+        public string GetNextFreeSaveName()
+        {
+            return NEW_SAVE_PREFIX + " " + GetSaveFiles().Count + 1;
         }
 
         #endregion
@@ -66,12 +98,12 @@ namespace DigDig2
 
         public void WriteSaveToFile(string saveName = "")
         {
-            string currentSaveName = loadedSave.saveName;
+            string currentSaveName = loadedGameSave.saveName;
             if (saveName != string.Empty) currentSaveName = saveName;
 
-            loadedSave.saveName = currentSaveName;
-            loadedSave.version = Application.version;
-            FileSystem.WriteDataToFile(Path.Join(SAVE_DIR, currentSaveName), loadedSave);
+            loadedGameSave.saveName = currentSaveName;
+            loadedGameSave.version = Application.version;
+            FileSystem.WriteDataToFile(GetSaveFilePathFromName(saveName), loadedGameSave);
         }
 
         public void SaveAll()
@@ -85,25 +117,29 @@ namespace DigDig2
 
         public void WriteToSaveData(string uniqueName, object data)
         {
-            loadedSave.stateData[uniqueName] = data;
+            loadedGameSave.stateData[uniqueName] = data;
         }
 
         #endregion
 
         #region Loading
+        public GameSave ReadSaveFile(string saveName)
+        {
+            return FileSystem.ReadDataFromFile<GameSave>(GetSaveFilePathFromName(saveName));
+        }
+
+        public bool LoadSave(GameSave gameSave)
+        {
+            loadedGameSave = gameSave;
+
+            return true;
+        }
         public bool LoadSave(string saveName)
         {
-            object returnedData = FileSystem.ReadDataFromFile<SaveFile>(Path.Join(SAVE_DIR, saveName));
-            if (returnedData != null)
+            GameSave gameSave = ReadSaveFile(saveName);
+            if (gameSave != null)
             {
-                loadedSave = (SaveFile)returnedData;
-                if (loadedSave.saveName != saveName)
-                {
-                    Debug.LogWarning("Save Loaded has missmatching saveName property, Overwriting the loaded save's saveName");
-                    loadedSave.saveName = saveName;
-                }
-
-                return true;
+                return LoadSave(gameSave);
             }
             else
             {
@@ -113,7 +149,7 @@ namespace DigDig2
 
         public void UnloadCurrentlyLoadedSave()
         {
-            loadedSave = null;
+            loadedGameSave = null;
         }
         
         #endregion
@@ -124,7 +160,7 @@ namespace DigDig2
         {
             if (uniqueNames.Contains(uniqueName))
             {
-                Debug.LogWarning($"trying to register Savable with already registered uniqueName: {uniqueName}, Aborting");
+                Debug.LogWarning($"Trying to register Savable with already registered uniqueName: {uniqueName}, aborting");
                 return;
             }
 
@@ -139,7 +175,7 @@ namespace DigDig2
         {
             if (HasLoadedSave)
             {
-                Debug.LogError("Trying to Restore Savable State with no Save Loaded, Be sure to load A save first!");
+                Debug.LogError("Trying to restore Savable state with no save loaded, be sure to load a save first!");
                 return;
             }
             if (saveable == null && registeredSavables.Keys.Contains(uniqueName))
@@ -147,9 +183,9 @@ namespace DigDig2
                 saveable = registeredSavables[uniqueName];
             }
 
-            if (loadedSave.stateData.Keys.Contains(uniqueName))
+            if (loadedGameSave.stateData.Keys.Contains(uniqueName))
             {
-                saveable.RestoreState(loadedSave.stateData[uniqueName]);
+                saveable.RestoreState(loadedGameSave.stateData[uniqueName]);
             }
         }
         

@@ -31,7 +31,7 @@ namespace DigDig2.Debugging
 
         public override List<string> GetSuggestions(string[] args)
         {
-            return SaveManager.Instance.GetSaveFileNames();
+            return SaveManager.Instance.GetSaveFileSaveNames();
         }
     }
 }
