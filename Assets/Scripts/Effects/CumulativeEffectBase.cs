@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 namespace DigDig2.Effects
 {
     [Serializable]
@@ -42,11 +41,12 @@ namespace DigDig2.Effects
         public void Update()
         {
             float cumulativeCurveValue = 0f;
-            for (int i = effectInstances.Count-1; i > -1; i--)
+            for (int i = effectInstances.Count - 1; i > -1; i--)
             {
                 T effect = effectInstances[i];
                 effect.durationPassed += useUnscaledTime ? Time.unscaledDeltaTime : Time.deltaTime;
-                if (effect.durationPassed > effect.duration) {
+                if (effect.durationPassed > effect.duration)
+                {
                     effectInstances.RemoveAt(i);
                     OnEffectEnd(effect);
                     continue;

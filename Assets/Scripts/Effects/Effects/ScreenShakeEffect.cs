@@ -51,9 +51,9 @@ namespace DigDig2.Effects
         }
     }
 
-    #if UNITY_EDITOR
+#if UNITY_EDITOR
     [CustomEditor(typeof(ScreenShakeEffect))]
-    public class ScreenShakeEffectEditor : Editor 
+    public class ScreenShakeEffectEditor : Editor
     {
         public override void OnInspectorGUI()
         {
@@ -71,5 +71,5 @@ namespace DigDig2.Effects
             }
         }
     }
-    #endif
+#endif
 }
