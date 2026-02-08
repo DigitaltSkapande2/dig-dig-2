@@ -31,6 +31,8 @@ namespace DigDig2
 
         private void Start()
         {
+            Debug.Log($"Saving files in: {Path.Join(Application.persistentDataPath, SAVE_DIR)}");
+
             string saveDirectoryPath = FileSystem.GetFilePath(SAVE_DIR);
             if (!Directory.Exists(saveDirectoryPath)) Directory.CreateDirectory(saveDirectoryPath);
 

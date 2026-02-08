@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 namespace DigDig2
 {
-    public class MainMenu : MonoBehaviour
+    public class MainMenuOld : MonoBehaviour
     {
         [SerializeField] GameObject mainMenuContainer;
         [SerializeField] GameObject multiplayerLobbyContainer;

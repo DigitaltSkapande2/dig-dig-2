@@ -115,7 +115,8 @@ MonoBehaviour:
   - rid: 173326061024575593
   - rid: 173326239723159703
   - rid: 173326239723159738
-  m_VersionTimestamp: 638993238560287635
+  m_VersionTimestamp: 639060840753402910
+  m_SerializedVersion: 2
   m_DebugInfo: {fileID: -6912607920071464823}
   m_RuntimeGraph: {fileID: 5585291459702331616}
   AssetID:
@@ -128,13 +129,18 @@ MonoBehaviour:
   m_NodeModelsInfo:
   - Name: On Start
     Story: 
+    RuntimeTypeString: Unity.Behavior.Start, Unity.Behavior, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
     RuntimeTypeID:
       m_Value0: 3335272451348827663
       m_Value1: 11549843281177505721
     Variables: []
     NamedChildren: []
+    IsPlaceholder: 0
   - Name: WotT Scan For Enemy in Radius
     Story: '[Agent] scans for an enemy in radius [Radius] and assigns it to [Variable]'
+    RuntimeTypeString: DigDig2.WotTScanEnemyRadius, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
     RuntimeTypeID:
       m_Value0: 63296688776806400
       m_Value1: 53258
@@ -166,8 +172,11 @@ MonoBehaviour:
           Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       Tooltip: 
     NamedChildren: []
+    IsPlaceholder: 0
   - Name: WotT Follow
     Story: '[Agent] follows [Target]'
+    RuntimeTypeString: DigDig2.WotTFollow, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
     RuntimeTypeID:
       m_Value0: 983040
       m_Value1: 0
@@ -198,8 +207,11 @@ MonoBehaviour:
           PublicKeyToken=b77a5c561934e089
       Tooltip: 
     NamedChildren: []
+    IsPlaceholder: 0
   - Name: WotT Radius Patrol
     Story: '[Agent] patrols around [Center] with a max radius of [MaxRadius]'
+    RuntimeTypeString: DigDig2.WotTRadiusPatrol, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
     RuntimeTypeID:
       m_Value0: 2814752669564928
       m_Value1: 0
@@ -240,15 +252,21 @@ MonoBehaviour:
           PublicKeyToken=b77a5c561934e089
       Tooltip: 
     NamedChildren: []
-  - Name: Abort
+    IsPlaceholder: 0
+  - Name: Fail
     Story: 
+    RuntimeTypeString: Unity.Behavior.AbortModifier, Unity.Behavior, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
     RuntimeTypeID:
       m_Value0: 11694760734451091187
       m_Value1: 13156989698943900053
     Variables: []
     NamedChildren: []
+    IsPlaceholder: 0
   - Name: WotT Set Auto Look Lock
     Story: '[Agent] sets auto look lock to [State]'
+    RuntimeTypeString: DigDig2.WotTAutoLookLock, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
     RuntimeTypeID:
       m_Value0: 655360
       m_Value1: 12
@@ -264,8 +282,11 @@ MonoBehaviour:
           PublicKeyToken=b77a5c561934e089
       Tooltip: 
     NamedChildren: []
+    IsPlaceholder: 0
   - Name: WotT Focus On
     Story: '[Agent] focuses on [Transform]'
+    RuntimeTypeString: DigDig2.WotTFocusOn, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
     RuntimeTypeID:
       m_Value0: 202309632
       m_Value1: 0
@@ -281,8 +302,11 @@ MonoBehaviour:
           Culture=neutral, PublicKeyToken=null
       Tooltip: 
     NamedChildren: []
+    IsPlaceholder: 0
   - Name: WotT Set Vector3 to Transform Position
     Story: Set [Variable] to [Transform] position
+    RuntimeTypeString: DigDig2.WotTSetVector3ToTransformPosition, Assembly-CSharp,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
     RuntimeTypeID:
       m_Value0: 216432270616035328
       m_Value1: 67108864000
@@ -298,8 +322,11 @@ MonoBehaviour:
           Culture=neutral, PublicKeyToken=null
       Tooltip: 
     NamedChildren: []
+    IsPlaceholder: 0
   - Name: Conditional Branch
     Story: 
+    RuntimeTypeString: Unity.Behavior.BranchingConditionComposite, Unity.Behavior,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
     RuntimeTypeID:
       m_Value0: 12334964803190848789
       m_Value1: 14608808926743427008
@@ -307,8 +334,11 @@ MonoBehaviour:
     NamedChildren:
     - True
     - False
+    IsPlaceholder: 0
   - Name: WotT Request Attack Start
     Story: '[Agent] requests to attack with attack number [AttackIndex]'
+    RuntimeTypeString: DigDig2.WotTRequestAttackStart, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
     RuntimeTypeID:
       m_Value0: 2814813654745088
       m_Value1: 2684354732
@@ -324,373 +354,15 @@ MonoBehaviour:
           PublicKeyToken=b77a5c561934e089
       Tooltip: 
     NamedChildren: []
-  - Name: WotT Attack
-    Story: '[Agent] attacks with attack [AttackIndex]'
-    RuntimeTypeID:
-      m_Value0: 3061040371728384
-      m_Value1: 172
-    Variables:
-    - Name: Agent
-      Type:
-        m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    - Name: AttackIndex
-      Type:
-        m_SerializableType: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      Tooltip: 
-    NamedChildren: []
-  - Name: Run In Parallel
-    Story: 
-    RuntimeTypeID:
-      m_Value0: 6216542881172158703
-      m_Value1: 2191282456596108218
-    Variables: []
-    NamedChildren: []
-  - Name: Set Variable Value
-    Story: 'Set [Variable] value to [Value]'
-    RuntimeTypeID:
-      m_Value0: 5494721648866555964
-      m_Value1: 18024545711220129068
-    Variables:
-    - Name: Variable
-      Type:
-        m_SerializableType: Unity.Behavior.BlackboardVariable, Unity.Behavior, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    - Name: Value
-      Type:
-        m_SerializableType: Unity.Behavior.BlackboardVariable, Unity.Behavior, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    NamedChildren: []
-  - Name: WotT Look Towards
-    Story: '[Agent] looks towards [Point]'
-    RuntimeTypeID:
-      m_Value0: 939563472260169728
-      m_Value1: 0
-    Variables:
-    - Name: Agent
-      Type:
-        m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    - Name: Point
-      Type:
-        m_SerializableType: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    NamedChildren: []
-  - Name: Start On Event Message
-    Story: 'When a message is received on [ChannelVariable]'
-    RuntimeTypeID:
-      m_Value0: 3356300611230043817
-      m_Value1: 5497005381991559097
-    Variables:
-    - Name: ChannelVariable
-      Type:
-        m_SerializableType: Unity.Behavior.BlackboardVariable, Unity.Behavior, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    NamedChildren: []
-  - Name: WotT Avoid
-    Story: '[Agent] avoids [Target] for [Time] seconds'
-    RuntimeTypeID:
-      m_Value0: 55835230208
-      m_Value1: 0
-    Variables:
-    - Name: Agent
-      Type:
-        m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    - Name: Target
-      Type:
-        m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    - Name: Duration
-      Type:
-        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      Tooltip: 
-    NamedChildren: []
-  - Name: Wait (Seconds)
-    Story: Wait for [SecondsToWait] seconds
-    RuntimeTypeID:
-      m_Value0: 7729581452106168333
-      m_Value1: 8820302366443624372
-    Variables:
-    - Name: SecondsToWait
-      Type:
-        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      Tooltip: 
-    NamedChildren: []
-  - Name: Switch
-    Story: 
-    RuntimeTypeID:
-      m_Value0: 7697158487413557231
-      m_Value1: 14836087705204215232
-    Variables:
-    - Name: EnumVariable
-      Type:
-        m_SerializableType: Unity.Behavior.BlackboardVariable, Unity.Behavior, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    NamedChildren: []
-  - Name: WotT Waypoint Patrol
-    Story: '[Agent] patrols along [Waypoints]'
-    RuntimeTypeID:
-      m_Value0: 720575943063633920
-      m_Value1: 0
-    Variables:
-    - Name: Agent
-      Type:
-        m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    - Name: Waypoints
-      Type:
-        m_SerializableType: System.Collections.Generic.List`1[[UnityEngine.GameObject,
-          UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]],
-          mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Tooltip: 
-    - Name: WaypointWaitTime
-      Type:
-        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      Tooltip: 
-    - Name: RandomizeWaypointSelection
-      Type:
-        m_SerializableType: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      Tooltip: 
-    NamedChildren: []
-  - Name: Run In Parallel Until Any Succeeds
-    Story: 
-    RuntimeTypeID:
-      m_Value0: 3118052729764074030
-      m_Value1: 1388175790504016299
-    Variables: []
-    NamedChildren: []
-  - Name: Repeat
-    Story: 
-    RuntimeTypeID:
-      m_Value0: 3696095273264312494
-      m_Value1: 14191201703811421854
-    Variables: []
-    NamedChildren: []
-  - Name: Wait For Any
-    Story: 
-    RuntimeTypeID:
-      m_Value0: 3335272451348827839
-      m_Value1: 11621900875215433657
-    Variables: []
-    NamedChildren: []
-  - Name: Wait For All
-    Story: 
-    RuntimeTypeID:
-      m_Value0: 7660367652061089412
-      m_Value1: 18313906318609194151
-    Variables: []
-    NamedChildren: []
-  - Name: WotT Avoid
-    Story: '[Agent] avoids [Target] for [Time] seconds'
-    RuntimeTypeID:
-      m_Value0: 586914974679467924
-      m_Value1: 42789850935477650
-    Variables:
-    - Name: Agent
-      Type:
-        m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    - Name: Target
-      Type:
-        m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    - Name: Time
-      Type:
-        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      Tooltip: 
-    - Name: DistanceThreshold
-      Type:
-        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      Tooltip: 
-    - Name: AllowedTargetDistanceError
-      Type:
-        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      Tooltip: 
-    NamedChildren: []
-  - Name: WotT Follow
-    Story: '[Agent] follows [Followed]'
-    RuntimeTypeID:
-      m_Value0: 5009858075488184133
-      m_Value1: 30761
-    Variables:
-    - Name: Agent
-      Type:
-        m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    - Name: Followed
-      Type:
-        m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    - Name: TargetDistanceToFollowed
-      Type:
-        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      Tooltip: 
-    - Name: DistanceThreshold
-      Type:
-        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      Tooltip: 
-    - Name: AllowedTargetDistanceError
-      Type:
-        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      Tooltip: 
-    NamedChildren: []
-  - Name: WotT Patrol
-    Story: '[Agent] patrols along [Waypoints]'
-    RuntimeTypeID:
-      m_Value0: 8504773295492120667
-      m_Value1: 7
-    Variables:
-    - Name: Agent
-      Type:
-        m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    - Name: Waypoints
-      Type:
-        m_SerializableType: System.Collections.Generic.List`1[[UnityEngine.GameObject,
-          UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]],
-          mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Tooltip: 
-    - Name: Speed
-      Type:
-        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      Tooltip: 
-    - Name: WaypointWaitTime
-      Type:
-        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      Tooltip: 
-    - Name: AnimatorSpeedParam
-      Type:
-        m_SerializableType: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      Tooltip: 
-    - Name: PreserveLatestPatrolPoint
-      Type:
-        m_SerializableType: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      Tooltip: 
-    NamedChildren: []
-  - Name: Time Out
-    Story: Time out after [Duration] seconds
-    RuntimeTypeID:
-      m_Value0: 4725243088229644710
-      m_Value1: 8959865044334223964
-    Variables:
-    - Name: Duration
-      Type:
-        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      Tooltip: 
-    NamedChildren: []
-  - Name: Cooldown
-    Story: Cooldowns for [duration] seconds after execution
-    RuntimeTypeID:
-      m_Value0: 11996061466798456745
-      m_Value1: 7008150615564501899
-    Variables:
-    - Name: Duration
-      Type:
-        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      Tooltip: 
-    NamedChildren: []
-  - Name: Sequence
-    Story: 
-    RuntimeTypeID:
-      m_Value0: 10181448252506100447
-      m_Value1: 8737116843063128493
-    Variables: []
-    NamedChildren: []
-  - Name: Random
-    Story: 
-    RuntimeTypeID:
-      m_Value0: 15586748977048568638
-      m_Value1: 1886799870276249994
-    Variables: []
-    NamedChildren: []
-  - Name: Conditional Guard
-    Story: 
-    RuntimeTypeID:
-      m_Value0: 10845871997924083670
-      m_Value1: 4041440894818793834
-    Variables: []
-    NamedChildren: []
-  - Name: Patrol
-    Story: '[Agent] patrols along [Waypoints]'
-    RuntimeTypeID:
-      m_Value0: 14152437374081355248
-      m_Value1: 10648518091965011058
-    Variables:
-    - Name: Agent
-      Type:
-        m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    - Name: Waypoints
-      Type:
-        m_SerializableType: System.Collections.Generic.List`1[[UnityEngine.GameObject,
-          UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]],
-          mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Tooltip: 
-    - Name: Speed
-      Type:
-        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      Tooltip: 
-    - Name: WaypointWaitTime
-      Type:
-        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      Tooltip: 
-    - Name: DistanceThreshold
-      Type:
-        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      Tooltip: 
-    - Name: AnimatorSpeedParam
-      Type:
-        m_SerializableType: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      Tooltip: 
-    - Name: PreserveLatestPatrolPoint
-      Type:
-        m_SerializableType: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      Tooltip: 
-    NamedChildren: []
+    IsPlaceholder: 0
   m_Blackboards: []
   m_MainBlackboardAuthoringAsset: {fileID: -7504770601548968970}
   m_CommandBuffer:
     m_Commands: []
   m_SubgraphsInfo: []
+  m_BlackboardMissingManagedRef: 0
+  m_GraphMissingManagedRef: 0
+  m_HasMissingTypeInManagedRef: 0
   references:
     version: 2
     RefIds:
@@ -1182,6 +854,7 @@ MonoBehaviour:
         - rid: 173326058932929017
         <RequiresAllConditionsTrue>k__BackingField: 0
         <ShouldTruncateNodeUI>k__BackingField: 0
+        <ObserverType>k__BackingField: 0
     - rid: 173326058932929000
       type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
       data:
@@ -1536,6 +1209,7 @@ MonoBehaviour:
         - rid: 173326059262968066
         <RequiresAllConditionsTrue>k__BackingField: 0
         <ShouldTruncateNodeUI>k__BackingField: 0
+        <ObserverType>k__BackingField: 0
     - rid: 173326059262968040
       type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
       data:
@@ -1930,6 +1604,7 @@ MonoBehaviour:
             rid: 173326061024575730
         <RequiresAllConditionsTrue>k__BackingField: 0
         <ShouldTruncateNodeUI>k__BackingField: 0
+        <ObserverType>k__BackingField: 0
     - rid: 173326061024575592
       type: {class: FloatingPortNodeModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
       data:
@@ -2319,9 +1994,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Graphs:
   - rid: 173326397395697794
-  RootGraph:
-    rid: 173326397395697794
   m_DebugInfo: {fileID: -6912607920071464823}
+  m_WasCompileWithPlaceholderNode: 0
   references:
     version: 2
     RefIds:
@@ -2338,40 +2012,14 @@ MonoBehaviour:
           rid: 173326397395697795
         BlackboardGroupReferences: []
         Root:
-          rid: 173326397395697796
-        m_ActiveNodes: []
-        m_NodesToTick: []
-        m_NodesToEnd:
-          rid: 173326397395697797
-        m_EndedNodes:
-          rid: 173326397395697798
-        m_VersionTimestamp: 638993238560287635
+          rid: 7024573256277688516
+        m_VersionTimestamp: 639060840753402910
     - rid: 173326397395697795
       type: {class: BlackboardReference, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         m_Blackboard:
           rid: 173326397395697799
         m_Source: {fileID: 1073722169301651244}
-    - rid: 173326397395697796
-      type: {class: ParallelAllComposite, ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        ID:
-          m_Value0: 0
-          m_Value1: 0
-        Graph:
-          rid: 173326397395697794
-        m_Parent:
-          rid: -2
-        m_Children:
-        - rid: 173326397395697800
-        - rid: 173326397395697801
-        - rid: 173326397395697802
-    - rid: 173326397395697797
-      type: {class: 'Stack`1[[Unity.Behavior.Node, Unity.Behavior]]', ns: System.Collections.Generic, asm: mscorlib}
-      data: 
-    - rid: 173326397395697798
-      type: {class: 'HashSet`1[[Unity.Behavior.Node, Unity.Behavior]]', ns: System.Collections.Generic, asm: System.Core}
-      data: 
     - rid: 173326397395697799
       type: {class: Blackboard, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
@@ -2380,48 +2028,6 @@ MonoBehaviour:
         - rid: 173326397395697804
         - rid: 173326397395697805
         - rid: 173326397395697806
-    - rid: 173326397395697800
-      type: {class: Start, ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        ID:
-          m_Value0: 5499247240250446261
-          m_Value1: 18425977191552782522
-        Graph:
-          rid: 173326397395697794
-        m_Parent:
-          rid: 173326397395697796
-        m_Child:
-          rid: 173326397395697807
-        Repeat: 1
-        AllowMultipleRepeatsPerTick: 0
-    - rid: 173326397395697801
-      type: {class: Start, ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        ID:
-          m_Value0: 10356354418009479384
-          m_Value1: 6981887181456594683
-        Graph:
-          rid: 173326397395697794
-        m_Parent:
-          rid: 173326397395697796
-        m_Child:
-          rid: 173326397395697808
-        Repeat: 0
-        AllowMultipleRepeatsPerTick: 0
-    - rid: 173326397395697802
-      type: {class: Start, ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        ID:
-          m_Value0: 5256897882115131999
-          m_Value1: 8874332415729482547
-        Graph:
-          rid: 173326397395697794
-        m_Parent:
-          rid: 173326397395697796
-        m_Child:
-          rid: 173326397395697809
-        Repeat: 1
-        AllowMultipleRepeatsPerTick: 0
     - rid: 173326397395697803
       type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
@@ -2455,29 +2061,64 @@ MonoBehaviour:
           m_Value1: 13877320128694091591
         Name: Start Position
         m_Value: {x: 0, y: 0, z: 0}
-    - rid: 173326397395697807
-      type: {class: BranchingConditionComposite, ns: Unity.Behavior, asm: Unity.Behavior}
+    - rid: 7024573256277688516
+      type: {class: ParallelAllComposite, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         ID:
-          m_Value0: 1924032651772761369
-          m_Value1: 8597202230802327409
+          m_Value0: 0
+          m_Value1: 0
         Graph:
           rid: 173326397395697794
         m_Parent:
-          rid: 173326397395697800
-        m_Children:
-        - rid: 173326397395697810
-        - rid: 173326397395697811
-        m_Conditions:
-        - rid: 173326397395697812
-        m_RequiresAllConditions: 0
-        True:
-          rid: 173326397395697810
-        False:
-          rid: 173326397395697811
-        m_CurrentChild:
           rid: -2
-    - rid: 173326397395697808
+        m_Children:
+        - rid: 7024573256277688517
+        - rid: 7024573256277688518
+        - rid: 7024573256277688519
+        m_RegisteredObservers: []
+    - rid: 7024573256277688517
+      type: {class: Start, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        ID:
+          m_Value0: 10356354418009479384
+          m_Value1: 6981887181456594683
+        Graph:
+          rid: 173326397395697794
+        m_Parent:
+          rid: 7024573256277688516
+        m_Child:
+          rid: 7024573256277688520
+        Repeat: 0
+        AllowMultipleRepeatsPerTick: 0
+    - rid: 7024573256277688518
+      type: {class: Start, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        ID:
+          m_Value0: 5499247240250446261
+          m_Value1: 18425977191552782522
+        Graph:
+          rid: 173326397395697794
+        m_Parent:
+          rid: 7024573256277688516
+        m_Child:
+          rid: 7024573256277688521
+        Repeat: 1
+        AllowMultipleRepeatsPerTick: 0
+    - rid: 7024573256277688519
+      type: {class: Start, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        ID:
+          m_Value0: 5256897882115131999
+          m_Value1: 8874332415729482547
+        Graph:
+          rid: 173326397395697794
+        m_Parent:
+          rid: 7024573256277688516
+        m_Child:
+          rid: 7024573256277688522
+        Repeat: 1
+        AllowMultipleRepeatsPerTick: 0
+    - rid: 7024573256277688520
       type: {class: WotTSetVector3ToTransformPosition, ns: DigDig2, asm: Assembly-CSharp}
       data:
         ID:
@@ -2486,12 +2127,36 @@ MonoBehaviour:
         Graph:
           rid: 173326397395697794
         m_Parent:
-          rid: 173326397395697801
+          rid: 7024573256277688517
         Variable:
           rid: 173326397395697806
         Transform:
-          rid: 173326397395697813
-    - rid: 173326397395697809
+          rid: 7024573256277688523
+    - rid: 7024573256277688521
+      type: {class: BranchingConditionComposite, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        ID:
+          m_Value0: 1924032651772761369
+          m_Value1: 8597202230802327409
+        Graph:
+          rid: 173326397395697794
+        m_Parent:
+          rid: 7024573256277688518
+        m_Children:
+        - rid: 7024573256277688524
+        - rid: 7024573256277688525
+        m_RegisteredObservers: []
+        m_Conditions:
+        - rid: 7024573256277688526
+        m_RequiresAllConditions: 0
+        True:
+          rid: 7024573256277688524
+        False:
+          rid: 7024573256277688525
+        m_CurrentChild:
+          rid: -2
+        m_ObserverType: 0
+    - rid: 7024573256277688522
       type: {class: WotTScanEnemyRadius, ns: DigDig2, asm: Assembly-CSharp}
       data:
         ID:
@@ -2500,59 +2165,18 @@ MonoBehaviour:
         Graph:
           rid: 173326397395697794
         m_Parent:
-          rid: 173326397395697802
+          rid: 7024573256277688519
         Agent:
           rid: 173326397395697803
         Radius:
-          rid: 173326397395697814
+          rid: 7024573256277688527
         Variable:
           rid: 173326397395697804
         AttackableFilter:
           rid: 173326397395697805
         EnemySelectionPriorityMode:
-          rid: 173326397395697815
-    - rid: 173326397395697810
-      type: {class: AbortModifier, ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        ID:
-          m_Value0: 18160029740585249093
-          m_Value1: 11125756542868387211
-        Graph:
-          rid: 173326397395697794
-        m_Parent:
-          rid: 173326397395697807
-        m_Child:
-          rid: 173326397395697816
-        m_Conditions:
-        - rid: 173326397395697817
-        m_RequiresAllConditions: 0
-    - rid: 173326397395697811
-      type: {class: AbortModifier, ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        ID:
-          m_Value0: 569215576113410917
-          m_Value1: 14065787667402410088
-        Graph:
-          rid: 173326397395697794
-        m_Parent:
-          rid: 173326397395697807
-        m_Child:
-          rid: 173326397395697818
-        m_Conditions:
-        - rid: 173326397395697819
-        m_RequiresAllConditions: 0
-    - rid: 173326397395697812
-      type: {class: VariableComparisonCondition, ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        Graph:
-          rid: 173326397395697794
-        Variable:
-          rid: 173326397395697804
-        Operator:
-          rid: 173326397395697820
-        ComparisonValue:
-          rid: 173326397395697821
-    - rid: 173326397395697813
+          rid: 7024573256277688528
+    - rid: 7024573256277688523
       type: {class: 'GameObjectToComponentBlackboardVariable`1[[UnityEngine.Transform, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -2562,7 +2186,50 @@ MonoBehaviour:
         m_Value: {fileID: 0}
         m_LinkedVariable:
           rid: 173326397395697803
-    - rid: 173326397395697814
+    - rid: 7024573256277688524
+      type: {class: AbortModifier, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        ID:
+          m_Value0: 18160029740585249093
+          m_Value1: 11125756542868387211
+        Graph:
+          rid: 173326397395697794
+        m_Parent:
+          rid: 7024573256277688521
+        m_Child:
+          rid: 7024573256277688529
+        m_Conditions:
+        - rid: 7024573256277688530
+        m_RequiresAllConditions: 0
+        m_ObserverType: 0
+    - rid: 7024573256277688525
+      type: {class: AbortModifier, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        ID:
+          m_Value0: 569215576113410917
+          m_Value1: 14065787667402410088
+        Graph:
+          rid: 173326397395697794
+        m_Parent:
+          rid: 7024573256277688521
+        m_Child:
+          rid: 7024573256277688531
+        m_Conditions:
+        - rid: 7024573256277688532
+        m_RequiresAllConditions: 0
+        m_ObserverType: 0
+    - rid: 7024573256277688526
+      type: {class: VariableComparisonCondition, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        Graph:
+          rid: 173326397395697794
+        Variable:
+          rid: 173326397395697804
+        Operator:
+          rid: 7024573256277688533
+        ComparisonValue:
+          rid: 7024573256277688534
+    - rid: 7024573256277688527
       type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -2570,7 +2237,7 @@ MonoBehaviour:
           m_Value1: 0
         Name: 
         m_Value: 5
-    - rid: 173326397395697815
+    - rid: 7024573256277688528
       type: {class: 'BlackboardVariable`1[[DigDig2.WotTScanEnemyRadius/EnemyPriorityMode, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -2578,7 +2245,7 @@ MonoBehaviour:
           m_Value1: 0
         Name: 
         m_Value: 0
-    - rid: 173326397395697816
+    - rid: 7024573256277688529
       type: {class: SequenceComposite, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         ID:
@@ -2587,12 +2254,13 @@ MonoBehaviour:
         Graph:
           rid: 173326397395697794
         m_Parent:
-          rid: 173326397395697810
+          rid: 7024573256277688524
         m_Children:
-        - rid: 173326397395697822
-        - rid: 173326397395697823
-        - rid: 173326397395697824
-    - rid: 173326397395697817
+        - rid: 7024573256277688535
+        - rid: 7024573256277688536
+        - rid: 7024573256277688537
+        m_RegisteredObservers: []
+    - rid: 7024573256277688530
       type: {class: VariableComparisonCondition, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         Graph:
@@ -2600,10 +2268,10 @@ MonoBehaviour:
         Variable:
           rid: 173326397395697803
         Operator:
-          rid: 173326397395697825
+          rid: 7024573256277688538
         ComparisonValue:
-          rid: 173326397395697826
-    - rid: 173326397395697818
+          rid: 7024573256277688539
+    - rid: 7024573256277688531
       type: {class: SequenceComposite, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         ID:
@@ -2612,11 +2280,12 @@ MonoBehaviour:
         Graph:
           rid: 173326397395697794
         m_Parent:
-          rid: 173326397395697811
+          rid: 7024573256277688525
         m_Children:
-        - rid: 173326397395697827
-        - rid: 173326397395697828
-    - rid: 173326397395697819
+        - rid: 7024573256277688540
+        - rid: 7024573256277688541
+        m_RegisteredObservers: []
+    - rid: 7024573256277688532
       type: {class: VariableComparisonCondition, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         Graph:
@@ -2624,10 +2293,10 @@ MonoBehaviour:
         Variable:
           rid: 173326397395697804
         Operator:
-          rid: 173326397395697829
+          rid: 7024573256277688542
         ComparisonValue:
-          rid: 173326397395697830
-    - rid: 173326397395697820
+          rid: 7024573256277688543
+    - rid: 7024573256277688533
       type: {class: 'BlackboardVariable`1[[Unity.Behavior.ConditionOperator, Unity.Behavior]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -2635,7 +2304,7 @@ MonoBehaviour:
           m_Value1: 0
         Name: 
         m_Value: 1
-    - rid: 173326397395697821
+    - rid: 7024573256277688534
       type: {class: 'BlackboardVariable`1[[DigDig2.Attackable, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -2643,7 +2312,7 @@ MonoBehaviour:
           m_Value1: 0
         Name: 
         m_Value: {fileID: 0}
-    - rid: 173326397395697822
+    - rid: 7024573256277688535
       type: {class: WotTAutoLookLock, ns: DigDig2, asm: Assembly-CSharp}
       data:
         ID:
@@ -2652,12 +2321,12 @@ MonoBehaviour:
         Graph:
           rid: 173326397395697794
         m_Parent:
-          rid: 173326397395697816
+          rid: 7024573256277688529
         Agent:
           rid: 173326397395697803
         State:
-          rid: 173326397395697831
-    - rid: 173326397395697823
+          rid: 7024573256277688544
+    - rid: 7024573256277688536
       type: {class: WotTFocusOn, ns: DigDig2, asm: Assembly-CSharp}
       data:
         ID:
@@ -2666,12 +2335,12 @@ MonoBehaviour:
         Graph:
           rid: 173326397395697794
         m_Parent:
-          rid: 173326397395697816
+          rid: 7024573256277688529
         Agent:
           rid: 173326397395697803
         Transform:
-          rid: 173326397395697832
-    - rid: 173326397395697824
+          rid: 7024573256277688545
+    - rid: 7024573256277688537
       type: {class: SequenceComposite, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         ID:
@@ -2680,11 +2349,12 @@ MonoBehaviour:
         Graph:
           rid: 173326397395697794
         m_Parent:
-          rid: 173326397395697816
+          rid: 7024573256277688529
         m_Children:
-        - rid: 173326397395697833
-        - rid: 173326397395697834
-    - rid: 173326397395697825
+        - rid: 7024573256277688546
+        - rid: 7024573256277688547
+        m_RegisteredObservers: []
+    - rid: 7024573256277688538
       type: {class: 'BlackboardVariable`1[[Unity.Behavior.ConditionOperator, Unity.Behavior]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -2692,7 +2362,7 @@ MonoBehaviour:
           m_Value1: 0
         Name: 
         m_Value: 0
-    - rid: 173326397395697826
+    - rid: 7024573256277688539
       type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -2700,7 +2370,7 @@ MonoBehaviour:
           m_Value1: 0
         Name: 
         m_Value: {fileID: 0}
-    - rid: 173326397395697827
+    - rid: 7024573256277688540
       type: {class: WotTAutoLookLock, ns: DigDig2, asm: Assembly-CSharp}
       data:
         ID:
@@ -2709,12 +2379,12 @@ MonoBehaviour:
         Graph:
           rid: 173326397395697794
         m_Parent:
-          rid: 173326397395697818
+          rid: 7024573256277688531
         Agent:
           rid: 173326397395697803
         State:
-          rid: 173326397395697835
-    - rid: 173326397395697828
+          rid: 7024573256277688548
+    - rid: 7024573256277688541
       type: {class: WotTRadiusPatrol, ns: DigDig2, asm: Assembly-CSharp}
       data:
         ID:
@@ -2723,22 +2393,22 @@ MonoBehaviour:
         Graph:
           rid: 173326397395697794
         m_Parent:
-          rid: 173326397395697818
+          rid: 7024573256277688531
         Agent:
           rid: 173326397395697803
         Center:
           rid: 173326397395697806
         MaxRadius:
-          rid: 173326397395697836
+          rid: 7024573256277688549
         MinRadius:
-          rid: 173326397395697837
+          rid: 7024573256277688550
         WaypointWaitTime:
-          rid: 173326397395697838
+          rid: 7024573256277688551
         AllowedDistanceBetweenLastAndNewPoint:
-          rid: 173326397395697839
+          rid: 7024573256277688552
         MaxPointSelectionAttempts:
-          rid: 173326397395697840
-    - rid: 173326397395697829
+          rid: 7024573256277688553
+    - rid: 7024573256277688542
       type: {class: 'BlackboardVariable`1[[Unity.Behavior.ConditionOperator, Unity.Behavior]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -2746,7 +2416,7 @@ MonoBehaviour:
           m_Value1: 0
         Name: 
         m_Value: 1
-    - rid: 173326397395697830
+    - rid: 7024573256277688543
       type: {class: 'BlackboardVariable`1[[DigDig2.Attackable, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -2754,7 +2424,7 @@ MonoBehaviour:
           m_Value1: 0
         Name: 
         m_Value: {fileID: 0}
-    - rid: 173326397395697831
+    - rid: 7024573256277688544
       type: {class: 'BlackboardVariable`1[[System.Boolean, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -2762,7 +2432,7 @@ MonoBehaviour:
           m_Value1: 0
         Name: 
         m_Value: 1
-    - rid: 173326397395697832
+    - rid: 7024573256277688545
       type: {class: 'ComponentToComponentBlackboardVariable`2[[DigDig2.Attackable, Assembly-CSharp],[UnityEngine.Transform, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -2772,7 +2442,7 @@ MonoBehaviour:
         m_Value: {fileID: 0}
         m_LinkedVariable:
           rid: 173326397395697804
-    - rid: 173326397395697833
+    - rid: 7024573256277688546
       type: {class: WotTFollow, ns: DigDig2, asm: Assembly-CSharp}
       data:
         ID:
@@ -2781,18 +2451,18 @@ MonoBehaviour:
         Graph:
           rid: 173326397395697794
         m_Parent:
-          rid: 173326397395697824
+          rid: 7024573256277688537
         Agent:
           rid: 173326397395697803
         Target:
-          rid: 173326397395697841
+          rid: 7024573256277688554
         FollowDistance:
-          rid: 173326397395697842
+          rid: 7024573256277688555
         DistanceTolerance:
-          rid: 173326397395697843
+          rid: 7024573256277688556
         AllowedTargetErrorDistance:
-          rid: 173326397395697844
-    - rid: 173326397395697834
+          rid: 7024573256277688557
+    - rid: 7024573256277688547
       type: {class: WotTRequestAttackStart, ns: DigDig2, asm: Assembly-CSharp}
       data:
         ID:
@@ -2801,12 +2471,12 @@ MonoBehaviour:
         Graph:
           rid: 173326397395697794
         m_Parent:
-          rid: 173326397395697824
+          rid: 7024573256277688537
         Agent:
           rid: 173326397395697803
         AttackIndex:
-          rid: 173326397395697845
-    - rid: 173326397395697835
+          rid: 7024573256277688558
+    - rid: 7024573256277688548
       type: {class: 'BlackboardVariable`1[[System.Boolean, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -2814,7 +2484,7 @@ MonoBehaviour:
           m_Value1: 0
         Name: 
         m_Value: 0
-    - rid: 173326397395697836
+    - rid: 7024573256277688549
       type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -2822,7 +2492,7 @@ MonoBehaviour:
           m_Value1: 0
         Name: 
         m_Value: 5
-    - rid: 173326397395697837
+    - rid: 7024573256277688550
       type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -2830,7 +2500,7 @@ MonoBehaviour:
           m_Value1: 0
         Name: 
         m_Value: 0.1
-    - rid: 173326397395697838
+    - rid: 7024573256277688551
       type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -2838,7 +2508,7 @@ MonoBehaviour:
           m_Value1: 0
         Name: 
         m_Value: 1
-    - rid: 173326397395697839
+    - rid: 7024573256277688552
       type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -2846,7 +2516,7 @@ MonoBehaviour:
           m_Value1: 0
         Name: 
         m_Value: 1.5
-    - rid: 173326397395697840
+    - rid: 7024573256277688553
       type: {class: 'BlackboardVariable`1[[System.Int32, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -2854,7 +2524,7 @@ MonoBehaviour:
           m_Value1: 0
         Name: 
         m_Value: 5
-    - rid: 173326397395697841
+    - rid: 7024573256277688554
       type: {class: 'ComponentToGameObjectBlackboardVariable`1[[DigDig2.Attackable, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -2864,7 +2534,7 @@ MonoBehaviour:
         m_Value: {fileID: 0}
         m_LinkedVariable:
           rid: 173326397395697804
-    - rid: 173326397395697842
+    - rid: 7024573256277688555
       type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -2872,7 +2542,7 @@ MonoBehaviour:
           m_Value1: 0
         Name: 
         m_Value: 0.5
-    - rid: 173326397395697843
+    - rid: 7024573256277688556
       type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -2880,7 +2550,7 @@ MonoBehaviour:
           m_Value1: 0
         Name: 
         m_Value: 2
-    - rid: 173326397395697844
+    - rid: 7024573256277688557
       type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -2888,7 +2558,7 @@ MonoBehaviour:
           m_Value1: 0
         Name: 
         m_Value: 1
-    - rid: 173326397395697845
+    - rid: 7024573256277688558
       type: {class: 'BlackboardVariable`1[[System.Int32, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:

@@ -1,0 +1,31 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/MainMenu/Style.uss?fileID=7433441132597879392&amp;guid=7b25c9c7deefb56afbed8e4df3da8aac&amp;type=3#Style"/>
+    <ui:VisualElement name="cover" style="flex-grow: 1; position: relative;">
+        <ui:Label text="&lt;size=86&gt;Whiskers &#10;&lt;size=50&gt;of the&#10;&lt;size=86&gt;Tide" style="position: absolute; top: 100px; left: 150px; font-size: 86px; -unity-font-definition: url(&quot;project://database/Assets/Fonts/Roboto/static/Roboto-Bold.ttf?fileID=12800000&amp;guid=965bc77683b35b414bdc001b974583f7&amp;type=3#Roboto-Bold&quot;); -unity-text-align: upper-center; color: rgb(255, 255, 255); text-shadow: 0 0 10px rgb(0, 0, 0);"/>
+        <ui:VisualElement name="mainNavigation" enabled="true" style="flex-grow: 1; width: 500px; justify-content: flex-end; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; flex-direction: column; padding-top: 0; transition-property: translate, opacity; transition-duration: 0.1s, 0.1s; opacity: 1; position: absolute; left: 150px; bottom: 100px;">
+            <ui:Button text="Continue" selectable="false" enabled="true" name="continue" style="position: relative; top: 0; left: 0;"/>
+            <ui:Button text="Load Game" name="loadGame" style="position: relative; top: 0; left: 0;"/>
+            <ui:Button text="New Game" selectable="false" enabled="true" name="newGame" style="position: relative; top: 0; left: 0;"/>
+            <ui:Button text="Settings" name="settings" style="position: relative; top: 0; left: 0;"/>
+            <ui:Button text="Quit" name="quit" class="quit" style="position: relative; top: 0; left: 0;"/>
+        </ui:VisualElement>
+        <ui:VisualElement name="menuContainer" style="flex-grow: 1; position: absolute; right: 200px; height: 700px; width: 1000px; top: 50%; left: auto; bottom: 50%; transform-origin: center; align-content: center; translate: 0 -50%;">
+            <ui:VisualElement name="saveMenu" enabled="true" class="menu" style="flex-grow: 1; opacity: 1; visibility: hidden; position: absolute; height: 100%; width: 100%; top: 0; left: 0; right: 0; bottom: 0; transition-property: translate, opacity; transition-duration: 0.1s, 0.1s;">
+                <ui:Label text="SAVES" name="" class="title"/>
+                <ui:ScrollView horizontal-scroller-visibility="Hidden"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="settingsMenu" enabled="true" class="menu" style="flex-grow: 1; opacity: 1; visibility: visible; position: absolute; top: 0; left: 0; bottom: 0; right: 0; width: 100%; height: 100%; transition-property: translate, opacity; transition-duration: 0.1s, 0.1s;">
+                <ui:Label text="SETTINGS" name="" class="title"/>
+                <ui:Button text="hello"/>
+                <ui:Button text="hello" name="" class="navigationStart"/>
+                <ui:Button text="hello" name=""/>
+                <ui:Vector2Field label="Vec2 Field"/>
+                <ui:LongField label="Long Field" value="42"/>
+                <ui:IntegerField label="Integer Field" value="42"/>
+                <ui:FloatField label="Float Field" value="42.2"/>
+                <ui:DoubleField label="Double Field" value="42.2"/>
+                <ui:TextField label="Text Field" placeholder-text="filler text"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
