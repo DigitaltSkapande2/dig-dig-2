@@ -1,55 +1,38 @@
-using System;
+using System.Collections.Generic;
 using System.IO;
-using IO.Swagger.Model;
+using System.Linq;
 using UnityEngine;
 
 namespace DigDig2
 {
     public static class FileSystem
     {
-        public static void WriteDataToFile(object data, string fileName)
+
+
+        public static void WriteDataToFile(string fileName, object data)
         {
             string filePath = GetFilePath(fileName + ".json");
-            ValidateFilePath(filePath);
-
             string dataText = JsonUtility.ToJson(data);
 
             File.WriteAllText(filePath, dataText);
         }
 
-        public static object ReadDataFromFile(string fileName)
+        public static T ReadDataFromFile<T>(string fileName)
         {
             string filePath = GetFilePath(fileName + ".json");
-            if (IsFilePathValid(filePath))
-            {
-                Debug.LogError($"Trying To Read Nonexistent File {filePath}");
-                return null;
-            }
-            string dataAsText = File.ReadAllText(fileName);
+            string dataAsText = File.ReadAllText(filePath);
 
-            return JsonUtility.FromJson<object>(dataAsText); // SERIALIZATION ABSTRACTION???
+            return JsonUtility.FromJson<T>(dataAsText); // SERIALIZATION ABSTRACTION???
         }
 
         public static string GetFilePath(string fileName)
         {
-            return Path.Join(UnityEngine.Application.persistentDataPath, fileName);
+            return Path.Join(Application.persistentDataPath, fileName);
         }
-
-        public static bool IsFilePathValid(string filePath)
+        
+        public static List<string> GetFilesInDirectory(string directoryPath)
         {
-            if (!Path.IsPathFullyQualified(filePath) || !File.Exists(filePath))
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        public static void ValidateFilePath(string filePath)
-        {
-            if (Directory.Exists(Path.GetDirectoryName(filePath)) && IsFilePathValid(filePath)) return;
-
-            Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+            return Directory.GetFiles(GetFilePath(directoryPath)).ToList();
         }
     }
 }

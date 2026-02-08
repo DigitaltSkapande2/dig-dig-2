@@ -111,9 +111,9 @@ public partial class @ProjectWideInputActions: IInputActionCollection2, IDisposa
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Sprint"",
+                    ""name"": ""SwitchCharacter"",
                     ""type"": ""Button"",
-                    ""id"": ""641cd816-40e6-41b4-8c3d-04687c349290"",
+                    ""id"": ""d9e7be36-c023-481f-886e-51293b8f7fd0"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -233,61 +233,6 @@ public partial class @ProjectWideInputActions: IInputActionCollection2, IDisposa
                 },
                 {
                     ""name"": """",
-                    ""id"": ""1635d3fe-58b6-4ba9-a4e2-f4b964f6b5c8"",
-                    ""path"": ""<XRController>/{Primary2DAxis}"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""XR"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""3ea4d645-4504-4529-b061-ab81934c3752"",
-                    ""path"": ""<Joystick>/stick"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Joystick"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""f2e9ba44-c423-42a7-ad56-f20975884794"",
-                    ""path"": ""<Keyboard>/leftShift"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Sprint"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""8cbb2f4b-a784-49cc-8d5e-c010b8c7f4e6"",
-                    ""path"": ""<Gamepad>/leftStickPress"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Sprint"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""d8bf24bf-3f2f-4160-a97c-38ec1eb520ba"",
-                    ""path"": ""<XRController>/trigger"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""XR"",
-                    ""action"": ""Sprint"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""1c04ea5f-b012-41d1-a6f7-02e963b52893"",
                     ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
@@ -305,6 +250,28 @@ public partial class @ProjectWideInputActions: IInputActionCollection2, IDisposa
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5249be9b-cb5f-49a6-b7f1-6e4c3f8ffd38"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""SwitchCharacter"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d53e157d-9d8b-4396-8117-81b883498b90"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""SwitchCharacter"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1027,18 +994,18 @@ public partial class @ProjectWideInputActions: IInputActionCollection2, IDisposa
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""JoystickAim"",
-                    ""type"": ""Value"",
-                    ""id"": ""167710a6-17ac-4c19-8d4e-cedea33debfa"",
-                    ""expectedControlType"": ""Vector2"",
+                    ""name"": ""Focus"",
+                    ""type"": ""Button"",
+                    ""id"": ""8fad912f-41a7-4e5d-b8e8-0f558b7a12f4"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": true
+                    ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""MouseAim"",
+                    ""name"": ""FocusTarget"",
                     ""type"": ""Value"",
-                    ""id"": ""0a8ad2ae-31a3-4b5f-9259-47a43d10a4fc"",
+                    ""id"": ""167710a6-17ac-4c19-8d4e-cedea33debfa"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -1114,12 +1081,23 @@ public partial class @ProjectWideInputActions: IInputActionCollection2, IDisposa
                 },
                 {
                     ""name"": """",
+                    ""id"": ""7540bfd1-a06d-4e56-9c7d-52391614ca9e"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""FocusTarget"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""47403358-1678-4f77-8f61-9e3e82dbb06d"",
-                    ""path"": ""<Gamepad>/leftStick"",
+                    ""path"": ""<Gamepad>/rightStick"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Gamepad"",
-                    ""action"": ""JoystickAim"",
+                    ""action"": ""FocusTarget"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -1136,12 +1114,23 @@ public partial class @ProjectWideInputActions: IInputActionCollection2, IDisposa
                 },
                 {
                     ""name"": """",
-                    ""id"": ""486ca93e-f08f-4731-9cb1-ad7d59ef2ab7"",
-                    ""path"": ""<Mouse>/position"",
+                    ""id"": ""a1a20348-4d0a-407a-8b81-a186b834d445"",
+                    ""path"": ""<Keyboard>/leftShift"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""MouseAim"",
+                    ""groups"": """",
+                    ""action"": ""Focus"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f648fa57-deb0-4925-a0f0-84087c61269c"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Focus"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1215,7 +1204,7 @@ public partial class @ProjectWideInputActions: IInputActionCollection2, IDisposa
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
-        m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
+        m_Player_SwitchCharacter = m_Player.FindAction("SwitchCharacter", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1243,8 +1232,8 @@ public partial class @ProjectWideInputActions: IInputActionCollection2, IDisposa
         m_Attack = asset.FindActionMap("Attack", throwIfNotFound: true);
         m_Attack_Attack1 = m_Attack.FindAction("Attack1", throwIfNotFound: true);
         m_Attack_Attack2 = m_Attack.FindAction("Attack2", throwIfNotFound: true);
-        m_Attack_JoystickAim = m_Attack.FindAction("JoystickAim", throwIfNotFound: true);
-        m_Attack_MouseAim = m_Attack.FindAction("MouseAim", throwIfNotFound: true);
+        m_Attack_Focus = m_Attack.FindAction("Focus", throwIfNotFound: true);
+        m_Attack_FocusTarget = m_Attack.FindAction("FocusTarget", throwIfNotFound: true);
     }
 
     ~@ProjectWideInputActions()
@@ -1331,7 +1320,7 @@ public partial class @ProjectWideInputActions: IInputActionCollection2, IDisposa
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Interact;
-    private readonly InputAction m_Player_Sprint;
+    private readonly InputAction m_Player_SwitchCharacter;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -1352,9 +1341,9 @@ public partial class @ProjectWideInputActions: IInputActionCollection2, IDisposa
         /// </summary>
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
         /// <summary>
-        /// Provides access to the underlying input action "Player/Sprint".
+        /// Provides access to the underlying input action "Player/SwitchCharacter".
         /// </summary>
-        public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
+        public InputAction @SwitchCharacter => m_Wrapper.m_Player_SwitchCharacter;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1387,9 +1376,9 @@ public partial class @ProjectWideInputActions: IInputActionCollection2, IDisposa
             @Interact.started += instance.OnInteract;
             @Interact.performed += instance.OnInteract;
             @Interact.canceled += instance.OnInteract;
-            @Sprint.started += instance.OnSprint;
-            @Sprint.performed += instance.OnSprint;
-            @Sprint.canceled += instance.OnSprint;
+            @SwitchCharacter.started += instance.OnSwitchCharacter;
+            @SwitchCharacter.performed += instance.OnSwitchCharacter;
+            @SwitchCharacter.canceled += instance.OnSwitchCharacter;
         }
 
         /// <summary>
@@ -1407,9 +1396,9 @@ public partial class @ProjectWideInputActions: IInputActionCollection2, IDisposa
             @Interact.started -= instance.OnInteract;
             @Interact.performed -= instance.OnInteract;
             @Interact.canceled -= instance.OnInteract;
-            @Sprint.started -= instance.OnSprint;
-            @Sprint.performed -= instance.OnSprint;
-            @Sprint.canceled -= instance.OnSprint;
+            @SwitchCharacter.started -= instance.OnSwitchCharacter;
+            @SwitchCharacter.performed -= instance.OnSwitchCharacter;
+            @SwitchCharacter.canceled -= instance.OnSwitchCharacter;
         }
 
         /// <summary>
@@ -1891,8 +1880,8 @@ public partial class @ProjectWideInputActions: IInputActionCollection2, IDisposa
     private List<IAttackActions> m_AttackActionsCallbackInterfaces = new List<IAttackActions>();
     private readonly InputAction m_Attack_Attack1;
     private readonly InputAction m_Attack_Attack2;
-    private readonly InputAction m_Attack_JoystickAim;
-    private readonly InputAction m_Attack_MouseAim;
+    private readonly InputAction m_Attack_Focus;
+    private readonly InputAction m_Attack_FocusTarget;
     /// <summary>
     /// Provides access to input actions defined in input action map "Attack".
     /// </summary>
@@ -1913,13 +1902,13 @@ public partial class @ProjectWideInputActions: IInputActionCollection2, IDisposa
         /// </summary>
         public InputAction @Attack2 => m_Wrapper.m_Attack_Attack2;
         /// <summary>
-        /// Provides access to the underlying input action "Attack/JoystickAim".
+        /// Provides access to the underlying input action "Attack/Focus".
         /// </summary>
-        public InputAction @JoystickAim => m_Wrapper.m_Attack_JoystickAim;
+        public InputAction @Focus => m_Wrapper.m_Attack_Focus;
         /// <summary>
-        /// Provides access to the underlying input action "Attack/MouseAim".
+        /// Provides access to the underlying input action "Attack/FocusTarget".
         /// </summary>
-        public InputAction @MouseAim => m_Wrapper.m_Attack_MouseAim;
+        public InputAction @FocusTarget => m_Wrapper.m_Attack_FocusTarget;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1952,12 +1941,12 @@ public partial class @ProjectWideInputActions: IInputActionCollection2, IDisposa
             @Attack2.started += instance.OnAttack2;
             @Attack2.performed += instance.OnAttack2;
             @Attack2.canceled += instance.OnAttack2;
-            @JoystickAim.started += instance.OnJoystickAim;
-            @JoystickAim.performed += instance.OnJoystickAim;
-            @JoystickAim.canceled += instance.OnJoystickAim;
-            @MouseAim.started += instance.OnMouseAim;
-            @MouseAim.performed += instance.OnMouseAim;
-            @MouseAim.canceled += instance.OnMouseAim;
+            @Focus.started += instance.OnFocus;
+            @Focus.performed += instance.OnFocus;
+            @Focus.canceled += instance.OnFocus;
+            @FocusTarget.started += instance.OnFocusTarget;
+            @FocusTarget.performed += instance.OnFocusTarget;
+            @FocusTarget.canceled += instance.OnFocusTarget;
         }
 
         /// <summary>
@@ -1975,12 +1964,12 @@ public partial class @ProjectWideInputActions: IInputActionCollection2, IDisposa
             @Attack2.started -= instance.OnAttack2;
             @Attack2.performed -= instance.OnAttack2;
             @Attack2.canceled -= instance.OnAttack2;
-            @JoystickAim.started -= instance.OnJoystickAim;
-            @JoystickAim.performed -= instance.OnJoystickAim;
-            @JoystickAim.canceled -= instance.OnJoystickAim;
-            @MouseAim.started -= instance.OnMouseAim;
-            @MouseAim.performed -= instance.OnMouseAim;
-            @MouseAim.canceled -= instance.OnMouseAim;
+            @Focus.started -= instance.OnFocus;
+            @Focus.performed -= instance.OnFocus;
+            @Focus.canceled -= instance.OnFocus;
+            @FocusTarget.started -= instance.OnFocusTarget;
+            @FocusTarget.performed -= instance.OnFocusTarget;
+            @FocusTarget.canceled -= instance.OnFocusTarget;
         }
 
         /// <summary>
@@ -2101,12 +2090,12 @@ public partial class @ProjectWideInputActions: IInputActionCollection2, IDisposa
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnInteract(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "Sprint" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "SwitchCharacter" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnSprint(InputAction.CallbackContext context);
+        void OnSwitchCharacter(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.
@@ -2273,18 +2262,18 @@ public partial class @ProjectWideInputActions: IInputActionCollection2, IDisposa
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnAttack2(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "JoystickAim" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "Focus" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnJoystickAim(InputAction.CallbackContext context);
+        void OnFocus(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "MouseAim" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "FocusTarget" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnMouseAim(InputAction.CallbackContext context);
+        void OnFocusTarget(InputAction.CallbackContext context);
     }
 }

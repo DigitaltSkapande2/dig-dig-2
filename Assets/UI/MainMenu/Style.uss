@@ -1,0 +1,90 @@
+:root {
+}
+
+#cover {
+    background-image: url("project://database/Assets/Textures/MainMenu/Cover.png?fileID=2800000&guid=fa054f674990081c7adf652397940fd1&type=3#Cover");
+    -unity-background-scale-mode: scale-and-crop;
+}
+
+
+
+
+
+#mainNavigation > Button {
+    height: 90px;
+    font-size: 54px;
+    -unity-text-align: middle-left;
+    -unity-font-style: normal;
+    -unity-font-definition: url("project://database/Assets/Fonts/Roboto/static/Roboto-Medium.ttf?fileID=12800000&guid=5f15a61a79254b59d852a42bc1313680&type=3#Roboto-Medium");
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    margin-bottom: 0;
+    margin-top: 0;
+    background-color: rgba(255, 255, 255, 0);
+    color: rgb(255, 255, 255);
+    text-shadow: 0 0 5px rgb(0, 0, 0);
+    padding-left: 0;
+    transition-property: padding-left, color;
+    transition-duration: 0.1s, 0.1s;
+}
+
+
+
+
+
+#mainNavigation > Button:focus {
+    padding-left: 40px;
+}
+
+#mainNavigation > Button.quit:focus {
+    padding-left: 40px;
+    color: rgb(219, 49, 42);
+}
+
+#mainNavigation > Button.selected {
+    padding-left: 40px;
+    color: rgb(194, 219, 42);
+}
+
+#mainNavigation > Button.quit.selected {
+    padding-left: 40px;
+    color: rgb(219, 49, 42);
+}
+
+.menu {
+    background-color: rgba(0, 0, 0, 0.78);
+    color: rgb(255, 255, 255);
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+}
+
+.menu > .title {
+    color: rgb(255, 255, 255);
+    -unity-font-definition: url("project://database/Assets/Fonts/Roboto/static/Roboto-Bold.ttf?fileID=12800000&guid=965bc77683b35b414bdc001b974583f7&type=3#Roboto-Bold");
+    font-size: 68px;
+    -unity-text-align: upper-center;
+}
+
+#saveFile {
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+#saveFile:focus {
+    border-left-color: rgb(255, 255, 255);
+    border-right-color: rgb(255, 255, 255);
+    border-top-color: rgb(255, 255, 255);
+    border-bottom-color: rgb(255, 255, 255);
+    border-top-width: 2px;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+}

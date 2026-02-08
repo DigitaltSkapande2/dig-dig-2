@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 416641506086951432}
   - component: {fileID: 1554077063381067444}
   - component: {fileID: 3516357769329635209}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Crystal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -102,7 +102,7 @@ GameObject:
   - component: {fileID: 3213830340879485965}
   - component: {fileID: 4018930690133570384}
   - component: {fileID: 2002717688747189687}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Crystal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -212,7 +212,7 @@ GameObject:
   - component: {fileID: 3821140945852151295}
   - component: {fileID: 8518204104179716871}
   - component: {fileID: 6285520572108859645}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Shield
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -299,7 +299,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2489549238134287283}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Visuals
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 namespace DigDig2
 {
-    [RequireComponent(typeof(EntityCharacterController))]
+    [RequireComponent(typeof(EntityCharacterController), typeof(SingleplayerCharacterSwitching))]
     public class PlayerCharacterInputController : NetworkBehaviour, ProjectWideInputActions.IPlayerActions
     {
         // Input
@@ -16,6 +16,9 @@ namespace DigDig2
         private EntityCharacterController entityCharacterController;
         private Vector2 inputMoveVector = Vector2.zero;
 
+        // Character Switching
+        private SingleplayerCharacterSwitching characterSwitching;
+
         // Interactors
         private Interactor interactor;
 
@@ -23,6 +26,7 @@ namespace DigDig2
         private void Awake()
         {
             entityCharacterController = GetComponent<EntityCharacterController>();
+            characterSwitching = GetComponent<SingleplayerCharacterSwitching>();
             interactor = GetComponentInChildren<Interactor>();
         }
 
@@ -63,9 +67,11 @@ namespace DigDig2
 
         private void EnableInput()
         {
-            playerActions = InputManager.Instance.inputActions.Player;
-
-            playerActions.SetCallbacks(this);
+            if (!NetworkClient.active || isLocalPlayer)
+            {
+                playerActions = InputManager.Instance.inputActions.Player;
+                playerActions.SetCallbacks(this);
+            }
         }
 
         private void DisableInput()
@@ -87,9 +93,12 @@ namespace DigDig2
             if (interactor) interactor.SendInteraction(context.phase);
         }
 
-        public void OnSprint(InputAction.CallbackContext context)
+        public void OnSwitchCharacter(InputAction.CallbackContext context)
         {
-            
+            if (context.performed && characterSwitching != null)
+            {
+                characterSwitching.SwitchCharacter();
+            }
         }
 
         #endregion

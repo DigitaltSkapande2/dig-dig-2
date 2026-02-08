@@ -5,13 +5,13 @@ namespace DigDig2.CinemaCamera
 {
     public class CameraCurveEffector : TriggerZoneCameraEffectorBase
     {
-        [SerializeField] SplineContainer splineContainer;
+        [SerializeField] private SplineContainer splineContainer;
 
         private Spline projectionSpline; // The spline to match the Player
         private Spline dataSpline; // the spline to get the camera data from
 
 
-        void Start()
+        private new void Start()
         {
             projectionSpline = splineContainer.Splines[0];
             dataSpline = splineContainer.Splines[1];

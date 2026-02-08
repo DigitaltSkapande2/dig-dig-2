@@ -101,5 +101,10 @@ namespace DigDig2.CinemaCamera
         {
             AddCameraEffector(this);
         }
+
+        protected void OnDisable()
+        {
+            RemoveCameraEffector(this);
+        }
     }
 }

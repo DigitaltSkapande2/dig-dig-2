@@ -3,7 +3,6 @@ using DigDig2.Debugging;
 using System.Collections.Generic;
 using System.Linq;
 using Mirror;
-using System.Collections;
 using System;
 
 namespace DigDig2
@@ -12,9 +11,6 @@ namespace DigDig2
 	[Debug(DebugMenuToggleable.non_toggleable), RequireComponent(typeof(CharacterController))]
 	public class EntityCharacterController : NetworkBehaviour
 	{
-		// These get set public bools are supposed to be serialized but unity or C# doesn't allow that so fix this please!
-		[Tooltip("Freezes the entity (stops running ´CharacterController.Move()´) and disables the CharacterController component. Allows you to move the entity by setting their transform. Use EntityCharacterController.Teleport() for teleporting instead.")]
-		[SerializeField]
 		public bool Frozen
 		{
 			get
@@ -27,10 +23,10 @@ namespace DigDig2
 				frozen = value;
 
 				characterController.enabled = !frozen;
-				//gameObject.GetComponent<PlayerAttack>().SetFrozen(frozen);
 			}
 		}
-		private bool frozen = false;
+		[Tooltip("Freezes the entity (stops running ´CharacterController.Move()´) and disables the CharacterController component. Allows you to move the entity by setting their transform. Use EntityCharacterController.Teleport() for teleporting instead.")]
+		[SerializeField] private bool frozen = false;
 
 		[Header("Movement")]
 
