@@ -6,7 +6,7 @@ using UnityEditor;
 
 namespace DigDig2.Effects
 {
-    public class ScreenShakeEffect : CumulativeEffectBase<EffectInstanceData>
+    public class ScreenShakeEffect : CumulativeEffectBase<CumulativeEffectInstanceData>
     {
 
         [SerializeField] private float shakeFrequency = 5;
@@ -61,7 +61,7 @@ namespace DigDig2.Effects
             ScreenShakeEffect effect = (ScreenShakeEffect)target;
             if (GUILayout.Button("Test Shake"))
             {
-                EffectInstanceData testInstance = new EffectInstanceData
+                CumulativeEffectInstanceData testInstance = new CumulativeEffectInstanceData
                 {
                     duration = 1f,
                     intensity = 1f,

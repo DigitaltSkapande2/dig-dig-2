@@ -6,7 +6,7 @@ using UnityEngine.Rendering.Universal;
 namespace DigDig2.Effects
 {
     [Serializable]
-    public class VignettePulseEffectInstanceData : EffectInstanceData
+    public class VignettePulseEffectInstanceData : CumulativeEffectInstanceData
     {
         public Color color;
     }

@@ -9,12 +9,14 @@ namespace DigDig2.Effects
     [Serializable]
     public struct EffectPlayer
     {
+        public bool spawnPrefab;
+        public SpawnPrefabEffectInstance spawnPrefabEffectInstance;
         public bool screenShake;
-        public EffectInstanceData screenShakeEffectData;
+        public CumulativeEffectInstanceData screenShakeEffectData;
         public bool cameraZoom;
-        public EffectInstanceData cameraZoomEffectData;
+        public CumulativeEffectInstanceData cameraZoomEffectData;
         public bool timeSlow;
-        public EffectInstanceData timeSlowEffectData;
+        public CumulativeEffectInstanceData  timeSlowEffectData;
         public bool vignettePulse;
         public VignettePulseEffectInstanceData vignettePulseEffectData;
 
@@ -186,15 +188,15 @@ namespace DigDig2.Effects
 
             return height;
         }
-    
-    
+
+
         // Helper: build an EffectPlayer struct from the serialized property values
         private static EffectPlayer BuildRuntimeFromSerialized(SerializedProperty prop)
         {
             EffectPlayer ep = new EffectPlayer();
 
             ep.screenShake = prop.FindPropertyRelative("screenShake").boolValue;
-            var ss = new EffectInstanceData();
+            var ss = new CumulativeEffectInstanceData();
             var ssProp = prop.FindPropertyRelative("screenShakeEffectData");
             if (ssProp != null)
             {
@@ -205,7 +207,7 @@ namespace DigDig2.Effects
             ep.screenShakeEffectData = ss;
 
             ep.cameraZoom = prop.FindPropertyRelative("cameraZoom").boolValue;
-            var cz = new EffectInstanceData();
+            var cz = new CumulativeEffectInstanceData();
             var czProp = prop.FindPropertyRelative("cameraZoomEffectData");
             if (czProp != null)
             {
@@ -216,7 +218,7 @@ namespace DigDig2.Effects
             ep.cameraZoomEffectData = cz;
 
             ep.timeSlow = prop.FindPropertyRelative("timeSlow").boolValue;
-            var ts = new EffectInstanceData();
+            var ts = new CumulativeEffectInstanceData();
             var tsProp = prop.FindPropertyRelative("timeSlowEffectData");
             if (tsProp != null)
             {
