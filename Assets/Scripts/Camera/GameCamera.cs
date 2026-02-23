@@ -24,9 +24,6 @@ namespace DigDig2.CinemaCamera {
 
         void Update()
         {
-
-
-
             this.targetRotation = Quaternion.Slerp(this.targetRotation, baseTargetRotation, Time.deltaTime * rotationSpeed);
 
             Vector3 targetPos = Vector3.zero;

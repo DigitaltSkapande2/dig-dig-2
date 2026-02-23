@@ -8,8 +8,8 @@ namespace DigDig2
     public class CharacterSelectSequencer : MonoBehaviour
     {
         [Header("Clickable Materials")]
-        [SerializeField] private Collider maxClickableCollider;
-        [SerializeField] private Collider minisClickableCollider;
+        [SerializeField] private ClickableMesh maxClickableCollider;
+        [SerializeField] private ClickableMesh minisClickableCollider;
         [Header("Materials")]
         [SerializeField] private float intensityToSet = 5f;
         [SerializeField] private string float_to_modify = "fresnell_intensity";
