@@ -1,3 +1,4 @@
+using DigDig2.Effects;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -25,6 +26,8 @@ namespace DigDig2
 
         [Tooltip("Effects to be played when health is below 0.")]
         [SerializeField] private GameObject[] deathEffects;
+        [SerializeField] private EffectPlayer deathEffectPlayer;
+        [SerializeField] private EffectPlayer hitEffectPlayer;
 
         [Tooltip("Event is called when health is below 0.")]
         [SerializeField] private UnityEvent death;
