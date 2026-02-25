@@ -10,7 +10,7 @@ namespace DigDig2.Effects
     {
         [SerializeField] internal bool useUnscaledTime = true;
         internal List<T> effectInstances = new List<T>();
-        public void PlayEffectInstance(T effectInstance)
+        public virtual void PlayEffectInstance(T effectInstance)
         {
             // Store a copy of the provided instance so callers can reuse the same template
             // without mutating the serialized asset/state.

@@ -10,7 +10,7 @@ namespace DigDig2.Effects
     public struct EffectPlayer
     {
         public bool spawnPrefab;
-        public SpawnPrefabEffectInstance spawnPrefabEffectInstance;
+        public SpawnPrefabEffectData spawnPrefabEffectData;
         public bool screenShake;
         public CumulativeEffectInstanceData screenShakeEffectData;
         public bool cameraZoom;
@@ -20,8 +20,21 @@ namespace DigDig2.Effects
         public bool vignettePulse;
         public VignettePulseEffectInstanceData vignettePulseEffectData;
 
-        public void Play()
+        public void Play(Vector2 position = default, Quaternion rotation = default, Vector3 scale = default)
         {
+            if (spawnPrefab)
+            {
+                SpawnPrefabEffect spawnPrefabEffect = EffectCore.Instance.spawnPrefabEffect;
+                if (spawnPrefabEffect != null)
+                {
+                    SpawnPrefabEffectData effectInstance = spawnPrefabEffectData;
+                    effectInstance.position = position;
+                    effectInstance.rotation = rotation;
+                    effectInstance.scale = scale;
+                    spawnPrefabEffect.PlayEffectInstance(effectInstance);
+                }
+            }
+
             if (screenShake)
             {
                 ScreenShakeEffect screenShakeEffect = EffectCore.Instance.screenShakeEffect;
@@ -113,6 +126,11 @@ namespace DigDig2.Effects
                 }
             }
 
+            // SpawnPrefab
+            var spawnPrefabProp = property.FindPropertyRelative("spawnPrefab");
+            var spawnPrefabDataProp = property.FindPropertyRelative("spawnPrefabEffectData");
+            DrawEffectSection("Spawn Prefab", spawnPrefabProp, spawnPrefabDataProp, subPanelColor);
+
             // screenShake
             var screenShakeProp = property.FindPropertyRelative("screenShake");
             var screenShakeDataProp = property.FindPropertyRelative("screenShakeEffectData");
@@ -194,6 +212,15 @@ namespace DigDig2.Effects
         private static EffectPlayer BuildRuntimeFromSerialized(SerializedProperty prop)
         {
             EffectPlayer ep = new EffectPlayer();
+
+            ep.spawnPrefab = prop.FindPropertyRelative("spawnPrefab").boolValue;
+            var sp = new SpawnPrefabEffectData();
+            var spProp = prop.FindPropertyRelative("spawnPrefabEffectData");
+            if (spProp != null)
+            {
+                sp.prefabToSpawn = spProp.FindPropertyRelative("prefabToSpawn").objectReferenceValue as GameObject;
+            }
+            ep.spawnPrefabEffectData = sp;
 
             ep.screenShake = prop.FindPropertyRelative("screenShake").boolValue;
             var ss = new CumulativeEffectInstanceData();
