@@ -7,6 +7,7 @@ namespace DigDig2.Effects
     [Serializable]
     public class CumulativeEffectInstanceData : ICloneable
     {
+        // Duration passed since the effect started, used to evaluate the curve
         [NonSerialized] internal float durationPassed = 0f;
         public AnimationCurve intensityCurve = AnimationCurve.EaseInOut(0f, 1f, 1f, 0f);
         public float duration = 0.4f;
@@ -14,12 +15,7 @@ namespace DigDig2.Effects
 
         public object Clone()
         {
-            CumulativeEffectInstanceData clone = new();
-            clone.durationPassed = this.durationPassed;
-            clone.intensityCurve = intensityCurve;
-            clone.duration = duration;
-            clone.intensity = intensity;
-            return clone;
+            return MemberwiseClone();
         }
     }
 
