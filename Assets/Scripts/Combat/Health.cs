@@ -25,9 +25,7 @@ namespace DigDig2
         [SerializeField] private int healthPoints = 1;
 
         [Tooltip("Effects to be played when health is below 0.")]
-        [SerializeField] private GameObject[] deathEffects;
         [SerializeField] private EffectPlayer deathEffectPlayer;
-        [SerializeField] private EffectPlayer hitEffectPlayer;
 
         [Tooltip("Event is called when health is below 0.")]
         [SerializeField] private UnityEvent death;
@@ -61,7 +59,7 @@ namespace DigDig2
             healthPoints = 0;
 
             death.Invoke();
-            PlayDeathEffects();
+            deathEffectPlayer.Play(transform.position);
             Destroy(gameObject);
         }
 
@@ -71,14 +69,6 @@ namespace DigDig2
         }
 
         #region Effects
-
-        private void PlayDeathEffects()
-        {
-            foreach (GameObject deathEffect in deathEffects)
-            {
-                Instantiate(deathEffect, transform.position, Quaternion.identity);
-            }
-        }
 
         #endregion
     }

@@ -1,5 +1,9 @@
 using System;
 using UnityEngine;
+using System.Collections.Generic;
+using UnityEngine.UIElements;
+
+
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -30,7 +34,7 @@ namespace DigDig2.Effects
                     SpawnPrefabEffectData effectInstance = spawnPrefabEffectData;
                     effectInstance.position = position;
                     effectInstance.rotation = rotation;
-                    effectInstance.scale = scale;
+                    effectInstance.scale = scale != Vector3.zero ? scale : Vector3.one;
                     spawnPrefabEffect.PlayEffectInstance(effectInstance);
                 }
             }
@@ -126,6 +130,8 @@ namespace DigDig2.Effects
                 }
             }
 
+            
+
             // SpawnPrefab
             var spawnPrefabProp = property.FindPropertyRelative("spawnPrefab");
             var spawnPrefabDataProp = property.FindPropertyRelative("spawnPrefabEffectData");
@@ -160,6 +166,7 @@ namespace DigDig2.Effects
                 EffectPlayer runtime = BuildRuntimeFromSerialized(property);
                 runtime.Play();
             }
+
             GUI.enabled = true;
 
             EditorGUI.indentLevel--;
@@ -218,7 +225,7 @@ namespace DigDig2.Effects
             var spProp = prop.FindPropertyRelative("spawnPrefabEffectData");
             if (spProp != null)
             {
-                sp.prefabToSpawn = spProp.FindPropertyRelative("prefabToSpawn").objectReferenceValue as GameObject;
+                //sp.prefabToSpawn = spProp.FindPropertyRelative("prefabToSpawn").objectReferenceValue;
             }
             ep.spawnPrefabEffectData = sp;
 

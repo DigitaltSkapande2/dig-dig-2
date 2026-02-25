@@ -1,13 +1,20 @@
 using System;
-using DigDig2.CinemaCamera;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace DigDig2.Effects
 {
+    [Serializable]
     public class SpawnPrefabEffectData : ICloneable
     {
-        public GameObject prefabToSpawn;
-        public float duration = 2f;
+        [Serializable]
+        public struct PrefabToSpawn
+        {
+            public GameObject prefab;
+            [Range(1f, 10f)] public float duration;
+        }
+
+        public List<PrefabToSpawn> prefabToSpawn;
         [NonSerialized] public Vector3 position;
         [NonSerialized] public Quaternion rotation;
         [NonSerialized] public Vector3 scale = Vector3.one;
@@ -27,15 +34,25 @@ namespace DigDig2.Effects
         {
             if (currentlySpawnedPrefabsCount >= maxSimultaneousSpawns)
             {
+                Debug.LogWarning($"SpawnPrefabEffect: Max simultaneous spawns reached ({maxSimultaneousSpawns}). Cannot spawn more prefabs until some are destroyed.");
                 return;
             }
 
-            currentlySpawnedPrefabsCount++;
-            GameObject spawned = Instantiate(effectInstance.prefabToSpawn, effectInstance.position, effectInstance.rotation);
-            spawned.transform.localScale = effectInstance.scale;
+            foreach (var prefabToSpawn in effectInstance.prefabToSpawn)
+            {
+                Debug.Log($"Spawning prefab {prefabToSpawn.prefab.name} at {effectInstance.position} with rotation {effectInstance.rotation} and scale {effectInstance.scale} for duration {prefabToSpawn.duration}");
+                SpawnPrefab(prefabToSpawn.prefab, effectInstance.position, effectInstance.rotation, effectInstance.scale, prefabToSpawn.duration);
+            }
+        }
 
-            Destroy(spawned, effectInstance.duration);
-            Invoke(nameof(OnSpawnedPrefabDestroyed), effectInstance.duration);
+        private void SpawnPrefab(GameObject prefab, Vector3 position, Quaternion rotation, Vector3 scale, float duration)
+        {
+            currentlySpawnedPrefabsCount++;
+            GameObject spawned = Instantiate(prefab, position, rotation);
+            spawned.transform.localScale = scale;
+
+            Destroy(spawned, duration);
+            Invoke(nameof(OnSpawnedPrefabDestroyed), duration);
         }
 
         private void OnSpawnedPrefabDestroyed()
