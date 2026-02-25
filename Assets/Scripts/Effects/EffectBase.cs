@@ -6,7 +6,7 @@ namespace DigDig2.Effects
 {
     //  T is the InstanceData Class
 
-    public class EffectBase<T> : MonoBehaviour
+    public class EffectBase<T> : MonoBehaviour where T : ICloneable
     {
         [SerializeField] internal bool useUnscaledTime = true;
         internal List<T> effectInstances = new List<T>();

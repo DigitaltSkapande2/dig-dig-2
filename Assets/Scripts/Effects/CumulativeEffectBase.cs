@@ -5,12 +5,22 @@ using UnityEngine;
 namespace DigDig2.Effects
 {
     [Serializable]
-    public class CumulativeEffectInstanceData
+    public class CumulativeEffectInstanceData : ICloneable
     {
         [NonSerialized] internal float durationPassed = 0f;
         public AnimationCurve intensityCurve = AnimationCurve.EaseInOut(0f, 1f, 1f, 0f);
         public float duration = 0.4f;
         public float intensity = 1f;
+
+        public object Clone()
+        {
+            CumulativeEffectInstanceData clone = new();
+            clone.durationPassed = this.durationPassed;
+            clone.intensityCurve = intensityCurve;
+            clone.duration = duration;
+            clone.intensity = intensity;
+            return clone;
+        }
     }
 
 
@@ -29,8 +39,6 @@ namespace DigDig2.Effects
         internal new void Update()
         {
             float cumulativeCurveValue = 0f;
-            for (int i = effectInstances.Count - 1; i > -1; i--)
-
             // iterate backwards to allow removal while iterating
             for (int i = effectInstances.Count - 1; i >= 0; i--)
             {
@@ -50,7 +58,6 @@ namespace DigDig2.Effects
                     effectInstances.RemoveAt(i);
                 }
 
-                float curveValue = effect.intensityCurve.Evaluate(effect.durationPassed / effect.duration);
                 // evaluate curve (normalized time) and accumulate the weighted value
                 float normalized = Mathf.Clamp01(effect.durationPassed / Mathf.Max(float.Epsilon, effect.duration));
                 float curveValue = effect.intensityCurve.Evaluate(normalized);
@@ -68,7 +75,7 @@ namespace DigDig2.Effects
             }
         }
 
-        protected virtual void UpdateEffect(float cumulativeValue)
+        internal virtual void UpdateEffect(float cumulativeValue)
         {
             // default: do nothing. Derived classes should override.
         }
