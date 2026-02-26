@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -6,23 +7,35 @@ using UnityEngine.InputSystem;
 namespace DigDig2
 {
     [RequireComponent(typeof(Camera))]
-    public class MeshClickerCamera : MonoBehaviour
+    public class MeshClickerCamera : MonoBehaviour, ProjectWideInputActions.IUIActions
     {
         private bool isPointerDown = false;
 
         private Camera camera;
         private Collider currentCollider;
+        [SerializeField] private LayerMask clickableLayerMask;
 
         private void Start()
         {
+            
             camera = GetComponent<Camera>();
+        }
+
+        void OnEnable()
+        {
+            InputManager.Instance.inputActions.UI.SetCallbacks(this);
+        }
+
+        void OnDisable()
+        {
+            InputManager.Instance.inputActions.UI.SetCallbacks(this);
         }
 
         private void FixedUpdate()
         {
             Ray ray = camera.ScreenPointToRay(Mouse.current.position.ReadValue());
 
-            if (Physics.Raycast(ray, out RaycastHit raycastHit))
+            if (Physics.Raycast(ray, out RaycastHit raycastHit, 100f, clickableLayerMask))
             {
                 if (raycastHit.collider != currentCollider)
                 {
@@ -32,11 +45,32 @@ namespace DigDig2
             }
         }
 
-        public void OnClick(InputValue inputValue)
+        public void OnNavigate(InputAction.CallbackContext context)
         {
-            if (isPointerDown != inputValue.isPressed)
+
+        }
+
+        public void OnSubmit(InputAction.CallbackContext context)
+        {
+
+        }
+
+        public void OnCancel(InputAction.CallbackContext context)
+        {
+
+        }
+
+        public void OnPoint(InputAction.CallbackContext context)
+        {
+
+        }
+
+        public void OnClick(InputAction.CallbackContext context)
+        {
+            Debug.Log("On Click " + context.ReadValueAsButton());
+            if (isPointerDown != context.ReadValueAsButton())
             {
-                isPointerDown = inputValue.isPressed;
+                isPointerDown = context.ReadValueAsButton();
 
                 if (isPointerDown)
                 {
@@ -47,6 +81,31 @@ namespace DigDig2
                     currentCollider?.GetComponent<ClickableMesh>()?.OnPointerClickRelease();
                 }
             }
+        }
+
+        public void OnRightClick(InputAction.CallbackContext context)
+        {
+
+        }
+
+        public void OnMiddleClick(InputAction.CallbackContext context)
+        {
+
+        }
+
+        public void OnScrollWheel(InputAction.CallbackContext context)
+        {
+
+        }
+
+        public void OnTrackedDevicePosition(InputAction.CallbackContext context)
+        {
+
+        }
+
+        public void OnTrackedDeviceOrientation(InputAction.CallbackContext context)
+        {
+
         }
     }
 }

@@ -1,8 +1,6 @@
 using System;
 using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine.UIElements;
-
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -34,7 +32,7 @@ namespace DigDig2.Effects
                     SpawnPrefabEffectData effectInstance = spawnPrefabEffectData;
                     effectInstance.position = position;
                     effectInstance.rotation = rotation;
-                    effectInstance.scale = scale != Vector3.zero ? scale : Vector3.one;
+                    effectInstance.scale = scale;
                     spawnPrefabEffect.PlayEffectInstance(effectInstance);
                 }
             }
@@ -130,8 +128,6 @@ namespace DigDig2.Effects
                 }
             }
 
-            
-
             // SpawnPrefab
             var spawnPrefabProp = property.FindPropertyRelative("spawnPrefab");
             var spawnPrefabDataProp = property.FindPropertyRelative("spawnPrefabEffectData");
@@ -166,7 +162,6 @@ namespace DigDig2.Effects
                 EffectPlayer runtime = BuildRuntimeFromSerialized(property);
                 runtime.Play();
             }
-
             GUI.enabled = true;
 
             EditorGUI.indentLevel--;
@@ -182,6 +177,11 @@ namespace DigDig2.Effects
 
             float lineHeight = EditorGUIUtility.singleLineHeight;
             float spacing = 2f;
+
+            var spawnPrefabProp = property.FindPropertyRelative("spawnPrefab");
+            var spawnPrefabDataProp = property.FindPropertyRelative("spawnPrefabEffectData");
+            height += lineHeight + spacing;
+            if (spawnPrefabProp.boolValue) height += EditorGUI.GetPropertyHeight(spawnPrefabDataProp, true) + spacing;
 
             // screenShake
             var screenShakeProp = property.FindPropertyRelative("screenShake");
@@ -225,7 +225,7 @@ namespace DigDig2.Effects
             var spProp = prop.FindPropertyRelative("spawnPrefabEffectData");
             if (spProp != null)
             {
-                //sp.prefabToSpawn = spProp.FindPropertyRelative("prefabToSpawn").objectReferenceValue;
+                //sp.prefabToSpawn = spProp.FindPropertyRelative("prefabToSpawn").objectReferenceValue.GetComponent<SpawnPrefabEffectInstance>().prefabToSpawn;
             }
             ep.spawnPrefabEffectData = sp;
 

@@ -5,6 +5,12 @@ using UnityEngine;
 
 namespace DigDig2
 {
+
+    public enum CharacterType
+    {
+        Max,
+        Mini,
+    }
     public class GameManager : Singleton<GameManager>
     {
         [Header("Player Prefabs")]
@@ -12,11 +18,7 @@ namespace DigDig2
         [SerializeField] private GameObject maxPrefab;
         [SerializeField] private GameObject miniPrefab;
 
-        public enum CharacterType
-        {
-            Max,
-            Mini,
-        }
+
 
         public GameObject LocalPlayerObj
         {
