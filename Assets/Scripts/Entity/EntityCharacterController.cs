@@ -130,6 +130,18 @@ namespace DigDig2
 		private Vector3 lastGroundPosition = Vector3.zero;
 
 		[SyncVar] private float targetLookRotation = 0f;
+		public float TargetLookRotation
+		{
+			get
+			{
+				return targetLookRotation;
+			}
+			set
+			{
+				targetLookRotation = value;
+			}
+		}
+		
 
 		private enum PlayerState
         {

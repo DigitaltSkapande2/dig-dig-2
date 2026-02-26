@@ -28,7 +28,7 @@ namespace DigDig2
             }
         }
 
-        public CharacterType currentCharacter { private set; get; }
+        public CharacterType currentCharacter { private set; get; } = CharacterType.Max;
 
 
         private void Start()
@@ -62,16 +62,22 @@ namespace DigDig2
 
         public void SingleplayerSwitchCharacter()
         {
-            currentCharacter = Enum.GetValues(typeof(CharacterType)).Cast<CharacterType>()
-                    .SkipWhile(e => e != currentCharacter).Skip(1).First();
+            // Harvvest old player data
+            Vector3 oldPlayerLookVector = LocalPlayerObj.GetComponent<EntityCharacterController>().GetForwardVector();
+            Vector3 oldPlayerPos = LocalPlayerObj.transform.position;
 
+            // Kill old player
+            Destroy(LocalPlayerObj);
+
+            // Switch Logic
+            currentCharacter = CharacterType.Max == currentCharacter ? CharacterType.Mini : CharacterType.Max;
+
+            // Spawn new player
             GameObject newPrefab = GetCharacterPrefabFromCharacterType(currentCharacter);
-
-            Vector3 lookVector = GetComponent<EntityCharacterController>().GetForwardVector();
-            GameObject playerCharacter = Instantiate(newPrefab, transform.position, transform.rotation);
-            playerCharacter.GetComponent<EntityCharacterController>().LookTowards(lookVector, false);
+            GameObject playerCharacter = Instantiate(newPrefab, oldPlayerPos, Quaternion.identity);
+            playerCharacter.GetComponent<EntityCharacterController>().LookTowards(oldPlayerLookVector, false);
             NetworkServer.ReplacePlayerForConnection(NetworkServer.connections[0], playerCharacter, ReplacePlayerOptions.KeepAuthority);
-            Destroy(gameObject);
+            
         }
 
         #endregion

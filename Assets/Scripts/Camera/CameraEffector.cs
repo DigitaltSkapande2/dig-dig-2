@@ -32,10 +32,7 @@ namespace DigDig2.CinemaCamera
             }
         }
 
-        public Vector3 position;
-        //public Vector2 cameraLocalPlanarOffset;
-        public Quaternion rotation;
-        public float frustumSize;
+
 
         [SerializeField] private int priorityLevel;
         public int PriorityLevel
@@ -51,6 +48,12 @@ namespace DigDig2.CinemaCamera
                 ReCompileEffectiveEffectors();
             }
         }
+
+        [Header("Debug Values")]
+        public Vector3 position;
+        //public Vector2 cameraLocalPlanarOffset;
+        public Quaternion rotation;
+        public float frustumSize;
 
         #endregion
 
