@@ -440,9 +440,10 @@ namespace DigDig2
 			animator.CrossFadeInFixedTime("SwordIdle", 0.1f, 1);
         }
 
-		public void LookTowards(Vector3 target)
+		public void LookTowards(Vector3 target, bool userLerp = true)
 		{
 			targetLookRotation = Vector3.SignedAngle(transform.forward, target - transform.position, transform.up);
+			RefreshVisualsRotation(userLerp);
 		}
 
 		public Vector3 GetForwardVector()

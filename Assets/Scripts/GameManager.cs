@@ -69,7 +69,7 @@ namespace DigDig2
 
             Vector3 lookVector = GetComponent<EntityCharacterController>().GetForwardVector();
             GameObject playerCharacter = Instantiate(newPrefab, transform.position, transform.rotation);
-            playerCharacter.transform.LookAt(playerCharacter.transform.position + lookVector);
+            playerCharacter.GetComponent<EntityCharacterController>().LookTowards(lookVector, false);
             NetworkServer.ReplacePlayerForConnection(NetworkServer.connections[0], playerCharacter, ReplacePlayerOptions.KeepAuthority);
             Destroy(gameObject);
         }
