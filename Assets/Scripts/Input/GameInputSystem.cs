@@ -298,7 +298,7 @@ public partial class @ProjectWideInputActions: IInputActionCollection2, IDisposa
                 {
                     ""name"": """",
                     ""id"": ""6b126b22-f7ae-4b06-90cc-caf0cfa0ef07"",
-                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""path"": ""<Gamepad>/buttonEast"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
