@@ -45737,6 +45737,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: SavePoint
       objectReference: {fileID: 0}
+    - target: {fileID: 6814596740034364791, guid: ee92603dd2b37dbe7b2955f4695f6409, type: 3}
+      propertyPath: sceneId
+      value: 3885765147
+      objectReference: {fileID: 0}
+    - target: {fileID: 6927814864992761602, guid: ee92603dd2b37dbe7b2955f4695f6409, type: 3}
+      propertyPath: sceneId
+      value: 24836276
+      objectReference: {fileID: 0}
     - target: {fileID: 7165053757399966656, guid: ee92603dd2b37dbe7b2955f4695f6409, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.672458

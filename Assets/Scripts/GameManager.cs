@@ -37,8 +37,7 @@ namespace DigDig2
         {
             if (NetworkServer.active)
             {
-                if (NetworkManager.singleton.IsMultiplayer) InitializeMultiplayer();
-                else SingleplayerInitialize();
+                if (!NetworkManager.singleton.IsMultiplayer) SingleplayerInitialize();
             }
         }
 

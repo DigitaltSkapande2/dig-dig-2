@@ -245,10 +245,29 @@ namespace DigDig2
         }
         private void OnMultiplayerChosen()
         {
-            if (loadedSaveFileIndex >= 0)
+            Debug.Log("MULTIPLAYER CHOSEN");
+
+            switch (hostingModeSelectionType)
             {
-                Debug.LogWarning("Multiplayer is not implemented yet! ANTON LOCK IN!! pwetty pwease...");
+                case HostingModeSelectionType.ContinuedGameSave:
+                    Debug.LogWarning("Continuing not implemented yet!");
+                    break;
+                case HostingModeSelectionType.LoadedGameSave:
+                    if (loadedSaveFileIndex >= 0)
+                    {
+                        string saveFilePath = saveFiles[loadedSaveFileIndex];
+                        SaveManager.GameSave gameSave = FileSystem.ReadDataFromFile<SaveManager.GameSave>(saveFilePath);
+                        SaveManager.Instance.LoadSave(gameSave);
+
+                        StartMultiplayer();
+                    }
+                    break;
+                case HostingModeSelectionType.NewGameSave:
+                    SaveManager.Instance.CreateNewSave();
+                    StartMultiplayer();
+                    break;
             }
+            
         }
 
         public async void StartSingleplayer()
@@ -257,6 +276,15 @@ namespace DigDig2
 
             await UniTask.WaitUntil(() => NetworkServer.active);
             Debug.Log("GANG!!! WE MADE IT!!");
+
+            NetworkManager.singleton.ServerChangeScene(gameSceneName);
+        }
+
+        public async void StartMultiplayer()
+        {
+            NetworkManager.singleton.StartHost(true);
+
+            await UniTask.WaitUntil(() => NetworkServer.active);
 
             NetworkManager.singleton.ServerChangeScene(gameSceneName);
         }

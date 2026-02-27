@@ -75,10 +75,11 @@ namespace DigDig2
         {
             if (saveName == string.Empty) saveName = GetNextFreeSaveName();
 
-            loadedGameSave = new()
+            loadedGameSave = new GameSave()
             {
                 saveName = saveName,
-                version = Application.version
+                version = Application.version,
+                stateData = new Dictionary<string, object>()
             };
         }
         public string GetNextFreeSaveName()
@@ -173,7 +174,7 @@ namespace DigDig2
 
         public void RestoreISavable(string uniqueName, ISaveable saveable = null)
         {
-            if (HasLoadedSave)
+            if (!HasLoadedSave)
             {
                 Debug.LogError("Trying to restore Savable state with no save loaded, be sure to load a save first!");
                 return;
