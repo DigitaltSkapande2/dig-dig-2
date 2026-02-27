@@ -69,7 +69,8 @@ namespace DigDig2
 
         public void OnFocus(InputAction.CallbackContext context)
         {
-            Debug.Log(context.performed);
+            if (context.performed) attacker.StartFocus();
+            else attacker.EndFocus();
         }
 
         public void OnFocusTarget(InputAction.CallbackContext context)

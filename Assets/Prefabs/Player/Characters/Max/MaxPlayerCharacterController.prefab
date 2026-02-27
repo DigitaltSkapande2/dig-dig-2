@@ -200,6 +200,10 @@ MonoBehaviour:
   chainTimeWindowBeforeAttackEnd: 0.5
   bindableAttackHitboxes:
   - {fileID: 2279751000911291947}
+  enemyGroups:
+  - enemy
+  - crystal
+  focusScanRadius: 10
   verboseLogging: 0
 --- !u!114 &1195255877809228181
 MonoBehaviour:

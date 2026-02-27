@@ -18,6 +18,9 @@ namespace DigDig2
         [SerializeField] private GameObject maxPrefab;
         [SerializeField] private GameObject miniPrefab;
 
+        [Header("Enemy Focusing")]
+        [SerializeField] private GameObject focusIndicator;
+
 
 
         public GameObject LocalPlayerObj
@@ -101,6 +104,19 @@ namespace DigDig2
 
             GameObject miniPlayerCharacter = Instantiate(miniPrefab);
             NetworkServer.ReplacePlayerForConnection(NetworkManager.singleton.MiniPlayerConnection, miniPlayerCharacter, ReplacePlayerOptions.KeepAuthority);
+        }
+
+        #endregion
+
+        #region Enemy Focusing
+
+        public void FocusOnPosition(Vector3 position)
+        {
+            focusIndicator.transform.position = Camera.main.WorldToScreenPoint(position);
+        }
+        public void SetFocusIndicatorVibility(bool visible)
+        {
+            focusIndicator.SetActive(visible);
         }
 
         #endregion

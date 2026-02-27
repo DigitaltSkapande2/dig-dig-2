@@ -18,6 +18,12 @@ namespace DigDig2
 		[Tooltip("The \"anchor points\" that an attack can use to create hitboxes.")]
 		[SerializeField] private List<BindableAttackHitbox> bindableAttackHitboxes = new();
 
+		[Tooltip("The groups of this entity's enemies")]
+		[SerializeField] private List<string> enemyGroups = new();
+
+		[Tooltip("The radius to scan for enemies at when focusing")]
+		[SerializeField] private float focusScanRadius = 10;
+
 		[SerializeField] private bool verboseLogging = false;
 
 		public CombatState State
@@ -46,6 +52,8 @@ namespace DigDig2
 
 		private Dictionary<string, BindableAttackHitbox> activeAttacks = new();
 
+		private Attackable focusedEnemy = null;
+
 		public enum CombatState
 		{
 			Idle,
@@ -69,6 +77,9 @@ namespace DigDig2
 		private void Update()
 		{
 			if (authority)
+			{
+				UpdateEnemyFocus();
+
 				if ((state == CombatState.Idle || attackRequestChain > 0) && !attackRequestProcessed)
 				{
 					if (heldAttackType != null)
@@ -108,6 +119,7 @@ namespace DigDig2
 
 				if (attackCooldownTimer > 0) attackCooldownTimer -= Time.deltaTime;
 				if (state == CombatState.OnCooldown && attackCooldownTimer <= 0) state = CombatState.Idle;
+			}
 		}
 
         private void FixedUpdate()
@@ -344,6 +356,91 @@ namespace DigDig2
 
 			return bindableAttackHitboxes[index];
         }
+
+		#endregion
+
+		#region Enemy Focusing
+
+		public List<Attackable> GetEnemiesInRadius(float radius)
+		{
+			List<Attackable> enemyAttackables = new();
+			
+            Collider[] colliders = Physics.OverlapSphere(transform.position, radius);
+            foreach (Collider collider in colliders)
+			{
+                if (collider.TryGetComponent(out Attackable enemyAttackable))
+                {
+                    if (enemyGroups.Contains(enemyAttackable.Group)) enemyAttackables.Add(enemyAttackable);
+                }
+            }
+
+			return enemyAttackables;
+		}
+		public Attackable GetClosestEnemyInRadius(float radius)
+		{
+			Attackable closestEnemy = null;
+			float closestEnemyDistance = -1;
+			foreach (Attackable enemy in GetEnemiesInRadius(radius))
+			{
+				float enemyDistance = Vector3.Distance(transform.position, enemy.transform.position);
+				if (closestEnemyDistance == -1 || enemyDistance < closestEnemyDistance)
+				{
+					closestEnemy = enemy;
+					closestEnemyDistance = enemyDistance;
+				}
+			}
+
+			return closestEnemy;
+		}
+
+		public void StartFocus()
+		{
+			Attackable closestEnemy = GetClosestEnemyInRadius(focusScanRadius);
+			if (closestEnemy && IsAttackableVisibleOnScreen(closestEnemy))
+			{
+				focusedEnemy = closestEnemy;
+			}
+		}
+		public void EndFocus()
+		{
+			focusedEnemy = null;
+
+			if (entityCharacterController) entityCharacterController.SetAutomaticLookRotationLock(false);
+
+			if (isClient && GameManager.Instance.LocalPlayerObj == gameObject) GameManager.Instance.SetFocusIndicatorVibility(false);
+		}
+
+		private void UpdateEnemyFocus()
+		{
+			if (focusedEnemy)
+			{
+				if (isClient && GameManager.Instance.LocalPlayerObj == gameObject) GameManager.Instance.FocusOnPosition(focusedEnemy.transform.position);
+
+				if (!IsAttackableVisibleOnScreen(focusedEnemy))
+				{
+					focusedEnemy = null;
+				}
+			}
+
+			if (entityCharacterController)
+			{
+				entityCharacterController.SetAutomaticLookRotationLock(focusedEnemy != null);
+				if (focusedEnemy) entityCharacterController.LookTowards(focusedEnemy.transform.position);
+			}
+
+			if (isClient && GameManager.Instance.LocalPlayerObj == gameObject) GameManager.Instance.SetFocusIndicatorVibility(focusedEnemy != null);
+		}
+
+		public bool IsAttackableVisibleOnScreen(Attackable attackable)
+		{
+			if (attackable.TryGetComponent(out Collider collider))
+			{
+				Plane[] cameraFrustrumPlanes = GeometryUtility.CalculateFrustumPlanes(Camera.main);
+				return GeometryUtility.TestPlanesAABB(cameraFrustrumPlanes, collider.bounds);
+			}
+			
+			return false;
+		}
 
 		#endregion
 
