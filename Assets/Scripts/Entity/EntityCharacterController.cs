@@ -84,8 +84,19 @@ namespace DigDig2
 
 		[Space(20)]
 
-		[Tooltip("How far the ground raycast should cast")]
+		[Tooltip("How far the ground raycast should cast.")]
 		[SerializeField] private float movingPlatformGroundRaycastDistance = 2f;
+
+		[Space(20)]
+
+		[Tooltip("If the entity has the ability to dash.")]
+		[SerializeField] private bool canDash = false;
+
+		[SerializeField] private float dashStrength = 10;
+
+		[SerializeField] private float dashDecaySpeed = 20;
+
+		[SerializeField] private float dashCooldown = 2;
 
 		[Header("Combat")]
 
@@ -122,6 +133,9 @@ namespace DigDig2
 		private Vector3 slopeSlideVelocity;
 
 		private Vector3 knockbackVelocity;
+
+		private Vector3 dashVelocity;
+		private float dashCooldownTimer = 0;
 
 		private float stunTimer = 0;
 
@@ -179,6 +193,7 @@ namespace DigDig2
 					if (stunTimer <= 0) ProcessMove();
 					ProcessSlope();
 					ProcessKnockback();
+					ProcessDash();
 
 					ApplyMovement();
 
@@ -271,6 +286,18 @@ namespace DigDig2
 			knockbackVelocity = Vector3.Lerp(knockbackVelocity, Vector3.zero, knockbackFallofSpeed * Time.deltaTime);
 		}
 
+		private void ProcessDash()
+		{
+			if (dashCooldownTimer > 0)
+			{
+				dashCooldownTimer = Mathf.Max(dashCooldownTimer - Time.deltaTime, 0);
+				Debug.Log(dashCooldownTimer);
+			}
+
+			velocity += dashVelocity;
+			dashVelocity = Vector3.Lerp(dashVelocity, Vector3.zero, dashDecaySpeed * Time.deltaTime);
+		}
+
 		private void ProcessEdge()
 		{
 			Dictionary<Vector3, float> edgeAdjustments = new();
@@ -346,6 +373,15 @@ namespace DigDig2
 			}
 
 			lastGround = ground;
+		}
+
+		public void Dash()
+		{
+			if (canDash && dashCooldownTimer <= 0)
+			{
+				dashVelocity = inputMoveVector * dashStrength;
+				dashCooldownTimer = dashCooldown;
+			}
 		}
 
 		// Add velocity to CharacterController

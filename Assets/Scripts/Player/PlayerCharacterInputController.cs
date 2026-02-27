@@ -101,6 +101,14 @@ namespace DigDig2
             }
         }
 
+        public void OnDash(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+            {
+                entityCharacterController.Dash();
+            }
+        }
+
         #endregion
     }
 }
