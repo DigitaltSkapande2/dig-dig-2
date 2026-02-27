@@ -2,6 +2,7 @@
   "dependencies": {
     "com.cysharp.unitask": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",
     "com.maligan.unity-zed": "https://github.com/maligan/unity-zed.git",
+    "com.mirror.steamworks.net": "https://github.com/Chykary/FizzySteamworks.git?path=/com.mirror.steamworks.net",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.ai.navigation": "2.0.10",
     "com.unity.behavior": "1.0.15",

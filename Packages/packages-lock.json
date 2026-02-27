@@ -16,6 +16,13 @@
       },
       "hash": "25f1b97fedb6cf7b4b566c4a83ec8311b68d3e82"
     },
+    "com.mirror.steamworks.net": {
+      "version": "https://github.com/Chykary/FizzySteamworks.git?path=/com.mirror.steamworks.net",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "2339a4a4742a8b09fbbb29fc555e5622a6e30a92"
+    },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
       "depth": 0,
