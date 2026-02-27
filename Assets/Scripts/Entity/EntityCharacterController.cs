@@ -111,6 +111,7 @@ namespace DigDig2
 
 		// Movement
 		private CharacterController characterController;
+		private Attacker attacker;
 
 		private Vector3 velocity;
 		private Animator animator;
@@ -143,17 +144,19 @@ namespace DigDig2
 		}
 		
 
-		private enum PlayerState
+		private enum EntityState
         {
             Idle,
 			Sprinting,
+			Attacking
         }
 
-		private PlayerState state;
+		private EntityState state;
 
 		private void Awake()
 		{
 			characterController = GetComponent<CharacterController>();
+			attacker = GetComponent<Attacker>();
 			animator = GetComponentInChildren<Animator>();
 		}
 
@@ -435,19 +438,25 @@ namespace DigDig2
 
 		private void UpdateAnimation()
         {
+			if (attacker.State != Attacker.CombatState.Idle)
+			{
+				state = EntityState.Attacking;
+				return;
+			}
+
             if (new Vector3(inputMoveVector.x, 0, inputMoveVector.z).magnitude > 0f)
             {
-				if (state == PlayerState.Sprinting) return;
+				if (state == EntityState.Sprinting) return;
 
                 animator.CrossFadeInFixedTime("Sprint", 0.1f, 0);
 				animator.CrossFadeInFixedTime("SwordSprint", 0.1f, 1);
-				state = PlayerState.Sprinting;
+				state = EntityState.Sprinting;
 				return;
             }
 
-			if (state == PlayerState.Idle) return;
+			if (state == EntityState.Idle) return;
 
-			state = PlayerState.Idle;
+			state = EntityState.Idle;
 			animator.CrossFadeInFixedTime("Idle", 0.1f, 0);
 			animator.CrossFadeInFixedTime("SwordIdle", 0.1f, 1);
         }
