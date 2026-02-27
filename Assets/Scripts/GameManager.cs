@@ -65,6 +65,7 @@ namespace DigDig2
         {
             // Harvvest old player data
             Vector3 oldPlayerLookVector = LocalPlayerObj.GetComponent<EntityCharacterController>().GetForwardVector();
+            Debug.Log(oldPlayerLookVector);
             Vector3 oldPlayerPos = LocalPlayerObj.transform.position;
 
             // Kill old player
@@ -76,7 +77,8 @@ namespace DigDig2
             // Spawn new player
             GameObject newPrefab = GetCharacterPrefabFromCharacterType(currentCharacter);
             GameObject playerCharacter = Instantiate(newPrefab, oldPlayerPos, Quaternion.identity);
-            playerCharacter.GetComponent<EntityCharacterController>().LookTowards(oldPlayerLookVector, false);
+            EntityCharacterController playerEntityCharacterController = playerCharacter.GetComponent<EntityCharacterController>();
+            playerEntityCharacterController.LookTowards(playerCharacter.transform.position + oldPlayerLookVector, false);
             NetworkServer.ReplacePlayerForConnection(NetworkServer.connections[0], playerCharacter, ReplacePlayerOptions.KeepAuthority);
             
         }

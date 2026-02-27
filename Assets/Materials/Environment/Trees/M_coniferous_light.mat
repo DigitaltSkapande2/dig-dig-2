@@ -59,6 +59,9 @@ Material:
     - _TextureIntensity: 1
     - _TextureStrength: 1
     - _TextureTiling: 2.76
+    - _WindDensity: 0.25
+    - _WindSpeed: 3
+    - _WindStrength: 0.1
     m_Colors:
     - _BaseColor: {r: 0.0766247, g: 0.16226411, b: 0, a: 1}
     - _GlowColor: {r: 0, g: 27.67306, b: 32, a: 1}

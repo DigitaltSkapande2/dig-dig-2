@@ -56,14 +56,14 @@ namespace DigDig2
 		}
 
 		private Animator animator;
-		private Attackable attackable;
+		private EntityCharacterController entityCharacterController;
 
 
 
 		private void Awake()
 		{
 			animator = GetComponentInChildren<Animator>();
-			TryGetComponent(out attackable);
+			TryGetComponent(out entityCharacterController);
 		}
 
 		private void Update()
@@ -256,8 +256,6 @@ namespace DigDig2
 			state = CombatState.Performing;
 			performanceStartTime = Time.time;
 
-			GetComponent<EntityCharacterController>().AttackSlowdown(currentPerformingAttack.AttackDuration);
-
 			lastPerformedAttackType = currentPerformingAttackType;
 			lastPerformedAttack = currentPerformingAttack;
 		}
@@ -349,10 +347,22 @@ namespace DigDig2
 
 		#endregion
 
-		public void SetAttackTypes(AttackType[] attackTypes)
+		#region Character Controller Interfacing
+
+		public void AddMoveSpeedDebuff(string debuffId, float debuff)
 		{
-			this.attackTypes[0] = attackTypes[0];
-			this.attackTypes[1] = attackTypes[1];
+			if (entityCharacterController) entityCharacterController.AddMoveSpeedDebuff(debuffId, debuff);
 		}
+		public void RemoveMoveSpeedDebuff(string debuffId)
+		{
+			if (entityCharacterController) entityCharacterController.RemoveMoveSpeedDebuff(debuffId);
+		}
+		public float GetBaseMoveSpeed()
+		{
+			if (entityCharacterController) return entityCharacterController.MoveSpeed;
+			else return 0;
+		}
+
+		#endregion
 	}
 }

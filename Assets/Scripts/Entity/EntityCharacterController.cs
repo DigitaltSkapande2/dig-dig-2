@@ -41,18 +41,14 @@ namespace DigDig2
 
 		[Tooltip("The max speed the entity can walk at.")]
 		[SerializeField, DebugSerialized] private float moveSpeed = 5f;
+		public float MoveSpeed { get { return moveSpeed; } }
 
-		[Tooltip("The mac speed the entity can sprint at.")]
-		[SerializeField, DebugSerialized] private float attackMoveSpeed = 0.5f;
 
 		[Tooltip("The direction the entity is currently moving.")]
 		[SerializeField] public Vector3 inputMoveVector = Vector3.zero;
 
 		[Tooltip("The move acceleration and decelleration speed, higher is faster.")]
 		[SerializeField] private float moveInputVectorLerpSpeed = 10f;
-
-		[Tooltip("If the entity is sprinting or not, moveSpeed is default speed, sprintMoveSpeed is sprint speed.")]
-		[SerializeField] public bool isAttacking = false;
 
 		[Space(20)]
 
@@ -84,8 +80,19 @@ namespace DigDig2
 
 		[Space(20)]
 
-		[Tooltip("How far the ground raycast should cast")]
+		[Tooltip("How far the ground raycast should cast.")]
 		[SerializeField] private float movingPlatformGroundRaycastDistance = 2f;
+
+		[Space(20)]
+
+		[Tooltip("If the entity has the ability to dash.")]
+		[SerializeField] private bool canDash = false;
+
+		[SerializeField] private float dashStrength = 10;
+
+		[SerializeField] private float dashDecaySpeed = 20;
+
+		[SerializeField] private float dashCooldown = 2;
 
 		[Header("Combat")]
 
@@ -111,19 +118,23 @@ namespace DigDig2
 
 		// Movement
 		private CharacterController characterController;
+		private Attacker attacker;
 
 		private Vector3 velocity;
 		private Animator animator;
 
 		private Vector3 moveVector;
 
-		private float slowDownTimer;
-
 		private Vector3 slopeSlideVelocity;
 
 		private Vector3 knockbackVelocity;
 
+		private Vector3 dashVelocity;
+		private float dashCooldownTimer = 0;
+
 		private float stunTimer = 0;
+
+		private Dictionary<string, float> moveSpeedDebuffs = new();
 
 		private Transform ground;
 		private Transform lastGround;
@@ -143,17 +154,19 @@ namespace DigDig2
 		}
 		
 
-		private enum PlayerState
+		private enum EntityState
         {
             Idle,
 			Sprinting,
+			Attacking
         }
 
-		private PlayerState state;
+		private EntityState state;
 
 		private void Awake()
 		{
 			characterController = GetComponent<CharacterController>();
+			attacker = GetComponent<Attacker>();
 			animator = GetComponentInChildren<Animator>();
 		}
 
@@ -179,6 +192,7 @@ namespace DigDig2
 					if (stunTimer <= 0) ProcessMove();
 					ProcessSlope();
 					ProcessKnockback();
+					ProcessDash();
 
 					ApplyMovement();
 
@@ -197,7 +211,7 @@ namespace DigDig2
 
 			if (isClient)
 			{
-				RefreshVisualsRotation();
+				if (!frozen) RefreshVisualsRotation();
 			}
 
 			if (authority)
@@ -207,6 +221,13 @@ namespace DigDig2
 					stunTimer = Mathf.Clamp(stunTimer - Time.deltaTime, 0, maxStunTime);
 				}
 			}
+		}
+
+		private void OnDrawGizmosSelected()
+		{
+			Vector3 centerRaycastEndPoint = transform.position + -transform.up * (GetComponent<CharacterController>().height / 2f + edgeScanDistance);
+			Gizmos.color = Color.red;
+			Gizmos.DrawLine(transform.position, centerRaycastEndPoint);
 		}
 
 		#region Movement
@@ -219,20 +240,15 @@ namespace DigDig2
 			}
 			else
 			{
-				velocity += Physics.gravity * gravityScale * Time.deltaTime;
+				velocity += gravityScale * Time.deltaTime * Physics.gravity;
 			}
 		}
 
 		// Add move/walk/run to current velocity
 		private void ProcessMove()
 		{
-			slowDownTimer -= Time.deltaTime;
-			isAttacking = slowDownTimer > 0;
-
-			float speed = isAttacking ? attackMoveSpeed : moveSpeed;
-
 			// Lerp move input vector to create smooth acceleration and decelleration
-			moveVector = Vector3.Lerp(moveVector, inputMoveVector * speed, Time.deltaTime * moveInputVectorLerpSpeed);
+			moveVector = Vector3.Lerp(moveVector, inputMoveVector * GetMoveSpeed(), Time.deltaTime * moveInputVectorLerpSpeed);
 
 			velocity = new(moveVector.x, velocity.y, moveVector.z);
 		}
@@ -269,6 +285,18 @@ namespace DigDig2
 		{
 			velocity += knockbackVelocity;
 			knockbackVelocity = Vector3.Lerp(knockbackVelocity, Vector3.zero, knockbackFallofSpeed * Time.deltaTime);
+		}
+
+		private void ProcessDash()
+		{
+			if (dashCooldownTimer > 0)
+			{
+				dashCooldownTimer = Mathf.Max(dashCooldownTimer - Time.deltaTime, 0);
+				Debug.Log(dashCooldownTimer);
+			}
+
+			velocity += dashVelocity;
+			dashVelocity = Vector3.Lerp(dashVelocity, Vector3.zero, dashDecaySpeed * Time.deltaTime);
 		}
 
 		private void ProcessEdge()
@@ -348,6 +376,27 @@ namespace DigDig2
 			lastGround = ground;
 		}
 
+		public void Dash()
+		{
+			if (canDash && dashCooldownTimer <= 0)
+			{
+				dashVelocity = inputMoveVector * dashStrength;
+				dashCooldownTimer = dashCooldown;
+			}
+		}
+
+		public float GetMoveSpeed()
+		{
+			float totalMoveSpeed = moveSpeed;
+
+			foreach (KeyValuePair<string, float> moveSpeedDebuff in moveSpeedDebuffs)
+			{
+				totalMoveSpeed -= moveSpeedDebuff.Value;
+			}
+
+			return Mathf.Max(totalMoveSpeed, 0);
+		}
+
 		// Add velocity to CharacterController
 		private void ApplyMovement(bool isFixedUpdate = false)
 		{
@@ -393,11 +442,14 @@ namespace DigDig2
 			Frozen = false;
 		}
 
-		public void AttackSlowdown(float time)
-        {
-            slowDownTimer = time;
-        }
-
+		public void AddMoveSpeedDebuff(string debuffId, float debuff)
+		{
+			moveSpeedDebuffs[debuffId] = debuff;
+		}
+		public void RemoveMoveSpeedDebuff(string debuffId)
+		{
+			moveSpeedDebuffs.Remove(debuffId);
+		}
 
 		#endregion
 
@@ -421,7 +473,7 @@ namespace DigDig2
 		{
 			if (inputMoveVector.magnitude > 0 && !automaticLookRotationLocked)
 			{
-				targetLookRotation = Vector3.SignedAngle(transform.forward, inputMoveVector, transform.up);
+				targetLookRotation = Mathf.Lerp(targetLookRotation, Vector3.SignedAngle(transform.forward, inputMoveVector, transform.up), GetMoveSpeed() / moveSpeed);
 			}
 		}
 
@@ -435,27 +487,33 @@ namespace DigDig2
 
 		private void UpdateAnimation()
         {
+			if (attacker.State != Attacker.CombatState.Idle)
+			{
+				state = EntityState.Attacking;
+				return;
+			}
+
             if (new Vector3(inputMoveVector.x, 0, inputMoveVector.z).magnitude > 0f)
             {
-				if (state == PlayerState.Sprinting) return;
+				if (state == EntityState.Sprinting) return;
 
                 animator.CrossFadeInFixedTime("Sprint", 0.1f, 0);
 				animator.CrossFadeInFixedTime("SwordSprint", 0.1f, 1);
-				state = PlayerState.Sprinting;
+				state = EntityState.Sprinting;
 				return;
             }
 
-			if (state == PlayerState.Idle) return;
+			if (state == EntityState.Idle) return;
 
-			state = PlayerState.Idle;
+			state = EntityState.Idle;
 			animator.CrossFadeInFixedTime("Idle", 0.1f, 0);
 			animator.CrossFadeInFixedTime("SwordIdle", 0.1f, 1);
         }
 
-		public void LookTowards(Vector3 target, bool userLerp = true)
+		public void LookTowards(Vector3 target, bool useLerp = true)
 		{
 			targetLookRotation = Vector3.SignedAngle(transform.forward, target - transform.position, transform.up);
-			RefreshVisualsRotation(userLerp);
+			RefreshVisualsRotation(useLerp);
 		}
 
 		public Vector3 GetForwardVector()
