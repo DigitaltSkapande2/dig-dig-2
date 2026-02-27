@@ -197,7 +197,7 @@ namespace DigDig2
 
 			if (isClient)
 			{
-				RefreshVisualsRotation();
+				if (!frozen) RefreshVisualsRotation();
 			}
 
 			if (authority)
@@ -452,10 +452,10 @@ namespace DigDig2
 			animator.CrossFadeInFixedTime("SwordIdle", 0.1f, 1);
         }
 
-		public void LookTowards(Vector3 target, bool userLerp = true)
+		public void LookTowards(Vector3 target, bool useLerp = true)
 		{
 			targetLookRotation = Vector3.SignedAngle(transform.forward, target - transform.position, transform.up);
-			RefreshVisualsRotation(userLerp);
+			RefreshVisualsRotation(useLerp);
 		}
 
 		public Vector3 GetForwardVector()
