@@ -18,8 +18,8 @@ GameObject:
   - component: {fileID: 1195255877809228181}
   - component: {fileID: 1621004928720741753}
   - component: {fileID: 440174058403782015}
-  - component: {fileID: 5749047405966691678}
   - component: {fileID: 2644439905992683439}
+  - component: {fileID: 4848744646254258847}
   m_Layer: 3
   m_Name: MiniPlayerCharacterController
   m_TagString: Player
@@ -135,6 +135,7 @@ MonoBehaviour:
   syncDirection: 1
   syncMode: 0
   syncInterval: 0
+  frozen: 0
   gravityScale: 1
   groundLayers:
     serializedVersion: 2
@@ -153,6 +154,9 @@ MonoBehaviour:
   edgeScanDistance: 0.25
   edgeScanSlopeLimit: 75
   movingPlatformGroundRaycastDistance: 2
+  canDash: 1
+  dashStrength: 10
+  dashDecaySpeed: 10
   knockbackMultiplier: 1
   knockbackFallofSpeed: 2
   maxStunTime: 3
@@ -209,6 +213,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6131312a667f03449029662d2f690ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.PlayerAttackInput
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
 --- !u!114 &1621004928720741753
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -223,7 +230,123 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Attackable
   invincibilityTime: 0.05
   group: player
-  hitEffects: []
+  hitEffect:
+    spawnPrefab: 0
+    spawnPrefabEffectData:
+      prefabToSpawn: []
+    screenShake: 0
+    screenShakeEffectData:
+      intensityCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      duration: 0.4
+      intensity: 1
+    cameraZoom: 0
+    cameraZoomEffectData:
+      intensityCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      duration: 0.4
+      intensity: 1
+    timeSlow: 0
+    timeSlowEffectData:
+      intensityCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      duration: 0.4
+      intensity: 1
+    vignettePulse: 0
+    vignettePulseEffectData:
+      intensityCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      duration: 0.4
+      intensity: 1
+      color: {r: 0, g: 0, b: 0, a: 0}
   hit:
     m_PersistentCalls:
       m_Calls: []
@@ -241,23 +364,126 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Health
   maxHealthPoints: 5
   healthPoints: 5
-  deathEffects: []
+  deathEffectPlayer:
+    spawnPrefab: 0
+    spawnPrefabEffectData:
+      prefabToSpawn: []
+    screenShake: 0
+    screenShakeEffectData:
+      intensityCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      duration: 0.4
+      intensity: 1
+    cameraZoom: 0
+    cameraZoomEffectData:
+      intensityCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      duration: 0.4
+      intensity: 1
+    timeSlow: 0
+    timeSlowEffectData:
+      intensityCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      duration: 0.4
+      intensity: 1
+    vignettePulse: 0
+    vignettePulseEffectData:
+      intensityCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      duration: 0.4
+      intensity: 1
+      color: {r: 0, g: 0, b: 0, a: 0}
   death:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &5749047405966691678
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4442565222488509090}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3717c12d7cd8b5e4f871e80aee7aff24, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DigDig2.SingleplayerCharacterSwitching
-  otherPrefab: {fileID: 4442565222488509090, guid: d5a3d3276e47631bfb60f1dda5c99ef2, type: 3}
 --- !u!95 &2644439905992683439
 Animator:
   serializedVersion: 7
@@ -280,6 +506,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &4848744646254258847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4442565222488509090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43932542731a1fb4d9f5ee8378890a02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DigDig2.SingleplayerCharacterSwitcher
+  otherPrefab: {fileID: 0}
+  cooldown: 0
 --- !u!1 &4933219036402945239
 GameObject:
   m_ObjectHideFlags: 0

@@ -155,6 +155,9 @@ MonoBehaviour:
   edgeScanDistance: 0.25
   edgeScanSlopeLimit: 75
   movingPlatformGroundRaycastDistance: 2
+  canDash: 0
+  dashStrength: 10
+  dashDecaySpeed: 10
   knockbackMultiplier: 1
   knockbackFallofSpeed: 2
   maxStunTime: 3
