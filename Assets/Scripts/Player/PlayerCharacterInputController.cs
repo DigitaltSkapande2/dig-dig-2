@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 namespace DigDig2
 {
-    [RequireComponent(typeof(EntityCharacterController), typeof(SingleplayerCharacterSwitching))]
+    [RequireComponent(typeof(EntityCharacterController), typeof(SingleplayerCharacterSwitcher))]
     public class PlayerCharacterInputController : NetworkBehaviour, ProjectWideInputActions.IPlayerActions
     {
         // Input
@@ -17,7 +17,7 @@ namespace DigDig2
         private Vector2 inputMoveVector = Vector2.zero;
 
         // Character Switching
-        private SingleplayerCharacterSwitching characterSwitching;
+        private SingleplayerCharacterSwitcher characterSwitching;
 
         // Interactors
         private Interactor interactor;
@@ -26,7 +26,7 @@ namespace DigDig2
         private void Awake()
         {
             entityCharacterController = GetComponent<EntityCharacterController>();
-            characterSwitching = GetComponent<SingleplayerCharacterSwitching>();
+            characterSwitching = GetComponent<SingleplayerCharacterSwitcher>();
             interactor = GetComponentInChildren<Interactor>();
         }
 

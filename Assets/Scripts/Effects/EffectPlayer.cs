@@ -1,5 +1,7 @@
 using System;
 using UnityEngine;
+using System.Collections.Generic;
+
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -9,17 +11,32 @@ namespace DigDig2.Effects
     [Serializable]
     public struct EffectPlayer
     {
+        public bool spawnPrefab;
+        public SpawnPrefabEffectData spawnPrefabEffectData;
         public bool screenShake;
-        public EffectInstanceData screenShakeEffectData;
+        public CumulativeEffectInstanceData screenShakeEffectData;
         public bool cameraZoom;
-        public EffectInstanceData cameraZoomEffectData;
+        public CumulativeEffectInstanceData cameraZoomEffectData;
         public bool timeSlow;
-        public EffectInstanceData timeSlowEffectData;
+        public CumulativeEffectInstanceData  timeSlowEffectData;
         public bool vignettePulse;
         public VignettePulseEffectInstanceData vignettePulseEffectData;
 
-        public void Play()
+        public void Play(Vector2 position = default, Quaternion rotation = default, Vector3 scale = default)
         {
+            if (spawnPrefab)
+            {
+                SpawnPrefabEffect spawnPrefabEffect = EffectCore.Instance.spawnPrefabEffect;
+                if (spawnPrefabEffect != null)
+                {
+                    SpawnPrefabEffectData effectInstance = spawnPrefabEffectData;
+                    effectInstance.position = position;
+                    effectInstance.rotation = rotation;
+                    effectInstance.scale = scale;
+                    spawnPrefabEffect.PlayEffectInstance(effectInstance);
+                }
+            }
+
             if (screenShake)
             {
                 ScreenShakeEffect screenShakeEffect = EffectCore.Instance.screenShakeEffect;
@@ -111,6 +128,11 @@ namespace DigDig2.Effects
                 }
             }
 
+            // SpawnPrefab
+            var spawnPrefabProp = property.FindPropertyRelative("spawnPrefab");
+            var spawnPrefabDataProp = property.FindPropertyRelative("spawnPrefabEffectData");
+            DrawEffectSection("Spawn Prefab", spawnPrefabProp, spawnPrefabDataProp, subPanelColor);
+
             // screenShake
             var screenShakeProp = property.FindPropertyRelative("screenShake");
             var screenShakeDataProp = property.FindPropertyRelative("screenShakeEffectData");
@@ -156,6 +178,11 @@ namespace DigDig2.Effects
             float lineHeight = EditorGUIUtility.singleLineHeight;
             float spacing = 2f;
 
+            var spawnPrefabProp = property.FindPropertyRelative("spawnPrefab");
+            var spawnPrefabDataProp = property.FindPropertyRelative("spawnPrefabEffectData");
+            height += lineHeight + spacing;
+            if (spawnPrefabProp.boolValue) height += EditorGUI.GetPropertyHeight(spawnPrefabDataProp, true) + spacing;
+
             // screenShake
             var screenShakeProp = property.FindPropertyRelative("screenShake");
             var screenShakeDataProp = property.FindPropertyRelative("screenShakeEffectData");
@@ -186,15 +213,24 @@ namespace DigDig2.Effects
 
             return height;
         }
-    
-    
+
+
         // Helper: build an EffectPlayer struct from the serialized property values
         private static EffectPlayer BuildRuntimeFromSerialized(SerializedProperty prop)
         {
             EffectPlayer ep = new EffectPlayer();
 
+            ep.spawnPrefab = prop.FindPropertyRelative("spawnPrefab").boolValue;
+            var sp = new SpawnPrefabEffectData();
+            var spProp = prop.FindPropertyRelative("spawnPrefabEffectData");
+            if (spProp != null)
+            {
+                //sp.prefabToSpawn = spProp.FindPropertyRelative("prefabToSpawn").objectReferenceValue.GetComponent<SpawnPrefabEffectInstance>().prefabToSpawn;
+            }
+            ep.spawnPrefabEffectData = sp;
+
             ep.screenShake = prop.FindPropertyRelative("screenShake").boolValue;
-            var ss = new EffectInstanceData();
+            var ss = new CumulativeEffectInstanceData();
             var ssProp = prop.FindPropertyRelative("screenShakeEffectData");
             if (ssProp != null)
             {
@@ -205,7 +241,7 @@ namespace DigDig2.Effects
             ep.screenShakeEffectData = ss;
 
             ep.cameraZoom = prop.FindPropertyRelative("cameraZoom").boolValue;
-            var cz = new EffectInstanceData();
+            var cz = new CumulativeEffectInstanceData();
             var czProp = prop.FindPropertyRelative("cameraZoomEffectData");
             if (czProp != null)
             {
@@ -216,7 +252,7 @@ namespace DigDig2.Effects
             ep.cameraZoomEffectData = cz;
 
             ep.timeSlow = prop.FindPropertyRelative("timeSlow").boolValue;
-            var ts = new EffectInstanceData();
+            var ts = new CumulativeEffectInstanceData();
             var tsProp = prop.FindPropertyRelative("timeSlowEffectData");
             if (tsProp != null)
             {

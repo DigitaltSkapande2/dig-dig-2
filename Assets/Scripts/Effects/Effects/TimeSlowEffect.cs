@@ -2,14 +2,14 @@ using UnityEngine;
 
 namespace DigDig2.Effects
 {
-    public class TimeSlowEffect : CumulativeEffectBase<EffectInstanceData>
+    public class TimeSlowEffect : CumulativeEffectBase<CumulativeEffectInstanceData>
     {
         internal override void UpdateEffect(float curveValue)
         {
             SetTimeScale(curveValue);
         }
 
-        internal override void OnEffectEnd(EffectInstanceData effect)
+        internal override void OnEffectEnd(CumulativeEffectInstanceData effect)
         {
             SetTimeScale(1);
         }

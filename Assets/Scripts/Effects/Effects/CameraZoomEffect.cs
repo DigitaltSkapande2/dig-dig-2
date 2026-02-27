@@ -3,7 +3,7 @@ using DigDig2.CinemaCamera;
 
 namespace DigDig2.Effects
 {
-    public class CameraZoomEffect : CumulativeEffectBase<EffectInstanceData>
+    public class CameraZoomEffect : CumulativeEffectBase<CumulativeEffectInstanceData>
     {
         CameraEffector cameraZoomEffector;
 
@@ -19,7 +19,7 @@ namespace DigDig2.Effects
             cameraZoomEffector.frustumSize = curveValue;
         }
 
-        internal override void OnEffectEnd(EffectInstanceData effect)
+        internal override void OnEffectEnd(CumulativeEffectInstanceData effect)
         {
             cameraZoomEffector.frustumSize = 0;
         }

@@ -1,9 +1,11 @@
 using System.Collections.Generic;
+using DigDig2.Effects;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace DigDig2
 {
+    [RequireComponent(typeof(Health))]
     public class Attackable : MonoBehaviour
     {
         [Tooltip("Duration of invincibility after a hit.")]
@@ -20,7 +22,7 @@ namespace DigDig2
         [SerializeField] private string group = "none";
 
         [Tooltip("Effects that are played when the attackable is hit.")]
-        [SerializeField] private List<GameObject> hitEffects = new();
+        [SerializeField] private EffectPlayer hitEffect;
 
         [Tooltip("An event that gets emitted when this attackable gets hit.")]
         [SerializeField] public UnityEvent hit = new();
@@ -54,20 +56,12 @@ namespace DigDig2
             if (attack) attack.Hit(attacker, this, healthComponent, entityCharacterController);
 
             hit.Invoke();
-            PlayHitEffect();
+            hitEffect.Play(transform.position);
         }
 
         public bool IsInvincible()
         {
             return invincibilityTimer > 0;
-        }
-
-        private void PlayHitEffect()
-        {
-            foreach (GameObject hitEffect in hitEffects)
-            {
-                Instantiate(hitEffect, transform.position, Quaternion.identity);
-            }
         }
     }
 }

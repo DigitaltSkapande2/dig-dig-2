@@ -19,7 +19,7 @@ MonoBehaviour:
   - mapName: DebugNotes
     context: 2
   - mapName: UI
-    context: 0
+    context: 2
   - mapName: DebugConsole
     context: 10
   - mapName: DebugMenu

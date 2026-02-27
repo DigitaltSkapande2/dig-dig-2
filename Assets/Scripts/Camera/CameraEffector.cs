@@ -12,6 +12,7 @@ namespace DigDig2.CinemaCamera
         // -- Static Fields -- //
         private static List<CameraEffector> allCameraEffectors = new();
         private static List<CameraEffector> effectiveCameraEffectors = new();
+        private static List<CameraEffector> overriddenCameraEffectors = new();
 
         // -- Instance Fields -- //
         [SerializeField] public bool overridesLowerPriority = false;
@@ -20,7 +21,7 @@ namespace DigDig2.CinemaCamera
         {
             get
             {
-                return isActive;    
+                return isActive;
             }
             set
             {
@@ -31,10 +32,7 @@ namespace DigDig2.CinemaCamera
             }
         }
 
-        public Vector3 position;
-        //public Vector2 cameraLocalPlanarOffset;
-        public Quaternion rotation;
-        public float frustumSize;
+
 
         [SerializeField] private int priorityLevel;
         public int PriorityLevel
@@ -45,13 +43,17 @@ namespace DigDig2.CinemaCamera
             }
             set
             {
-                RemoveCameraEffector(this);
-
                 priorityLevel = value;
 
-                AddCameraEffector(this);
+                ReCompileEffectiveEffectors();
             }
         }
+
+        [Header("Debug Values")]
+        public Vector3 position;
+        //public Vector2 cameraLocalPlanarOffset;
+        public Quaternion rotation;
+        public float frustumSize;
 
         #endregion
 
@@ -73,7 +75,7 @@ namespace DigDig2.CinemaCamera
         {
             // Find the highest priority level among effectors with any override
             int highestPriority = allCameraEffectors
-            .Where(e => e.overridesLowerPriority && e.IsActive)
+            .Where(e => e.IsActive && e.overridesLowerPriority)
             .Select(e => e.PriorityLevel)
             .DefaultIfEmpty(0)
             .Max();
@@ -82,8 +84,7 @@ namespace DigDig2.CinemaCamera
 
             // Filter effectors with the highest priority and any override
             effectiveCameraEffectors = allCameraEffectors
-            .Where(e => e.IsActive)
-            .Where(e => e.PriorityLevel >= highestPriority)
+            .Where(e => e.IsActive && e.PriorityLevel >= highestPriority)
             .OrderByDescending(e => e.PriorityLevel)
             .ToList();
 

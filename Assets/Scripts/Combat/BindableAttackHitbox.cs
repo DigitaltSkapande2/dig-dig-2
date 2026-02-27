@@ -63,14 +63,14 @@ namespace DigDig2
 
             float distanceBetweenChecks = 1f;
             int intermediateAttacks = 0;
-            Debug.Log("Has attacked once: " + attackInfo.hasCheckedOnce);
+            //Debug.Log("Has attacked once: " + attackInfo.hasCheckedOnce);
             if (attackInfo.hasCheckedOnce)
             {
                 distanceBetweenChecks = Vector3.Distance(attackInfo.lastPosition, transform.position);
                 intermediateAttacks = Mathf.CeilToInt(distanceBetweenChecks / unitsPerIntermediateCheck);
             }
             
-            Debug.Log("Intermediate attacks: " + intermediateAttacks);
+            //Debug.Log("Intermediate attacks: " + intermediateAttacks);
             
             for (int intermediateAttackIndex = 0;
                  intermediateAttackIndex < intermediateAttacks;

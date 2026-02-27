@@ -1,8 +1,16 @@
+using System;
+using System.Linq;
 using Mirror;
 using UnityEngine;
 
 namespace DigDig2
 {
+
+    public enum CharacterType
+    {
+        Max,
+        Mini,
+    }
     public class GameManager : Singleton<GameManager>
     {
         [Header("Player Prefabs")]
@@ -10,14 +18,9 @@ namespace DigDig2
         [SerializeField] private GameObject maxPrefab;
         [SerializeField] private GameObject miniPrefab;
 
-        public enum CharacterType {
-            Max,
-            Mini,
-        }
-        
 
 
-        public GameObject CurrentCharacter
+        public GameObject LocalPlayerObj
         {
             get
             {
@@ -27,6 +30,7 @@ namespace DigDig2
             }
         }
 
+        public CharacterType currentCharacter { private set; get; } = CharacterType.Max;
 
 
         private void Start()
@@ -34,7 +38,7 @@ namespace DigDig2
             if (NetworkServer.active)
             {
                 if (NetworkManager.singleton.IsMultiplayer) InitializeMultiplayer();
-                else InitializeSingleplayer();
+                else SingleplayerInitialize();
             }
         }
 
@@ -50,12 +54,32 @@ namespace DigDig2
 
         #region Singleplayer
 
-        private void InitializeSingleplayer()
+        private void SingleplayerInitialize()
         {
             Debug.Log("Initializing Singleplayer...");
             GameObject playerCharacter = Instantiate(GetCharacterPrefabFromCharacterType(singleplayerStartingCharacter));
             NetworkServer.ReplacePlayerForConnection(NetworkServer.connections[0], playerCharacter, ReplacePlayerOptions.KeepAuthority);
             Debug.Log("Singleplayer Initialization Finished!");
+        }
+
+        public void SingleplayerSwitchCharacter()
+        {
+            // Harvvest old player data
+            Vector3 oldPlayerLookVector = LocalPlayerObj.GetComponent<EntityCharacterController>().GetForwardVector();
+            Vector3 oldPlayerPos = LocalPlayerObj.transform.position;
+
+            // Kill old player
+            Destroy(LocalPlayerObj);
+
+            // Switch Logic
+            currentCharacter = CharacterType.Max == currentCharacter ? CharacterType.Mini : CharacterType.Max;
+
+            // Spawn new player
+            GameObject newPrefab = GetCharacterPrefabFromCharacterType(currentCharacter);
+            GameObject playerCharacter = Instantiate(newPrefab, oldPlayerPos, Quaternion.identity);
+            playerCharacter.GetComponent<EntityCharacterController>().LookTowards(oldPlayerLookVector, false);
+            NetworkServer.ReplacePlayerForConnection(NetworkServer.connections[0], playerCharacter, ReplacePlayerOptions.KeepAuthority);
+            
         }
 
         #endregion
