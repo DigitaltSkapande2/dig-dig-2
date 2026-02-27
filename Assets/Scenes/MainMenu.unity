@@ -193,6 +193,10 @@ PrefabInstance:
       propertyPath: offlineScene
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 8409939387374728056, guid: 9ab8b93fb5870fdbb8dcb96f5d3acf85, type: 3}
+      propertyPath: port
+      value: 7778
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -451,6 +455,7 @@ GameObject:
   - component: {fileID: 1196496130}
   - component: {fileID: 1196496129}
   - component: {fileID: 1196496126}
+  - component: {fileID: 1196496131}
   m_Layer: 5
   m_Name: UIDocument
   m_TagString: Untagged
@@ -508,6 +513,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d53554dc6e0e430dfafb5158e0b1b58e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.MainMenu
+  gameSceneName: GameScene
 --- !u!114 &1196496127
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -606,6 +612,21 @@ MonoBehaviour:
   m_FirstSelected: {fileID: 0}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
+--- !u!114 &1196496131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1196496123}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 711115f9e434f30c582e511b95662602, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DigDig2.UINavigation.UserInterfaceNavigator
+  initialNavigationUri: /
+  closedElementClass: navigation-closed
+  descendantOpenElementClass: navigation-descendant-open
 --- !u!1 &1265907025
 GameObject:
   m_ObjectHideFlags: 0

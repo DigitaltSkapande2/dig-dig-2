@@ -194,8 +194,8 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
       duration: 0.4
-      intensity: 1
-    cameraZoom: 1
+      intensity: 0.5
+    cameraZoom: 0
     cameraZoomEffectData:
       intensityCurve:
         serializedVersion: 2
@@ -278,8 +278,8 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
       duration: 0.4
-      intensity: 1
-      color: {r: 0, g: 0, b: 0, a: 0}
+      intensity: 14.09
+      color: {r: 0, g: 0, b: 1, a: 0}
   hit:
     m_PersistentCalls:
       m_Calls: []
