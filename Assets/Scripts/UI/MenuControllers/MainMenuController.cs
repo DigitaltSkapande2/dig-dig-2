@@ -137,7 +137,7 @@ namespace DigDig2
                 for (int index = 0; index < saveFiles.Count; index++)
                 {
                     SaveFile saveFileElement = (SaveFile)saveFileList.GetRootElementForIndex(index);
-                    saveFileElement.RemoveFromClassList("selected");
+                    saveFileElement?.RemoveFromClassList("selected");
                 }
             });
 
@@ -177,23 +177,23 @@ namespace DigDig2
                 }
             });
 
-            navigator.Hierarchy = new NavigationNode("mainNavigation", mainNavigationContainer, mainNavigationContainer, true, new()
+            navigator.Hierarchy = new NavigationNode("mainNavigation", mainNavigationContainer, mainNavigationContainer, true, 0, new()
             {
-                new("screenCover", screenCover, null, false, new()
+                new("screenCover", screenCover, null, false, 0.5f, new()
                 {
-                    new("hostingSelection", hostingSelctionAnimationContainer, hostingSelctionAnimationContainer),
+                    new("hostingSelection", hostingSelctionAnimationContainer, hostingSelctionAnimationContainer, true, 0.5f),
                 }),
-                new("loadGame", saveMenu, saveFileList, true, new()
+                new("loadGame", saveMenu, saveFileList, true, 0.1f, new()
                 {
-                    new("save", saveManagement, saveManagement, true, new()
+                    new("save", saveManagement, saveManagement, true, 0.1f, new()
                     {
-                        new("screenCover", screenCover, null, false, new()
+                        new("screenCover", screenCover, null, false, 0.5f, new()
                         {
-                            new("hostingSelection", hostingSelctionAnimationContainer, hostingSelctionAnimationContainer)
+                            new("hostingSelection", hostingSelctionAnimationContainer, hostingSelctionAnimationContainer, true, 0.5f)
                         })
                     })
                 }),
-                new("settings", settingsMenu, settingsMenu)
+                new("settings", settingsMenu, settingsMenu, true, 0.1f)
             });
         }
 
