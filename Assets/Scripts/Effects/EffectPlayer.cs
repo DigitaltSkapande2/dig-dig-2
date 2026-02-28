@@ -22,7 +22,7 @@ namespace DigDig2.Effects
         public bool vignettePulse;
         public VignettePulseEffectInstanceData vignettePulseEffectData;
 
-        public void Play(Vector2 position = default, Quaternion rotation = default, Vector3 scale = default, Transform parent = null)
+        public void Play(Vector3 position = default, Quaternion rotation = default, Vector3 scale = default, Transform parent = null)
         {
             if (scale == Vector3.zero) scale = Vector3.one;
 

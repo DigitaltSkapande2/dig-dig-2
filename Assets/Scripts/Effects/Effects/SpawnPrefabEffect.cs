@@ -43,6 +43,7 @@ namespace DigDig2.Effects
             foreach (var prefabToSpawn in effectInstance.prefabToSpawn)
             {
                 if (prefabToSpawn.hasLifetime) currentlySpawnedPrefabsCount++;
+                if (prefabToSpawn.prefab == null) { Debug.LogError("Cannot insantiate null prefab!"); return; }
                 GameObject spawned = Instantiate(prefabToSpawn.prefab, effectInstance.position, effectInstance.rotation, effectInstance.parent);
                 spawned.transform.localScale = effectInstance.scale;
 
