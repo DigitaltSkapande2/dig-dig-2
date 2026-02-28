@@ -657,7 +657,7 @@ MonoBehaviour:
   shape: 0
   boxSize: {x: 0.01, y: 0.03, z: 0.01}
   sphereRadius: 0.001
-  unitsPerIntermediateCheck: 0.001
+  unitsPerIntermediateCheck: 0.01
 --- !u!1 &7251259118998489019
 GameObject:
   m_ObjectHideFlags: 0

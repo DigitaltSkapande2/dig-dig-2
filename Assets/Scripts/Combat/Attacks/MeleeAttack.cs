@@ -29,6 +29,7 @@ namespace DigDig2
 			attacker.PlayAnimation(animationStateName);
 			attacker.StartHitboxAttack(this, animationStateName, attacker.GetBindableAttackHitbox(bindableAttackHitboxIndex));
 			attacker.AddMoveSpeedDebuff(animationStateName, attacker.GetBaseMoveSpeed());
+			attacker.PushInDirection(Vector3.forward, 10);
 		}
 
         public override void Ended(Attacker attacker, AttackType attackGroup)

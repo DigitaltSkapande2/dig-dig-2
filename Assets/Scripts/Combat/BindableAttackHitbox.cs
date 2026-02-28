@@ -61,16 +61,12 @@ namespace DigDig2
         {
             AttackInfo attackInfo = activeAttacks[attackId];
 
-            float distanceBetweenChecks = 1f;
             int intermediateAttacks = 0;
-            //Debug.Log("Has attacked once: " + attackInfo.hasCheckedOnce);
             if (attackInfo.hasCheckedOnce)
             {
-                distanceBetweenChecks = Vector3.Distance(attackInfo.lastPosition, transform.position);
+                float distanceBetweenChecks = Vector3.Distance(attackInfo.lastPosition, transform.position);
                 intermediateAttacks = Mathf.CeilToInt(distanceBetweenChecks / unitsPerIntermediateCheck);
             }
-            
-            //Debug.Log("Intermediate attacks: " + intermediateAttacks);
             
             for (int intermediateAttackIndex = 0;
                  intermediateAttackIndex < intermediateAttacks;
@@ -81,7 +77,15 @@ namespace DigDig2
                 Debug.DrawLine(intermediatePosition, intermediatePosition + Vector3.up / 10f, Color.blue, 1f);
                 Collider[] colliders = shape switch
                 {
-                    AttackHitboxShape.Box => Physics.OverlapBox(intermediatePosition, boxSize / 2, intermediateRotation),
+                    AttackHitboxShape.Box => Physics.OverlapBox(
+                        intermediatePosition,
+                        new Vector3(
+                            boxSize.x / 2 * transform.lossyScale.x,
+                            boxSize.y / 2 * transform.lossyScale.y,
+                            boxSize.z / 2 * transform.lossyScale.z
+                        ),
+                        intermediateRotation
+                    ),
                     AttackHitboxShape.Sphere => Physics.OverlapSphere(intermediatePosition, sphereRadius),
                     _ => new Collider[0],
                 };

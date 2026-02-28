@@ -94,6 +94,10 @@ namespace DigDig2
 
 		[SerializeField] private float dashCooldown = 2;
 
+		[Space(20)]
+
+		[SerializeField] private float pushDecaySpeed = 10;
+
 		[Header("Combat")]
 
 		[Tooltip("Knockback multiplier")]
@@ -130,6 +134,8 @@ namespace DigDig2
 		private Vector3 knockbackVelocity;
 
 		private Vector3 dashVelocity;
+
+		private Vector3 pushVelocity;
 		private float dashCooldownTimer = 0;
 
 		private float stunTimer = 0;
@@ -193,6 +199,7 @@ namespace DigDig2
 					ProcessSlope();
 					ProcessKnockback();
 					ProcessDash();
+					ProcessPush();
 
 					ApplyMovement();
 
@@ -297,6 +304,12 @@ namespace DigDig2
 
 			velocity += dashVelocity;
 			dashVelocity = Vector3.Lerp(dashVelocity, Vector3.zero, dashDecaySpeed * Time.deltaTime);
+		}
+
+		private void ProcessPush()
+		{
+			pushVelocity = Vector3.Lerp(pushVelocity, Vector3.zero, pushDecaySpeed * Time.deltaTime);
+			velocity += pushVelocity;
 		}
 
 		private void ProcessEdge()
@@ -449,6 +462,18 @@ namespace DigDig2
 		public void RemoveMoveSpeedDebuff(string debuffId)
 		{
 			moveSpeedDebuffs.Remove(debuffId);
+		}
+
+		/// <summary>
+		/// NOTE: Pushes the character according to it's current rotation, this means that the direction has to be in local space!
+		/// </summary>
+		/// <param name="direction"></param>
+		/// <param name="strength"></param>
+		public void PushInDirection(Vector3 direction, float strength)
+		{
+			Vector3 localPushVelocity = direction.normalized * strength;
+			pushVelocity += Quaternion.Euler(0f, targetLookRotation, 0f) * localPushVelocity;
+			Debug.Log($"pushing: {Quaternion.Euler(0f, targetLookRotation, 0f) * localPushVelocity}");
 		}
 
 		#endregion

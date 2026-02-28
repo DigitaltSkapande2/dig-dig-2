@@ -460,6 +460,11 @@ namespace DigDig2
 			else return 0;
 		}
 
+		public void PushInDirection(Vector3 direction, float strength)
+		{
+			if (entityCharacterController) entityCharacterController.PushInDirection(direction, strength);
+		}
+
 		#endregion
 	}
 }
