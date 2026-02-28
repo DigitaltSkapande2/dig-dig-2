@@ -4,9 +4,9 @@
     <ui:VisualElement name="cover" style="flex-grow: 1; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url(&quot;project://database/Assets/Textures/MainMenu/Cover.png?fileID=2800000&amp;guid=fa054f674990081c7adf652397940fd1&amp;type=3#Cover&quot;); -unity-background-scale-mode: scale-and-crop;">
         <ui:Image source="project://database/Assets/Textures/UI/Title.png?fileID=2800000&amp;guid=887d5d3fdebb0904b9db8ff257ddda45&amp;type=3#Title" style="top: 0; left: 0; height: 502px; width: 1017px;"/>
         <ui:VisualElement name="mainNavigation" style="flex-grow: 1; width: 500px; justify-content: flex-end; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; flex-direction: column; padding-top: 0; position: absolute; left: 150px; bottom: 100px;">
-            <ui:Button text="Continue" selectable="false" enabled="true" name="continue" style="position: relative; top: 0; left: 0;"/>
+            <ui:Button text="Continue" enabled="true" name="continue" style="position: relative; top: 0; left: 0;"/>
             <ui:Button text="Load Game" name="loadGame" style="position: relative; top: 0; left: 0;"/>
-            <ui:Button text="New Game" selectable="false" enabled="true" name="newGame" style="position: relative; top: 0; left: 0;"/>
+            <ui:Button text="New Game" enabled="true" name="newGame" style="position: relative; top: 0; left: 0;"/>
             <ui:Button text="Settings" name="settings" style="position: relative; top: 0; left: 0;"/>
             <ui:Button text="Quit" name="quit" class="quit" style="position: relative; top: 0; left: 0;"/>
         </ui:VisualElement>
