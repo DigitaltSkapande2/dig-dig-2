@@ -164,7 +164,8 @@ namespace DigDig2
         {
             Idle,
 			Sprinting,
-			Attacking
+			Attacking,
+			Dashing,
         }
 
 		private EntityState state;
@@ -208,7 +209,7 @@ namespace DigDig2
 
 					// Visuals
 					UpdateVisualsRotation();
-					UpdateAnimation();
+					if (isLocalPlayer) UpdateAnimation();
 				}
 				else
                 {
@@ -512,6 +513,15 @@ namespace DigDig2
 
 		private void UpdateAnimation()
         {
+			if (dashVelocity.magnitude > 0.1) {
+				state = EntityState.Dashing;
+
+				animator.CrossFadeInFixedTime("Dash", 0.1f, 0);
+				animator.CrossFadeInFixedTime("SwordDash", 0.1f, 1);
+
+				return;
+			}
+
 			if (attacker.State != Attacker.CombatState.Idle)
 			{
 				state = EntityState.Attacking;
