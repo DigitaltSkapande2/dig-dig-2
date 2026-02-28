@@ -41,6 +41,11 @@ namespace DigDig2.Effects
             vignette.smoothness.overrideState = true;
         }
 
+        internal override void OnEffectStart(VignettePulseEffectInstanceData effect)
+        {
+            UpdateTargetColors();
+        }
+
         internal override void UpdateEffect(float curveValue)
         {
             print("curveValue: " + curveValue);

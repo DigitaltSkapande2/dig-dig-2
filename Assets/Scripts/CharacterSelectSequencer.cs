@@ -46,6 +46,7 @@ namespace DigDig2
         {
             if (!NetworkManager.singleton.IsMultiplayer)
             {
+                VerboseLog("Not in multiplayer mode, disabling character select sequencer.");
                 gameObject.SetActive(false);
                 Destroy(gameObject);
             }
@@ -58,32 +59,12 @@ namespace DigDig2
 
             if (!isServer)
             {
-                switchCharacterButton.enabled = false;
-                startButton.enabled = false;   
+                switchCharacterButton.interactable = false;
+                startButton.interactable = false;   
             }
             else
             {
-                VerboseLog("START ON SERVER");
-                maxInstance = Instantiate(maxPrefab, maxSpawnPoint.position, maxSpawnPoint.rotation);
-                NetworkServer.Spawn(maxInstance);
-                minisInstance = Instantiate(minisPrefab, minisSpawnPoint.position, minisSpawnPoint.rotation);
-                NetworkServer.Spawn(minisInstance);
 
-                switchCharacterButton.enabled = true;
-                startButton.enabled = true;
-
-                hostConn = NetworkServer.localConnection;
-
-                switchCharacterButton.onClick.AddListener(OnSwitchCharacterButtonClicked);
-                startButton.onClick.AddListener(OnStartButtonClicked);
-
-                if (NetworkManager.singleton != null)
-                {
-                    NetworkManager.singleton.serverConnect.AddListener(OnServerConnect);
-                    NetworkManager.singleton.serverDisconnect.AddListener(OnServerDisconnect);
-                }
-
-                VerboseLog("Server ready. Waiting for clients to connect before spawning characters.");
                 
             }
         }
@@ -93,7 +74,28 @@ namespace DigDig2
 
         public override void OnStartServer()
         {
+            VerboseLog("START ON SERVER");
+            maxInstance = Instantiate(maxPrefab, maxSpawnPoint.position, maxSpawnPoint.rotation);
+            NetworkServer.Spawn(maxInstance);
+            minisInstance = Instantiate(minisPrefab, minisSpawnPoint.position, minisSpawnPoint.rotation);
+            NetworkServer.Spawn(minisInstance);
 
+            switchCharacterButton.interactable = true;
+            startButton.interactable = true;
+
+            hostConn = NetworkServer.localConnection;
+            hostAlias = hostConn.connectionId.ToString();
+
+            switchCharacterButton.onClick.AddListener(OnSwitchCharacterButtonClicked);
+            startButton.onClick.AddListener(OnStartButtonClicked);
+
+            if (NetworkManager.singleton != null)
+            {
+                NetworkManager.singleton.serverConnect.AddListener(OnServerConnect);
+                NetworkManager.singleton.serverDisconnect.AddListener(OnServerDisconnect);
+            }
+
+            VerboseLog("Server ready. Waiting for clients to connect before spawning characters.");
         }
 
         [Server]
@@ -104,7 +106,7 @@ namespace DigDig2
                 clientConn = null;
                 clientAlias = "";
             }
-            UpdateCharacterNamePlates();
+            ServerUpdateAliases();
         }
 
         [Server]
@@ -120,7 +122,7 @@ namespace DigDig2
             {
                 Debug.LogError("there are more than 2 connections?");
             }
-            UpdateCharacterNamePlates();
+            ServerUpdateAliases();
         }
 
         [Server]
@@ -129,13 +131,12 @@ namespace DigDig2
             hostIsMax = !hostIsMax;
             RpcUpdateHostIsMax(hostIsMax);
 
-            UpdateCharacterNamePlates();
+            ServerUpdateAliases();
         }
 
         [Server]
         private void OnStartButtonClicked()
         {
-            //NetworkServer.ReplacePlayerForConnection() // TODOreplace characters,
             GameObject hostCharObjInstance = hostIsMax ? maxInstance : minisInstance;
             GameObject clientCharObjInstance = hostIsMax ? minisInstance : maxInstance;
 
@@ -147,47 +148,50 @@ namespace DigDig2
 
             NetworkServer.ReplacePlayerForConnection(hostConn, hostCharObjInstance, ReplacePlayerOptions.KeepActive);
             NetworkServer.ReplacePlayerForConnection(clientConn, clientCharObjInstance, ReplacePlayerOptions.KeepActive);
+
+            RpcEnablePlayerInput();
         }
 
         [Server]
-        private void OnCharacterClicked(CharacterType characterType, ClickableMesh clickedMesh)
+        private void ServerUpdateAliases() 
         {
-            Debug.Log("Clicked on character: " + characterType);
-        }
-
-        [Server]
-        private void FixedUpdate()
-        {
-
+            RpcUpdateAliases(hostAlias, clientAlias);
+            //LocalUpdateCharacterNamePlates();
         }
 
         #endregion
         #region Client
 
-        [Client, ClientRpc]
+        [ClientRpc]
         private void RpcUpdateHostIsMax(bool newValue)
         {
             hostIsMax = newValue;
+            LocalUpdateCharacterNamePlates();
         }
 
-        [Client, ClientRpc]
+        [ClientRpc]
         private void RpcUpdateAliases(string clientAlias, string hostAlias)
         {
             this.clientAlias = clientAlias;
             this.hostAlias = hostAlias;
-            UpdateCharacterNamePlates();
+            LocalUpdateCharacterNamePlates();
         }
 
+        [ClientRpc]
+        private void RpcEnablePlayerInput() 
+        {
+            NetworkClient.localPlayer.GetComponent<PlayerCharacterInputController>().EnableInput();
+            NetworkClient.localPlayer.GetComponent<PlayerAttackInput>().EnableInput();
+            NetworkClient.localPlayer.GetComponent<EntityCharacterController>().Frozen = false;
+        }
 
         #endregion
         #region Util
 
-
-        private void UpdateCharacterNamePlates()
+        private void LocalUpdateCharacterNamePlates()
         {
             maxNameplateText.text = hostIsMax ? hostAlias : clientAlias;
             minisNameplateText.text = hostIsMax ? clientAlias : hostAlias; 
-            RpcUpdateAliases(clientAlias, hostAlias);
         }
 
         private void VerboseLog(string msg)

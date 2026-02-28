@@ -506,8 +506,8 @@ MonoBehaviour:
   transport: {fileID: 9007534310325429183}
   networkAddress: localhost
   maxConnections: 2
-  disconnectInactiveConnections: 0
-  disconnectInactiveTimeout: 60
+  disconnectInactiveConnections: 1
+  disconnectInactiveTimeout: 20
   authenticator: {fileID: 0}
   playerPrefab: {fileID: 8794435795408865772, guid: 9e920e9664e8e9a669b06154984538c8, type: 3}
   autoCreatePlayer: 1

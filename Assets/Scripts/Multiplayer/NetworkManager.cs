@@ -110,9 +110,9 @@ namespace DigDig2
             base.StartHost();
         }
 
-        public new void StartClient()
+        public new void StartClient(bool isMultiplayer = true)
         {
-            IsMultiplayer = true;
+            IsMultiplayer = isMultiplayer;
             base.StartClient();
         }
 

@@ -239,7 +239,7 @@ MonoBehaviour:
     spawnPrefab: 0
     spawnPrefabEffectData:
       prefabToSpawn: []
-    screenShake: 0
+    screenShake: 1
     screenShakeEffectData:
       intensityCurve:
         serializedVersion: 2
@@ -266,7 +266,7 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
       duration: 0.4
-      intensity: 1
+      intensity: 0.2
     cameraZoom: 0
     cameraZoomEffectData:
       intensityCurve:
@@ -323,7 +323,7 @@ MonoBehaviour:
         m_RotationOrder: 4
       duration: 0.4
       intensity: 1
-    vignettePulse: 0
+    vignettePulse: 1
     vignettePulseEffectData:
       intensityCurve:
         serializedVersion: 2
@@ -351,7 +351,7 @@ MonoBehaviour:
         m_RotationOrder: 4
       duration: 0.4
       intensity: 1
-      color: {r: 0, g: 0, b: 0, a: 0}
+      color: {r: 0.5849056, g: 0.08001069, b: 0.08001069, a: 0}
   hit:
     m_PersistentCalls:
       m_Calls: []

@@ -276,7 +276,7 @@ namespace DigDig2
 
         public async void JoinLocalHostGame()
         {
-            NetworkManager.singleton.StartClient();
+            NetworkManager.singleton.StartClient(true);
             await UniTask.WaitUntil(() => NetworkClient.active);
 
             Debug.Log("Client started.");

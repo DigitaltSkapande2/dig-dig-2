@@ -38,12 +38,13 @@ namespace DigDig2
 
         #region Input Setup
 
-        private void EnableInput()
+        public void EnableInput()
         {
             if (!NetworkClient.active || isLocalPlayer)
             {
                 attackActions = InputManager.Instance.inputActions.Attack;
                 attackActions.SetCallbacks(this);
+                hasStarted = true;
             }
         }
 

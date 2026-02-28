@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using Mirror;
+using UnityEditor.Build;
 using UnityEngine;
 
 namespace DigDig2
@@ -36,8 +37,9 @@ namespace DigDig2
         public CharacterType currentCharacter { private set; get; } = CharacterType.Max;
 
 
-        private void Start()
+        protected void Start()
         {
+            base.Awake();
             if (NetworkServer.active)
             {
                 if (!NetworkManager.singleton.IsMultiplayer) SingleplayerInitialize();
