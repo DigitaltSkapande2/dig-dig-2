@@ -59,7 +59,7 @@ namespace DigDig2
             healthPoints = 0;
 
             death.Invoke();
-            deathEffectPlayer.Play(transform.position);
+            deathEffectPlayer.Play(transform.position, Quaternion.identity, Vector3.one, transform.parent);
             Destroy(gameObject);
         }
 

@@ -231,7 +231,7 @@ namespace DigDig2
 			}
 		}
 
-		private void OnDrawGizmosSelected()
+        private void OnDrawGizmosSelected()
 		{
 			Vector3 centerRaycastEndPoint = transform.position + -transform.up * (GetComponent<CharacterController>().height / 2f + edgeScanDistance);
 			Gizmos.color = Color.red;

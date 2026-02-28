@@ -108,7 +108,7 @@ CharacterController:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4096
   m_LayerOverridePriority: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
@@ -156,6 +156,7 @@ MonoBehaviour:
   dashStrength: 10
   dashDecaySpeed: 10
   dashCooldown: 2
+  pushDecaySpeed: 10
   knockbackMultiplier: 1
   knockbackFallofSpeed: 2
   maxStunTime: 3
