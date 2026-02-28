@@ -32,8 +32,9 @@ namespace DigDig2
 
 
 
-        private void Start()
+        private new void Awake()
         {
+            base.Awake();
             string saveDirectoryPath = GetSavesDirectoryPath();
             Debug.Log($"Saving files in: {saveDirectoryPath}");
             if (!Directory.Exists(saveDirectoryPath)) Directory.CreateDirectory(saveDirectoryPath);

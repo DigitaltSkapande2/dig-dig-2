@@ -31,7 +31,7 @@ namespace DigDig2
         [SerializeField] bool verboseLogging = false;
 
 
-        private bool hostIsMax = true;
+        [SerializeField] private bool hostIsMax = true;
 
         private LocalConnectionToClient hostConn = null;
         private string hostAlias;
@@ -103,7 +103,7 @@ namespace DigDig2
                 clientConn = null;
                 clientAlias = "";
             }
-            ServerUpdateAliases();
+            RpcUpdateAliases(hostAlias, clientAlias);
         }
 
         [Server]
@@ -119,20 +119,20 @@ namespace DigDig2
             {
                 Debug.LogError("there are more than 2 connections?");
             }
-            ServerUpdateAliases();
+            RpcUpdateAliases(hostAlias, clientAlias);
         }
 
         [Server]
         private void OnSwitchCharacterButtonClicked()
         {
             hostIsMax = !hostIsMax;
-            RpcUpdateHostIsMax(hostIsMax);
+            RpcUpdateHostIsMax(!hostIsMax);
 
-            ServerUpdateAliases();
+            RpcUpdateAliases(hostAlias, clientAlias);
         }
 
         [Server]
-        private void OnStartButtonClicked()
+        private async void OnStartButtonClicked()
         {
             if (clientConn == null)
             {
@@ -140,10 +140,7 @@ namespace DigDig2
                 return;
             }
 
-            NetworkServer.UnSpawn(maxDummyInstance);
             NetworkServer.Destroy(maxDummyInstance);
-
-            NetworkServer.UnSpawn(minisDummyInstance);
             NetworkServer.Destroy(minisDummyInstance);
 
             GameObject maxInstance = Instantiate(maxPrefab, maxSpawnPoint.position, maxSpawnPoint.rotation);
@@ -158,18 +155,14 @@ namespace DigDig2
             // NetworkServer.RemovePlayerForConnection(hostConn, RemovePlayerOptions.Destroy);
             // NetworkServer.RemovePlayerForConnection(clientConn, RemovePlayerOptions.Destroy);
 
-            NetworkServer.ReplacePlayerForConnection(hostConn, hostCharObjInstance, ReplacePlayerOptions.Unspawn);
-            NetworkServer.ReplacePlayerForConnection(clientConn, clientCharObjInstance, ReplacePlayerOptions.Unspawn);
+            NetworkServer.ReplacePlayerForConnection(hostConn, hostCharObjInstance, ReplacePlayerOptions.Destroy);
+            NetworkServer.ReplacePlayerForConnection(clientConn, clientCharObjInstance, ReplacePlayerOptions.Destroy);
+            
+            await System.Threading.Tasks.Task.Delay(100); // wait a frame for the ReplacePlayerForConnection to complete before enabling input
 
             RpcEnablePlayerInput();
         }
 
-        [Server]
-        private void ServerUpdateAliases() 
-        {
-            RpcUpdateAliases(hostAlias, clientAlias);
-            //LocalUpdateCharacterNamePlates();
-        }
 
         #endregion
         #region Client

@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using Mirror;
+using Mirror.BouncyCastle.Crypto.Parameters;
+using UnityEditor.Build;
 using UnityEngine;
 
 namespace DigDig2
@@ -32,29 +34,40 @@ namespace DigDig2
         private void Awake()
         {
             SaveManager.Instance.RegisterSavable("SavePointIndex", this);
+            collider = GetComponent<Collider>();
         }
 
-        private void Start()
+        public override void OnStartServer()
         {
-            collider = GetComponent<Collider>();
-            if (savePointIndex < highestReachedSavePointIndex)
-            {
-                KillCollider();
-            }
-            else if (NetworkManager.singleton.IsMultiplayer && isServer)
+            if (NetworkManager.singleton.IsMultiplayer)
             {
                 GameObject instance = Instantiate(characterSeclectSecuencerPrefab, transform.position, Quaternion.identity);
                 NetworkServer.Spawn(instance);
             }
+
+            if (savePointIndex <= highestReachedSavePointIndex)
+            {
+                SetSpawnPointAchieved(true);
+            }
+        }
+
+
+        [ClientRpc]
+        private void SetSpawnPointAchieved(bool achieved)
+        {
+
+            KillCollider();
         }
 
 
         private void OnTriggerEnter(Collider other)
         {
-            if (savePointIndex > highestReachedSavePointIndex)
+            if (isServer && savePointIndex > highestReachedSavePointIndex)
             {
                 highestReachedSavePointIndex = savePointIndex;
             }
+
+            SetSpawnPointAchieved(true);
         }
 
         private void KillCollider()
