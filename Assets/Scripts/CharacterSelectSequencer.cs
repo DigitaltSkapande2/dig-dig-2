@@ -16,6 +16,9 @@ namespace DigDig2
         [Header("Prefabs")]
         [SerializeField] private GameObject maxPrefab;
         [SerializeField] private GameObject minisPrefab;
+        [SerializeField] private GameObject maxDummyPrefab;
+        [SerializeField] private GameObject minisDummyPrefab;
+
         [Header("Scene Refs")]
         [SerializeField] private Transform maxSpawnPoint;
         [SerializeField] private Transform minisSpawnPoint;
@@ -35,8 +38,8 @@ namespace DigDig2
         private NetworkConnectionToClient clientConn = null;
         private string clientAlias;
 
-        private GameObject maxInstance;
-        private GameObject minisInstance;
+        private GameObject maxDummyInstance;
+        private GameObject minisDummyInstance;
         
 
         #endregion
@@ -57,15 +60,10 @@ namespace DigDig2
             // maxClickableCollider.clickStart.AddListener(() => OnCharacterClicked(CharacterType.Max, maxClickableCollider));
             // minisClickableCollider.clickStart.AddListener(() => OnCharacterClicked(CharacterType.Mini, minisClickableCollider));
 
-            if (!isServer)
+            if (!isServer) // !isServer != isClient
             {
                 switchCharacterButton.interactable = false;
                 startButton.interactable = false;   
-            }
-            else
-            {
-
-                
             }
         }
 
@@ -74,11 +72,10 @@ namespace DigDig2
 
         public override void OnStartServer()
         {
-            VerboseLog("START ON SERVER");
-            maxInstance = Instantiate(maxPrefab, maxSpawnPoint.position, maxSpawnPoint.rotation);
-            NetworkServer.Spawn(maxInstance);
-            minisInstance = Instantiate(minisPrefab, minisSpawnPoint.position, minisSpawnPoint.rotation);
-            NetworkServer.Spawn(minisInstance);
+            maxDummyInstance = Instantiate(maxDummyPrefab, maxSpawnPoint.position, maxSpawnPoint.rotation);
+            NetworkServer.Spawn(maxDummyInstance);
+            minisDummyInstance = Instantiate(minisDummyPrefab, minisSpawnPoint.position, minisSpawnPoint.rotation);
+            NetworkServer.Spawn(minisDummyInstance);
 
             switchCharacterButton.interactable = true;
             startButton.interactable = true;
@@ -137,17 +134,32 @@ namespace DigDig2
         [Server]
         private void OnStartButtonClicked()
         {
-            GameObject hostCharObjInstance = hostIsMax ? maxInstance : minisInstance;
-            GameObject clientCharObjInstance = hostIsMax ? minisInstance : maxInstance;
-
             if (clientConn == null)
             {
                 Debug.LogError("No client connected! Cannot start game.");
                 return;
             }
 
-            NetworkServer.ReplacePlayerForConnection(hostConn, hostCharObjInstance, ReplacePlayerOptions.KeepActive);
-            NetworkServer.ReplacePlayerForConnection(clientConn, clientCharObjInstance, ReplacePlayerOptions.KeepActive);
+            NetworkServer.UnSpawn(maxDummyInstance);
+            NetworkServer.Destroy(maxDummyInstance);
+
+            NetworkServer.UnSpawn(minisDummyInstance);
+            NetworkServer.Destroy(minisDummyInstance);
+
+            GameObject maxInstance = Instantiate(maxPrefab, maxSpawnPoint.position, maxSpawnPoint.rotation);
+            GameObject minisInstance = Instantiate(minisPrefab, minisSpawnPoint.position, minisSpawnPoint.rotation);
+
+            GameObject hostCharObjInstance = hostIsMax ? maxInstance : minisInstance;
+            GameObject clientCharObjInstance = hostIsMax ? minisInstance : maxInstance;
+
+            hostCharObjInstance.name = hostIsMax ? "Max_connid: " + hostConn.connectionId : "Minis_connid: " + hostConn.connectionId;
+            clientCharObjInstance.name = hostIsMax ? "Minis_connid: " + clientConn.connectionId : "Max_connid: " + clientConn.connectionId;
+
+            // NetworkServer.RemovePlayerForConnection(hostConn, RemovePlayerOptions.Destroy);
+            // NetworkServer.RemovePlayerForConnection(clientConn, RemovePlayerOptions.Destroy);
+
+            NetworkServer.ReplacePlayerForConnection(hostConn, hostCharObjInstance, ReplacePlayerOptions.Unspawn);
+            NetworkServer.ReplacePlayerForConnection(clientConn, clientCharObjInstance, ReplacePlayerOptions.Unspawn);
 
             RpcEnablePlayerInput();
         }

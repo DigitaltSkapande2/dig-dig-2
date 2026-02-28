@@ -5,7 +5,6 @@ using UnityEngine.Events;
 
 namespace DigDig2
 {
-    [RequireComponent(typeof(Health))]
     public class Attackable : MonoBehaviour
     {
         [Tooltip("Duration of invincibility after a hit.")]

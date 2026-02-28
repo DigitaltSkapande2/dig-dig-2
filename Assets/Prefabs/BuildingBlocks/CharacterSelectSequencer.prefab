@@ -383,6 +383,8 @@ MonoBehaviour:
   syncInterval: 0
   maxPrefab: {fileID: 4442565222488509090, guid: d5a3d3276e47631bfb60f1dda5c99ef2, type: 3}
   minisPrefab: {fileID: 4442565222488509090, guid: f67aae0ed0287714d978db69befa66ce, type: 3}
+  maxDummyPrefab: {fileID: 4442565222488509090, guid: bfb82c243266d39e79d82d1e6d564b7e, type: 3}
+  minisDummyPrefab: {fileID: 4442565222488509090, guid: d995d48d87cfb80f1bd3995ad5e1c4b7, type: 3}
   maxSpawnPoint: {fileID: 8097027346526215108}
   minisSpawnPoint: {fileID: 6100783926166531798}
   switchCharacterButton: {fileID: 1042246904590052101}

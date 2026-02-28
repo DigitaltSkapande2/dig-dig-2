@@ -232,6 +232,8 @@ namespace DigDig2
 			}
 		}
 
+
+
         private void OnDrawGizmosSelected()
 		{
 			Vector3 centerRaycastEndPoint = transform.position + -transform.up * (GetComponent<CharacterController>().height / 2f + edgeScanDistance);
