@@ -30,12 +30,10 @@ namespace DigDig2
 
         private bool hostIsMax = true;
 
-        private NetworkConnectionToClient hostConn = null;
+        private LocalConnectionToClient hostConn = null;
         private string hostAlias;
         private NetworkConnectionToClient clientConn = null;
         private string clientAlias;
-
-
 
         private GameObject maxInstance;
         private GameObject minisInstance;
@@ -61,7 +59,32 @@ namespace DigDig2
             if (!isServer)
             {
                 switchCharacterButton.enabled = false;
-                startButton.enabled = false;
+                startButton.enabled = false;   
+            }
+            else
+            {
+                VerboseLog("START ON SERVER");
+                maxInstance = Instantiate(maxPrefab, maxSpawnPoint.position, maxSpawnPoint.rotation);
+                NetworkServer.Spawn(maxInstance);
+                minisInstance = Instantiate(minisPrefab, minisSpawnPoint.position, minisSpawnPoint.rotation);
+                NetworkServer.Spawn(minisInstance);
+
+                switchCharacterButton.enabled = true;
+                startButton.enabled = true;
+
+                hostConn = NetworkServer.localConnection;
+
+                switchCharacterButton.onClick.AddListener(OnSwitchCharacterButtonClicked);
+                startButton.onClick.AddListener(OnStartButtonClicked);
+
+                if (NetworkManager.singleton != null)
+                {
+                    NetworkManager.singleton.serverConnect.AddListener(OnServerConnect);
+                    NetworkManager.singleton.serverDisconnect.AddListener(OnServerDisconnect);
+                }
+
+                VerboseLog("Server ready. Waiting for clients to connect before spawning characters.");
+                
             }
         }
 
@@ -70,23 +93,7 @@ namespace DigDig2
 
         public override void OnStartServer()
         {
-            VerboseLog("START ON SERVER");
-            maxInstance = Instantiate(maxPrefab, maxSpawnPoint.position, maxSpawnPoint.rotation);
-            minisInstance = Instantiate(minisPrefab, minisSpawnPoint.position, minisSpawnPoint.rotation);
 
-            switchCharacterButton.enabled = true;
-            startButton.enabled = true;
-
-            hostConn = NetworkClient.localPlayer.connectionToClient;
-
-            switchCharacterButton.onClick.AddListener(OnSwitchCharacterButtonClicked);
-            startButton.onClick.AddListener(OnStartButtonClicked);
-
-            if (NetworkManager.singleton != null)
-            {
-                NetworkManager.singleton.serverConnect.RemoveListener(OnServerConnect);
-                NetworkManager.singleton.serverDisconnect.RemoveListener(OnServerDisconnect);
-            }
         }
 
         [Server]
@@ -105,7 +112,7 @@ namespace DigDig2
         {
             if (clientConn == null)
             {
-                VerboseLog($"Set Max Connection to {conn.connectionId}");
+                VerboseLog($"Client connected: {conn.connectionId}");
                 clientConn = conn;
                 clientAlias = conn.connectionId.ToString();
             }
@@ -120,6 +127,7 @@ namespace DigDig2
         private void OnSwitchCharacterButtonClicked()
         {
             hostIsMax = !hostIsMax;
+            RpcUpdateHostIsMax(hostIsMax);
 
             UpdateCharacterNamePlates();
         }
@@ -130,6 +138,12 @@ namespace DigDig2
             //NetworkServer.ReplacePlayerForConnection() // TODOreplace characters,
             GameObject hostCharObjInstance = hostIsMax ? maxInstance : minisInstance;
             GameObject clientCharObjInstance = hostIsMax ? minisInstance : maxInstance;
+
+            if (clientConn == null)
+            {
+                Debug.LogError("No client connected! Cannot start game.");
+                return;
+            }
 
             NetworkServer.ReplacePlayerForConnection(hostConn, hostCharObjInstance, ReplacePlayerOptions.KeepActive);
             NetworkServer.ReplacePlayerForConnection(clientConn, clientCharObjInstance, ReplacePlayerOptions.KeepActive);
@@ -159,7 +173,9 @@ namespace DigDig2
         [Client, ClientRpc]
         private void RpcUpdateAliases(string clientAlias, string hostAlias)
         {
-            
+            this.clientAlias = clientAlias;
+            this.hostAlias = hostAlias;
+            UpdateCharacterNamePlates();
         }
 
 
@@ -167,10 +183,11 @@ namespace DigDig2
         #region Util
 
 
-        private void UpdateCharacterNamePlates(bool oldValue = false, bool newValue = false)
+        private void UpdateCharacterNamePlates()
         {
             maxNameplateText.text = hostIsMax ? hostAlias : clientAlias;
-            minisNameplateText.text = hostIsMax ? clientAlias : hostAlias; ;
+            minisNameplateText.text = hostIsMax ? clientAlias : hostAlias; 
+            RpcUpdateAliases(clientAlias, hostAlias);
         }
 
         private void VerboseLog(string msg)

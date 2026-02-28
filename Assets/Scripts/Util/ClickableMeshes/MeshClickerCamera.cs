@@ -67,7 +67,7 @@ namespace DigDig2
 
         public void OnClick(InputAction.CallbackContext context)
         {
-            Debug.Log("On Click " + context.ReadValueAsButton());
+            //Debug.Log("On Click " + context.ReadValueAsButton());
             if (isPointerDown != context.ReadValueAsButton())
             {
                 isPointerDown = context.ReadValueAsButton();

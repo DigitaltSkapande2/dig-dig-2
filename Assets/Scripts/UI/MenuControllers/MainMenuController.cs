@@ -34,6 +34,7 @@ namespace DigDig2
         private Button loadGameButton;
         private Button newGameButton;
         private Button settingsButton;
+        private Button joinGameButton;
         private Button quitButton;
 
         private VisualElement saveMenu;
@@ -195,6 +196,9 @@ namespace DigDig2
                 new("settings", settingsMenu, settingsMenu)
             });
         }
+
+
+
         private void Update()
         {
             Focusable currentFocus = uiDocument.rootVisualElement.focusController.focusedElement;
@@ -268,6 +272,14 @@ namespace DigDig2
                     break;
             }
             
+        }
+
+        public async void JoinLocalHostGame()
+        {
+            NetworkManager.singleton.StartClient();
+            await UniTask.WaitUntil(() => NetworkClient.active);
+
+            Debug.Log("Client started.");
         }
 
         public async void StartSingleplayer()

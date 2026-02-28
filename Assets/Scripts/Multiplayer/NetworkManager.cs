@@ -3,6 +3,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Events;
 using Mirror;
+using kcp2k;
+using UnityEngine.Rendering.UI;
 
 /*
 	Documentation: https://mirror-networking.gitbook.io/docs/components/network-manager
@@ -13,6 +15,8 @@ namespace DigDig2
     public class NetworkManager : Mirror.NetworkManager
     {
         public bool IsMultiplayer { get; private set; } = false;
+
+        [SerializeField] private Canvas debugCanvas;
 
         // You can adjust the parameters of the Actions below to suit your needs and pass the values through the Invoke() method.
         [NonSerialized] public UnityEvent onDestroy = new();
@@ -72,6 +76,11 @@ namespace DigDig2
         public override void Start()
         {
             base.Start();
+
+            if (transport.GetType() == typeof(KcpTransport))
+            {
+                debugCanvas.gameObject.SetActive(true);
+            }
         }
 
         /// <summary>
@@ -99,6 +108,12 @@ namespace DigDig2
         {
             IsMultiplayer = isMultiplayer;
             base.StartHost();
+        }
+
+        public new void StartClient()
+        {
+            IsMultiplayer = true;
+            base.StartClient();
         }
 
         /// <summary>
