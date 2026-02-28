@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Mirror;
 using System;
+using DigDig2.Effects;
 
 namespace DigDig2
 {
@@ -561,6 +562,12 @@ namespace DigDig2
 			automaticLookRotationLocked = isLocked;
 		}
 
+		#endregion
+		#region Effects
+		public void OnFootStepEvent()
+		{
+			
+		}
 		#endregion
 	}
 }

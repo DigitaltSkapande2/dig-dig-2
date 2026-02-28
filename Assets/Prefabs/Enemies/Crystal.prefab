@@ -167,6 +167,8 @@ MonoBehaviour:
       prefabToSpawn:
       - prefab: {fileID: 900025642660281898, guid: 565fe03e66511a84c95b09b1d718120e, type: 3}
         duration: 1
+      - prefab: {fileID: 4950934811570952627, guid: cd6909833c777c7e89624209efd6a893, type: 3}
+        duration: 1
     screenShake: 1
     screenShakeEffectData:
       intensityCurve:
@@ -194,7 +196,7 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
       duration: 0.4
-      intensity: 0.5
+      intensity: 0.3
     cameraZoom: 0
     cameraZoomEffectData:
       intensityCurve:
@@ -298,41 +300,48 @@ MonoBehaviour:
   maxHealthPoints: 3
   healthPoints: 3
   deathEffectPlayer:
-    spawnPrefab: 0
+    spawnPrefab: 1
     spawnPrefabEffectData:
       prefabToSpawn:
-      - prefab: {fileID: 0}
-        duration: 0
-      - prefab: {fileID: 0}
-        duration: 0
-    screenShake: 0
+      - prefab: {fileID: 4950934811570952627, guid: e3d6722d579ee65979033bc361455f1a, type: 3}
+        duration: 1.54
+    screenShake: 1
     screenShakeEffectData:
       intensityCurve:
         serializedVersion: 2
         m_Curve:
         - serializedVersion: 3
           time: 0
-          value: 1
+          value: 0
+          inSlope: 2.2857165
+          outSlope: 2.2857165
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0.19444443
+        - serializedVersion: 3
+          time: 0.3
+          value: 1.0000006
           inSlope: 0
           outSlope: 0
           tangentMode: 0
           weightedMode: 0
-          inWeight: 0
-          outWeight: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
         - serializedVersion: 3
           time: 1
           value: 0
-          inSlope: 0
-          outSlope: 0
+          inSlope: -0.009070296
+          outSlope: -0.009070296
           tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
+          weightedMode: 3
+          inWeight: 1
           outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
-      duration: 0.4
-      intensity: 1
+      duration: 7
+      intensity: 0.4
     cameraZoom: 0
     cameraZoomEffectData:
       intensityCurve:
