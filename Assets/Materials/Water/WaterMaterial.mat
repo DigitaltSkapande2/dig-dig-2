@@ -68,8 +68,8 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _DepthDistance: 15
-    - _DepthStrength: 0.3
+    - _DepthDistance: 5.9
+    - _DepthStrength: 0.67
     - _DisplaceStrength: 0.02
     - _FlowIntensity: 1.5
     - _FlowSize: 4
@@ -90,13 +90,13 @@ Material:
     - _Speed: 1
     - _WaterDepth: 2.1
     m_Colors:
-    - _BottomColor: {r: 0, g: 0.2646606, b: 0.43529412, a: 1}
-    - _FlowColor: {r: 0.16019936, g: 0.4528302, b: 0.4205751, a: 1}
+    - _BottomColor: {r: 0, g: 0.30049738, b: 0.5019608, a: 1}
+    - _FlowColor: {r: 0.21057315, g: 0.49056602, b: 0.4219803, a: 1}
     - _FoamColor: {r: 0.7783019, g: 0.99759024, b: 1, a: 1}
-    - _FoamDirection: {r: -1, g: -1, b: 0, a: 0}
+    - _FoamDirection: {r: -1, g: 0.8, b: 0, a: 0}
     - _FoamTiling: {r: 1, g: 1, b: 0, a: 0}
     - _Tiling: {r: 0.1, g: 0.1, b: 0, a: 0}
     - _TilingDirection: {r: 0.1, g: 0.1, b: 0, a: 0}
-    - _TopColor: {r: 0.1098039, g: 0.60406995, b: 0.6745098, a: 1}
+    - _TopColor: {r: 0.049172312, g: 0.60774153, b: 0.6132076, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

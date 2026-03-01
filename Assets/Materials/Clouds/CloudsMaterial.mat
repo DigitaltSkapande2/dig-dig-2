@@ -33,7 +33,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Layer1Intensity: 0.1
+    - _Layer1Intensity: 0.32
     - _Layer1Scale: 1
     - _Layer1Speed: 0.02
     - _Layer2Intensity: 0.53

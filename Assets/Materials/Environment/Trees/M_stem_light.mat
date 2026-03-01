@@ -64,20 +64,20 @@ Material:
     m_Ints: []
     m_Floats:
     - _Metallic: 0
-    - _NoiseScale: 12.2
+    - _NoiseScale: 2.4
     - _NoiseStrength: 1
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Smoothness: 0
     - _TextureIntensity: 4.68
     - _TextureStrength: 1
-    - _TextureTiling: 2.8
+    - _TextureTiling: 0.7
     - _WindDensity: 10
     - _WindSpeed: 0
     - _WindStrength: 0.05
     m_Colors:
     - _BaseColor: {r: 0.5018867, g: 0.14365083, b: 0.03693123, a: 1}
     - _GlowColor: {r: 0, g: 0, b: 0, a: 1}
-    - _TextureColor: {r: 0.17735851, g: 0.0076966705, b: 0.0076966705, a: 1}
+    - _TextureColor: {r: 0.5943396, g: 0.14845197, b: 0.08130119, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

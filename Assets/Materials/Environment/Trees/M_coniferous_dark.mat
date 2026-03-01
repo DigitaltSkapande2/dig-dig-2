@@ -74,9 +74,9 @@ Material:
     - _TextureTiling: 2.15
     - _WindDensity: 0.25
     - _WindSpeed: 3
-    - _WindStrength: 0.1
+    - _WindStrength: 0.12
     m_Colors:
-    - _BaseColor: {r: 0.030188674, g: 0.15471691, b: 0, a: 1}
+    - _BaseColor: {r: 0.026536722, g: 0.122641504, b: 0.0017354898, a: 1}
     - _GlowColor: {r: 0, g: 27.67306, b: 32, a: 1}
     - _TextureColor: {r: 0, g: 0.09433961, b: 0.049722996, a: 1}
   m_BuildTextureStacks: []
