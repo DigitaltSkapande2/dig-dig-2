@@ -124,9 +124,9 @@ namespace DigDig2
 		// Movement
 		private CharacterController characterController;
 		private Attacker attacker;
+		private Animator animator;
 
 		private Vector3 velocity;
-		private Animator animator;
 
 		private Vector3 moveVelocity;
 
@@ -177,7 +177,7 @@ namespace DigDig2
 			characterController = GetComponent<CharacterController>();
 			animator = GetComponentInChildren<Animator>();
 
-			TryGetComponent(out Attacker attacker);
+			TryGetComponent(out attacker);
 		}
 
 		private void Start()
@@ -400,6 +400,7 @@ namespace DigDig2
 			{
 				dashVelocity = inputMoveVector * dashStrength;
 				dashCooldownTimer = dashCooldown;
+				if (attacker) { attacker.EndAttack(); attacker.EndAttackCharge(); }
 			}
 		}
 
@@ -521,36 +522,37 @@ namespace DigDig2
 			if (moveVelocity.magnitude > 0) moveSpeedGoalPercentage = moveVelocity.magnitude / moveSpeed;
 			animator.SetFloat("MovementSpeed", moveSpeedGoalPercentage);
 
-			if (dashVelocity.magnitude > 0.1) {
-				state = EntityState.Dashing;
-
-				animator.CrossFadeInFixedTime("Dash", 0.1f, 0);
-				animator.CrossFadeInFixedTime("SwordDash", 0.1f, 1);
-
-				return;
-			}
-
 			if (attacker != null && attacker.State != Attacker.CombatState.Idle)
 			{
 				state = EntityState.Attacking;
 				return;
 			}
 
+			if (dashVelocity.magnitude > 0.1f) {
+				if (state == EntityState.Dashing) return; 
+
+				state = EntityState.Dashing;
+				animator.CrossFadeInFixedTime("Dash", 0.1f, 0);
+				animator.CrossFadeInFixedTime("SwordDash", 0.1f, 1);
+
+				return;
+			}
+
             if (new Vector3(inputMoveVector.x, 0, inputMoveVector.z).magnitude > 0f)
             {
 				if (state == EntityState.Sprinting) return;
-
+				state = EntityState.Sprinting;
                 animator.CrossFadeInFixedTime("Sprint", 0.1f, 0);
 				animator.CrossFadeInFixedTime("SwordSprint", 0.1f, 1);
-				state = EntityState.Sprinting;
 				return;
             }
 
-			if (state == EntityState.Idle) return;
-
-			state = EntityState.Idle;
-			animator.CrossFadeInFixedTime("Idle", 0.1f, 0);
-			animator.CrossFadeInFixedTime("SwordIdle", 0.1f, 1);
+			if (state != EntityState.Idle)
+			{
+				state = EntityState.Idle;
+				animator.CrossFadeInFixedTime("Idle", 0.1f, 0);
+				animator.CrossFadeInFixedTime("SwordIdle", 0.1f, 1);
+			}
         }
 
 		public void LookTowards(Vector3 target, bool useLerp = true)

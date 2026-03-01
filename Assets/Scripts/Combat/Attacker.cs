@@ -323,8 +323,8 @@ namespace DigDig2
 
 		public void PlayAnimation(string animationStateName)
 		{
-			animator.Play(animationStateName, 0, 0);
-			animator.Play(animationStateName, 1, 0);
+			animator.CrossFadeInFixedTime(animationStateName, 0.1f, 0);
+			animator.CrossFadeInFixedTime(animationStateName, 0.1f, 1);
 		}
 
 		#endregion
