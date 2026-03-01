@@ -62,5 +62,10 @@ namespace DigDig2
         {
             return invincibilityTimer > 0;
         }
+
+        public void ApplyKnockback(Vector3 direction, float strength)
+        {
+            entityCharacterController.ApplyKnockback(direction, strength);
+        }
     }
 }

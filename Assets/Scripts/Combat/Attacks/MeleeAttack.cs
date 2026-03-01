@@ -8,6 +8,7 @@ namespace DigDig2
 		[SerializeField] private string animationStateName;
 		[SerializeField] private int damage = 1;
 		[SerializeField] private int bindableAttackHitboxIndex = 0;
+		[SerializeField] private float knockbackStrength = 50;
 
 		public override void ChargeStart(Attacker attacker, AttackType attackType)
 		{
@@ -41,6 +42,7 @@ namespace DigDig2
         public override void Hit(Attacker attacker, Attackable attackable, Health healthComponent, EntityCharacterController entityCharacterController)
 		{
 			if (healthComponent) healthComponent.Damage(damage);
+			attackable.ApplyKnockback((attackable.transform.position - attacker.transform.position).normalized, knockbackStrength);
         }
 	}
 }

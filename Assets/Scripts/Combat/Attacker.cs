@@ -465,6 +465,11 @@ namespace DigDig2
 			if (entityCharacterController) entityCharacterController.PushInDirection(direction, strength);
 		}
 
+		public void ApplyKnockback(Vector3 direction, float strength)
+		{
+			if (entityCharacterController) entityCharacterController.ApplyKnockback(direction, strength);
+		}
+
 		#endregion
 	}
 }

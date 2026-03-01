@@ -102,10 +102,10 @@ namespace DigDig2
 		[Header("Combat")]
 
 		[Tooltip("Knockback multiplier")]
-		[SerializeField] private float knockbackMultiplier;
+		[SerializeField] private float knockbackStrengthMultiplier = 1;
 
 		[Tooltip("How fast you return to stationary after taking knockback")]
-		[SerializeField] private float knockbackFallofSpeed;
+		[SerializeField] private float knockbackDecaySpeed = 20;
 
 		[Tooltip("How long the stun timer can be")]
 		[SerializeField] private float maxStunTime = 3f;
@@ -296,7 +296,7 @@ namespace DigDig2
 		private void ProcessKnockback()
 		{
 			velocity += knockbackVelocity;
-			knockbackVelocity = Vector3.Lerp(knockbackVelocity, Vector3.zero, knockbackFallofSpeed * Time.deltaTime);
+			knockbackVelocity = Vector3.Lerp(knockbackVelocity, Vector3.zero, knockbackDecaySpeed * Time.deltaTime);
 		}
 
 		private void ProcessDash()
@@ -485,9 +485,9 @@ namespace DigDig2
 
 		#region Combat
 
-		public void ApplyKnockback(Vector3 knockbackForce)
+		public void ApplyKnockback(Vector3 direction, float strength)
 		{
-			knockbackVelocity = knockbackForce * knockbackMultiplier;
+			knockbackVelocity = direction * strength * knockbackStrengthMultiplier;
 		}
 		
 		public void Stun(float stunDuration)
