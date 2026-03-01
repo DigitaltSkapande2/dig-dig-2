@@ -12,17 +12,24 @@ namespace DigDig2
         Max,
         Mini,
     }
-    public class GameManager : Singleton<GameManager>
+    public class GameManager : Singleton<GameManager>, ISaveable
     {
         [Header("Player Prefabs")]
-        [SerializeField] private CharacterType singleplayerStartingCharacter = CharacterType.Max;
+        [SerializeField] private CharacterType defaultSingleplayerCharacter = CharacterType.Max;
         [SerializeField] private GameObject maxPrefab;
         [SerializeField] private GameObject miniPrefab;
 
         [Header("Enemy Focusing")]
         [SerializeField] private GameObject focusIndicator;
+        [Header("SavePoints")]
+        [SerializeField] private SavePoint[] savePoints;
 
-
+        public struct GameManagerGameSaveData
+        {
+            public CharacterType singleplayerSelectedCharacter;
+            public int highestReachedSavePointIndex;
+        }
+        public GameManagerGameSaveData loadedGameManagerSaveData { get; private set; }
 
         public GameObject LocalPlayerObj
         {
@@ -39,10 +46,26 @@ namespace DigDig2
 
         protected void Start()
         {
-            base.Awake();
-            if (NetworkServer.active)
+            
+        }
+
+        public override void OnStartServer()
+        {
+            SaveManager.Instance.RegisterSavable("GameManager", this, true);
+            for (int i = 0; i < savePoints.Length; i++)
             {
-                if (!NetworkManager.singleton.IsMultiplayer) SingleplayerInitialize();
+                savePoints[i].GetComponent<SavePoint>().savePointReached.AddListener(() => SetHighestReachedSavePointIndex(i));
+            }   
+
+            SavePoint savePointToStartAt = savePoints[loadedGameManagerSaveData.highestReachedSavePointIndex];
+
+            if (NetworkManager.singleton.IsMultiplayer)
+            {
+                savePointToStartAt.ServerStartMultiplayerStartSequence();
+            }
+            else
+            {
+                savePointToStartAt.ServerStartSingleplayerStartSequence();
             }
         }
 
@@ -58,12 +81,17 @@ namespace DigDig2
 
         #region Singleplayer
 
-        private void SingleplayerInitialize()
+        public void InitializeSingleplayerCharacter(Vector3 spawnPosition, Quaternion spawnRotation)
         {
-            Debug.Log("Initializing Singleplayer...");
-            GameObject playerCharacter = Instantiate(GetCharacterPrefabFromCharacterType(singleplayerStartingCharacter));
-            NetworkServer.ReplacePlayerForConnection(NetworkServer.connections[0], playerCharacter, ReplacePlayerOptions.KeepAuthority);
-            Debug.Log("Singleplayer Initialization Finished!");
+            if (NetworkManager.singleton.IsMultiplayer)
+            {
+                Debug.LogError("Tried to initialize singleplayer character in multiplayer mode. This is not allowed.");
+                return;
+            }
+            Debug.Log("GAMEMANAGER: Initializing Singleplayer Characters...");
+            GameObject playerCharacter = Instantiate(GetCharacterPrefabFromCharacterType(loadedGameManagerSaveData.singleplayerSelectedCharacter), spawnPosition, spawnRotation);
+            NetworkServer.ReplacePlayerForConnection(NetworkServer.localConnection, playerCharacter, ReplacePlayerOptions.KeepAuthority);
+            Debug.Log("GAMEMANAGER: Singleplayer Characters Initialized!");
         }
 
         public void SingleplayerSwitchCharacter()
@@ -94,20 +122,15 @@ namespace DigDig2
 
         #region Multiplayer
 
-        private void InitializeMultiplayer()
-        {
-            Debug.Log("Initializing Multiplayer...");
-            InitializeMultiplayerPlayers();
-            Debug.Log("Multiplayer Initialization Finished!");
-        }
-
         private void InitializeMultiplayerPlayers()
         {
+            Debug.Log("GAMEMANAGER: Initializing Multiplayer Characters...");
             GameObject maxPlayerCharacter = Instantiate(maxPrefab);
             NetworkServer.ReplacePlayerForConnection(NetworkManager.singleton.MaxPlayerConnection, maxPlayerCharacter, ReplacePlayerOptions.KeepAuthority);
 
             GameObject miniPlayerCharacter = Instantiate(miniPrefab);
             NetworkServer.ReplacePlayerForConnection(NetworkManager.singleton.MiniPlayerConnection, miniPlayerCharacter, ReplacePlayerOptions.KeepAuthority);
+            Debug.Log("GAMEMANAGER: Multiplayer Characters Initialized!");
         }
 
         #endregion
@@ -121,6 +144,38 @@ namespace DigDig2
         public void SetFocusIndicatorVibility(bool visible)
         {
             focusIndicator.SetActive(visible);
+        }
+
+        #endregion
+        #region Saving and Loading 
+
+        public object CollectData()
+        {
+            return loadedGameManagerSaveData;
+        }
+
+        public void RestoreState(object dataObject)
+        {
+            if (dataObject == null)
+            {
+                loadedGameManagerSaveData = new GameManagerGameSaveData
+                {
+                    singleplayerSelectedCharacter = defaultSingleplayerCharacter,
+                    highestReachedSavePointIndex = 0,
+                };
+            }
+            else
+            {
+                loadedGameManagerSaveData = (GameManagerGameSaveData)dataObject;
+                currentCharacter = loadedGameManagerSaveData.singleplayerSelectedCharacter;
+            }
+        }
+
+        public void SetHighestReachedSavePointIndex(int index)
+        {
+            var tempData = loadedGameManagerSaveData;
+            tempData.highestReachedSavePointIndex = index;
+            loadedGameManagerSaveData = tempData;
         }
 
         #endregion

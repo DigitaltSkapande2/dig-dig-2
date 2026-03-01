@@ -5,6 +5,8 @@ using UnityEngine;
 public class Singleton<T> : NetworkBehaviour where T : NetworkBehaviour
 {
     private static T instance;
+    [Header("Singleton Settings")]
+    [SerializeField] private bool destroyOnLoad = true;
     public static T Instance
     {
         get
@@ -41,6 +43,8 @@ public class Singleton<T> : NetworkBehaviour where T : NetworkBehaviour
 
         Instance = this as T;
         Debug.Log("Set instance of " + gameObject.name);
-        DontDestroyOnLoad(gameObject);
+        if (destroyOnLoad) {
+            DontDestroyOnLoad(gameObject);
+        }
     }
 }
