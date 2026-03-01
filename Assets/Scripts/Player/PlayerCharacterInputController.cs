@@ -65,12 +65,17 @@ namespace DigDig2
 
         #region Input Setup
 
-        private void EnableInput()
+        public void EnableInput()
         {
             if (!NetworkClient.active || isLocalPlayer)
             {
+                Debug.Log("Enabling input for player character controller.");
                 playerActions = InputManager.Instance.inputActions.Player;
                 playerActions.SetCallbacks(this);
+
+                hasStarted = true;
+
+                DebugNotesManager.Instance.RegisterPlayerCharacterController(entityCharacterController);
             }
         }
 
@@ -98,6 +103,14 @@ namespace DigDig2
             if (context.performed && characterSwitching != null)
             {
                 characterSwitching.SwitchCharacter();
+            }
+        }
+
+        public void OnDash(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+            {
+                entityCharacterController.Dash();
             }
         }
 

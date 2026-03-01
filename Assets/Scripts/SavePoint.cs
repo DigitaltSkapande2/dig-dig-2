@@ -1,13 +1,17 @@
 using System.Collections.Generic;
+using Mirror;
+using Mirror.BouncyCastle.Crypto.Parameters;
+using UnityEditor.Build;
 using UnityEngine;
 
 namespace DigDig2
 {
-    [RequireComponent(typeof(Collider))]
-    public class SavePoint : MonoBehaviour, ISaveable
+    [RequireComponent(typeof(Collider), typeof(NetworkIdentity))]
+    public class SavePoint : NetworkBehaviour, ISaveable
     {
         [SerializeField] private Collider saveTriggerreaCollider;
         [SerializeField] private int savePointIndex = 0;
+        [SerializeField] private GameObject characterSeclectSecuencerPrefab;
 
         private static Dictionary<int, SavePoint> allSavePoints;
         private static int highestReachedSavePointIndex;
@@ -30,24 +34,40 @@ namespace DigDig2
         private void Awake()
         {
             SaveManager.Instance.RegisterSavable("SavePointIndex", this);
+            collider = GetComponent<Collider>();
         }
 
-        private void Start()
+        public override void OnStartServer()
         {
-            collider = GetComponent<Collider>();
-            if (savePointIndex < highestReachedSavePointIndex)
+            if (NetworkManager.singleton.IsMultiplayer)
             {
-                KillCollider();
+                GameObject instance = Instantiate(characterSeclectSecuencerPrefab, transform.position, Quaternion.identity);
+                NetworkServer.Spawn(instance);
             }
+
+            if (savePointIndex <= highestReachedSavePointIndex)
+            {
+                SetSpawnPointAchieved(true);
+            }
+        }
+
+
+        [ClientRpc]
+        private void SetSpawnPointAchieved(bool achieved)
+        {
+
+            KillCollider();
         }
 
 
         private void OnTriggerEnter(Collider other)
         {
-            if (savePointIndex > highestReachedSavePointIndex)
+            if (isServer && savePointIndex > highestReachedSavePointIndex)
             {
                 highestReachedSavePointIndex = savePointIndex;
             }
+
+            SetSpawnPointAchieved(true);
         }
 
         private void KillCollider()

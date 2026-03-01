@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class Billboard : MonoBehaviour
 {
+	[SerializeField] private bool onlyYAxis = false;
+
     private void Awake()
     {
 		UpdateRotation();
@@ -14,6 +16,7 @@ public class Billboard : MonoBehaviour
 
 	private void UpdateRotation()
 	{
-		transform.rotation = Camera.main.transform.rotation;
+		if (onlyYAxis) transform.rotation = Quaternion.Euler(new Vector3(transform.rotation.x, Camera.main.transform.rotation.y, transform.rotation.z));
+		else transform.rotation = Camera.main.transform.rotation;
 	}
 }

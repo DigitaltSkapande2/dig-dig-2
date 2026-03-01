@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using DigDig2.UIElements;
@@ -79,6 +80,7 @@ namespace DigDig2.UINavigation
         {
             node.element.AddToClassList(closedElementClass);
             if (node.inputElement != null) node.inputElement.enabledSelf = false;
+            if (node.element.style.display != DisplayStyle.None) StartCoroutine(HideDisplay(node));
 
             if (node.children != null)
             {
@@ -94,6 +96,7 @@ namespace DigDig2.UINavigation
             if (node.name == splitUri[splitIndex])
             {
                 node.element.RemoveFromClassList(closedElementClass);
+                node.element.style.display = DisplayStyle.Flex;
                 
                 if (splitIndex >= splitUri.Count - 1)
                 {
@@ -134,6 +137,12 @@ namespace DigDig2.UINavigation
                 }
             }
         }
+
+        private IEnumerator HideDisplay(NavigationNode node)
+        {
+            yield return new WaitForSecondsRealtime(node.closeDuration);
+            if (node.element.ClassListContains(closedElementClass)) node.element.style.display = DisplayStyle.None;
+        }
     }
 
     public class NavigationNode
@@ -142,14 +151,16 @@ namespace DigDig2.UINavigation
         public VisualElement element;
         public VisualElement inputElement;
         public bool openable;
+        public float closeDuration;
         public List<NavigationNode> children;
 
-        public NavigationNode(string name, VisualElement element, VisualElement inputElement = null, bool openable = true, List<NavigationNode> children = null)
+        public NavigationNode(string name, VisualElement element, VisualElement inputElement = null, bool openable = true, float closeDuration = 0, List<NavigationNode> children = null)
         {
             this.name = name;
             this.element = element;
             this.inputElement = inputElement;
             this.openable = openable;
+            this.closeDuration = closeDuration;
             this.children = children;
         }
     }

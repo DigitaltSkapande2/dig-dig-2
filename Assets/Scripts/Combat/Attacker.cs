@@ -18,6 +18,12 @@ namespace DigDig2
 		[Tooltip("The \"anchor points\" that an attack can use to create hitboxes.")]
 		[SerializeField] private List<BindableAttackHitbox> bindableAttackHitboxes = new();
 
+		[Tooltip("The groups of this entity's enemies")]
+		[SerializeField] private List<string> enemyGroups = new();
+
+		[Tooltip("The radius to scan for enemies at when focusing")]
+		[SerializeField] private float focusScanRadius = 10;
+
 		[SerializeField] private bool verboseLogging = false;
 
 		public CombatState State
@@ -46,6 +52,8 @@ namespace DigDig2
 
 		private Dictionary<string, BindableAttackHitbox> activeAttacks = new();
 
+		private Attackable focusedEnemy = null;
+
 		public enum CombatState
 		{
 			Idle,
@@ -56,19 +64,22 @@ namespace DigDig2
 		}
 
 		private Animator animator;
-		private Attackable attackable;
+		private EntityCharacterController entityCharacterController;
 
 
 
 		private void Awake()
 		{
 			animator = GetComponentInChildren<Animator>();
-			TryGetComponent(out attackable);
+			TryGetComponent(out entityCharacterController);
 		}
 
 		private void Update()
 		{
 			if (authority)
+			{
+				UpdateEnemyFocus();
+
 				if ((state == CombatState.Idle || attackRequestChain > 0) && !attackRequestProcessed)
 				{
 					if (heldAttackType != null)
@@ -108,6 +119,7 @@ namespace DigDig2
 
 				if (attackCooldownTimer > 0) attackCooldownTimer -= Time.deltaTime;
 				if (state == CombatState.OnCooldown && attackCooldownTimer <= 0) state = CombatState.Idle;
+			}
 		}
 
         private void FixedUpdate()
@@ -256,8 +268,6 @@ namespace DigDig2
 			state = CombatState.Performing;
 			performanceStartTime = Time.time;
 
-			GetComponent<EntityCharacterController>().AttackSlowdown(currentPerformingAttack.AttackDuration);
-
 			lastPerformedAttackType = currentPerformingAttackType;
 			lastPerformedAttack = currentPerformingAttack;
 		}
@@ -313,8 +323,8 @@ namespace DigDig2
 
 		public void PlayAnimation(string animationStateName)
 		{
-			animator.Play(animationStateName, 0, 0);
-			animator.Play(animationStateName, 1, 0);
+			animator.CrossFadeInFixedTime(animationStateName, 0.1f, 0);
+			animator.CrossFadeInFixedTime(animationStateName, 0.1f, 1);
 		}
 
 		#endregion
@@ -349,10 +359,117 @@ namespace DigDig2
 
 		#endregion
 
-		public void SetAttackTypes(AttackType[] attackTypes)
+		#region Enemy Focusing
+
+		public List<Attackable> GetEnemiesInRadius(float radius)
 		{
-			this.attackTypes[0] = attackTypes[0];
-			this.attackTypes[1] = attackTypes[1];
+			List<Attackable> enemyAttackables = new();
+			
+            Collider[] colliders = Physics.OverlapSphere(transform.position, radius);
+            foreach (Collider collider in colliders)
+			{
+                if (collider.TryGetComponent(out Attackable enemyAttackable))
+                {
+                    if (enemyGroups.Contains(enemyAttackable.Group)) enemyAttackables.Add(enemyAttackable);
+                }
+            }
+
+			return enemyAttackables;
 		}
+		public Attackable GetClosestEnemyInRadius(float radius)
+		{
+			Attackable closestEnemy = null;
+			float closestEnemyDistance = -1;
+			foreach (Attackable enemy in GetEnemiesInRadius(radius))
+			{
+				float enemyDistance = Vector3.Distance(transform.position, enemy.transform.position);
+				if (closestEnemyDistance == -1 || enemyDistance < closestEnemyDistance)
+				{
+					closestEnemy = enemy;
+					closestEnemyDistance = enemyDistance;
+				}
+			}
+
+			return closestEnemy;
+		}
+
+		public void StartFocus()
+		{
+			Attackable closestEnemy = GetClosestEnemyInRadius(focusScanRadius);
+			if (closestEnemy && IsAttackableVisibleOnScreen(closestEnemy))
+			{
+				focusedEnemy = closestEnemy;
+			}
+		}
+		public void EndFocus()
+		{
+			focusedEnemy = null;
+
+			if (entityCharacterController) entityCharacterController.SetAutomaticLookRotationLock(false);
+
+			if (isClient && GameManager.Instance.LocalPlayerObj == gameObject) GameManager.Instance.SetFocusIndicatorVibility(false);
+		}
+
+		private void UpdateEnemyFocus()
+		{
+			if (focusedEnemy)
+			{
+				if (isClient && GameManager.Instance.LocalPlayerObj == gameObject) GameManager.Instance.FocusOnPosition(focusedEnemy.transform.position);
+
+				if (!IsAttackableVisibleOnScreen(focusedEnemy))
+				{
+					focusedEnemy = null;
+				}
+			}
+
+			if (entityCharacterController)
+			{
+				entityCharacterController.SetAutomaticLookRotationLock(focusedEnemy != null);
+				if (focusedEnemy) entityCharacterController.LookTowards(focusedEnemy.transform.position);
+			}
+
+			if (isClient && GameManager.Instance.LocalPlayerObj == gameObject) GameManager.Instance.SetFocusIndicatorVibility(focusedEnemy != null);
+		}
+
+		public bool IsAttackableVisibleOnScreen(Attackable attackable)
+		{
+			if (attackable.TryGetComponent(out Collider collider))
+			{
+				Plane[] cameraFrustrumPlanes = GeometryUtility.CalculateFrustumPlanes(Camera.main);
+				return GeometryUtility.TestPlanesAABB(cameraFrustrumPlanes, collider.bounds);
+			}
+			
+			return false;
+		}
+
+		#endregion
+
+		#region Character Controller Interfacing
+
+		public void AddMoveSpeedDebuff(string debuffId, float debuff)
+		{
+			if (entityCharacterController) entityCharacterController.AddMoveSpeedDebuff(debuffId, debuff);
+		}
+		public void RemoveMoveSpeedDebuff(string debuffId)
+		{
+			if (entityCharacterController) entityCharacterController.RemoveMoveSpeedDebuff(debuffId);
+		}
+		public float GetBaseMoveSpeed()
+		{
+			if (entityCharacterController) return entityCharacterController.MoveSpeed;
+			else return 0;
+		}
+
+		public void PushInDirection(Vector3 direction, float strength)
+		{
+			if (entityCharacterController) entityCharacterController.PushInDirection(direction, strength);
+		}
+
+		public void ApplyKnockback(Vector3 direction, float strength)
+		{
+			if (entityCharacterController) entityCharacterController.ApplyKnockback(direction, strength);
+		}
+
+		#endregion
 	}
 }

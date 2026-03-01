@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Mirror;
 using System;
+using DigDig2.Effects;
 
 namespace DigDig2
 {
@@ -41,18 +42,14 @@ namespace DigDig2
 
 		[Tooltip("The max speed the entity can walk at.")]
 		[SerializeField, DebugSerialized] private float moveSpeed = 5f;
+		public float MoveSpeed { get { return moveSpeed; } }
 
-		[Tooltip("The mac speed the entity can sprint at.")]
-		[SerializeField, DebugSerialized] private float attackMoveSpeed = 0.5f;
 
 		[Tooltip("The direction the entity is currently moving.")]
 		[SerializeField] public Vector3 inputMoveVector = Vector3.zero;
 
 		[Tooltip("The move acceleration and decelleration speed, higher is faster.")]
 		[SerializeField] private float moveInputVectorLerpSpeed = 10f;
-
-		[Tooltip("If the entity is sprinting or not, moveSpeed is default speed, sprintMoveSpeed is sprint speed.")]
-		[SerializeField] public bool isAttacking = false;
 
 		[Space(20)]
 
@@ -84,16 +81,31 @@ namespace DigDig2
 
 		[Space(20)]
 
-		[Tooltip("How far the ground raycast should cast")]
+		[Tooltip("How far the ground raycast should cast.")]
 		[SerializeField] private float movingPlatformGroundRaycastDistance = 2f;
+
+		[Space(20)]
+
+		[Tooltip("If the entity has the ability to dash.")]
+		[SerializeField] private bool canDash = false;
+
+		[SerializeField] private float dashStrength = 10;
+
+		[SerializeField] private float dashDecaySpeed = 20;
+
+		[SerializeField] private float dashCooldown = 2;
+
+		[Space(20)]
+
+		[SerializeField] private float pushDecaySpeed = 10;
 
 		[Header("Combat")]
 
 		[Tooltip("Knockback multiplier")]
-		[SerializeField] private float knockbackMultiplier;
+		[SerializeField] private float knockbackStrengthMultiplier = 1;
 
 		[Tooltip("How fast you return to stationary after taking knockback")]
-		[SerializeField] private float knockbackFallofSpeed;
+		[SerializeField] private float knockbackDecaySpeed = 20;
 
 		[Tooltip("How long the stun timer can be")]
 		[SerializeField] private float maxStunTime = 3f;
@@ -111,19 +123,25 @@ namespace DigDig2
 
 		// Movement
 		private CharacterController characterController;
-
-		private Vector3 velocity;
+		private Attacker attacker;
 		private Animator animator;
 
-		private Vector3 moveVector;
+		private Vector3 velocity;
 
-		private float slowDownTimer;
+		private Vector3 moveVelocity;
 
 		private Vector3 slopeSlideVelocity;
 
 		private Vector3 knockbackVelocity;
 
+		private Vector3 dashVelocity;
+
+		private Vector3 pushVelocity;
+		private float dashCooldownTimer = 0;
+
 		private float stunTimer = 0;
+
+		private Dictionary<string, float> moveSpeedDebuffs = new();
 
 		private Transform ground;
 		private Transform lastGround;
@@ -143,18 +161,23 @@ namespace DigDig2
 		}
 		
 
-		private enum PlayerState
+		private enum EntityState
         {
+			None,
             Idle,
 			Sprinting,
+			Attacking,
+			Dashing,
         }
 
-		private PlayerState state;
+		private EntityState state = EntityState.None;
 
 		private void Awake()
 		{
 			characterController = GetComponent<CharacterController>();
 			animator = GetComponentInChildren<Animator>();
+
+			TryGetComponent(out attacker);
 		}
 
 		private void Start()
@@ -179,6 +202,8 @@ namespace DigDig2
 					if (stunTimer <= 0) ProcessMove();
 					ProcessSlope();
 					ProcessKnockback();
+					ProcessDash();
+					ProcessPush();
 
 					ApplyMovement();
 
@@ -187,7 +212,7 @@ namespace DigDig2
 
 					// Visuals
 					UpdateVisualsRotation();
-					UpdateAnimation();
+					if (isLocalPlayer) UpdateAnimation();
 				}
 				else
                 {
@@ -197,7 +222,7 @@ namespace DigDig2
 
 			if (isClient)
 			{
-				RefreshVisualsRotation();
+				if (!frozen) RefreshVisualsRotation();
 			}
 
 			if (authority)
@@ -207,6 +232,15 @@ namespace DigDig2
 					stunTimer = Mathf.Clamp(stunTimer - Time.deltaTime, 0, maxStunTime);
 				}
 			}
+		}
+
+
+
+        private void OnDrawGizmosSelected()
+		{
+			Vector3 centerRaycastEndPoint = transform.position + -transform.up * (GetComponent<CharacterController>().height / 2f + edgeScanDistance);
+			Gizmos.color = Color.red;
+			Gizmos.DrawLine(transform.position, centerRaycastEndPoint);
 		}
 
 		#region Movement
@@ -219,22 +253,16 @@ namespace DigDig2
 			}
 			else
 			{
-				velocity += Physics.gravity * gravityScale * Time.deltaTime;
+				velocity += gravityScale * Time.deltaTime * Physics.gravity;
 			}
 		}
 
 		// Add move/walk/run to current velocity
 		private void ProcessMove()
 		{
-			slowDownTimer -= Time.deltaTime;
-			isAttacking = slowDownTimer > 0;
-
-			float speed = isAttacking ? attackMoveSpeed : moveSpeed;
-
 			// Lerp move input vector to create smooth acceleration and decelleration
-			moveVector = Vector3.Lerp(moveVector, inputMoveVector * speed, Time.deltaTime * moveInputVectorLerpSpeed);
-
-			velocity = new(moveVector.x, velocity.y, moveVector.z);
+			moveVelocity = Vector3.Lerp(moveVelocity, inputMoveVector * GetMoveSpeed(), Time.deltaTime * moveInputVectorLerpSpeed);
+			velocity = new(moveVelocity.x, velocity.y, moveVelocity.z);
 		}
 
 		private void ProcessSlope()
@@ -268,7 +296,25 @@ namespace DigDig2
 		private void ProcessKnockback()
 		{
 			velocity += knockbackVelocity;
-			knockbackVelocity = Vector3.Lerp(knockbackVelocity, Vector3.zero, knockbackFallofSpeed * Time.deltaTime);
+			knockbackVelocity = Vector3.Lerp(knockbackVelocity, Vector3.zero, knockbackDecaySpeed * Time.deltaTime);
+		}
+
+		private void ProcessDash()
+		{
+			if (dashCooldownTimer > 0)
+			{
+				dashCooldownTimer = Mathf.Max(dashCooldownTimer - Time.deltaTime, 0);
+				Debug.Log(dashCooldownTimer);
+			}
+
+			velocity += dashVelocity;
+			dashVelocity = Vector3.Lerp(dashVelocity, Vector3.zero, dashDecaySpeed * Time.deltaTime);
+		}
+
+		private void ProcessPush()
+		{
+			pushVelocity = Vector3.Lerp(pushVelocity, Vector3.zero, pushDecaySpeed * Time.deltaTime);
+			velocity += pushVelocity;
 		}
 
 		private void ProcessEdge()
@@ -348,6 +394,28 @@ namespace DigDig2
 			lastGround = ground;
 		}
 
+		public void Dash()
+		{
+			if (canDash && dashCooldownTimer <= 0)
+			{
+				dashVelocity = inputMoveVector * dashStrength;
+				dashCooldownTimer = dashCooldown;
+				if (attacker) { attacker.EndAttack(); attacker.EndAttackCharge(); }
+			}
+		}
+
+		public float GetMoveSpeed()
+		{
+			float totalMoveSpeed = moveSpeed;
+
+			foreach (KeyValuePair<string, float> moveSpeedDebuff in moveSpeedDebuffs)
+			{
+				totalMoveSpeed -= moveSpeedDebuff.Value;
+			}
+
+			return Mathf.Max(totalMoveSpeed, 0);
+		}
+
 		// Add velocity to CharacterController
 		private void ApplyMovement(bool isFixedUpdate = false)
 		{
@@ -393,19 +461,34 @@ namespace DigDig2
 			Frozen = false;
 		}
 
-		public void AttackSlowdown(float time)
-        {
-            slowDownTimer = time;
-        }
+		public void AddMoveSpeedDebuff(string debuffId, float debuff)
+		{
+			moveSpeedDebuffs[debuffId] = debuff;
+		}
+		public void RemoveMoveSpeedDebuff(string debuffId)
+		{
+			moveSpeedDebuffs.Remove(debuffId);
+		}
 
+		/// <summary>
+		/// NOTE: Pushes the character according to it's current rotation, this means that the direction has to be in local space!
+		/// </summary>
+		/// <param name="direction"></param>
+		/// <param name="strength"></param>
+		public void PushInDirection(Vector3 direction, float strength)
+		{
+			Vector3 localPushVelocity = direction.normalized * strength;
+			pushVelocity += Quaternion.Euler(0f, targetLookRotation, 0f) * localPushVelocity;
+			Debug.Log($"pushing: {Quaternion.Euler(0f, targetLookRotation, 0f) * localPushVelocity}");
+		}
 
 		#endregion
 
 		#region Combat
 
-		public void ApplyKnockback(Vector3 knockbackForce)
+		public void ApplyKnockback(Vector3 direction, float strength)
 		{
-			knockbackVelocity = knockbackForce * knockbackMultiplier;
+			knockbackVelocity = direction * strength * knockbackStrengthMultiplier;
 		}
 		
 		public void Stun(float stunDuration)
@@ -421,7 +504,7 @@ namespace DigDig2
 		{
 			if (inputMoveVector.magnitude > 0 && !automaticLookRotationLocked)
 			{
-				targetLookRotation = Vector3.SignedAngle(transform.forward, inputMoveVector, transform.up);
+				targetLookRotation = Mathf.Lerp(targetLookRotation, Vector3.SignedAngle(transform.forward, inputMoveVector, transform.up), GetMoveSpeed() / moveSpeed);
 			}
 		}
 
@@ -435,27 +518,47 @@ namespace DigDig2
 
 		private void UpdateAnimation()
         {
+			float moveSpeedGoalPercentage = 0;
+			if (moveVelocity.magnitude > 0) moveSpeedGoalPercentage = moveVelocity.magnitude / moveSpeed;
+			animator.SetFloat("MovementSpeed", moveSpeedGoalPercentage);
+
+			if (attacker != null && attacker.State != Attacker.CombatState.Idle)
+			{
+				state = EntityState.Attacking;
+				return;
+			}
+
+			if (dashVelocity.magnitude > 0.1f) {
+				if (state == EntityState.Dashing) return; 
+
+				state = EntityState.Dashing;
+				animator.CrossFadeInFixedTime("Dash", 0.1f, 0);
+				animator.CrossFadeInFixedTime("SwordDash", 0.1f, 1);
+
+				return;
+			}
+
             if (new Vector3(inputMoveVector.x, 0, inputMoveVector.z).magnitude > 0f)
             {
-				if (state == PlayerState.Sprinting) return;
-
+				if (state == EntityState.Sprinting) return;
+				state = EntityState.Sprinting;
                 animator.CrossFadeInFixedTime("Sprint", 0.1f, 0);
 				animator.CrossFadeInFixedTime("SwordSprint", 0.1f, 1);
-				state = PlayerState.Sprinting;
 				return;
             }
 
-			if (state == PlayerState.Idle) return;
-
-			state = PlayerState.Idle;
-			animator.CrossFadeInFixedTime("Idle", 0.1f, 0);
-			animator.CrossFadeInFixedTime("SwordIdle", 0.1f, 1);
+			if (state != EntityState.Idle)
+			{
+				state = EntityState.Idle;
+				animator.CrossFadeInFixedTime("Idle", 0.1f, 0);
+				animator.CrossFadeInFixedTime("SwordIdle", 0.1f, 1);
+			}
         }
 
-		public void LookTowards(Vector3 target, bool userLerp = true)
+		public void LookTowards(Vector3 target, bool useLerp = true)
 		{
 			targetLookRotation = Vector3.SignedAngle(transform.forward, target - transform.position, transform.up);
-			RefreshVisualsRotation(userLerp);
+			RefreshVisualsRotation(useLerp);
 		}
 
 		public Vector3 GetForwardVector()
@@ -468,6 +571,12 @@ namespace DigDig2
 			automaticLookRotationLocked = isLocked;
 		}
 
+		#endregion
+		#region Effects
+		public void OnFootStepEvent()
+		{
+			
+		}
 		#endregion
 	}
 }

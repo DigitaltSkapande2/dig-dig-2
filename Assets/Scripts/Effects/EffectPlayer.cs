@@ -22,8 +22,10 @@ namespace DigDig2.Effects
         public bool vignettePulse;
         public VignettePulseEffectInstanceData vignettePulseEffectData;
 
-        public void Play(Vector2 position = default, Quaternion rotation = default, Vector3 scale = default)
+        public void Play(Vector3 position = default, Quaternion rotation = default, Vector3 scale = default, Transform parent = null)
         {
+            if (scale == Vector3.zero) scale = Vector3.one;
+
             if (spawnPrefab)
             {
                 SpawnPrefabEffect spawnPrefabEffect = EffectCore.Instance.spawnPrefabEffect;
@@ -33,6 +35,7 @@ namespace DigDig2.Effects
                     effectInstance.position = position;
                     effectInstance.rotation = rotation;
                     effectInstance.scale = scale;
+                    effectInstance.parent = parent;
                     spawnPrefabEffect.PlayEffectInstance(effectInstance);
                 }
             }

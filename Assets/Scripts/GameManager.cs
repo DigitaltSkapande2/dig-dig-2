@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using Mirror;
+using UnityEditor.Build;
 using UnityEngine;
 
 namespace DigDig2
@@ -18,6 +19,9 @@ namespace DigDig2
         [SerializeField] private GameObject maxPrefab;
         [SerializeField] private GameObject miniPrefab;
 
+        [Header("Enemy Focusing")]
+        [SerializeField] private GameObject focusIndicator;
+
 
 
         public GameObject LocalPlayerObj
@@ -33,12 +37,12 @@ namespace DigDig2
         public CharacterType currentCharacter { private set; get; } = CharacterType.Max;
 
 
-        private void Start()
+        protected void Start()
         {
+            base.Awake();
             if (NetworkServer.active)
             {
-                if (NetworkManager.singleton.IsMultiplayer) InitializeMultiplayer();
-                else SingleplayerInitialize();
+                if (!NetworkManager.singleton.IsMultiplayer) SingleplayerInitialize();
             }
         }
 
@@ -65,8 +69,10 @@ namespace DigDig2
         public void SingleplayerSwitchCharacter()
         {
             // Harvvest old player data
-            Vector3 oldPlayerLookVector = LocalPlayerObj.GetComponent<EntityCharacterController>().GetForwardVector();
+            EntityCharacterController oldPlayerEntityCharacterController = LocalPlayerObj.GetComponent<EntityCharacterController>();
             Vector3 oldPlayerPos = LocalPlayerObj.transform.position;
+            Vector3 oldPlayerLookVector = oldPlayerEntityCharacterController.GetForwardVector();
+            Vector3 oldPlayerInputMoveVector = oldPlayerEntityCharacterController.inputMoveVector;
 
             // Kill old player
             Destroy(LocalPlayerObj);
@@ -77,7 +83,9 @@ namespace DigDig2
             // Spawn new player
             GameObject newPrefab = GetCharacterPrefabFromCharacterType(currentCharacter);
             GameObject playerCharacter = Instantiate(newPrefab, oldPlayerPos, Quaternion.identity);
-            playerCharacter.GetComponent<EntityCharacterController>().LookTowards(oldPlayerLookVector, false);
+            EntityCharacterController playerEntityCharacterController = playerCharacter.GetComponent<EntityCharacterController>();
+            playerEntityCharacterController.LookTowards(playerCharacter.transform.position + oldPlayerLookVector, false);
+            playerEntityCharacterController.inputMoveVector = oldPlayerInputMoveVector;
             NetworkServer.ReplacePlayerForConnection(NetworkServer.connections[0], playerCharacter, ReplacePlayerOptions.KeepAuthority);
             
         }
@@ -100,6 +108,19 @@ namespace DigDig2
 
             GameObject miniPlayerCharacter = Instantiate(miniPrefab);
             NetworkServer.ReplacePlayerForConnection(NetworkManager.singleton.MiniPlayerConnection, miniPlayerCharacter, ReplacePlayerOptions.KeepAuthority);
+        }
+
+        #endregion
+
+        #region Enemy Focusing
+
+        public void FocusOnPosition(Vector3 position)
+        {
+            focusIndicator.transform.position = Camera.main.WorldToScreenPoint(position);
+        }
+        public void SetFocusIndicatorVibility(bool visible)
+        {
+            focusIndicator.SetActive(visible);
         }
 
         #endregion

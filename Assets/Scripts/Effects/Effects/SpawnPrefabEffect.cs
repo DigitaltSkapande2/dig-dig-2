@@ -11,13 +11,15 @@ namespace DigDig2.Effects
         public struct PrefabToSpawn
         {
             public GameObject prefab;
-            [Range(1f, 10f)] public float duration;
+            public bool hasLifetime;
+            [Range(0f, 10f)] public float lifetime;
         }
 
         public List<PrefabToSpawn> prefabToSpawn;
         [NonSerialized] public Vector3 position;
         [NonSerialized] public Quaternion rotation;
         [NonSerialized] public Vector3 scale = Vector3.one;
+        [NonSerialized] public Transform parent;
 
         public object Clone()
         {
@@ -40,19 +42,14 @@ namespace DigDig2.Effects
 
             foreach (var prefabToSpawn in effectInstance.prefabToSpawn)
             {
-                Debug.Log($"Spawning prefab {prefabToSpawn.prefab.name} at {effectInstance.position} with rotation {effectInstance.rotation} and scale {effectInstance.scale} for duration {prefabToSpawn.duration}");
-                SpawnPrefab(prefabToSpawn.prefab, effectInstance.position, effectInstance.rotation, effectInstance.scale, prefabToSpawn.duration);
+                if (prefabToSpawn.hasLifetime) currentlySpawnedPrefabsCount++;
+                if (prefabToSpawn.prefab == null) { Debug.LogError("Cannot insantiate null prefab!"); return; }
+                GameObject spawned = Instantiate(prefabToSpawn.prefab, effectInstance.position, effectInstance.rotation, effectInstance.parent);
+                spawned.transform.localScale = effectInstance.scale;
+
+                if (prefabToSpawn.hasLifetime) Destroy(spawned, prefabToSpawn.lifetime);
+                if (prefabToSpawn.hasLifetime) Invoke(nameof(OnSpawnedPrefabDestroyed), prefabToSpawn.lifetime);
             }
-        }
-
-        private void SpawnPrefab(GameObject prefab, Vector3 position, Quaternion rotation, Vector3 scale, float duration)
-        {
-            currentlySpawnedPrefabsCount++;
-            GameObject spawned = Instantiate(prefab, position, rotation);
-            spawned.transform.localScale = scale;
-
-            Destroy(spawned, duration);
-            Invoke(nameof(OnSpawnedPrefabDestroyed), duration);
         }
 
         private void OnSpawnedPrefabDestroyed()

@@ -34,6 +34,7 @@ namespace DigDig2
         private Button loadGameButton;
         private Button newGameButton;
         private Button settingsButton;
+        private Button joinGameButton;
         private Button quitButton;
 
         private VisualElement saveMenu;
@@ -136,7 +137,7 @@ namespace DigDig2
                 for (int index = 0; index < saveFiles.Count; index++)
                 {
                     SaveFile saveFileElement = (SaveFile)saveFileList.GetRootElementForIndex(index);
-                    saveFileElement.RemoveFromClassList("selected");
+                    saveFileElement?.RemoveFromClassList("selected");
                 }
             });
 
@@ -176,25 +177,28 @@ namespace DigDig2
                 }
             });
 
-            navigator.Hierarchy = new NavigationNode("mainNavigation", mainNavigationContainer, mainNavigationContainer, true, new()
+            navigator.Hierarchy = new NavigationNode("mainNavigation", mainNavigationContainer, mainNavigationContainer, true, 0, new()
             {
-                new("screenCover", screenCover, null, false, new()
+                new("screenCover", screenCover, null, false, 0.5f, new()
                 {
-                    new("hostingSelection", hostingSelctionAnimationContainer, hostingSelctionAnimationContainer),
+                    new("hostingSelection", hostingSelctionAnimationContainer, hostingSelctionAnimationContainer, true, 0.5f),
                 }),
-                new("loadGame", saveMenu, saveFileList, true, new()
+                new("loadGame", saveMenu, saveFileList, true, 0.1f, new()
                 {
-                    new("save", saveManagement, saveManagement, true, new()
+                    new("save", saveManagement, saveManagement, true, 0.1f, new()
                     {
-                        new("screenCover", screenCover, null, false, new()
+                        new("screenCover", screenCover, null, false, 0.5f, new()
                         {
-                            new("hostingSelection", hostingSelctionAnimationContainer, hostingSelctionAnimationContainer)
+                            new("hostingSelection", hostingSelctionAnimationContainer, hostingSelctionAnimationContainer, true, 0.5f)
                         })
                     })
                 }),
-                new("settings", settingsMenu, settingsMenu)
+                new("settings", settingsMenu, settingsMenu, true, 0.1f)
             });
         }
+
+
+
         private void Update()
         {
             Focusable currentFocus = uiDocument.rootVisualElement.focusController.focusedElement;
@@ -245,10 +249,37 @@ namespace DigDig2
         }
         private void OnMultiplayerChosen()
         {
-            if (loadedSaveFileIndex >= 0)
+            Debug.Log("MULTIPLAYER CHOSEN");
+
+            switch (hostingModeSelectionType)
             {
-                Debug.LogWarning("Multiplayer is not implemented yet! ANTON LOCK IN!! pwetty pwease...");
+                case HostingModeSelectionType.ContinuedGameSave:
+                    Debug.LogWarning("Continuing not implemented yet!");
+                    break;
+                case HostingModeSelectionType.LoadedGameSave:
+                    if (loadedSaveFileIndex >= 0)
+                    {
+                        string saveFilePath = saveFiles[loadedSaveFileIndex];
+                        SaveManager.GameSave gameSave = FileSystem.ReadDataFromFile<SaveManager.GameSave>(saveFilePath);
+                        SaveManager.Instance.LoadSave(gameSave);
+
+                        StartMultiplayer();
+                    }
+                    break;
+                case HostingModeSelectionType.NewGameSave:
+                    SaveManager.Instance.CreateNewSave();
+                    StartMultiplayer();
+                    break;
             }
+            
+        }
+
+        public async void JoinLocalHostGame()
+        {
+            NetworkManager.singleton.StartClient(true);
+            await UniTask.WaitUntil(() => NetworkClient.active);
+
+            Debug.Log("Client started.");
         }
 
         public async void StartSingleplayer()
@@ -257,6 +288,15 @@ namespace DigDig2
 
             await UniTask.WaitUntil(() => NetworkServer.active);
             Debug.Log("GANG!!! WE MADE IT!!");
+
+            NetworkManager.singleton.ServerChangeScene(gameSceneName);
+        }
+
+        public async void StartMultiplayer()
+        {
+            NetworkManager.singleton.StartHost(true);
+
+            await UniTask.WaitUntil(() => NetworkServer.active);
 
             NetworkManager.singleton.ServerChangeScene(gameSceneName);
         }

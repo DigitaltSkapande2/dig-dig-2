@@ -12,7 +12,7 @@ namespace DigDig2.UINavigation
     {
         UIDocument uiDocument;
         VisualElement characterIndicatorContainer;
-        
+
         Image maxCharacterIndicatorImage;
         Image minisCharacterIndicatorImage;
 
@@ -23,12 +23,16 @@ namespace DigDig2.UINavigation
 
         void Start()
         {
-        
+
             characterIndicatorContainer = uiDocument.rootVisualElement.Query<VisualElement>("mainNavigation");
 
             maxCharacterIndicatorImage = characterIndicatorContainer.Query<Image>("maxCharacterIndicatorImage");
             minisCharacterIndicatorImage = characterIndicatorContainer.Query<Image>("minisCharacterIndicatorImage");
         }
+
+        
+
+
 
     }
 }

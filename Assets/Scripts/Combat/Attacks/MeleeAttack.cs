@@ -7,6 +7,8 @@ namespace DigDig2
 	{
 		[SerializeField] private string animationStateName;
 		[SerializeField] private int damage = 1;
+		[SerializeField] private int bindableAttackHitboxIndex = 0;
+		[SerializeField] private float knockbackStrength = 50;
 
 		public override void ChargeStart(Attacker attacker, AttackType attackType)
 		{
@@ -26,17 +28,21 @@ namespace DigDig2
 		public override void Trigger(Attacker attacker, AttackType attackGroup, float chargeTime)
 		{
 			attacker.PlayAnimation(animationStateName);
-			attacker.StartHitboxAttack(this, animationStateName, attacker.GetBindableAttackHitbox(0));
+			attacker.StartHitboxAttack(this, animationStateName, attacker.GetBindableAttackHitbox(bindableAttackHitboxIndex));
+			attacker.AddMoveSpeedDebuff(animationStateName, attacker.GetBaseMoveSpeed());
+			attacker.PushInDirection(Vector3.forward, 10);
 		}
 
         public override void Ended(Attacker attacker, AttackType attackGroup)
         {
             attacker.EndHitboxAttack(animationStateName);
+			attacker.RemoveMoveSpeedDebuff(animationStateName);
         }
 
         public override void Hit(Attacker attacker, Attackable attackable, Health healthComponent, EntityCharacterController entityCharacterController)
 		{
-			healthComponent?.Damage(damage);
+			if (healthComponent) healthComponent.Damage(damage);
+			attackable.ApplyKnockback((attackable.transform.position - attacker.transform.position).normalized, knockbackStrength);
         }
 	}
 }

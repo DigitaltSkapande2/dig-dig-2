@@ -160,13 +160,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Attackable
   invincibilityTime: 0
-  group: none
+  group: crystal
   hitEffect:
     spawnPrefab: 1
     spawnPrefabEffectData:
       prefabToSpawn:
       - prefab: {fileID: 900025642660281898, guid: 565fe03e66511a84c95b09b1d718120e, type: 3}
-        duration: 1
+        hasLifetime: 1
+        lifetime: 2.02
+      - prefab: {fileID: 4950934811570952627, guid: cd6909833c777c7e89624209efd6a893, type: 3}
+        hasLifetime: 1
+        lifetime: 2.02
     screenShake: 1
     screenShakeEffectData:
       intensityCurve:
@@ -194,8 +198,8 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
       duration: 0.4
-      intensity: 1
-    cameraZoom: 1
+      intensity: 0.5
+    cameraZoom: 0
     cameraZoomEffectData:
       intensityCurve:
         serializedVersion: 2
@@ -278,8 +282,8 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
       duration: 0.4
-      intensity: 1
-      color: {r: 0, g: 0, b: 0, a: 0}
+      intensity: 14.09
+      color: {r: 0, g: 0, b: 1, a: 0}
   hit:
     m_PersistentCalls:
       m_Calls: []
@@ -290,7 +294,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6291972602155261083}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 809a18945f58a064abeeb94658cb72d9, type: 3}
   m_Name: 
@@ -298,29 +302,22 @@ MonoBehaviour:
   maxHealthPoints: 3
   healthPoints: 3
   deathEffectPlayer:
-    spawnPrefab: 0
+    spawnPrefab: 1
     spawnPrefabEffectData:
       prefabToSpawn:
-      - prefab: {fileID: 0}
-        duration: 0
-      - prefab: {fileID: 0}
-        duration: 0
-    screenShake: 0
+      - prefab: {fileID: 7897868338809870288, guid: 8a151044b9bd2ae00a36f4196086499f, type: 3}
+        hasLifetime: 0
+        lifetime: 0
+      - prefab: {fileID: 4950934811570952627, guid: e3d6722d579ee65979033bc361455f1a, type: 3}
+        hasLifetime: 1
+        lifetime: 2.02
+    screenShake: 1
     screenShakeEffectData:
       intensityCurve:
         serializedVersion: 2
         m_Curve:
         - serializedVersion: 3
           time: 0
-          value: 1
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 1
           value: 0
           inSlope: 0
           outSlope: 0
@@ -328,11 +325,29 @@ MonoBehaviour:
           weightedMode: 0
           inWeight: 0
           outWeight: 0
+        - serializedVersion: 3
+          time: 0.3
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 1
+          value: 0
+          inSlope: 0.0025856497
+          outSlope: 0.0025856497
+          tangentMode: 0
+          weightedMode: 3
+          inWeight: 1
+          outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
-      duration: 0.4
-      intensity: 1
+      duration: 7
+      intensity: 0.4
     cameraZoom: 0
     cameraZoomEffectData:
       intensityCurve:

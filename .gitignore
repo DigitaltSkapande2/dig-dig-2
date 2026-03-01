@@ -75,5 +75,5 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
-/.vscode/launch.json
-/.zed
+.vscode/launch.json
+.zed

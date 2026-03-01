@@ -38,12 +38,13 @@ namespace DigDig2
 
         #region Input Setup
 
-        private void EnableInput()
+        public void EnableInput()
         {
             if (!NetworkClient.active || isLocalPlayer)
             {
                 attackActions = InputManager.Instance.inputActions.Attack;
                 attackActions.SetCallbacks(this);
+                hasStarted = true;
             }
         }
 
@@ -69,7 +70,8 @@ namespace DigDig2
 
         public void OnFocus(InputAction.CallbackContext context)
         {
-            Debug.Log(context.performed);
+            if (context.performed) attacker.StartFocus();
+            else attacker.EndFocus();
         }
 
         public void OnFocusTarget(InputAction.CallbackContext context)
