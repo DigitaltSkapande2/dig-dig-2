@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Newtonsoft.Json;
 using UnityEngine;
 
 namespace DigDig2
@@ -18,7 +19,9 @@ namespace DigDig2
             string dataString = "";
             switch (extension)
             {
-                case ".json": dataString = JsonUtility.ToJson(data); break;
+                case ".json": 
+                    dataString = JsonConvert.SerializeObject(data, Formatting.Indented); 
+                    break;
             }
 
             File.WriteAllText(filePath, dataString);

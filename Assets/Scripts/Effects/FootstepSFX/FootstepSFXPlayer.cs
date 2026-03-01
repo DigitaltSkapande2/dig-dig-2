@@ -27,7 +27,6 @@ namespace DigDig2.Effects
 
         public void OnFootStepEvent()
         {
-            print("Footstep :#");
             if (!isActive) return;
             GameObject effecToPlay = EffectPrefab[UnityEngine.Random.Range(0, EffectPrefab.Length)];
 

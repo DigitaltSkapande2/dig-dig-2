@@ -36,7 +36,7 @@ namespace DigDig2
         {
             base.Awake();
             string saveDirectoryPath = GetSavesDirectoryPath();
-            Debug.Log($"Saving files in: {saveDirectoryPath}");
+            VerboseLog($"Saving files in: {saveDirectoryPath}");
             if (!Directory.Exists(saveDirectoryPath)) Directory.CreateDirectory(saveDirectoryPath);
         }
 
@@ -48,7 +48,7 @@ namespace DigDig2
         }
         public string GetSaveFilePathFromName(string saveName)
         {
-            return Path.Join(GetSavesDirectoryPath(), saveName, SAVE_FILE_EXTENSION);
+            return Path.Join(GetSavesDirectoryPath(), saveName + SAVE_FILE_EXTENSION);
         }
 
         public List<string> GetSaveFiles()
@@ -95,17 +95,15 @@ namespace DigDig2
         public void SaveAllAndWriteToFile(string saveName = "")
         {
             SaveAll();
-            WriteSaveToFile(saveName);
+            WriteSaveToFile();
         }
 
         public void WriteSaveToFile(string saveName = "")
         {
-            string currentSaveName = loadedGameSave.saveName;
-            if (saveName != string.Empty) currentSaveName = saveName;
-
-            loadedGameSave.saveName = currentSaveName;
+            loadedGameSave.saveName = saveName == string.Empty ? loadedGameSave.saveName : saveName;
             loadedGameSave.version = Application.version;
-            FileSystem.WriteDataToFile(GetSaveFilePathFromName(saveName), loadedGameSave);
+            FileSystem.WriteDataToFile(GetSaveFilePathFromName(loadedGameSave.saveName), loadedGameSave);
+            VerboseLog($"Wrote save file \"{loadedGameSave.saveName}\" to disk, State data = {loadedGameSave.stateData.Count} entries");
         }
 
         public void SaveAll()
@@ -120,6 +118,7 @@ namespace DigDig2
         public void WriteToSaveData(string uniqueName, object data)
         {
             loadedGameSave.stateData[uniqueName] = data;
+            VerboseLog($"wrote save data for key \"{uniqueName}\"");
         }
 
         #endregion
@@ -165,6 +164,7 @@ namespace DigDig2
                 Debug.LogWarning($"Trying to register Savable with already registered uniqueName: {uniqueName}, aborting");
                 return;
             }
+            VerboseLog($"Registered NEW Savable with uniqueName \"{uniqueName}\"");
 
             uniqueNames.Add(uniqueName);
             registeredSavables.Add(uniqueName, saveable);
@@ -189,9 +189,20 @@ namespace DigDig2
             {
                 saveable.RestoreState(loadedGameSave.stateData[uniqueName]);
             }
+            else
+            {
+                saveable.RestoreState(null);
+            }
+            VerboseLog($"Restored state for Savable with uniqueName \"{uniqueName}\"");
+            
         }
         
         #endregion
+
+        private void VerboseLog(string message)
+        {
+            Debug.Log("SAVEMANAGER: " + message);
+        }
     }
 }
 

@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace DigDig2.CinemaCamera
 {
-    public class LockTargetEffector : TriggerZoneCameraEffectorBase
+    public class LockTargetInZoneEffector : TriggerZoneCameraEffectorBase
     {
         [SerializeField] Transform targetTransform;
         [SerializeField] float targetFrustumSize = 10f;

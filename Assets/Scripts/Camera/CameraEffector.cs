@@ -11,11 +11,27 @@ namespace DigDig2.CinemaCamera
         #region Field Declaration
         // -- Static Fields -- //
         private static List<CameraEffector> allCameraEffectors = new();
-        private static List<CameraEffector> effectiveCameraEffectors = new();
-        private static List<CameraEffector> overriddenCameraEffectors = new();
+        private static List<CameraEffector> effectivePivotCameraEffectors = new();
+        private static List<CameraEffector> effectiveAbsoluteCameraEffectors = new();
 
         // -- Instance Fields -- //
+        [SerializeField] private int priorityLevel;
+        public int PriorityLevel
+        {
+            get
+            {
+                return priorityLevel;
+            }
+            set
+            {
+                priorityLevel = value;
+
+                ReCompileEffectiveEffectors();
+            }
+        }
         [SerializeField] public bool overridesLowerPriority = false;
+        
+        [Header("Debug Visibility")]
         [SerializeField] private bool isActive = true;
         public bool IsActive
         {
@@ -32,24 +48,10 @@ namespace DigDig2.CinemaCamera
             }
         }
 
+        protected readonly bool targetCameraPivot = true; 
 
 
-        [SerializeField] private int priorityLevel;
-        public int PriorityLevel
-        {
-            get
-            {
-                return priorityLevel;
-            }
-            set
-            {
-                priorityLevel = value;
 
-                ReCompileEffectiveEffectors();
-            }
-        }
-
-        [Header("Debug Values")]
         public Vector3 position;
         //public Vector2 cameraLocalPlanarOffset;
         public Quaternion rotation;
@@ -80,20 +82,31 @@ namespace DigDig2.CinemaCamera
             .DefaultIfEmpty(0)
             .Max();
 
-            Debug.Log(highestPriority);
+            Debug.Log($"Highest Priority: {highestPriority}");
 
             // Filter effectors with the highest priority and any override
-            effectiveCameraEffectors = allCameraEffectors
-            .Where(e => e.IsActive && e.PriorityLevel >= highestPriority)
+            effectivePivotCameraEffectors = allCameraEffectors
+            .Where(e => e.targetCameraPivot && e.IsActive && e.PriorityLevel >= highestPriority)
             .OrderByDescending(e => e.PriorityLevel)
             .ToList();
 
-            Debug.Log($"Effective Effectors Count: {effectiveCameraEffectors.Count}");
+            effectiveAbsoluteCameraEffectors = allCameraEffectors
+            .Where(e => !e.targetCameraPivot && e.IsActive && e.PriorityLevel >= highestPriority)
+            .OrderByDescending(e => e.PriorityLevel)
+            .ToList();
+
+            Debug.Log($"Effective Pivot Camera Effectors Count: {effectivePivotCameraEffectors.Count}st");
+            Debug.Log($"Effective Absolute Camera Effectors Count: {effectiveAbsoluteCameraEffectors.Count}st");
         }
 
-        public static List<CameraEffector> GetEffectiveCameraEffectors()
+        public static List<CameraEffector> GetEffectivePivotCameraEffectors()
         {
-            return effectiveCameraEffectors;
+            return effectivePivotCameraEffectors;
+        }
+
+        public static List<CameraEffector> GetEffectiveAbsoluteCameraEffectors()
+        {
+            return effectiveAbsoluteCameraEffectors;
         }
 
         #endregion

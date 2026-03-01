@@ -1,88 +1,91 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using DigDig2.CinemaCamera;
+using DigDig2.Effects;
 using Mirror;
-using Mirror.BouncyCastle.Crypto.Parameters;
-using UnityEditor.Build;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace DigDig2
 {
     [RequireComponent(typeof(Collider), typeof(NetworkIdentity))]
-    public class SavePoint : NetworkBehaviour, ISaveable
+    public class SavePoint : NetworkBehaviour
     {
-        [SerializeField] private Collider saveTriggerreaCollider;
-        [SerializeField] private int savePointIndex = 0;
         [SerializeField] private GameObject characterSeclectSecuencerPrefab;
-
-        private static Dictionary<int, SavePoint> allSavePoints;
-        private static int highestReachedSavePointIndex;
-
+        [SerializeField] private LockTargetEffector lockTargetEffector;
+        [SerializeField] private Transform singlePlayerSpawnPoint;
+        [Header("Events")]
+        [SerializeField] public UnityEvent savePointReached;
+        [SerializeField] private EffectPlayer onReachedEffect;
+        [SerializeField] private float timeUntilReleaseCamera = 2;
         private new Collider collider;
-
-        private static SavePoint GetHighestReachedSpawnPoint()
-        {
-            if (allSavePoints.ContainsKey(highestReachedSavePointIndex))
+        private int HighestReachedSavePointIndex { 
+            get
             {
-                return allSavePoints[highestReachedSavePointIndex];
-            }
-            else
+                return GameManager.Instance.loadedGameManagerSaveData.highestReachedSavePointIndex;
+            } 
+            set
             {
-                Debug.LogError($"Highest Savepoint is set to {highestReachedSavePointIndex}, but no Savepoint in the scene is assigned that index... Might be problem with save loading");
-                return null;
-            }
+                GameManager.Instance.SetHighestReachedSavePointIndex(value);
+            } 
         }
+        
 
         private void Awake()
         {
-            SaveManager.Instance.RegisterSavable("SavePointIndex", this);
             collider = GetComponent<Collider>();
+            lockTargetEffector.IsActive = false;
         }
 
-        public override void OnStartServer()
+        public void Start()
         {
-            if (NetworkManager.singleton.IsMultiplayer)
-            {
-                GameObject instance = Instantiate(characterSeclectSecuencerPrefab, transform.position, Quaternion.identity);
-                NetworkServer.Spawn(instance);
-            }
-
-            if (savePointIndex <= highestReachedSavePointIndex)
-            {
-                SetSpawnPointAchieved(true);
-            }
+            
+        }
+        
+        [Server]
+        public void ServerStartMultiplayerStartSequence()
+        {
+            lockTargetEffector.IsActive = true;
+            VerboseLog("Spawning character select sequencer for multiplayer spawn...");
+            GameObject instance = Instantiate(characterSeclectSecuencerPrefab, transform.position, Quaternion.identity);
+            NetworkServer.Spawn(instance);
         }
 
+        [Server]
+        public async void ServerStartSingleplayerStartSequence()
+        {
+            lockTargetEffector.IsActive = true;
+            VerboseLog("Initializing singleplayer spawn...");
+            GameManager.Instance.InitializeSingleplayerCharacter(singlePlayerSpawnPoint.position, singlePlayerSpawnPoint.rotation);
+
+            GameCamera.Instance.ZoomOutAnimation(); // TODO: MAKE THIS BETTER THAN REGULAR FUCKASS ANIMATOR ON CAMERA
+            await Task.Delay((int)(timeUntilReleaseCamera * 1000));
+            lockTargetEffector.IsActive = false;
+        }
 
         [ClientRpc]
-        private void SetSpawnPointAchieved(bool achieved)
+        private void SetSpawnPointReached(bool reached)
         {
+            collider.enabled = !reached; 
 
-            KillCollider();
+            if (reached)
+            {
+                onReachedEffect.Play();
+                savePointReached.Invoke();
+            }
         }
-
 
         private void OnTriggerEnter(Collider other)
         {
-            if (isServer && savePointIndex > highestReachedSavePointIndex)
-            {
-                highestReachedSavePointIndex = savePointIndex;
-            }
+            if (!isServer) return;
 
-            SetSpawnPointAchieved(true);
+            savePointReached.Invoke();
+            SetSpawnPointReached(true);
         }
 
-        private void KillCollider()
+        private void VerboseLog(string message)
         {
-            Destroy(collider);
-        }
-
-        public object CollectData()
-        {
-            return highestReachedSavePointIndex;
-        }
-
-        public void RestoreState(object dataObject)
-        {
-            highestReachedSavePointIndex = (int)dataObject;
+            Debug.Log("SAVEPOINT: " + message);
         }
     }
 }
