@@ -128,7 +128,7 @@ namespace DigDig2
 		private Vector3 velocity;
 		private Animator animator;
 
-		private Vector3 moveVector;
+		private Vector3 moveVelocity;
 
 		private Vector3 slopeSlideVelocity;
 
@@ -163,19 +163,21 @@ namespace DigDig2
 
 		private enum EntityState
         {
+			None,
             Idle,
 			Sprinting,
 			Attacking,
 			Dashing,
         }
 
-		private EntityState state;
+		private EntityState state = EntityState.None;
 
 		private void Awake()
 		{
 			characterController = GetComponent<CharacterController>();
-			attacker = GetComponent<Attacker>();
 			animator = GetComponentInChildren<Animator>();
+
+			TryGetComponent(out Attacker attacker);
 		}
 
 		private void Start()
@@ -259,9 +261,8 @@ namespace DigDig2
 		private void ProcessMove()
 		{
 			// Lerp move input vector to create smooth acceleration and decelleration
-			moveVector = Vector3.Lerp(moveVector, inputMoveVector * GetMoveSpeed(), Time.deltaTime * moveInputVectorLerpSpeed);
-
-			velocity = new(moveVector.x, velocity.y, moveVector.z);
+			moveVelocity = Vector3.Lerp(moveVelocity, inputMoveVector * GetMoveSpeed(), Time.deltaTime * moveInputVectorLerpSpeed);
+			velocity = new(moveVelocity.x, velocity.y, moveVelocity.z);
 		}
 
 		private void ProcessSlope()
@@ -516,6 +517,10 @@ namespace DigDig2
 
 		private void UpdateAnimation()
         {
+			float moveSpeedGoalPercentage = 0;
+			if (moveVelocity.magnitude > 0) moveSpeedGoalPercentage = moveVelocity.magnitude / moveSpeed;
+			animator.SetFloat("MovementSpeed", moveSpeedGoalPercentage);
+
 			if (dashVelocity.magnitude > 0.1) {
 				state = EntityState.Dashing;
 
@@ -525,7 +530,7 @@ namespace DigDig2
 				return;
 			}
 
-			if (attacker.State != Attacker.CombatState.Idle)
+			if (attacker != null && attacker.State != Attacker.CombatState.Idle)
 			{
 				state = EntityState.Attacking;
 				return;
