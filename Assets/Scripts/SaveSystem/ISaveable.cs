@@ -1,5 +1,3 @@
-using System;
-
 namespace DigDig2
 {
     public interface ISaveable

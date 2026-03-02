@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using DigDig2.CinemaCamera;
 using DigDig2.Effects;

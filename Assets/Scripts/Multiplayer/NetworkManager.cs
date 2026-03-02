@@ -1,10 +1,8 @@
 using System;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.Events;
 using Mirror;
 using kcp2k;
-using UnityEngine.Rendering.UI;
 
 /*
 	Documentation: https://mirror-networking.gitbook.io/docs/components/network-manager

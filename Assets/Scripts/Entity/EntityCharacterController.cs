@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Mirror;
 using System;
-using DigDig2.Effects;
 
 namespace DigDig2
 {
