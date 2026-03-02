@@ -1,5 +1,6 @@
 using Mirror;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace DigDig2
 {
@@ -27,6 +28,9 @@ namespace DigDig2
             public int highestReachedSavePointIndex;
         }
         public GameManagerGameSaveData loadedGameManagerSaveData { get; private set; }
+        [SerializeField] public UnityEvent<CharacterType, GameObject> characterSwitched;
+
+
 
         public GameObject LocalPlayerObj
         {
@@ -82,7 +86,7 @@ namespace DigDig2
         {
             if (NetworkManager.singleton.IsMultiplayer)
             {
-                Debug.LogError("Tried to initialize singleplayer character in multiplayer mode. This is not allowed.");
+                Debug.LogError("Tried to initialize singleplayer character in multiplayer mode, this is not allowed.");
                 return;
             }
             Debug.Log("GAMEMANAGER: Initializing Singleplayer Characters...");
@@ -93,11 +97,21 @@ namespace DigDig2
 
         public void SingleplayerSwitchCharacter()
         {
-            // Harvvest old player data
+            if (NetworkManager.singleton.IsMultiplayer)
+            {
+                Debug.LogError("Tried to switch character in multiplayer mode, this is not allowed.");
+            }
+            
+            // Harvest old player data
             EntityCharacterController oldPlayerEntityCharacterController = LocalPlayerObj.GetComponent<EntityCharacterController>();
+            Health oldPlayerHealthComponent = LocalPlayerObj.GetComponent<Health>();
+            
             Vector3 oldPlayerPos = LocalPlayerObj.transform.position;
+            
             Vector3 oldPlayerLookVector = oldPlayerEntityCharacterController.GetForwardVector();
             Vector3 oldPlayerInputMoveVector = oldPlayerEntityCharacterController.inputMoveVector;
+
+            int oldHealthPoints = oldPlayerHealthComponent.HealthPoints;
 
             // Kill old player
             Destroy(LocalPlayerObj);
@@ -108,11 +122,18 @@ namespace DigDig2
             // Spawn new player
             GameObject newPrefab = GetCharacterPrefabFromCharacterType(currentCharacter);
             GameObject playerCharacter = Instantiate(newPrefab, oldPlayerPos, Quaternion.identity);
+            
             EntityCharacterController playerEntityCharacterController = playerCharacter.GetComponent<EntityCharacterController>();
+            Health playerHealthComponent = playerCharacter.GetComponent<Health>();
+            
             playerEntityCharacterController.LookTowards(playerCharacter.transform.position + oldPlayerLookVector, false);
             playerEntityCharacterController.inputMoveVector = oldPlayerInputMoveVector;
-            NetworkServer.ReplacePlayerForConnection(NetworkServer.connections[0], playerCharacter, ReplacePlayerOptions.KeepAuthority);
             
+            playerHealthComponent.HealthPoints = oldHealthPoints;
+            
+            NetworkServer.ReplacePlayerForConnection(NetworkServer.connections[0], playerCharacter, ReplacePlayerOptions.KeepAuthority);
+
+            characterSwitched.Invoke(currentCharacter, playerCharacter);
         }
 
         #endregion

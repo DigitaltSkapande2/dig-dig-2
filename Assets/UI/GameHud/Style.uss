@@ -1,0 +1,16 @@
+:root {
+}
+
+.character-indicator.selected {
+    translate: 0 0;
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+}
+
+.character-indicator {
+    translate: 50px 0;
+    transition-property: translate, -unity-background-image-tint-color;
+    transition-duration: 0.1s, 0.1s;
+    -unity-background-image-tint-color: rgb(178, 178, 178);
+}
+
+
