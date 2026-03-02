@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace DigDig2.CinemaCamera
 {
     public class PlayerFollowCameraEffector : CameraEffector

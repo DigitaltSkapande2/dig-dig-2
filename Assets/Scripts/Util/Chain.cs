@@ -1,7 +1,4 @@
-using System.Linq;
-using Unity.AppUI.UI;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
 
 namespace DigDig2
 {

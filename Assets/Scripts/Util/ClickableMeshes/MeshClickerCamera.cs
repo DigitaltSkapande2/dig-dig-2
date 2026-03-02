@@ -1,7 +1,4 @@
-using System;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 namespace DigDig2
