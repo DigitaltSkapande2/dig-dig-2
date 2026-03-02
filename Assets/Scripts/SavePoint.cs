@@ -57,7 +57,6 @@ namespace DigDig2
             VerboseLog("Initializing singleplayer spawn...");
             GameManager.Instance.InitializeSingleplayerCharacter(singlePlayerSpawnPoint.position, singlePlayerSpawnPoint.rotation);
 
-            GameCamera.Instance.ZoomOutAnimation(); // TODO: MAKE THIS BETTER THAN REGULAR FUCKASS ANIMATOR ON CAMERA
             await Task.Delay((int)(timeUntilReleaseCamera * 1000));
             lockTargetEffector.IsActive = false;
         }
@@ -78,8 +77,8 @@ namespace DigDig2
         {
             if (!isServer) return;
 
-            savePointReached.Invoke();
             SetSpawnPointReached(true);
+            VerboseLog("reached: " + gameObject.name);
         }
 
         private void VerboseLog(string message)

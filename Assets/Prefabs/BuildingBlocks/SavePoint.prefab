@@ -52,7 +52,7 @@ BoxCollider:
     m_Bits: 8
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 1015
+    m_Bits: 8183
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
@@ -198,7 +198,7 @@ MonoBehaviour:
       duration: 0.4
       intensity: 1
       color: {r: 0, g: 0, b: 0, a: 0}
-  timeUntilReleaseCamera: 2
+  timeUntilReleaseCamera: 0.5
 --- !u!114 &986510210547433775
 MonoBehaviour:
   m_ObjectHideFlags: 0

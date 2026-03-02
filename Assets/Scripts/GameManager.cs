@@ -87,7 +87,7 @@ namespace DigDig2
             }
             Debug.Log("GAMEMANAGER: Initializing Singleplayer Characters...");
             GameObject playerCharacter = Instantiate(GetCharacterPrefabFromCharacterType(loadedGameManagerSaveData.singleplayerSelectedCharacter), spawnPosition, spawnRotation);
-            NetworkServer.ReplacePlayerForConnection(NetworkServer.localConnection, playerCharacter, ReplacePlayerOptions.KeepAuthority);
+            NetworkServer.AddPlayerForConnection(NetworkServer.localConnection, playerCharacter);
             Debug.Log("GAMEMANAGER: Singleplayer Characters Initialized!");
         }
 

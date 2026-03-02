@@ -7,8 +7,6 @@ namespace DigDig2.CinemaCamera {
         [Tooltip("the time in seconds it will take for the camera to get to the target position")]
         [SerializeField] public float followSpeed = 5f;
         [SerializeField] public float rotationSpeed = 1;
-        [Header("BAD CODE Animation Settings")]
-        [SerializeField] private string zoomOutAnimationTriggerName = "ZoomOut";
 
         private Vector3 targetPos;
         private Quaternion targetRotation;
@@ -62,15 +60,5 @@ namespace DigDig2.CinemaCamera {
         {
             baseTargetRotation = quaternion.Euler(0, Mathf.Deg2Rad * angle, 0);
         }
-
-
-        #region BAD CODE 
-
-        public void ZoomOutAnimation()
-        {
-            animator.SetTrigger(zoomOutAnimationTriggerName);
-        }
-
-        #endregion
     }
 }
