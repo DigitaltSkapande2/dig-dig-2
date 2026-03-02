@@ -1,5 +1,80 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &588724508550712408
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1050634199419642037}
+  - component: {fileID: 3582992625335540524}
+  - component: {fileID: 258712155262035162}
+  m_Layer: 0
+  m_Name: Collider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1050634199419642037
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 588724508550712408}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.26402462, y: -0, z: -0.964516, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.44488382, y: 1.82145, z: 0.5046031}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 248203396631856248}
+  m_LocalEulerAnglesHint: {x: 0, y: 27.6, z: 0}
+--- !u!65 &3582992625335540524
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 588724508550712408}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.25333908, y: 0.008717211, z: 0.12494315}
+  m_Center: {x: 0.004907041, y: 0.03118563, z: -0.020071069}
+--- !u!65 &258712155262035162
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 588724508550712408}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.25333908, y: 0.008717211, z: 0.12494315}
+  m_Center: {x: 0.004907041, y: -0.031185634, z: -0.020071069}
 --- !u!1 &1611213899266556493
 GameObject:
   m_ObjectHideFlags: 0
@@ -30,7 +105,8 @@ Transform:
   m_LocalPosition: {x: -37, y: -16.979269, z: -150}
   m_LocalScale: {x: -131.70401, y: -41.45867, z: -82.31936}
   m_ConstrainProportionsScale: 1
-  m_Children: []
+  m_Children:
+  - {fileID: 1050634199419642037}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: -120.712006, y: 0, z: 90}
 --- !u!33 &8040783333177596035
