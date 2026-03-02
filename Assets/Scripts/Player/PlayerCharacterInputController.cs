@@ -108,8 +108,6 @@ namespace DigDig2
             if (context.performed && characterSwitching != null)
             {
                 characterSwitching.SwitchCharacter();
-
-                SaveManager.Instance.SaveAllAndWriteToFile();
             }
         }
 

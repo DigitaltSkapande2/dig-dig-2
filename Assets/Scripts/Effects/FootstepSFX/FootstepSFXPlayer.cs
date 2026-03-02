@@ -48,7 +48,7 @@ namespace DigDig2.Effects
                 }
             }
 
-            Instantiate(effecToPlay, transform.position, Quaternion.identity);
+            Destroy(Instantiate(effecToPlay, transform.position, Quaternion.identity), 2f);
         }
 
 

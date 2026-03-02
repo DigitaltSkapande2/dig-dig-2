@@ -7,10 +7,9 @@ namespace DigDig2.CinemaCamera
         private Transform target;
         private new Collider collider;
 
-        protected new void Start()
+        protected void Start()
         {
             Debug.Log("ZINKKKKK");
-            base.Start();
 
             collider = GetComponent<Collider>();
             if (collider == null)

@@ -44,6 +44,7 @@ Transform:
   m_Children:
   - {fileID: 6683684807395102275}
   - {fileID: 1498176944971182097}
+  - {fileID: 1362454097932589284}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8958985942633479411
@@ -336,6 +337,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Health
   maxHealthPoints: 5
   healthPoints: 5
+  DestroyOnDeath: 0
   deathEffectPlayer:
     spawnPrefab: 0
     spawnPrefabEffectData:
@@ -455,7 +457,19 @@ MonoBehaviour:
       color: {r: 0, g: 0, b: 0, a: 0}
   death:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4508982100989086957}
+        m_TargetAssemblyTypeName: DigDig2.DeathSequence, Assembly-CSharp
+        m_MethodName: StartDeathSequence
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &5749047405966691678
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -719,6 +733,79 @@ Transform:
   - {fileID: 7335952800051028140}
   m_Father: {fileID: 3368673675683253185}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &2239660008021016429
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 3368673675683253185}
+    m_Modifications:
+    - target: {fileID: 1007880672321316745, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007880672321316745, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007880672321316745, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.68803
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007880672321316745, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007880672321316745, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007880672321316745, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007880672321316745, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007880672321316745, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007880672321316745, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007880672321316745, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2996078269563199115, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
+      propertyPath: m_Name
+      value: DeathSequence
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
+--- !u!4 &1362454097932589284 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1007880672321316745, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
+  m_PrefabInstance: {fileID: 2239660008021016429}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4508982100989086957 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2416112746756125568, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
+  m_PrefabInstance: {fileID: 2239660008021016429}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5e451c31b1ea573390ac83e40e653eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DigDig2.DeathSequence
 --- !u!1001 &7080840903810582343
 PrefabInstance:
   m_ObjectHideFlags: 0

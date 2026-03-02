@@ -1,6 +1,7 @@
 using Mirror;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.ProBuilder.MeshOperations;
 
 namespace DigDig2
 {
@@ -106,7 +107,8 @@ namespace DigDig2
             }
             Debug.Log("GAMEMANAGER: Initializing Singleplayer Characters...");
             GameObject playerCharacter = Instantiate(GetCharacterPrefabFromCharacterType(loadedGameManagerSaveData.singleplayerSelectedCharacter), spawnPosition, spawnRotation);
-            NetworkServer.AddPlayerForConnection(NetworkServer.localConnection, playerCharacter);
+            if (NetworkServer.localConnection.identity) NetworkServer.ReplacePlayerForConnection(NetworkServer.localConnection, playerCharacter, ReplacePlayerOptions.Destroy);
+            else NetworkServer.AddPlayerForConnection(NetworkServer.localConnection, playerCharacter);
             Debug.Log("GAMEMANAGER: Singleplayer Characters Initialized!");
         }
 

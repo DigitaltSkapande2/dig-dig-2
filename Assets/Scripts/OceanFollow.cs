@@ -39,7 +39,7 @@ namespace DigDig2
 
         void Update()
         {
-            if (target == null) return;
+            if (target == null) target = GameManager.Instance.LocalPlayerObj.transform;
 
             Vector3 newPosition = new Vector3(
                 Mathf.Round(target.position.x / gridSize.x) * gridSize.x,

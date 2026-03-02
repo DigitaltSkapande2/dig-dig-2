@@ -110,7 +110,7 @@ namespace DigDig2.CinemaCamera
 
         #endregion
 
-        protected void Start()
+        protected void OnEnable()
         {
             AddCameraEffector(this);
         }
