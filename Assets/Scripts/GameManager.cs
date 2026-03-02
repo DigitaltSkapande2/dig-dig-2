@@ -30,6 +30,17 @@ namespace DigDig2
         public GameManagerGameSaveData loadedGameManagerSaveData { get; private set; }
         [SerializeField] public UnityEvent<CharacterType, GameObject> characterSwitched;
 
+        public bool Paused
+        {
+            get
+            {
+                return pauseMenuController.Paused;
+            }
+        }
+        [SerializeField] public UnityEvent<bool> pauseStateChanged;
+        
+        private PauseMenuController pauseMenuController;
+
 
 
         public GameObject LocalPlayerObj
@@ -45,9 +56,13 @@ namespace DigDig2
         public CharacterType currentCharacter { private set; get; } = CharacterType.Max;
 
 
-        protected void Start()
+        private void Awake()
         {
-            
+            pauseMenuController = GetComponentInChildren<PauseMenuController>();
+            pauseMenuController.stateChanged.AddListener((bool state) =>
+            {
+                pauseStateChanged.Invoke(state);
+            });
         }
 
         public override void OnStartServer()
@@ -196,6 +211,20 @@ namespace DigDig2
             loadedGameManagerSaveData = tempData;
         }
 
+        #endregion
+        
+        #region Pausing
+
+        public void Pause()
+        {
+            pauseMenuController.Open();
+        }
+
+        public void Resume()
+        {
+            pauseMenuController.Close();
+        }
+        
         #endregion
     }
 }

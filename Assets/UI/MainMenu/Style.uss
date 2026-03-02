@@ -1,40 +1,13 @@
 :root {
-    -unity-font-definition: url("project://database/Assets/Fonts/Roboto/static/Roboto-Medium.ttf?fileID=12800000&guid=5f15a61a79254b59d852a42bc1313680&type=3#Roboto-Medium");
-    color: rgb(255, 255, 255);
 }
 
-Button {
-    background-color: rgb(30, 30, 30);
-    border-left-color: rgb(89, 89, 89);
-    border-right-color: rgb(89, 89, 89);
-    border-top-color: rgb(89, 89, 89);
-    border-bottom-color: rgb(89, 89, 89);
-    border-top-width: 2px;
-    border-right-width: 2px;
-    border-bottom-width: 2px;
-    border-left-width: 2px;
-    font-size: 24px;
-}
 
-Button:focus {
-    background-color: rgb(30, 30, 30);
-    border-left-color: rgb(194, 219, 42);
-    border-right-color: rgb(194, 219, 42);
-    border-top-color: rgb(194, 219, 42);
-    border-bottom-color: rgb(194, 219, 42);
-    border-top-width: 2px;
-    border-right-width: 2px;
-    border-bottom-width: 2px;
-    border-left-width: 2px;
-}
 
-.navigation-descendant-open {
-    opacity: 0.5;
-}
 
-.navigation-closed {
-    opacity: 0;
-}
+
+
+
+
 
 #mainNavigation {
     transition-property: opacity, translate;
