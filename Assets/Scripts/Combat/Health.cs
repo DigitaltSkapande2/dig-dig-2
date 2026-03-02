@@ -7,10 +7,16 @@ namespace DigDig2
     [RequireComponent(typeof(Attackable))]
     public class Health : MonoBehaviour
     {
+        public int MaxHealthPoints
+        {
+            get
+            {
+                return maxHealthPoints;
+            }
+        }
         [Tooltip("Starting health and eventual cap for healing.")]
         [SerializeField] private int maxHealthPoints = 1;
 
-        [Tooltip("The entity's current health.")]
         public int HealthPoints
 		{
             get
@@ -22,13 +28,16 @@ namespace DigDig2
                 SetHealth(value);
 			}
 		}
+        [Tooltip("The entity's current health.")]
         [SerializeField] private int healthPoints = 1;
 
         [Tooltip("Effects to be played when health is below 0.")]
         [SerializeField] private EffectPlayer deathEffectPlayer;
 
         [Tooltip("Event is called when health is below 0.")]
-        [SerializeField] private UnityEvent death;
+        [SerializeField] public UnityEvent death;
+
+        [SerializeField] public UnityEvent<int> healthChanged;
 
 
 
@@ -51,6 +60,7 @@ namespace DigDig2
         public void SetHealth(int newHealth)
         {
             healthPoints = Mathf.Clamp(newHealth, 0, maxHealthPoints);
+            healthChanged.Invoke(healthPoints);
             CheckState();
         }
 
