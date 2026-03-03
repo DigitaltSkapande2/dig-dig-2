@@ -7,6 +7,8 @@ namespace DigDig2
 {
     public class PauseMenuController : MonoBehaviour
     {
+        [SerializeField] private float openCooldown = 0.2f;
+        
         public bool Paused
         {
             get
@@ -17,6 +19,8 @@ namespace DigDig2
 
         private bool lastPausedState = false;
         public UnityEvent<bool> stateChanged;
+
+        private float openCooldownTimer = 0;
 
         private VisualElement pauseMenuContainer;
         
@@ -53,20 +57,25 @@ namespace DigDig2
                 }
             });
         }
-
+        
+        private void Update() 
+        {
+            if (openCooldownTimer > 0) openCooldownTimer = Mathf.Max(openCooldownTimer - Time.deltaTime, 0);
+        }
         public void Open()
         {
             navigator.NavigateTo("/pauseMenu");
+            openCooldownTimer = openCooldown;
         }
 
         public void Close()
         {
-            navigator.NavigateTo("/");
+            if (openCooldownTimer <= 0) navigator.NavigateTo("/");
         }
         
         private void OnCancel()
         {
-            navigator.NavigateBack();
+            if (openCooldownTimer <= 0) navigator.NavigateBack();
         }
     }
 }
