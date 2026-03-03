@@ -105,7 +105,7 @@ GameObject:
   - component: {fileID: 2746291578090397163}
   - component: {fileID: 4353828130334444852}
   - component: {fileID: 3576301691390269034}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Arch
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1179,7 +1179,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 2277
+  m_VersionIndex: 2286
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
