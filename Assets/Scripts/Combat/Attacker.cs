@@ -406,16 +406,19 @@ namespace DigDig2
 			focusedEnemy = null;
 
 			if (entityCharacterController) entityCharacterController.SetAutomaticLookRotationLock(false);
-
-			if (isClient && GameManager.Instance.LocalPlayerObj == gameObject) GameManager.Instance.SetFocusIndicatorVibility(false);
 		}
 
 		private void UpdateEnemyFocus()
 		{
+			if (isClient && GameManager.Instance.LocalPlayerObj == gameObject)
+			{
+				Vector3 enemyPosition = Vector3.zero;
+				if (focusedEnemy) enemyPosition = focusedEnemy.transform.position;
+				GameManager.Instance.FocusOnPosition(focusedEnemy != null, enemyPosition);
+			}
+			
 			if (focusedEnemy)
 			{
-				if (isClient && GameManager.Instance.LocalPlayerObj == gameObject) GameManager.Instance.FocusOnPosition(focusedEnemy.transform.position);
-
 				if (!IsAttackableVisibleOnScreen(focusedEnemy))
 				{
 					focusedEnemy = null;
@@ -427,8 +430,6 @@ namespace DigDig2
 				entityCharacterController.SetAutomaticLookRotationLock(focusedEnemy != null);
 				if (focusedEnemy) entityCharacterController.LookTowards(focusedEnemy.transform.position);
 			}
-
-			if (isClient && GameManager.Instance.LocalPlayerObj == gameObject) GameManager.Instance.SetFocusIndicatorVibility(focusedEnemy != null);
 		}
 
 		public bool IsAttackableVisibleOnScreen(Attackable attackable)

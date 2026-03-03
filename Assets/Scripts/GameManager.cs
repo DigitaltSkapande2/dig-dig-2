@@ -17,9 +17,7 @@ namespace DigDig2
         [SerializeField] private CharacterType defaultSingleplayerCharacter = CharacterType.Max;
         [SerializeField] private GameObject maxPrefab;
         [SerializeField] private GameObject miniPrefab;
-
-        [Header("Enemy Focusing")]
-        [SerializeField] private GameObject focusIndicator;
+        
         [Header("SavePoints")]
         [SerializeField] private SavePoint[] savePoints;
 
@@ -41,6 +39,7 @@ namespace DigDig2
         [SerializeField] public UnityEvent<bool> pauseStateChanged;
         
         private PauseMenuController pauseMenuController;
+        private GameHudController gameHudController;
 
 
 
@@ -64,6 +63,8 @@ namespace DigDig2
             {
                 pauseStateChanged.Invoke(state);
             });
+
+            gameHudController = GetComponentInChildren<GameHudController>();
         }
 
         public override void OnStartServer()
@@ -172,13 +173,9 @@ namespace DigDig2
 
         #region Enemy Focusing
 
-        public void FocusOnPosition(Vector3 position)
+        public void FocusOnPosition(bool visible, Vector3 position)
         {
-            focusIndicator.transform.position = Camera.main.WorldToScreenPoint(position);
-        }
-        public void SetFocusIndicatorVibility(bool visible)
-        {
-            focusIndicator.SetActive(visible);
+            gameHudController.UpdateFocusTarget(visible, position);
         }
 
         #endregion
