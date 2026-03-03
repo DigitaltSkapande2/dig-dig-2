@@ -12,6 +12,9 @@ namespace DigDig2
 
         private Attacker attacker;
 
+        public bool InputEnabled => inputEnabled;
+        private bool inputEnabled = false;
+
 
 
         private void Awake()
@@ -20,11 +23,14 @@ namespace DigDig2
         }
 		private void Start()
         {
-            if (!NetworkClient.active || isLocalPlayer)
+            if (!GameManager.Instance.Paused) EnableInput();
+            GameManager.Instance.pauseStateChanged.AddListener((bool isPaused) =>
             {
-                EnableInput();
-                hasStarted = true;
-            }
+                if (isPaused) DisableInput();
+                else EnableInput();
+            });
+            
+            hasStarted = true;
         }
 
         private void OnEnable()
@@ -37,20 +43,21 @@ namespace DigDig2
         }
 
         #region Input Setup
-
+        
         public void EnableInput()
         {
             if (!NetworkClient.active || isLocalPlayer)
             {
                 attackActions = InputManager.Instance.inputActions.Attack;
                 attackActions.SetCallbacks(this);
-                hasStarted = true;
+                inputEnabled = true;
             }
         }
 
         private void DisableInput()
         {
             attackActions.RemoveCallbacks(this);
+            inputEnabled = false;
         }
 
         #endregion

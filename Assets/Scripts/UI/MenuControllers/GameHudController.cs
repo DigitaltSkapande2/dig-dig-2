@@ -13,6 +13,8 @@ namespace DigDig2
 
         private VisualElement healthBar;
         private VisualElement fullHealthBar;
+        
+        private VisualElement focusTargetIndicator;
 
         private UIDocument uiDocument;
 
@@ -31,6 +33,8 @@ namespace DigDig2
 
             healthBar = uiDocument.rootVisualElement.Query<VisualElement>("healthBar");
             fullHealthBar = healthBar.Query<VisualElement>("full");
+
+            focusTargetIndicator = uiDocument.rootVisualElement.Query<VisualElement>("focusTargetIndicator");
 
             SetupCharacterBindings();
         }
@@ -68,7 +72,18 @@ namespace DigDig2
         {
             Debug.Log("GameHudController: Updating health");
             
-            fullHealthBar.style.width = new StyleLength(new Length((float)health / (float)maxHealth * 100f, LengthUnit.Percent));
+            fullHealthBar.style.width = new StyleLength(new Length(health / (float)maxHealth * 100f, LengthUnit.Percent));
+        }
+
+        public void UpdateFocusTarget(bool inUse, Vector3 worldPosition)
+        {
+            focusTargetIndicator.style.display =
+                new StyleEnum<DisplayStyle>(inUse ? DisplayStyle.Flex : DisplayStyle.None);
+            if (!inUse) return;
+            
+            Vector2 screenPosition = RuntimePanelUtils.CameraTransformWorldToPanel(uiDocument.rootVisualElement.panel, worldPosition, Camera.main);
+            focusTargetIndicator.style.translate =
+                new StyleTranslate(new Translate(screenPosition.x, screenPosition.y));
         }
     }
 }

@@ -181,6 +181,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2379204138695762400, guid: 9ab8b93fb5870fdbb8dcb96f5d3acf85, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4650714884969202455, guid: 9ab8b93fb5870fdbb8dcb96f5d3acf85, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 6
@@ -203,7 +207,7 @@ PrefabInstance:
       objectReference: {fileID: 2732685959610631463, guid: 34ddc708381b418f98b00f0beb32b333, type: 3}
     - target: {fileID: 9007534310325429183, guid: 9ab8b93fb5870fdbb8dcb96f5d3acf85, type: 3}
       propertyPath: statisticsGUI
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -798,6 +802,7 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
+  destroyOnLoad: 1
 --- !u!114 &1993231489
 MonoBehaviour:
   m_ObjectHideFlags: 0

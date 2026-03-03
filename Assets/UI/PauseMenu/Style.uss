@@ -1,0 +1,11 @@
+:root {
+}
+
+#animationContainer {
+    transition-property: translate;
+    transition-duration: 0.1s;
+}
+
+#animationContainer.navigation-closed {
+    translate: 0% 50px;
+}

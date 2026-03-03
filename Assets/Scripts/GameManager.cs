@@ -1,6 +1,7 @@
 using Mirror;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.ProBuilder.MeshOperations;
 
 namespace DigDig2
 {
@@ -16,9 +17,7 @@ namespace DigDig2
         [SerializeField] private CharacterType defaultSingleplayerCharacter = CharacterType.Max;
         [SerializeField] private GameObject maxPrefab;
         [SerializeField] private GameObject miniPrefab;
-
-        [Header("Enemy Focusing")]
-        [SerializeField] private GameObject focusIndicator;
+        
         [Header("SavePoints")]
         [SerializeField] private SavePoint[] savePoints;
 
@@ -29,6 +28,18 @@ namespace DigDig2
         }
         public GameManagerGameSaveData loadedGameManagerSaveData { get; private set; }
         [SerializeField] public UnityEvent<CharacterType, GameObject> characterSwitched;
+
+        public bool Paused
+        {
+            get
+            {
+                return pauseMenuController.Paused;
+            }
+        }
+        [SerializeField] public UnityEvent<bool> pauseStateChanged;
+        
+        private PauseMenuController pauseMenuController;
+        private GameHudController gameHudController;
 
 
 
@@ -45,9 +56,15 @@ namespace DigDig2
         public CharacterType currentCharacter { private set; get; } = CharacterType.Max;
 
 
-        protected void Start()
+        private void Awake()
         {
-            
+            pauseMenuController = GetComponentInChildren<PauseMenuController>();
+            pauseMenuController.stateChanged.AddListener((bool state) =>
+            {
+                pauseStateChanged.Invoke(state);
+            });
+
+            gameHudController = GetComponentInChildren<GameHudController>();
         }
 
         public override void OnStartServer()
@@ -91,7 +108,8 @@ namespace DigDig2
             }
             Debug.Log("GAMEMANAGER: Initializing Singleplayer Characters...");
             GameObject playerCharacter = Instantiate(GetCharacterPrefabFromCharacterType(loadedGameManagerSaveData.singleplayerSelectedCharacter), spawnPosition, spawnRotation);
-            NetworkServer.AddPlayerForConnection(NetworkServer.localConnection, playerCharacter);
+            if (NetworkServer.localConnection.identity) NetworkServer.ReplacePlayerForConnection(NetworkServer.localConnection, playerCharacter, ReplacePlayerOptions.Destroy);
+            else NetworkServer.AddPlayerForConnection(NetworkServer.localConnection, playerCharacter);
             Debug.Log("GAMEMANAGER: Singleplayer Characters Initialized!");
         }
 
@@ -155,13 +173,9 @@ namespace DigDig2
 
         #region Enemy Focusing
 
-        public void FocusOnPosition(Vector3 position)
+        public void FocusOnPosition(bool visible, Vector3 position)
         {
-            focusIndicator.transform.position = Camera.main.WorldToScreenPoint(position);
-        }
-        public void SetFocusIndicatorVibility(bool visible)
-        {
-            focusIndicator.SetActive(visible);
+            gameHudController.UpdateFocusTarget(visible, position);
         }
 
         #endregion
@@ -196,6 +210,20 @@ namespace DigDig2
             loadedGameManagerSaveData = tempData;
         }
 
+        #endregion
+        
+        #region Pausing
+
+        public void Pause()
+        {
+            pauseMenuController.Open();
+        }
+
+        public void Resume()
+        {
+            pauseMenuController.Close();
+        }
+        
         #endregion
     }
 }

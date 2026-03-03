@@ -76,9 +76,10 @@ namespace DigDig2
         private void OnTriggerEnter(Collider other)
         {
             if (!isServer) return;
+            VerboseLog("reached: " + gameObject.name);
 
             SetSpawnPointReached(true);
-            VerboseLog("reached: " + gameObject.name);
+            SaveManager.Instance.SaveAllAndWriteToFile();
         }
 
         private void VerboseLog(string message)

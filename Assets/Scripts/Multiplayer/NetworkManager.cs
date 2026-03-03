@@ -106,12 +106,14 @@ namespace DigDig2
         {
             IsMultiplayer = isMultiplayer;
             base.StartHost();
+            debugCanvas.gameObject.SetActive(false);
         }
 
         public new void StartClient(bool isMultiplayer = true)
         {
             IsMultiplayer = isMultiplayer;
             base.StartClient();
+            debugCanvas.gameObject.SetActive(false);
         }
 
         /// <summary>

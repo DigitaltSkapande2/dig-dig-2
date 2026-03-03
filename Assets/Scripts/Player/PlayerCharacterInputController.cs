@@ -21,6 +21,9 @@ namespace DigDig2
         // Interactors
         private Interactor interactor;
 
+        public bool InputEnabled => inputEnabled;
+        private bool inputEnabled = false;
+
 
         private void Awake()
         {
@@ -31,19 +34,25 @@ namespace DigDig2
 
         private void Start()
         {
-            if (!NetworkClient.active || isLocalPlayer)
+            if (!GameManager.Instance.Paused) EnableInput();
+            GameManager.Instance.pauseStateChanged.AddListener((bool isPaused) =>
             {
-                EnableInput();
-                hasStarted = true;
-
-                DebugNotesManager.Instance.RegisterPlayerCharacterController(entityCharacterController);
-            }
+                if (isPaused) DisableInput();
+                else EnableInput();
+            });
+            
+            hasStarted = true;
         }
 
         private void Update()
         {
             if (!NetworkClient.active || isLocalPlayer)
             {
+                if (!inputEnabled)
+                {
+                    entityCharacterController.inputMoveVector = Vector3.zero;
+                }
+                
                 if (Camera.main)
                 {
                     Vector3 rotatedInputMoveVector = Quaternion.Euler(0f, Camera.main.transform.rotation.eulerAngles.y, 0f) * new Vector3(inputMoveVector.x, 0f, inputMoveVector.y);
@@ -68,19 +77,16 @@ namespace DigDig2
         {
             if (!NetworkClient.active || isLocalPlayer)
             {
-                Debug.Log("Enabling input for player character controller.");
                 playerActions = InputManager.Instance.inputActions.Player;
                 playerActions.SetCallbacks(this);
-
-                hasStarted = true;
-
-                DebugNotesManager.Instance.RegisterPlayerCharacterController(entityCharacterController);
+                inputEnabled = true;
             }
         }
 
         private void DisableInput()
         {
             playerActions.RemoveCallbacks(this);
+            inputEnabled = false;
         }
 
         #endregion
@@ -102,8 +108,6 @@ namespace DigDig2
             if (context.performed && characterSwitching != null)
             {
                 characterSwitching.SwitchCharacter();
-
-                SaveManager.Instance.SaveAllAndWriteToFile();
             }
         }
 
@@ -112,6 +116,14 @@ namespace DigDig2
             if (context.performed)
             {
                 entityCharacterController.Dash();
+            }
+        }
+
+        public void OnPause(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+            {
+                GameManager.Instance.Pause();
             }
         }
 

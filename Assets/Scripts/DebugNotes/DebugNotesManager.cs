@@ -46,8 +46,6 @@ namespace DigDig2
 		[Tooltip("The in-game note billboard prefab.")]
 		[SerializeField] private DebugNoteBillboard debugNoteBillboardPrefab;
 
-		private EntityCharacterController playerCharacterController;
-
 		readonly private Dictionary<int, DebugNoteBillboard> debugNoteBillboards = new();
 		readonly private Dictionary<int, DebugNoteBillboard> archivedDebugNoteBillboards = new();
 
@@ -127,7 +125,7 @@ namespace DigDig2
 		// Get the nearest note and focus it, if a note is already focused then unfocus the old one
 		private void FocusNearestNote()
 		{
-			if (playerCharacterController == null)
+			if (GameManager.Instance.LocalPlayerObj == null)
 			{
 				if (focusedNoteIndex != -1)
 				{
@@ -147,7 +145,7 @@ namespace DigDig2
 				DebugNoteBillboard noteBillboard = GetNoteBillboardFromNoteIndex(noteIndex);
 				if (!noteBillboard.gameObject.activeSelf) continue;
 
-				float noteDistance = Vector3.Distance(playerCharacterController.transform.position, noteBillboard.transform.position);
+				float noteDistance = Vector3.Distance(GameManager.Instance.LocalPlayerObj.transform.position, noteBillboard.transform.position);
 				if (noteDistance <= maxFocusDistance)
 				{
 					if (nearestNote == -1)
@@ -326,12 +324,6 @@ namespace DigDig2
 			noteBillboard.gameObject.SetActive(_showDebugNotes);
 		}
 
-		// Register the current player character controller to be used for getting the position and freezing the player
-		public void RegisterPlayerCharacterController(EntityCharacterController newPlayerCharacterController)
-		{
-			playerCharacterController = newPlayerCharacterController;
-		}
-
 		#endregion
 
 		#region Notes Frontend
@@ -362,7 +354,7 @@ namespace DigDig2
 
 		private void ShowNoteManagementInterface(NoteManagementMode managementMode)
 		{
-			if (playerCharacterController)
+			if (GameManager.Instance.LocalPlayerObj != null)
 			{
 				noteManagementMode = managementMode;
 				switch (managementMode)
@@ -377,16 +369,16 @@ namespace DigDig2
 
 				interfaceCanvas.SetActive(true);
 
-				playerCharacterController.Frozen = true;
+				GameManager.Instance.LocalPlayerObj.GetComponent<EntityCharacterController>().Frozen = true;
 			}
 		}
 		private void HideNoteManagementInterface()
 		{
-			if (playerCharacterController)
+			if (GameManager.Instance.LocalPlayerObj != null)
 			{
 				interfaceCanvas.SetActive(false);
 
-				playerCharacterController.Frozen = false;
+				GameManager.Instance.LocalPlayerObj.GetComponent<EntityCharacterController>().Frozen = false;
 
 				interfaceArchiveButton.interactable = false;
 
@@ -401,7 +393,7 @@ namespace DigDig2
 		// Player pressed the confirm button on the note management interface
 		public void OnNoteConfirmPressed()
 		{
-			if (playerCharacterController == null) return;
+			if (GameManager.Instance.LocalPlayerObj == null) return;
 			if (interfaceTitleInputField.text.Length <= 0) return;
 
 			switch (noteManagementMode)
@@ -411,7 +403,7 @@ namespace DigDig2
 						interfaceTitleInputField.text,
 						interfaceNoteInputField.text,
 						interfaceAuthorInputField.text,
-						playerCharacterController.transform.position + notePlacePositionOffset
+						GameManager.Instance.LocalPlayerObj.transform.position + notePlacePositionOffset
 					);
 					break;
 				case NoteManagementMode.edit:

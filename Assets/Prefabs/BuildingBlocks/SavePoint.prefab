@@ -80,7 +80,19 @@ MonoBehaviour:
   singlePlayerSpawnPoint: {fileID: 6465120459874542917}
   savePointReached:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1604272352386888948}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
   onReachedEffect:
     spawnPrefab: 0
     spawnPrefabEffectData:
@@ -454,6 +466,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FireplaceFire
       objectReference: {fileID: 0}
+    - target: {fileID: 1446114678107710526, guid: ff74a4caeb436e44dbc993c2714d284f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2093288126019558422, guid: ff74a4caeb436e44dbc993c2714d284f, type: 3}
       propertyPath: m_Intensity
       value: 7.2
@@ -543,6 +559,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff74a4caeb436e44dbc993c2714d284f, type: 3}
+--- !u!1 &1604272352386888948 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1446114678107710526, guid: ff74a4caeb436e44dbc993c2714d284f, type: 3}
+  m_PrefabInstance: {fileID: 167236367830913226}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3219902316344983642 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3385933481990541456, guid: ff74a4caeb436e44dbc993c2714d284f, type: 3}

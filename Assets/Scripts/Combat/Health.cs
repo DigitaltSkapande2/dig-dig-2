@@ -30,6 +30,7 @@ namespace DigDig2
 		}
         [Tooltip("The entity's current health.")]
         [SerializeField] private int healthPoints = 1;
+        [SerializeField] private bool DestroyOnDeath = true;
 
         [Tooltip("Effects to be played when health is below 0.")]
         [SerializeField] private EffectPlayer deathEffectPlayer;
@@ -38,7 +39,6 @@ namespace DigDig2
         [SerializeField] public UnityEvent death;
 
         [SerializeField] public UnityEvent<int> healthChanged;
-
 
 
         private void Start()
@@ -70,16 +70,33 @@ namespace DigDig2
 
             death.Invoke();
             deathEffectPlayer.Play(transform.position, Quaternion.identity, Vector3.one, transform.parent);
-            Destroy(gameObject);
+            if (DestroyOnDeath) Destroy(gameObject);
+            else enabled = false;
         }
 
         private void CheckState()
         {
             if (healthPoints <= 0) Kill();
         }
-
-        #region Effects
-
-        #endregion
     }
+
+    #if UNITY_EDITOR
+
+    [UnityEditor.CustomEditor(typeof(Health))]
+    public class HealthEditor : UnityEditor.Editor
+    {
+        public override void OnInspectorGUI()
+        {
+            base.OnInspectorGUI();
+
+            Health health = (Health)target;
+
+            if (GUILayout.Button("Damage 1"))
+            {
+                health.Damage(1);
+            }
+        }
+    }
+
+    #endif
 }

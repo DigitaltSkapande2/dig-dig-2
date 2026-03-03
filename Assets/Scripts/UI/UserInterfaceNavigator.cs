@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DigDig2.UIElements;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UIElements;
 
 namespace DigDig2.UINavigation
@@ -19,6 +20,8 @@ namespace DigDig2.UINavigation
         public NavigationNode Hierarchy { get => hierarchy; set { hierarchy = value; NavigateTo(initialNavigationUri, true); } }
         private NavigationNode hierarchy;
 
+        public UnityEvent<string> navigatedTo;
+        
         
 
         public void NavigateTo(string uri, bool forceRefresh = false)
@@ -63,6 +66,8 @@ namespace DigDig2.UINavigation
 
                 Debug.Log($"Navigating to: {uri}");
                 OpenNode(hierarchy, splitUri, arguments);
+                
+                navigatedTo.Invoke(uri);
             }
         }
         public void NavigateBack()
@@ -78,9 +83,12 @@ namespace DigDig2.UINavigation
 
         private void CloseNode(NavigationNode node)
         {
-            node.element.AddToClassList(closedElementClass);
             if (node.inputElement != null) node.inputElement.enabledSelf = false;
-            if (node.element.style.display != DisplayStyle.None) StartCoroutine(HideDisplay(node));
+            if (node.element != null)
+            {
+                node.element.AddToClassList(closedElementClass);
+                if (node.element.style.display != DisplayStyle.None) StartCoroutine(HideDisplay(node));
+            }
 
             if (node.children != null)
             {
@@ -95,14 +103,17 @@ namespace DigDig2.UINavigation
             if (splitIndex >= splitUri.Count) return;
             if (node.name == splitUri[splitIndex])
             {
-                node.element.RemoveFromClassList(closedElementClass);
-                node.element.style.display = DisplayStyle.Flex;
+                if (node.element != null)
+                {
+                    node.element.RemoveFromClassList(closedElementClass);
+                    node.element.style.display = DisplayStyle.Flex;
+                }
                 
                 if (splitIndex >= splitUri.Count - 1)
                 {
                     if (node.openable == false) { NavigateBack(); return; }
 
-                    node.element.RemoveFromClassList(descendantOpenElementClass);
+                    if (node.element != null) node.element.RemoveFromClassList(descendantOpenElementClass);
                     if (node.inputElement != null)
                     {
                         node.inputElement.enabledSelf = true;
@@ -113,18 +124,21 @@ namespace DigDig2.UINavigation
                     openedEvent.nodeName = node.name;
                     openedEvent.arguments = arguments;
                     openedEvent.target = node.element;
-                    node.element.SendEvent(openedEvent);
+                    if (node.element != null) node.element.SendEvent(openedEvent);
                 }
                 else
                 {
-                    node.element.AddToClassList(descendantOpenElementClass);
                     if (node.inputElement != null) node.inputElement.enabledSelf = false;
-                    
-                    NavigatorDescendantOpenedEvent descendantOpenedEvent = new NavigatorDescendantOpenedEvent();
-                    descendantOpenedEvent.nodeName = node.name;
-                    descendantOpenedEvent.arguments = arguments;
-                    descendantOpenedEvent.target = node.element;
-                    node.element.SendEvent(descendantOpenedEvent);
+                    if (node.element != null)
+                    {
+                        node.element.AddToClassList(descendantOpenElementClass);
+                        
+                        NavigatorDescendantOpenedEvent descendantOpenedEvent = new NavigatorDescendantOpenedEvent();
+                        descendantOpenedEvent.nodeName = node.name;
+                        descendantOpenedEvent.arguments = arguments;
+                        descendantOpenedEvent.target = node.element;
+                        node.element.SendEvent(descendantOpenedEvent);
+                    }
                 }
 
                 if (node.children != null)
@@ -141,7 +155,7 @@ namespace DigDig2.UINavigation
         private IEnumerator HideDisplay(NavigationNode node)
         {
             yield return new WaitForSecondsRealtime(node.closeDuration);
-            if (node.element.ClassListContains(closedElementClass)) node.element.style.display = DisplayStyle.None;
+            if (node.element != null && node.element.ClassListContains(closedElementClass)) node.element.style.display = DisplayStyle.None;
         }
     }
 
@@ -154,7 +168,7 @@ namespace DigDig2.UINavigation
         public float closeDuration;
         public List<NavigationNode> children;
 
-        public NavigationNode(string name, VisualElement element, VisualElement inputElement = null, bool openable = true, float closeDuration = 0, List<NavigationNode> children = null)
+        public NavigationNode(string name, VisualElement element, float closeDuration = 0, VisualElement inputElement = null, bool openable = true, List<NavigationNode> children = null)
         {
             this.name = name;
             this.element = element;

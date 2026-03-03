@@ -11,8 +11,6 @@ namespace DigDig2
     [RequireComponent(typeof(UIDocument), typeof(UserInterfaceNavigator))]
     public class MainMenu : MonoBehaviour
     {
-        private const string NAVIGATION_START_CLASS_NAME = "navigationStart";
-
         [SerializeField] private string gameSceneName = "GameScene";
 
         private enum HostingModeSelectionType {
@@ -175,23 +173,23 @@ namespace DigDig2
                 }
             });
 
-            navigator.Hierarchy = new NavigationNode("mainNavigation", mainNavigationContainer, mainNavigationContainer, true, 0, new()
+            navigator.Hierarchy = new NavigationNode("mainNavigation", mainNavigationContainer, 0, mainNavigationContainer, true, new()
             {
-                new("screenCover", screenCover, null, false, 0.5f, new()
+                new("screenCover", screenCover, 0.5f, null, false, new()
                 {
-                    new("hostingSelection", hostingSelctionAnimationContainer, hostingSelctionAnimationContainer, true, 0.5f),
+                    new("hostingSelection", hostingSelctionAnimationContainer, 0.5f),
                 }),
-                new("loadGame", saveMenu, saveFileList, true, 0.1f, new()
+                new("loadGame", saveMenu, 0.1f, saveFileList, true, new()
                 {
-                    new("save", saveManagement, saveManagement, true, 0.1f, new()
+                    new("save", saveManagement, 0.1f, saveManagement, true, new()
                     {
-                        new("screenCover", screenCover, null, false, 0.5f, new()
+                        new("screenCover", screenCover, 0.5f, null, false, new()
                         {
-                            new("hostingSelection", hostingSelctionAnimationContainer, hostingSelctionAnimationContainer, true, 0.5f)
+                            new("hostingSelection", hostingSelctionAnimationContainer, 0.5f)
                         })
                     })
                 }),
-                new("settings", settingsMenu, settingsMenu, true, 0.1f)
+                new("settings", settingsMenu, 0.1f)
             });
         }
 

@@ -21,7 +21,7 @@ public class Singleton<T> : NetworkBehaviour where T : NetworkBehaviour
                 }
                 else
                 {
-                    return potentialFoundInstance;
+                    instance = potentialFoundInstance;
                 }
             }
             return instance;

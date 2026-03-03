@@ -352,10 +352,14 @@ namespace EZhex1991.EZSoftBone
         }
         private void Update()
         {
-            RevertTransforms(startDepth);
+          
+
+
         }
-        private void LateUpdate()
+
+        private void FixedUpdate()
         {
+            RevertTransforms(startDepth);
             switch (deltaTimeMode)
             {
                 case DeltaTimeMode.DeltaTime:
@@ -369,6 +373,10 @@ namespace EZhex1991.EZSoftBone
                     break;
             }
             UpdateTransforms();
+        }
+        private void LateUpdate()
+        {
+           
         }
         private void OnDisable()
         {
