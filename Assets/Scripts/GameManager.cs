@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using Mirror;
 using Newtonsoft.Json;
 using UnityEngine;
@@ -13,6 +12,7 @@ namespace DigDig2
         Max,
         Mini,
     }
+
     public class GameManager : Singleton<GameManager>, ISaveable
     {
         [Header("Player Prefabs")]
@@ -79,7 +79,7 @@ namespace DigDig2
             {
                 if (savePoints[i].TryGetComponent(out SavePoint spawnpoint))
                 {
-                    int gay = i;
+                    int gay = i + 1;
                     spawnpoint.savePointReached.AddListener(() => SetHighestReachedSavePointIndex(gay));
                     spawnpoint.RcpSetSpawnPointReached(i <= loadedGameManagerSaveData.highestReachedSavePointIndex);
                 }

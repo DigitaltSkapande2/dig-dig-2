@@ -1,10 +1,12 @@
 using System.Collections.Generic;
+using DigDig2.CinemaCamera;
 using DigDig2.Effects;
+using Newtonsoft.Json;
 using UnityEngine;
 
 namespace DigDig2
 {
-    public class OceanFollow : MonoBehaviour
+    public class OceanFollow : MonoBehaviour, ISaveable
     {
 
         [Tooltip("the object to follow")]
@@ -19,6 +21,7 @@ namespace DigDig2
         bool waterParticlesPlaying = false;
 
         private float targetY;
+
 
         public void LowerWater(float amount)
         {
@@ -36,11 +39,14 @@ namespace DigDig2
         void Start()
         {
             targetY = transform.position.y;
+            target = GameCamera.Instance.transform;
+
+            SaveManager.Instance.RegisterSavable("Ocean", this);
         }
 
         void Update()
         {
-            if (target == null) target = GameManager.Instance.LocalPlayerObj.transform;
+            if (target == null) target = GameCamera.Instance.transform;
 
             transform.position = new Vector3 (0, Mathf.Lerp(transform.position.y, targetY, Time.deltaTime * verticalSpeed), 0);
 
@@ -61,6 +67,19 @@ namespace DigDig2
             }
 
             plane.position = newPosition;
+        }
+
+        public object CollectData()
+        {
+            return targetY;
+        }
+
+        public void RestoreState(object dataObject)
+        {
+            if (dataObject != null)
+            {
+                plane.position = new Vector3(target.position.x, JsonConvert.DeserializeObject<float>(dataObject.ToString()), target.position.z);
+            }
         }
     }
 }
