@@ -9,6 +9,7 @@ namespace DigDig2
 
         [Tooltip("the object to follow")]
         [SerializeField] private Transform target;
+        [SerializeField] private Transform plane;
         [Tooltip("the interval at witch to snap to. The sice of one grid piece")]
         [SerializeField] private Vector2 gridSize = new Vector2(1f, 1f);
         [SerializeField] private EffectPlayer onWaterLowerEffect;
@@ -41,9 +42,11 @@ namespace DigDig2
         {
             if (target == null) target = GameManager.Instance.LocalPlayerObj.transform;
 
+            transform.position = new Vector3 (0, Mathf.Lerp(transform.position.y, targetY, Time.deltaTime * verticalSpeed), 0);
+
             Vector3 newPosition = new Vector3(
                 Mathf.Round(target.position.x / gridSize.x) * gridSize.x,
-                Mathf.Lerp(transform.position.y, targetY, Time.deltaTime * verticalSpeed),
+                transform.position.y,
                 Mathf.Round(target.position.z / gridSize.y) * gridSize.y
             );
     
@@ -57,7 +60,7 @@ namespace DigDig2
                 waterParticlesPlaying = false;
             }
 
-            transform.position = newPosition;
+            plane.position = newPosition;
         }
     }
 }
