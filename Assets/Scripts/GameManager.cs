@@ -1,4 +1,7 @@
+using System;
+using System.Collections.Generic;
 using Mirror;
+using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -20,12 +23,13 @@ namespace DigDig2
         [Header("SavePoints")]
         [SerializeField] private SavePoint[] savePoints;
 
-        public class GameManagerGameSaveData
+        [Serializable]
+        public struct GameManagerGameSaveData
         {
             public CharacterType singleplayerSelectedCharacter;
             public int highestReachedSavePointIndex;
         }
-        public GameManagerGameSaveData loadedGameManagerSaveData { get; private set; }
+        public GameManagerGameSaveData loadedGameManagerSaveData;
         [SerializeField] public UnityEvent<CharacterType, GameObject> characterSwitched;
 
         public bool Paused
@@ -66,12 +70,19 @@ namespace DigDig2
             gameHudController = GetComponentInChildren<GameHudController>();
         }
 
-        public override void OnStartServer()
+        public void Start()
         {
+            if (!isServer) return;
             SaveManager.Instance.RegisterSavable("GameManager", this, true);
+            print(loadedGameManagerSaveData.highestReachedSavePointIndex);
             for (int i = 0; i < savePoints.Length; i++)
             {
-                savePoints[i].GetComponent<SavePoint>().savePointReached.AddListener(() => SetHighestReachedSavePointIndex(i));
+                if (savePoints[i].TryGetComponent(out SavePoint spawnpoint))
+                {
+                    int gay = i;
+                    spawnpoint.savePointReached.AddListener(() => SetHighestReachedSavePointIndex(gay));
+                    spawnpoint.RcpSetSpawnPointReached(i <= loadedGameManagerSaveData.highestReachedSavePointIndex);
+                }
             }
 
             SavePoint savePointToStartAt = savePoints[loadedGameManagerSaveData.highestReachedSavePointIndex];
@@ -200,6 +211,7 @@ namespace DigDig2
 
         public void RestoreState(object dataObject)
         {
+            Debug.Log("SUNG JINWOOOO");
             if (dataObject == null)
             {
                 loadedGameManagerSaveData = new GameManagerGameSaveData
@@ -207,11 +219,13 @@ namespace DigDig2
                     singleplayerSelectedCharacter = defaultSingleplayerCharacter,
                     highestReachedSavePointIndex = 0,
                 };
+                Debug.Log("SUNG KIM");
             }
             else
             {
-                loadedGameManagerSaveData = (GameManagerGameSaveData)dataObject;
+                loadedGameManagerSaveData = JsonConvert.DeserializeObject<GameManagerGameSaveData>(dataObject.ToString());
                 currentCharacter = loadedGameManagerSaveData.singleplayerSelectedCharacter;
+                Debug.Log($"GAAAY {loadedGameManagerSaveData.highestReachedSavePointIndex}");
             }
         }
 

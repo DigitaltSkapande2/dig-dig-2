@@ -19,7 +19,7 @@ namespace DigDig2
             string dataString = "";
             switch (extension)
             {
-                case ".json": 
+                case ".json":                
                     dataString = JsonConvert.SerializeObject(data, Formatting.Indented); 
                     break;
             }
@@ -34,7 +34,9 @@ namespace DigDig2
 
             switch (extension)
             {
-                case ".json": return JsonUtility.FromJson<T>(dataString);
+                case ".json":
+                    Debug.Log(JsonConvert.SerializeObject(JsonConvert.DeserializeObject<T>(dataString)));
+                return JsonConvert.DeserializeObject<T>(dataString);
                 default: return default;
             }
         }

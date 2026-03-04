@@ -133,6 +133,7 @@ namespace DigDig2
         {
             if (gameSave == null) Debug.LogError("TRYING TO LOAD NULL GAMESAVE");
             loadedGameSave = gameSave;
+            VerboseLog($"Loaded save of name {gameSave.saveName}");
 
             return true;
         }
@@ -145,6 +146,7 @@ namespace DigDig2
             }
             else
             {
+                Debug.LogWarning($"Trying to Load Save of unknown name: {saveName}");
                 return false;
             }
         }
@@ -186,7 +188,7 @@ namespace DigDig2
                 saveable = registeredSavables[uniqueName];
             }
 
-            if (loadedGameSave.stateData != null && loadedGameSave.stateData.Keys.Contains(uniqueName))
+            if (loadedGameSave.stateData.Keys.Contains(uniqueName))
             {
                 saveable.RestoreState(loadedGameSave.stateData[uniqueName]);
             }

@@ -61,10 +61,17 @@ namespace DigDig2
             lockTargetEffector.IsActive = false;
         }
 
-        [ClientRpc]
-        private void SetSpawnPointReached(bool reached)
+        [Server]
+        public void ServerSetSpawnPointReached(bool reached)
         {
-            collider.enabled = !reached; 
+            RcpSetSpawnPointReached(reached);
+        }
+
+        [ClientRpc]
+        public void RcpSetSpawnPointReached(bool reached)
+        {
+            collider.enabled = !reached;
+            VerboseLog($"i am active, {name}");
 
             if (reached)
             {
@@ -78,7 +85,7 @@ namespace DigDig2
             if (!isServer) return;
             VerboseLog("reached: " + gameObject.name);
 
-            SetSpawnPointReached(true);
+            RcpSetSpawnPointReached(true);
             SaveManager.Instance.SaveAllAndWriteToFile();
         }
 
