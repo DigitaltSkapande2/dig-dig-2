@@ -1,6 +1,8 @@
 using DigDig2.UINavigation;
+using Mirror;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 namespace DigDig2
@@ -23,6 +25,10 @@ namespace DigDig2
         private float openCooldownTimer = 0;
 
         private VisualElement pauseMenuContainer;
+
+        private Button resumeButton;
+        private Button settingsButton;
+        private Button exitButton;
         
         private UIDocument uiDocument;
         private UserInterfaceNavigator navigator;
@@ -37,6 +43,12 @@ namespace DigDig2
         private void Start()
         {
             pauseMenuContainer = uiDocument.rootVisualElement.Query<VisualElement>("animationContainer");
+
+            resumeButton = pauseMenuContainer.Query<Button>("resume");
+            resumeButton.clicked += Close;
+            settingsButton = pauseMenuContainer.Query<Button>("settings");
+            exitButton = pauseMenuContainer.Query<Button>("exit");
+            exitButton.clicked += SaveAndExit;
             
             navigator.Hierarchy = new NavigationNode("game", null, 0, null, true, new()
             {
@@ -62,15 +74,20 @@ namespace DigDig2
         {
             if (openCooldownTimer > 0) openCooldownTimer = Mathf.Max(openCooldownTimer - Time.deltaTime, 0);
         }
+        
         public void Open()
         {
             navigator.NavigateTo("/pauseMenu");
             openCooldownTimer = openCooldown;
         }
-
         public void Close()
         {
             if (openCooldownTimer <= 0) navigator.NavigateTo("/");
+        }
+
+        private void SaveAndExit()
+        {
+            GameManager.Instance.SaveAndExit();
         }
         
         private void OnCancel()
