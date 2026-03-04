@@ -349,7 +349,7 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
       duration: 7
-      intensity: 0.4
+      intensity: 0.2
     cameraZoom: 0
     cameraZoomEffectData:
       intensityCurve:

@@ -13,6 +13,7 @@ namespace DigDig2
         [SerializeField] private GameObject characterSeclectSecuencerPrefab;
         [SerializeField] private LockTargetEffector lockTargetEffector;
         [SerializeField] private Transform singlePlayerSpawnPoint;
+        [SerializeField] public float cameraYRotation;
         [Header("Events")]
         [SerializeField] public UnityEvent savePointReached;
         [SerializeField] private EffectPlayer onReachedEffect;
@@ -55,7 +56,7 @@ namespace DigDig2
         {
             lockTargetEffector.IsActive = true;
             VerboseLog("Initializing singleplayer spawn...");
-            GameManager.Instance.InitializeSingleplayerCharacter(singlePlayerSpawnPoint.position, singlePlayerSpawnPoint.rotation);
+            GameManager.Instance.InitializeSingleplayerCharacter(singlePlayerSpawnPoint.position, Quaternion.identity);
 
             await Task.Delay((int)(timeUntilReleaseCamera * 1000));
             lockTargetEffector.IsActive = false;

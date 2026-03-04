@@ -160,14 +160,16 @@ namespace DigDig2
 
         #region ISaveable interaction
 
+        public void Reset()
+        {
+            uniqueNames.Clear();
+            registeredSavables.Clear();
+        }
+
         public void RegisterSavable(string uniqueName, ISaveable saveable, bool restoreOnRegister = true)
         {
-            if (uniqueNames.Contains(uniqueName))
-            {
-                Debug.LogWarning($"Trying to register Savable with already registered uniqueName: {uniqueName}, aborting");
-                return;
-            }
-            VerboseLog($"Registered NEW Savable with uniqueName \"{uniqueName}\"");
+            if (uniqueNames.Contains(uniqueName)) Debug.LogWarning($"Trying to register Savable with already registered uniqueName: {uniqueName}, aborting");
+            else VerboseLog($"Registered NEW Savable with uniqueName \"{uniqueName}\"");
 
             uniqueNames.Add(uniqueName);
             registeredSavables.Add(uniqueName, saveable);
@@ -191,12 +193,14 @@ namespace DigDig2
             if (loadedGameSave.stateData.Keys.Contains(uniqueName))
             {
                 saveable.RestoreState(loadedGameSave.stateData[uniqueName]);
+                VerboseLog($"Restored state for Savable with uniqueName \"{uniqueName}\"");
             }
             else
             {
                 saveable.RestoreState(null);
+                VerboseLog($"Restored state NULL for Savable with uniqueName \"{uniqueName}\"");
             }
-            VerboseLog($"Restored state for Savable with uniqueName \"{uniqueName}\"");
+            
             
         }
         

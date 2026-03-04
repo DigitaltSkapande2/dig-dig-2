@@ -1,4 +1,5 @@
 using System;
+using DigDig2.CinemaCamera;
 using Mirror;
 using Newtonsoft.Json;
 using UnityEngine;
@@ -79,9 +80,10 @@ namespace DigDig2
             {
                 if (savePoints[i].TryGetComponent(out SavePoint spawnpoint))
                 {
-                    int gay = i + 1;
+                    int gay = i;
                     spawnpoint.savePointReached.AddListener(() => SetHighestReachedSavePointIndex(gay));
-                    spawnpoint.RcpSetSpawnPointReached(i <= loadedGameManagerSaveData.highestReachedSavePointIndex);
+                    spawnpoint.ServerSetSpawnPointReached(i <= loadedGameManagerSaveData.highestReachedSavePointIndex);
+                    Debug.Log(spawnpoint.name + " " + i);
                 }
             }
 
@@ -94,7 +96,13 @@ namespace DigDig2
             else
             {
                 savePointToStartAt.ServerStartSingleplayerStartSequence();
+                GameCamera.Instance.SetTargetRotation(savePointToStartAt.cameraYRotation, true);
             }
+        }
+
+        void OnDestroy()
+        {
+            SaveManager.Instance.Reset();
         }
 
         private GameObject GetCharacterPrefabFromCharacterType(CharacterType characterType)
@@ -109,7 +117,6 @@ namespace DigDig2
 
         public void SaveAndExit()
         {
-
             if (NetworkServer.active)
             {
                 SaveManager.Instance.SaveAllAndWriteToFile();
@@ -249,5 +256,7 @@ namespace DigDig2
         }
 
         #endregion
+
+
     }
 }

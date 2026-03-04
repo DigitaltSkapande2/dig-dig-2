@@ -76,9 +76,15 @@ namespace DigDig2
 
         public void RestoreState(object dataObject)
         {
-            if (dataObject != null)
+            if (dataObject == null)
             {
-                plane.position = new Vector3(target.position.x, JsonConvert.DeserializeObject<float>(dataObject.ToString()), target.position.z);
+                Debug.Log("WÄÄÄÄÄÄÄÄ");
+            }
+            else
+            {
+                targetY = JsonConvert.DeserializeObject<float>(dataObject.ToString());
+                print(targetY);
+                transform.position = new Vector3(0, targetY, 0);
             }
         }
     }

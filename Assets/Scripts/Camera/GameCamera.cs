@@ -57,7 +57,14 @@ namespace DigDig2.CinemaCamera
 
         public void SetTargetRotation(float angle)
         {
+            SetTargetRotation(angle, false);
+        }
+
+        public void SetTargetRotation(float angle, bool setInstant)
+        {
             baseTargetRotation = quaternion.Euler(0, Mathf.Deg2Rad * angle, 0);
+            Debug.Log($"Set Camera Rotation to {angle} {setInstant}");
+            if (setInstant) transform.rotation = baseTargetRotation;
         }
 
         #region Saving
