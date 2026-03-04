@@ -5,6 +5,4 @@ namespace DigDig2
         object CollectData();
         void RestoreState(object dataObject);
     }
-
 }
-

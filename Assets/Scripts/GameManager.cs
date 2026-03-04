@@ -1,11 +1,10 @@
 using Mirror;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.ProBuilder.MeshOperations;
+using UnityEngine.SceneManagement;
 
 namespace DigDig2
 {
-
     public enum CharacterType
     {
         Max,
@@ -17,11 +16,11 @@ namespace DigDig2
         [SerializeField] private CharacterType defaultSingleplayerCharacter = CharacterType.Max;
         [SerializeField] private GameObject maxPrefab;
         [SerializeField] private GameObject miniPrefab;
-        
+
         [Header("SavePoints")]
         [SerializeField] private SavePoint[] savePoints;
 
-        public struct GameManagerGameSaveData
+        public class GameManagerGameSaveData
         {
             public CharacterType singleplayerSelectedCharacter;
             public int highestReachedSavePointIndex;
@@ -37,7 +36,7 @@ namespace DigDig2
             }
         }
         [SerializeField] public UnityEvent<bool> pauseStateChanged;
-        
+
         private PauseMenuController pauseMenuController;
         private GameHudController gameHudController;
 
@@ -73,7 +72,7 @@ namespace DigDig2
             for (int i = 0; i < savePoints.Length; i++)
             {
                 savePoints[i].GetComponent<SavePoint>().savePointReached.AddListener(() => SetHighestReachedSavePointIndex(i));
-            }   
+            }
 
             SavePoint savePointToStartAt = savePoints[loadedGameManagerSaveData.highestReachedSavePointIndex];
 
@@ -95,6 +94,19 @@ namespace DigDig2
                 CharacterType.Mini => miniPrefab,
                 _ => null,
             };
+        }
+
+        public void SaveAndExit()
+        {
+
+            if (NetworkServer.active)
+            {
+                SaveManager.Instance.SaveAllAndWriteToFile();
+                NetworkManager.singleton.StopHost();
+            }
+            else NetworkManager.singleton.StopClient();
+
+            SceneManager.LoadScene(0);
         }
 
         #region Singleplayer
@@ -119,13 +131,13 @@ namespace DigDig2
             {
                 Debug.LogError("Tried to switch character in multiplayer mode, this is not allowed.");
             }
-            
+
             // Harvest old player data
             EntityCharacterController oldPlayerEntityCharacterController = LocalPlayerObj.GetComponent<EntityCharacterController>();
             Health oldPlayerHealthComponent = LocalPlayerObj.GetComponent<Health>();
-            
+
             Vector3 oldPlayerPos = LocalPlayerObj.transform.position;
-            
+
             Vector3 oldPlayerLookVector = oldPlayerEntityCharacterController.GetForwardVector();
             Vector3 oldPlayerInputMoveVector = oldPlayerEntityCharacterController.inputMoveVector;
 
@@ -140,15 +152,15 @@ namespace DigDig2
             // Spawn new player
             GameObject newPrefab = GetCharacterPrefabFromCharacterType(currentCharacter);
             GameObject playerCharacter = Instantiate(newPrefab, oldPlayerPos, Quaternion.identity);
-            
+
             EntityCharacterController playerEntityCharacterController = playerCharacter.GetComponent<EntityCharacterController>();
             Health playerHealthComponent = playerCharacter.GetComponent<Health>();
-            
+
             playerEntityCharacterController.LookTowards(playerCharacter.transform.position + oldPlayerLookVector, false);
             playerEntityCharacterController.inputMoveVector = oldPlayerInputMoveVector;
-            
+
             playerHealthComponent.HealthPoints = oldHealthPoints;
-            
+
             NetworkServer.ReplacePlayerForConnection(NetworkServer.connections[0], playerCharacter, ReplacePlayerOptions.KeepAuthority);
 
             characterSwitched.Invoke(currentCharacter, playerCharacter);
@@ -179,7 +191,7 @@ namespace DigDig2
         }
 
         #endregion
-        #region Saving and Loading 
+        #region Saving and Loading
 
         public object CollectData()
         {
@@ -205,13 +217,11 @@ namespace DigDig2
 
         public void SetHighestReachedSavePointIndex(int index)
         {
-            var tempData = loadedGameManagerSaveData;
-            tempData.highestReachedSavePointIndex = index;
-            loadedGameManagerSaveData = tempData;
+            loadedGameManagerSaveData.highestReachedSavePointIndex = index;
         }
 
         #endregion
-        
+
         #region Pausing
 
         public void Pause()
@@ -223,7 +233,7 @@ namespace DigDig2
         {
             pauseMenuController.Close();
         }
-        
+
         #endregion
     }
 }

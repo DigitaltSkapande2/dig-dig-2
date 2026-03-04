@@ -131,6 +131,7 @@ namespace DigDig2
 
         public bool LoadSave(GameSave gameSave)
         {
+            if (gameSave == null) Debug.LogError("TRYING TO LOAD NULL GAMESAVE");
             loadedGameSave = gameSave;
 
             return true;
@@ -185,7 +186,7 @@ namespace DigDig2
                 saveable = registeredSavables[uniqueName];
             }
 
-            if (loadedGameSave.stateData.Keys.Contains(uniqueName))
+            if (loadedGameSave.stateData != null && loadedGameSave.stateData.Keys.Contains(uniqueName))
             {
                 saveable.RestoreState(loadedGameSave.stateData[uniqueName]);
             }

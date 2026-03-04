@@ -119,6 +119,10 @@ namespace DigDig2.UINavigation
                         node.inputElement.enabledSelf = true;
                         node.inputElement.Focus();
                     }
+                    else if (node.element != null)
+                    {
+                        node.element.Focus();
+                    }
                     
                     NavigatorOpenedEvent openedEvent = new NavigatorOpenedEvent();
                     openedEvent.nodeName = node.name;
