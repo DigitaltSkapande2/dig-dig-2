@@ -1,8 +1,9 @@
 using Unity.Mathematics;
 using UnityEngine;
 
-namespace DigDig2.CinemaCamera {
-    public class GameCamera : Singleton<GameCamera>
+namespace DigDig2.CinemaCamera
+{
+    public class GameCamera : Singleton<GameCamera>, ISaveable
     {
         [Tooltip("the time in seconds it will take for the camera to get to the target position")]
         [SerializeField] public float followSpeed = 5f;
@@ -14,14 +15,12 @@ namespace DigDig2.CinemaCamera {
         private float targetFrustumSize;
 
         Camera mainCamera;
-        Animator animator;
         private float defaultFrustumHeight;
 
         void Start()
         {
             mainCamera = GetComponentInChildren<Camera>();
             defaultFrustumHeight = mainCamera.orthographicSize;
-            animator = GetComponent<Animator>();
         }
 
         void Update()
@@ -30,7 +29,7 @@ namespace DigDig2.CinemaCamera {
             Quaternion targetRotation = Quaternion.identity;
             float frustumSize = defaultFrustumHeight;
 
-            
+
             foreach (var effector in CameraEffector.GetEffectivePivotCameraEffectors())
             {
                 targetPos += effector.position;
@@ -60,5 +59,20 @@ namespace DigDig2.CinemaCamera {
         {
             baseTargetRotation = quaternion.Euler(0, Mathf.Deg2Rad * angle, 0);
         }
+
+        #region Saving
+
+        public object CollectData()
+        {
+            return baseTargetRotation;
+        }
+        public void RestoreState(object dataObject)
+        {
+            if (dataObject == null) return;
+            baseTargetRotation = (Quaternion)dataObject;
+            transform.rotation = baseTargetRotation;
+        }
+
+        #endregion
     }
 }

@@ -639,6 +639,9 @@ MonoBehaviour:
   initialNavigationUri: /
   closedElementClass: navigation-closed
   descendantOpenElementClass: navigation-descendant-open
+  navigatedTo:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1265907025
 GameObject:
   m_ObjectHideFlags: 0
