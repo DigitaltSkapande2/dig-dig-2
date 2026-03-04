@@ -173,19 +173,19 @@ namespace DigDig2
                 }
             });
 
-            navigator.Hierarchy = new NavigationNode("mainNavigation", mainNavigationContainer, 0, mainNavigationContainer, true, new()
+            navigator.Hierarchy = new NavigationNode("mainNavigation", mainNavigationContainer, 0, loadGameButton, mainNavigationContainer, true, new()
             {
-                new("screenCover", screenCover, 0.5f, null, false, new()
+                new("screenCover", screenCover, 0.5f, null, null, false, new()
                 {
-                    new("hostingSelection", hostingSelctionAnimationContainer, 0.5f),
+                    new("hostingSelection", hostingSelctionAnimationContainer, 0.5f, singleplayerModeButton),
                 }),
-                new("loadGame", saveMenu, 0.1f, saveFileList, true, new()
+                new("loadGame", saveMenu, 0.1f, saveFileList, saveFileList, true, new()
                 {
-                    new("save", saveManagement, 0.1f, saveManagement, true, new()
+                    new("save", saveManagement, 0.1f, saveLoadButton, saveManagement, true, new()
                     {
-                        new("screenCover", screenCover, 0.5f, null, false, new()
+                        new("screenCover", screenCover, 0.5f, null, null, false, new()
                         {
-                            new("hostingSelection", hostingSelctionAnimationContainer, 0.5f)
+                            new("hostingSelection", hostingSelctionAnimationContainer, 0.5f, singleplayerModeButton)
                         })
                     })
                 }),

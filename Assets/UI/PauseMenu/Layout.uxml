@@ -5,7 +5,7 @@
         <ui:VisualElement name="container" style="flex-grow: 1; position: absolute; top: 50%; left: 50%; padding-left: 20px; padding-right: 20px; padding-top: 20px; padding-bottom: 20px; translate: -50% -50%; background-color: rgba(0, 0, 0, 0.78); width: 500px;">
             <ui:Label text="Paused" style="font-size: 48px; -unity-text-align: middle-center; margin-bottom: 20px;"/>
             <ui:Button text="Resume" name="resume"/>
-            <ui:Button text="Settings" name="settings"/>
+            <ui:Button text="Settings" name="settings" enabled="false"/>
             <ui:Button text="Save &amp; Exit" name="exit"/>
         </ui:VisualElement>
     </ui:VisualElement>
