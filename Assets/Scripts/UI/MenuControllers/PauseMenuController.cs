@@ -50,9 +50,9 @@ namespace DigDig2
             exitButton = pauseMenuContainer.Query<Button>("exit");
             exitButton.clicked += SaveAndExit;
             
-            navigator.Hierarchy = new NavigationNode("game", null, 0, null, true, new()
+            navigator.Hierarchy = new NavigationNode("game", null, 0, null, null, true, new()
             {
-                new NavigationNode("pauseMenu", pauseMenuContainer, 0.1f),
+                new NavigationNode("pauseMenu", pauseMenuContainer, 0.1f, resumeButton),
             });
             
             navigator.navigatedTo.AddListener((string uri) =>

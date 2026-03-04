@@ -1,4 +1,5 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/MainStyle.uss?fileID=7433441132597879392&amp;guid=57c2164d8f5e7a4f5bf7c6109294bfec&amp;type=3#MainStyle"/>
     <Style src="project://database/Assets/UI/GameHud/Style.uss?fileID=7433441132597879392&amp;guid=c51e898850f5ec940a9f381a7bcdc96a&amp;type=3#Style"/>
     <ui:VisualElement name="characterIndicatorContainer" style="right: 0; position: absolute; width: 300px; height: auto; align-items: flex-end; align-self: flex-end; justify-content: center; top: 100px; left: auto; bottom: auto;">
         <ui:Image source="" name="max" class="selected character-indicator" style="height: 100px; flex-basis: auto; background-image: url(&quot;project://database/Assets/Textures/UI/GameHud/CharacterSwitching/Max.png?fileID=2800000&amp;guid=641449a6d9d5f394d9e181faaae3f393&amp;type=3#Max&quot;); width: 100%; -unity-background-scale-mode: scale-to-fit; background-position-x: right 0; margin-left: 0;"/>
@@ -9,6 +10,6 @@
         <ui:Image name="full" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; right: auto; bottom: auto; background-image: url(&quot;project://database/Assets/Textures/UI/GameHud/HealthBar/HealthBarFull.png?fileID=2800000&amp;guid=274102641c86021558a8183765d8799d&amp;type=3#HealthBarFull&quot;); background-size: 400px 100%; background-position-x: left 0; background-position-y: top 0;"/>
     </ui:VisualElement>
     <ui:VisualElement name="focusTargetIndicator" style="flex-grow: 1; position: absolute; display: none;">
-        <ui:VisualElement name="" style="flex-grow: 1; position: absolute; translate: -50% -50%; width: 20px; height: 20px; background-color: rgb(255, 255, 255); border-top-left-radius: 100%; border-top-right-radius: 100%; border-bottom-right-radius: 100%; border-bottom-left-radius: 100%;"/>
+        <ui:VisualElement name="" style="flex-grow: 1; position: absolute; translate: -50% -50%; width: 50px; height: 50px; background-color: rgb(255, 255, 255); border-top-left-radius: 100%; border-top-right-radius: 100%; border-bottom-right-radius: 100%; border-bottom-left-radius: 100%; -unity-background-scale-mode: scale-to-fit; background-image: url(&quot;project://database/Assets/Textures/UI/Crosshairs/Focused.png?fileID=2800000&amp;guid=b72a3b39ce959ca4792ed10d8cb3b315&amp;type=3#Focused&quot;);"/>
     </ui:VisualElement>
 </ui:UXML>

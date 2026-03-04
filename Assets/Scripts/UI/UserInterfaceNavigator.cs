@@ -117,18 +117,19 @@ namespace DigDig2.UINavigation
                     if (node.inputElement != null)
                     {
                         node.inputElement.enabledSelf = true;
-                        node.inputElement.Focus();
                     }
-                    else if (node.element != null)
-                    {
-                        node.element.Focus();
-                    }
-                    
+
                     NavigatorOpenedEvent openedEvent = new NavigatorOpenedEvent();
                     openedEvent.nodeName = node.name;
                     openedEvent.arguments = arguments;
                     openedEvent.target = node.element;
                     if (node.element != null) node.element.SendEvent(openedEvent);
+
+                    if (node.focusElement != null)
+                    {
+                        if (!node.focusElement.canGrabFocus) { Debug.LogError($"{node.focusElement} was selected as the focusElement but it's not focusable!"); return; }
+                        node.focusElement.Focus();
+                    }
                 }
                 else
                 {
@@ -168,15 +169,17 @@ namespace DigDig2.UINavigation
         public string name;
         public VisualElement element;
         public VisualElement inputElement;
+        public VisualElement focusElement;
         public bool openable;
         public float closeDuration;
         public List<NavigationNode> children;
 
-        public NavigationNode(string name, VisualElement element, float closeDuration = 0, VisualElement inputElement = null, bool openable = true, List<NavigationNode> children = null)
+        public NavigationNode(string name, VisualElement element, float closeDuration = 0, VisualElement focusElement = null, VisualElement inputElement = null, bool openable = true, List<NavigationNode> children = null)
         {
             this.name = name;
             this.element = element;
             this.inputElement = inputElement;
+            this.focusElement = focusElement;
             this.openable = openable;
             this.closeDuration = closeDuration;
             this.children = children;

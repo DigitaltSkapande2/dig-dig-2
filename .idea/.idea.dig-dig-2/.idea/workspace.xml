@@ -6,12 +6,14 @@
   <component name="ChangeListManager">
     <list default="true" id="50c3eb56-0f37-4789-a838-f82a855a30c4" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.dig-dig-2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.dig-dig-2/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Materials/Clouds/CloudsMaterial.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Materials/Clouds/CloudsMaterial.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Singletons/NetworkManager.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Singletons/NetworkManager.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/GameScene/EffectCoreVolume Profile 2.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/GameScene/EffectCoreVolume Profile 2.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/MainMenu.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/MainMenu.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/MenuControllers/MainMenuController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/MenuControllers/MainMenuController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/MenuControllers/PauseMenuController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/MenuControllers/PauseMenuController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/UserInterfaceNavigator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/UserInterfaceNavigator.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UI/GameHud/Layout.uxml" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UI/GameHud/Layout.uxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UI/MainMenu/Layout.uxml" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UI/MainMenu/Layout.uxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/UI/PauseMenu/Layout.uxml" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UI/PauseMenu/Layout.uxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ProjectSettings/Packages/com.unity.probuilder/Settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/Packages/com.unity.probuilder/Settings.json" afterDir="false" />
     </list>
