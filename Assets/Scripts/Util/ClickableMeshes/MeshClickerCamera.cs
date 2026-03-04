@@ -104,5 +104,10 @@ namespace DigDig2
         {
 
         }
+
+        public void OnReset(InputAction.CallbackContext context)
+        {
+            
+        }
     }
 }

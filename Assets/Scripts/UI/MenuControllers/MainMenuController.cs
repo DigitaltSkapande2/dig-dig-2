@@ -302,6 +302,11 @@ namespace DigDig2
             navigator.NavigateBack();
         }
 
+        private void OnReset()
+        {
+            navigator.NavigateTo("/", true);
+        }
+
         private void OnContinue()
         {
             navigator.NavigateTo("/screenCover/hostingSelection?type=continue");
