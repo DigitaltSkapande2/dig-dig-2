@@ -1,6 +1,7 @@
 using Mirror;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 namespace DigDig2
 {
@@ -93,6 +94,19 @@ namespace DigDig2
                 CharacterType.Mini => miniPrefab,
                 _ => null,
             };
+        }
+
+        public void SaveAndExit()
+        {
+
+            if (NetworkServer.active)
+            {
+                SaveManager.Instance.SaveAllAndWriteToFile();
+                NetworkManager.singleton.StopHost();
+            }
+            else NetworkManager.singleton.StopClient();
+
+            SceneManager.LoadScene(0);
         }
 
         #region Singleplayer

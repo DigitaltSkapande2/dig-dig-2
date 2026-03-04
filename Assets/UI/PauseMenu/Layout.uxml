@@ -6,7 +6,7 @@
             <ui:Label text="Paused" style="font-size: 48px; -unity-text-align: middle-center; margin-bottom: 20px;"/>
             <ui:Button text="Resume" name="resume"/>
             <ui:Button text="Settings" name="settings"/>
-            <ui:Button text="Quit" name="quit"/>
+            <ui:Button text="Save &amp; Exit" name="exit"/>
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

@@ -9,7 +9,7 @@ using UnityEngine.UIElements;
 namespace DigDig2
 {
     [RequireComponent(typeof(UIDocument), typeof(UserInterfaceNavigator))]
-    public class MainMenu : MonoBehaviour
+    public class MainMenuController : MonoBehaviour
     {
         [SerializeField] private string gameSceneName = "GameScene";
 
