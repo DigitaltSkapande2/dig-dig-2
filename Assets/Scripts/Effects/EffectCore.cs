@@ -8,6 +8,7 @@ namespace DigDig2.Effects
     [RequireComponent(typeof(CameraZoomEffect))]
     [RequireComponent(typeof(TimeSlowEffect))]
     [RequireComponent(typeof(VignettePulseEffect))]
+    [RequireComponent(typeof(GreyscalePulseEffect))]
     public class EffectCore : Singleton<EffectCore>
     {
         [NonSerialized] public SpawnPrefabEffect spawnPrefabEffect;
@@ -15,6 +16,7 @@ namespace DigDig2.Effects
         [NonSerialized] public CameraZoomEffect cameraZoomEffect;
         [NonSerialized] public TimeSlowEffect timeSlowEffect;
         [NonSerialized] public VignettePulseEffect vignettePulseEffect;
+        [NonSerialized] public GreyscalePulseEffect GreyscalePulseEffect;
 
         protected override void Awake()
         {
@@ -24,6 +26,7 @@ namespace DigDig2.Effects
             cameraZoomEffect = GetComponent<CameraZoomEffect>();
             timeSlowEffect = GetComponent<TimeSlowEffect>();
             vignettePulseEffect = GetComponent<VignettePulseEffect>();
+            GreyscalePulseEffect = GetComponent<GreyscalePulseEffect>();
         }
     }
 }

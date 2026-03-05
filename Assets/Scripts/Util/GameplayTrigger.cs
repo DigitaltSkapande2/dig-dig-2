@@ -1,3 +1,4 @@
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -8,6 +9,23 @@ namespace DigDig2
     {
         [SerializeField] UnityEvent triggerEvent;
 
+#if UNITY_EDITOR
+
+        Collider mesh;
+
+        void Start()
+        {
+            mesh = GetComponent<Collider>();
+        }
+
+
+        void OnDrawGizmos()
+        {
+            
+        }
+
+#endif
+
         void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Player"))
@@ -15,5 +33,7 @@ namespace DigDig2
                 triggerEvent.Invoke();
             }
         }
+
+        
     }
 }

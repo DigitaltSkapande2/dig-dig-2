@@ -20,6 +20,8 @@ namespace DigDig2.Effects
         public CumulativeEffectInstanceData  timeSlowEffectData;
         public bool vignettePulse;
         public VignettePulseEffectInstanceData vignettePulseEffectData;
+        public bool greyscale;
+        public CumulativeEffectInstanceData greyscaleEffectData;
 
         public void Play(Vector3 position = default, Quaternion rotation = default, Vector3 scale = default, Transform parent = null)
         {
@@ -72,6 +74,15 @@ namespace DigDig2.Effects
                 if (vignettePulseEffect != null)
                 {
                     vignettePulseEffect.PlayEffectInstance(vignettePulseEffectData);
+                }
+            }
+
+            if (greyscale)
+            {
+                TimeSlowEffect greyscaleEffect = EffectCore.Instance.timeSlowEffect;
+                if (greyscaleEffect != null)
+                {
+                    greyscaleEffect.PlayEffectInstance(greyscaleEffectData);
                 }
             }
         }
@@ -155,6 +166,11 @@ namespace DigDig2.Effects
             var vignetteDataProp = property.FindPropertyRelative("vignettePulseEffectData");
             DrawEffectSection("Vignette Pulse", vignetteProp, vignetteDataProp, subPanelColor);
 
+            // greyscale
+            var greyscaleProp = property.FindPropertyRelative("greyscale");
+            var greyscaleDataProp = property.FindPropertyRelative("greyscaleEffectData");
+            DrawEffectSection("Greyscale", greyscaleProp, greyscaleDataProp, subPanelColor);
+
             // Preview button
             var previewRect = new Rect(position.x + 8, y, position.width - 16, lineHeight + 4);
             GUI.enabled = Application.isPlaying && DigDig2.Effects.EffectCore.Instance != null;
@@ -208,6 +224,13 @@ namespace DigDig2.Effects
             var vignetteDataProp = property.FindPropertyRelative("vignettePulseEffectData");
             height += lineHeight + spacing;
             if (vignetteProp.boolValue) height += EditorGUI.GetPropertyHeight(vignetteDataProp, true) + spacing;
+
+            // timeSlow
+            var greyscaleProp = property.FindPropertyRelative("greyscale");
+            var greyscaleDataProp = property.FindPropertyRelative("greyscaleEffectData");
+            height += lineHeight + spacing;
+            if (greyscaleProp.boolValue) height += EditorGUI.GetPropertyHeight(greyscaleDataProp, true) + spacing;
+
             // add preview button height
             height += lineHeight + spacing + 6f;
             // outer padding

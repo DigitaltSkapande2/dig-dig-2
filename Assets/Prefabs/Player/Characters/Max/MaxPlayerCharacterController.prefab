@@ -320,6 +320,34 @@ MonoBehaviour:
       duration: 0.4
       intensity: 0.3
       color: {r: 0.5849056, g: 0.08001069, b: 0.08001069, a: 0}
+    greyscale: 0
+    greyscaleEffectData:
+      intensityCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      duration: 0.4
+      intensity: 1
   hit:
     m_PersistentCalls:
       m_Calls: []
@@ -455,6 +483,34 @@ MonoBehaviour:
       duration: 0.4
       intensity: 1
       color: {r: 0, g: 0, b: 0, a: 0}
+    greyscale: 0
+    greyscaleEffectData:
+      intensityCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      duration: 0.4
+      intensity: 1
   death:
     m_PersistentCalls:
       m_Calls:
@@ -783,6 +839,86 @@ PrefabInstance:
     - target: {fileID: 1007880672321316745, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2416112746756125568, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
+      propertyPath: deathEffectPlayer.greyscale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2416112746756125568, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
+      propertyPath: deathEffectPlayer.screenShake
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2416112746756125568, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
+      propertyPath: deathEffectPlayer.greyscaleEffectData.duration
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2416112746756125568, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
+      propertyPath: deathEffectPlayer.screenShakeEffectData.duration
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2416112746756125568, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
+      propertyPath: deathEffectPlayer.cameraZoomEffectData.intensityCurve.m_Curve.Array.data[0].time
+      value: -0.0041656494
+      objectReference: {fileID: 0}
+    - target: {fileID: 2416112746756125568, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
+      propertyPath: deathEffectPlayer.greyscaleEffectData.intensityCurve.m_Curve.Array.data[0].value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2416112746756125568, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
+      propertyPath: deathEffectPlayer.greyscaleEffectData.intensityCurve.m_Curve.Array.data[1].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2416112746756125568, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
+      propertyPath: deathEffectPlayer.cameraZoomEffectData.intensityCurve.m_Curve.Array.data[0].value
+      value: -0.002380371
+      objectReference: {fileID: 0}
+    - target: {fileID: 2416112746756125568, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
+      propertyPath: deathEffectPlayer.greyscaleEffectData.intensityCurve.m_Curve.Array.data[0].inSlope
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2416112746756125568, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
+      propertyPath: deathEffectPlayer.greyscaleEffectData.intensityCurve.m_Curve.Array.data[1].inSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2416112746756125568, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
+      propertyPath: deathEffectPlayer.cameraZoomEffectData.intensityCurve.m_Curve.Array.data[0].inSlope
+      value: 2.9681013
+      objectReference: {fileID: 0}
+    - target: {fileID: 2416112746756125568, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
+      propertyPath: deathEffectPlayer.cameraZoomEffectData.intensityCurve.m_Curve.Array.data[1].inSlope
+      value: 0.009865481
+      objectReference: {fileID: 0}
+    - target: {fileID: 2416112746756125568, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
+      propertyPath: deathEffectPlayer.greyscaleEffectData.intensityCurve.m_Curve.Array.data[0].outSlope
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2416112746756125568, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
+      propertyPath: deathEffectPlayer.greyscaleEffectData.intensityCurve.m_Curve.Array.data[1].outSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2416112746756125568, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
+      propertyPath: deathEffectPlayer.cameraZoomEffectData.intensityCurve.m_Curve.Array.data[0].outSlope
+      value: 2.9681013
+      objectReference: {fileID: 0}
+    - target: {fileID: 2416112746756125568, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
+      propertyPath: deathEffectPlayer.cameraZoomEffectData.intensityCurve.m_Curve.Array.data[1].inWeight
+      value: 0.5521983
+      objectReference: {fileID: 0}
+    - target: {fileID: 2416112746756125568, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
+      propertyPath: deathEffectPlayer.cameraZoomEffectData.intensityCurve.m_Curve.Array.data[1].outSlope
+      value: 0.009865481
+      objectReference: {fileID: 0}
+    - target: {fileID: 2416112746756125568, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
+      propertyPath: deathEffectPlayer.cameraZoomEffectData.intensityCurve.m_Curve.Array.data[0].outWeight
+      value: 0.26626185
+      objectReference: {fileID: 0}
+    - target: {fileID: 2416112746756125568, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
+      propertyPath: deathEffectPlayer.cameraZoomEffectData.intensityCurve.m_Curve.Array.data[0].weightedMode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2416112746756125568, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
+      propertyPath: deathEffectPlayer.cameraZoomEffectData.intensityCurve.m_Curve.Array.data[1].weightedMode
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2996078269563199115, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
       propertyPath: m_Name

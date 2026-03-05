@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 
 namespace DigDig2
 {
@@ -23,12 +24,14 @@ namespace DigDig2
 
         [Header("SavePoints")]
         [SerializeField] private SavePoint[] savePoints;
+        [SerializeField] private Crystal[] crystals;
 
         [Serializable]
         public struct GameManagerGameSaveData
         {
             public CharacterType singleplayerSelectedCharacter;
             public int highestReachedSavePointIndex;
+            public int highestKilledCrystal;
         }
         public GameManagerGameSaveData loadedGameManagerSaveData;
         [SerializeField] public UnityEvent<CharacterType, GameObject> characterSwitched;
@@ -74,19 +77,45 @@ namespace DigDig2
         public void Start()
         {
             if (!isServer) return;
+
             SaveManager.Instance.RegisterSavable("GameManager", this, true);
-            print(loadedGameManagerSaveData.highestReachedSavePointIndex);
+
+            InitializeSavePoint();
+            KillAlreadyKilledCrystals();
+
+            StartGame();
+        }
+
+        private void InitializeSavePoint()
+        {
             for (int i = 0; i < savePoints.Length; i++)
             {
-                if (savePoints[i].TryGetComponent(out SavePoint spawnpoint))
+                if (savePoints[i])
                 {
+                    SavePoint savePoint = savePoints[i];
                     int gay = i;
-                    spawnpoint.savePointReached.AddListener(() => SetHighestReachedSavePointIndex(gay));
-                    spawnpoint.ServerSetSpawnPointReached(i <= loadedGameManagerSaveData.highestReachedSavePointIndex);
-                    Debug.Log(spawnpoint.name + " " + i);
+                    savePoint.savePointReached.AddListener(() => SetHighestReachedSavePointIndex(gay));
+                    savePoint.ServerSetSpawnPointReached(i <= loadedGameManagerSaveData.highestReachedSavePointIndex);
+                    Debug.Log(savePoint.name + " " + i);
                 }
             }
+        }
 
+        private void KillAlreadyKilledCrystals()
+        {
+            for (int i = 0; i < crystals.Length; i++)
+            {
+                if (crystals[i])
+                {
+                    Crystal crystal = crystals[i];
+                    if (i < loadedGameManagerSaveData.highestKilledCrystal) Destroy(crystal.gameObject);
+                    else crystal.GetComponent<Health>().death.AddListener(() => SetHighestKilledCrystalIndex(i));
+                }
+            }
+        }
+
+        private void StartGame()
+        {
             SavePoint savePointToStartAt = savePoints[loadedGameManagerSaveData.highestReachedSavePointIndex];
 
             if (NetworkManager.singleton.IsMultiplayer)
@@ -239,6 +268,11 @@ namespace DigDig2
         public void SetHighestReachedSavePointIndex(int index)
         {
             loadedGameManagerSaveData.highestReachedSavePointIndex = index;
+        }
+
+        public void SetHighestKilledCrystalIndex(int index)
+        {
+            loadedGameManagerSaveData.highestKilledCrystal = index;
         }
 
         #endregion
