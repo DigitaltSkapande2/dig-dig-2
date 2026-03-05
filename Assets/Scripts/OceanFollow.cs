@@ -82,7 +82,7 @@ namespace DigDig2
             }
             else
             {
-                targetY = JsonConvert.DeserializeObject<float>(dataObject.ToString());
+                targetY = (float)dataObject;
                 print(targetY);
                 transform.position = new Vector3(0, targetY, 0);
             }
