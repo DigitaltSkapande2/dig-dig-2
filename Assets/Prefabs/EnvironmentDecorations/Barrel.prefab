@@ -82,6 +82,9 @@ MonoBehaviour:
       - prefab: {fileID: 2900997506971962639, guid: eb05cc849483175209f751de90bf7c13, type: 3}
         hasLifetime: 0
         lifetime: 0
+      - prefab: {fileID: 4950934811570952627, guid: b5fe4e539c6f68c32847f5767ad46b50, type: 3}
+        hasLifetime: 1
+        lifetime: 2.19
     screenShake: 0
     screenShakeEffectData:
       intensityCurve:

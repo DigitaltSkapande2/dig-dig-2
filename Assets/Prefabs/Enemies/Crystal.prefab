@@ -524,7 +524,7 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
       duration: 5
-      intensity: 0.6
+      intensity: 0.3
       color: {r: 0.9150943, g: 0.67768776, b: 0.854936, a: 1}
     greyscale: 0
     greyscaleEffectData:
