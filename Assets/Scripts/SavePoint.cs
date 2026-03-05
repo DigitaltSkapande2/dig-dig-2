@@ -68,7 +68,7 @@ namespace DigDig2
             RcpSetSpawnPointReached(reached);
         }
 
-        [ClientRpc]
+
         public void RcpSetSpawnPointReached(bool reached)
         {
             collider.enabled = !reached;

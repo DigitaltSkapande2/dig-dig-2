@@ -17,6 +17,7 @@ namespace DigDig2.Effects
 
         private void SetTimeScale(float timeScale)
         {
+            Debug.Log("TIMESCALE: "+ timeScale);
             Time.timeScale = timeScale;
         }
     }

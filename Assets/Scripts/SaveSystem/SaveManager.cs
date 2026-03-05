@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace DigDig2
 {
-    public class SaveManager : ClientSingleton<SaveManager> 
+    public class SaveManager : ClientSingleton<SaveManager>
     {
         private const string SAVES_DIRECTORY_NAME = "saves";
         private const string SAVE_FILE_EXTENSION = ".json";
