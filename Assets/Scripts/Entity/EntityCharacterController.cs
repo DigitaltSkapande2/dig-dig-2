@@ -211,7 +211,7 @@ namespace DigDig2
 
 					// Visuals
 					UpdateVisualsRotation();
-					if (isLocalPlayer) UpdateAnimation();
+					if (animator != null) UpdateAnimation();
 				}
 				else
                 {
@@ -532,7 +532,7 @@ namespace DigDig2
 
 				state = EntityState.Dashing;
 				animator.CrossFadeInFixedTime("Dash", 0.1f, 0);
-				animator.CrossFadeInFixedTime("SwordDash", 0.1f, 1);
+				if (isLocalPlayer) animator.CrossFadeInFixedTime("SwordDash", 0.1f, 1);
 
 				return;
 			}
@@ -542,7 +542,7 @@ namespace DigDig2
 				if (state == EntityState.Sprinting) return;
 				state = EntityState.Sprinting;
                 animator.CrossFadeInFixedTime("Sprint", 0.1f, 0);
-				animator.CrossFadeInFixedTime("SwordSprint", 0.1f, 1);
+                if (isLocalPlayer) animator.CrossFadeInFixedTime("SwordSprint", 0.1f, 1);
 				return;
             }
 
@@ -550,7 +550,7 @@ namespace DigDig2
 			{
 				state = EntityState.Idle;
 				animator.CrossFadeInFixedTime("Idle", 0.1f, 0);
-				animator.CrossFadeInFixedTime("SwordIdle", 0.1f, 1);
+				if (isLocalPlayer) animator.CrossFadeInFixedTime("SwordIdle", 0.1f, 1);
 			}
         }
 
@@ -571,6 +571,7 @@ namespace DigDig2
 		}
 
 		#endregion
+		
 		#region Effects
 		public void OnFootStepEvent()
 		{
