@@ -486,7 +486,7 @@ MonoBehaviour:
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
-      duration: 4
+      duration: 5
       intensity: 1
     vignettePulse: 1
     vignettePulseEffectData:
@@ -523,7 +523,7 @@ MonoBehaviour:
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
-      duration: 4
+      duration: 5
       intensity: 0.6
       color: {r: 0, g: 0, b: 0, a: 1}
     greyscale: 0

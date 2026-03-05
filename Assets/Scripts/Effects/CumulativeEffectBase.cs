@@ -50,7 +50,9 @@ namespace DigDig2.Effects
                 // expired?
                 if (effect.durationPassed > effect.duration)
                 {
+                    OnEffectEnd(effect);
                     effectInstances.RemoveAt(i);
+                    continue;
                 }
 
                 // evaluate curve (normalized time) and accumulate the weighted value

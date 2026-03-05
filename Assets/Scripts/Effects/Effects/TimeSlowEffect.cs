@@ -11,7 +11,12 @@ namespace DigDig2.Effects
 
         internal override void OnEffectEnd(CumulativeEffectInstanceData effect)
         {
-            SetTimeScale(1);
+            print($"SKIBIDI TOILET {effectInstances.Count}");
+            if (effectInstances.Count <= 1)
+            {
+                print("WIZZZ");
+                SetTimeScale(1);
+            }
         }
 
 
