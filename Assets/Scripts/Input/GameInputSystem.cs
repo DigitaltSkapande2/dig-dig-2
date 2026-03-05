@@ -296,7 +296,7 @@ public partial class @ProjectWideInputActions: IInputActionCollection2, IDisposa
                 {
                     ""name"": """",
                     ""id"": ""36a1610c-9df3-4610-94ac-e472ca0a98cf"",
-                    ""path"": ""<Keyboard>/shift"",
+                    ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -1197,7 +1197,7 @@ public partial class @ProjectWideInputActions: IInputActionCollection2, IDisposa
                 {
                     ""name"": """",
                     ""id"": ""a1a20348-4d0a-407a-8b81-a186b834d445"",
-                    ""path"": ""<Keyboard>/alt"",
+                    ""path"": ""<Keyboard>/shift"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
