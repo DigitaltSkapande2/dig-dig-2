@@ -47,7 +47,6 @@
 }
 
 .saveFile > Label {
-    -unity-font-definition: url("project://database/Assets/Fonts/Roboto/static/Roboto-Medium.ttf?fileID=12800000&guid=5f15a61a79254b59d852a42bc1313680&type=3#Roboto-Medium");
     color: rgb(255, 255, 255);
 }
 

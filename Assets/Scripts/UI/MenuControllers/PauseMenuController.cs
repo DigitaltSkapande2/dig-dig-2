@@ -10,6 +10,9 @@ namespace DigDig2
     public class PauseMenuController : MonoBehaviour
     {
         [SerializeField] private float openCooldown = 0.2f;
+
+		[SerializeField] private GameObject buttonHoverEffectPrefab;
+        [SerializeField] private GameObject buttonClickEffectPrefab;
         
         public bool Paused
         {
@@ -44,6 +47,10 @@ namespace DigDig2
         {
             pauseMenuContainer = uiDocument.rootVisualElement.Query<VisualElement>("animationContainer");
 
+			uiDocument.rootVisualElement.RegisterCallback<ClickEvent>(ButtonClick, TrickleDown.TrickleDown);
+            uiDocument.rootVisualElement.RegisterCallback<NavigationSubmitEvent>(ButtonClick, TrickleDown.TrickleDown);
+            uiDocument.rootVisualElement.RegisterCallback<FocusEvent>(ButtonHover, TrickleDown.TrickleDown);
+
             resumeButton = pauseMenuContainer.Query<Button>("resume");
             resumeButton.clicked += Close;
             settingsButton = pauseMenuContainer.Query<Button>("settings");
@@ -73,6 +80,21 @@ namespace DigDig2
         private void Update() 
         {
             if (openCooldownTimer > 0) openCooldownTimer = Mathf.Max(openCooldownTimer - Time.deltaTime, 0);
+        }
+
+		private void ButtonClick(EventBase _)
+        {
+            PlaySoundEffect(buttonClickEffectPrefab);
+        }
+
+        private void ButtonHover(EventBase _)
+        {
+            PlaySoundEffect(buttonHoverEffectPrefab);
+        }
+
+        private void PlaySoundEffect(GameObject effectPrefab)
+        {
+            Destroy(Instantiate(effectPrefab, Vector3.zero, Quaternion.identity, transform), 10f);
         }
         
         public void Open()

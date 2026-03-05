@@ -1,14 +1,6 @@
 :root {
 }
 
-
-
-
-
-
-
-
-
 #mainNavigation {
     transition-property: opacity, translate;
     transition-duration: 0.1s, 0.1s;
@@ -25,7 +17,6 @@
     font-size: 54px;
     -unity-text-align: middle-left;
     -unity-font-style: normal;
-    -unity-font-definition: url("project://database/Assets/Fonts/Roboto/static/Roboto-Medium.ttf?fileID=12800000&guid=5f15a61a79254b59d852a42bc1313680&type=3#Roboto-Medium");
     border-top-width: 0;
     border-right-width: 0;
     border-bottom-width: 0;

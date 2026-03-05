@@ -1,5 +1,5 @@
 :root {
-    -unity-font-definition: url("project://database/Assets/Fonts/Roboto/static/Roboto-Medium.ttf?fileID=12800000&guid=5f15a61a79254b59d852a42bc1313680&type=3#Roboto-Medium");
+    -unity-font-definition: url("project://database/Assets/Fonts/milky_nice/MilkyNice-Clean.ttf?fileID=12800000&guid=df4971c7b58b624419a9bd44d18b85ac&type=3#MilkyNice-Clean");
     color: rgb(255, 255, 255);
 }
 
@@ -35,5 +35,3 @@ Button:focus {
 .navigation-closed {
     opacity: 0;
 }
-
-
