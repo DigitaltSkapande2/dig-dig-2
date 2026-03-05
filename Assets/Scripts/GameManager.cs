@@ -263,19 +263,20 @@ namespace DigDig2
             Debug.Log("SUNG JINWOOOO");
             if (dataObject == null)
             {
+                Debug.Log("SUNG KIM");
                 loadedGameManagerSaveData = new GameManagerGameSaveData
                 {
                     singleplayerSelectedCharacter = defaultSingleplayerCharacter,
                     highestReachedSavePointIndex = 0,
                     highestKilledCrystal = -1,
                 };
-                Debug.Log("SUNG KIM");
             }
             else
             {
-                loadedGameManagerSaveData = JsonConvert.DeserializeObject<GameManagerGameSaveData>(dataObject.ToString());
-                currentCharacter = loadedGameManagerSaveData.singleplayerSelectedCharacter;
                 Debug.Log($"GAAAY {dataObject}");
+                loadedGameManagerSaveData = (GameManagerGameSaveData)dataObject;
+                //loadedGameManagerSaveData = JsonConvert.DeserializeObject<GameManagerGameSaveData>(dataObject.ToString());
+                currentCharacter = loadedGameManagerSaveData.singleplayerSelectedCharacter;
                 Debug.Log(loadedGameManagerSaveData.highestReachedSavePointIndex);
             }
         }

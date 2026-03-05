@@ -263,7 +263,7 @@ MonoBehaviour:
         m_RotationOrder: 4
       duration: 0.4
       intensity: 1
-    timeSlow: 0
+    timeSlow: 1
     timeSlowEffectData:
       intensityCurve:
         serializedVersion: 2
@@ -278,18 +278,27 @@ MonoBehaviour:
           inWeight: 0
           outWeight: 0
         - serializedVersion: 3
-          time: 1
+          time: 0.05
           value: 0
-          inSlope: 0
-          outSlope: 0
+          inSlope: -0.010204082
+          outSlope: -0.010204082
           tangentMode: 0
           weightedMode: 0
-          inWeight: 0
+          inWeight: 0.33333334
+          outWeight: 0.24561404
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0.002148241
+          outSlope: 0.002148241
+          tangentMode: 0
+          weightedMode: 3
+          inWeight: 1
           outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
-      duration: 0.4
+      duration: 0.3
       intensity: 1
     vignettePulse: 1
     vignettePulseEffectData:

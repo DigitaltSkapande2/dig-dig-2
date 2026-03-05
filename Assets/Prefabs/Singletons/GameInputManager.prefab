@@ -48,6 +48,7 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
+  destroyOnLoad: 0
   inputContextConfig: {fileID: 11400000, guid: ef3e68a6e394772409f488a22a7901c6, type: 2}
   initialContext: 2
   currentInputState: 0

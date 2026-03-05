@@ -178,7 +178,7 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  destroyOnLoad: 1
+  destroyOnLoad: 0
   followSpeed: 5
   rotationSpeed: 1
 --- !u!114 &7793959676995267171
