@@ -521,7 +521,7 @@ namespace DigDig2
 			if (moveVelocity.magnitude > 0) moveSpeedGoalPercentage = moveVelocity.magnitude / moveSpeed;
 			animator.SetFloat("MovementSpeed", moveSpeedGoalPercentage);
 
-			if (attacker != null && attacker.State != Attacker.CombatState.Idle)
+			if (attacker != null && attacker.State != Attacker.CombatState.Idle && attacker.State != Attacker.CombatState.OnCooldown)
 			{
 				state = EntityState.Attacking;
 				return;

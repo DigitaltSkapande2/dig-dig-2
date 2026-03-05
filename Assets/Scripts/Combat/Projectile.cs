@@ -5,6 +5,7 @@ namespace DigDig2
     public class Projectile : MonoBehaviour
     {
         [SerializeField] private GameObject hitEffect;
+        [SerializeField] LayerMask layerMask;
         private string hitboxID;
         private Attacker attacker;
         private float speed;
@@ -13,8 +14,11 @@ namespace DigDig2
         private void Update()
         {
             transform.position += speed * Time.deltaTime * transform.forward;
+        }
 
-            Physics.Raycast(transform.position, transform.forward, speed * Time.deltaTime);
+        void OnTriggerEnter(Collider other)
+        {
+            DestroyProjectile();
         }
 
         public void SetInfo(Attack attack, Attacker attacker, float speed, float lifeTime)

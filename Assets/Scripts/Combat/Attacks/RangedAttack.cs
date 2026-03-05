@@ -31,7 +31,7 @@ namespace DigDig2
 		{
 			Debug.Log("Hello i am a ranged attack");
             attacker.PlayAnimation(animationStateName);
-			attacker.AddMoveSpeedDebuff(animationStateName, attacker.GetBaseMoveSpeed());
+			attacker.AddMoveSpeedDebuff(animationStateName, attacker.GetBaseMoveSpeed() / 2);
             Vector3 forward = attacker.GetComponent<EntityCharacterController>().GetForwardVector();
             Projectile projectile = Instantiate(projectilePrefab, attacker.transform.position + forward, quaternion.LookRotation(forward, Vector3.up)).GetComponent<Projectile>();
             projectile.SetInfo(this, attacker, projectileSpeed, projectileLifetime);
