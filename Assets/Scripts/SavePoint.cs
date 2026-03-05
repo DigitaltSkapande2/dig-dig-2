@@ -76,7 +76,7 @@ namespace DigDig2
 
             if (reached)
             {
-                onReachedEffect.Play();
+                
                 savePointReached.Invoke();
             }
         }
@@ -87,6 +87,7 @@ namespace DigDig2
             VerboseLog("reached: " + gameObject.name);
 
             RcpSetSpawnPointReached(true);
+            onReachedEffect.Play();
             SaveManager.Instance.SaveAllAndWriteToFile();
         }
 

@@ -50,7 +50,7 @@ MonoBehaviour:
     spawnPrefab: 0
     spawnPrefabEffectData:
       prefabToSpawn: []
-    screenShake: 0
+    screenShake: 1
     screenShakeEffectData:
       intensityCurve:
         serializedVersion: 2
@@ -84,22 +84,22 @@ MonoBehaviour:
         serializedVersion: 2
         m_Curve:
         - serializedVersion: 3
-          time: 0
-          value: 0
-          inSlope: 2
-          outSlope: 2
+          time: -0.0041656494
+          value: -0.002380371
+          inSlope: 2.9681013
+          outSlope: 2.9681013
           tangentMode: 0
-          weightedMode: 0
+          weightedMode: 3
           inWeight: 0
-          outWeight: 0
+          outWeight: 0.26626185
         - serializedVersion: 3
           time: 1
           value: 1
-          inSlope: 0
-          outSlope: 0
+          inSlope: 0.009865481
+          outSlope: 0.009865481
           tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
+          weightedMode: 3
+          inWeight: 0.5521983
           outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
@@ -149,28 +149,73 @@ MonoBehaviour:
         serializedVersion: 2
         m_Curve:
         - serializedVersion: 3
-          time: 0
+          time: -0.0000017797574
           value: 0
-          inSlope: 0
-          outSlope: 0
+          inSlope: -0
+          outSlope: -0
           tangentMode: 0
-          weightedMode: 0
+          weightedMode: 3
           inWeight: 0
-          outWeight: 0
+          outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 0.1
+          value: 1
+          inSlope: -0.008050175
+          outSlope: -0.008050175
+          tangentMode: 0
+          weightedMode: 3
+          inWeight: 0.33333334
+          outWeight: 0.43441683
+        - serializedVersion: 3
+          time: 0.24486895
+          value: 0.80816984
+          inSlope: 0.04430653
+          outSlope: 0.04430653
+          tangentMode: 0
+          weightedMode: 3
+          inWeight: 0.6524107
+          outWeight: 0.53862655
+        - serializedVersion: 3
+          time: 0.37637162
+          value: 0.9674185
+          inSlope: -2.1904073
+          outSlope: -2.1904073
+          tangentMode: 0
+          weightedMode: 3
+          inWeight: 0.3088394
+          outWeight: 0.32473856
+        - serializedVersion: 3
+          time: 0.46205723
+          value: 0.80233216
+          inSlope: -0.046923783
+          outSlope: -0.046923783
+          tangentMode: 0
+          weightedMode: 3
+          inWeight: 1
+          outWeight: 1
+        - serializedVersion: 3
+          time: 0.5484468
+          value: 0.983848
+          inSlope: -0.18729578
+          outSlope: -0.18729578
+          tangentMode: 0
+          weightedMode: 3
+          inWeight: 0.34653535
+          outWeight: 0.40021735
         - serializedVersion: 3
           time: 1
-          value: 1
-          inSlope: 2
-          outSlope: 2
+          value: 0
+          inSlope: -0.0040480145
+          outSlope: -0.0040480145
           tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
+          weightedMode: 3
+          inWeight: 0.5003192
           outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
       duration: 2
-      intensity: 1
+      intensity: 0.3
       color: {r: 0.31132078, g: 0, b: 0, a: 1}
     greyscale: 1
     greyscaleEffectData:
@@ -198,5 +243,8 @@ MonoBehaviour:
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
-      duration: 0.4
+      duration: 2
       intensity: 1
+  disolveWeight: 3
+  disolveMat: {fileID: 2100000, guid: a0fd55cc35b8cbb4d997eeee9ba6b0b8, type: 2}
+  disolveFloatName: _DissolveAmount
