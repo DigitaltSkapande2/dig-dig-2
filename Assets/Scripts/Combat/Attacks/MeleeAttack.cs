@@ -29,7 +29,7 @@ namespace DigDig2
 		
 		public override void Trigger(Attacker attacker, AttackType attackGroup, float chargeTime)
 		{
-			attacker.GetattackTrailRenderer().enabled = hasTrailEffect;
+			if (hasTrailEffect) attacker.GetattackTrailRenderer().enabled = true;
 			attacker.PlayAnimation(animationStateName);
 			attacker.StartHitboxAttack(this, animationStateName, attacker.GetBindableAttackHitbox(bindableAttackHitboxIndex));
 			attacker.AddMoveSpeedDebuff(animationStateName, attacker.GetBaseMoveSpeed());
@@ -38,14 +38,14 @@ namespace DigDig2
 
         public override void Ended(Attacker attacker, AttackType attackGroup)
         {
-			attacker.GetattackTrailRenderer().enabled = false;
+			if (hasTrailEffect) attacker.GetattackTrailRenderer().enabled = false;
             attacker.EndHitboxAttack(animationStateName);
 			attacker.RemoveMoveSpeedDebuff(animationStateName);
         }
 
         public override void Hit(Attacker attacker, Attackable attackable, Health healthComponent, EntityCharacterController entityCharacterController)
 		{
-			Instantiate(hitEffect, attackable.transform.position, Quaternion.identity);
+			if (hitEffect != null) Instantiate(hitEffect, attackable.transform.position, Quaternion.identity);
 			if (healthComponent) healthComponent.Damage(damage);
 			attackable.ApplyKnockback((attackable.transform.position - attacker.transform.position).normalized, knockbackStrength);
         }

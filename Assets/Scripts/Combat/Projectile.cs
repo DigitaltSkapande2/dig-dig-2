@@ -8,18 +8,13 @@ namespace DigDig2
         private string hitboxID;
         private Attacker attacker;
         private float speed;
-        private bool hit;
 
 
         private void Update()
         {
             transform.position += speed * Time.deltaTime * transform.forward;
-        }
 
-        void OnTriggerEnter(Collider other)
-        {
-            if (hit) return;
-            DestroyProjectile();
+            Physics.Raycast(transform.position, transform.forward, speed * Time.deltaTime);
         }
 
         public void SetInfo(Attack attack, Attacker attacker, float speed, float lifeTime)
@@ -36,7 +31,6 @@ namespace DigDig2
 
         private void DestroyProjectile()
         {
-            hit = true;
             attacker.EndHitboxAttack(hitboxID);
             Instantiate(hitEffect, transform.position, Quaternion.identity);
             Destroy(gameObject);
