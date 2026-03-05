@@ -760,85 +760,17 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2416112746756125568, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
-      propertyPath: deathEffectPlayer.greyscale
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2416112746756125568, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
-      propertyPath: deathEffectPlayer.screenShake
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2416112746756125568, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
-      propertyPath: deathEffectPlayer.greyscaleEffectData.duration
+      propertyPath: targetMeshRenderer.Array.size
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2416112746756125568, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
-      propertyPath: deathEffectPlayer.screenShakeEffectData.duration
-      value: 0.4
-      objectReference: {fileID: 0}
+      propertyPath: 'targetMeshRenderer.Array.data[0]'
+      value: 
+      objectReference: {fileID: 6965108698693947457}
     - target: {fileID: 2416112746756125568, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
-      propertyPath: deathEffectPlayer.cameraZoomEffectData.intensityCurve.m_Curve.Array.data[0].time
-      value: -0.0041656494
-      objectReference: {fileID: 0}
-    - target: {fileID: 2416112746756125568, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
-      propertyPath: deathEffectPlayer.greyscaleEffectData.intensityCurve.m_Curve.Array.data[0].value
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2416112746756125568, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
-      propertyPath: deathEffectPlayer.greyscaleEffectData.intensityCurve.m_Curve.Array.data[1].value
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2416112746756125568, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
-      propertyPath: deathEffectPlayer.cameraZoomEffectData.intensityCurve.m_Curve.Array.data[0].value
-      value: -0.002380371
-      objectReference: {fileID: 0}
-    - target: {fileID: 2416112746756125568, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
-      propertyPath: deathEffectPlayer.greyscaleEffectData.intensityCurve.m_Curve.Array.data[0].inSlope
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2416112746756125568, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
-      propertyPath: deathEffectPlayer.greyscaleEffectData.intensityCurve.m_Curve.Array.data[1].inSlope
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2416112746756125568, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
-      propertyPath: deathEffectPlayer.cameraZoomEffectData.intensityCurve.m_Curve.Array.data[0].inSlope
-      value: 2.9681013
-      objectReference: {fileID: 0}
-    - target: {fileID: 2416112746756125568, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
-      propertyPath: deathEffectPlayer.cameraZoomEffectData.intensityCurve.m_Curve.Array.data[1].inSlope
-      value: 0.009865481
-      objectReference: {fileID: 0}
-    - target: {fileID: 2416112746756125568, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
-      propertyPath: deathEffectPlayer.greyscaleEffectData.intensityCurve.m_Curve.Array.data[0].outSlope
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2416112746756125568, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
-      propertyPath: deathEffectPlayer.greyscaleEffectData.intensityCurve.m_Curve.Array.data[1].outSlope
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2416112746756125568, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
-      propertyPath: deathEffectPlayer.cameraZoomEffectData.intensityCurve.m_Curve.Array.data[0].outSlope
-      value: 2.9681013
-      objectReference: {fileID: 0}
-    - target: {fileID: 2416112746756125568, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
-      propertyPath: deathEffectPlayer.cameraZoomEffectData.intensityCurve.m_Curve.Array.data[1].inWeight
-      value: 0.5521983
-      objectReference: {fileID: 0}
-    - target: {fileID: 2416112746756125568, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
-      propertyPath: deathEffectPlayer.cameraZoomEffectData.intensityCurve.m_Curve.Array.data[1].outSlope
-      value: 0.009865481
-      objectReference: {fileID: 0}
-    - target: {fileID: 2416112746756125568, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
-      propertyPath: deathEffectPlayer.cameraZoomEffectData.intensityCurve.m_Curve.Array.data[0].outWeight
-      value: 0.26626185
-      objectReference: {fileID: 0}
-    - target: {fileID: 2416112746756125568, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
-      propertyPath: deathEffectPlayer.cameraZoomEffectData.intensityCurve.m_Curve.Array.data[0].weightedMode
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2416112746756125568, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
-      propertyPath: deathEffectPlayer.cameraZoomEffectData.intensityCurve.m_Curve.Array.data[1].weightedMode
-      value: 3
-      objectReference: {fileID: 0}
+      propertyPath: 'targetMeshRenderer.Array.data[1]'
+      value: 
+      objectReference: {fileID: 3869839782317373076}
     - target: {fileID: 2996078269563199115, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
       propertyPath: m_Name
       value: DeathSequence
@@ -1067,9 +999,19 @@ MonoBehaviour:
   m_ForceModule: {fileID: 0}
   m_ForceScale: 1
   m_SimulateSpace: {fileID: 0}
+--- !u!137 &3869839782317373076 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -4342357548064064633, guid: fb11f71a623f7354d8aac55a6cd6624f, type: 3}
+  m_PrefabInstance: {fileID: 8505248102990744851}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4537892359898125835 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -3967280838818931944, guid: fb11f71a623f7354d8aac55a6cd6624f, type: 3}
+  m_PrefabInstance: {fileID: 8505248102990744851}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &6965108698693947457 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 1630794972795428178, guid: fb11f71a623f7354d8aac55a6cd6624f, type: 3}
   m_PrefabInstance: {fileID: 8505248102990744851}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &8179116826566421240 stripped
