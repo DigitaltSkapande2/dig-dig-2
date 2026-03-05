@@ -5,7 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="50c3eb56-0f37-4789-a838-f82a855a30c4" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/EnvironmentDecorations/Barrel.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/EnvironmentDecorations/Barrel.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.dig-dig-2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.dig-dig-2/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Shaders/VFX/Projectile/Impact1.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Shaders/VFX/Projectile/Impact1.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Shaders/VFX/Projectile/Impact2.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Shaders/VFX/Projectile/Impact2.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Shaders/VFX/Projectile/Impact3.png" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Shaders/VFX/Projectile/Impact3.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Shaders/VFX/Projectile/Impact3.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Shaders/VFX/Projectile/Impact3.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Shaders/VFX/Projectile/ProjectileSlashWide.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Shaders/VFX/Projectile/ProjectileSlashWide.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Shaders/VFX/Projectile/ProjectileTrail.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Shaders/VFX/Projectile/ProjectileTrail.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Shaders/VFX/Projectile/Shockwave.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Shaders/VFX/Projectile/Shockwave.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Shaders/VFX/Projectile/Shockwave2.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Shaders/VFX/Projectile/Shockwave2.png.meta" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -137,7 +145,7 @@
       <workItem from="1772529045603" duration="4000" />
       <workItem from="1772529084525" duration="212000" />
       <workItem from="1772734893498" duration="1105000" />
-      <workItem from="1772736017654" duration="12288000" />
+      <workItem from="1772736017654" duration="13276000" />
     </task>
     <servers />
   </component>

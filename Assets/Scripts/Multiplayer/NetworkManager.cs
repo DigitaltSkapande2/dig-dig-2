@@ -77,7 +77,7 @@ namespace DigDig2
 
             if (transport.GetType() == typeof(KcpTransport))
             {
-                debugCanvas.gameObject.SetActive(true);
+                //debugCanvas.gameObject.SetActive(true);
             }
         }
 
