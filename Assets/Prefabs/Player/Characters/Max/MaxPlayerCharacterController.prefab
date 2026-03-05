@@ -122,9 +122,9 @@ MonoBehaviour:
   edgeScanSlopeLimit: 75
   movingPlatformGroundRaycastDistance: 2
   canDash: 1
-  dashStrength: 10
+  dashStrength: 15
   dashDecaySpeed: 10
-  dashCooldown: 2
+  dashCooldown: 0.5
   pushDecaySpeed: 10
   knockbackStrengthMultiplier: 0.75
   knockbackDecaySpeed: 20

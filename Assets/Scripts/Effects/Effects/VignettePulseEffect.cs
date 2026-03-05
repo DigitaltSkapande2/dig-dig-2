@@ -48,7 +48,6 @@ namespace DigDig2.Effects
 
         internal override void UpdateEffect(float curveValue)
         {
-            print("curveValue: " + curveValue);
             vignette.color.value = Color.Lerp(defaultVignette.color.value, targetColor, curveValue * 2);
             vignette.intensity.value = (curveValue * (1 - defaultVignette.intensity.value) * curveValue) + defaultVignette.intensity.value;
         }

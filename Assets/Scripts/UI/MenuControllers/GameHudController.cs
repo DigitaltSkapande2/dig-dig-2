@@ -1,3 +1,4 @@
+using System;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -7,6 +8,8 @@ namespace DigDig2
     [RequireComponent(typeof(UIDocument))]
     public class GameHudController : MonoBehaviour
     {
+        [SerializeField] private float focusTargetIndicatorRotationSpeed = 10f;
+        
         private VisualElement characterIndicatorContainer;
         private VisualElement maxCharacterIndicator;
         private VisualElement miniCharacterIndicator;
@@ -15,6 +18,7 @@ namespace DigDig2
         private VisualElement fullHealthBar;
         
         private VisualElement focusTargetIndicator;
+        private VisualElement focusTargetIndicatorImage;
 
         private UIDocument uiDocument;
 
@@ -35,8 +39,16 @@ namespace DigDig2
             fullHealthBar = healthBar.Query<VisualElement>("full");
 
             focusTargetIndicator = uiDocument.rootVisualElement.Query<VisualElement>("focusTargetIndicator");
+            focusTargetIndicatorImage = focusTargetIndicator.Query<VisualElement>("image");
 
             SetupCharacterBindings();
+        }
+
+        private void Update()
+        {
+            focusTargetIndicatorImage.style.rotate = new StyleRotate(new Rotate(
+                focusTargetIndicatorImage.resolvedStyle.rotate.angle.value +
+                 Time.deltaTime * focusTargetIndicatorRotationSpeed / focusTargetIndicator.resolvedStyle.scale.value.x));
         }
 
         private async void SetupCharacterBindings()
@@ -77,8 +89,9 @@ namespace DigDig2
 
         public void UpdateFocusTarget(bool inUse, Vector3 worldPosition)
         {
-            focusTargetIndicator.style.display =
-                new StyleEnum<DisplayStyle>(inUse ? DisplayStyle.Flex : DisplayStyle.None);
+            focusTargetIndicator.style.display = new StyleEnum<DisplayStyle>(inUse ? DisplayStyle.Flex : DisplayStyle.None);
+            focusTargetIndicator.style.opacity = new StyleFloat(inUse ? 1f : 0f);
+            focusTargetIndicator.style.scale = new StyleScale(new Scale(inUse ? new Vector2(1f, 1f) : new Vector2(2f, 2f)));
             if (!inUse) return;
             
             Vector2 screenPosition = RuntimePanelUtils.CameraTransformWorldToPanel(uiDocument.rootVisualElement.panel, worldPosition, Camera.main);
