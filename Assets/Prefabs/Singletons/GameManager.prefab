@@ -261,6 +261,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de3343066c85e91f2a56a519d1f4fde9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.GameHudController
+  focusTargetIndicatorRotationSpeed: 50
 --- !u!1 &6097956373199808459
 GameObject:
   m_ObjectHideFlags: 0
@@ -321,6 +322,11 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  crystals: []
+  loadedGameManagerSaveData:
+    singleplayerSelectedCharacter: 0
+    highestReachedSavePointIndex: 0
+    highestKilledCrystal: 0
   characterSwitched:
     m_PersistentCalls:
       m_Calls: []
