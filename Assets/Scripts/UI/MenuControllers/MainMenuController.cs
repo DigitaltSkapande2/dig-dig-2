@@ -13,6 +13,9 @@ namespace DigDig2
     {
         [SerializeField] private string gameSceneName = "GameScene";
 
+        [SerializeField] private GameObject buttonHoverEffectPrefab;
+        [SerializeField] private GameObject buttonClickEffectPrefab;
+
         private enum HostingModeSelectionType {
             None,
 
@@ -64,6 +67,10 @@ namespace DigDig2
         private void Start()
         {
             saveFiles = SaveManager.Instance.GetSaveFiles();
+            
+            uiDocument.rootVisualElement.RegisterCallback<ClickEvent>(ButtonClick, TrickleDown.TrickleDown);
+            uiDocument.rootVisualElement.RegisterCallback<NavigationSubmitEvent>(ButtonClick, TrickleDown.TrickleDown);
+            uiDocument.rootVisualElement.RegisterCallback<FocusEvent>(ButtonHover, TrickleDown.TrickleDown);
 
             mainNavigationContainer = uiDocument.rootVisualElement.Query<VisualElement>("mainNavigation");
 
@@ -193,8 +200,6 @@ namespace DigDig2
             });
         }
 
-
-
         private void Update()
         {
             Focusable currentFocus = uiDocument.rootVisualElement.focusController.focusedElement;
@@ -203,6 +208,21 @@ namespace DigDig2
                 lastFocus = currentFocus;
                 Debug.Log($"New focus: {currentFocus}");
             }
+        }
+
+        private void ButtonClick(EventBase _)
+        {
+            PlaySoundEffect(buttonClickEffectPrefab);
+        }
+
+        private void ButtonHover(EventBase _)
+        {
+            PlaySoundEffect(buttonHoverEffectPrefab);
+        }
+
+        private void PlaySoundEffect(GameObject effectPrefab)
+        {
+            Destroy(Instantiate(effectPrefab, Vector3.zero, Quaternion.identity, transform), 10f);
         }
 
         private void SelectListViewSelectedSaveFile()
