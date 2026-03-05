@@ -72,7 +72,7 @@ namespace DigDig2
 		private void Awake()
 		{
 			animator = GetComponentInChildren<Animator>();
-			attackTrailRenderer = bindableAttackHitboxes[0]?.GetComponent<TrailRenderer>();
+			if (bindableAttackHitboxes[0] != null) attackTrailRenderer = bindableAttackHitboxes[0].GetComponent<TrailRenderer>();
 			TryGetComponent(out entityCharacterController);
 		}
 

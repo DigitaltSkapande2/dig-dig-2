@@ -8,6 +8,7 @@ namespace DigDig2
 		[SerializeField] private string animationStateName;
 		[SerializeField] private int damage = 1;
 		[SerializeField] private int bindableAttackHitboxIndex = 0;
+		[SerializeField] GameObject hitEffect;
 		[SerializeField] private bool hasTrailEffect;
 		[SerializeField] private float knockbackStrength = 50;
 
@@ -44,6 +45,7 @@ namespace DigDig2
 
         public override void Hit(Attacker attacker, Attackable attackable, Health healthComponent, EntityCharacterController entityCharacterController)
 		{
+			Instantiate(hitEffect, attackable.transform.position, Quaternion.identity);
 			if (healthComponent) healthComponent.Damage(damage);
 			attackable.ApplyKnockback((attackable.transform.position - attacker.transform.position).normalized, knockbackStrength);
         }

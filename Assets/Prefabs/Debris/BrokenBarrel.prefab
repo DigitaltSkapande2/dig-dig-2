@@ -104,9 +104,33 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -0.794
       objectReference: {fileID: 0}
+    - target: {fileID: -7825432767297149106, guid: 35b76afda366ae8d189b21cda1575dd0, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.288
+      objectReference: {fileID: 0}
+    - target: {fileID: -7825432767297149106, guid: 35b76afda366ae8d189b21cda1575dd0, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.682
+      objectReference: {fileID: 0}
+    - target: {fileID: -7825432767297149106, guid: 35b76afda366ae8d189b21cda1575dd0, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.265
+      objectReference: {fileID: 0}
     - target: {fileID: -7663678114840504322, guid: 35b76afda366ae8d189b21cda1575dd0, type: 3}
       propertyPath: m_Layer
       value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: -6678382073085040369, guid: 35b76afda366ae8d189b21cda1575dd0, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.177
+      objectReference: {fileID: 0}
+    - target: {fileID: -6678382073085040369, guid: 35b76afda366ae8d189b21cda1575dd0, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.335
+      objectReference: {fileID: 0}
+    - target: {fileID: -6678382073085040369, guid: 35b76afda366ae8d189b21cda1575dd0, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.128
       objectReference: {fileID: 0}
     - target: {fileID: -5442016059645222236, guid: 35b76afda366ae8d189b21cda1575dd0, type: 3}
       propertyPath: m_Layer
@@ -120,6 +144,18 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 12
       objectReference: {fileID: 0}
+    - target: {fileID: -953342466816307569, guid: 35b76afda366ae8d189b21cda1575dd0, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.615
+      objectReference: {fileID: 0}
+    - target: {fileID: -953342466816307569, guid: 35b76afda366ae8d189b21cda1575dd0, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.509
+      objectReference: {fileID: 0}
+    - target: {fileID: -953342466816307569, guid: 35b76afda366ae8d189b21cda1575dd0, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.352
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 35b76afda366ae8d189b21cda1575dd0, type: 3}
       propertyPath: m_Name
       value: BarrelBroken
@@ -131,6 +167,18 @@ PrefabInstance:
     - target: {fileID: 4027228791024609348, guid: 35b76afda366ae8d189b21cda1575dd0, type: 3}
       propertyPath: m_Layer
       value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 4866386532506748524, guid: 35b76afda366ae8d189b21cda1575dd0, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.77
+      objectReference: {fileID: 0}
+    - target: {fileID: 4866386532506748524, guid: 35b76afda366ae8d189b21cda1575dd0, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.418
+      objectReference: {fileID: 0}
+    - target: {fileID: 4866386532506748524, guid: 35b76afda366ae8d189b21cda1575dd0, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.127
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -180,7 +228,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1278452151085945007}
   serializedVersion: 5
-  m_Mass: 1
+  m_Mass: 10
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -234,7 +282,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1307307714905414223}
   serializedVersion: 5
-  m_Mass: 1
+  m_Mass: 10
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -293,7 +341,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3745670053523074837}
   serializedVersion: 5
-  m_Mass: 1
+  m_Mass: 10
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -347,7 +395,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5233514806000675783}
   serializedVersion: 5
-  m_Mass: 1
+  m_Mass: 10
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -401,7 +449,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6296660557745288389}
   serializedVersion: 5
-  m_Mass: 1
+  m_Mass: 10
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}

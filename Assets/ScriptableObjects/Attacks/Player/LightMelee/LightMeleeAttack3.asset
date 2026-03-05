@@ -16,4 +16,6 @@ MonoBehaviour:
   animationStateName: LightAttack3
   damage: 1
   bindableAttackHitboxIndex: 0
+  hitEffect: {fileID: 6931098926697571914, guid: 3d36de908b6d4fc4cbed789d229020ac, type: 3}
+  hasTrailEffect: 0
   knockbackStrength: 100

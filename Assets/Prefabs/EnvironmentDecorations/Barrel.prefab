@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7417802528109468483}
   - component: {fileID: 4445192151893001547}
   - component: {fileID: 1103967620891982233}
+  - component: {fileID: 6782572150856297765}
   m_Layer: 0
   m_Name: Barrel
   m_TagString: Untagged
@@ -55,9 +56,9 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.6
-  m_Height: 1.5
+  m_Height: 1.3
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.1, z: 0}
 --- !u!114 &4445192151893001547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -72,6 +73,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Health
   maxHealthPoints: 1
   healthPoints: 1
+  DestroyOnDeath: 1
   deathEffectPlayer:
     spawnPrefab: 1
     spawnPrefabEffectData:
@@ -192,7 +194,38 @@ MonoBehaviour:
       duration: 0.4
       intensity: 1
       color: {r: 0, g: 0, b: 0, a: 0}
+    greyscale: 0
+    greyscaleEffectData:
+      intensityCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      duration: 0.4
+      intensity: 1
   death:
+    m_PersistentCalls:
+      m_Calls: []
+  healthChanged:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &1103967620891982233
@@ -326,9 +359,58 @@ MonoBehaviour:
       duration: 0.4
       intensity: 1
       color: {r: 0, g: 0, b: 0, a: 0}
+    greyscale: 0
+    greyscaleEffectData:
+      intensityCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      duration: 0.4
+      intensity: 1
   hit:
     m_PersistentCalls:
       m_Calls: []
+--- !u!65 &6782572150856297765
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2966948558371978296}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.5, y: 0.2, z: 0.5}
+  m_Center: {x: 0, y: -0.55, z: 0}
 --- !u!1001 &4516896843194829250
 PrefabInstance:
   m_ObjectHideFlags: 0
