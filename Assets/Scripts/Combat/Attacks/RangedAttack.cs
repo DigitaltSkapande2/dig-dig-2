@@ -31,6 +31,7 @@ namespace DigDig2
 		{
 			Debug.Log("Hello i am a ranged attack");
             attacker.PlayAnimation(animationStateName);
+			attacker.AddMoveSpeedDebuff(animationStateName, attacker.GetBaseMoveSpeed());
             Vector3 forward = attacker.GetComponent<EntityCharacterController>().GetForwardVector();
             Projectile projectile = Instantiate(projectilePrefab, attacker.transform.position + forward, quaternion.LookRotation(forward, Vector3.up)).GetComponent<Projectile>();
             projectile.SetInfo(this, attacker, projectileSpeed, projectileLifetime);
@@ -38,7 +39,7 @@ namespace DigDig2
 
         public override void Ended(Attacker attacker, AttackType attackGroup)
         {
-
+			attacker.RemoveMoveSpeedDebuff(animationStateName);
         }
 
         public override void Hit(Attacker attacker, Attackable attackable, Health healthComponent, EntityCharacterController entityCharacterController)

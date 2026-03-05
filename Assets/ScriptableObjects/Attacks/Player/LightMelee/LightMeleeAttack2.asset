@@ -16,4 +16,5 @@ MonoBehaviour:
   animationStateName: LightAttack2
   damage: 1
   bindableAttackHitboxIndex: 0
+  hasTrailEffect: 1
   knockbackStrength: 100

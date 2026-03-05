@@ -8,6 +8,7 @@ namespace DigDig2
 		[SerializeField] private string animationStateName;
 		[SerializeField] private int damage = 1;
 		[SerializeField] private int bindableAttackHitboxIndex = 0;
+		[SerializeField] private bool hasTrailEffect;
 		[SerializeField] private float knockbackStrength = 50;
 
 		public override void ChargeStart(Attacker attacker, AttackType attackType)
@@ -27,6 +28,7 @@ namespace DigDig2
 		
 		public override void Trigger(Attacker attacker, AttackType attackGroup, float chargeTime)
 		{
+			attacker.GetattackTrailRenderer().enabled = hasTrailEffect;
 			attacker.PlayAnimation(animationStateName);
 			attacker.StartHitboxAttack(this, animationStateName, attacker.GetBindableAttackHitbox(bindableAttackHitboxIndex));
 			attacker.AddMoveSpeedDebuff(animationStateName, attacker.GetBaseMoveSpeed());
@@ -35,6 +37,7 @@ namespace DigDig2
 
         public override void Ended(Attacker attacker, AttackType attackGroup)
         {
+			attacker.GetattackTrailRenderer().enabled = false;
             attacker.EndHitboxAttack(animationStateName);
 			attacker.RemoveMoveSpeedDebuff(animationStateName);
         }
