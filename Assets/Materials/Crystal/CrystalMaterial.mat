@@ -56,14 +56,14 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _CrackStage: 0.2
+    - _CrackStage: 0.001
     - _FrenselPower: 2.41
     - _Metallic: 1
     - _NoiseScale: 10.5
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Seethrough: 0
-    - _Smoothness: 0.5
+    - _Smoothness: 1
     - _frensel_power: 1.511
     m_Colors:
     - _BaseColor: {r: 0.0020189781, g: 0, b: 0.15094844, a: 1}

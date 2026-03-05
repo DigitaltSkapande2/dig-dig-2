@@ -100,6 +100,14 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -6593084892664428563, guid: 5f71ddd4dec51cbf997e7670df8f4b4d, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 0291efcb87a030e4e8eb8d381261b1b5, type: 2}
+    - target: {fileID: -6382620986548691731, guid: 5f71ddd4dec51cbf997e7670df8f4b4d, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 0291efcb87a030e4e8eb8d381261b1b5, type: 2}
     - target: {fileID: -5935591176829663612, guid: 5f71ddd4dec51cbf997e7670df8f4b4d, type: 3}
       propertyPath: m_Layer
       value: 12
@@ -108,6 +116,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 12
       objectReference: {fileID: 0}
+    - target: {fileID: -4441756726386836802, guid: 5f71ddd4dec51cbf997e7670df8f4b4d, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 0291efcb87a030e4e8eb8d381261b1b5, type: 2}
     - target: {fileID: -4365254706050377845, guid: 5f71ddd4dec51cbf997e7670df8f4b4d, type: 3}
       propertyPath: m_Layer
       value: 12
@@ -116,6 +128,14 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 12
       objectReference: {fileID: 0}
+    - target: {fileID: -2161429205914085658, guid: 5f71ddd4dec51cbf997e7670df8f4b4d, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 0291efcb87a030e4e8eb8d381261b1b5, type: 2}
+    - target: {fileID: -333838906525044435, guid: 5f71ddd4dec51cbf997e7670df8f4b4d, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 0291efcb87a030e4e8eb8d381261b1b5, type: 2}
     - target: {fileID: 919132149155446097, guid: 5f71ddd4dec51cbf997e7670df8f4b4d, type: 3}
       propertyPath: m_Name
       value: CrystalBroken
@@ -128,6 +148,14 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 12
       objectReference: {fileID: 0}
+    - target: {fileID: 4621250569616862841, guid: 5f71ddd4dec51cbf997e7670df8f4b4d, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 0291efcb87a030e4e8eb8d381261b1b5, type: 2}
+    - target: {fileID: 5588998365135388127, guid: 5f71ddd4dec51cbf997e7670df8f4b4d, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 0291efcb87a030e4e8eb8d381261b1b5, type: 2}
     - target: {fileID: 5637657422850274512, guid: 5f71ddd4dec51cbf997e7670df8f4b4d, type: 3}
       propertyPath: m_Layer
       value: 12

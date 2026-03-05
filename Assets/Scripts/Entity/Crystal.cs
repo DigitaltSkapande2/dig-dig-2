@@ -56,6 +56,9 @@ namespace DigDig2
             if (crystal == null) { Debug.LogError("Crystal has not been assigned."); return; }
             crystalMeshRenderer = crystal.GetComponent<MeshRenderer>();
 
+            Material material = crystalMeshRenderer.material;
+            material.SetFloat("_CrackStage", 0.2f);
+
             originalPos = transform.position;
 		}
 
