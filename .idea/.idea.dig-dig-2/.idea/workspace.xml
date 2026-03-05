@@ -5,17 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="50c3eb56-0f37-4789-a838-f82a855a30c4" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.dig-dig-2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.dig-dig-2/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Animations/PlayerCharacter/Mini/MiniAnimationController.controller" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animations/PlayerCharacter/Mini/MiniAnimationController.controller" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Animations/TestEnemy/TestEnemyAnimationController.controller" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animations/TestEnemy/TestEnemyAnimationController.controller" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Enemies/TestEnemy.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Enemies/TestEnemy.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/GameScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/GameScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ScriptableObjects/AttackTypes/TestEnemyMelee.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ScriptableObjects/AttackTypes/TestEnemyMelee.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ScriptableObjects/Attacks/TestEnemy/MeleeAttack1.asset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ScriptableObjects/Attacks/TestEnemy/MeleeAttack1.asset.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ScriptableObjects/Attacks/TestEnemy/MeleeAttack2.asset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ScriptableObjects/Attacks/TestEnemy/MeleeAttack2.asset.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Entity/EntityCharacterController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Entity/EntityCharacterController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Models/Enemies/Ranged/Bodyparts_Enemy1_SquidGuy.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Models/Enemies/Ranged/Bodyparts_Enemy1_SquidGuy.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Models/Enemies/Ranged/squid_enemy_ranged_Finished.fbx.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Models/Enemies/Ranged/squid_enemy_ranged_Finished.fbx.meta" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -149,7 +141,7 @@
       <workItem from="1772529045603" duration="4000" />
       <workItem from="1772529084525" duration="212000" />
       <workItem from="1772734893498" duration="1105000" />
-      <workItem from="1772736017654" duration="14725000" />
+      <workItem from="1772736017654" duration="15066000" />
     </task>
     <servers />
   </component>
