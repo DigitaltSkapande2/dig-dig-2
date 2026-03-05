@@ -64,6 +64,7 @@ namespace DigDig2
 		}
 
 		private Animator animator;
+		private TrailRenderer attackTrailRenderer;
 		private EntityCharacterController entityCharacterController;
 
 
@@ -71,6 +72,7 @@ namespace DigDig2
 		private void Awake()
 		{
 			animator = GetComponentInChildren<Animator>();
+			attackTrailRenderer = bindableAttackHitboxes[0]?.GetComponent<TrailRenderer>();
 			TryGetComponent(out entityCharacterController);
 		}
 
@@ -149,6 +151,11 @@ namespace DigDig2
 
 			return attackTypes[attackTypeIndex];
 		}
+
+		public TrailRenderer GetattackTrailRenderer()
+        {
+            return attackTrailRenderer;
+        }
 
 		#region Input
 

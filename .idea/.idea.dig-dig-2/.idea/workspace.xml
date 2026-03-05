@@ -5,11 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="50c3eb56-0f37-4789-a838-f82a855a30c4" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Singletons/GameManager.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Singletons/GameManager.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/PerformanceTestRunInfo.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/PerformanceTestRunInfo.json.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/PerformanceTestRunSettings.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/PerformanceTestRunSettings.json.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Singletons/NetworkManager.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Singletons/NetworkManager.prefab" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -130,7 +126,7 @@
       <workItem from="1772529045603" duration="4000" />
       <workItem from="1772529084525" duration="212000" />
       <workItem from="1772734893498" duration="1105000" />
-      <workItem from="1772736017654" duration="4933000" />
+      <workItem from="1772736017654" duration="5653000" />
     </task>
     <servers />
   </component>

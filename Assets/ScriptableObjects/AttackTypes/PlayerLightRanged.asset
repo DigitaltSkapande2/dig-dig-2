@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.AttackGroup
   endCooldown: 0.5
   chargeDuration: 0
-  requireCharge: 0
+  chargeMode: 0
   chain:
   - {fileID: 11400000, guid: dae86fe97c04ea6489ce1f39902f51ac, type: 2}
+  - {fileID: 11400000, guid: 44ce9f8ef91c39a4d973ffcbf5fd5627, type: 2}
+  - {fileID: 11400000, guid: c06c144f4b767dd4d96b6ba258ab8322, type: 2}
