@@ -533,9 +533,12 @@ MonoBehaviour:
   invincibilityTime: 0.05
   group: enemy
   hitEffect:
-    spawnPrefab: 0
+    spawnPrefab: 1
     spawnPrefabEffectData:
-      prefabToSpawn: []
+      prefabToSpawn:
+      - prefab: {fileID: 4950934811570952627, guid: 0c8861c4d881711a881abc9f02a89e22, type: 3}
+        hasLifetime: 1
+        lifetime: 1.05
     screenShake: 0
     screenShakeEffectData:
       intensityCurve:
@@ -592,14 +595,14 @@ MonoBehaviour:
         m_RotationOrder: 4
       duration: 0.4
       intensity: 1
-    timeSlow: 0
+    timeSlow: 1
     timeSlowEffectData:
       intensityCurve:
         serializedVersion: 2
         m_Curve:
         - serializedVersion: 3
           time: 0
-          value: 1
+          value: 0.15000153
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -608,7 +611,7 @@ MonoBehaviour:
           outWeight: 0
         - serializedVersion: 3
           time: 1
-          value: 0
+          value: 0.1499939
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -618,7 +621,7 @@ MonoBehaviour:
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
-      duration: 0.4
+      duration: 0.05
       intensity: 1
     vignettePulse: 0
     vignettePulseEffectData:
@@ -649,6 +652,34 @@ MonoBehaviour:
       duration: 0.4
       intensity: 1
       color: {r: 0, g: 0, b: 0, a: 0}
+    greyscale: 0
+    greyscaleEffectData:
+      intensityCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      duration: 0.4
+      intensity: 1
   hit:
     m_PersistentCalls:
       m_Calls: []
@@ -668,9 +699,15 @@ MonoBehaviour:
   healthPoints: 1
   DestroyOnDeath: 1
   deathEffectPlayer:
-    spawnPrefab: 0
+    spawnPrefab: 1
     spawnPrefabEffectData:
-      prefabToSpawn: []
+      prefabToSpawn:
+      - prefab: {fileID: 900025642660281898, guid: 81eab515c76aa20ecb1fcefa090d93ea, type: 3}
+        hasLifetime: 1
+        lifetime: 1.5
+      - prefab: {fileID: 4950934811570952627, guid: f471bdc1490ebb553826dac56db434a6, type: 3}
+        hasLifetime: 1
+        lifetime: 1.5
     screenShake: 0
     screenShakeEffectData:
       intensityCurve:
@@ -784,6 +821,34 @@ MonoBehaviour:
       duration: 0.4
       intensity: 1
       color: {r: 0, g: 0, b: 0, a: 0}
+    greyscale: 0
+    greyscaleEffectData:
+      intensityCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      duration: 0.4
+      intensity: 1
   death:
     m_PersistentCalls:
       m_Calls: []
