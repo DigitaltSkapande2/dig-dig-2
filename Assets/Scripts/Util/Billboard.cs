@@ -16,7 +16,7 @@ public class Billboard : MonoBehaviour
 
 	private void UpdateRotation()
 	{
-		if (onlyYAxis) transform.rotation = Quaternion.Euler(new Vector3(transform.rotation.x, Camera.main.transform.rotation.y, transform.rotation.z));
+		if (onlyYAxis && Camera.main != null) transform.rotation = Quaternion.Euler(new Vector3(transform.rotation.x, Camera.main.transform.rotation.y, transform.rotation.z));
 		else transform.rotation = Camera.main.transform.rotation;
 	}
 }

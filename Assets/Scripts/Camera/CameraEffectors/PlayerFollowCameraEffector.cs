@@ -4,7 +4,8 @@ namespace DigDig2.CinemaCamera
     {
         void Update()
         {
-            if (GameManager.Instance.LocalPlayerObj) position = GameManager.Instance.LocalPlayerObj.transform.position;
+            if (GameManager.Instance && GameManager.Instance.LocalPlayerObj) position = GameManager.Instance.LocalPlayerObj.transform.position;
         }
     }
 }
+

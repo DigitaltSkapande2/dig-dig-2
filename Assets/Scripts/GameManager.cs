@@ -274,8 +274,17 @@ namespace DigDig2
             else
             {
                 Debug.Log($"GAAAY {dataObject}");
-                loadedGameManagerSaveData = (GameManagerGameSaveData)dataObject;
-                //loadedGameManagerSaveData = JsonConvert.DeserializeObject<GameManagerGameSaveData>(dataObject.ToString());
+                try
+                {
+                    loadedGameManagerSaveData = (GameManagerGameSaveData)dataObject;
+                }
+                catch
+                {
+                    loadedGameManagerSaveData = JsonConvert.DeserializeObject<GameManagerGameSaveData>(dataObject.ToString());
+                }
+                
+                
+                
                 currentCharacter = loadedGameManagerSaveData.singleplayerSelectedCharacter;
                 Debug.Log(loadedGameManagerSaveData.highestReachedSavePointIndex);
             }
