@@ -39,14 +39,13 @@ namespace DigDig2
         void Start()
         {
             targetY = transform.position.y;
-            target = GameCamera.Instance.transform;
 
             SaveManager.Instance.RegisterSavable("Ocean", this);
         }
 
         void Update()
         {
-            if (target == null) target = GameCamera.Instance.transform;
+            if (target == null && GameCamera.Instance != null) target = GameCamera.Instance.transform;
 
             transform.position = new Vector3 (0, Mathf.Lerp(transform.position.y, targetY, Time.deltaTime * verticalSpeed), 0);
 
