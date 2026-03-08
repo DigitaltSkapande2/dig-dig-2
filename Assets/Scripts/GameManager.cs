@@ -1,6 +1,6 @@
 using System;
 using DigDig2.CinemaCamera;
-using Mirror;
+
 using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Events;
@@ -30,6 +30,7 @@ namespace DigDig2
         public struct GameManagerGameSaveData
         {
             public CharacterType singleplayerSelectedCharacter;
+            public bool isMultiplayer;
             public int highestReachedSavePointIndex;
             public int highestKilledCrystal;
         }
@@ -44,22 +45,41 @@ namespace DigDig2
             }
         }
         [SerializeField] public UnityEvent<bool> pauseStateChanged;
+        
+        public bool IsMultiplayer => loadedGameManagerSaveData.isMultiplayer;
 
         private PauseMenuController pauseMenuController;
         private GameHudController gameHudController;
 
-
-
-        public GameObject LocalPlayerObj
+        // Player
+        private GameObject[] players = new GameObject[2];
+        public GameObject PlayerOneCharacter
         {
             get
             {
-                if (NetworkClient.localPlayer) return NetworkClient.localPlayer.gameObject;
+#if UNITY_EDITOR
+                if (players[0]) return players[0];
+                else Debug.LogError("No Players have been initialized");
+                #else
+                    return players[0];
+                #endif
 
                 return null;
             }
         }
 
+        public GameObject PlayerTwoCharacter
+        {
+            get
+            {
+                if (players[1]) return players[1];
+                else Debug.LogAssertion("No Players have been initialized");
+
+                return null;
+            }
+        }
+
+        // Character
         public CharacterType currentCharacter { private set; get; } = CharacterType.Max;
 
 
@@ -76,14 +96,28 @@ namespace DigDig2
 
         public void Start()
         {
-            if (!isServer) return;
-
             SaveManager.Instance.RegisterSavable("GameManager", this, true);
-
+            
+            StartGame();
+        }
+        
+        private void StartGame()
+        {
             InitializeSavePoint();
             KillAlreadyKilledCrystals();
+            
+            Debug.Log(loadedGameManagerSaveData.highestReachedSavePointIndex);
+            SavePoint savePointToStartAt = savePoints[loadedGameManagerSaveData.highestReachedSavePointIndex];
 
-            StartGame();
+            if (IsMultiplayer)
+            {
+                savePointToStartAt.ServerStartMultiplayerStartSequence();
+            }
+            else
+            {
+                savePointToStartAt.ServerStartSingleplayerStartSequence();
+                GameCamera.Instance.SetTargetRotation(savePointToStartAt.cameraYRotation, true);
+            }
         }
 
         private void InitializeSavePoint()
@@ -96,7 +130,7 @@ namespace DigDig2
                 {
                     SavePoint savePoint = savePoints[i];
                     int gay = i;
-                    savePoint.ServerSetSpawnPointReached(i <= loadedGameManagerSaveData.highestReachedSavePointIndex);
+                    savePoint.SetSpawnPointReached(i <= loadedGameManagerSaveData.highestReachedSavePointIndex);
                     savePoint.savePointReached.AddListener(() => SetHighestReachedSavePointIndex(gay));
                     Debug.Log(savePoint.name + " " + i);
                 }
@@ -126,22 +160,6 @@ namespace DigDig2
             }
         }
 
-        private void StartGame()
-        {
-            Debug.Log(loadedGameManagerSaveData.highestReachedSavePointIndex);
-            SavePoint savePointToStartAt = savePoints[loadedGameManagerSaveData.highestReachedSavePointIndex];
-
-            if (NetworkManager.singleton.IsMultiplayer)
-            {
-                savePointToStartAt.ServerStartMultiplayerStartSequence();
-            }
-            else
-            {
-                savePointToStartAt.ServerStartSingleplayerStartSequence();
-                GameCamera.Instance.SetTargetRotation(savePointToStartAt.cameraYRotation, true);
-            }
-        }
-
         void OnDestroy()
         {
             if (SaveManager.Instance) SaveManager.Instance.Reset();
@@ -157,46 +175,44 @@ namespace DigDig2
             };
         }
 
-        public void SaveAndExit()
+        public void SaveAndLoadMainMenu()
         {
-            if (NetworkServer.active)
-            {
-                SaveManager.Instance.SaveAllAndWriteToFile();
-                NetworkManager.singleton.StopHost();
-            }
-            else NetworkManager.singleton.StopClient();
-
+            SaveManager.Instance.SaveAllAndWriteToFile();
             SceneManager.LoadScene(0);
+        }
+
+        public async void ReloadGameScene()
+        {
+            await SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+            StartGame();
         }
 
         #region Singleplayer
 
         public void InitializeSingleplayerCharacter(Vector3 spawnPosition, Quaternion spawnRotation)
         {
-            if (NetworkManager.singleton.IsMultiplayer)
+            if (IsMultiplayer)
             {
                 Debug.LogError("Tried to initialize singleplayer character in multiplayer mode, this is not allowed.");
                 return;
             }
-            Debug.Log("GAMEMANAGER: Initializing Singleplayer Characters...");
             GameObject playerCharacter = Instantiate(GetCharacterPrefabFromCharacterType(loadedGameManagerSaveData.singleplayerSelectedCharacter), spawnPosition, spawnRotation);
-            if (NetworkServer.localConnection.identity) NetworkServer.ReplacePlayerForConnection(NetworkServer.localConnection, playerCharacter, ReplacePlayerOptions.Destroy);
-            else NetworkServer.AddPlayerForConnection(NetworkServer.localConnection, playerCharacter);
-            Debug.Log("GAMEMANAGER: Singleplayer Characters Initialized!");
+            players[0] = playerCharacter;
+            Debug.Log("GAMEMANAGER: Singleplayer Character Initialized!");
         }
 
         public void SingleplayerSwitchCharacter()
         {
-            if (NetworkManager.singleton.IsMultiplayer)
+            if (IsMultiplayer)
             {
                 Debug.LogError("Tried to switch character in multiplayer mode, this is not allowed.");
             }
 
             // Harvest old player data
-            EntityCharacterController oldPlayerEntityCharacterController = LocalPlayerObj.GetComponent<EntityCharacterController>();
-            Health oldPlayerHealthComponent = LocalPlayerObj.GetComponent<Health>();
+            EntityCharacterController oldPlayerEntityCharacterController = PlayerOneCharacter.GetComponent<EntityCharacterController>();
+            Health oldPlayerHealthComponent = PlayerOneCharacter.GetComponent<Health>();
 
-            Vector3 oldPlayerPos = LocalPlayerObj.transform.position;
+            Vector3 oldPlayerPos = PlayerOneCharacter.transform.position;
 
             Vector3 oldPlayerLookVector = oldPlayerEntityCharacterController.GetForwardVector();
             Vector3 oldPlayerInputMoveVector = oldPlayerEntityCharacterController.inputMoveVector;
@@ -204,7 +220,7 @@ namespace DigDig2
             int oldHealthPoints = oldPlayerHealthComponent.HealthPoints;
 
             // Kill old player
-            Destroy(LocalPlayerObj);
+            Destroy(PlayerOneCharacter);
 
             // Switch Logic
             currentCharacter = CharacterType.Max == currentCharacter ? CharacterType.Mini : CharacterType.Max;
@@ -212,17 +228,17 @@ namespace DigDig2
             // Spawn new player
             GameObject newPrefab = GetCharacterPrefabFromCharacterType(currentCharacter);
             GameObject playerCharacter = Instantiate(newPrefab, oldPlayerPos, Quaternion.identity);
-
+            
+            // Inject Old Player percistance data
             EntityCharacterController playerEntityCharacterController = playerCharacter.GetComponent<EntityCharacterController>();
             Health playerHealthComponent = playerCharacter.GetComponent<Health>();
-
+            
             playerEntityCharacterController.LookTowards(playerCharacter.transform.position + oldPlayerLookVector, false);
             playerEntityCharacterController.inputMoveVector = oldPlayerInputMoveVector;
-
+            
             playerHealthComponent.HealthPoints = oldHealthPoints;
-
-            NetworkServer.ReplacePlayerForConnection(NetworkServer.connections[0], playerCharacter, ReplacePlayerOptions.KeepAuthority);
-
+            
+            players[0] = playerCharacter;
             characterSwitched.Invoke(currentCharacter, playerCharacter);
         }
 
@@ -232,12 +248,13 @@ namespace DigDig2
 
         private void InitializeMultiplayerPlayers()
         {
-            Debug.Log("GAMEMANAGER: Initializing Multiplayer Characters...");
-            GameObject maxPlayerCharacter = Instantiate(maxPrefab);
-            NetworkServer.ReplacePlayerForConnection(NetworkManager.singleton.MaxPlayerConnection, maxPlayerCharacter, ReplacePlayerOptions.KeepAuthority);
 
+            GameObject maxPlayerCharacter = Instantiate(maxPrefab);
+            
             GameObject miniPlayerCharacter = Instantiate(miniPrefab);
-            NetworkServer.ReplacePlayerForConnection(NetworkManager.singleton.MiniPlayerConnection, miniPlayerCharacter, ReplacePlayerOptions.KeepAuthority);
+            
+            // TODO: FIX CONTROLLS
+            
             Debug.Log("GAMEMANAGER: Multiplayer Characters Initialized!");
         }
 

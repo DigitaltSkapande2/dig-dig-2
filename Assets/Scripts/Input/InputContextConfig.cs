@@ -11,6 +11,18 @@ using UnityEditor;
 
 namespace DigDig2
 {
+
+    [System.Flags]
+    public enum InputContext
+    {
+        None = 0,
+        PauseMenu = 1 << 0,
+        Gameplay = 1 << 1,
+        Cutscene = 1 << 2,
+        DebugConsole = 1 << 3,
+        DebugNotes = 1 << 4
+    }
+
     [CreateAssetMenu(fileName = "InputContextConfig", menuName = "Input/Context Config")]
     public class InputContextConfig : ScriptableObject
     {
@@ -24,12 +36,6 @@ namespace DigDig2
         }
 
         public MapContext[] mapContexts;
-
-
-
-
-
-
     }
 #if UNITY_EDITOR
     [CustomEditor(typeof(InputContextConfig))]
@@ -76,16 +82,4 @@ namespace DigDig2
     }
 
 #endif
-
-
-    [System.Flags]
-    public enum InputContext
-    {
-        None = 0,
-        PauseMenu = 1 << 0,
-        Gameplay = 1 << 1,
-        Cutscene = 1 << 2,
-        DebugConsole = 1 << 3,
-        DebugNotes = 1 << 4
-    }
 }

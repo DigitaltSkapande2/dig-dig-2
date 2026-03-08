@@ -1,12 +1,12 @@
 using System;
-using Mirror;
+
 using UnityEngine;
 using UnityEngine.AI;
 
 namespace DigDig2
 {
-    [RequireComponent(typeof(EntityCharacterController), typeof(NetworkIdentity))]
-    public class EntityCharacterBehaviorAgent : NetworkBehaviour
+    [RequireComponent(typeof(EntityCharacterController))]
+    public class EntityCharacterBehaviorAgent : MonoBehaviour
     {
         [Header("Following Path State")]
         [Tooltip("The distance that the entity marks a waypoint as passed.")]
@@ -29,7 +29,7 @@ namespace DigDig2
 
         #region Visuals State Variables
 
-        [SyncVar] private Transform focusedTransform;
+        private Transform focusedTransform;
 
         #endregion
 
@@ -54,60 +54,59 @@ namespace DigDig2
 
         private void Update()
         {
-            if (authority)
+
+            if (focusedTransform != null)
             {
-                if (focusedTransform != null)
-                {
-                    LookTowards(focusedTransform.position);
-                }
+                LookTowards(focusedTransform.position);
+            }
 
-                switch (movementState)
-                {
-                    case MovementState.FollowingPath:
-                        if (currentPathWaypoints.Length > 0)
+            switch (movementState)
+            {
+                case MovementState.FollowingPath:
+                    if (currentPathWaypoints.Length > 0)
+                    {
+                        Vector3 currentPathWaypoint = currentPathWaypoints[currentPathWaypointIndex];
+                        Vector3 positionDifference = currentPathWaypoint - transform.position;
+                        positionDifference.y = 0f;
+                        float distanceToWaypoint = positionDifference.magnitude;
+
+                        if (distanceToWaypoint <= pathWaypointDistanceTolerance)
                         {
-                            Vector3 currentPathWaypoint = currentPathWaypoints[currentPathWaypointIndex];
-                            Vector3 positionDifference = currentPathWaypoint - transform.position;
-                            positionDifference.y = 0f;
-                            float distanceToWaypoint = positionDifference.magnitude;
-
-                            if (distanceToWaypoint <= pathWaypointDistanceTolerance)
+                            if (currentPathWaypoints.Length > currentPathWaypointIndex + 1)
                             {
-                                if (currentPathWaypoints.Length > currentPathWaypointIndex + 1)
-                                {
-                                    // More waypoints to follow, go to next one
-                                    currentPathWaypointIndex++;
-                                    currentPathWaypoint = currentPathWaypoints[currentPathWaypointIndex];
-                                    positionDifference = currentPathWaypoint - transform.position;
-                                    positionDifference.y = 0f;
-                                    distanceToWaypoint = positionDifference.magnitude;
-                                }
-                                else
-                                {
-                                    // No more waypoints to follow, entity has finished, reset path
-                                    Stop();
-                                }
-                            }
-
-                            if (currentPathWaypointIndex >= currentPathWaypoints.Length - 1)
-                            {
-                                entityCharacterController.inputMoveVector = positionDifference.normalized * Mathf.Min(distanceToWaypoint / (pathWaypointDistanceTolerance + 1f), 1f);
+                                // More waypoints to follow, go to next one
+                                currentPathWaypointIndex++;
+                                currentPathWaypoint = currentPathWaypoints[currentPathWaypointIndex];
+                                positionDifference = currentPathWaypoint - transform.position;
+                                positionDifference.y = 0f;
+                                distanceToWaypoint = positionDifference.magnitude;
                             }
                             else
                             {
-                                entityCharacterController.inputMoveVector = positionDifference.normalized;
+                                // No more waypoints to follow, entity has finished, reset path
+                                Stop();
                             }
                         }
 
-                        break;
-                    case MovementState.FollowingDirection:
-                        entityCharacterController.inputMoveVector = currentDirection;
-                        break;
-                    default:
-                        entityCharacterController.inputMoveVector = Vector3.zero;
-                        break;
-                }
+                        if (currentPathWaypointIndex >= currentPathWaypoints.Length - 1)
+                        {
+                            entityCharacterController.inputMoveVector = positionDifference.normalized * Mathf.Min(distanceToWaypoint / (pathWaypointDistanceTolerance + 1f), 1f);
+                        }
+                        else
+                        {
+                            entityCharacterController.inputMoveVector = positionDifference.normalized;
+                        }
+                    }
+
+                    break;
+                case MovementState.FollowingDirection:
+                    entityCharacterController.inputMoveVector = currentDirection;
+                    break;
+                default:
+                    entityCharacterController.inputMoveVector = Vector3.zero;
+                    break;
             }
+            
         }
 
         private void OnDrawGizmosSelected()

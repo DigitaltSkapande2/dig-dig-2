@@ -1,11 +1,12 @@
-using Mirror;
+
+using DigDig2.CinemaCamera;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace DigDig2
 {
     [RequireComponent(typeof(EntityCharacterController), typeof(SingleplayerCharacterSwitcher))]
-    public class PlayerCharacterInputController : NetworkBehaviour, ProjectWideInputActions.IPlayerActions
+    public class PlayerCharacterInputController : MonoBehaviour, ProjectWideInputActions.IPlayerActions
     {
         // Input
         private ProjectWideInputActions.PlayerActions playerActions;
@@ -24,6 +25,8 @@ namespace DigDig2
         public bool InputEnabled => inputEnabled;
         private bool inputEnabled = false;
 
+        private Camera mainCamera;
+
 
         private void Awake()
         {
@@ -41,23 +44,26 @@ namespace DigDig2
                 else EnableInput();
             });
             
+            mainCamera = GameCamera.Instance.mainCamera;
             hasStarted = true;
         }
 
         private void Update()
         {
-            if (!NetworkClient.active || isLocalPlayer)
+
+            if (!inputEnabled)
             {
-                if (!inputEnabled)
-                {
-                    entityCharacterController.inputMoveVector = Vector3.zero;
-                }
-                
-                if (Camera.main)
-                {
-                    Vector3 rotatedInputMoveVector = Quaternion.Euler(0f, Camera.main.transform.rotation.eulerAngles.y, 0f) * new Vector3(inputMoveVector.x, 0f, inputMoveVector.y);
-                    entityCharacterController.inputMoveVector = rotatedInputMoveVector;
-                }
+                entityCharacterController.inputMoveVector = Vector3.zero;
+            }
+            
+            if (mainCamera != null)
+            {
+                Vector3 rotatedInputMoveVector = Quaternion.Euler(0f, GameCamera.Instance.mainCamera.transform.rotation.eulerAngles.y, 0f) * new Vector3(inputMoveVector.x, 0f, inputMoveVector.y);
+                entityCharacterController.inputMoveVector = rotatedInputMoveVector;
+            }
+            else
+            {
+                mainCamera = GameCamera.Instance.mainCamera;
             }
         }
 
@@ -75,12 +81,9 @@ namespace DigDig2
 
         public void EnableInput()
         {
-            if (!NetworkClient.active || isLocalPlayer)
-            {
-                playerActions = InputManager.Instance.inputActions.Player;
-                playerActions.SetCallbacks(this);
-                inputEnabled = true;
-            }
+            playerActions = InputManager.Instance.inputActions.Player;
+            playerActions.SetCallbacks(this);
+            inputEnabled = true;
         }
 
         private void DisableInput()

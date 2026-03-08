@@ -1,11 +1,11 @@
-using Mirror;
+
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace DigDig2
 {
     [RequireComponent(typeof(Attacker))]
-    public class PlayerAttackInput : NetworkBehaviour, ProjectWideInputActions.IAttackActions
+    public class PlayerAttackInput : MonoBehaviour, ProjectWideInputActions.IAttackActions
     {
         private ProjectWideInputActions.AttackActions attackActions;
         private bool hasStarted = false;
@@ -46,12 +46,9 @@ namespace DigDig2
         
         public void EnableInput()
         {
-            if (!NetworkClient.active || isLocalPlayer)
-            {
-                attackActions = InputManager.Instance.inputActions.Attack;
-                attackActions.SetCallbacks(this);
-                inputEnabled = true;
-            }
+            attackActions = InputManager.Instance.inputActions.Attack;
+            attackActions.SetCallbacks(this);
+            inputEnabled = true;
         }
 
         private void DisableInput()

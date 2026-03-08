@@ -1,11 +1,11 @@
 using System.Collections.Generic;
-using Mirror;
+using DigDig2.CinemaCamera;
 using UnityEngine;
 
 namespace DigDig2
 {
-	[RequireComponent(typeof(EntityCharacterController), typeof(NetworkIdentity))]
-	public class Attacker : NetworkBehaviour
+	[RequireComponent(typeof(EntityCharacterController))]
+	public class Attacker : MonoBehaviour
 	{
 		[Tooltip("The attack types that this entity has access to.")]
 		[SerializeField] private List<AttackType> attackTypes;
@@ -78,62 +78,57 @@ namespace DigDig2
 
 		private void Update()
 		{
-			if (authority)
+			UpdateEnemyFocus();
+
+			if ((state == CombatState.Idle || attackRequestChain > 0) && !attackRequestProcessed)
 			{
-				UpdateEnemyFocus();
-
-				if ((state == CombatState.Idle || attackRequestChain > 0) && !attackRequestProcessed)
+				if (heldAttackType != null)
 				{
-					if (heldAttackType != null)
-					{
-						currentAttackChain = attackRequestChain;
+					currentAttackChain = attackRequestChain;
 
-						if (heldAttackType.chargeMode == AttackType.ChargeMode.NoCharge)
-						{
-							PerformAttack(heldAttackType);
-						}
-						else
-						{
-							ChargeAttack(heldAttackType);
-						}
+					if (heldAttackType.chargeMode == AttackType.ChargeMode.NoCharge)
+					{
+						PerformAttack(heldAttackType);
 					}
-
-					attackRequestProcessed = true;
-					attackRequestChain = -1;
-				}
-
-				if (state == CombatState.Charging)
-				{
-					currentPerformingAttack.Charge(this, currentPerformingAttackType, Mathf.Clamp(Time.time - chargeStartTime, 0, currentPerformingAttackType.chargeDuration));
-					if (Time.time - chargeStartTime >= currentPerformingAttackType.chargeDuration)
+					else
 					{
-						state = CombatState.FullyCharged;
-						currentPerformingAttack.ChargeFull(this, currentPerformingAttackType);
-					}
-				}
-				else if (state == CombatState.Performing)
-				{
-					if (Time.time - performanceStartTime >= currentPerformingAttack.AttackDuration)
-					{
-						EndAttack(true);
+						ChargeAttack(heldAttackType);
 					}
 				}
 
-				if (attackCooldownTimer > 0) attackCooldownTimer -= Time.deltaTime;
-				if (state == CombatState.OnCooldown && attackCooldownTimer <= 0) state = CombatState.Idle;
+				attackRequestProcessed = true;
+				attackRequestChain = -1;
 			}
+
+			if (state == CombatState.Charging)
+			{
+				currentPerformingAttack.Charge(this, currentPerformingAttackType, Mathf.Clamp(Time.time - chargeStartTime, 0, currentPerformingAttackType.chargeDuration));
+				if (Time.time - chargeStartTime >= currentPerformingAttackType.chargeDuration)
+				{
+					state = CombatState.FullyCharged;
+					currentPerformingAttack.ChargeFull(this, currentPerformingAttackType);
+				}
+			}
+			else if (state == CombatState.Performing)
+			{
+				if (Time.time - performanceStartTime >= currentPerformingAttack.AttackDuration)
+				{
+					EndAttack(true);
+				}
+			}
+
+			if (attackCooldownTimer > 0) attackCooldownTimer -= Time.deltaTime;
+			if (state == CombatState.OnCooldown && attackCooldownTimer <= 0) state = CombatState.Idle;
+			
 		}
 
         private void FixedUpdate()
 		{
-			if (authority)
+			foreach (KeyValuePair<string, BindableAttackHitbox> activeAttack in activeAttacks)
 			{
-				foreach (KeyValuePair<string, BindableAttackHitbox> activeAttack in activeAttacks)
-				{
-					activeAttack.Value.Attack(activeAttack.Key);
-				}
+				activeAttack.Value.Attack(activeAttack.Key);
 			}
-        }
+		}
 
 		private void LogVerbose(string message)
         {
@@ -161,8 +156,6 @@ namespace DigDig2
 
 		public void RequestAttackStart(int attackTypeIndex)
 		{
-			if (!authority) return;
-
 			heldAttackType = GetAttackTypeFromIndex(attackTypeIndex);
 
 			LogVerbose($"Attack request started. Held Attack Type: {heldAttackType}");
@@ -185,8 +178,6 @@ namespace DigDig2
 		
 		public void RequestAttackEnd()
 		{
-			if (!authority) return;
-
 			// Perform the Charged attack (if there is one and it's valid)
 			if (IsChargeValid()) PerformAttack(heldAttackType);
 
@@ -340,16 +331,12 @@ namespace DigDig2
 
 		public void StartHitboxAttack(Attack attack, string id, BindableAttackHitbox bindableAttackHitbox)
 		{
-			if (!authority) return;
-
 			bindableAttackHitbox.StartAttack(id, this, attack);
 			activeAttacks[id] = bindableAttackHitbox;
 		}
 
 		public void EndHitboxAttack(string id)
 		{
-			if (!authority) return;
-
 			if (activeAttacks.ContainsKey(id))
 			{
 				activeAttacks[id].EndAttack(id);
@@ -359,8 +346,6 @@ namespace DigDig2
 		
 		public BindableAttackHitbox GetBindableAttackHitbox(int index)
 		{
-			if (!authority) return null;
-
 			return bindableAttackHitboxes[index];
         }
 
@@ -417,13 +402,6 @@ namespace DigDig2
 
 		private void UpdateEnemyFocus()
 		{
-			if (isClient && GameManager.Instance.LocalPlayerObj == gameObject)
-			{
-				Vector3 enemyPosition = Vector3.zero;
-				if (focusedEnemy) enemyPosition = focusedEnemy.transform.position;
-				GameManager.Instance.FocusOnPosition(focusedEnemy != null, enemyPosition);
-			}
-			
 			if (focusedEnemy)
 			{
 				if (!IsAttackableVisibleOnScreen(focusedEnemy))
@@ -431,11 +409,21 @@ namespace DigDig2
 					focusedEnemy = null;
 				}
 			}
-
+			bool isFocusedEnemy = focusedEnemy != null;
+			
+			// Set Screen Marker Position
+			if (GameManager.Instance.PlayerOneCharacter == gameObject)
+			{
+				Vector3 enemyPosition = Vector3.zero;
+				if (isFocusedEnemy) enemyPosition = focusedEnemy.transform.position;
+				GameManager.Instance.FocusOnPosition(isFocusedEnemy, enemyPosition); // TODO: feels a bit odd calling GameManager, and the GameManager relays the info down the tree again
+			}
+			
+			// EntityCharacter Controller rotation
 			if (entityCharacterController)
 			{
-				entityCharacterController.SetAutomaticLookRotationLock(focusedEnemy != null);
-				if (focusedEnemy) entityCharacterController.LookTowards(focusedEnemy.transform.position);
+				entityCharacterController.SetAutomaticLookRotationLock(isFocusedEnemy);
+				if (isFocusedEnemy) entityCharacterController.LookTowards(focusedEnemy.transform.position);
 			}
 		}
 
@@ -443,7 +431,7 @@ namespace DigDig2
 		{
 			if (attackable.TryGetComponent(out Collider collider))
 			{
-				Plane[] cameraFrustrumPlanes = GeometryUtility.CalculateFrustumPlanes(Camera.main);
+				Plane[] cameraFrustrumPlanes = GeometryUtility.CalculateFrustumPlanes(GameCamera.Instance.mainCamera);
 				return GeometryUtility.TestPlanesAABB(cameraFrustrumPlanes, collider.bounds);
 			}
 			

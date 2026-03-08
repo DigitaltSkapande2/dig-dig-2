@@ -2,14 +2,14 @@ using UnityEngine;
 using DigDig2.Debugging;
 using System.Collections.Generic;
 using System.Linq;
-using Mirror;
+
 using System;
 
 namespace DigDig2
 {
 	// This might be kaboom?
 	[Debug(DebugMenuToggleable.non_toggleable), RequireComponent(typeof(CharacterController))]
-	public class EntityCharacterController : NetworkBehaviour
+	public class EntityCharacterController : MonoBehaviour
 	{
 		public bool Frozen
 		{
@@ -146,7 +146,7 @@ namespace DigDig2
 		private Transform lastGround;
 		private Vector3 lastGroundPosition = Vector3.zero;
 
-		[SyncVar] private float targetLookRotation = 0f;
+		private float targetLookRotation = 0f;
 		public float TargetLookRotation
 		{
 			get
@@ -181,55 +181,40 @@ namespace DigDig2
 
 		private void Start()
 		{
-			if (isClient)
-			{
-				RefreshVisualsRotation(false);
-			}
+			RefreshVisualsRotation(false);
 		}
 
 		private void Update()
 		{
 			if (!frozen)
 			{
-				if (authority)
-				{
-					Debug.DrawLine(transform.position, transform.position + GetForwardVector(), Color.red);
 
-					// Movement
-					// NOTE: Reorder movement processing order here!
-					ProcessGravity();
-					if (stunTimer <= 0) ProcessMove();
-					ProcessSlope();
-					ProcessKnockback();
-					ProcessDash();
-					ProcessPush();
+				Debug.DrawLine(transform.position, transform.position + GetForwardVector(), Color.red);
 
-					ApplyMovement();
+				// Movement
+				// NOTE: Reorder movement processing order here!
+				ProcessGravity();
+				if (stunTimer <= 0) ProcessMove();
+				ProcessSlope();
+				ProcessKnockback();
+				ProcessDash();
+				ProcessPush();
 
-					ProcessMovingPlatform();
-					ProcessEdge();
+				ApplyMovement();
 
-					// Visuals
-					UpdateVisualsRotation();
-					if (animator != null) UpdateAnimation();
-				}
-				else
-                {
-                    frozen = true;
-                }
+				ProcessMovingPlatform();
+				ProcessEdge();
+
+				// Visuals
+				UpdateVisualsRotation();
+				if (animator != null) UpdateAnimation();
+				
+				RefreshVisualsRotation();
 			}
-
-			if (isClient)
+			
+			if (stunTimer != 0)
 			{
-				if (!frozen) RefreshVisualsRotation();
-			}
-
-			if (authority)
-			{
-				if (stunTimer != 0)
-				{
-					stunTimer = Mathf.Clamp(stunTimer - Time.deltaTime, 0, maxStunTime);
-				}
+				stunTimer = Mathf.Clamp(stunTimer - Time.deltaTime, 0, maxStunTime);
 			}
 		}
 
@@ -532,7 +517,7 @@ namespace DigDig2
 
 				state = EntityState.Dashing;
 				animator.CrossFadeInFixedTime("Dash", 0.1f, 0);
-				if (isLocalPlayer) animator.CrossFadeInFixedTime("SwordDash", 0.1f, 1);
+				animator.CrossFadeInFixedTime("SwordDash", 0.1f, 1);
 
 				return;
 			}
@@ -542,7 +527,7 @@ namespace DigDig2
 				if (state == EntityState.Sprinting) return;
 				state = EntityState.Sprinting;
                 animator.CrossFadeInFixedTime("Sprint", 0.1f, 0);
-                if (isLocalPlayer) animator.CrossFadeInFixedTime("SwordSprint", 0.1f, 1);
+                animator.CrossFadeInFixedTime("SwordSprint", 0.1f, 1);
 				return;
             }
 
@@ -550,7 +535,7 @@ namespace DigDig2
 			{
 				state = EntityState.Idle;
 				animator.CrossFadeInFixedTime("Idle", 0.1f, 0);
-				if (isLocalPlayer) animator.CrossFadeInFixedTime("SwordIdle", 0.1f, 1);
+				animator.CrossFadeInFixedTime("SwordIdle", 0.1f, 1);
 			}
         }
 
@@ -570,13 +555,6 @@ namespace DigDig2
 			automaticLookRotationLocked = isLocked;
 		}
 
-		#endregion
-		
-		#region Effects
-		public void OnFootStepEvent()
-		{
-			
-		}
 		#endregion
 	}
 }

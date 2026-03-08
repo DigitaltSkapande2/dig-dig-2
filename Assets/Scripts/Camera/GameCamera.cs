@@ -14,7 +14,7 @@ namespace DigDig2.CinemaCamera
         private Quaternion baseTargetRotation;
         private float targetFrustumSize;
 
-        Camera mainCamera;
+        public Camera mainCamera;
         private float defaultFrustumHeight;
 
         void Start()

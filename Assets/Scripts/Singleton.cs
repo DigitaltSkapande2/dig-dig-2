@@ -1,8 +1,6 @@
-using Mirror;
 using UnityEngine;
 
-[RequireComponent(typeof(NetworkIdentity))]
-public class Singleton<T> : NetworkBehaviour where T : NetworkBehaviour
+public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 {
     private static T instance;
     [Header("Singleton Settings")]

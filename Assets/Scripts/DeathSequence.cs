@@ -1,5 +1,5 @@
 using DigDig2.Effects;
-using Mirror;
+
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Splines.Interpolators;
@@ -20,11 +20,9 @@ namespace DigDig2
 
         public void StartDeathSequence()
         {
-            if (!NetworkServer.active) return;
-
             deathEffectPlayer.Play(transform.position, Quaternion.identity, Vector3.one);
 
-            if (NetworkManager.singleton.IsMultiplayer)
+            if (GameManager.Instance.IsMultiplayer)
             {
                 // TODO: Implement multiplayer respawn system
             }
@@ -44,7 +42,6 @@ namespace DigDig2
                     foreach (Material mat in renderer.materials)
                     {
                         float newDissolveAmount = Mathf.Lerp(mat.GetFloat(disolveFloatName), 1f, disolveWeight*Time.deltaTime);
-                        Debug.Log("newDissolveAmount: " + newDissolveAmount);
                         mat.SetFloat(disolveFloatName, newDissolveAmount);
                     }
                 }
@@ -53,13 +50,7 @@ namespace DigDig2
 
         private void SingleplayerResetScene()
         {
-            var playerInstance = Instantiate(emptyPlayerPrefab);
-            DontDestroyOnLoad(playerInstance);
-            NetworkServer.ReplacePlayerForConnection(NetworkServer.localConnection, playerInstance, ReplacePlayerOptions.Destroy);
-            Debug.Log(SceneManager.GetActiveScene().name);
-            NetworkManager.singleton.ServerChangeScene(SceneManager.GetActiveScene().name);
+            GameManager.Instance.ReloadGameScene();
         }
-
-
     }
 }

@@ -1,13 +1,13 @@
-using Mirror;
+
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 
 namespace DigDig2
 {
-    [RequireComponent(typeof(NetworkIdentity))]
-    public class CharacterSelectSequencer : NetworkBehaviour
+    public class CharacterSelectSequencer : MonoBehaviour
     {
         #region Variables
         [Header("Prefabs")]
@@ -26,15 +26,8 @@ namespace DigDig2
         [SerializeField] private TMP_Text minisNameplateText;
         [Header("Debug")]
         [SerializeField] bool verboseLogging = false;
-
-
-        [SerializeField] private bool hostIsMax = true;
-
-        private LocalConnectionToClient hostConn = null;
-        private string hostAlias;
-        private NetworkConnectionToClient clientConn = null;
-        private string clientAlias;
-
+        [FormerlySerializedAs("hostIsMax")] [SerializeField] private bool PlayerOneIsMax = true;
+        
         private GameObject maxDummyInstance;
         private GameObject minisDummyInstance;
         
@@ -44,7 +37,7 @@ namespace DigDig2
 
         private void Awake()
         {
-            if (!NetworkManager.singleton.IsMultiplayer)
+            if (!GameManager.Instance.IsMultiplayer)
             {
                 VerboseLog("Not in multiplayer mode, disabling character select sequencer.");
                 gameObject.SetActive(false);
@@ -56,145 +49,65 @@ namespace DigDig2
         {
             // maxClickableCollider.clickStart.AddListener(() => OnCharacterClicked(CharacterType.Max, maxClickableCollider));
             // minisClickableCollider.clickStart.AddListener(() => OnCharacterClicked(CharacterType.Mini, minisClickableCollider));
+            
+            switchCharacterButton.interactable = false;
+            startButton.interactable = false;
 
-            if (!isServer) // !isServer != isClient
-            {
-                switchCharacterButton.interactable = false;
-                startButton.interactable = false;   
-            }
-        }
-
-        #endregion
-        #region Server
-
-        public override void OnStartServer()
-        {
             maxDummyInstance = Instantiate(maxDummyPrefab, maxSpawnPoint.position, maxSpawnPoint.rotation);
-            NetworkServer.Spawn(maxDummyInstance);
             minisDummyInstance = Instantiate(minisDummyPrefab, minisSpawnPoint.position, minisSpawnPoint.rotation);
-            NetworkServer.Spawn(minisDummyInstance);
 
             switchCharacterButton.interactable = true;
             startButton.interactable = true;
 
-            hostConn = NetworkServer.localConnection;
-            hostAlias = hostConn.connectionId.ToString();
-
             switchCharacterButton.onClick.AddListener(OnSwitchCharacterButtonClicked);
             startButton.onClick.AddListener(OnStartButtonClicked);
 
-            if (NetworkManager.singleton != null)
-            {
-                NetworkManager.singleton.serverConnect.AddListener(OnServerConnect);
-                NetworkManager.singleton.serverDisconnect.AddListener(OnServerDisconnect);
-            }
-
             VerboseLog("Server ready. Waiting for clients to connect before spawning characters.");
         }
+        
+        #endregion
+        
 
-        [Server]
-        private void OnServerDisconnect(NetworkConnectionToClient conn)
-        {
-            if (clientConn == conn)
-            {
-                clientConn = null;
-                clientAlias = "";
-            }
-            RpcUpdateAliases(hostAlias, clientAlias);
-        }
-
-        [Server]
-        private void OnServerConnect(NetworkConnectionToClient conn)
-        {
-            if (clientConn == null)
-            {
-                VerboseLog($"Client connected: {conn.connectionId}");
-                clientConn = conn;
-                clientAlias = conn.connectionId.ToString();
-            }
-            else
-            {
-                Debug.LogError("there are more than 2 connections?");
-            }
-            RpcUpdateAliases(hostAlias, clientAlias);
-        }
-
-        [Server]
+        
         private void OnSwitchCharacterButtonClicked()
         {
-            hostIsMax = !hostIsMax;
-            RpcUpdateHostIsMax(!hostIsMax);
-
-            RpcUpdateAliases(hostAlias, clientAlias);
+            PlayerOneIsMax = !PlayerOneIsMax;
         }
 
-        [Server]
+        
         private async void OnStartButtonClicked()
         {
-            if (clientConn == null)
-            {
-                Debug.LogError("No client connected! Cannot start game.");
-                return;
-            }
-
-            NetworkServer.Destroy(maxDummyInstance);
-            NetworkServer.Destroy(minisDummyInstance);
+            Destroy(maxDummyInstance);
+            Destroy(minisDummyInstance);
 
             GameObject maxInstance = Instantiate(maxPrefab, maxSpawnPoint.position, maxSpawnPoint.rotation);
             GameObject minisInstance = Instantiate(minisPrefab, minisSpawnPoint.position, minisSpawnPoint.rotation);
 
-            GameObject hostCharObjInstance = hostIsMax ? maxInstance : minisInstance;
-            GameObject clientCharObjInstance = hostIsMax ? minisInstance : maxInstance;
+            GameObject hostCharObjInstance = PlayerOneIsMax ? maxInstance : minisInstance;
+            GameObject clientCharObjInstance = PlayerOneIsMax ? minisInstance : maxInstance;
 
-            hostCharObjInstance.name = hostIsMax ? "Max_connid: " + hostConn.connectionId : "Minis_connid: " + hostConn.connectionId;
-            clientCharObjInstance.name = hostIsMax ? "Minis_connid: " + clientConn.connectionId : "Max_connid: " + clientConn.connectionId;
+            //hostCharObjInstance.name = PlayerOneIsMax ? "Max_connid: " + hostConn.connectionId : "Minis_connid: " + hostConn.connectionId;
+            //clientCharObjInstance.name = PlayerOneIsMax ? "Minis_connid: " + clientConn.connectionId : "Max_connid: " + clientConn.connectionId;
 
             // NetworkServer.RemovePlayerForConnection(hostConn, RemovePlayerOptions.Destroy);
             // NetworkServer.RemovePlayerForConnection(clientConn, RemovePlayerOptions.Destroy);
-
-            NetworkServer.ReplacePlayerForConnection(hostConn, hostCharObjInstance, ReplacePlayerOptions.Destroy);
-            NetworkServer.ReplacePlayerForConnection(clientConn, clientCharObjInstance, ReplacePlayerOptions.Destroy);
+            
             
             await System.Threading.Tasks.Task.Delay(100); // wait a frame for the ReplacePlayerForConnection to complete before enabling input
 
-            RpcEnablePlayerInput();
+            EnablePlayerInput();
         }
+        
 
-
-        #endregion
-        #region Client
-
-        [ClientRpc]
-        private void RpcUpdateHostIsMax(bool newValue)
+        
+        private void EnablePlayerInput() 
         {
-            hostIsMax = newValue;
-            LocalUpdateCharacterNamePlates();
+            GameManager.Instance.PlayerOneCharacter.GetComponent<PlayerCharacterInputController>().EnableInput();
+            GameManager.Instance.PlayerOneCharacter.GetComponent<PlayerAttackInput>().EnableInput();
+            GameManager.Instance.PlayerOneCharacter.GetComponent<EntityCharacterController>().Frozen = false;
         }
-
-        [ClientRpc]
-        private void RpcUpdateAliases(string clientAlias, string hostAlias)
-        {
-            this.clientAlias = clientAlias;
-            this.hostAlias = hostAlias;
-            LocalUpdateCharacterNamePlates();
-        }
-
-        [ClientRpc]
-        private void RpcEnablePlayerInput() 
-        {
-            NetworkClient.localPlayer.GetComponent<PlayerCharacterInputController>().EnableInput();
-            NetworkClient.localPlayer.GetComponent<PlayerAttackInput>().EnableInput();
-            NetworkClient.localPlayer.GetComponent<EntityCharacterController>().Frozen = false;
-        }
-
-        #endregion
+        
         #region Util
-
-        private void LocalUpdateCharacterNamePlates()
-        {
-            maxNameplateText.text = hostIsMax ? hostAlias : clientAlias;
-            minisNameplateText.text = hostIsMax ? clientAlias : hostAlias; 
-        }
 
         private void VerboseLog(string msg)
         {

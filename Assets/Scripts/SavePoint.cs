@@ -1,14 +1,13 @@
 using System.Threading.Tasks;
 using DigDig2.CinemaCamera;
 using DigDig2.Effects;
-using Mirror;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace DigDig2
 {
-    [RequireComponent(typeof(Collider), typeof(NetworkIdentity))]
-    public class SavePoint : NetworkBehaviour
+
+    public class SavePoint : MonoBehaviour
     {
         [SerializeField] private GameObject characterSeclectSecuencerPrefab;
         [SerializeField] private LockTargetEffector lockTargetEffector;
@@ -42,16 +41,13 @@ namespace DigDig2
             
         }
         
-        [Server]
         public void ServerStartMultiplayerStartSequence()
         {
             lockTargetEffector.IsActive = true;
             VerboseLog("Spawning character select sequencer for multiplayer spawn...");
             GameObject instance = Instantiate(characterSeclectSecuencerPrefab, transform.position, Quaternion.identity);
-            NetworkServer.Spawn(instance);
         }
 
-        [Server]
         public async void ServerStartSingleplayerStartSequence()
         {
             lockTargetEffector.IsActive = true;
@@ -62,14 +58,7 @@ namespace DigDig2
             lockTargetEffector.IsActive = false;
         }
 
-        [Server]
-        public void ServerSetSpawnPointReached(bool reached)
-        {
-            RcpSetSpawnPointReached(reached);
-        }
-
-
-        public void RcpSetSpawnPointReached(bool reached)
+        public void SetSpawnPointReached(bool reached)
         {
             collider.enabled = !reached;
             VerboseLog($"i am active, {name}");
@@ -83,10 +72,9 @@ namespace DigDig2
 
         private void OnTriggerEnter(Collider other)
         {
-            if (!isServer) return;
             VerboseLog("reached: " + gameObject.name);
 
-            RcpSetSpawnPointReached(true);
+            SetSpawnPointReached(true);
             onReachedEffect.Play();
             SaveManager.Instance.SaveAllAndWriteToFile();
         }

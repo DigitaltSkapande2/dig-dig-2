@@ -1,5 +1,5 @@
 using DigDig2.UINavigation;
-using Mirror;
+
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -109,7 +109,7 @@ namespace DigDig2
 
         private void SaveAndExit()
         {
-            GameManager.Instance.SaveAndExit();
+            GameManager.Instance.SaveAndLoadMainMenu();
         }
         
         private void OnCancel()

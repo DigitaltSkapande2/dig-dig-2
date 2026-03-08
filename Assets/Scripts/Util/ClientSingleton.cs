@@ -1,4 +1,4 @@
-using Mirror;
+
 using UnityEngine;
 
 public class ClientSingleton<T> : MonoBehaviour where T : MonoBehaviour

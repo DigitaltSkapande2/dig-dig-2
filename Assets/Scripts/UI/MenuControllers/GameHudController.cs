@@ -58,8 +58,8 @@ namespace DigDig2
         {
             GameManager.Instance.characterSwitched.AddListener(UpdateCharacter);
             
-            await UniTask.WaitUntil(() => GameManager.Instance.LocalPlayerObj);
-            UpdateCharacter(GameManager.Instance.currentCharacter, GameManager.Instance.LocalPlayerObj);
+            await UniTask.WaitUntil(() => GameManager.Instance.PlayerOneCharacter);
+            UpdateCharacter(GameManager.Instance.currentCharacter, GameManager.Instance.PlayerOneCharacter);
         }
 
         private void UpdateCharacter(CharacterType characterType, GameObject characterObject)

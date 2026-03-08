@@ -237,8 +237,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 628066563918885282}
-  - component: {fileID: 1105490476774405943}
-  - component: {fileID: 8073782812119370610}
   - component: {fileID: 7640796214157116245}
   - component: {fileID: 4606330902297098520}
   - component: {fileID: 8863147776240216943}
@@ -270,57 +268,6 @@ Transform:
   - {fileID: 9056734433506333632}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1105490476774405943
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5585277213094831744}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneId: 0
-  _assetId: 1527385738
-  serverOnly: 0
-  visibility: 2
-  hasSpawned: 0
---- !u!114 &8073782812119370610
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5585277213094831744}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a553cb17010b2403e8523b558bffbc14, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncDirection: 0
-  syncMode: 0
-  syncInterval: 0
-  target: {fileID: 628066563918885282}
-  syncPosition: 1
-  syncRotation: 0
-  syncScale: 0
-  onlySyncOnChange: 1
-  compressRotation: 1
-  interpolatePosition: 1
-  interpolateRotation: 1
-  interpolateScale: 1
-  coordinateSpace: 0
-  timelineOffset: 1
-  showGizmos: 0
-  showOverlay: 0
-  overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
-  bufferResetMultiplier: 3
-  useFixedUpdate: 0
-  positionSensitivity: 0.01
-  rotationSensitivity: 0.01
-  scaleSensitivity: 0.01
 --- !u!143 &7640796214157116245
 CharacterController:
   m_ObjectHideFlags: 0
@@ -358,9 +305,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fdd87b4ca6994e188f170e0f6f637dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncDirection: 0
-  syncMode: 0
-  syncInterval: 0
   frozen: 0
   gravityScale: 1
   groundLayers:
@@ -401,9 +345,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c835a598b542dcd0baf8ad9ea31b8a21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncDirection: 0
-  syncMode: 0
-  syncInterval: 0
   pathWaypointDistanceTolerance: 0.5
   movementState: 0
 --- !u!114 &5976209809697749524
@@ -447,9 +388,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9159de995a6f4794dbddc1f67ad7f200, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Attacker
-  syncDirection: 0
-  syncMode: 0
-  syncInterval: 0
   attackTypes:
   - {fileID: 11400000, guid: 554a7201707c2ce4087b6f692cb08e8b, type: 2}
   chainTimeWindowAfterAttackEnd: 0.05

@@ -2,8 +2,9 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using DigDig2.UIElements;
 using DigDig2.UINavigation;
-using Mirror;
+
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 namespace DigDig2
@@ -290,31 +291,14 @@ namespace DigDig2
             
         }
 
-        public async void JoinLocalHostGame()
+        public void StartSingleplayer()
         {
-            NetworkManager.singleton.StartClient(true);
-            await UniTask.WaitUntil(() => NetworkClient.active);
-
-            Debug.Log("Client started.");
+            SceneManager.LoadScene(gameSceneName);
         }
 
-        public async void StartSingleplayer()
+        public void StartMultiplayer()
         {
-            NetworkManager.singleton.StartHost(false);
-
-            await UniTask.WaitUntil(() => NetworkServer.active);
-            Debug.Log("GANG!!! WE MADE IT!!");
-
-            NetworkManager.singleton.ServerChangeScene(gameSceneName);
-        }
-
-        public async void StartMultiplayer()
-        {
-            NetworkManager.singleton.StartHost(true);
-
-            await UniTask.WaitUntil(() => NetworkServer.active);
-
-            NetworkManager.singleton.ServerChangeScene(gameSceneName);
+            SceneManager.LoadScene(gameSceneName);
         }
 
         private void OnCancel()
