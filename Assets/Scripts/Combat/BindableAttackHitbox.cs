@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-
+using DigDig2.Combat.Attacks;
 using UnityEngine;
 
 namespace DigDig2.Combat
@@ -80,6 +80,7 @@ namespace DigDig2.Combat
 					if ( !enemyAttackable ) continue;
 					if ( enemyAttackable == attackInfo.attackerAttackable ) continue;
 					if ( attackInfo.attackedEntities.Contains( enemyAttackable ) ) continue;
+					if ( enemyAttackable.Group.Contains("Melee Only") && attackInfo.attack is RangedAttack ) continue;
 
 					attackInfo.attackedEntities.Add( enemyAttackable );
 					enemyAttackable.Hit( attackInfo.attack, attackInfo.attacker );
