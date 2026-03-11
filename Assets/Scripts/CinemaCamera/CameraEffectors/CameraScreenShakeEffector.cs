@@ -5,8 +5,8 @@ namespace DigDig2.CinemaCamera.CameraEffectors
 {
 	public class ScreenShakeEffector : CameraEffector
 	{
-		[FormerlySerializedAs( "ShakeIntensity" )] [SerializeField]
-		private float shakeIntensity;
+		[FormerlySerializedAs( "ShakeIntensity" )]
+		[SerializeField] private float shakeIntensity;
 
 		[SerializeField] private float shakeFrequency = 5;
 		[SerializeField] private float shakeAmplitude = 5;

@@ -30,8 +30,9 @@ namespace DigDig2.CinemaCamera
 
 		private void Update( )
 		{
-			targetPos = Vector3.zero;
-			targetRotation = Quaternion.identity;
+			// i don't know how this witchcraft works...
+			Vector3 targetPos = Vector3.zero;
+			Quaternion targetRotation = Quaternion.identity;
 			
 			float frustumSize = defaultFrustumHeight;
 
@@ -44,9 +45,9 @@ namespace DigDig2.CinemaCamera
 			}
 
 			transform.position = Vector3.Lerp( transform.position, targetPos, followSpeed * Time.deltaTime );
-			targetRotation.eulerAngles += targetRotation.eulerAngles;
+			targetRotation.eulerAngles += this.targetRotation.eulerAngles;
 
-			targetRotation = Quaternion.Slerp( targetRotation, baseTargetRotation, Time.deltaTime * rotationSpeed );
+			this.targetRotation = Quaternion.Slerp( this.targetRotation, baseTargetRotation, Time.deltaTime * rotationSpeed );
 
 			transform.rotation = targetRotation;
 
