@@ -182,7 +182,8 @@ namespace DigDig2.SaveSystem
 			{
 				saveable.RestoreState( loadedGameSave.stateData[ uniqueName ] );
 				VerboseLog( $"Restored state for Savable with uniqueName \"{uniqueName}\"" );
-			} else
+			}
+			else
 			{
 				saveable.RestoreState( null );
 				VerboseLog( $"Restored state NULL for Savable with uniqueName \"{uniqueName}\"" );

@@ -148,7 +148,8 @@ namespace DigDig2.Game
 				{
 					Destroy( crystal.gameObject );
 					Debug.Log( $"crystal [{i}] KILLED" );
-				} else
+				}
+				else
 					crystal.GetComponent<Health>( ).death.AddListener( ( ) => SetHighestKilledCrystalIndex( gay ) );
 			}
 		}
@@ -276,10 +277,12 @@ namespace DigDig2.Game
 					highestReachedSavePointIndex = 0,
 					highestKilledCrystal = -1
 				};
-			} else
+			}
+			else
 			{
 				Debug.Log( $"GAAAY {dataObject}" );
-				try { loadedGameManagerSaveData = (GameManagerGameSaveData)dataObject; } catch { loadedGameManagerSaveData = JsonConvert.DeserializeObject<GameManagerGameSaveData>( dataObject.ToString( ) ); }
+				try { loadedGameManagerSaveData = (GameManagerGameSaveData)dataObject; }
+				catch { loadedGameManagerSaveData = JsonConvert.DeserializeObject<GameManagerGameSaveData>( dataObject.ToString( ) ); }
 
 				CurrentCharacter = loadedGameManagerSaveData.singleplayerSelectedCharacter;
 				Debug.Log( loadedGameManagerSaveData.highestReachedSavePointIndex );

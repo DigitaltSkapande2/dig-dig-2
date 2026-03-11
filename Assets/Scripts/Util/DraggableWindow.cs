@@ -53,7 +53,8 @@ namespace DigDig2.Util
 				originalLocalPointerPosition = eventData.position;
 				originalWindowSize = windowRect.sizeDelta;
 				originalWindowPosition = windowRect.localPosition;
-			} else if ( IsPointerInTopBar( eventData ) )
+			}
+			else if ( IsPointerInTopBar( eventData ) )
 			{
 				// Start dragging
 				originalWindowPosition = windowRect.position;

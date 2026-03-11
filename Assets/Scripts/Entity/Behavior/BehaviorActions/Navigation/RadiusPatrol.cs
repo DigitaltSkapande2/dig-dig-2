@@ -76,7 +76,8 @@ namespace DigDig2.Entity.Behavior.BehaviorActions.Navigation
 					waiting = false;
 					MoveToNextRandomPoint( );
 				}
-			} else
+			}
+			else
 			{
 				// Check if we've reached the waypoint (ensuring NavMeshAgent has completed path calculation if available)
 				if ( agentTranslatorCharacterBehaviorController && agentTranslatorCharacterBehaviorController.movementState != BehaviorAgentTranslator.MovementState.Idle ) return Status.Running;

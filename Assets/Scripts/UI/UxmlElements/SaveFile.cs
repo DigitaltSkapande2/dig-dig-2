@@ -2,7 +2,7 @@ using UnityEngine.UIElements;
 
 namespace DigDig2.UI.UxmlElements
 {
-	[UxmlElement] public sealed partial class SaveFile : VisualElement
+	[UxmlElement] public partial class SaveFile : VisualElement
 	{
 		private readonly Label saveInfoLabel;
 

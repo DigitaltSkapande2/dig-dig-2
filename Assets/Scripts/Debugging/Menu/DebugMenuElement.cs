@@ -61,7 +61,8 @@ namespace DigDig2.Debugging.Menu
 				);
 
 				uiToggle.SetIsOnWithoutNotify( behaviour.gameObject.activeSelf );
-			} else
+			}
+			else
 			{
 				uiToggle.interactable = false;
 				uiToggle.isOn = false;

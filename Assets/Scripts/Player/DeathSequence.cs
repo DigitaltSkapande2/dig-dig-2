@@ -41,7 +41,8 @@ namespace DigDig2.Player
 			if ( GameManager.Instance.IsMultiplayer )
 			{
 				// TODO: Implement multiplayer respawn system
-			} else
+			}
+			else
 			{
 				isDying = true;
 				Invoke( nameof( SingleplayerResetScene ), timeUntilRespawn );

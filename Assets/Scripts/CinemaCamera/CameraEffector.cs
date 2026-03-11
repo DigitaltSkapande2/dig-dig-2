@@ -7,10 +7,6 @@ namespace DigDig2.CinemaCamera
 {
 	public class CameraEffector : MonoBehaviour
 	{
-		protected void OnEnable( ) { AddCameraEffector( this ); }
-
-		protected void OnDisable( ) { RemoveCameraEffector( this ); }
-
 		#region Field Declaration
 
 		// -- Static Fields -- //
@@ -104,5 +100,9 @@ namespace DigDig2.CinemaCamera
 		public static List<CameraEffector> GetEffectiveAbsoluteCameraEffectors( ) => effectiveAbsoluteCameraEffectors;
 
 		#endregion
+		
+		protected void OnEnable( ) { AddCameraEffector( this ); }
+
+		protected void OnDisable( ) { RemoveCameraEffector( this ); }
 	}
 }

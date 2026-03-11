@@ -17,7 +17,8 @@ namespace DigDig2.UI.UxmlElements
 			{
 				Submit?.Invoke( );
 				mouseDown = false;
-			} else if ( evt.eventTypeId == MouseDownEvent.TypeId( ) )
+			}
+			else if ( evt.eventTypeId == MouseDownEvent.TypeId( ) )
 				mouseDown = true;
 			else if ( evt.eventTypeId == MouseLeaveEvent.TypeId( ) ) mouseDown = false;
 		}

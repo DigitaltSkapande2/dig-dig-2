@@ -50,7 +50,8 @@ namespace DigDig2.Entity.Behavior
 								positionDifference = currentPathWaypoint - transform.position;
 								positionDifference.y = 0f;
 								distanceToWaypoint = positionDifference.magnitude;
-							} else
+							}
+							else
 							{
 								// No more waypoints to follow, entity has finished, reset path
 								Stop( );

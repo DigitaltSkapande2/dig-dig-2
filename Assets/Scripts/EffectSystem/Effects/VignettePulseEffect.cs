@@ -57,7 +57,8 @@ namespace DigDig2.EffectSystem.Effects
 			{
 				vignette.intensity.value = defaultVignette.intensity.value;
 				vignette.color.value = defaultVignette.color.value;
-			} else
+			}
+			else
 				UpdateTargetColors( );
 		}
 

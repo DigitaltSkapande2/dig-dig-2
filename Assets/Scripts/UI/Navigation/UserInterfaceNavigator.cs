@@ -146,7 +146,8 @@ namespace DigDig2.UI.Navigation
 
 						node.focusElement.Focus( );
 					}
-				} else
+				}
+				else
 				{
 					if ( node.inputElement != null ) node.inputElement.enabledSelf = false;
 					if ( node.element != null )

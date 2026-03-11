@@ -71,7 +71,8 @@ namespace DigDig2.UI.Controllers
 					{
 						lastPausedState = false;
 						stateChanged.Invoke( false );
-					} else if ( !lastPausedState )
+					}
+					else if ( !lastPausedState )
 					{
 						lastPausedState = true;
 						stateChanged.Invoke( true );

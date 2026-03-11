@@ -69,7 +69,8 @@ namespace DigDig2
 				Debug.Log( "WÄÄÄÄÄÄÄÄ" );
 			else
 			{
-				try { targetY = (float)dataObject; } catch { targetY = JsonConvert.DeserializeObject<float>( dataObject.ToString( ) ); }
+				try { targetY = (float)dataObject; }
+				catch { targetY = JsonConvert.DeserializeObject<float>( dataObject.ToString( ) ); }
 
 				print( targetY );
 				transform.position = new( 0, targetY, 0 );

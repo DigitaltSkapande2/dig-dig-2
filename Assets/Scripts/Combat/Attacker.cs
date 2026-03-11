@@ -193,7 +193,8 @@ namespace DigDig2.Combat
 				attackRequestChain = currentAttackChain + 1;
 				LogVerbose( "Incrementing chain!" );
 				EndAttack( false, true );
-			} else
+			}
+			else
 			{
 				LogVerbose( "Resetting chain!" );
 				attackRequestChain = 0;
@@ -277,12 +278,14 @@ namespace DigDig2.Combat
 					EndAttack( );
 					return;
 				}
-			} else if ( attackType ) // Attack is not charged, trigger attack
+			}
+			else if ( attackType ) // Attack is not charged, trigger attack
 			{
 				LogVerbose( $"Attacking with chain {currentAttackChain}!" );
 				currentPerformingAttackType = attackType;
 				currentPerformingAttack = currentPerformingAttackType.GetAttackFromIndex( currentAttackChain );
-			} else
+			}
+			else
 				EndAttack( true );
 
 			if ( !currentPerformingAttack )
@@ -393,8 +396,9 @@ namespace DigDig2.Combat
 		private void UpdateEnemyFocus( )
 		{
 			if ( focusedEnemy )
-				if ( !IsAttackableVisibleOnScreen( focusedEnemy ) )
-					focusedEnemy = null;
+			{
+				if ( !IsAttackableVisibleOnScreen( focusedEnemy ) ) focusedEnemy = null;
+			}
 
 			bool hasFocusedEnemy = (bool)focusedEnemy;
 

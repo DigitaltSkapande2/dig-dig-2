@@ -32,9 +32,10 @@ namespace DigDig2.Game
 
 			controlPoint = Vector3.Lerp( controlPoint, Vector3.Lerp( crystal, enemy, controlPointDefaultPosition ), Time.deltaTime * controlPointResetSpeed );
 
-			for ( int index = 0; index <= segments; index++ )
+			int index = 0;
+			for ( int i = 0; i <= segments; i++ )
 			{
-				float value = 1f / segments * index;
+				float value = 1f / segments * i;
 
 				var p1 = Vector3.Lerp( crystal, controlPoint, value );
 				var p2 = Vector3.Lerp( controlPoint, enemy, value );
@@ -52,11 +53,10 @@ namespace DigDig2.Game
 				{
 					Vector3 offset = p3 - crystal;
 					p3 = crystal + offset.normalized * shieldDistance;
-
-					continue;
 				}
 
 				line.SetPosition( index, p3 );
+				index++;
 			}
 		}
 

@@ -83,7 +83,8 @@ namespace DigDig2.Debugging.Menu
 					// Spawn menu element for this behaviour
 					DebugMenuElement element = SpawnMenuElement( behaviour, debugFields, debugAttr.IsToggleable );
 					debugMenuElements.Add( element );
-				} else
+				}
+				else
 					nonDebugableBehaviourTypes.Add( behaviourType );
 			}
 		}

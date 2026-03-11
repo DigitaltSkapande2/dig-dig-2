@@ -72,7 +72,8 @@ namespace DigDig2.UI.Controllers
 			{
 				miniCharacterIndicator.RemoveFromClassList( "selected" );
 				maxCharacterIndicator.AddToClassList( "selected" );
-			} else
+			}
+			else
 			{
 				maxCharacterIndicator.RemoveFromClassList( "selected" );
 				miniCharacterIndicator.AddToClassList( "selected" );

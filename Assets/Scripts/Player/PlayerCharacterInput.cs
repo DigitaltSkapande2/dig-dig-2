@@ -61,7 +61,8 @@ namespace DigDig2.Player
 			{
 				Vector3 rotatedInputMoveVector = Quaternion.Euler( 0f, GameCamera.Instance.mainCamera.transform.rotation.eulerAngles.y, 0f ) * new Vector3( inputMoveVector.x, 0f, inputMoveVector.y );
 				entityCharacterController.inputMoveVector = rotatedInputMoveVector;
-			} else
+			}
+			else
 				mainCamera = GameCamera.Instance.mainCamera;
 		}
 

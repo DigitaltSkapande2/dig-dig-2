@@ -170,7 +170,8 @@ namespace DigDig2.Debugging.Console
 			{
 				// If a suggestion is selected, insert it into the input field
 				InsertCurrentlySelectedSuggestion( );
-			} else
+			}
+			else
 			{
 				// Process the command
 
@@ -273,7 +274,8 @@ namespace DigDig2.Debugging.Console
 				{
 					// Highlight the currently selected suggestion (using bold or color)
 					suggestions += $"<color=yellow>{currentSuggestions[ i ]}</color>\n";
-				} else
+				}
+				else
 					suggestions += $"{currentSuggestions[ i ]}\n";
 			}
 
@@ -315,7 +317,8 @@ namespace DigDig2.Debugging.Console
 			{
 				canvas.SetActive( true );
 				StartCoroutine( ActivateInputField( inputField ) ); // Activate the input field after the UI is updated
-			} else
+			}
+			else
 			{
 				canvas.SetActive( false );
 				inputField.text = "";

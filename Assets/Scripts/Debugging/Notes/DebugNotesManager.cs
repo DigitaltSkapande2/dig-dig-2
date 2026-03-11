@@ -158,7 +158,8 @@ namespace DigDig2.Debugging.Notes
 
 				focusedNoteIndex = nearestNote;
 				nearestNoteBillboard?.SetFocused( true );
-			} else
+			}
+			else
 			{
 				if ( focusedNoteIndex == -1 ) return;
 

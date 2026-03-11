@@ -245,7 +245,8 @@ namespace DigDig2
 					// Entity is standing on a slope that is too steep, add slide force
 					float slideStrength = slopeAngle / 90f * slopeSlidePower;
 					slopeSlideVelocity += slideStrength * Time.deltaTime * new Vector3( raycastInfo.normal.x, 0f, raycastInfo.normal.z ).normalized;
-				} else
+				}
+				else
 				{
 					// Entity is not standing on a slope that is too steep, interpolate slide force to 0 to create a decay effect
 					slopeSlideVelocity = Vector3.Lerp( slopeSlideVelocity, Vector3.zero, Time.deltaTime * slopeSlideDecaySpeed );
@@ -338,7 +339,8 @@ namespace DigDig2
 				if ( edgeAdjustments.Keys.Contains( centerRaycastInfo.normal ) )
 				{
 					if ( edgeAdjustments[ centerRaycastInfo.normal ] < centerRaycastInfo.distance ) edgeAdjustments[ centerRaycastInfo.normal ] = centerRaycastInfo.distance;
-				} else
+				}
+				else
 					edgeAdjustments[ centerRaycastInfo.normal ] = centerRaycastInfo.distance;
 			}
 
@@ -378,11 +380,13 @@ namespace DigDig2
 
 						Debug.DrawLine( transform.position, transform.position + movement * 20, Color.green );
 					}
-				} else
+				}
+				else
 					lastGroundPosition = Vector3.zero;
 
 				lastGroundPosition = ground.position;
-			} else
+			}
+			else
 			{
 				ground = null;
 				lastGroundPosition = Vector3.zero;

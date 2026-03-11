@@ -21,7 +21,8 @@ namespace DigDig2.Util
 						transform.rotation.z
 					)
 				);
-			} else if ( Camera.main ) transform.rotation = Camera.main.transform.rotation;
+			}
+			else if ( Camera.main ) transform.rotation = Camera.main.transform.rotation;
 		}
 	}
 }
