@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
+using JetBrains.Annotations;
+
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -20,7 +22,7 @@ namespace DigDig2.EffectSystem.Footsteps
 
 	public class FootstepSfxPlayer : MonoBehaviour
 	{
-		private const bool IS_ACTIVE = true;
+		//private const bool IS_ACTIVE = true;
 
 		[FormerlySerializedAs( "EffectPrefab" )] [SerializeField]
 		private GameObject[ ] effectPrefab;
@@ -33,9 +35,10 @@ namespace DigDig2.EffectSystem.Footsteps
 		[SerializeField] private FootstepMaterialOverride[ ] footstepMaterialOverrides;
 
 		// erm this is not used :3 should it be?
+		[UsedImplicitly]
 		public void OnFootStepEvent( )
 		{
-			if ( !IS_ACTIVE ) return;
+			//if ( !IS_ACTIVE ) return;
 
 			GameObject effectToPlay = effectPrefab[ Random.Range( 0, effectPrefab.Length ) ];
 

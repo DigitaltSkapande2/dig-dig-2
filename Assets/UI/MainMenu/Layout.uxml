@@ -11,7 +11,7 @@
             <ui:Button text="Settings" name="settings" enabled="false" style="position: relative; top: 0; left: 0;"/>
             <ui:Button text="Quit" name="quit" class="quit" style="position: relative; top: 0; left: 0;"/>
         </ui:VisualElement>
-        <ui:VisualElement name="menuContainer" style="flex-grow: 1; position: absolute; right: 200px; height: 700px; width: 1000px; top: 50%; left: auto; bottom: 50%; transform-origin: center; align-content: center; translate: 0 -50%; display: none;">
+        <ui:VisualElement name="menuContainer" style="flex-grow: 1; position: absolute; right: 200px; height: 700px; width: 1000px; top: 50%; left: auto; bottom: 50%; transform-origin: center; align-content: center; translate: 0 -50%;">
             <ui:VisualElement name="saveMenu" enabled="true" class="menu" style="flex-grow: 1; visibility: visible; position: absolute; height: 100%; width: 100%; top: 0; left: 0; right: 0; bottom: 0;">
                 <ui:Label text="SAVES" name="" class="title"/>
                 <DigDig2.UI.UxmlElements.SubmittableListView name="saveFileList" virtualization-method="DynamicHeight" show-border="false" allow-remove="false" allow-add="false" style="height: 100%;"/>
@@ -22,7 +22,7 @@
                     <ui:Button text="Delete" name="delete"/>
                 </ui:VisualElement>
             </ui:VisualElement>
-            <ui:VisualElement name="settingsMenu" enabled="true" class="menu" style="flex-grow: 1; visibility: visible; position: absolute; top: 0; left: 0; bottom: 0; right: 0; width: 100%; height: 100%; display: none;">
+            <ui:VisualElement name="settingsMenu" enabled="true" class="menu" style="flex-grow: 1; visibility: visible; position: absolute; top: 0; left: 0; bottom: 0; right: 0; width: 100%; height: 100%;">
                 <ui:Label text="SETTINGS" name="" class="title"/>
                 <ui:Button text="hello"/>
                 <ui:Button text="hello" name="" class="navigationStart"/>
@@ -36,7 +36,7 @@
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
-    <ui:VisualElement name="screenCover" enabled="true" style="flex-grow: 1; background-color: rgb(0, 0, 0); position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none;">
+    <ui:VisualElement name="screenCover" enabled="true" style="flex-grow: 1; background-color: rgb(0, 0, 0); position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
         <ui:VisualElement name="modeSelection" style="flex-grow: 1; left: 50%; top: 50%; right: auto; bottom: auto; position: absolute; width: auto; height: auto; translate: -50% -50%; flex-shrink: 1;">
             <ui:VisualElement name="animationContainer">
                 <ui:Label text="How would you like to play?" style="font-size: 48px; -unity-text-align: middle-center;"/>
