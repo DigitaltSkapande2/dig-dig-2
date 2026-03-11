@@ -1,52 +1,40 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+
 using Newtonsoft.Json;
+
 using UnityEngine;
 
-namespace DigDig2
-{
-    public static class FileSystem
-    {
-        public static string GetDataPath()
-        {
-            return Application.persistentDataPath;
-        }
+namespace DigDig2.SaveSystem {
+	public static class FileSystem {
+		public static string GetDataPath( ) => Application.persistentDataPath;
 
-        public static void WriteDataToFile(string filePath, object data)
-        {
-            string extension = Path.GetExtension(filePath);
-            string dataString = "";
-            switch (extension)
-            {
-                case ".json":                
-                    dataString = JsonConvert.SerializeObject(data, Formatting.Indented); 
-                    Debug.Log(dataString);
-                    break;
-            }
+		public static void WriteDataToFile( string filePath, object data ) {
+			string extension = Path.GetExtension( filePath );
+			string dataString = "";
+			switch ( extension ) {
+				case ".json":
+					dataString = JsonConvert.SerializeObject( data, Formatting.Indented );
+					Debug.Log( dataString );
+					break;
+			}
 
-            File.WriteAllText(filePath, dataString);
-        }
+			File.WriteAllText( filePath, dataString );
+		}
 
-        public static T ReadDataFromFile<T>(string filePath)
-        {
-            string extension = Path.GetExtension(filePath);
-            string dataString = File.ReadAllText(filePath);
+		public static T ReadDataFromFile<T>( string filePath ) {
+			string extension = Path.GetExtension( filePath );
+			string dataString = File.ReadAllText( filePath );
 
-            switch (extension)
-            {
-                case ".json":
-                    Debug.Log("Reading: " + JsonConvert.SerializeObject(JsonConvert.DeserializeObject<T>(dataString)));
-                return JsonConvert.DeserializeObject<T>(dataString);
-                default: return default;
-            }
-        }
+			switch ( extension ) {
+				case ".json":
+					Debug.Log( "Reading: " + JsonConvert.SerializeObject( JsonConvert.DeserializeObject<T>( dataString ) ) );
+					return JsonConvert.DeserializeObject<T>( dataString );
+				default: return default;
+			}
+		}
 
-        
-        public static List<string> GetFilesInDirectory(string directoryPath)
-        {
-            return Directory.GetFiles(directoryPath).ToList();
-        }
-    }
+		public static List<string> GetFilesInDirectory( string directoryPath ) => Directory.GetFiles( directoryPath ).ToList( );
+	}
 }
-

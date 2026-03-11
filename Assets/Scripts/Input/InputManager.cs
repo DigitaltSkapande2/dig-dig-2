@@ -1,76 +1,63 @@
-using UnityEngine;
+using DigDig2.Util;
 
+using UnityEngine;
+using UnityEngine.InputSystem;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 
+namespace DigDig2.Input {
+	internal class InputManager : Singleton<InputManager> {
+		[SerializeField] public InputContextConfig inputContextConfig;
+		[SerializeField] private InputContext initialContext = InputContext.Gameplay;
+		public InputContext currentInputState = InputContext.None;
+		public ProjectWideInputActions inputActions;
 
-namespace DigDig2
-{
-    internal class InputManager : Singleton<InputManager>
-    {
-        [SerializeField] public InputContextConfig inputContextConfig;
-        [SerializeField] InputContext initialContext = InputContext.Gameplay;
-        public InputContext currentInputState = InputContext.None;
-        public ProjectWideInputActions inputActions;
+		private new void Awake( ) {
+			if ( inputContextConfig == null || inputContextConfig.inputActions == null ) {
+				Debug.LogError( "InputContextConfig or its InputActionAsset is not assigned in InputManager." );
+				gameObject.SetActive( false );
+				return;
+			}
 
-        private new void Awake()
-        {
-            if (inputContextConfig == null || inputContextConfig.inputActions == null)
-            {
-                Debug.LogError("InputContextConfig or its InputActionAsset is not assigned in InputManager.");
-                gameObject.SetActive(false);
-                return;
-            }
-            inputActions = new ProjectWideInputActions();
+			inputActions = new( );
 
-            base.Awake();
+			base.Awake( );
 
-            SetInputContext(initialContext);
-        }
+			SetInputContext( initialContext );
+		}
 
-        public void SetInputContext(InputContext inputContext)
-        {
-            currentInputState = inputContext;
-            UpdateActionMaps();
-        }
+		public void SetInputContext( InputContext inputContext ) {
+			currentInputState = inputContext;
+			UpdateActionMaps( );
+		}
 
-        public void UpdateActionMaps()
-        {
+		public void UpdateActionMaps( ) {
+			foreach ( InputContextConfig.MapContext mapContext in inputContextConfig.mapContexts ) {
+				InputActionMap map = inputActions.asset.FindActionMap( mapContext.mapName );
+				if ( map == null ) continue;
 
-            foreach (var mapContext in inputContextConfig.mapContexts)
-            {
-                var map = inputActions.asset.FindActionMap(mapContext.mapName);
-                if (map == null) continue;
+				if ( mapContext.context.HasFlag( currentInputState ) )
+					map.Enable( );
+				else
+					map.Disable( );
+			}
+		}
+	}
 
-                if (mapContext.context.HasFlag(currentInputState))
-                {
-                    map.Enable();
-                }
-                else
-                {
-                    map.Disable();
-                }
-            }
-        }
-    }
+	#if UNITY_EDITOR
 
-#if UNITY_EDITOR
+	[CustomEditor( typeof( InputManager ) )]
+	public class InputManagerEditor : Editor {
+		public override void OnInspectorGUI( ) {
+			DrawDefaultInspector( );
 
-    [CustomEditor(typeof(InputManager))]
-    public class InputManagerEditor : Editor
-    {
-        public override void OnInspectorGUI()
-        {
-            DrawDefaultInspector();
+			if ( !GUILayout.Button( "Update Action Maps" ) ) return;
 
-            if (GUILayout.Button("Update Action Maps"))
-            {
-                InputManager gay = (InputManager)target;
-                gay.UpdateActionMaps();
-            }
-        }
-    }
-    
-    #endif
+			var inputManagerTarget = (InputManager)target;
+			inputManagerTarget.UpdateActionMaps( );
+		}
+	}
+
+	#endif
 }

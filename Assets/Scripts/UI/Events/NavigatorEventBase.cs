@@ -1,30 +1,24 @@
 using System.Collections.Generic;
+
 using UnityEngine.UIElements;
 
-namespace DigDig2.UIElements
-{
-    public abstract class NavigatorEventBase<T> : EventBase<T>, INavigatorEvent where T : NavigatorEventBase<T>, new()
-    {
-        public string nodeName;
-        public Dictionary<string, Dictionary<string, string>> arguments;
-        
-        protected NavigatorEventBase()
-        {
-            LocalInit();
-        }
+namespace DigDig2.UI.Events {
+	public abstract class NavigatorEventBase<T> : EventBase<T>, INavigatorEvent where T : NavigatorEventBase<T>, new( ) {
+		public Dictionary<string, Dictionary<string, string>> arguments;
+		public string nodeName;
 
-        protected override void Init()
-        {
-            base.Init();
-            LocalInit();
-        }
+		protected NavigatorEventBase( ) { LocalInit( ); }
 
-        private void LocalInit()
-        {
-            bubbles = false;
-            tricklesDown = false;
-        }
-    }
+		protected override void Init( ) {
+			base.Init( );
+			LocalInit( );
+		}
 
-    public interface INavigatorEvent {}
+		private void LocalInit( ) {
+			bubbles = false;
+			tricklesDown = false;
+		}
+	}
+
+	public interface INavigatorEvent { }
 }

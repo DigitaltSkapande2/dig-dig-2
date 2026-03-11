@@ -11,4 +11,4 @@ ScriptedImporter:
   generateWrapperCode: 1
   wrapperCodePath: Assets/Scripts/Input/GameInputSystem.cs
   wrapperClassName: ProjectWideInputActions
-  wrapperCodeNamespace: 
+  wrapperCodeNamespace: DigDig2.Input

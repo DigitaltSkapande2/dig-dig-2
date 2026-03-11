@@ -1,10 +1,5 @@
-namespace DigDig2.UIElements
-{
-    public class NavigatorOpenedEvent : NavigatorEventBase<NavigatorOpenedEvent>
-    {
-        static NavigatorOpenedEvent()
-        {
-            SetCreateFunction(() => new NavigatorOpenedEvent());
-        }
-    }
+namespace DigDig2.UI.Events {
+	public class NavigatorOpenedEvent : NavigatorEventBase<NavigatorOpenedEvent> {
+		static NavigatorOpenedEvent( ) { SetCreateFunction( ( ) => new( ) ); }
+	}
 }

@@ -1,116 +1,97 @@
+using System;
 using System.Collections.Generic;
+
 using UnityEngine;
 
-namespace DigDig2
-{
-    public class BindableAttackHitbox : MonoBehaviour
-    {
-        public enum AttackHitboxShape
-        {
-            Box,
-            Sphere
-        }
+namespace DigDig2.Combat {
+	public class BindableAttackHitbox : MonoBehaviour {
+		[SerializeField] private AttackHitboxShape shape = AttackHitboxShape.Box;
+		[SerializeField] private Vector3 boxSize = Vector3.one;
+		[SerializeField] private float sphereRadius = 1.0f;
+		[SerializeField] private float unitsPerIntermediateCheck = 0.001f;
 
-        public struct AttackInfo
-        {
-            public Attacker attacker;
-            public Attackable attackerAttackable;
-            public Attack attack;
-            public List<Attackable> attackedEntities;
-            public bool hasCheckedOnce;
-            public Vector3 lastPosition;
-            public Quaternion lastRotation;
-        }
+		private readonly Dictionary<string, AttackInfo> activeAttacks = new( );
 
-        [SerializeField] private AttackHitboxShape shape = AttackHitboxShape.Box;
-        [SerializeField] private Vector3 boxSize = Vector3.one;
-        [SerializeField] private float sphereRadius = 1.0f;
-        [SerializeField] private float unitsPerIntermediateCheck = 0.001f;
+		private void OnDrawGizmos( ) {
+			Gizmos.matrix = transform.localToWorldMatrix;
+			Gizmos.color = Color.red;
+			if ( activeAttacks.Count > 0 ) Gizmos.color = Color.blue;
+			switch ( shape ) {
+				case AttackHitboxShape.Box: Gizmos.DrawWireCube( Vector3.zero, boxSize ); break;
+				case AttackHitboxShape.Sphere: Gizmos.DrawSphere( Vector3.zero, sphereRadius ); break;
+				default: throw new ArgumentOutOfRangeException( );
+			}
+		}
 
-        private Dictionary<string, AttackInfo> activeAttacks = new();
+		public void StartAttack( string attackId, Attacker attacker, Attack attack ) {
+			Attackable attackerAttackable = attacker.GetComponent<Attackable>( );
 
+			activeAttacks[ attackId ] = new( ) {
+				attacker = attacker,
+				attackerAttackable = attackerAttackable,
+				attack = attack,
+				attackedEntities = new( ),
+				hasCheckedOnce = false
+			};
+		}
 
+		public void Attack( string attackId ) {
+			AttackInfo attackInfo = activeAttacks[ attackId ];
 
-        private void OnDrawGizmos()
-        {
-            Gizmos.matrix = transform.localToWorldMatrix;
-            Gizmos.color = Color.red;
-            if (activeAttacks.Count > 0) Gizmos.color = Color.blue;
-            switch ( shape )
-            {
-                case AttackHitboxShape.Box: Gizmos.DrawWireCube(Vector3.zero, boxSize); break;
-                case AttackHitboxShape.Sphere: Gizmos.DrawSphere(Vector3.zero, sphereRadius); break;
-            }
-        }
+			int intermediateAttacks = 0;
+			if ( attackInfo.hasCheckedOnce ) {
+				float distanceBetweenChecks = Vector3.Distance( attackInfo.lastPosition, transform.position );
+				intermediateAttacks = Mathf.CeilToInt( distanceBetweenChecks / unitsPerIntermediateCheck );
+			}
 
-        public void StartAttack(string attackId, Attacker attacker, Attack attack)
-        {
-            Attackable attackerAttackable = attacker.GetComponent<Attackable>();
-            
-            activeAttacks[attackId] = new AttackInfo()
-            {
-                attacker = attacker,
-                attackerAttackable = attackerAttackable,
-                attack = attack,
-                attackedEntities = new(),
-                hasCheckedOnce = false
-            };
-        }
+			for ( int intermediateAttackIndex = 0;
+				intermediateAttackIndex < intermediateAttacks;
+				intermediateAttackIndex++ ) {
+				var intermediatePosition = Vector3.Lerp( attackInfo.lastPosition, transform.position, (float)intermediateAttackIndex / intermediateAttacks );
+				var intermediateRotation = Quaternion.Slerp( attackInfo.lastRotation, transform.rotation, (float)intermediateAttackIndex / intermediateAttacks );
+				Debug.DrawLine( intermediatePosition, intermediatePosition + Vector3.up / 10f, Color.blue, 1f );
+				Collider[ ] enemyColliders = shape switch {
+					AttackHitboxShape.Box => Physics.OverlapBox(
+						intermediatePosition,
+						new(
+							boxSize.x / 2 * transform.lossyScale.x,
+							boxSize.y / 2 * transform.lossyScale.y,
+							boxSize.z / 2 * transform.lossyScale.z
+						),
+						intermediateRotation
+					),
+					AttackHitboxShape.Sphere => Physics.OverlapSphere( intermediatePosition, sphereRadius ),
+					_ => Array.Empty<Collider>( )
+				};
 
-        public void Attack(string attackId)
-        {
-            AttackInfo attackInfo = activeAttacks[attackId];
+				foreach ( Collider enemyCollider in enemyColliders ) {
+					Attackable enemyAttackable = enemyCollider.GetComponent<Attackable>( );
+					if ( !enemyAttackable ) continue;
+					if ( enemyAttackable == attackInfo.attackerAttackable ) continue;
+					if ( attackInfo.attackedEntities.Contains( enemyAttackable ) ) continue;
 
-            int intermediateAttacks = 0;
-            if (attackInfo.hasCheckedOnce)
-            {
-                float distanceBetweenChecks = Vector3.Distance(attackInfo.lastPosition, transform.position);
-                intermediateAttacks = Mathf.CeilToInt(distanceBetweenChecks / unitsPerIntermediateCheck);
-            }
-            
-            for (int intermediateAttackIndex = 0;
-                 intermediateAttackIndex < intermediateAttacks;
-                 intermediateAttackIndex++)
-            {
-                Vector3 intermediatePosition = Vector3.Lerp(attackInfo.lastPosition, transform.position, (float)intermediateAttackIndex / intermediateAttacks);
-                Quaternion intermediateRotation = Quaternion.Slerp(attackInfo.lastRotation, transform.rotation, (float)intermediateAttackIndex / intermediateAttacks);
-                Debug.DrawLine(intermediatePosition, intermediatePosition + Vector3.up / 10f, Color.blue, 1f);
-                Collider[] colliders = shape switch
-                {
-                    AttackHitboxShape.Box => Physics.OverlapBox(
-                        intermediatePosition,
-                        new Vector3(
-                            boxSize.x / 2 * transform.lossyScale.x,
-                            boxSize.y / 2 * transform.lossyScale.y,
-                            boxSize.z / 2 * transform.lossyScale.z
-                        ),
-                        intermediateRotation
-                    ),
-                    AttackHitboxShape.Sphere => Physics.OverlapSphere(intermediatePosition, sphereRadius),
-                    _ => new Collider[0],
-                };
+					attackInfo.attackedEntities.Add( enemyAttackable );
+					enemyAttackable.Hit( attackInfo.attack, attackInfo.attacker );
+				}
+			}
 
-                foreach (Collider collider in colliders)
-                {
-                    Attackable enemyAttackable = collider.GetComponent<Attackable>();
-                    if (!enemyAttackable) continue;
-                    if (enemyAttackable == attackInfo.attackerAttackable) continue;
-                    if (attackInfo.attackedEntities.Contains(enemyAttackable)) continue;
+			attackInfo.lastPosition = transform.position;
+			attackInfo.lastRotation = transform.rotation;
+			attackInfo.hasCheckedOnce = true;
+			activeAttacks[ attackId ] = attackInfo;
+		}
 
-                    attackInfo.attackedEntities.Add(enemyAttackable);
-                    enemyAttackable.Hit(attackInfo.attack, attackInfo.attacker);
-                }
-            }
-            
-            attackInfo.lastPosition = transform.position;
-            attackInfo.lastRotation = transform.rotation;
-            attackInfo.hasCheckedOnce = true;
-            activeAttacks[attackId] = attackInfo;
-        }
+		public void EndAttack( string attackId ) { activeAttacks.Remove( attackId ); }
+		private enum AttackHitboxShape { Box, Sphere }
 
-        public void EndAttack(string attackId)
-        {
-            activeAttacks.Remove(attackId);
-        }
-    }
+		private struct AttackInfo {
+			public Attacker attacker;
+			public Attackable attackerAttackable;
+			public Attack attack;
+			public List<Attackable> attackedEntities;
+			public bool hasCheckedOnce;
+			public Vector3 lastPosition;
+			public Quaternion lastRotation;
+		}
+	}
 }

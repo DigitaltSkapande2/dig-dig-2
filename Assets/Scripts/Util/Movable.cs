@@ -1,50 +1,43 @@
 using UnityEngine;
 using UnityEngine.Splines;
 
-namespace DigDig2
-{
-    public class Movable : MonoBehaviour
-    {
-        [SerializeField] private float moveTime;
-        [SerializeField] private AnimationCurve speedCurve;
+namespace DigDig2 {
+	public class Movable : MonoBehaviour {
+		[SerializeField] private float moveTime;
+		[SerializeField] private AnimationCurve speedCurve;
 
-        [SerializeField] private SplineContainer path;
+		[SerializeField] private SplineContainer path;
 
-        [SerializeField] private bool reusable;
+		[SerializeField] private bool reusable;
+		private int splineIndex;
 
-        private Vector3 startPos;
-        private float time;
-        private int splineIndex = 0;
+		private Vector3 startPos;
+		private float time;
 
-        private bool triggered;
+		private bool triggered;
 
-        public void Trigger()
-        {
-            startPos = transform.position;
-            triggered = true;
-        }
+		private void Update( ) {
+			if ( !triggered ) return;
 
-        void Update()
-        {
-            if (!triggered) return;
+			time += Time.deltaTime;
+			float value = time / moveTime;
 
-            time += Time.deltaTime;
-            float value = time / moveTime;
+			float lerp = speedCurve.Evaluate( value );
 
-            float lerp = speedCurve.Evaluate(value);
+			transform.position = path.EvaluatePosition( splineIndex, lerp );
 
-            transform.position = path.EvaluatePosition(splineIndex, lerp);
+			if ( !( value >= 1 ) || !reusable ) return;
 
-            if (value >= 1 && reusable)
-            {
-                time = 0;
-                value = 0;
-                lerp = 0;
-                triggered = false;
+			time = 0;
+			triggered = false;
 
-                splineIndex++;
-                if (splineIndex >= path.Splines.Count) splineIndex = 0;
-            }
-        }
-    }
+			splineIndex++;
+			if ( splineIndex >= path.Splines.Count ) splineIndex = 0;
+		}
+
+		public void Trigger( ) {
+			startPos = transform.position;
+			triggered = true;
+		}
+	}
 }

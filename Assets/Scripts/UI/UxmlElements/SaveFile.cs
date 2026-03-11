@@ -1,54 +1,45 @@
-using System;
 using UnityEngine.UIElements;
 
-namespace DigDig2.UIElements
-{
-    [UxmlElement] public partial class SaveFile : VisualElement
-    {
-        private string _saveName = "Save Name";
-        [UxmlAttribute] public string saveName
-        {
-            get => _saveName;
-            set
-            {
-                _saveName = value;
-                if (saveNameLabel != null) saveNameLabel.text = _saveName;
-            }
-        }
+namespace DigDig2.UI.UxmlElements {
+	[UxmlElement] public sealed partial class SaveFile : VisualElement {
+		private readonly Label saveInfoLabel;
 
-        private string _saveInfo = "Save Info";
-        [UxmlAttribute] public string saveInfo
-        {
-            get => _saveInfo;
-            set
-            {
-                _saveInfo = value;
-                if (saveInfoLabel != null) saveInfoLabel.text = _saveInfo;
-            }
-        }
+		private readonly Label saveNameLabel;
 
-        private Label saveNameLabel;
-        private Label saveInfoLabel;
+		private string saveInfo = "Save Info";
+		private string saveName = "Save Name";
 
-        public event Action selected;
+		public SaveFile( ) : this( "" ) { }
 
+		public SaveFile( string saveName ) {
+			this.saveName = saveName;
 
+			focusable = true;
+			AddToClassList( "saveFile" );
 
-        public SaveFile() : this("") { }
-        public SaveFile(string saveName)
-        {
-            _saveName = saveName;
+			Add( saveNameLabel = new( ) );
+			saveNameLabel.name = "saveName";
+			saveNameLabel.text = this.saveName;
 
-            focusable = true;
-            AddToClassList("saveFile");
+			Add( saveInfoLabel = new( ) );
+			saveInfoLabel.name = "saveInfo";
+			saveInfoLabel.text = "Save Info";
+		}
 
-            Add(saveNameLabel = new Label());
-            saveNameLabel.name = "saveName";
-            saveNameLabel.text = _saveName;
+		[UxmlAttribute] public string SaveName {
+			get => saveName;
+			set {
+				saveName = value;
+				if ( saveNameLabel != null ) saveNameLabel.text = saveName;
+			}
+		}
 
-            Add(saveInfoLabel = new Label());
-            saveInfoLabel.name = "saveInfo";
-            saveInfoLabel.text = "Save Info";
-        }
-    }
+		[UxmlAttribute] public string SaveInfo {
+			get => saveInfo;
+			set {
+				saveInfo = value;
+				if ( saveInfoLabel != null ) saveInfoLabel.text = saveInfo;
+			}
+		}
+	}
 }
