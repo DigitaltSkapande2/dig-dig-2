@@ -1,11 +1,14 @@
 using UnityEngine;
 
-namespace DigDig2.CinemaCamera.CameraEffectors {
-	public abstract class TriggerZoneCameraEffectorBase : CameraEffector {
+namespace DigDig2.CinemaCamera.CameraEffectors
+{
+	public abstract class TriggerZoneCameraEffectorBase : CameraEffector
+	{
 		private new Collider collider;
 		private Transform target;
 
-		protected void Start( ) {
+		protected void Start( )
+		{
 			Debug.Log( "ZINKKKKK" );
 
 			collider = GetComponent<Collider>( );
@@ -14,12 +17,14 @@ namespace DigDig2.CinemaCamera.CameraEffectors {
 			target = GameCamera.Instance.GetComponent<Transform>( );
 		}
 
-		private void Update( ) {
+		private void Update( )
+		{
 			if ( !target || !collider ) return;
 
 			bool shouldActive = collider.bounds.Contains( target.position );
 
-			if ( shouldActive != IsActive ) {
+			if ( shouldActive != IsActive )
+			{
 				IsActive = shouldActive;
 				if ( shouldActive )
 					OnZoneEnter( );

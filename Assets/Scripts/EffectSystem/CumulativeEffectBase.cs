@@ -2,9 +2,11 @@ using System;
 
 using UnityEngine;
 
-namespace DigDig2.EffectSystem {
+namespace DigDig2.EffectSystem
+{
 	[Serializable]
-	public class CumulativeEffectInstanceData : ICloneable {
+	public class CumulativeEffectInstanceData : ICloneable
+	{
 		public AnimationCurve intensityCurve = AnimationCurve.EaseInOut( 0f, 1f, 1f, 0f );
 		public float duration = 0.4f;
 
@@ -17,14 +19,18 @@ namespace DigDig2.EffectSystem {
 	}
 
 	/// <summary>Cumulative, meaning the effect stacks if called multiple times before finishing</summary>
-	public class CumulativeEffectBase<T> : Effect<T> where T : CumulativeEffectInstanceData {
-		internal new void Update( ) {
+	public class CumulativeEffectBase<T> : Effect<T> where T : CumulativeEffectInstanceData
+	{
+		internal new void Update( )
+		{
 			float cumulativeCurveValue = 0f;
 
 			// iterate backwards to allow removal while iterating
-			for ( int i = effectInstances.Count - 1; i >= 0; i-- ) {
+			for ( int i = effectInstances.Count - 1; i >= 0; i-- )
+			{
 				T effect = effectInstances[ i ];
-				if ( effect == null ) {
+				if ( effect == null )
+				{
 					effectInstances.RemoveAt( i );
 					continue;
 				}
@@ -33,7 +39,8 @@ namespace DigDig2.EffectSystem {
 				effect.durationPassed += useUnscaledTime ? Time.unscaledDeltaTime : Time.deltaTime;
 
 				// expired?
-				if ( effect.durationPassed > effect.duration ) {
+				if ( effect.durationPassed > effect.duration )
+				{
 					OnEffectEnd( effect );
 					effectInstances.RemoveAt( i );
 					continue;
@@ -53,13 +60,15 @@ namespace DigDig2.EffectSystem {
 			if ( effectInstances.Count > 0 ) UpdateEffect( cumulativeCurveValue );
 		}
 
-		internal override void OnEffectStart( T effect ) {
+		internal override void OnEffectStart( T effect )
+		{
 			if ( effect == null ) return;
 
 			effect.durationPassed = 0f;
 		}
 
-		internal virtual void UpdateEffect( float cumulativeValue ) {
+		internal virtual void UpdateEffect( float cumulativeValue )
+		{
 			// default: do nothing. Derived classes should override.
 		}
 	}

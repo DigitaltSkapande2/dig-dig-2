@@ -5,10 +5,13 @@ using DigDig2.Game;
 
 using UnityEngine;
 
-namespace DigDig2.Combat {
+namespace DigDig2.Combat
+{
 	[RequireComponent( typeof( EntityCharacterController ) )]
-	public class Attacker : MonoBehaviour {
-		public enum CombatState {
+	public class Attacker : MonoBehaviour
+	{
+		public enum CombatState
+		{
 			Idle,
 			Performing,
 			Charging,
@@ -61,17 +64,21 @@ namespace DigDig2.Combat {
 
 		public CombatState State { get; private set; } = CombatState.Idle;
 
-		private void Awake( ) {
+		private void Awake( )
+		{
 			animator = GetComponentInChildren<Animator>( );
 			if ( bindableAttackHitboxes[ 0 ] ) bindableAttackHitboxes[ 0 ].TryGetComponent( out attackTrailRenderer );
 			TryGetComponent( out entityCharacterController );
 		}
 
-		private void Update( ) {
+		private void Update( )
+		{
 			UpdateEnemyFocus( );
 
-			if ( ( State == CombatState.Idle || attackRequestChain > 0 ) && !attackRequestProcessed ) {
-				if ( heldAttackType ) {
+			if ( ( State == CombatState.Idle || attackRequestChain > 0 ) && !attackRequestProcessed )
+			{
+				if ( heldAttackType )
+				{
 					currentAttackChain = attackRequestChain;
 
 					if ( heldAttackType.chargeMode == AttackType.ChargeMode.NoCharge )
@@ -84,17 +91,21 @@ namespace DigDig2.Combat {
 				attackRequestChain = -1;
 			}
 
-			switch ( State ) {
-				case CombatState.Charging: {
+			switch ( State )
+			{
+				case CombatState.Charging:
+				{
 					currentPerformingAttack.Charge( this, currentPerformingAttackType, Mathf.Clamp( Time.time - chargeStartTime, 0, currentPerformingAttackType.chargeDuration ) );
-					if ( Time.time - chargeStartTime >= currentPerformingAttackType.chargeDuration ) {
+					if ( Time.time - chargeStartTime >= currentPerformingAttackType.chargeDuration )
+					{
 						State = CombatState.FullyCharged;
 						currentPerformingAttack.ChargeFull( this, currentPerformingAttackType );
 					}
 
 					break;
 				}
-				case CombatState.Performing: {
+				case CombatState.Performing:
+				{
 					if ( Time.time - performanceStartTime >= currentPerformingAttack.AttackDuration ) EndAttack( true );
 
 					break;
@@ -109,20 +120,25 @@ namespace DigDig2.Combat {
 			if ( State == CombatState.OnCooldown && attackCooldownTimer <= 0 ) State = CombatState.Idle;
 		}
 
-		private void FixedUpdate( ) {
+		private void FixedUpdate( )
+		{
 			foreach ( KeyValuePair<string, BindableAttackHitbox> activeAttack in activeAttacks ) { activeAttack.Value.Attack( activeAttack.Key ); }
 		}
 
-		private void LogVerbose( string message ) {
+		private void LogVerbose( string message )
+		{
 			if ( verboseLogging ) Debug.Log( message );
 		}
 
-		private void LogWarningVerbose( string message ) {
+		private void LogWarningVerbose( string message )
+		{
 			if ( verboseLogging ) Debug.LogWarning( message );
 		}
 
-		private AttackType GetAttackTypeFromIndex( int attackTypeIndex ) {
-			if ( !( attackTypes.Count > attackTypeIndex ) ) {
+		private AttackType GetAttackTypeFromIndex( int attackTypeIndex )
+		{
+			if ( !( attackTypes.Count > attackTypeIndex ) )
+			{
 				Debug.LogError( $"{name} does not have an attack type index of {attackTypeIndex}." );
 				return null;
 			}
@@ -134,7 +150,8 @@ namespace DigDig2.Combat {
 
 		#region Chaining
 
-		public bool HasMetChainRequirement( AttackType attackType ) {
+		public bool HasMetChainRequirement( AttackType attackType )
+		{
 			LogVerbose( "Checking attack chain requirement:" );
 			LogVerbose( $"> Is it the same as the last? {lastPerformedAttackType == attackType}" );
 			if ( lastPerformedAttackType != attackType ) return false;
@@ -155,7 +172,8 @@ namespace DigDig2.Combat {
 
 		#region Animation
 
-		public void PlayAnimation( string animationStateName ) {
+		public void PlayAnimation( string animationStateName )
+		{
 			animator.CrossFadeInFixedTime( animationStateName, 0.1f, 0 );
 			animator.CrossFadeInFixedTime( animationStateName, 0.1f, 1 );
 		}
@@ -164,16 +182,19 @@ namespace DigDig2.Combat {
 
 		#region Input
 
-		public void RequestAttackStart( int attackTypeIndex ) {
+		public void RequestAttackStart( int attackTypeIndex )
+		{
 			heldAttackType = GetAttackTypeFromIndex( attackTypeIndex );
 
 			LogVerbose( $"Attack request started. Held Attack Type: {heldAttackType}" );
 			bool isValidChain = HasMetChainRequirement( heldAttackType );
-			if ( isValidChain ) {
+			if ( isValidChain )
+			{
 				attackRequestChain = currentAttackChain + 1;
 				LogVerbose( "Incrementing chain!" );
 				EndAttack( false, true );
-			} else {
+			} else
+			{
 				LogVerbose( "Resetting chain!" );
 				attackRequestChain = 0;
 			}
@@ -182,7 +203,8 @@ namespace DigDig2.Combat {
 			attackRequestProcessed = false;
 		}
 
-		public void RequestAttackEnd( ) {
+		public void RequestAttackEnd( )
+		{
 			// Perform the Charged attack (if there is one and it's valid)
 			if ( IsChargeValid( ) ) PerformAttack( heldAttackType );
 
@@ -197,8 +219,10 @@ namespace DigDig2.Combat {
 
 		#region Charging
 
-		private void ChargeAttack( AttackType attackType ) {
-			if ( attackType.chargeMode == AttackType.ChargeMode.NoCharge ) {
+		private void ChargeAttack( AttackType attackType )
+		{
+			if ( attackType.chargeMode == AttackType.ChargeMode.NoCharge )
+			{
 				Debug.LogError( $"Attack type \"{attackType.name}\" is not a chargable attack type." );
 				return;
 			}
@@ -215,8 +239,10 @@ namespace DigDig2.Combat {
 			chargeStartTime = Time.time;
 		}
 
-		public void EndAttackCharge( ) {
-			if ( !IsChargingAttack( ) ) {
+		public void EndAttackCharge( )
+		{
+			if ( !IsChargingAttack( ) )
+			{
 				Debug.LogError( "Could not cancel attack charge, there is no attack being charged." );
 				return;
 			}
@@ -226,7 +252,8 @@ namespace DigDig2.Combat {
 
 		public bool IsChargingAttack( ) => !Mathf.Approximately( chargeStartTime, -1 );
 
-		public float GetAttackChargeTime( ) {
+		public float GetAttackChargeTime( )
+		{
 			if ( IsChargingAttack( ) ) return Time.time - chargeStartTime;
 
 			LogWarningVerbose( "There is no attack being charged." );
@@ -239,12 +266,14 @@ namespace DigDig2.Combat {
 
 		#region Attacking
 
-		private void PerformAttack( AttackType attackType = null ) {
+		private void PerformAttack( AttackType attackType = null )
+		{
 			if ( IsChargingAttack( ) && !attackType ) // Attack is charged, end charge and trigger attack
 			{
 				if ( IsChargeValid( ) )
 					EndAttackCharge( );
-				else {
+				else
+				{
 					EndAttack( );
 					return;
 				}
@@ -256,7 +285,8 @@ namespace DigDig2.Combat {
 			} else
 				EndAttack( true );
 
-			if ( !currentPerformingAttack ) {
+			if ( !currentPerformingAttack )
+			{
 				EndAttack( false, true );
 				Debug.LogWarning( $"Failed to get attack chain, currentAttackChain = {currentAttackChain}, currentPerformingAttackType.chain.Count = {currentPerformingAttackType.chain.Count}." );
 				return;
@@ -270,8 +300,10 @@ namespace DigDig2.Combat {
 			lastPerformedAttack = currentPerformingAttack;
 		}
 
-		public void EndAttack( bool applyCooldown = false, bool ignoreWarning = false ) {
-			if ( !currentPerformingAttackType ) {
+		public void EndAttack( bool applyCooldown = false, bool ignoreWarning = false )
+		{
+			if ( !currentPerformingAttackType )
+			{
 				if ( !ignoreWarning ) Debug.LogError( "Can't end attack, no attack is being performed right now." );
 				return;
 			}
@@ -294,12 +326,14 @@ namespace DigDig2.Combat {
 
 		#region Attack Hit Detection
 
-		public void StartHitboxAttack( Attack attack, string id, BindableAttackHitbox bindableAttackHitbox ) {
+		public void StartHitboxAttack( Attack attack, string id, BindableAttackHitbox bindableAttackHitbox )
+		{
 			bindableAttackHitbox.StartAttack( id, this, attack );
 			activeAttacks[ id ] = bindableAttackHitbox;
 		}
 
-		public void EndHitboxAttack( string id ) {
+		public void EndHitboxAttack( string id )
+		{
 			if ( !activeAttacks.TryGetValue( id, out BindableAttackHitbox attack ) ) return;
 
 			attack.EndAttack( id );
@@ -312,11 +346,13 @@ namespace DigDig2.Combat {
 
 		#region Enemy Focusing
 
-		public List<Attackable> GetEnemiesInRadius( float radius ) {
+		public List<Attackable> GetEnemiesInRadius( float radius )
+		{
 			List<Attackable> enemyAttackables = new( );
 
 			Collider[ ] scannedColliders = Physics.OverlapSphere( transform.position, radius );
-			foreach ( Collider scannedCollider in scannedColliders ) {
+			foreach ( Collider scannedCollider in scannedColliders )
+			{
 				if ( !scannedCollider.TryGetComponent( out Attackable enemyAttackable ) ) continue;
 
 				if ( enemyGroups.Contains( enemyAttackable.Group ) ) enemyAttackables.Add( enemyAttackable );
@@ -325,10 +361,12 @@ namespace DigDig2.Combat {
 			return enemyAttackables;
 		}
 
-		public Attackable GetClosestEnemyInRadius( float radius ) {
+		public Attackable GetClosestEnemyInRadius( float radius )
+		{
 			Attackable closestEnemy = null;
 			float closestEnemyDistance = -1;
-			foreach ( Attackable enemy in GetEnemiesInRadius( radius ) ) {
+			foreach ( Attackable enemy in GetEnemiesInRadius( radius ) )
+			{
 				float enemyDistance = Vector3.Distance( transform.position, enemy.transform.position );
 				if ( !Mathf.Approximately( closestEnemyDistance, -1 ) && !( enemyDistance < closestEnemyDistance ) ) continue;
 
@@ -339,26 +377,30 @@ namespace DigDig2.Combat {
 			return closestEnemy;
 		}
 
-		public void StartFocus( ) {
+		public void StartFocus( )
+		{
 			Attackable closestEnemy = GetClosestEnemyInRadius( focusScanRadius );
 			if ( closestEnemy && IsAttackableVisibleOnScreen( closestEnemy ) ) focusedEnemy = closestEnemy;
 		}
 
-		public void EndFocus( ) {
+		public void EndFocus( )
+		{
 			focusedEnemy = null;
 
 			if ( entityCharacterController ) entityCharacterController.SetAutomaticLookRotationLock( false );
 		}
 
-		private void UpdateEnemyFocus( ) {
-			if ( focusedEnemy ) {
-				if ( !IsAttackableVisibleOnScreen( focusedEnemy ) ) focusedEnemy = null;
-			}
+		private void UpdateEnemyFocus( )
+		{
+			if ( focusedEnemy )
+				if ( !IsAttackableVisibleOnScreen( focusedEnemy ) )
+					focusedEnemy = null;
 
 			bool hasFocusedEnemy = (bool)focusedEnemy;
 
 			// Set Screen Marker Position
-			if ( GameManager.Instance.PlayerOneCharacter == gameObject ) {
+			if ( GameManager.Instance.PlayerOneCharacter == gameObject )
+			{
 				Vector3 enemyPosition = Vector3.zero;
 				if ( hasFocusedEnemy ) enemyPosition = focusedEnemy!.transform.position;
 				GameManager.Instance.FocusOnPosition( hasFocusedEnemy, enemyPosition ); // TODO: feels a bit odd calling GameManager, and the GameManager relays the info down the tree again
@@ -371,7 +413,8 @@ namespace DigDig2.Combat {
 			if ( hasFocusedEnemy ) entityCharacterController.LookTowards( focusedEnemy!.transform.position );
 		}
 
-		public bool IsAttackableVisibleOnScreen( Attackable attackable ) {
+		public bool IsAttackableVisibleOnScreen( Attackable attackable )
+		{
 			if ( !attackable.TryGetComponent( out Collider attackableCollider ) ) return false;
 
 			Plane[ ] cameraFrustumPlanes = GeometryUtility.CalculateFrustumPlanes( GameCamera.Instance.mainCamera );
@@ -382,25 +425,30 @@ namespace DigDig2.Combat {
 
 		#region Character Controller Interfacing
 
-		public void AddMoveSpeedDebuff( string debuffId, float debuff ) {
+		public void AddMoveSpeedDebuff( string debuffId, float debuff )
+		{
 			if ( entityCharacterController ) entityCharacterController.AddMoveSpeedDebuff( debuffId, debuff );
 		}
 
-		public void RemoveMoveSpeedDebuff( string debuffId ) {
+		public void RemoveMoveSpeedDebuff( string debuffId )
+		{
 			if ( entityCharacterController ) entityCharacterController.RemoveMoveSpeedDebuff( debuffId );
 		}
 
-		public float GetBaseMoveSpeed( ) {
+		public float GetBaseMoveSpeed( )
+		{
 			if ( entityCharacterController ) return entityCharacterController.MoveSpeed;
 
 			return 0;
 		}
 
-		public void PushInDirection( Vector3 direction, float strength ) {
+		public void PushInDirection( Vector3 direction, float strength )
+		{
 			if ( entityCharacterController ) entityCharacterController.PushInDirection( direction, strength );
 		}
 
-		public void ApplyKnockback( Vector3 direction, float strength ) {
+		public void ApplyKnockback( Vector3 direction, float strength )
+		{
 			if ( entityCharacterController ) entityCharacterController.ApplyKnockback( direction, strength );
 		}
 

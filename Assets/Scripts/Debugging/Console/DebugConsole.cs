@@ -11,8 +11,10 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace DigDig2.Debugging.Console {
-	public class DebugConsole : Singleton<DebugConsole>, ProjectWideInputActions.IDebugConsoleActions {
+namespace DigDig2.Debugging.Console
+{
+	public class DebugConsole : Singleton<DebugConsole>, ProjectWideInputActions.IDebugConsoleActions
+	{
 		[SerializeField] [TextArea] private string standardSuggestion;
 		[SerializeField] private ConsoleCommand[ ] commands;
 
@@ -41,22 +43,26 @@ namespace DigDig2.Debugging.Console {
 		// Console state management
 		private bool isConsoleOpen;
 
-		private CommandSystem CommandSystem {
-			get {
+		private CommandSystem CommandSystem
+		{
+			get
+			{
 				if ( commandSystem != null ) return commandSystem;
 
 				return commandSystem = new( commands );
 			}
 		}
 
-		private IEnumerator ActivateInputField( TMP_InputField activatedInputField ) {
+		private IEnumerator ActivateInputField( TMP_InputField activatedInputField )
+		{
 			yield return null;
 
 			activatedInputField.ActivateInputField( );
 			activatedInputField.caretPosition = activatedInputField.text.Length; // Set caret to the end of the text
 		}
 
-		private async void ProcessCommand( CommandDescriptor commandToProcess ) {
+		private async void ProcessCommand( CommandDescriptor commandToProcess )
+		{
 			// Add the command to history
 			commandHistory.Add( commandToProcess );
 			historyIndex = commandHistory.Count; // Reset history index
@@ -66,7 +72,8 @@ namespace DigDig2.Debugging.Console {
 
 			// Asynchronously Process the command
 			CommandResultContext result = await CommandSystem.ProcessCommand( commandToProcess );
-			switch ( result.type ) {
+			switch ( result.type )
+			{
 				case CommandResultContext.Type.Error when result.message != null: PrintConsoleMessage( $"<color=#AA0000>Error</color>: {result.message}" ); break;
 				case CommandResultContext.Type.Error: PrintConsoleMessage( $"<color=#AA0000>Error</color>: Unspecified error while executing command {commandToProcess.ToString( )}" ); break;
 				case CommandResultContext.Type.Warning: PrintConsoleMessage( $"<color=#AAAA00>Warning</color>: {result}" ); break;
@@ -78,7 +85,8 @@ namespace DigDig2.Debugging.Console {
 			FocusOnInputField( );
 		}
 
-		private void HandleHistoryNavigationUp( ) {
+		private void HandleHistoryNavigationUp( )
+		{
 			if ( commandHistory.Count == 0 ) return;
 
 			// Move up in history (decrement index)
@@ -87,7 +95,8 @@ namespace DigDig2.Debugging.Console {
 			inputField.caretPosition = inputField.text.Length;
 		}
 
-		private void HandleHistoryNavigationDown( ) {
+		private void HandleHistoryNavigationDown( )
+		{
 			if ( commandHistory.Count == 0 ) return;
 
 			// Move down in history (increment index)
@@ -96,18 +105,21 @@ namespace DigDig2.Debugging.Console {
 			inputField.caretPosition = inputField.text.Length;
 		}
 
-		private void FocusOnInputField( ) {
+		private void FocusOnInputField( )
+		{
 			if ( inputField != null ) inputField.ActivateInputField( );
 		}
 
-		private void NewLetterTyped( char c ) {
+		private void NewLetterTyped( char c )
+		{
 			Debug.Log( $"new letter typed: {c}" );
 			if ( c == char.Parse( " " ) ) InsertCurrentlySelectedSuggestion( );
 		}
 
 		#region Unity Messages
 
-		private void Start( ) {
+		private void Start( )
+		{
 			inputMap = InputManager.Instance.inputActions.DebugConsole;
 			inputMap.SetCallbacks( this );
 		}
@@ -118,7 +130,8 @@ namespace DigDig2.Debugging.Console {
 
 		#region Public Methods
 
-		private void PrintConsoleMessage( string message ) {
+		private void PrintConsoleMessage( string message )
+		{
 			GameObject consoleMessage = Instantiate( consoleMessagePrefab, consoleMessageParent );
 			TMP_Text messageText = consoleMessage.GetComponentInChildren<TMP_Text>( );
 			if ( messageText )
@@ -130,7 +143,8 @@ namespace DigDig2.Debugging.Console {
 		// Called by Unity's InputField
 		private readonly int previousTextLength = 0;
 
-		public void TextChanged( string text ) {
+		public void TextChanged( string text )
+		{
 			Debug.Log( "---------Text changed--------" );
 			if ( !string.IsNullOrEmpty( text ) && text.Length > previousTextLength ) NewLetterTyped( text[ inputField.caretPosition - 1 ] );
 
@@ -147,35 +161,42 @@ namespace DigDig2.Debugging.Console {
 
 		#region Input Handling
 
-		public void OnConfirm( InputAction.CallbackContext context ) {
+		public void OnConfirm( InputAction.CallbackContext context )
+		{
 			if ( !context.performed ) return;
 			if ( !isConsoleOpen || inputField.text == string.Empty ) return;
 
-			if ( currentSuggestionIndex != -1 && currentSuggestions.Count > 0 ) {
+			if ( currentSuggestionIndex != -1 && currentSuggestions.Count > 0 )
+			{
 				// If a suggestion is selected, insert it into the input field
 				InsertCurrentlySelectedSuggestion( );
-			} else {
+			} else
+			{
 				// Process the command
 
 				ProcessCommand( new( inputField.text ) );
 			}
 		}
 
-		public void OnCycleSuggestions( InputAction.CallbackContext context ) {
+		public void OnCycleSuggestions( InputAction.CallbackContext context )
+		{
 			if ( !isConsoleOpen ) return;
 
 			if ( context.started ) CycleSuggestionSelection( );
 		}
 
-		public void OnOpenDebugConsole( InputAction.CallbackContext context ) {
+		public void OnOpenDebugConsole( InputAction.CallbackContext context )
+		{
 			if ( context.performed ) ToggleDevConsole( );
 		}
 
-		public void OnCloseDebugConsole( InputAction.CallbackContext context ) {
+		public void OnCloseDebugConsole( InputAction.CallbackContext context )
+		{
 			if ( context.performed ) CloseConsole( );
 		}
 
-		public void OnHistoryNavigation( InputAction.CallbackContext context ) {
+		public void OnHistoryNavigation( InputAction.CallbackContext context )
+		{
 			if ( !isConsoleOpen ) return;
 
 			if ( context.ReadValue<float>( ) > 0 )
@@ -188,7 +209,8 @@ namespace DigDig2.Debugging.Console {
 
 		#region Suggestion Handling
 
-		private void UpdateSuggestions( ) {
+		private void UpdateSuggestions( )
+		{
 			if ( !isConsoleOpen || !inputField ) return;
 
 			if ( !currentlyEnteredCommand.IsValid )
@@ -201,7 +223,8 @@ namespace DigDig2.Debugging.Console {
 			UpdateSuggestionText( );
 		}
 
-		private void InsertCurrentlySelectedSuggestion( ) {
+		private void InsertCurrentlySelectedSuggestion( )
+		{
 			if ( currentSuggestionIndex == -1 || currentSuggestions.Count == 0 ) return;
 
 			// Insert the currently selected suggestion into the input field
@@ -221,7 +244,8 @@ namespace DigDig2.Debugging.Console {
 			inputField.ActivateInputField( );
 		}
 
-		private void CycleSuggestionSelection( ) {
+		private void CycleSuggestionSelection( )
+		{
 			if ( currentSuggestions.Count == 0 ) return;
 
 			// UnityEngine.Debug.Log("Cycling through suggestions");
@@ -233,16 +257,20 @@ namespace DigDig2.Debugging.Console {
 			UpdateSuggestionText( );
 		}
 
-		private void UpdateSuggestionText( ) {
-			if ( currentSuggestions == null || currentSuggestions.Count == 0 ) {
+		private void UpdateSuggestionText( )
+		{
+			if ( currentSuggestions == null || currentSuggestions.Count == 0 )
+			{
 				suggestionText.text = standardSuggestion;
 				return;
 			}
 
 			// Build the suggestion list with the highlighted suggestion
 			string suggestions = "";
-			for ( int i = 0; i < currentSuggestions.Count; i++ ) {
-				if ( i == currentSuggestionIndex ) {
+			for ( int i = 0; i < currentSuggestions.Count; i++ )
+			{
+				if ( i == currentSuggestionIndex )
+				{
 					// Highlight the currently selected suggestion (using bold or color)
 					suggestions += $"<color=yellow>{currentSuggestions[ i ]}</color>\n";
 				} else
@@ -256,10 +284,12 @@ namespace DigDig2.Debugging.Console {
 
 		#region State Management
 
-		private void ToggleDevConsole( ) {
+		private void ToggleDevConsole( )
+		{
 			isConsoleOpen = !isConsoleOpen;
 
-			if ( !isConsoleOpen ) {
+			if ( !isConsoleOpen )
+			{
 				CloseConsole( );
 				return;
 			}
@@ -269,7 +299,8 @@ namespace DigDig2.Debugging.Console {
 			FocusOnInputField( );
 		}
 
-		private void CloseConsole( ) {
+		private void CloseConsole( )
+		{
 			isConsoleOpen = false;
 			UpdateUI( );
 			commandHistory.Clear( );
@@ -278,11 +309,14 @@ namespace DigDig2.Debugging.Console {
 			currentSuggestions.Clear( );
 		}
 
-		private void UpdateUI( ) {
-			if ( isConsoleOpen ) {
+		private void UpdateUI( )
+		{
+			if ( isConsoleOpen )
+			{
 				canvas.SetActive( true );
 				StartCoroutine( ActivateInputField( inputField ) ); // Activate the input field after the UI is updated
-			} else {
+			} else
+			{
 				canvas.SetActive( false );
 				inputField.text = "";
 				suggestionText.text = "";

@@ -1,8 +1,10 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace DigDig2.Util {
-	public class DraggableWindow : MonoBehaviour, IDragHandler, IPointerDownHandler, IPointerUpHandler {
+namespace DigDig2.Util
+{
+	public class DraggableWindow : MonoBehaviour, IDragHandler, IPointerDownHandler, IPointerUpHandler
+	{
 		[SerializeField] private RectTransform topBar; // Reference to the TopBar for dragging the window
 		[SerializeField] private RectTransform bottomLeft; // Reference to BottomLeft for resizing the window
 		[SerializeField] private Vector2 minResolution;
@@ -20,7 +22,8 @@ namespace DigDig2.Util {
 
 		private RectTransform windowRect; // Reference to the RectTransform of the DraggableWindow
 
-		private void Awake( ) {
+		private void Awake( )
+		{
 			windowRect = GetComponent<RectTransform>( );
 			canvas = GetComponentInParent<Canvas>( );
 
@@ -30,31 +33,36 @@ namespace DigDig2.Util {
 				Debug.LogError( "This script works with Screen Space - Camera or World Space canvases." );
 		}
 
-		public void OnDrag( PointerEventData eventData ) {
+		public void OnDrag( PointerEventData eventData )
+		{
 			if ( isResizing )
 				ResizeWindow( eventData );
 			else if ( isDragging ) DragWindow( eventData );
 		}
 
-		public void OnPointerDown( PointerEventData eventData ) {
+		public void OnPointerDown( PointerEventData eventData )
+		{
 			if ( !RectTransformUtility.ScreenPointToWorldPointInRectangle( windowRect, eventData.position, uiCamera, out Vector3 worldPosition ) ) return;
 
 			originalPointerPosition = worldPosition;
 
-			if ( IsPointerInBottomLeft( eventData ) ) {
+			if ( IsPointerInBottomLeft( eventData ) )
+			{
 				// Start resizing
 				isResizing = true;
 				originalLocalPointerPosition = eventData.position;
 				originalWindowSize = windowRect.sizeDelta;
 				originalWindowPosition = windowRect.localPosition;
-			} else if ( IsPointerInTopBar( eventData ) ) {
+			} else if ( IsPointerInTopBar( eventData ) )
+			{
 				// Start dragging
 				originalWindowPosition = windowRect.position;
 				isDragging = true;
 			}
 		}
 
-		public void OnPointerUp( PointerEventData eventData ) {
+		public void OnPointerUp( PointerEventData eventData )
+		{
 			// Reset resizing state or perform any other necessary actions
 			isResizing = false;
 			isDragging = false;
@@ -70,7 +78,8 @@ namespace DigDig2.Util {
 			// Check if the pointer is inside the bottom-left resize area
 			RectTransformUtility.RectangleContainsScreenPoint( bottomLeft, eventData.position, uiCamera );
 
-		private void DragWindow( PointerEventData eventData ) {
+		private void DragWindow( PointerEventData eventData )
+		{
 			if ( windowRect == null || canvas == null || uiCamera == null ) return;
 
 			if ( !RectTransformUtility.ScreenPointToWorldPointInRectangle( windowRect, eventData.position, uiCamera, out Vector3 worldPosition ) ) return;
@@ -79,7 +88,8 @@ namespace DigDig2.Util {
 			windowRect.position = originalWindowPosition + offset;
 		}
 
-		private void ResizeWindow( PointerEventData eventData ) {
+		private void ResizeWindow( PointerEventData eventData )
+		{
 			if ( windowRect == null || canvas == null || uiCamera == null ) return;
 
 			Debug.Log( "Resizing window" );

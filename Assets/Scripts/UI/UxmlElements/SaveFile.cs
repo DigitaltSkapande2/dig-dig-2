@@ -1,7 +1,9 @@
 using UnityEngine.UIElements;
 
-namespace DigDig2.UI.UxmlElements {
-	[UxmlElement] public sealed partial class SaveFile : VisualElement {
+namespace DigDig2.UI.UxmlElements
+{
+	[UxmlElement] public sealed partial class SaveFile : VisualElement
+	{
 		private readonly Label saveInfoLabel;
 
 		private readonly Label saveNameLabel;
@@ -11,7 +13,8 @@ namespace DigDig2.UI.UxmlElements {
 
 		public SaveFile( ) : this( "" ) { }
 
-		public SaveFile( string saveName ) {
+		public SaveFile( string saveName )
+		{
 			this.saveName = saveName;
 
 			focusable = true;
@@ -26,17 +29,21 @@ namespace DigDig2.UI.UxmlElements {
 			saveInfoLabel.text = "Save Info";
 		}
 
-		[UxmlAttribute] public string SaveName {
+		[UxmlAttribute] public string SaveName
+		{
 			get => saveName;
-			set {
+			set
+			{
 				saveName = value;
 				if ( saveNameLabel != null ) saveNameLabel.text = saveName;
 			}
 		}
 
-		[UxmlAttribute] public string SaveInfo {
+		[UxmlAttribute] public string SaveInfo
+		{
 			get => saveInfo;
-			set {
+			set
+			{
 				saveInfo = value;
 				if ( saveInfoLabel != null ) saveInfoLabel.text = saveInfo;
 			}

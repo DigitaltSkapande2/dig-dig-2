@@ -1,8 +1,10 @@
 using UnityEngine;
 using UnityEngine.Splines;
 
-namespace DigDig2 {
-	public class Movable : MonoBehaviour {
+namespace DigDig2
+{
+	public class Movable : MonoBehaviour
+	{
 		[SerializeField] private float moveTime;
 		[SerializeField] private AnimationCurve speedCurve;
 
@@ -16,7 +18,8 @@ namespace DigDig2 {
 
 		private bool triggered;
 
-		private void Update( ) {
+		private void Update( )
+		{
 			if ( !triggered ) return;
 
 			time += Time.deltaTime;
@@ -35,7 +38,8 @@ namespace DigDig2 {
 			if ( splineIndex >= path.Splines.Count ) splineIndex = 0;
 		}
 
-		public void Trigger( ) {
+		public void Trigger( )
+		{
 			startPos = transform.position;
 			triggered = true;
 		}

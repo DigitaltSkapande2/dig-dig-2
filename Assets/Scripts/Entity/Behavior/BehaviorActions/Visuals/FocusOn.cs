@@ -7,7 +7,8 @@ using UnityEngine;
 
 using Action = Unity.Behavior.Action;
 
-namespace DigDig2.Entity.Behavior.BehaviorActions.Visuals {
+namespace DigDig2.Entity.Behavior.BehaviorActions.Visuals
+{
 	[Serializable] [GeneratePropertyBag] [NodeDescription(
 		"WotT Focus On",
 		"Tell the agent to continuously look towards a transform.",
@@ -15,19 +16,23 @@ namespace DigDig2.Entity.Behavior.BehaviorActions.Visuals {
 		story: "[Agent] focuses on [Transform]",
 		id: "WotT_Focus_On"
 	)]
-	public class WotTFocusOn : Action {
+	public class WotTFocusOn : Action
+	{
 		[SerializeReference] public BlackboardVariable<GameObject> Agent;
 		[SerializeReference] public BlackboardVariable<Transform> Transform;
 
 		private BehaviorAgentTranslator agentTranslatorCharacterBehaviorController;
 
-		protected override Status OnStart( ) {
-			if ( !Agent.Value ) {
+		protected override Status OnStart( )
+		{
+			if ( !Agent.Value )
+			{
 				LogFailure( "No agent assigned." );
 				return Status.Failure;
 			}
 
-			if ( !Transform.Value ) {
+			if ( !Transform.Value )
+			{
 				LogFailure( "No transform assigned." );
 				return Status.Failure;
 			}
@@ -38,7 +43,8 @@ namespace DigDig2.Entity.Behavior.BehaviorActions.Visuals {
 			return Status.Success;
 		}
 
-		protected override Status OnUpdate( ) {
+		protected override Status OnUpdate( )
+		{
 			agentTranslatorCharacterBehaviorController.LookTowards( Transform.Value.position );
 			return Status.Running;
 		}

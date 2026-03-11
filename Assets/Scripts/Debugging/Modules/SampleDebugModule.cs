@@ -2,10 +2,12 @@
 
 using UnityEngine;
 
-namespace DigDig2.Debugging.Modules {
+namespace DigDig2.Debugging.Modules
+{
 	// Attribute to mark this class as "for Debug"
 	[Debug]
-	public class SampleDebugModule : MonoBehaviour {
+	public class SampleDebugModule : MonoBehaviour
+	{
 		// private variable
 		private int beans;
 

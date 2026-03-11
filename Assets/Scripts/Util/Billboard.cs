@@ -1,15 +1,19 @@
 using UnityEngine;
 
-namespace DigDig2.Util {
-	public class Billboard : MonoBehaviour {
+namespace DigDig2.Util
+{
+	public class Billboard : MonoBehaviour
+	{
 		[SerializeField] private bool onlyYAxis;
 
 		private void Awake( ) { UpdateRotation( ); }
 
 		private void Update( ) { UpdateRotation( ); }
 
-		private void UpdateRotation( ) {
-			if ( onlyYAxis && Camera.main ) {
+		private void UpdateRotation( )
+		{
+			if ( onlyYAxis && Camera.main )
+			{
 				transform.rotation = Quaternion.Euler(
 					new(
 						transform.rotation.x,

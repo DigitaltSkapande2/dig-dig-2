@@ -6,8 +6,10 @@ using DigDig2.Util;
 
 using UnityEngine;
 
-namespace DigDig2.SaveSystem {
-	public class SaveManager : Singleton<SaveManager> {
+namespace DigDig2.SaveSystem
+{
+	public class SaveManager : Singleton<SaveManager>
+	{
 		private const string SAVES_DIRECTORY_NAME = "saves";
 		private const string SAVE_FILE_EXTENSION = ".json";
 		private const string NEW_SAVE_PREFIX = "Save";
@@ -16,11 +18,13 @@ namespace DigDig2.SaveSystem {
 		private readonly List<string> uniqueNames = new( );
 		private GameSave loadedGameSave;
 
-		private bool HasLoadedSave {
+		private bool HasLoadedSave
+		{
 			get => loadedGameSave != null;
 		}
 
-		private new void Awake( ) {
+		private new void Awake( )
+		{
 			base.Awake( );
 			string saveDirectoryPath = GetSavesDirectoryPath( );
 			VerboseLog( $"Saving files in: {saveDirectoryPath}" );
@@ -29,7 +33,8 @@ namespace DigDig2.SaveSystem {
 
 		private void VerboseLog( string message ) { Debug.Log( "SAVEMANAGER: " + message ); }
 
-		public class GameSave {
+		public class GameSave
+		{
 			public string saveName;
 			public Dictionary<string, object> stateData;
 			public string version;
@@ -43,10 +48,12 @@ namespace DigDig2.SaveSystem {
 
 		public List<string> GetSaveFiles( ) => FileSystem.GetFilesInDirectory( GetSavesDirectoryPath( ) );
 
-		public List<string> GetSaveFileSaveNames( ) {
+		public List<string> GetSaveFileSaveNames( )
+		{
 			List<string> saveFileNames = new( );
 			List<string> saveFiles = GetSaveFiles( );
-			foreach ( string saveFilePath in saveFiles ) {
+			foreach ( string saveFilePath in saveFiles )
+			{
 				GameSave saveFileData = FileSystem.ReadDataFromFile<GameSave>( saveFilePath );
 				saveFileNames.Add( saveFileData.saveName );
 			}
@@ -58,10 +65,12 @@ namespace DigDig2.SaveSystem {
 
 		#region Save Creation
 
-		public void CreateNewSave( string saveName = "" ) {
+		public void CreateNewSave( string saveName = "" )
+		{
 			if ( saveName == string.Empty ) saveName = GetNextFreeSaveName( );
 
-			loadedGameSave = new( ) {
+			loadedGameSave = new( )
+			{
 				saveName = saveName,
 				version = Application.version,
 				stateData = new( )
@@ -74,23 +83,27 @@ namespace DigDig2.SaveSystem {
 
 		#region Saving
 
-		public void SaveAllAndWriteToFile( string saveName = "" ) {
+		public void SaveAllAndWriteToFile( string saveName = "" )
+		{
 			SaveAll( );
 			WriteSaveToFile( );
 		}
 
-		public void WriteSaveToFile( string saveName = "" ) {
+		public void WriteSaveToFile( string saveName = "" )
+		{
 			loadedGameSave.saveName = saveName == string.Empty ? loadedGameSave.saveName : saveName;
 			loadedGameSave.version = Application.version;
 			FileSystem.WriteDataToFile( GetSaveFilePathFromName( loadedGameSave.saveName ), loadedGameSave );
 			VerboseLog( $"Wrote save file \"{loadedGameSave.saveName}\" to disk, State data = {loadedGameSave.stateData.Count} entries" );
 		}
 
-		public void SaveAll( ) {
+		public void SaveAll( )
+		{
 			foreach ( KeyValuePair<string, ISaveable> saveablePair in registeredSavables ) { WriteToSaveData( saveablePair.Key, saveablePair.Value.CollectData( ) ); }
 		}
 
-		public void WriteToSaveData( string uniqueName, object data ) {
+		public void WriteToSaveData( string uniqueName, object data )
+		{
 			loadedGameSave.stateData[ uniqueName ] = data;
 			VerboseLog( $"wrote save data for key \"{uniqueName}\"" );
 		}
@@ -101,8 +114,10 @@ namespace DigDig2.SaveSystem {
 
 		public GameSave ReadSaveFile( string saveName ) => FileSystem.ReadDataFromFile<GameSave>( GetSaveFilePathFromName( saveName ) );
 
-		public bool LoadSave( GameSave gameSave ) {
-			if ( gameSave == null ) {
+		public bool LoadSave( GameSave gameSave )
+		{
+			if ( gameSave == null )
+			{
 				Debug.LogError( "TRYING TO LOAD NULL GAMESAVE" );
 				return false;
 			}
@@ -113,7 +128,8 @@ namespace DigDig2.SaveSystem {
 			return true;
 		}
 
-		public bool LoadSave( string saveName ) {
+		public bool LoadSave( string saveName )
+		{
 			GameSave gameSave = ReadSaveFile( saveName );
 			if ( gameSave != null ) return LoadSave( gameSave );
 
@@ -127,12 +143,14 @@ namespace DigDig2.SaveSystem {
 
 		#region ISaveable Interaction
 
-		public void Reset( ) {
+		public void Reset( )
+		{
 			uniqueNames.Clear( );
 			registeredSavables.Clear( );
 		}
 
-		public void RegisterSavable( string uniqueName, ISaveable saveable, bool restoreOnRegister = true ) {
+		public void RegisterSavable( string uniqueName, ISaveable saveable, bool restoreOnRegister = true )
+		{
 			if ( uniqueNames.Contains( uniqueName ) )
 				Debug.LogWarning( $"Trying to register Savable with already registered uniqueName: {uniqueName}, aborting" );
 			else
@@ -144,23 +162,28 @@ namespace DigDig2.SaveSystem {
 			if ( restoreOnRegister ) RestoreISavable( uniqueName, saveable );
 		}
 
-		public void RestoreISavable( string uniqueName, ISaveable saveable = null ) {
-			if ( !HasLoadedSave ) {
+		public void RestoreISavable( string uniqueName, ISaveable saveable = null )
+		{
+			if ( !HasLoadedSave )
+			{
 				Debug.LogError( "Trying to restore Savable state with no save loaded, be sure to load a save first!" );
 				return;
 			}
 
-			if ( saveable == null ) {
+			if ( saveable == null )
+			{
 				if ( registeredSavables.Keys.Contains( uniqueName ) )
 					saveable = registeredSavables[ uniqueName ];
 				else
 					return;
 			}
 
-			if ( loadedGameSave.stateData.Keys.Contains( uniqueName ) ) {
+			if ( loadedGameSave.stateData.Keys.Contains( uniqueName ) )
+			{
 				saveable.RestoreState( loadedGameSave.stateData[ uniqueName ] );
 				VerboseLog( $"Restored state for Savable with uniqueName \"{uniqueName}\"" );
-			} else {
+			} else
+			{
 				saveable.RestoreState( null );
 				VerboseLog( $"Restored state NULL for Savable with uniqueName \"{uniqueName}\"" );
 			}

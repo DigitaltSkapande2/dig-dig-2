@@ -9,11 +9,14 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-namespace DigDig2.Player {
-	public class CharacterSelectSequencer : MonoBehaviour {
+namespace DigDig2.Player
+{
+	public class CharacterSelectSequencer : MonoBehaviour
+	{
 		private void OnSwitchCharacterButtonClicked( ) { PlayerOneIsMax = !PlayerOneIsMax; }
 
-		private async void OnStartButtonClicked( ) {
+		private async void OnStartButtonClicked( )
+		{
 			Destroy( maxDummyInstance );
 			Destroy( minisDummyInstance );
 
@@ -34,7 +37,8 @@ namespace DigDig2.Player {
 			EnablePlayerInput( );
 		}
 
-		private void EnablePlayerInput( ) {
+		private void EnablePlayerInput( )
+		{
 			GameManager.Instance.PlayerOneCharacter.GetComponent<PlayerCharacterInput>( ).EnableInput( );
 			GameManager.Instance.PlayerOneCharacter.GetComponent<PlayerAttackInput>( ).EnableInput( );
 			GameManager.Instance.PlayerOneCharacter.GetComponent<EntityCharacterController>( ).Frozen = false;
@@ -42,7 +46,8 @@ namespace DigDig2.Player {
 
 		#region Util
 
-		private void VerboseLog( string msg ) {
+		private void VerboseLog( string msg )
+		{
 			if ( verboseLogging ) Debug.Log( "CHARACTER_SELECT: " + msg );
 		}
 
@@ -82,7 +87,8 @@ namespace DigDig2.Player {
 
 		#region UnityCallbacks
 
-		private void Awake( ) {
+		private void Awake( )
+		{
 			if ( GameManager.Instance.IsMultiplayer ) return;
 
 			VerboseLog( "Not in multiplayer mode, disabling character select sequencer." );
@@ -90,7 +96,8 @@ namespace DigDig2.Player {
 			Destroy( gameObject );
 		}
 
-		private void Start( ) {
+		private void Start( )
+		{
 			// maxClickableCollider.clickStart.AddListener(() => OnCharacterClicked(CharacterType.Max, maxClickableCollider));
 			// minisClickableCollider.clickStart.AddListener(() => OnCharacterClicked(CharacterType.Mini, minisClickableCollider));
 

@@ -10,8 +10,10 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-namespace DigDig2.Debugging.Notes {
-	public class DebugNotesManager : Singleton<DebugNotesManager> {
+namespace DigDig2.Debugging.Notes
+{
+	public class DebugNotesManager : Singleton<DebugNotesManager>
+	{
 		[Header( "Note Storage" )]
 		[Tooltip( "DebugNotesStorage scriptable object used to store note data." )]
 		[SerializeField] private DebugNotesStorage debugNotesStorage;
@@ -56,31 +58,37 @@ namespace DigDig2.Debugging.Notes {
 		private bool showArchivedDebugNotes;
 		private bool showDebugNotes = true;
 
-		public bool ShowDebugNotes {
+		public bool ShowDebugNotes
+		{
 			get => showDebugNotes;
 
-			set {
+			set
+			{
 				showDebugNotes = value;
 				RefreshNoteBillboardVisibility( );
 			}
 		}
 
-		public bool ShowArchivedDebugNotes {
+		public bool ShowArchivedDebugNotes
+		{
 			get => showArchivedDebugNotes;
 
-			set {
+			set
+			{
 				showArchivedDebugNotes = value;
 				RefreshNoteBillboardVisibility( );
 			}
 		}
 
-		private void Start( ) {
+		private void Start( )
+		{
 			PlaceStoredDebugNotes( );
 
 			HideNoteManagementInterface( );
 		}
 
-		private void Update( ) {
+		private void Update( )
+		{
 			// Maybe not too performance friendly to check all notes in a for loop every frame, but uhhhhhhhhhhhhh i don't know any easier way :)
 			FocusNearestNote( );
 		}
@@ -89,7 +97,8 @@ namespace DigDig2.Debugging.Notes {
 
 		#region Notes Backend
 
-		private DebugNoteScene GetCurrentSceneNoteStorage( ) {
+		private DebugNoteScene GetCurrentSceneNoteStorage( )
+		{
 			if ( debugNotesStorage.scenes.TryGetValue( SceneManager.GetActiveScene( ).path, out DebugNoteScene storage ) ) return storage;
 
 			DebugNoteScene newDebugNoteScene = new( );
@@ -98,8 +107,10 @@ namespace DigDig2.Debugging.Notes {
 		}
 
 		// Get the nearest note and focus it, if a note is already focused then unfocus the old one
-		private void FocusNearestNote( ) {
-			if ( !GameManager.Instance.PlayerOneCharacter ) {
+		private void FocusNearestNote( )
+		{
+			if ( !GameManager.Instance.PlayerOneCharacter )
+			{
 				if ( focusedNoteIndex == -1 ) return;
 
 				DebugNoteBillboard focusedNoteBillboard = GetNoteBillboardFromNoteIndex( focusedNoteIndex );
@@ -113,14 +124,16 @@ namespace DigDig2.Debugging.Notes {
 			DebugNoteBillboard nearestNoteBillboard = null;
 			int nearestNote = -1;
 			float nearestNoteDistance = 0;
-			foreach ( int noteIndex in debugNoteBillboards.Keys ) {
+			foreach ( int noteIndex in debugNoteBillboards.Keys )
+			{
 				DebugNoteBillboard noteBillboard = GetNoteBillboardFromNoteIndex( noteIndex );
 				if ( !noteBillboard.gameObject.activeSelf ) continue;
 
 				float noteDistance = Vector3.Distance( GameManager.Instance.PlayerOneCharacter.transform.position, noteBillboard.transform.position );
 				if ( !( noteDistance <= maxFocusDistance ) ) continue;
 
-				if ( nearestNote == -1 ) {
+				if ( nearestNote == -1 )
+				{
 					nearestNoteBillboard = noteBillboard;
 					nearestNote = noteIndex;
 					nearestNoteDistance = noteDistance;
@@ -134,8 +147,10 @@ namespace DigDig2.Debugging.Notes {
 				nearestNote = noteIndex;
 			}
 
-			if ( nearestNote != -1 ) {
-				if ( focusedNoteIndex != -1 ) {
+			if ( nearestNote != -1 )
+			{
+				if ( focusedNoteIndex != -1 )
+				{
 					DebugNoteBillboard focusedNoteBillboard = GetNoteBillboardFromNoteIndex( focusedNoteIndex );
 
 					focusedNoteBillboard.SetFocused( false );
@@ -143,7 +158,8 @@ namespace DigDig2.Debugging.Notes {
 
 				focusedNoteIndex = nearestNote;
 				nearestNoteBillboard?.SetFocused( true );
-			} else {
+			} else
+			{
 				if ( focusedNoteIndex == -1 ) return;
 
 				DebugNoteBillboard focusedNoteBillboard = GetNoteBillboardFromNoteIndex( focusedNoteIndex );
@@ -153,16 +169,20 @@ namespace DigDig2.Debugging.Notes {
 			}
 		}
 
-		private void RefreshNoteBillboardVisibility( ) {
-			foreach ( int noteIndex in debugNoteBillboards.Keys ) {
+		private void RefreshNoteBillboardVisibility( )
+		{
+			foreach ( int noteIndex in debugNoteBillboards.Keys )
+			{
 				DebugNoteBillboard noteBillboard = GetNoteBillboardFromNoteIndex( noteIndex );
-				if ( !showDebugNotes ) {
+				if ( !showDebugNotes )
+				{
 					noteBillboard.gameObject.SetActive( false );
 					continue;
 				}
 
 				DebugNoteData noteData = GetNoteDataFromNoteIndex( noteIndex );
-				if ( !showArchivedDebugNotes && noteData.archived ) {
+				if ( !showArchivedDebugNotes && noteData.archived )
+				{
 					noteBillboard.gameObject.SetActive( false );
 					continue;
 				}
@@ -173,13 +193,15 @@ namespace DigDig2.Debugging.Notes {
 
 		private DebugNoteBillboard GetNoteBillboardFromNoteIndex( int noteIndex ) => debugNoteBillboards.GetValueOrDefault( noteIndex );
 
-		private DebugNoteData GetNoteDataFromNoteIndex( int noteIndex ) {
+		private DebugNoteData GetNoteDataFromNoteIndex( int noteIndex )
+		{
 			DebugNoteScene currentDebugNoteSceneStorage = GetCurrentSceneNoteStorage( );
 			return currentDebugNoteSceneStorage.notes.Count > noteIndex ? currentDebugNoteSceneStorage.notes[ noteIndex ] : null;
 		}
 
 		// Place an existing note in the world, does not save a new note to the storage
-		private void PlaceStoredDebugNote( int noteIndex ) {
+		private void PlaceStoredDebugNote( int noteIndex )
+		{
 			DebugNoteData noteData = GetNoteDataFromNoteIndex( noteIndex );
 
 			DebugNoteBillboard newNoteBillboard = Instantiate( debugNoteBillboardPrefab, noteData.position, Quaternion.identity, transform );
@@ -194,15 +216,18 @@ namespace DigDig2.Debugging.Notes {
 		}
 
 		// Go through the stored notes and place them in the world
-		private void PlaceStoredDebugNotes( ) {
+		private void PlaceStoredDebugNotes( )
+		{
 			for ( int noteIndex = 0; noteIndex < GetCurrentSceneNoteStorage( ).notes.Count; noteIndex++ ) { PlaceStoredDebugNote( noteIndex ); }
 		}
 
 		// Create a new note in the note storage and place it in the world
-		public void CreateNewNote( string title, string note, string author, Vector3 position ) {
+		public void CreateNewNote( string title, string note, string author, Vector3 position )
+		{
 			DebugNoteScene currentDebugNoteSceneStorage = GetCurrentSceneNoteStorage( );
 
-			DebugNoteData newNoteData = new( ) {
+			DebugNoteData newNoteData = new( )
+			{
 				title = title,
 				note = note,
 				author = author,
@@ -215,7 +240,8 @@ namespace DigDig2.Debugging.Notes {
 			PlaceStoredDebugNote( newNoteIndex );
 		}
 
-		public void EditNote( int noteIndex, string title, string note, string author ) {
+		public void EditNote( int noteIndex, string title, string note, string author )
+		{
 			DebugNoteData noteData = GetNoteDataFromNoteIndex( noteIndex );
 			DebugNoteBillboard noteBillboard = GetNoteBillboardFromNoteIndex( noteIndex );
 
@@ -226,9 +252,11 @@ namespace DigDig2.Debugging.Notes {
 			noteBillboard.ApplyNoteData( noteData );
 		}
 
-		public void ArchiveNote( int noteIndex ) {
+		public void ArchiveNote( int noteIndex )
+		{
 			DebugNoteData noteData = GetNoteDataFromNoteIndex( noteIndex );
-			if ( noteData.archived ) {
+			if ( noteData.archived )
+			{
 				Debug.LogError( $"Debug note with index \"{noteIndex}\" was requested to be archived but is already archived!" );
 				return;
 			}
@@ -240,9 +268,11 @@ namespace DigDig2.Debugging.Notes {
 			noteBillboard.gameObject.SetActive( showDebugNotes && showArchivedDebugNotes );
 		}
 
-		public void UnarchiveNote( int archivedNoteIndex ) {
+		public void UnarchiveNote( int archivedNoteIndex )
+		{
 			DebugNoteData noteData = GetNoteDataFromNoteIndex( archivedNoteIndex );
-			if ( !noteData.archived ) {
+			if ( !noteData.archived )
+			{
 				Debug.LogError( $"Archived debug note with index \"{archivedNoteIndex}\" was requested to be unarchived but was not archived!" );
 				return;
 			}
@@ -258,13 +288,15 @@ namespace DigDig2.Debugging.Notes {
 
 		#region Notes Frontend
 
-		public void StartNotePlacement( ) {
+		public void StartNotePlacement( )
+		{
 			if ( noteManagementMode != NoteManagementMode.None ) return;
 
 			ShowNoteManagementInterface( NoteManagementMode.Place );
 		}
 
-		public void StartNoteEditing( ) {
+		public void StartNoteEditing( )
+		{
 			if ( noteManagementMode != NoteManagementMode.None ) return;
 			if ( focusedNoteIndex == -1 ) return;
 
@@ -280,11 +312,13 @@ namespace DigDig2.Debugging.Notes {
 			ShowNoteManagementInterface( NoteManagementMode.Edit );
 		}
 
-		private void ShowNoteManagementInterface( NoteManagementMode managementMode ) {
+		private void ShowNoteManagementInterface( NoteManagementMode managementMode )
+		{
 			if ( !GameManager.Instance.PlayerOneCharacter ) return;
 
 			noteManagementMode = managementMode;
-			interfaceTitle.text = managementMode switch {
+			interfaceTitle.text = managementMode switch
+			{
 				NoteManagementMode.Place => "Place Note",
 				NoteManagementMode.Edit => "Edit Note",
 				_ => interfaceTitle.text
@@ -295,7 +329,8 @@ namespace DigDig2.Debugging.Notes {
 			GameManager.Instance.PlayerOneCharacter.GetComponent<EntityCharacterController>( ).Frozen = true;
 		}
 
-		private void HideNoteManagementInterface( ) {
+		private void HideNoteManagementInterface( )
+		{
 			if ( !GameManager.Instance.PlayerOneCharacter ) return;
 
 			interfaceCanvas.SetActive( false );
@@ -312,11 +347,13 @@ namespace DigDig2.Debugging.Notes {
 		}
 
 		// Player pressed the confirm button on the note management interface
-		public void OnNoteConfirmPressed( ) {
+		public void OnNoteConfirmPressed( )
+		{
 			if ( !GameManager.Instance.PlayerOneCharacter ) return;
 			if ( interfaceTitleInputField.text.Length <= 0 ) return;
 
-			switch ( noteManagementMode ) {
+			switch ( noteManagementMode )
+			{
 				case NoteManagementMode.Place:
 					CreateNewNote(
 						interfaceTitleInputField.text,
@@ -338,7 +375,8 @@ namespace DigDig2.Debugging.Notes {
 			HideNoteManagementInterface( );
 		}
 
-		public void OnNoteArchivePressed( ) {
+		public void OnNoteArchivePressed( )
+		{
 			if ( editingNoteIndex == -1 ) return;
 
 			DebugNoteData editingNoteData = GetNoteDataFromNoteIndex( editingNoteIndex );

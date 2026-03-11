@@ -1,8 +1,10 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace DigDig2.Util.ClickableMeshes {
-	public class ClickableMesh : MonoBehaviour, IClickableMesh {
+namespace DigDig2.Util.ClickableMeshes
+{
+	public class ClickableMesh : MonoBehaviour, IClickableMesh
+	{
 		public UnityEvent hoverEnter = new( );
 		public UnityEvent hoverExit = new( );
 		public UnityEvent clickStart = new( );

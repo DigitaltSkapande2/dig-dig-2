@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace DigDig2.Player.Interaction {
-	public class Interactor : MonoBehaviour {
-		public enum InteractionPhase {
+namespace DigDig2.Player.Interaction
+{
+	public class Interactor : MonoBehaviour
+	{
+		public enum InteractionPhase
+		{
 			Unknown,
 			Began,
 			Held,
@@ -27,7 +30,8 @@ namespace DigDig2.Player.Interaction {
 
 		private void Update( ) { UpdateInteractableFocus( ); }
 
-		private void OnTriggerEnter( Collider other ) {
+		private void OnTriggerEnter( Collider other )
+		{
 			Interactable interactable = other.GetComponent<Interactable>( );
 			if ( !interactable ) return;
 
@@ -35,7 +39,8 @@ namespace DigDig2.Player.Interaction {
 			UpdateInteractableFocus( );
 		}
 
-		private void OnTriggerExit( Collider other ) {
+		private void OnTriggerExit( Collider other )
+		{
 			Interactable interactable = other.GetComponent<Interactable>( );
 			if ( !interactable ) return;
 
@@ -43,16 +48,19 @@ namespace DigDig2.Player.Interaction {
 			UpdateInteractableFocus( );
 		}
 
-		public void UpdateInteractableFocus( ) {
+		public void UpdateInteractableFocus( )
+		{
 			// Get the interactable with the angle closest to where the player is looking
 			Interactable closestInteractable = null;
 			float closestInteractableAngle = 180f;
-			foreach ( Interactable interactableInRange in interactablesInRange ) {
+			foreach ( Interactable interactableInRange in interactablesInRange )
+			{
 				float interactableAngle = Vector3.Angle( -interactableInRange.GetInteractableSource( ).forward, interactionSource.transform.forward );
 
 				if ( interactableAngle > interactionAngle ) continue;
 
-				if ( !closestInteractable ) {
+				if ( !closestInteractable )
+				{
 					closestInteractable = interactableInRange;
 					closestInteractableAngle = interactableAngle;
 					continue;
@@ -81,10 +89,12 @@ namespace DigDig2.Player.Interaction {
 
 		public bool HasFocusedInteractable( ) => focusedInteractable != null;
 
-		public void SendInteraction( InputActionPhase phase = InputActionPhase.Waiting ) {
+		public void SendInteraction( InputActionPhase phase = InputActionPhase.Waiting )
+		{
 			if ( !HasFocusedInteractable( ) ) return;
 
-			InteractionPhase interactionPhase = phase switch {
+			InteractionPhase interactionPhase = phase switch
+			{
 				InputActionPhase.Started => InteractionPhase.Began,
 				InputActionPhase.Performed => InteractionPhase.Held,
 				InputActionPhase.Canceled => InteractionPhase.Ended,

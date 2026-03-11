@@ -4,22 +4,27 @@ using DigDig2.Debugging.Menu;
 
 using UnityEngine;
 
-namespace DigDig2.Debugging.Modules {
+namespace DigDig2.Debugging.Modules
+{
 	[Debug]
-	public class DisplayCollisionBoxes : MonoBehaviour {
+	public class DisplayCollisionBoxes : MonoBehaviour
+	{
 		private readonly List<Collider2D> colliders = new( );
 
 		// LineRenderer for drawing the colliders
 		private readonly List<LineRenderer> lineRenderers = new( );
 
-		private void Update( ) {
+		private void Update( )
+		{
 			UpdateColliders( );
 
 			// Update the line renderers to draw the colliders
-			for ( int i = 0; i < colliders.Count; i++ ) {
+			for ( int i = 0; i < colliders.Count; i++ )
+			{
 				if ( !colliders[ i ] || !colliders[ i ].enabled ) continue;
 
-				switch ( colliders[ i ] ) {
+				switch ( colliders[ i ] )
+				{
 					case BoxCollider2D boxCollider: DrawBoxCollider( boxCollider, lineRenderers[ i ] ); break;
 					case CircleCollider2D circleCollider: DrawCircleCollider( circleCollider, lineRenderers[ i ] ); break;
 					case PolygonCollider2D polygonCollider: DrawPolygonCollider( polygonCollider, lineRenderers[ i ] ); break;
@@ -30,7 +35,8 @@ namespace DigDig2.Debugging.Modules {
 
 		private void OnDisable( ) { ClearLineRenderers( ); }
 
-		private void UpdateColliders( ) {
+		private void UpdateColliders( )
+		{
 			colliders.Clear( );
 			ClearLineRenderers( );
 
@@ -38,7 +44,8 @@ namespace DigDig2.Debugging.Modules {
 			colliders.AddRange( FindObjectsByType<Collider2D>( FindObjectsSortMode.None ) );
 
 			// Initialize line renderers for each collider
-			for ( int index = 0; index < colliders.Count; index++ ) {
+			for ( int index = 0; index < colliders.Count; index++ )
+			{
 				var lineObj = new GameObject( "ColliderVisualizer" );
 				lineObj.transform.SetParent( transform );
 				LineRenderer lineRenderer = lineObj.AddComponent<LineRenderer>( );
@@ -53,13 +60,15 @@ namespace DigDig2.Debugging.Modules {
 			}
 		}
 
-		private void ClearLineRenderers( ) {
+		private void ClearLineRenderers( )
+		{
 			foreach ( LineRenderer lineRenderer in lineRenderers ) { Destroy( lineRenderer.gameObject ); }
 
 			lineRenderers.Clear( );
 		}
 
-		private void DrawBoxCollider( BoxCollider2D boxCollider, LineRenderer lineRenderer ) {
+		private void DrawBoxCollider( BoxCollider2D boxCollider, LineRenderer lineRenderer )
+		{
 			var corners = new Vector3[ 5 ];
 			Vector2 center = boxCollider.transform.TransformPoint( boxCollider.offset );
 			Vector2 size = boxCollider.size * boxCollider.transform.lossyScale;
@@ -74,14 +83,16 @@ namespace DigDig2.Debugging.Modules {
 			lineRenderer.SetPositions( corners );
 		}
 
-		private void DrawCircleCollider( CircleCollider2D circleCollider, LineRenderer lineRenderer ) {
+		private void DrawCircleCollider( CircleCollider2D circleCollider, LineRenderer lineRenderer )
+		{
 			const int SEGMENTS = 30;
 			var points = new Vector3[ SEGMENTS + 1 ];
 
 			Vector2 center = circleCollider.transform.TransformPoint( circleCollider.offset );
 			float radius = circleCollider.radius * Mathf.Max( circleCollider.transform.lossyScale.x, circleCollider.transform.lossyScale.y );
 
-			for ( int i = 0; i <= SEGMENTS; i++ ) {
+			for ( int i = 0; i <= SEGMENTS; i++ )
+			{
 				float angle = (float)i / SEGMENTS * 2 * Mathf.PI;
 				points[ i ] = center + new Vector2( Mathf.Cos( angle ) * radius, Mathf.Sin( angle ) * radius );
 			}
@@ -90,7 +101,8 @@ namespace DigDig2.Debugging.Modules {
 			lineRenderer.SetPositions( points );
 		}
 
-		private void DrawPolygonCollider( PolygonCollider2D polygonCollider, LineRenderer lineRenderer ) {
+		private void DrawPolygonCollider( PolygonCollider2D polygonCollider, LineRenderer lineRenderer )
+		{
 			Vector2[ ] points = polygonCollider.points;
 			var worldPoints = new Vector3[ points.Length + 1 ];
 
@@ -102,7 +114,8 @@ namespace DigDig2.Debugging.Modules {
 			lineRenderer.SetPositions( worldPoints );
 		}
 
-		private void DrawEdgeCollider( EdgeCollider2D edgeCollider, LineRenderer lineRenderer ) {
+		private void DrawEdgeCollider( EdgeCollider2D edgeCollider, LineRenderer lineRenderer )
+		{
 			Vector2[ ] points = edgeCollider.points;
 			var worldPoints = new Vector3[ points.Length ];
 

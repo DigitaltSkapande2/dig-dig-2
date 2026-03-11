@@ -6,13 +6,17 @@ using DigDig2.Debugging.Notes;
 
 using UnityEngine;
 
-namespace DigDig2.Debugging.Console.Commands {
+namespace DigDig2.Debugging.Console.Commands
+{
 	[CreateAssetMenu( fileName = "ChangeDebugNotesVisibility", menuName = "Developer Console/Commands/Change Debug Notes Visibility" )]
-	public class ChangeDebugNotesVisibility : ConsoleCommand {
+	public class ChangeDebugNotesVisibility : ConsoleCommand
+	{
 		[SerializeField] private bool changeArchivedVisibility;
 
-		public override async UniTask<CommandResultContext> Process( string[ ] args ) {
-			switch ( args[ 0 ] ) {
+		public override async UniTask<CommandResultContext> Process( string[ ] args )
+		{
+			switch ( args[ 0 ] )
+			{
 				case "show":
 					if ( !changeArchivedVisibility )
 						DebugNotesManager.Instance.ShowDebugNotes = true;
@@ -35,10 +39,12 @@ namespace DigDig2.Debugging.Console.Commands {
 			return CommandResultContext.Success;
 		}
 
-		public override List<string> GetSuggestions( string[ ] args ) {
+		public override List<string> GetSuggestions( string[ ] args )
+		{
 			if ( args.Length > 1 ) return new( );
 
-			List<string> result = new( ) {
+			List<string> result = new( )
+			{
 				"show",
 				"hide"
 			};

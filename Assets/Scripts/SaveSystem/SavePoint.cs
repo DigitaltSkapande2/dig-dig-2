@@ -7,33 +7,39 @@ using DigDig2.Game;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace DigDig2.SaveSystem {
-	public class SavePoint : MonoBehaviour {
+namespace DigDig2.SaveSystem
+{
+	public class SavePoint : MonoBehaviour
+	{
 		[SerializeField] private GameObject characterSeclectSecuencerPrefab;
 		[SerializeField] private LockTargetEffector lockTargetEffector;
 		[SerializeField] private Transform singlePlayerSpawnPoint;
 		[SerializeField] public float cameraYRotation;
 
-		[Header( "Events" )] [SerializeField]
+		[Header( "Events" )]
+		[SerializeField]
 		public UnityEvent savePointReached;
 
 		[SerializeField] private EffectPlayer onReachedEffect;
 		[SerializeField] private float timeUntilReleaseCamera = 2;
 		private new Collider collider;
 
-		private int HighestReachedSavePointIndex {
+		private int HighestReachedSavePointIndex
+		{
 			get => GameManager.Instance.loadedGameManagerSaveData.highestReachedSavePointIndex;
 			set => GameManager.Instance.SetHighestReachedSavePointIndex( value );
 		}
 
-		private void Awake( ) {
+		private void Awake( )
+		{
 			collider = GetComponent<Collider>( );
 			lockTargetEffector.IsActive = false;
 		}
 
 		public void Start( ) { }
 
-		private void OnTriggerEnter( Collider other ) {
+		private void OnTriggerEnter( Collider other )
+		{
 			VerboseLog( "reached: " + gameObject.name );
 
 			SetSpawnPointReached( true );
@@ -41,13 +47,15 @@ namespace DigDig2.SaveSystem {
 			SaveManager.Instance.SaveAllAndWriteToFile( );
 		}
 
-		public void ServerStartMultiplayerStartSequence( ) {
+		public void ServerStartMultiplayerStartSequence( )
+		{
 			lockTargetEffector.IsActive = true;
 			VerboseLog( "Spawning character select sequencer for multiplayer spawn..." );
 			GameObject instance = Instantiate( characterSeclectSecuencerPrefab, transform.position, Quaternion.identity );
 		}
 
-		public async void ServerStartSingleplayerStartSequence( ) {
+		public async void ServerStartSingleplayerStartSequence( )
+		{
 			lockTargetEffector.IsActive = true;
 			VerboseLog( "Initializing singleplayer spawn..." );
 			GameManager.Instance.InitializeSingleplayerCharacter( singlePlayerSpawnPoint.position, Quaternion.identity );
@@ -56,7 +64,8 @@ namespace DigDig2.SaveSystem {
 			lockTargetEffector.IsActive = false;
 		}
 
-		public void SetSpawnPointReached( bool reached ) {
+		public void SetSpawnPointReached( bool reached )
+		{
 			collider.enabled = !reached;
 			VerboseLog( $"i am active, {name}" );
 

@@ -6,15 +6,19 @@ using UnityEngine.InputSystem;
 using UnityEditor;
 #endif
 
-namespace DigDig2.Input {
-	internal class InputManager : Singleton<InputManager> {
+namespace DigDig2.Input
+{
+	internal class InputManager : Singleton<InputManager>
+	{
 		[SerializeField] public InputContextConfig inputContextConfig;
 		[SerializeField] private InputContext initialContext = InputContext.Gameplay;
 		public InputContext currentInputState = InputContext.None;
 		public ProjectWideInputActions inputActions;
 
-		private new void Awake( ) {
-			if ( inputContextConfig == null || inputContextConfig.inputActions == null ) {
+		private new void Awake( )
+		{
+			if ( inputContextConfig == null || inputContextConfig.inputActions == null )
+			{
 				Debug.LogError( "InputContextConfig or its InputActionAsset is not assigned in InputManager." );
 				gameObject.SetActive( false );
 				return;
@@ -27,13 +31,16 @@ namespace DigDig2.Input {
 			SetInputContext( initialContext );
 		}
 
-		public void SetInputContext( InputContext inputContext ) {
+		public void SetInputContext( InputContext inputContext )
+		{
 			currentInputState = inputContext;
 			UpdateActionMaps( );
 		}
 
-		public void UpdateActionMaps( ) {
-			foreach ( InputContextConfig.MapContext mapContext in inputContextConfig.mapContexts ) {
+		public void UpdateActionMaps( )
+		{
+			foreach ( InputContextConfig.MapContext mapContext in inputContextConfig.mapContexts )
+			{
 				InputActionMap map = inputActions.asset.FindActionMap( mapContext.mapName );
 				if ( map == null ) continue;
 
@@ -48,8 +55,10 @@ namespace DigDig2.Input {
 	#if UNITY_EDITOR
 
 	[CustomEditor( typeof( InputManager ) )]
-	public class InputManagerEditor : Editor {
-		public override void OnInspectorGUI( ) {
+	public class InputManagerEditor : Editor
+	{
+		public override void OnInspectorGUI( )
+		{
 			DrawDefaultInspector( );
 
 			if ( !GUILayout.Button( "Update Action Maps" ) ) return;

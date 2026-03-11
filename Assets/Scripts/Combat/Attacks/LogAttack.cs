@@ -1,8 +1,10 @@
 using UnityEngine;
 
-namespace DigDig2.Combat.Attacks {
+namespace DigDig2.Combat.Attacks
+{
 	[CreateAssetMenu( fileName = "LogAttack", menuName = "Scriptable Objects/Attacks/Log Attack" )]
-	public class LogAttack : Attack {
+	public class LogAttack : Attack
+	{
 		public string testMessage;
 
 		public override void ChargeStart( Attacker attacker, AttackType attackType ) { }

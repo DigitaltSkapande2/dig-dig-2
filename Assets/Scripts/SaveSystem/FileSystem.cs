@@ -6,14 +6,18 @@ using Newtonsoft.Json;
 
 using UnityEngine;
 
-namespace DigDig2.SaveSystem {
-	public static class FileSystem {
+namespace DigDig2.SaveSystem
+{
+	public static class FileSystem
+	{
 		public static string GetDataPath( ) => Application.persistentDataPath;
 
-		public static void WriteDataToFile( string filePath, object data ) {
+		public static void WriteDataToFile( string filePath, object data )
+		{
 			string extension = Path.GetExtension( filePath );
 			string dataString = "";
-			switch ( extension ) {
+			switch ( extension )
+			{
 				case ".json":
 					dataString = JsonConvert.SerializeObject( data, Formatting.Indented );
 					Debug.Log( dataString );
@@ -23,11 +27,13 @@ namespace DigDig2.SaveSystem {
 			File.WriteAllText( filePath, dataString );
 		}
 
-		public static T ReadDataFromFile<T>( string filePath ) {
+		public static T ReadDataFromFile<T>( string filePath )
+		{
 			string extension = Path.GetExtension( filePath );
 			string dataString = File.ReadAllText( filePath );
 
-			switch ( extension ) {
+			switch ( extension )
+			{
 				case ".json":
 					Debug.Log( "Reading: " + JsonConvert.SerializeObject( JsonConvert.DeserializeObject<T>( dataString ) ) );
 					return JsonConvert.DeserializeObject<T>( dataString );

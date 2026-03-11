@@ -1,10 +1,13 @@
 using UnityEngine;
 
-namespace DigDig2.Combat {
-	public abstract class Attack : ScriptableObject {
+namespace DigDig2.Combat
+{
+	public abstract class Attack : ScriptableObject
+	{
 		[SerializeField] protected float attackDuration = 1f;
 
-		public float AttackDuration {
+		public float AttackDuration
+		{
 			get => attackDuration;
 		}
 

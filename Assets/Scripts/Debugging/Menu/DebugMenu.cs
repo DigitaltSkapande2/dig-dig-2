@@ -9,8 +9,10 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-namespace DigDig2.Debugging.Menu {
-	public class DebugMenu : MonoBehaviour {
+namespace DigDig2.Debugging.Menu
+{
+	public class DebugMenu : MonoBehaviour
+	{
 		[Header( "Object ref" )]
 		[SerializeField] private GameObject debugMenuGraphics;
 
@@ -20,18 +22,21 @@ namespace DigDig2.Debugging.Menu {
 		private readonly List<DebugMenuElement> debugMenuElements = new( );
 		private ProjectWideInputActions.DebugMenuActions inputMap;
 
-		private void Start( ) {
+		private void Start( )
+		{
 			inputMap = InputManager.Instance.inputActions.DebugMenu;
 			inputMap.OpenDebugMenu.started += OpenMenuFromEvent;
 			inputMap.CloseDebugMenu.started += CloseMenuFromEvent;
 		}
 
-		private void OnDisable( ) {
+		private void OnDisable( )
+		{
 			inputMap.OpenDebugMenu.started -= OpenMenuFromEvent;
 			inputMap.CloseDebugMenu.started -= CloseMenuFromEvent;
 		}
 
-		public void OpenMenu( ) {
+		public void OpenMenu( )
+		{
 			SetMenuActive( true );
 			UpdateMenuElements( );
 		}
@@ -43,13 +48,15 @@ namespace DigDig2.Debugging.Menu {
 
 		private void SetMenuActive( bool state ) { debugMenuGraphics.SetActive( state ); }
 
-		private void UpdateMenuElements( ) {
+		private void UpdateMenuElements( )
+		{
 			ClearMenuElements( );
 			GenerateMenuElements( );
 			LayoutRebuilder.MarkLayoutForRebuild( debugMenuContent );
 		}
 
-		private void GenerateMenuElements( ) {
+		private void GenerateMenuElements( )
+		{
 			Debug.Log( "Generating Debug Menu Elements..." );
 
 			// Find all objects in the scene
@@ -57,12 +64,14 @@ namespace DigDig2.Debugging.Menu {
 
 			var nonDebugableBehaviourTypes = new List<Type>( );
 
-			foreach ( MonoBehaviour behaviour in allBehaviours ) {
+			foreach ( MonoBehaviour behaviour in allBehaviours )
+			{
 				Type behaviourType = behaviour.GetType( );
 				if ( nonDebugableBehaviourTypes.Contains( behaviourType ) ) continue;
 
 				// Check the class for [Debug] attribute
-				if ( Attribute.IsDefined( behaviourType, typeof( DebugAttribute ) ) ) {
+				if ( Attribute.IsDefined( behaviourType, typeof( DebugAttribute ) ) )
+				{
 					var debugAttr = (DebugAttribute)Attribute.GetCustomAttribute( behaviourType, typeof( DebugAttribute ) );
 
 					// Find fields marked with [DebugSerialized]
@@ -79,13 +88,15 @@ namespace DigDig2.Debugging.Menu {
 			}
 		}
 
-		private DebugMenuElement SpawnMenuElement( MonoBehaviour behaviour, FieldInfo[ ] debugFields, DebugMenuToggleable toggleable ) {
+		private DebugMenuElement SpawnMenuElement( MonoBehaviour behaviour, FieldInfo[ ] debugFields, DebugMenuToggleable toggleable )
+		{
 			DebugMenuElement elementComponent = Instantiate( debugMenuElementPrefab, debugMenuContent ).GetComponent<DebugMenuElement>( );
 			elementComponent.Initialize( behaviour, debugFields, toggleable );
 			return elementComponent;
 		}
 
-		private void ClearMenuElements( ) {
+		private void ClearMenuElements( )
+		{
 			foreach ( DebugMenuElement element in debugMenuElements ) { Destroy( element.gameObject ); }
 
 			debugMenuElements.Clear( );

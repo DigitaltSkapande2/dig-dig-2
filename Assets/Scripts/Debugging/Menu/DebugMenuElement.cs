@@ -6,8 +6,10 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace DigDig2.Debugging.Menu {
-	public class DebugMenuElement : MonoBehaviour {
+namespace DigDig2.Debugging.Menu
+{
+	public class DebugMenuElement : MonoBehaviour
+	{
 		[SerializeField] private TMP_Text labelText;
 		[SerializeField] private RectTransform elementContainer;
 
@@ -25,10 +27,12 @@ namespace DigDig2.Debugging.Menu {
 
 		private void Awake( ) { verticalLayoutGroup = elementContainer.GetComponent<VerticalLayoutGroup>( ); }
 
-		public void Initialize( MonoBehaviour behaviour, FieldInfo[ ] debugFields, DebugMenuToggleable toggleable ) {
+		public void Initialize( MonoBehaviour behaviour, FieldInfo[ ] debugFields, DebugMenuToggleable toggleable )
+		{
 			labelText.text = behaviour.GetType( ).Name; // Use the class name as the label
 
-			foreach ( FieldInfo field in debugFields ) {
+			foreach ( FieldInfo field in debugFields )
+			{
 				GameObject fieldUi;
 
 				if ( field.FieldType == typeof( bool ) )
@@ -46,16 +50,19 @@ namespace DigDig2.Debugging.Menu {
 			}
 
 			Toggle uiToggle = GetComponentInChildren<Toggle>( );
-			if ( toggleable == DebugMenuToggleable.Toggleable ) {
+			if ( toggleable == DebugMenuToggleable.Toggleable )
+			{
 				// Attach toggle to script.GameObject.SetActive
-				uiToggle.onValueChanged.AddListener( value => {
+				uiToggle.onValueChanged.AddListener( value =>
+					{
 						behaviour.gameObject.SetActive( value );
 						SetFieldsActive( value );
 					}
 				);
 
 				uiToggle.SetIsOnWithoutNotify( behaviour.gameObject.activeSelf );
-			} else {
+			} else
+			{
 				uiToggle.interactable = false;
 				uiToggle.isOn = false;
 				uiToggle.enabled = false;
@@ -64,15 +71,18 @@ namespace DigDig2.Debugging.Menu {
 			SetFieldsActive( behaviour.gameObject.activeSelf );
 		}
 
-		private void SetFieldsActive( bool state ) {
-			foreach ( GameObject element in debugFieldElements ) {
+		private void SetFieldsActive( bool state )
+		{
+			foreach ( GameObject element in debugFieldElements )
+			{
 				element.SetActive( state );
 				if ( verticalLayoutGroup ) verticalLayoutGroup.spacing = state ? 0 : -30;
 				LayoutRebuilder.MarkLayoutForRebuild( elementContainer );
 			}
 		}
 
-		private GameObject DisplayFieldBool( FieldInfo field, MonoBehaviour target ) {
+		private GameObject DisplayFieldBool( FieldInfo field, MonoBehaviour target )
+		{
 			GameObject fieldUi = Instantiate( boolPrefab, elementContainer );
 			fieldUi.GetComponentInChildren<Text>( ).text = field.Name;
 
@@ -83,13 +93,15 @@ namespace DigDig2.Debugging.Menu {
 			return fieldUi;
 		}
 
-		private GameObject DisplayFieldInt( FieldInfo field, MonoBehaviour target ) {
+		private GameObject DisplayFieldInt( FieldInfo field, MonoBehaviour target )
+		{
 			GameObject fieldUi = Instantiate( intPrefab, elementContainer );
 			fieldUi.GetComponentInChildren<Text>( ).text = field.Name;
 
 			TMP_InputField inputField = fieldUi.GetComponentInChildren<TMP_InputField>( );
 			inputField.text = field.GetValue( target ).ToString( );
-			inputField.onEndEdit.AddListener( newValue => {
+			inputField.onEndEdit.AddListener( newValue =>
+				{
 					if ( int.TryParse( newValue, out int intValue ) ) field.SetValue( target, intValue );
 				}
 			);
@@ -97,13 +109,15 @@ namespace DigDig2.Debugging.Menu {
 			return fieldUi;
 		}
 
-		private GameObject DisplayFieldFloat( FieldInfo field, MonoBehaviour target ) {
+		private GameObject DisplayFieldFloat( FieldInfo field, MonoBehaviour target )
+		{
 			GameObject fieldUi = Instantiate( floatPrefab, elementContainer );
 			fieldUi.GetComponentInChildren<Text>( ).text = field.Name;
 
 			TMP_InputField inputField = fieldUi.GetComponentInChildren<TMP_InputField>( );
 			inputField.text = field.GetValue( target ).ToString( );
-			inputField.onEndEdit.AddListener( newValue => {
+			inputField.onEndEdit.AddListener( newValue =>
+				{
 					if ( float.TryParse( newValue, out float floatValue ) ) field.SetValue( target, floatValue );
 				}
 			);
@@ -111,7 +125,8 @@ namespace DigDig2.Debugging.Menu {
 			return fieldUi;
 		}
 
-		private GameObject DisplayFieldString( FieldInfo field, MonoBehaviour target ) {
+		private GameObject DisplayFieldString( FieldInfo field, MonoBehaviour target )
+		{
 			GameObject fieldUi = Instantiate( stringPrefab, elementContainer );
 			TMP_InputField inputField = fieldUi.GetComponentInChildren<TMP_InputField>( );
 
@@ -121,7 +136,8 @@ namespace DigDig2.Debugging.Menu {
 			return fieldUi;
 		}
 
-		private GameObject DisplayFieldDefault( FieldInfo field, MonoBehaviour target ) {
+		private GameObject DisplayFieldDefault( FieldInfo field, MonoBehaviour target )
+		{
 			GameObject fieldUi = Instantiate( defaultPrefab, elementContainer );
 			Text fieldText = fieldUi.GetComponentInChildren<Text>( );
 

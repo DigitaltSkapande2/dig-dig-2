@@ -7,7 +7,8 @@ using UnityEngine;
 
 using Action = Unity.Behavior.Action;
 
-namespace DigDig2.Entity.Behavior.BehaviorActions.Navigation {
+namespace DigDig2.Entity.Behavior.BehaviorActions.Navigation
+{
 	[Serializable] [GeneratePropertyBag] [NodeDescription(
 		"WotT Follow",
 		"Follows target until it's reached.",
@@ -15,7 +16,8 @@ namespace DigDig2.Entity.Behavior.BehaviorActions.Navigation {
 		story: "[Agent] follows [Target]",
 		id: "WotT_Follow"
 	)]
-	public class WotTFollow : Action {
+	public class WotTFollow : Action
+	{
 		[SerializeReference] public BlackboardVariable<GameObject> Agent;
 		[SerializeReference] public BlackboardVariable<GameObject> Target;
 
@@ -32,23 +34,28 @@ namespace DigDig2.Entity.Behavior.BehaviorActions.Navigation {
 
 		private BehaviorAgentTranslator mAgentTranslatorCharacterBehaviorController;
 
-		protected override Status OnStart( ) {
-			if ( !Agent.Value ) {
+		protected override Status OnStart( )
+		{
+			if ( !Agent.Value )
+			{
 				LogFailure( "No agent assigned." );
 				return Status.Failure;
 			}
 
-			if ( !Target.Value ) {
+			if ( !Target.Value )
+			{
 				LogFailure( "No target to follow." );
 				return Status.Failure;
 			}
 
-			if ( DistanceTolerance.Value <= FollowDistance.Value ) {
+			if ( DistanceTolerance.Value <= FollowDistance.Value )
+			{
 				LogFailure( "Distance Tolerance is lower or equal to Follow Distance, this will cause jittering when the agent reaches it's target and is not allowed." );
 				return Status.Failure;
 			}
 
-			if ( AllowedTargetErrorDistance.Value < 1 ) {
+			if ( AllowedTargetErrorDistance.Value < 1 )
+			{
 				LogFailure( "Allowed Target Error Distance is lower than 1 and will cause the agent to recalculate it's path very often, please keep it above 1." );
 				return Status.Failure;
 			}
@@ -61,7 +68,8 @@ namespace DigDig2.Entity.Behavior.BehaviorActions.Navigation {
 			return Status.Running;
 		}
 
-		protected override Status OnUpdate( ) {
+		protected override Status OnUpdate( )
+		{
 			if ( !Agent.Value || !Target.Value ) return Status.Failure;
 
 			if ( GetDistanceToCurrentTarget( ) <= DistanceTolerance.Value || mAgentTranslatorCharacterBehaviorController.movementState == BehaviorAgentTranslator.MovementState.Idle ) return Status.Success;
@@ -82,7 +90,8 @@ namespace DigDig2.Entity.Behavior.BehaviorActions.Navigation {
 
 		private float GetDistanceToCurrentTarget( ) => ( Target.Value.transform.position - Agent.Value.transform.position ).magnitude;
 
-		private Vector3 GetFollowTarget( ) {
+		private Vector3 GetFollowTarget( )
+		{
 			currentTarget = ( Agent.Value.transform.position - Target.Value.transform.position ).normalized * FollowDistance.Value + Target.Value.transform.position;
 			return currentTarget;
 		}

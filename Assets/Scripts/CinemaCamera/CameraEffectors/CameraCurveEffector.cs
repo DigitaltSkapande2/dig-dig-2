@@ -3,14 +3,17 @@ using System;
 using UnityEngine;
 using UnityEngine.Splines;
 
-namespace DigDig2.CinemaCamera.CameraEffectors {
-	public class CameraCurveEffector : TriggerZoneCameraEffectorBase {
+namespace DigDig2.CinemaCamera.CameraEffectors
+{
+	public class CameraCurveEffector : TriggerZoneCameraEffectorBase
+	{
 		[SerializeField] private SplineContainer splineContainer;
 		private Spline dataSpline; // the spline to get the camera data from
 
 		private Spline projectionSpline; // The spline to match the Player
 
-		private new void Start( ) {
+		private new void Start( )
+		{
 			projectionSpline = splineContainer.Splines[ 0 ];
 			dataSpline = splineContainer.Splines[ 1 ];
 			if ( projectionSpline == null || dataSpline == null ) Debug.LogError( "CameraCurveEffector requires a SplineContainer with two splines." );

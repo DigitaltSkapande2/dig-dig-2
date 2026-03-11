@@ -3,8 +3,10 @@ using System.Collections.Generic;
 
 using UnityEngine;
 
-namespace DigDig2.Combat {
-	public class BindableAttackHitbox : MonoBehaviour {
+namespace DigDig2.Combat
+{
+	public class BindableAttackHitbox : MonoBehaviour
+	{
 		[SerializeField] private AttackHitboxShape shape = AttackHitboxShape.Box;
 		[SerializeField] private Vector3 boxSize = Vector3.one;
 		[SerializeField] private float sphereRadius = 1.0f;
@@ -12,21 +14,25 @@ namespace DigDig2.Combat {
 
 		private readonly Dictionary<string, AttackInfo> activeAttacks = new( );
 
-		private void OnDrawGizmos( ) {
+		private void OnDrawGizmos( )
+		{
 			Gizmos.matrix = transform.localToWorldMatrix;
 			Gizmos.color = Color.red;
 			if ( activeAttacks.Count > 0 ) Gizmos.color = Color.blue;
-			switch ( shape ) {
+			switch ( shape )
+			{
 				case AttackHitboxShape.Box: Gizmos.DrawWireCube( Vector3.zero, boxSize ); break;
 				case AttackHitboxShape.Sphere: Gizmos.DrawSphere( Vector3.zero, sphereRadius ); break;
 				default: throw new ArgumentOutOfRangeException( );
 			}
 		}
 
-		public void StartAttack( string attackId, Attacker attacker, Attack attack ) {
+		public void StartAttack( string attackId, Attacker attacker, Attack attack )
+		{
 			Attackable attackerAttackable = attacker.GetComponent<Attackable>( );
 
-			activeAttacks[ attackId ] = new( ) {
+			activeAttacks[ attackId ] = new( )
+			{
 				attacker = attacker,
 				attackerAttackable = attackerAttackable,
 				attack = attack,
@@ -35,22 +41,26 @@ namespace DigDig2.Combat {
 			};
 		}
 
-		public void Attack( string attackId ) {
+		public void Attack( string attackId )
+		{
 			AttackInfo attackInfo = activeAttacks[ attackId ];
 
 			int intermediateAttacks = 0;
-			if ( attackInfo.hasCheckedOnce ) {
+			if ( attackInfo.hasCheckedOnce )
+			{
 				float distanceBetweenChecks = Vector3.Distance( attackInfo.lastPosition, transform.position );
 				intermediateAttacks = Mathf.CeilToInt( distanceBetweenChecks / unitsPerIntermediateCheck );
 			}
 
 			for ( int intermediateAttackIndex = 0;
 				intermediateAttackIndex < intermediateAttacks;
-				intermediateAttackIndex++ ) {
+				intermediateAttackIndex++ )
+			{
 				var intermediatePosition = Vector3.Lerp( attackInfo.lastPosition, transform.position, (float)intermediateAttackIndex / intermediateAttacks );
 				var intermediateRotation = Quaternion.Slerp( attackInfo.lastRotation, transform.rotation, (float)intermediateAttackIndex / intermediateAttacks );
 				Debug.DrawLine( intermediatePosition, intermediatePosition + Vector3.up / 10f, Color.blue, 1f );
-				Collider[ ] enemyColliders = shape switch {
+				Collider[ ] enemyColliders = shape switch
+				{
 					AttackHitboxShape.Box => Physics.OverlapBox(
 						intermediatePosition,
 						new(
@@ -64,7 +74,8 @@ namespace DigDig2.Combat {
 					_ => Array.Empty<Collider>( )
 				};
 
-				foreach ( Collider enemyCollider in enemyColliders ) {
+				foreach ( Collider enemyCollider in enemyColliders )
+				{
 					Attackable enemyAttackable = enemyCollider.GetComponent<Attackable>( );
 					if ( !enemyAttackable ) continue;
 					if ( enemyAttackable == attackInfo.attackerAttackable ) continue;
@@ -84,7 +95,8 @@ namespace DigDig2.Combat {
 		public void EndAttack( string attackId ) { activeAttacks.Remove( attackId ); }
 		private enum AttackHitboxShape { Box, Sphere }
 
-		private struct AttackInfo {
+		private struct AttackInfo
+		{
 			public Attacker attacker;
 			public Attackable attackerAttackable;
 			public Attack attack;

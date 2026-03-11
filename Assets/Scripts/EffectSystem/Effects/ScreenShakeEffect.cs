@@ -5,20 +5,25 @@ using UnityEngine;
 using UnityEditor;
 #endif
 
-namespace DigDig2.EffectSystem.Effects {
-	public class ScreenShakeEffect : CumulativeEffectBase<CumulativeEffectInstanceData> {
+namespace DigDig2.EffectSystem.Effects
+{
+	public class ScreenShakeEffect : CumulativeEffectBase<CumulativeEffectInstanceData>
+	{
 		[SerializeField] private float shakeFrequency = 5;
 		[SerializeField] private float shakeAmplitude = 5;
 		private CameraEffector screenShakeEffector;
 
-		private void Awake( ) {
+		private void Awake( )
+		{
 			var screenShakeEffectorObject = new GameObject( "ScreenShakeEffector" );
 			screenShakeEffectorObject.transform.SetParent( transform );
 			screenShakeEffector = screenShakeEffectorObject.AddComponent<CameraEffector>( );
 		}
 
-		internal override void UpdateEffect( float curveValue ) {
-			if ( curveValue <= 0f ) {
+		internal override void UpdateEffect( float curveValue )
+		{
+			if ( curveValue <= 0f )
+			{
 				// reset when no shake
 				screenShakeEffector.rotation = Quaternion.identity;
 				screenShakeEffector.position = Vector3.zero;
@@ -46,13 +51,16 @@ namespace DigDig2.EffectSystem.Effects {
 
 	#if UNITY_EDITOR
 	[CustomEditor( typeof( ScreenShakeEffect ) )]
-	public class ScreenShakeEffectEditor : Editor {
-		public override void OnInspectorGUI( ) {
+	public class ScreenShakeEffectEditor : Editor
+	{
+		public override void OnInspectorGUI( )
+		{
 			base.OnInspectorGUI( );
 			var effect = (ScreenShakeEffect)target;
 			if ( !GUILayout.Button( "Test Shake" ) ) return;
 
-			var testInstance = new CumulativeEffectInstanceData {
+			var testInstance = new CumulativeEffectInstanceData
+			{
 				duration = 1f,
 				intensity = 1f,
 				intensityCurve = AnimationCurve.EaseInOut( 0f, 1f, 1f, 0f )

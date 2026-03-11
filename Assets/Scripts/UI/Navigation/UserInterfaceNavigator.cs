@@ -8,8 +8,10 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UIElements;
 
-namespace DigDig2.UI.Navigation {
-	public class UserInterfaceNavigator : MonoBehaviour {
+namespace DigDig2.UI.Navigation
+{
+	public class UserInterfaceNavigator : MonoBehaviour
+	{
 		[SerializeField] private string initialNavigationUri = "/";
 
 		[Space( 20 )] [SerializeField]
@@ -21,21 +23,26 @@ namespace DigDig2.UI.Navigation {
 		private NavigationNode hierarchy;
 		private string navigationUri = "/";
 
-		public string NavigationUri {
+		public string NavigationUri
+		{
 			get => navigationUri;
 			set => NavigateTo( value );
 		}
 
-		public NavigationNode Hierarchy {
+		public NavigationNode Hierarchy
+		{
 			get => hierarchy;
-			set {
+			set
+			{
 				hierarchy = value;
 				NavigateTo( initialNavigationUri, true );
 			}
 		}
 
-		public void NavigateTo( string uri, bool forceRefresh = false ) {
-			if ( navigationUri != uri || forceRefresh ) {
+		public void NavigateTo( string uri, bool forceRefresh = false )
+		{
+			if ( navigationUri != uri || forceRefresh )
+			{
 				navigationUri = uri;
 				CloseNode( hierarchy );
 
@@ -44,7 +51,8 @@ namespace DigDig2.UI.Navigation {
 				splitUri[ 0 ] = hierarchy.name;
 
 				Dictionary<string, Dictionary<string, string>> arguments = new( );
-				for ( int index = 0; index < splitUri.Count; index++ ) {
+				for ( int index = 0; index < splitUri.Count; index++ )
+				{
 					string uriPart = splitUri[ index ];
 					if ( !uriPart.Contains( "?" ) ) continue;
 
@@ -58,7 +66,8 @@ namespace DigDig2.UI.Navigation {
 						splitArguments.Add( splitUriPart[ 1 ] );
 
 					Dictionary<string, string> argumentValues = new( );
-					foreach ( string combinedArgument in splitArguments ) {
+					foreach ( string combinedArgument in splitArguments )
+					{
 						var splitArgument = combinedArgument.Split( "=" ).ToList( );
 						argumentValues.Add( splitArgument[ 0 ], splitArgument[ 1 ] );
 					}
@@ -73,7 +82,8 @@ namespace DigDig2.UI.Navigation {
 			}
 		}
 
-		public void NavigateBack( ) {
+		public void NavigateBack( )
+		{
 			if ( navigationUri == "/" ) return;
 
 			var splitUri = navigationUri.Split( "/" ).ToList( );
@@ -83,9 +93,11 @@ namespace DigDig2.UI.Navigation {
 			NavigateTo( newUri );
 		}
 
-		private void CloseNode( NavigationNode node ) {
+		private void CloseNode( NavigationNode node )
+		{
 			if ( node.inputElement != null ) node.inputElement.enabledSelf = false;
-			if ( node.element != null ) {
+			if ( node.element != null )
+			{
 				node.element.AddToClassList( closedElementClass );
 				if ( node.element.style.display != DisplayStyle.None ) StartCoroutine( HideDisplay( node ) );
 			}
@@ -95,17 +107,22 @@ namespace DigDig2.UI.Navigation {
 			foreach ( NavigationNode child in node.children ) { CloseNode( child ); }
 		}
 
-		private void OpenNode( NavigationNode node, List<string> splitUri, Dictionary<string, Dictionary<string, string>> arguments, int splitIndex = 0 ) {
+		private void OpenNode( NavigationNode node, List<string> splitUri, Dictionary<string, Dictionary<string, string>> arguments, int splitIndex = 0 )
+		{
 			if ( splitIndex >= splitUri.Count ) return;
 
-			if ( node.name == splitUri[ splitIndex ] ) {
-				if ( node.element != null ) {
+			if ( node.name == splitUri[ splitIndex ] )
+			{
+				if ( node.element != null )
+				{
 					node.element.RemoveFromClassList( closedElementClass );
 					node.element.style.display = DisplayStyle.Flex;
 				}
 
-				if ( splitIndex >= splitUri.Count - 1 ) {
-					if ( !node.openable ) {
+				if ( splitIndex >= splitUri.Count - 1 )
+				{
+					if ( !node.openable )
+					{
 						NavigateBack( );
 						return;
 					}
@@ -119,17 +136,21 @@ namespace DigDig2.UI.Navigation {
 					openedEvent.target = node.element;
 					node.element?.SendEvent( openedEvent );
 
-					if ( node.focusElement != null ) {
-						if ( !node.focusElement.canGrabFocus ) {
+					if ( node.focusElement != null )
+					{
+						if ( !node.focusElement.canGrabFocus )
+						{
 							Debug.LogError( $"{node.focusElement} was selected as the focusElement but it's not focusable!" );
 							return;
 						}
 
 						node.focusElement.Focus( );
 					}
-				} else {
+				} else
+				{
 					if ( node.inputElement != null ) node.inputElement.enabledSelf = false;
-					if ( node.element != null ) {
+					if ( node.element != null )
+					{
 						node.element.AddToClassList( descendantOpenElementClass );
 
 						var descendantOpenedEvent = new NavigatorDescendantOpenedEvent( );
@@ -147,14 +168,16 @@ namespace DigDig2.UI.Navigation {
 			}
 		}
 
-		private IEnumerator HideDisplay( NavigationNode node ) {
+		private IEnumerator HideDisplay( NavigationNode node )
+		{
 			yield return new WaitForSecondsRealtime( node.closeDuration );
 
 			if ( node.element != null && node.element.ClassListContains( closedElementClass ) ) node.element.style.display = DisplayStyle.None;
 		}
 	}
 
-	public class NavigationNode {
+	public class NavigationNode
+	{
 		public readonly List<NavigationNode> children;
 		public readonly float closeDuration;
 		public readonly VisualElement element;
@@ -171,7 +194,8 @@ namespace DigDig2.UI.Navigation {
 			VisualElement inputElement = null,
 			bool openable = true,
 			List<NavigationNode> children = null
-		) {
+		)
+		{
 			this.name = name;
 			this.element = element;
 			this.inputElement = inputElement;

@@ -1,7 +1,9 @@
 using UnityEngine;
 
-namespace DigDig2.CinemaCamera.CameraEffectors {
-	public class LockTargetInZoneEffector : TriggerZoneCameraEffectorBase {
+namespace DigDig2.CinemaCamera.CameraEffectors
+{
+	public class LockTargetInZoneEffector : TriggerZoneCameraEffectorBase
+	{
 		[SerializeField] private Transform targetTransform;
 		[SerializeField] private float targetFrustumSize = 10f;
 
@@ -9,7 +11,8 @@ namespace DigDig2.CinemaCamera.CameraEffectors {
 
 		protected override void OnZoneExit( ) { }
 
-		protected override void WhileActiveUpdate( ) {
+		protected override void WhileActiveUpdate( )
+		{
 			if ( !targetTransform ) return;
 
 			position = targetTransform.position;

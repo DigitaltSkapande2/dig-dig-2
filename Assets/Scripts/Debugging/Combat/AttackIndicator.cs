@@ -2,13 +2,16 @@ using DigDig2.Combat;
 
 using UnityEngine;
 
-namespace DigDig2.Debugging.Combat {
+namespace DigDig2.Debugging.Combat
+{
 	[RequireComponent( typeof( MeshRenderer ), typeof( Attackable ) )]
-	public class AttackIndicator : MonoBehaviour {
+	public class AttackIndicator : MonoBehaviour
+	{
 		private Attackable attackable;
 		private MeshRenderer meshRenderer;
 
-		private void Awake( ) {
+		private void Awake( )
+		{
 			meshRenderer = GetComponent<MeshRenderer>( );
 
 			attackable = GetComponent<Attackable>( );

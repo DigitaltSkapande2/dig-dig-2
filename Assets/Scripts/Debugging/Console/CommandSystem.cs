@@ -6,13 +6,16 @@ using Cysharp.Threading.Tasks;
 
 using UnityEngine;
 
-namespace DigDig2.Debugging.Console {
-	public class CommandSystem {
+namespace DigDig2.Debugging.Console
+{
+	public class CommandSystem
+	{
 		private readonly IEnumerable<ConsoleCommand> commands;
 
 		public CommandSystem( IEnumerable<ConsoleCommand> commands ) { this.commands = commands; }
 
-		internal List<string> GetSuggestions( CommandDescriptor inputCommand ) {
+		internal List<string> GetSuggestions( CommandDescriptor inputCommand )
+		{
 			if ( inputCommand.HasArguments && inputCommand.args[ ^1 ] != null ) // if the command word is provided
 			{
 				Debug.Log( $"CommandSystem: Getting suggestions for command '{inputCommand.commandWord}' with arguments: '{string.Join( ", ", inputCommand.args )}'" );
@@ -37,22 +40,26 @@ namespace DigDig2.Debugging.Console {
 				;
 		}
 
-		private List<string> GetCommandSuggestions( CommandDescriptor inputCommand ) {
+		private List<string> GetCommandSuggestions( CommandDescriptor inputCommand )
+		{
 			ConsoleCommand command = commands.FirstOrDefault( c => c.CommandWord.Equals( inputCommand.commandWord, StringComparison.OrdinalIgnoreCase ) );
 
 			return command ? command.GetSuggestions( inputCommand.args ) : null;
 		}
 
-		public async UniTask<CommandResultContext> ProcessCommand( CommandDescriptor inputCommand ) {
+		public async UniTask<CommandResultContext> ProcessCommand( CommandDescriptor inputCommand )
+		{
 			ConsoleCommand command = commands.FirstOrDefault( c => c.CommandWord.Equals( inputCommand.commandWord, StringComparison.OrdinalIgnoreCase ) );
 			if ( command != null ) return await command.Process( inputCommand.args );
 
 			return new( CommandResultContext.Type.Error, $"Command '{inputCommand.commandWord}' not found." );
 		}
 
-		private List<string> FuzzySort( IEnumerable<string> items, string input = "" ) {
+		private List<string> FuzzySort( IEnumerable<string> items, string input = "" )
+		{
 			return items
-				.OrderBy( item => {
+				.OrderBy( item =>
+					{
 						if ( item.Equals( input, StringComparison.OrdinalIgnoreCase ) ) return 0; // exact match
 						if ( item.StartsWith( input, StringComparison.OrdinalIgnoreCase ) ) return 1; // prefix match
 						if ( item.IndexOf( input, StringComparison.OrdinalIgnoreCase ) >= 0 ) return 2; // substring match
@@ -65,7 +72,8 @@ namespace DigDig2.Debugging.Console {
 				.ToList( );
 		}
 
-		private static int LevenshteinDistance( string source, string target ) {
+		private static int LevenshteinDistance( string source, string target )
+		{
 			if ( source == null ) throw new ArgumentNullException( nameof( source ) );
 			if ( target == null ) throw new ArgumentNullException( nameof( target ) );
 
@@ -81,8 +89,10 @@ namespace DigDig2.Debugging.Console {
 
 			for ( int j = 0; j <= targetLength; distance[ 0, j ] = j++ ) { }
 
-			for ( int i = 1; i <= sourceLength; i++ ) {
-				for ( int j = 1; j <= targetLength; j++ ) {
+			for ( int i = 1; i <= sourceLength; i++ )
+			{
+				for ( int j = 1; j <= targetLength; j++ )
+				{
 					int cost = target[ j - 1 ] == source[ i - 1 ] ? 0 : 1;
 					distance[ i, j ] = Math.Min(
 						Math.Min( distance[ i - 1, j ] + 1, distance[ i, j - 1 ] + 1 ),
@@ -95,20 +105,25 @@ namespace DigDig2.Debugging.Console {
 		}
 	}
 
-	public readonly struct CommandDescriptor {
+	public readonly struct CommandDescriptor
+	{
 		public readonly string commandWord;
 		public readonly string[ ] args;
 
-		public bool HasArguments {
+		public bool HasArguments
+		{
 			get => args != null && args.Length > 0;
 		}
 
-		public bool IsValid {
+		public bool IsValid
+		{
 			get => !string.IsNullOrWhiteSpace( commandWord );
 		}
 
-		public CommandDescriptor( string commandString ) {
-			if ( string.IsNullOrWhiteSpace( commandString ) ) {
+		public CommandDescriptor( string commandString )
+		{
+			if ( string.IsNullOrWhiteSpace( commandString ) )
+			{
 				commandWord = string.Empty;
 				args = null;
 				Debug.LogWarning( "CommandDescriptor: Trying to create CommandDescriptor of null or empty commandString." );
@@ -116,7 +131,8 @@ namespace DigDig2.Debugging.Console {
 			}
 
 			string[ ] parts = commandString.Split(
-				new[ ] {
+				new[ ]
+				{
 					' '
 				},
 				StringSplitOptions.None
@@ -127,9 +143,12 @@ namespace DigDig2.Debugging.Console {
 			args = parts.Skip( 1 ).ToArray( );
 		}
 
-		public string[ ] GetFullCommand( ) {
-			if ( args == null || args.Length == 0 ) {
-				return new[ ] {
+		public string[ ] GetFullCommand( )
+		{
+			if ( args == null || args.Length == 0 )
+			{
+				return new[ ]
+				{
 					commandWord
 				};
 			}
@@ -147,7 +166,8 @@ namespace DigDig2.Debugging.Console {
 			return fullCommand;
 		}
 
-		public override string ToString( ) {
+		public override string ToString( )
+		{
 			if ( args == null || args.Length == 0 ) return commandWord;
 
 			return $"{commandWord} {string.Join( " ", args )}";
@@ -158,27 +178,32 @@ namespace DigDig2.Debugging.Console {
 		public static implicit operator string( CommandDescriptor commandDescriptor ) => commandDescriptor.ToString( );
 	}
 
-	public struct CommandResultContext {
+	public struct CommandResultContext
+	{
 		public Type type;
 		public enum Type { Success, Error, Warning }
 
 		public string message;
 
-		public CommandResultContext( Type type, string message ) {
+		public CommandResultContext( Type type, string message )
+		{
 			this.type = type;
 			this.message = message;
 		}
 
-		public CommandResultContext( Type type ) {
+		public CommandResultContext( Type type )
+		{
 			this.type = Type.Success;
 			message = string.Empty;
 		}
 
-		public static CommandResultContext Success {
+		public static CommandResultContext Success
+		{
 			get => new( Type.Success );
 		}
 
-		public static CommandResultContext InvalidArguments {
+		public static CommandResultContext InvalidArguments
+		{
 			get => new( Type.Error, "Invalid arguments provided." );
 		}
 	}

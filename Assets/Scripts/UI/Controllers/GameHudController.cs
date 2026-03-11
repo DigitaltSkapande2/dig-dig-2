@@ -8,9 +8,11 @@ using DigDig2.Game;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace DigDig2.UI.Controllers {
+namespace DigDig2.UI.Controllers
+{
 	[RequireComponent( typeof( UIDocument ) )]
-	public class GameHudController : MonoBehaviour {
+	public class GameHudController : MonoBehaviour
+	{
 		[SerializeField] private float focusTargetIndicatorRotationSpeed = 10f;
 
 		[SerializeField] private List<Texture2D> healthBarTextures = new( );
@@ -31,7 +33,8 @@ namespace DigDig2.UI.Controllers {
 
 		private void Awake( ) { uiDocument = GetComponent<UIDocument>( ); }
 
-		private void Start( ) {
+		private void Start( )
+		{
 			characterIndicatorContainer = uiDocument.rootVisualElement.Query<VisualElement>( "characterIndicatorContainer" );
 			maxCharacterIndicator = characterIndicatorContainer.Query<VisualElement>( "max" );
 			miniCharacterIndicator = characterIndicatorContainer.Query<VisualElement>( "mini" );
@@ -45,7 +48,8 @@ namespace DigDig2.UI.Controllers {
 			SetupCharacterBindings( );
 		}
 
-		private void Update( ) {
+		private void Update( )
+		{
 			focusTargetIndicatorImage.style.rotate = new(
 				new Rotate(
 					focusTargetIndicatorImage.resolvedStyle.rotate.angle.value +
@@ -54,18 +58,22 @@ namespace DigDig2.UI.Controllers {
 			);
 		}
 
-		private async void SetupCharacterBindings( ) {
+		private async void SetupCharacterBindings( )
+		{
 			GameManager.Instance.characterSwitched.AddListener( UpdateCharacter );
 
 			await UniTask.WaitUntil( ( ) => GameManager.Instance.PlayerOneCharacter );
 			UpdateCharacter( GameManager.Instance.CurrentCharacter, GameManager.Instance.PlayerOneCharacter );
 		}
 
-		private void UpdateCharacter( CharacterType characterType, GameObject characterObject ) {
-			if ( characterType == CharacterType.Max ) {
+		private void UpdateCharacter( CharacterType characterType, GameObject characterObject )
+		{
+			if ( characterType == CharacterType.Max )
+			{
 				miniCharacterIndicator.RemoveFromClassList( "selected" );
 				maxCharacterIndicator.AddToClassList( "selected" );
-			} else {
+			} else
+			{
 				maxCharacterIndicator.RemoveFromClassList( "selected" );
 				miniCharacterIndicator.AddToClassList( "selected" );
 			}
@@ -76,12 +84,14 @@ namespace DigDig2.UI.Controllers {
 			UpdateHealthBar( healthComponent.HealthPoints );
 		}
 
-		private void UpdateHealthBar( int health ) {
+		private void UpdateHealthBar( int health )
+		{
 			Debug.Log( healthBarTextures[ health ] );
 			healthBarImage.style.backgroundImage = new( healthBarTextures[ health ] );
 		}
 
-		public void UpdateFocusTarget( bool inUse, Vector3 worldPosition ) {
+		public void UpdateFocusTarget( bool inUse, Vector3 worldPosition )
+		{
 			focusTargetIndicator.style.display = new( inUse ? DisplayStyle.Flex : DisplayStyle.None );
 			focusTargetIndicator.style.opacity = new( inUse ? 1f : 0f );
 			focusTargetIndicator.style.scale = new( new Scale( inUse ? new( 1f, 1f ) : new Vector2( 2f, 2f ) ) );

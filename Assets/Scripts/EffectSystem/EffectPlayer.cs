@@ -6,9 +6,11 @@ using UnityEditor;
 
 using UnityEngine;
 
-namespace DigDig2.EffectSystem {
+namespace DigDig2.EffectSystem
+{
 	[Serializable]
-	public struct EffectPlayer {
+	public struct EffectPlayer
+	{
 		public bool spawnPrefab;
 		public SpawnPrefabEffectData spawnPrefabEffectData;
 		public bool screenShake;
@@ -22,12 +24,15 @@ namespace DigDig2.EffectSystem {
 		public bool greyscale;
 		public CumulativeEffectInstanceData greyscaleEffectData;
 
-		public void Play( Vector3 position = default, Quaternion rotation = default, Vector3 scale = default, Transform parent = null ) {
+		public void Play( Vector3 position = default, Quaternion rotation = default, Vector3 scale = default, Transform parent = null )
+		{
 			if ( scale == Vector3.zero ) scale = Vector3.one;
 
-			if ( spawnPrefab ) {
+			if ( spawnPrefab )
+			{
 				SpawnPrefabEffect spawnPrefabEffect = EffectCore.Instance.spawnPrefabEffect;
-				if ( spawnPrefabEffect ) {
+				if ( spawnPrefabEffect )
+				{
 					SpawnPrefabEffectData effectInstance = spawnPrefabEffectData;
 					effectInstance.position = position;
 					effectInstance.rotation = rotation;
@@ -37,27 +42,32 @@ namespace DigDig2.EffectSystem {
 				}
 			}
 
-			if ( screenShake ) {
+			if ( screenShake )
+			{
 				ScreenShakeEffect screenShakeEffect = EffectCore.Instance.screenShakeEffect;
 				if ( screenShakeEffect ) screenShakeEffect.PlayEffectInstance( screenShakeEffectData );
 			}
 
-			if ( cameraZoom ) {
+			if ( cameraZoom )
+			{
 				CameraZoomEffect cameraZoomEffect = EffectCore.Instance.cameraZoomEffect;
 				if ( cameraZoomEffect ) cameraZoomEffect.PlayEffectInstance( cameraZoomEffectData );
 			}
 
-			if ( timeSlow ) {
+			if ( timeSlow )
+			{
 				TimeSlowEffect timeSlowEffect = EffectCore.Instance.timeSlowEffect;
 				if ( timeSlowEffect ) timeSlowEffect.PlayEffectInstance( timeSlowEffectData );
 			}
 
-			if ( vignettePulse ) {
+			if ( vignettePulse )
+			{
 				VignettePulseEffect vignettePulseEffect = EffectCore.Instance.vignettePulseEffect;
 				if ( vignettePulseEffect ) vignettePulseEffect.PlayEffectInstance( vignettePulseEffectData );
 			}
 
-			if ( greyscale ) {
+			if ( greyscale )
+			{
 				TimeSlowEffect greyscaleEffect = EffectCore.Instance.timeSlowEffect;
 				if ( greyscaleEffect ) greyscaleEffect.PlayEffectInstance( greyscaleEffectData );
 			}
@@ -68,11 +78,13 @@ namespace DigDig2.EffectSystem {
 
 	#if UNITY_EDITOR
 	[CustomPropertyDrawer( typeof( EffectPlayer ) )]
-	public class EffectPlayerDrawer : PropertyDrawer {
+	public class EffectPlayerDrawer : PropertyDrawer
+	{
 		private readonly Color backPanelColor = new( 0.12f, 0.12f, 0.12f, 0.20f );
 		private readonly Color subPanelColor = new( 0.12f, 0.12f, 0.12f, 0.35f );
 
-		public override void OnGUI( Rect position, SerializedProperty property, GUIContent label ) {
+		public override void OnGUI( Rect position, SerializedProperty property, GUIContent label )
+		{
 			EditorGUI.BeginProperty( position, label, property );
 
 			// Draw a background box for the whole EffectPlayer
@@ -83,7 +95,8 @@ namespace DigDig2.EffectSystem {
 			var headerRect = new Rect( position.x + 4, position.y + 4, position.width - 8, EditorGUIUtility.singleLineHeight );
 			property.isExpanded = EditorGUI.Foldout( headerRect, property.isExpanded, label, true );
 
-			if ( !property.isExpanded ) {
+			if ( !property.isExpanded )
+			{
 				EditorGUI.EndProperty( );
 				return;
 			}
@@ -95,14 +108,16 @@ namespace DigDig2.EffectSystem {
 			float spacing = 2f;
 
 			// Helper to draw a boxed section for each effect
-			void DrawEffectSection( string title, SerializedProperty enabledProp, SerializedProperty dataProp, Color bg ) {
+			void DrawEffectSection( string title, SerializedProperty enabledProp, SerializedProperty dataProp, Color bg )
+			{
 				var sectionRect = new Rect( position.x + 6, y, position.width - 12, lineHeight );
 
 				// title + toggle
 				EditorGUI.PropertyField( sectionRect, enabledProp, new GUIContent( title ) );
 				y += lineHeight + spacing;
 
-				if ( enabledProp.boolValue ) {
+				if ( enabledProp.boolValue )
+				{
 					float dataHeight = EditorGUI.GetPropertyHeight( dataProp, true );
 					var dataRect = new Rect( position.x + 12, y, position.width - 24, dataHeight );
 
@@ -147,7 +162,8 @@ namespace DigDig2.EffectSystem {
 			// Preview button
 			var previewRect = new Rect( position.x + 8, y, position.width - 16, lineHeight + 4 );
 			GUI.enabled = Application.isPlaying && EffectCore.Instance;
-			if ( GUI.Button( previewRect, "Preview Selected" ) ) {
+			if ( GUI.Button( previewRect, "Preview Selected" ) )
+			{
 				// Build a runtime EffectPlayer from serialized props and play it via EffectCore
 				EffectPlayer runtime = BuildRuntimeFromSerialized( property );
 				runtime.Play( );
@@ -160,7 +176,8 @@ namespace DigDig2.EffectSystem {
 			EditorGUI.EndProperty( );
 		}
 
-		public override float GetPropertyHeight( SerializedProperty property, GUIContent label ) {
+		public override float GetPropertyHeight( SerializedProperty property, GUIContent label )
+		{
 			float height = EditorGUIUtility.singleLineHeight + 2f; // foldout
 
 			if ( !property.isExpanded ) return height;
@@ -213,14 +230,17 @@ namespace DigDig2.EffectSystem {
 		}
 
 		// Helper: build an EffectPlayer struct from the serialized property values
-		private static EffectPlayer BuildRuntimeFromSerialized( SerializedProperty prop ) {
-			var ep = new EffectPlayer {
+		private static EffectPlayer BuildRuntimeFromSerialized( SerializedProperty prop )
+		{
+			var ep = new EffectPlayer
+			{
 				spawnPrefab = prop.FindPropertyRelative( "spawnPrefab" ).boolValue
 			};
 
 			var sp = new SpawnPrefabEffectData( );
 			SerializedProperty spProp = prop.FindPropertyRelative( "spawnPrefabEffectData" );
-			if ( spProp != null ) {
+			if ( spProp != null )
+			{
 				// sp.prefabToSpawn = spProp.FindPropertyRelative("prefabToSpawn").objectReferenceValue.GetComponent<SpawnPrefabEffectInstance>().prefabToSpawn;
 			}
 
@@ -229,7 +249,8 @@ namespace DigDig2.EffectSystem {
 			ep.screenShake = prop.FindPropertyRelative( "screenShake" ).boolValue;
 			var ss = new CumulativeEffectInstanceData( );
 			SerializedProperty ssProp = prop.FindPropertyRelative( "screenShakeEffectData" );
-			if ( ssProp != null ) {
+			if ( ssProp != null )
+			{
 				ss.intensityCurve = ssProp.FindPropertyRelative( "intensityCurve" ).animationCurveValue;
 				ss.duration = ssProp.FindPropertyRelative( "duration" ).floatValue;
 				ss.intensity = ssProp.FindPropertyRelative( "intensity" ).floatValue;
@@ -240,7 +261,8 @@ namespace DigDig2.EffectSystem {
 			ep.cameraZoom = prop.FindPropertyRelative( "cameraZoom" ).boolValue;
 			var cz = new CumulativeEffectInstanceData( );
 			SerializedProperty czProp = prop.FindPropertyRelative( "cameraZoomEffectData" );
-			if ( czProp != null ) {
+			if ( czProp != null )
+			{
 				cz.intensityCurve = czProp.FindPropertyRelative( "intensityCurve" ).animationCurveValue;
 				cz.duration = czProp.FindPropertyRelative( "duration" ).floatValue;
 				cz.intensity = czProp.FindPropertyRelative( "intensity" ).floatValue;
@@ -251,7 +273,8 @@ namespace DigDig2.EffectSystem {
 			ep.timeSlow = prop.FindPropertyRelative( "timeSlow" ).boolValue;
 			var ts = new CumulativeEffectInstanceData( );
 			SerializedProperty tsProp = prop.FindPropertyRelative( "timeSlowEffectData" );
-			if ( tsProp != null ) {
+			if ( tsProp != null )
+			{
 				ts.intensityCurve = tsProp.FindPropertyRelative( "intensityCurve" ).animationCurveValue;
 				ts.duration = tsProp.FindPropertyRelative( "duration" ).floatValue;
 				ts.intensity = tsProp.FindPropertyRelative( "intensity" ).floatValue;
@@ -262,7 +285,8 @@ namespace DigDig2.EffectSystem {
 			ep.vignettePulse = prop.FindPropertyRelative( "vignettePulse" ).boolValue;
 			var vp = new VignettePulseEffectInstanceData( );
 			SerializedProperty vpProp = prop.FindPropertyRelative( "vignettePulseEffectData" );
-			if ( vpProp != null ) {
+			if ( vpProp != null )
+			{
 				vp.intensityCurve = vpProp.FindPropertyRelative( "intensityCurve" ).animationCurveValue;
 				vp.duration = vpProp.FindPropertyRelative( "duration" ).floatValue;
 				vp.intensity = vpProp.FindPropertyRelative( "intensity" ).floatValue;

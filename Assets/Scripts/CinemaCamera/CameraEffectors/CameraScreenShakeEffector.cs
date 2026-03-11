@@ -1,15 +1,18 @@
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace DigDig2.CinemaCamera.CameraEffectors {
-	public class ScreenShakeEffector : CameraEffector {
+namespace DigDig2.CinemaCamera.CameraEffectors
+{
+	public class ScreenShakeEffector : CameraEffector
+	{
 		[FormerlySerializedAs( "ShakeIntensity" )] [SerializeField]
 		private float shakeIntensity;
 
 		[SerializeField] private float shakeFrequency = 5;
 		[SerializeField] private float shakeAmplitude = 5;
 
-		private void Update( ) {
+		private void Update( )
+		{
 			if ( shakeIntensity == 0f ) return;
 
 			Vector2 shakeOffset = Vector2.zero;

@@ -1,8 +1,10 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace DigDig2.Player.Interaction {
-	public class Interactable : MonoBehaviour {
+namespace DigDig2.Player.Interaction
+{
+	public class Interactable : MonoBehaviour
+	{
 		[SerializeField] private Transform interactableSource;
 
 		[Header( "Events" )]
@@ -13,7 +15,8 @@ namespace DigDig2.Player.Interaction {
 
 		private bool focused;
 
-		private void Awake( ) {
+		private void Awake( )
+		{
 			Rigidbody triggerRigidbody = gameObject.AddComponent<Rigidbody>( );
 			triggerRigidbody.isKinematic = true;
 			triggerRigidbody.freezeRotation = true;
@@ -24,7 +27,8 @@ namespace DigDig2.Player.Interaction {
 
 		public void Interact( Interactor.InteractionPhase phase = Interactor.InteractionPhase.Unknown ) { onInteract.Invoke( phase ); }
 
-		public void SetFocus( bool isFocused ) {
+		public void SetFocus( bool isFocused )
+		{
 			focused = isFocused;
 
 			if ( isFocused )

@@ -6,9 +6,11 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
 
-namespace DigDig2.Combat {
+namespace DigDig2.Combat
+{
 	[RequireComponent( typeof( Attackable ) )]
-	public class Health : MonoBehaviour {
+	public class Health : MonoBehaviour
+	{
 		[Tooltip( "Starting health and eventual cap for healing." )]
 		[SerializeField] private int maxHealthPoints = 1;
 
@@ -26,36 +28,42 @@ namespace DigDig2.Combat {
 
 		[SerializeField] public UnityEvent<int> healthChanged;
 
-		public int MaxHealthPoints {
+		public int MaxHealthPoints
+		{
 			get => maxHealthPoints;
 		}
 
-		public int HealthPoints {
+		public int HealthPoints
+		{
 			get => healthPoints;
 			set => SetHealth( value );
 		}
 
 		private void Start( ) { SetHealth( healthPoints ); }
 
-		public void Damage( int damage ) {
+		public void Damage( int damage )
+		{
 			if ( !enabled ) return;
 
 			SetHealth( healthPoints - damage );
 		}
 
-		public void Heal( int amount ) {
+		public void Heal( int amount )
+		{
 			if ( !enabled ) return;
 
 			SetHealth( healthPoints + amount );
 		}
 
-		public void SetHealth( int newHealth ) {
+		public void SetHealth( int newHealth )
+		{
 			healthPoints = Mathf.Clamp( newHealth, 0, maxHealthPoints );
 			healthChanged.Invoke( healthPoints );
 			CheckState( );
 		}
 
-		public void Kill( ) {
+		public void Kill( )
+		{
 			healthPoints = 0;
 
 			death.Invoke( );
@@ -66,7 +74,8 @@ namespace DigDig2.Combat {
 				enabled = false;
 		}
 
-		private void CheckState( ) {
+		private void CheckState( )
+		{
 			if ( healthPoints <= 0 ) Kill( );
 		}
 	}
@@ -74,8 +83,10 @@ namespace DigDig2.Combat {
 	#if UNITY_EDITOR
 
 	[CustomEditor( typeof( Health ) )]
-	public class HealthEditor : Editor {
-		public override void OnInspectorGUI( ) {
+	public class HealthEditor : Editor
+	{
+		public override void OnInspectorGUI( )
+		{
 			base.OnInspectorGUI( );
 
 			var health = (Health)target;

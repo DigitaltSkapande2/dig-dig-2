@@ -6,16 +6,20 @@ using DigDig2.Debugging.Menu;
 
 using UnityEngine;
 
-namespace DigDig2.Debugging.Console {
+namespace DigDig2.Debugging.Console
+{
 	[Debug]
-	public abstract class ConsoleCommand : ScriptableObject {
+	public abstract class ConsoleCommand : ScriptableObject
+	{
 		[SerializeField] private string commandWord = string.Empty;
 
-		public string CommandWord {
+		public string CommandWord
+		{
 			get => commandWord;
 		}
 
-		public virtual List<string> GetSuggestions( string[ ] args ) => new( ) {
+		public virtual List<string> GetSuggestions( string[ ] args ) => new( )
+		{
 			""
 		};
 

@@ -7,7 +7,8 @@ using UnityEngine;
 
 using Action = Unity.Behavior.Action;
 
-namespace DigDig2.Entity.Behavior.BehaviorActions.Visuals {
+namespace DigDig2.Entity.Behavior.BehaviorActions.Visuals
+{
 	[Serializable] [GeneratePropertyBag] [NodeDescription(
 		"WotT Look Towards",
 		"Tell the agent to look towards a point.",
@@ -15,14 +16,17 @@ namespace DigDig2.Entity.Behavior.BehaviorActions.Visuals {
 		story: "[Agent] looks towards [Point]",
 		id: "WotT_Look_Towards"
 	)]
-	public class WotTLookTowards : Action {
+	public class WotTLookTowards : Action
+	{
 		[SerializeReference] public BlackboardVariable<GameObject> Agent;
 		[SerializeReference] public BlackboardVariable<Vector3> Point;
 
 		private BehaviorAgentTranslator agentTranslatorCharacterBehaviorController;
 
-		protected override Status OnStart( ) {
-			if ( !Agent.Value ) {
+		protected override Status OnStart( )
+		{
+			if ( !Agent.Value )
+			{
 				LogFailure( "No agent assigned." );
 				return Status.Failure;
 			}

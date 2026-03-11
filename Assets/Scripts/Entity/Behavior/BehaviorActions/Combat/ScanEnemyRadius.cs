@@ -11,7 +11,8 @@ using UnityEngine;
 using Action = Unity.Behavior.Action;
 using Random = UnityEngine.Random;
 
-namespace DigDig2.Entity.Behavior.BehaviorActions.Combat {
+namespace DigDig2.Entity.Behavior.BehaviorActions.Combat
+{
 	[Serializable] [GeneratePropertyBag] [NodeDescription(
 		"WotT Scan For Enemy in Radius",
 		"Scan for enemies around the agent.",
@@ -19,7 +20,8 @@ namespace DigDig2.Entity.Behavior.BehaviorActions.Combat {
 		story: "[Agent] scans for an enemy in radius [Radius] and assigns it to [Variable]",
 		id: "WotT_Scan_Enemy_Radius"
 	)]
-	public class WotTScanEnemyRadius : Action {
+	public class WotTScanEnemyRadius : Action
+	{
 		public enum EnemyPriorityMode { Closest, Strongest, Random }
 
 		private const int MAX_RANDOM_SCAN_TRIES = 10;
@@ -32,13 +34,16 @@ namespace DigDig2.Entity.Behavior.BehaviorActions.Combat {
 
 		private BehaviorAgentTranslator mAgentTranslatorCharacterBehaviorController;
 
-		protected override Status OnStart( ) {
-			if ( Agent.Value == null ) {
+		protected override Status OnStart( )
+		{
+			if ( Agent.Value == null )
+			{
 				LogFailure( "No agent assigned." );
 				return Status.Failure;
 			}
 
-			if ( AttackableFilter.Value.Count <= 0 ) {
+			if ( AttackableFilter.Value.Count <= 0 )
+			{
 				LogFailure( "Attackable filter is empty." );
 				return Status.Failure;
 			}
@@ -47,10 +52,12 @@ namespace DigDig2.Entity.Behavior.BehaviorActions.Combat {
 
 			Collider[ ] colliders = Physics.OverlapSphere( mAgentTranslatorCharacterBehaviorController.transform.position, Radius );
 			Attackable selectedEnemy = null;
-			switch ( EnemySelectionPriorityMode.Value ) {
+			switch ( EnemySelectionPriorityMode.Value )
+			{
 				case EnemyPriorityMode.Closest:
 					float closestEnemyDistance = -1f;
-					foreach ( Collider enemyCollider in colliders ) {
+					foreach ( Collider enemyCollider in colliders )
+					{
 						Attackable enemyAttackable = enemyCollider.GetComponent<Attackable>( );
 						if ( !enemyAttackable ) continue;
 						if ( !AttackableFilter.Value.Contains( enemyAttackable.Group ) ) continue;
@@ -67,7 +74,8 @@ namespace DigDig2.Entity.Behavior.BehaviorActions.Combat {
 					return Status.Failure;
 				case EnemyPriorityMode.Random:
 					int randomScanTries = 0;
-					while ( true ) {
+					while ( true )
+					{
 						randomScanTries += 1;
 						if ( randomScanTries >= MAX_RANDOM_SCAN_TRIES ) break;
 

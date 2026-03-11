@@ -7,9 +7,11 @@ using Unity.Mathematics;
 
 using UnityEngine;
 
-namespace DigDig2.Game {
+namespace DigDig2.Game
+{
 	[RequireComponent( typeof( Attackable ), typeof( Health ) )]
-	public class Crystal : MonoBehaviour {
+	public class Crystal : MonoBehaviour
+	{
 		private const float NO_CRACK_STAGE = 0.2f;
 		private const float LIGHT_CRACK_STAGE = 0.015f;
 		private const float HEAVY_CRACK_STAGE = 0.001f;
@@ -41,15 +43,18 @@ namespace DigDig2.Game {
 
 		private Vector3 originalPos;
 
-		private void Awake( ) {
+		private void Awake( )
+		{
 			attackable = GetComponent<Attackable>( );
 			health = GetComponent<Health>( );
 
 			attackable.hit.AddListener( OnHit );
 		}
 
-		private void Start( ) {
-			if ( crystal == null ) {
+		private void Start( )
+		{
+			if ( crystal == null )
+			{
 				Debug.LogError( "Crystal has not been assigned." );
 				return;
 			}
@@ -62,23 +67,27 @@ namespace DigDig2.Game {
 			originalPos = transform.position;
 		}
 
-		private void Update( ) {
+		private void Update( )
+		{
 			HeightBob( );
 
 			shield.SetActive( hasShield );
 			health.enabled = !hasShield;
 
-			for ( int index = enemyConnections.Count - 1; index >= 0; index-- ) {
+			for ( int index = enemyConnections.Count - 1; index >= 0; index-- )
+			{
 				EnemyConnections enemyConnection = enemyConnections[ index ];
 				if ( !enemyConnection.lineDrawer && !enemyConnection.enemy ) continue;
 
-				if ( !enemyConnection.lineDrawer ) {
+				if ( !enemyConnection.lineDrawer )
+				{
 					enemyConnection.lineDrawer = Instantiate( linePrefab, transform.position, quaternion.identity, transform );
 					enemyConnection.lineComponent = enemyConnection.lineDrawer.GetComponent<CrystalLine>( );
 					enemyConnections[ index ] = enemyConnection;
 				}
 
-				if ( !enemyConnection.enemy ) {
+				if ( !enemyConnection.enemy )
+				{
 					Destroy( enemyConnection.lineDrawer );
 					enemyConnections.RemoveAt( index );
 
@@ -91,18 +100,21 @@ namespace DigDig2.Game {
 			if ( enemyConnections.Count <= 0 ) hasShield = false;
 		}
 
-		private void OnHit( ) {
+		private void OnHit( )
+		{
 			if ( hasShield ) return;
 
 			Material material = crystalMeshRenderer.material;
 
-			switch ( health.HealthPoints ) {
+			switch ( health.HealthPoints )
+			{
 				case 2: material.SetFloat( crackStage, LIGHT_CRACK_STAGE ); break;
 				case 1: material.SetFloat( crackStage, HEAVY_CRACK_STAGE ); break;
 			}
 		}
 
-		private void HeightBob( ) {
+		private void HeightBob( )
+		{
 			float sine = Mathf.Sin( Time.time * bobSpeed );
 			float offset = sine * bobStrength;
 			offset += bobStrength;
@@ -111,7 +123,8 @@ namespace DigDig2.Game {
 		}
 
 		[Serializable]
-		private struct EnemyConnections {
+		private struct EnemyConnections
+		{
 			public GameObject enemy;
 			[NonSerialized] public GameObject lineDrawer;
 			[NonSerialized] public CrystalLine lineComponent;

@@ -12,9 +12,11 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
-namespace DigDig2.UI.Controllers {
+namespace DigDig2.UI.Controllers
+{
 	[RequireComponent( typeof( UIDocument ), typeof( UserInterfaceNavigator ) )]
-	public class MainMenuController : MonoBehaviour {
+	public class MainMenuController : MonoBehaviour
+	{
 		[SerializeField] private string gameSceneName = "GameScene";
 
 		[SerializeField] private GameObject buttonHoverEffectPrefab;
@@ -53,12 +55,14 @@ namespace DigDig2.UI.Controllers {
 
 		private UIDocument uiDocument;
 
-		private void Awake( ) {
+		private void Awake( )
+		{
 			uiDocument = GetComponent<UIDocument>( );
 			navigator = GetComponent<UserInterfaceNavigator>( );
 		}
 
-		private void Start( ) {
+		private void Start( )
+		{
 			saveFiles = SaveManager.Instance.GetSaveFiles( );
 
 			uiDocument.rootVisualElement.RegisterCallback<ClickEvent>( ButtonClick, TrickleDown.TrickleDown );
@@ -87,7 +91,8 @@ namespace DigDig2.UI.Controllers {
 
 			saveFileList = saveMenu.Query<SubmittableListView>( "saveFileList" );
 			saveFileList.makeItem = ( ) => new SaveFile( );
-			saveFileList.bindItem = ( element, index ) => {
+			saveFileList.bindItem = ( element, index ) =>
+			{
 				var saveFileElement = (SaveFile)element;
 				string saveFilePath = saveFiles[ index ];
 				SaveManager.GameSave gameSave = FileSystem.ReadDataFromFile<SaveManager.GameSave>( saveFilePath );
@@ -124,19 +129,23 @@ namespace DigDig2.UI.Controllers {
 			multiplayerModeButton = hostingSelectionAnimationContainer.Query<Button>( "multiplayer" );
 			multiplayerModeButton.clicked += OnMultiplayerChosen;
 
-			saveMenu.RegisterCallback<NavigatorOpenedEvent>( evt => {
+			saveMenu.RegisterCallback<NavigatorOpenedEvent>( evt =>
+				{
 					selectedSaveFileIndex = -1;
-					for ( int index = 0; index < saveFiles.Count; index++ ) {
+					for ( int index = 0; index < saveFiles.Count; index++ )
+					{
 						var saveFileElement = (SaveFile)saveFileList.GetRootElementForIndex( index );
 						saveFileElement?.RemoveFromClassList( "selected" );
 					}
 				}
 			);
 
-			saveManagement.RegisterCallback<NavigatorOpenedEvent>( evt => {
+			saveManagement.RegisterCallback<NavigatorOpenedEvent>( evt =>
+				{
 					loadedSaveFileIndex = -1;
 					Dictionary<string, string> nodeArguments = evt.arguments[ evt.nodeName ];
-					if ( nodeArguments.TryGetValue( "index", out string nodeArgument ) ) {
+					if ( nodeArguments.TryGetValue( "index", out string nodeArgument ) )
+					{
 						int index = int.Parse( nodeArgument );
 						selectedSaveFileIndex = index;
 
@@ -153,10 +162,13 @@ namespace DigDig2.UI.Controllers {
 				}
 			);
 
-			hostingSelectionAnimationContainer.RegisterCallback<NavigatorOpenedEvent>( evt => {
+			hostingSelectionAnimationContainer.RegisterCallback<NavigatorOpenedEvent>( evt =>
+				{
 					Dictionary<string, string> nodeArguments = evt.arguments[ evt.nodeName ];
-					if ( nodeArguments.ContainsKey( "type" ) ) {
-						hostingModeSelectionType = nodeArguments[ "type" ] switch {
+					if ( nodeArguments.ContainsKey( "type" ) )
+					{
+						hostingModeSelectionType = nodeArguments[ "type" ] switch
+						{
 							"continue" => HostingModeSelectionType.ContinuedGameSave,
 							"load" => HostingModeSelectionType.LoadedGameSave,
 							"new" => HostingModeSelectionType.NewGameSave,
@@ -173,7 +185,8 @@ namespace DigDig2.UI.Controllers {
 				loadGameButton,
 				mainNavigationContainer,
 				true,
-				new( ) {
+				new( )
+				{
 					new(
 						"screenCover",
 						screenCover,
@@ -181,7 +194,8 @@ namespace DigDig2.UI.Controllers {
 						null,
 						null,
 						false,
-						new( ) {
+						new( )
+						{
 							new( "hostingSelection", hostingSelectionAnimationContainer, 0.5f, singleplayerModeButton )
 						}
 					),
@@ -192,7 +206,8 @@ namespace DigDig2.UI.Controllers {
 						saveFileList,
 						saveFileList,
 						true,
-						new( ) {
+						new( )
+						{
 							new(
 								"save",
 								saveManagement,
@@ -200,7 +215,8 @@ namespace DigDig2.UI.Controllers {
 								saveLoadButton,
 								saveManagement,
 								true,
-								new( ) {
+								new( )
+								{
 									new(
 										"screenCover",
 										screenCover,
@@ -208,7 +224,8 @@ namespace DigDig2.UI.Controllers {
 										null,
 										null,
 										false,
-										new( ) {
+										new( )
+										{
 											new( "hostingSelection", hostingSelectionAnimationContainer, 0.5f, singleplayerModeButton )
 										}
 									)
@@ -227,11 +244,13 @@ namespace DigDig2.UI.Controllers {
 
 		private void PlaySoundEffect( GameObject effectPrefab ) { Destroy( Instantiate( effectPrefab, Vector3.zero, Quaternion.identity, transform ), 10f ); }
 
-		private void SelectListViewSelectedSaveFile( ) {
+		private void SelectListViewSelectedSaveFile( )
+		{
 			if ( selectedSaveFileIndex < 0 && loadedSaveFileIndex < 0 && saveFileList.selectedIndex >= 0 ) navigator.NavigateTo( $"/loadGame/save?index={saveFileList.selectedIndex}" );
 		}
 
-		private void LoadSelectedSaveFile( ) {
+		private void LoadSelectedSaveFile( )
+		{
 			Debug.Log( selectedSaveFileIndex );
 			if ( selectedSaveFileIndex < 0 ) return;
 
@@ -239,11 +258,14 @@ namespace DigDig2.UI.Controllers {
 			navigator.NavigateTo( $"/loadGame/save?index={loadedSaveFileIndex}/screenCover/hostingSelection?type=load" );
 		}
 
-		private void OnSingleplayerChosen( ) {
-			switch ( hostingModeSelectionType ) {
+		private void OnSingleplayerChosen( )
+		{
+			switch ( hostingModeSelectionType )
+			{
 				case HostingModeSelectionType.ContinuedGameSave: Debug.LogWarning( "Continuing not implemented yet!" ); break;
 				case HostingModeSelectionType.LoadedGameSave:
-					if ( loadedSaveFileIndex >= 0 ) {
+					if ( loadedSaveFileIndex >= 0 )
+					{
 						string saveFilePath = saveFiles[ loadedSaveFileIndex ];
 						SaveManager.GameSave gameSave = FileSystem.ReadDataFromFile<SaveManager.GameSave>( saveFilePath );
 						SaveManager.Instance.LoadSave( gameSave );
@@ -261,13 +283,16 @@ namespace DigDig2.UI.Controllers {
 			}
 		}
 
-		private void OnMultiplayerChosen( ) {
+		private void OnMultiplayerChosen( )
+		{
 			Debug.Log( "MULTIPLAYER CHOSEN" );
 
-			switch ( hostingModeSelectionType ) {
+			switch ( hostingModeSelectionType )
+			{
 				case HostingModeSelectionType.ContinuedGameSave: Debug.LogWarning( "Continuing not implemented yet!" ); break;
 				case HostingModeSelectionType.LoadedGameSave:
-					if ( loadedSaveFileIndex >= 0 ) {
+					if ( loadedSaveFileIndex >= 0 )
+					{
 						string saveFilePath = saveFiles[ loadedSaveFileIndex ];
 						SaveManager.GameSave gameSave = FileSystem.ReadDataFromFile<SaveManager.GameSave>( saveFilePath );
 						SaveManager.Instance.LoadSave( gameSave );
@@ -301,7 +326,8 @@ namespace DigDig2.UI.Controllers {
 
 		private void OnSettings( ) { navigator.NavigateTo( "/settings" ); }
 
-		private void OnQuit( ) {
+		private void OnQuit( )
+		{
 			#if UNITY_EDITOR
 			EditorApplication.isPlaying = false;
 			#endif
@@ -310,7 +336,8 @@ namespace DigDig2.UI.Controllers {
 			#endif
 		}
 
-		private enum HostingModeSelectionType {
+		private enum HostingModeSelectionType
+		{
 			None,
 			ContinuedGameSave,
 			LoadedGameSave,

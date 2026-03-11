@@ -3,8 +3,10 @@ using System.Linq;
 
 using UnityEngine;
 
-namespace DigDig2.CinemaCamera {
-	public class CameraEffector : MonoBehaviour {
+namespace DigDig2.CinemaCamera
+{
+	public class CameraEffector : MonoBehaviour
+	{
 		protected void OnEnable( ) { AddCameraEffector( this ); }
 
 		protected void OnDisable( ) { RemoveCameraEffector( this ); }
@@ -19,9 +21,11 @@ namespace DigDig2.CinemaCamera {
 		// -- Instance Fields -- //
 		[SerializeField] private int priorityLevel;
 
-		public int PriorityLevel {
+		public int PriorityLevel
+		{
 			get => priorityLevel;
-			set {
+			set
+			{
 				priorityLevel = value;
 
 				ReCompileEffectiveEffectors( );
@@ -33,9 +37,11 @@ namespace DigDig2.CinemaCamera {
 		[Header( "Debug Visibility" )]
 		[SerializeField] private bool isActive = true;
 
-		public bool IsActive {
+		public bool IsActive
+		{
 			get => isActive;
-			set {
+			set
+			{
 				if ( value == isActive ) return;
 
 				isActive = value;
@@ -55,17 +61,20 @@ namespace DigDig2.CinemaCamera {
 
 		#region Static Methods
 
-		public static void AddCameraEffector( CameraEffector effector ) {
+		public static void AddCameraEffector( CameraEffector effector )
+		{
 			allCameraEffectors.Add( effector );
 			ReCompileEffectiveEffectors( );
 		}
 
-		public static void RemoveCameraEffector( CameraEffector effector ) {
+		public static void RemoveCameraEffector( CameraEffector effector )
+		{
 			allCameraEffectors.Remove( effector );
 			ReCompileEffectiveEffectors( );
 		}
 
-		public static void ReCompileEffectiveEffectors( ) {
+		public static void ReCompileEffectiveEffectors( )
+		{
 			// Find the highest priority level among effectors with any override
 			int highestPriority = allCameraEffectors
 				.Where( e => e.IsActive && e.overridesLowerPriority )

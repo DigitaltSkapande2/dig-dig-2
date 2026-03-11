@@ -7,16 +7,20 @@ using DigDig2.SaveSystem;
 
 using UnityEngine;
 
-namespace DigDig2.Debugging.Console.Commands {
+namespace DigDig2.Debugging.Console.Commands
+{
 	[CreateAssetMenu( fileName = "ManageSaves", menuName = "Developer Console/Commands/Manage Saves" )]
-	public class ManageSaves : ConsoleCommand {
+	public class ManageSaves : ConsoleCommand
+	{
 		[SerializeField] private ManagementType managementType;
 
-		public override async UniTask<CommandResultContext> Process( string[ ] args ) {
+		public override async UniTask<CommandResultContext> Process( string[ ] args )
+		{
 			if ( args.Length < 1 ) return CommandResultContext.InvalidArguments;
 
 			bool success = false;
-			switch ( managementType ) {
+			switch ( managementType )
+			{
 				case ManagementType.Save:
 					SaveManager.Instance.SaveAllAndWriteToFile( args[ 0 ] );
 					success = true;

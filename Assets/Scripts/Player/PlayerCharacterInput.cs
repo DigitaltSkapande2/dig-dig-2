@@ -6,9 +6,11 @@ using DigDig2.Player.Interaction;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace DigDig2.Player {
+namespace DigDig2.Player
+{
 	[RequireComponent( typeof( EntityCharacterController ), typeof( SingleplayerCharacterSwitcher ) )]
-	public class PlayerCharacterInput : MonoBehaviour, ProjectWideInputActions.IPlayerActions {
+	public class PlayerCharacterInput : MonoBehaviour, ProjectWideInputActions.IPlayerActions
+	{
 		// Character Switching
 		private SingleplayerCharacterSwitcher characterSwitching;
 
@@ -28,15 +30,18 @@ namespace DigDig2.Player {
 
 		public bool InputEnabled { get; private set; }
 
-		private void Awake( ) {
+		private void Awake( )
+		{
 			entityCharacterController = GetComponent<EntityCharacterController>( );
 			characterSwitching = GetComponent<SingleplayerCharacterSwitcher>( );
 			interactor = GetComponentInChildren<Interactor>( );
 		}
 
-		private void Start( ) {
+		private void Start( )
+		{
 			if ( !GameManager.Instance.Paused ) EnableInput( );
-			GameManager.Instance.pauseStateChanged.AddListener( isPaused => {
+			GameManager.Instance.pauseStateChanged.AddListener( isPaused =>
+				{
 					if ( isPaused )
 						DisableInput( );
 					else
@@ -48,17 +53,20 @@ namespace DigDig2.Player {
 			hasStarted = true;
 		}
 
-		private void Update( ) {
+		private void Update( )
+		{
 			if ( !InputEnabled ) entityCharacterController.inputMoveVector = Vector3.zero;
 
-			if ( mainCamera ) {
+			if ( mainCamera )
+			{
 				Vector3 rotatedInputMoveVector = Quaternion.Euler( 0f, GameCamera.Instance.mainCamera.transform.rotation.eulerAngles.y, 0f ) * new Vector3( inputMoveVector.x, 0f, inputMoveVector.y );
 				entityCharacterController.inputMoveVector = rotatedInputMoveVector;
 			} else
 				mainCamera = GameCamera.Instance.mainCamera;
 		}
 
-		private void OnEnable( ) {
+		private void OnEnable( )
+		{
 			if ( hasStarted ) EnableInput( );
 		}
 
@@ -66,13 +74,15 @@ namespace DigDig2.Player {
 
 		#region Input Setup
 
-		public void EnableInput( ) {
+		public void EnableInput( )
+		{
 			playerActions = InputManager.Instance.inputActions.Player;
 			playerActions.SetCallbacks( this );
 			InputEnabled = true;
 		}
 
-		private void DisableInput( ) {
+		private void DisableInput( )
+		{
 			playerActions.RemoveCallbacks( this );
 			InputEnabled = false;
 		}
@@ -83,19 +93,23 @@ namespace DigDig2.Player {
 
 		public void OnMove( InputAction.CallbackContext context ) { inputMoveVector = context.ReadValue<Vector2>( ); }
 
-		public void OnInteract( InputAction.CallbackContext context ) {
+		public void OnInteract( InputAction.CallbackContext context )
+		{
 			if ( interactor ) interactor.SendInteraction( context.phase );
 		}
 
-		public void OnSwitchCharacter( InputAction.CallbackContext context ) {
+		public void OnSwitchCharacter( InputAction.CallbackContext context )
+		{
 			if ( context.performed && characterSwitching != null ) characterSwitching.SwitchCharacter( );
 		}
 
-		public void OnDash( InputAction.CallbackContext context ) {
+		public void OnDash( InputAction.CallbackContext context )
+		{
 			if ( context.performed ) entityCharacterController.Dash( );
 		}
 
-		public void OnPause( InputAction.CallbackContext context ) {
+		public void OnPause( InputAction.CallbackContext context )
+		{
 			if ( context.performed ) GameManager.Instance.Pause( );
 		}
 

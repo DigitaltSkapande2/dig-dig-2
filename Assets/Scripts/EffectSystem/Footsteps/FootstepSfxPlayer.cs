@@ -7,16 +7,19 @@ using UnityEngine.Serialization;
 
 using Random = UnityEngine.Random;
 
-namespace DigDig2.EffectSystem.Footsteps {
+namespace DigDig2.EffectSystem.Footsteps
+{
 	[Serializable]
-	public struct FootstepMaterialOverride {
+	public struct FootstepMaterialOverride
+	{
 		public Material material;
 
 		[FormerlySerializedAs( "footstepSFXPrefab" )]
 		public List<GameObject> footstepSfxPrefab;
 	}
 
-	public class FootstepSfxPlayer : MonoBehaviour {
+	public class FootstepSfxPlayer : MonoBehaviour
+	{
 		private const bool IS_ACTIVE = true;
 
 		[FormerlySerializedAs( "EffectPrefab" )] [SerializeField]
@@ -30,21 +33,26 @@ namespace DigDig2.EffectSystem.Footsteps {
 		[SerializeField] private FootstepMaterialOverride[ ] footstepMaterialOverrides;
 
 		// erm this is not used :3 should it be?
-		public void OnFootStepEvent( ) {
+		public void OnFootStepEvent( )
+		{
 			if ( !IS_ACTIVE ) return;
 
 			GameObject effectToPlay = effectPrefab[ Random.Range( 0, effectPrefab.Length ) ];
 
-			if ( overrideSense ) {
+			if ( overrideSense )
+			{
 				if ( Physics.Raycast(
 					transform.position,
 					overrideSenseRaycastVector,
 					out RaycastHit hit,
 					overrideSenseRaycastVector.magnitude,
 					overrideSenseLayer
-				) ) {
-					if ( TryGetMaterialFromRaycastHit( hit, out Material material ) ) {
-						foreach ( FootstepMaterialOverride footstepMaterialOverride in footstepMaterialOverrides ) {
+				) )
+				{
+					if ( TryGetMaterialFromRaycastHit( hit, out Material material ) )
+					{
+						foreach ( FootstepMaterialOverride footstepMaterialOverride in footstepMaterialOverrides )
+						{
 							if ( footstepMaterialOverride.material != material ) continue;
 
 							effectToPlay = footstepMaterialOverride.footstepSfxPrefab[ Random.Range( 0, footstepMaterialOverride.footstepSfxPrefab.Count ) ];
@@ -57,21 +65,25 @@ namespace DigDig2.EffectSystem.Footsteps {
 			Destroy( Instantiate( effectToPlay, transform.position, Quaternion.identity ), 2f );
 		}
 
-		private static bool TryGetMaterialFromRaycastHit( RaycastHit hit, out Material material ) {
+		private static bool TryGetMaterialFromRaycastHit( RaycastHit hit, out Material material )
+		{
 			MeshFilter meshFilter = hit.collider.GetComponent<MeshFilter>( );
-			if ( !meshFilter ) {
+			if ( !meshFilter )
+			{
 				material = null;
 				return false;
 			}
 
 			Mesh mesh = meshFilter.sharedMesh ?? meshFilter.mesh;
-			if ( !mesh ) {
+			if ( !mesh )
+			{
 				material = null;
 				return false;
 			}
 
 			Renderer renderer = meshFilter.GetComponent<Renderer>( );
-			if ( !renderer ) {
+			if ( !renderer )
+			{
 				material = null;
 				return false;
 			}
@@ -95,11 +107,14 @@ namespace DigDig2.EffectSystem.Footsteps {
 			return true;
 		}
 
-		private static int GetSubMeshIndex( Mesh mesh, int triangleIndex ) {
-			for ( int subMeshIndex = 0; subMeshIndex < mesh.subMeshCount; subMeshIndex++ ) {
+		private static int GetSubMeshIndex( Mesh mesh, int triangleIndex )
+		{
+			for ( int subMeshIndex = 0; subMeshIndex < mesh.subMeshCount; subMeshIndex++ )
+			{
 				int[ ] subMeshTriangles = mesh.GetTriangles( subMeshIndex );
 
-				for ( int i = 0; i < subMeshTriangles.Length; i += 3 ) {
+				for ( int i = 0; i < subMeshTriangles.Length; i += 3 )
+				{
 					if ( subMeshTriangles[ i ] == mesh.triangles[ triangleIndex * 3 ] &&
 						subMeshTriangles[ i + 1 ] == mesh.triangles[ triangleIndex * 3 + 1 ] &&
 						subMeshTriangles[ i + 2 ] == mesh.triangles[ triangleIndex * 3 + 2 ] )

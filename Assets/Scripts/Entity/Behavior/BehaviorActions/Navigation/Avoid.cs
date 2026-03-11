@@ -7,7 +7,8 @@ using UnityEngine;
 
 using Action = Unity.Behavior.Action;
 
-namespace DigDig2.Entity.Behavior.BehaviorActions.Navigation {
+namespace DigDig2.Entity.Behavior.BehaviorActions.Navigation
+{
 	[Serializable] [GeneratePropertyBag] [NodeDescription(
 		"WotT Avoid",
 		"Runs away from the target for a certain amount of seconds.",
@@ -15,7 +16,8 @@ namespace DigDig2.Entity.Behavior.BehaviorActions.Navigation {
 		story: "[Agent] avoids [Target] for [Duration] seconds",
 		id: "WotT_Avoid"
 	)]
-	public class WotTAvoid : Action {
+	public class WotTAvoid : Action
+	{
 		[SerializeReference] public BlackboardVariable<GameObject> Agent;
 
 		[Tooltip( "The target to avoid." )]
@@ -28,13 +30,16 @@ namespace DigDig2.Entity.Behavior.BehaviorActions.Navigation {
 
 		private BehaviorAgentTranslator mAgentTranslatorCharacterBehaviorController;
 
-		protected override Status OnStart( ) {
-			if ( Agent.Value == null ) {
+		protected override Status OnStart( )
+		{
+			if ( Agent.Value == null )
+			{
 				LogFailure( "No agent assigned." );
 				return Status.Failure;
 			}
 
-			if ( Target.Value == null ) {
+			if ( Target.Value == null )
+			{
 				LogFailure( "No target object assigned." );
 				return Status.Failure;
 			}
@@ -47,11 +52,13 @@ namespace DigDig2.Entity.Behavior.BehaviorActions.Navigation {
 			return Status.Running;
 		}
 
-		protected override Status OnUpdate( ) {
+		protected override Status OnUpdate( )
+		{
 			if ( !Agent.Value || !Target.Value ) return Status.Failure;
 
 			avoidTimer -= Time.deltaTime;
-			if ( avoidTimer <= 0 ) {
+			if ( avoidTimer <= 0 )
+			{
 				avoidTimer = 0;
 				mAgentTranslatorCharacterBehaviorController.Stop( );
 				return Status.Success;

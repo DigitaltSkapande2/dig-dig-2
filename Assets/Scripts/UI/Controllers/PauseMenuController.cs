@@ -5,8 +5,10 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UIElements;
 
-namespace DigDig2.UI.Controllers {
-	public class PauseMenuController : MonoBehaviour {
+namespace DigDig2.UI.Controllers
+{
+	public class PauseMenuController : MonoBehaviour
+	{
 		[SerializeField] private float openCooldown = 0.2f;
 
 		[SerializeField] private GameObject buttonHoverEffectPrefab;
@@ -25,16 +27,19 @@ namespace DigDig2.UI.Controllers {
 
 		private UIDocument uiDocument;
 
-		public bool Paused {
+		public bool Paused
+		{
 			get => navigator.NavigationUri != "/";
 		}
 
-		private void Awake( ) {
+		private void Awake( )
+		{
 			uiDocument = GetComponent<UIDocument>( );
 			navigator = GetComponent<UserInterfaceNavigator>( );
 		}
 
-		private void Start( ) {
+		private void Start( )
+		{
 			pauseMenuContainer = uiDocument.rootVisualElement.Query<VisualElement>( "animationContainer" );
 
 			uiDocument.rootVisualElement.RegisterCallback<ClickEvent>( ButtonClick, TrickleDown.TrickleDown );
@@ -54,16 +59,20 @@ namespace DigDig2.UI.Controllers {
 				null,
 				null,
 				true,
-				new( ) {
+				new( )
+				{
 					new( "pauseMenu", pauseMenuContainer, 0.1f, resumeButton )
 				}
 			);
 
-			navigator.navigatedTo.AddListener( uri => {
-					if ( uri == "/" && lastPausedState ) {
+			navigator.navigatedTo.AddListener( uri =>
+				{
+					if ( uri == "/" && lastPausedState )
+					{
 						lastPausedState = false;
 						stateChanged.Invoke( false );
-					} else if ( !lastPausedState ) {
+					} else if ( !lastPausedState )
+					{
 						lastPausedState = true;
 						stateChanged.Invoke( true );
 					}
@@ -71,7 +80,8 @@ namespace DigDig2.UI.Controllers {
 			);
 		}
 
-		private void Update( ) {
+		private void Update( )
+		{
 			if ( openCooldownTimer > 0 ) openCooldownTimer = Mathf.Max( openCooldownTimer - Time.deltaTime, 0 );
 		}
 
@@ -81,18 +91,21 @@ namespace DigDig2.UI.Controllers {
 
 		private void PlaySoundEffect( GameObject effectPrefab ) { Destroy( Instantiate( effectPrefab, Vector3.zero, Quaternion.identity, transform ), 10f ); }
 
-		public void Open( ) {
+		public void Open( )
+		{
 			navigator.NavigateTo( "/pauseMenu" );
 			openCooldownTimer = openCooldown;
 		}
 
-		public void Close( ) {
+		public void Close( )
+		{
 			if ( openCooldownTimer <= 0 ) navigator.NavigateTo( "/" );
 		}
 
 		private void SaveAndExit( ) { GameManager.Instance.SaveAndLoadMainMenu( ); }
 
-		private void OnCancel( ) {
+		private void OnCancel( )
+		{
 			if ( openCooldownTimer <= 0 ) navigator.NavigateBack( );
 		}
 	}

@@ -9,7 +9,8 @@ using UnityEngine;
 using Action = Unity.Behavior.Action;
 using Random = UnityEngine.Random;
 
-namespace DigDig2.Entity.Behavior.BehaviorActions.Navigation {
+namespace DigDig2.Entity.Behavior.BehaviorActions.Navigation
+{
 	[Serializable] [GeneratePropertyBag] [NodeDescription(
 		"WotT Waypoint Patrol",
 		"Patrols the agent along a set of waypoints.",
@@ -17,7 +18,8 @@ namespace DigDig2.Entity.Behavior.BehaviorActions.Navigation {
 		story: "[Agent] patrols along [Waypoints]",
 		id: "WotT_Waypoint_Patrol"
 	)]
-	public class WotTWaypointPatrol : Action {
+	public class WotTWaypointPatrol : Action
+	{
 		[SerializeReference] public BlackboardVariable<GameObject> Agent;
 
 		[Tooltip( "The waypoints to patrol around." )] [SerializeReference]
@@ -36,13 +38,16 @@ namespace DigDig2.Entity.Behavior.BehaviorActions.Navigation {
 		[CreateProperty] private bool waiting;
 		[CreateProperty] private float waypointWaitTimer;
 
-		protected override Status OnStart( ) {
-			if ( Agent.Value == null ) {
+		protected override Status OnStart( )
+		{
+			if ( Agent.Value == null )
+			{
 				LogFailure( "No agent assigned." );
 				return Status.Failure;
 			}
 
-			if ( Waypoints.Value == null || Waypoints.Value.Count == 0 ) {
+			if ( Waypoints.Value == null || Waypoints.Value.Count == 0 )
+			{
 				LogFailure( "No waypoints to patrol assigned." );
 				return Status.Failure;
 			}
@@ -56,20 +61,25 @@ namespace DigDig2.Entity.Behavior.BehaviorActions.Navigation {
 			return Status.Running;
 		}
 
-		protected override Status OnUpdate( ) {
+		protected override Status OnUpdate( )
+		{
 			if ( Agent.Value == null || Waypoints.Value == null ) return Status.Failure;
 
-			if ( waiting ) {
+			if ( waiting )
+			{
 				if ( waypointWaitTimer > 0.0f )
 					waypointWaitTimer -= Time.deltaTime;
-				else {
+				else
+				{
 					waypointWaitTimer = 0f;
 					waiting = false;
 					MoveToNextWaypoint( );
 				}
-			} else {
+			} else
+			{
 				// Check if we've reached the waypoint (ensuring NavMeshAgent has completed path calculation if available)
-				if ( mAgentTranslatorCharacterBehaviorController == null || mAgentTranslatorCharacterBehaviorController.movementState == BehaviorAgentTranslator.MovementState.Idle ) {
+				if ( mAgentTranslatorCharacterBehaviorController == null || mAgentTranslatorCharacterBehaviorController.movementState == BehaviorAgentTranslator.MovementState.Idle )
+				{
 					waypointWaitTimer = WaypointWaitTime.Value;
 					waiting = true;
 
@@ -84,10 +94,12 @@ namespace DigDig2.Entity.Behavior.BehaviorActions.Navigation {
 
 		private void Initialize( ) { mAgentTranslatorCharacterBehaviorController = Agent.Value.GetComponentInChildren<BehaviorAgentTranslator>( ); }
 
-		private void MoveToNextWaypoint( ) {
+		private void MoveToNextWaypoint( )
+		{
 			if ( !RandomizeWaypointSelection.Value )
 				currentPatrolPoint = ( currentPatrolPoint + 1 ) % Waypoints.Value.Count;
-			else {
+			else
+			{
 				int lastPatrolPoint = currentPatrolPoint;
 				while ( lastPatrolPoint == currentPatrolPoint ) { currentPatrolPoint = Random.Range( 0, Waypoints.Value.Count - 1 ); }
 			}

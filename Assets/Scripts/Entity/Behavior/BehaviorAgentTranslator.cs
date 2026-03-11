@@ -3,9 +3,11 @@ using System;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace DigDig2.Entity.Behavior {
+namespace DigDig2.Entity.Behavior
+{
 	[RequireComponent( typeof( EntityCharacterController ) )]
-	public class BehaviorAgentTranslator : MonoBehaviour {
+	public class BehaviorAgentTranslator : MonoBehaviour
+	{
 		public enum MovementState { Idle, FollowingPath, FollowingDirection }
 
 		[Header( "Following Path State" )]
@@ -24,26 +26,32 @@ namespace DigDig2.Entity.Behavior {
 
 		private void Start( ) { navMeshPath = new( ); }
 
-		private void Update( ) {
+		private void Update( )
+		{
 			if ( focusedTransform ) LookTowards( focusedTransform.position );
 
-			switch ( movementState ) {
+			switch ( movementState )
+			{
 				case MovementState.FollowingPath:
-					if ( currentPathWaypoints.Length > 0 ) {
+					if ( currentPathWaypoints.Length > 0 )
+					{
 						Vector3 currentPathWaypoint = currentPathWaypoints[ currentPathWaypointIndex ];
 						Vector3 positionDifference = currentPathWaypoint - transform.position;
 						positionDifference.y = 0f;
 						float distanceToWaypoint = positionDifference.magnitude;
 
-						if ( distanceToWaypoint <= pathWaypointDistanceTolerance ) {
-							if ( currentPathWaypoints.Length > currentPathWaypointIndex + 1 ) {
+						if ( distanceToWaypoint <= pathWaypointDistanceTolerance )
+						{
+							if ( currentPathWaypoints.Length > currentPathWaypointIndex + 1 )
+							{
 								// More waypoints to follow, go to next one
 								currentPathWaypointIndex++;
 								currentPathWaypoint = currentPathWaypoints[ currentPathWaypointIndex ];
 								positionDifference = currentPathWaypoint - transform.position;
 								positionDifference.y = 0f;
 								distanceToWaypoint = positionDifference.magnitude;
-							} else {
+							} else
+							{
 								// No more waypoints to follow, entity has finished, reset path
 								Stop( );
 							}
@@ -61,12 +69,15 @@ namespace DigDig2.Entity.Behavior {
 			}
 		}
 
-		private void OnDrawGizmosSelected( ) {
+		private void OnDrawGizmosSelected( )
+		{
 			if ( !entityCharacterController ) return;
 
-			switch ( movementState ) {
+			switch ( movementState )
+			{
 				case MovementState.FollowingPath:
-					for ( int pathWaypointIndex = currentPathWaypointIndex + 1; pathWaypointIndex < currentPathWaypoints.Length; pathWaypointIndex++ ) {
+					for ( int pathWaypointIndex = currentPathWaypointIndex + 1; pathWaypointIndex < currentPathWaypoints.Length; pathWaypointIndex++ )
+					{
 						Gizmos.color = Color.gray;
 						Gizmos.DrawSphere( currentPathWaypoints[ pathWaypointIndex ], 0.25f );
 					}
@@ -85,7 +96,10 @@ namespace DigDig2.Entity.Behavior {
 
 		// Following Path
 		[NonSerialized] public Vector3 currentDestination = Vector3.zero;
-		[NonSerialized] public Vector3[ ] currentPathWaypoints = { };
+
+		[NonSerialized] public Vector3[ ] currentPathWaypoints =
+			{ };
+
 		[NonSerialized] public int currentPathWaypointIndex;
 		private NavMeshPath navMeshPath;
 
@@ -96,7 +110,8 @@ namespace DigDig2.Entity.Behavior {
 
 		#region State Management
 
-		public void Stop( ) {
+		public void Stop( )
+		{
 			movementState = MovementState.Idle;
 
 			// Reset Following Path State
@@ -109,13 +124,15 @@ namespace DigDig2.Entity.Behavior {
 			currentDirection = Vector3.zero;
 		}
 
-		public bool SetDestination( Vector3 destination ) {
+		public bool SetDestination( Vector3 destination )
+		{
 			Stop( );
 
 			if ( navMeshPath == null ) return false;
 
 			bool validPathFound = NavMesh.CalculatePath( transform.position, destination, 1, navMeshPath );
-			if ( !validPathFound ) {
+			if ( !validPathFound )
+			{
 				Debug.LogWarning( "Path could not be calculated." );
 				return false;
 			}
@@ -128,7 +145,8 @@ namespace DigDig2.Entity.Behavior {
 			return true;
 		}
 
-		public bool SetDirection( Vector3 direction ) {
+		public bool SetDirection( Vector3 direction )
+		{
 			Stop( );
 
 			currentDirection = direction;
@@ -138,13 +156,15 @@ namespace DigDig2.Entity.Behavior {
 			return true;
 		}
 
-		public bool LookTowards( Vector3 target ) {
+		public bool LookTowards( Vector3 target )
+		{
 			entityCharacterController.LookTowards( target );
 
 			return true;
 		}
 
-		public bool SetFocusedLookTransform( Transform newFocusedTransform ) {
+		public bool SetFocusedLookTransform( Transform newFocusedTransform )
+		{
 			focusedTransform = newFocusedTransform;
 
 			return true;
@@ -152,7 +172,8 @@ namespace DigDig2.Entity.Behavior {
 
 		public Transform GetFocusedLookTransform( ) => focusedTransform;
 
-		public bool SetAutomaticLookRotationLock( bool isLocked ) {
+		public bool SetAutomaticLookRotationLock( bool isLocked )
+		{
 			entityCharacterController.SetAutomaticLookRotationLock( isLocked );
 
 			return true;

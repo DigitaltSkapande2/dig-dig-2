@@ -1,5 +1,7 @@
-namespace DigDig2.UI.Events {
-	public class NavigatorDescendantOpenedEvent : NavigatorEventBase<NavigatorDescendantOpenedEvent> {
+namespace DigDig2.UI.Events
+{
+	public class NavigatorDescendantOpenedEvent : NavigatorEventBase<NavigatorDescendantOpenedEvent>
+	{
 		static NavigatorDescendantOpenedEvent( ) { SetCreateFunction( ( ) => new( ) ); }
 	}
 }

@@ -3,9 +3,11 @@ using System.Collections.Generic;
 
 using UnityEngine;
 
-namespace DigDig2.Util {
+namespace DigDig2.Util
+{
 	[Serializable]
-	public class SerializableDictionary<TKey, TValue> : Dictionary<TKey, TValue>, ISerializationCallbackReceiver {
+	public class SerializableDictionary<TKey, TValue> : Dictionary<TKey, TValue>, ISerializationCallbackReceiver
+	{
 		[SerializeField]
 		private List<TKey> keys = new( );
 
@@ -13,17 +15,20 @@ namespace DigDig2.Util {
 		private List<TValue> values = new( );
 
 		// save the dictionary to lists
-		public void OnBeforeSerialize( ) {
+		public void OnBeforeSerialize( )
+		{
 			keys.Clear( );
 			values.Clear( );
-			foreach ( KeyValuePair<TKey, TValue> pair in this ) {
+			foreach ( KeyValuePair<TKey, TValue> pair in this )
+			{
 				keys.Add( pair.Key );
 				values.Add( pair.Value );
 			}
 		}
 
 		// load dictionary from lists
-		public void OnAfterDeserialize( ) {
+		public void OnAfterDeserialize( )
+		{
 			Clear( );
 
 			if ( keys.Count != values.Count ) throw new( string.Format( "there are {0} keys and {1} values after deserialization. Make sure that both key and value types are serializable." ) );

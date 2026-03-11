@@ -3,9 +3,11 @@ using DigDig2.Input;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace DigDig2.Util.ClickableMeshes {
+namespace DigDig2.Util.ClickableMeshes
+{
 	[RequireComponent( typeof( Camera ) )]
-	public class MeshClickerCamera : MonoBehaviour, ProjectWideInputActions.IUIActions {
+	public class MeshClickerCamera : MonoBehaviour, ProjectWideInputActions.IUIActions
+	{
 		[SerializeField] private LayerMask clickableLayerMask;
 
 		private new Camera camera;
@@ -14,7 +16,8 @@ namespace DigDig2.Util.ClickableMeshes {
 
 		private void Start( ) { camera = GetComponent<Camera>( ); }
 
-		private void FixedUpdate( ) {
+		private void FixedUpdate( )
+		{
 			Ray ray = camera.ScreenPointToRay( Mouse.current.position.ReadValue( ) );
 
 			if ( !Physics.Raycast( ray, out RaycastHit raycastHit, 100f, clickableLayerMask ) ) return;
@@ -37,7 +40,8 @@ namespace DigDig2.Util.ClickableMeshes {
 
 		public void OnPoint( InputAction.CallbackContext context ) { }
 
-		public void OnClick( InputAction.CallbackContext context ) {
+		public void OnClick( InputAction.CallbackContext context )
+		{
 			// Debug.Log("On Click " + context.ReadValueAsButton());
 			if ( isPointerDown == context.ReadValueAsButton( ) ) return;
 

@@ -5,9 +5,11 @@ using DigDig2.Input;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace DigDig2.Player.Combat {
+namespace DigDig2.Player.Combat
+{
 	[RequireComponent( typeof( Attacker ) )]
-	public class PlayerAttackInput : MonoBehaviour, ProjectWideInputActions.IAttackActions {
+	public class PlayerAttackInput : MonoBehaviour, ProjectWideInputActions.IAttackActions
+	{
 		private ProjectWideInputActions.AttackActions attackActions;
 
 		private Attacker attacker;
@@ -17,9 +19,11 @@ namespace DigDig2.Player.Combat {
 
 		private void Awake( ) { attacker = GetComponent<Attacker>( ); }
 
-		private void Start( ) {
+		private void Start( )
+		{
 			if ( !GameManager.Instance.Paused ) EnableInput( );
-			GameManager.Instance.pauseStateChanged.AddListener( isPaused => {
+			GameManager.Instance.pauseStateChanged.AddListener( isPaused =>
+				{
 					if ( isPaused )
 						DisableInput( );
 					else
@@ -30,7 +34,8 @@ namespace DigDig2.Player.Combat {
 			hasStarted = true;
 		}
 
-		private void OnEnable( ) {
+		private void OnEnable( )
+		{
 			if ( hasStarted ) EnableInput( );
 		}
 
@@ -38,13 +43,15 @@ namespace DigDig2.Player.Combat {
 
 		#region Input Setup
 
-		public void EnableInput( ) {
+		public void EnableInput( )
+		{
 			attackActions = InputManager.Instance.inputActions.Attack;
 			attackActions.SetCallbacks( this );
 			InputEnabled = true;
 		}
 
-		private void DisableInput( ) {
+		private void DisableInput( )
+		{
 			attackActions.RemoveCallbacks( this );
 			InputEnabled = false;
 		}
@@ -53,21 +60,24 @@ namespace DigDig2.Player.Combat {
 
 		#region Input Action Callbacks
 
-		public void OnAttack1( InputAction.CallbackContext context ) {
+		public void OnAttack1( InputAction.CallbackContext context )
+		{
 			if ( context.performed )
 				attacker.RequestAttackStart( 0 );
 			else
 				attacker.RequestAttackEnd( );
 		}
 
-		public void OnAttack2( InputAction.CallbackContext context ) {
+		public void OnAttack2( InputAction.CallbackContext context )
+		{
 			if ( context.performed )
 				attacker.RequestAttackStart( 1 );
 			else
 				attacker.RequestAttackEnd( );
 		}
 
-		public void OnFocus( InputAction.CallbackContext context ) {
+		public void OnFocus( InputAction.CallbackContext context )
+		{
 			if ( context.performed )
 				attacker.StartFocus( );
 			else

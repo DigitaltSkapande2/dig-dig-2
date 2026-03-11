@@ -1,21 +1,25 @@
 using System;
 
-namespace DigDig2.Util {
+namespace DigDig2.Util
+{
 	[Serializable]
-	public struct SerializableTuple<T1> {
+	public struct SerializableTuple<T1>
+	{
 		public T1 Item1;
 
 		public static implicit operator
 			SerializableTuple<T1>(
 				ValueTuple<T1> value
-			) => new( ) {
+			) => new( )
+		{
 			Item1 = value.Item1
 		};
 
 		public static implicit operator
 			ValueTuple<T1>(
 				SerializableTuple<T1> value
-			) => new( ) {
+			) => new( )
+		{
 			Item1 = value.Item1
 		};
 
@@ -23,14 +27,16 @@ namespace DigDig2.Util {
 	}
 
 	[Serializable]
-	public struct SerializableTuple<T1, T2> {
+	public struct SerializableTuple<T1, T2>
+	{
 		public T1 Item1;
 		public T2 Item2;
 
 		public static implicit operator
 			SerializableTuple<T1, T2>(
 				ValueTuple<T1, T2> value
-			) => new( ) {
+			) => new( )
+		{
 			Item1 = value.Item1,
 			Item2 = value.Item2
 		};
@@ -38,7 +44,8 @@ namespace DigDig2.Util {
 		public static implicit operator
 			ValueTuple<T1, T2>(
 				SerializableTuple<T1, T2> value
-			) => new( ) {
+			) => new( )
+		{
 			Item1 = value.Item1,
 			Item2 = value.Item2
 		};
@@ -47,7 +54,8 @@ namespace DigDig2.Util {
 	}
 
 	[Serializable]
-	public struct SerializableTuple<T1, T2, T3> {
+	public struct SerializableTuple<T1, T2, T3>
+	{
 		public T1 Item1;
 		public T2 Item2;
 		public T3 Item3;
@@ -55,7 +63,8 @@ namespace DigDig2.Util {
 		public static implicit operator
 			SerializableTuple<T1, T2, T3>(
 				ValueTuple<T1, T2, T3> value
-			) => new( ) {
+			) => new( )
+		{
 			Item1 = value.Item1,
 			Item2 = value.Item2,
 			Item3 = value.Item3
@@ -64,7 +73,8 @@ namespace DigDig2.Util {
 		public static implicit operator
 			ValueTuple<T1, T2, T3>(
 				SerializableTuple<T1, T2, T3> value
-			) => new( ) {
+			) => new( )
+		{
 			Item1 = value.Item1,
 			Item2 = value.Item2,
 			Item3 = value.Item3
@@ -74,7 +84,8 @@ namespace DigDig2.Util {
 	}
 
 	[Serializable]
-	public struct SerializableTuple<T1, T2, T3, T4> {
+	public struct SerializableTuple<T1, T2, T3, T4>
+	{
 		public T1 Item1;
 		public T2 Item2;
 		public T3 Item3;
@@ -83,7 +94,8 @@ namespace DigDig2.Util {
 		public static implicit operator
 			SerializableTuple<T1, T2, T3, T4>(
 				ValueTuple<T1, T2, T3, T4> value
-			) => new( ) {
+			) => new( )
+		{
 			Item1 = value.Item1,
 			Item2 = value.Item2,
 			Item3 = value.Item3,
@@ -93,7 +105,8 @@ namespace DigDig2.Util {
 		public static implicit operator
 			ValueTuple<T1, T2, T3, T4>(
 				SerializableTuple<T1, T2, T3, T4> value
-			) => new( ) {
+			) => new( )
+		{
 			Item1 = value.Item1,
 			Item2 = value.Item2,
 			Item3 = value.Item3,
@@ -104,7 +117,8 @@ namespace DigDig2.Util {
 	}
 
 	[Serializable]
-	public struct SerializableTuple<T1, T2, T3, T4, T5> {
+	public struct SerializableTuple<T1, T2, T3, T4, T5>
+	{
 		public T1 Item1;
 		public T2 Item2;
 		public T3 Item3;
@@ -114,7 +128,8 @@ namespace DigDig2.Util {
 		public static implicit operator
 			SerializableTuple<T1, T2, T3, T4, T5>(
 				ValueTuple<T1, T2, T3, T4, T5> value
-			) => new( ) {
+			) => new( )
+		{
 			Item1 = value.Item1,
 			Item2 = value.Item2,
 			Item3 = value.Item3,
@@ -125,7 +140,8 @@ namespace DigDig2.Util {
 		public static implicit operator
 			ValueTuple<T1, T2, T3, T4, T5>(
 				SerializableTuple<T1, T2, T3, T4, T5> value
-			) => new( ) {
+			) => new( )
+		{
 			Item1 = value.Item1,
 			Item2 = value.Item2,
 			Item3 = value.Item3,
@@ -137,7 +153,8 @@ namespace DigDig2.Util {
 	}
 
 	[Serializable]
-	public struct SerializableTuple<T1, T2, T3, T4, T5, T6> {
+	public struct SerializableTuple<T1, T2, T3, T4, T5, T6>
+	{
 		public T1 Item1;
 		public T2 Item2;
 		public T3 Item3;
@@ -148,7 +165,8 @@ namespace DigDig2.Util {
 		public static implicit operator
 			SerializableTuple<T1, T2, T3, T4, T5, T6>(
 				ValueTuple<T1, T2, T3, T4, T5, T6> value
-			) => new( ) {
+			) => new( )
+		{
 			Item1 = value.Item1,
 			Item2 = value.Item2,
 			Item3 = value.Item3,
@@ -160,7 +178,8 @@ namespace DigDig2.Util {
 		public static implicit operator
 			ValueTuple<T1, T2, T3, T4, T5, T6>(
 				SerializableTuple<T1, T2, T3, T4, T5, T6> value
-			) => new( ) {
+			) => new( )
+		{
 			Item1 = value.Item1,
 			Item2 = value.Item2,
 			Item3 = value.Item3,
@@ -173,7 +192,8 @@ namespace DigDig2.Util {
 	}
 
 	[Serializable]
-	public struct SerializableTuple<T1, T2, T3, T4, T5, T6, T7> {
+	public struct SerializableTuple<T1, T2, T3, T4, T5, T6, T7>
+	{
 		public T1 Item1;
 		public T2 Item2;
 		public T3 Item3;
@@ -185,7 +205,8 @@ namespace DigDig2.Util {
 		public static implicit operator
 			SerializableTuple<T1, T2, T3, T4, T5, T6, T7>(
 				ValueTuple<T1, T2, T3, T4, T5, T6, T7> value
-			) => new( ) {
+			) => new( )
+		{
 			Item1 = value.Item1,
 			Item2 = value.Item2,
 			Item3 = value.Item3,
@@ -198,7 +219,8 @@ namespace DigDig2.Util {
 		public static implicit operator
 			ValueTuple<T1, T2, T3, T4, T5, T6, T7>(
 				SerializableTuple<T1, T2, T3, T4, T5, T6, T7> value
-			) => new( ) {
+			) => new( )
+		{
 			Item1 = value.Item1,
 			Item2 = value.Item2,
 			Item3 = value.Item3,
@@ -213,7 +235,8 @@ namespace DigDig2.Util {
 
 	[Serializable]
 	public struct SerializableTuple<T1, T2, T3, T4, T5, T6, T7, TRest>
-		where TRest : struct {
+		where TRest : struct
+	{
 		public T1 Item1;
 		public T2 Item2;
 		public T3 Item3;
@@ -226,7 +249,8 @@ namespace DigDig2.Util {
 		public static implicit operator
 			SerializableTuple<T1, T2, T3, T4, T5, T6, T7, TRest>(
 				ValueTuple<T1, T2, T3, T4, T5, T6, T7, TRest> value
-			) => new( ) {
+			) => new( )
+		{
 			Item1 = value.Item1,
 			Item2 = value.Item2,
 			Item3 = value.Item3,
@@ -240,7 +264,8 @@ namespace DigDig2.Util {
 		public static implicit operator
 			ValueTuple<T1, T2, T3, T4, T5, T6, T7, TRest>(
 				SerializableTuple<T1, T2, T3, T4, T5, T6, T7, TRest> value
-			) => new( ) {
+			) => new( )
+		{
 			Item1 = value.Item1,
 			Item2 = value.Item2,
 			Item3 = value.Item3,

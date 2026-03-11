@@ -6,9 +6,11 @@ using DigDig2.Debugging.Menu;
 
 using UnityEngine;
 
-namespace DigDig2 {
+namespace DigDig2
+{
 	[Debug( DebugMenuToggleable.NonToggleable )] [RequireComponent( typeof( CharacterController ) )]
-	public class EntityCharacterController : MonoBehaviour {
+	public class EntityCharacterController : MonoBehaviour
+	{
 		private const string IDLE_ANIMATION_NAME = "Idle";
 		private const string SPRINT_ANIMATION_NAME = "Sprint";
 		private const string DASH_ANIMATION_NAME = "Dash";
@@ -126,23 +128,27 @@ namespace DigDig2 {
 
 		private Vector3 velocity;
 
-		public bool Frozen {
+		public bool Frozen
+		{
 			get => frozen;
 
-			set {
+			set
+			{
 				frozen = value;
 
 				characterController.enabled = !frozen;
 			}
 		}
 
-		public float MoveSpeed {
+		public float MoveSpeed
+		{
 			get => moveSpeed;
 		}
 
 		public float TargetLookRotation { get; set; }
 
-		private void Awake( ) {
+		private void Awake( )
+		{
 			characterController = GetComponent<CharacterController>( );
 			animator = GetComponentInChildren<Animator>( );
 
@@ -151,8 +157,10 @@ namespace DigDig2 {
 
 		private void Start( ) { RefreshVisualsRotation( false ); }
 
-		private void Update( ) {
-			if ( !frozen ) {
+		private void Update( )
+		{
+			if ( !frozen )
+			{
 				Debug.DrawLine( transform.position, transform.position + GetForwardVector( ), Color.red );
 
 				// Movement
@@ -179,13 +187,15 @@ namespace DigDig2 {
 			if ( stunTimer != 0 ) stunTimer = Mathf.Clamp( stunTimer - Time.deltaTime, 0, maxStunTime );
 		}
 
-		private void OnDrawGizmosSelected( ) {
+		private void OnDrawGizmosSelected( )
+		{
 			Vector3 centerRaycastEndPoint = transform.position + -transform.up * ( GetComponent<CharacterController>( ).height / 2f + edgeScanDistance );
 			Gizmos.color = Color.red;
 			Gizmos.DrawLine( transform.position, centerRaycastEndPoint );
 		}
 
-		private enum EntityState {
+		private enum EntityState
+		{
 			None,
 			Idle,
 			Sprinting,
@@ -195,7 +205,8 @@ namespace DigDig2 {
 
 		#region Movement
 
-		private void ProcessGravity( ) {
+		private void ProcessGravity( )
+		{
 			if ( characterController.isGrounded )
 				velocity.y = -0.5f;
 			else
@@ -203,13 +214,15 @@ namespace DigDig2 {
 		}
 
 		// Add move/walk/run to current velocity
-		private void ProcessMove( ) {
+		private void ProcessMove( )
+		{
 			// Lerp move input vector to create smooth acceleration and deceleration
 			moveVelocity = Vector3.Lerp( moveVelocity, inputMoveVector * GetMoveSpeed( ), Time.deltaTime * moveInputVectorLerpSpeed );
 			velocity = new( moveVelocity.x, velocity.y, moveVelocity.z );
 		}
 
-		private void ProcessSlope( ) {
+		private void ProcessSlope( )
+		{
 			// Raycast for slope
 			Physics.Raycast(
 				transform.position,
@@ -219,18 +232,21 @@ namespace DigDig2 {
 				groundLayers
 			);
 
-			if ( raycastInfo.normal != Vector3.zero ) {
+			if ( raycastInfo.normal != Vector3.zero )
+			{
 				// Get the angle of the slope the entity is standing on
 				float slopeAngle = Vector3.Angle( transform.up, raycastInfo.normal );
 
 				// Apply stick force
 				velocity.y -= slopeAngle * slopeStickPower;
 
-				if ( slopeAngle > characterController.slopeLimit ) {
+				if ( slopeAngle > characterController.slopeLimit )
+				{
 					// Entity is standing on a slope that is too steep, add slide force
 					float slideStrength = slopeAngle / 90f * slopeSlidePower;
 					slopeSlideVelocity += slideStrength * Time.deltaTime * new Vector3( raycastInfo.normal.x, 0f, raycastInfo.normal.z ).normalized;
-				} else {
+				} else
+				{
 					// Entity is not standing on a slope that is too steep, interpolate slide force to 0 to create a decay effect
 					slopeSlideVelocity = Vector3.Lerp( slopeSlideVelocity, Vector3.zero, Time.deltaTime * slopeSlideDecaySpeed );
 				}
@@ -239,28 +255,33 @@ namespace DigDig2 {
 			velocity += slopeSlideVelocity;
 		}
 
-		private void ProcessKnockback( ) {
+		private void ProcessKnockback( )
+		{
 			velocity += knockbackVelocity;
 			knockbackVelocity = Vector3.Lerp( knockbackVelocity, Vector3.zero, knockbackDecaySpeed * Time.deltaTime );
 		}
 
-		private void ProcessDash( ) {
+		private void ProcessDash( )
+		{
 			if ( dashCooldownTimer > 0 ) dashCooldownTimer = Mathf.Max( dashCooldownTimer - Time.deltaTime, 0 );
 
 			velocity += dashVelocity;
 			dashVelocity = Vector3.Lerp( dashVelocity, Vector3.zero, dashDecaySpeed * Time.deltaTime );
 		}
 
-		private void ProcessPush( ) {
+		private void ProcessPush( )
+		{
 			pushVelocity = Vector3.Lerp( pushVelocity, Vector3.zero, pushDecaySpeed * Time.deltaTime );
 			velocity += pushVelocity;
 		}
 
-		private void ProcessEdge( ) {
+		private void ProcessEdge( )
+		{
 			Dictionary<Vector3, float> edgeAdjustments = new( );
 
 			Vector3 centerRaycastEndPoint = transform.position + -transform.up * ( characterController.height / 2f + edgeScanDistance );
-			for ( int raycastIndex = 0; raycastIndex < edgeScanRaycasts; raycastIndex++ ) {
+			for ( int raycastIndex = 0; raycastIndex < edgeScanRaycasts; raycastIndex++ )
+			{
 				float positionDegrees = raycastIndex * 360f / edgeScanRaycasts;
 				Vector3 raycastLocalPosition = new( Mathf.Cos( positionDegrees * Mathf.Deg2Rad ), 0f, Mathf.Sin( positionDegrees * Mathf.Deg2Rad ) );
 				Vector3 raycastGlobalPosition = transform.position + raycastLocalPosition * edgeScanRadius;
@@ -314,13 +335,15 @@ namespace DigDig2 {
 					true
 				);
 
-				if ( edgeAdjustments.Keys.Contains( centerRaycastInfo.normal ) ) {
+				if ( edgeAdjustments.Keys.Contains( centerRaycastInfo.normal ) )
+				{
 					if ( edgeAdjustments[ centerRaycastInfo.normal ] < centerRaycastInfo.distance ) edgeAdjustments[ centerRaycastInfo.normal ] = centerRaycastInfo.distance;
 				} else
 					edgeAdjustments[ centerRaycastInfo.normal ] = centerRaycastInfo.distance;
 			}
 
-			foreach ( KeyValuePair<Vector3, float> edgeAdjustment in edgeAdjustments ) {
+			foreach ( KeyValuePair<Vector3, float> edgeAdjustment in edgeAdjustments )
+			{
 				Vector3 adjustment = -edgeAdjustment.Key * Mathf.Max( 0, edgeAdjustment.Value );
 				characterController.Move( adjustment );
 				Debug.DrawRay(
@@ -333,7 +356,8 @@ namespace DigDig2 {
 			}
 		}
 
-		private void ProcessMovingPlatform( ) {
+		private void ProcessMovingPlatform( )
+		{
 			Physics.Raycast(
 				transform.position,
 				Vector3.down,
@@ -342,10 +366,13 @@ namespace DigDig2 {
 				groundLayers
 			);
 
-			if ( hit.collider ) {
+			if ( hit.collider )
+			{
 				ground = hit.collider.transform;
-				if ( ground == lastGround ) {
-					if ( lastGroundPosition != Vector3.zero ) {
+				if ( ground == lastGround )
+				{
+					if ( lastGroundPosition != Vector3.zero )
+					{
 						Vector3 movement = ground.position - lastGroundPosition;
 						characterController.Move( movement );
 
@@ -355,7 +382,8 @@ namespace DigDig2 {
 					lastGroundPosition = Vector3.zero;
 
 				lastGroundPosition = ground.position;
-			} else {
+			} else
+			{
 				ground = null;
 				lastGroundPosition = Vector3.zero;
 			}
@@ -363,7 +391,8 @@ namespace DigDig2 {
 			lastGround = ground;
 		}
 
-		public void Dash( ) {
+		public void Dash( )
+		{
 			if ( !canDash || !( dashCooldownTimer <= 0 ) ) return;
 
 			dashVelocity = inputMoveVector * dashStrength;
@@ -374,7 +403,8 @@ namespace DigDig2 {
 			attacker.EndAttackCharge( );
 		}
 
-		public float GetMoveSpeed( ) {
+		public float GetMoveSpeed( )
+		{
 			float totalMoveSpeed = moveSpeed;
 
 			foreach ( KeyValuePair<string, float> moveSpeedDebuff in moveSpeedDebuffs ) { totalMoveSpeed -= moveSpeedDebuff.Value; }
@@ -383,7 +413,8 @@ namespace DigDig2 {
 		}
 
 		// Add velocity to CharacterController
-		private void ApplyMovement( bool isFixedUpdate = false ) {
+		private void ApplyMovement( bool isFixedUpdate = false )
+		{
 			// Set deltaTime to 1 if method is called by FixedUpdate() message, if not, set to real delta time.
 			float deltaTime = isFixedUpdate ? 1 : Time.deltaTime;
 
@@ -391,7 +422,8 @@ namespace DigDig2 {
 		}
 
 		// Teleport the entity to a new position & y-rotation, if you want to set the entity's transform manually, use EntityCharacterController.frozen instead.
-		private void Teleport( Vector3 teleportPosition ) {
+		private void Teleport( Vector3 teleportPosition )
+		{
 			Frozen = true;
 
 			transform.position = teleportPosition;
@@ -399,7 +431,8 @@ namespace DigDig2 {
 			Frozen = false;
 		}
 
-		private void Teleport( Vector3 teleportPosition, float teleportYRotation ) {
+		private void Teleport( Vector3 teleportPosition, float teleportYRotation )
+		{
 			Frozen = true;
 
 			transform.position = teleportPosition;
@@ -412,7 +445,8 @@ namespace DigDig2 {
 			Frozen = false;
 		}
 
-		private void Teleport( Vector3 teleportPosition, Vector3 teleportLookDirection ) {
+		private void Teleport( Vector3 teleportPosition, Vector3 teleportLookDirection )
+		{
 			Frozen = true;
 
 			transform.position = teleportPosition;
@@ -432,7 +466,8 @@ namespace DigDig2 {
 		/// <summary>NOTE: Pushes the character according to its current rotation, this means that the direction has to be in local space!</summary>
 		/// <param name="direction"></param>
 		/// <param name="strength"></param>
-		public void PushInDirection( Vector3 direction, float strength ) {
+		public void PushInDirection( Vector3 direction, float strength )
+		{
 			Vector3 localPushVelocity = direction.normalized * strength;
 			pushVelocity += Quaternion.Euler( 0f, TargetLookRotation, 0f ) * localPushVelocity;
 		}
@@ -449,27 +484,32 @@ namespace DigDig2 {
 
 		#region Visuals
 
-		private void UpdateVisualsRotation( ) {
+		private void UpdateVisualsRotation( )
+		{
 			if ( inputMoveVector.magnitude > 0 && !automaticLookRotationLocked ) TargetLookRotation = Mathf.Lerp( TargetLookRotation, Vector3.SignedAngle( transform.forward, inputMoveVector, transform.up ), GetMoveSpeed( ) / moveSpeed );
 		}
 
-		private void RefreshVisualsRotation( bool useLerp = true ) {
+		private void RefreshVisualsRotation( bool useLerp = true )
+		{
 			var targetRotation = Quaternion.Euler( 0f, TargetLookRotation, 0f );
 
 			visualsParent.transform.rotation = useLerp ? Quaternion.Lerp( visualsParent.transform.rotation, targetRotation, Time.deltaTime * visualsRotationSpeed ) : targetRotation;
 		}
 
-		private void UpdateAnimation( ) {
+		private void UpdateAnimation( )
+		{
 			float moveSpeedGoalPercentage = 0;
 			if ( moveVelocity.magnitude > 0 ) moveSpeedGoalPercentage = moveVelocity.magnitude / moveSpeed;
 			animator.SetFloat( movementSpeed, moveSpeedGoalPercentage );
 
-			if ( attacker && attacker.State != Attacker.CombatState.Idle && attacker.State != Attacker.CombatState.OnCooldown ) {
+			if ( attacker && attacker.State != Attacker.CombatState.Idle && attacker.State != Attacker.CombatState.OnCooldown )
+			{
 				state = EntityState.Attacking;
 				return;
 			}
 
-			if ( dashVelocity.magnitude > 0.1f ) {
+			if ( dashVelocity.magnitude > 0.1f )
+			{
 				if ( state == EntityState.Dashing ) return;
 
 				state = EntityState.Dashing;
@@ -479,7 +519,8 @@ namespace DigDig2 {
 				return;
 			}
 
-			if ( new Vector3( inputMoveVector.x, 0, inputMoveVector.z ).magnitude > 0f ) {
+			if ( new Vector3( inputMoveVector.x, 0, inputMoveVector.z ).magnitude > 0f )
+			{
 				if ( state == EntityState.Sprinting ) return;
 
 				state = EntityState.Sprinting;
@@ -488,14 +529,16 @@ namespace DigDig2 {
 				return;
 			}
 
-			if ( state != EntityState.Idle ) {
+			if ( state != EntityState.Idle )
+			{
 				state = EntityState.Idle;
 				animator.CrossFadeInFixedTime( IDLE_ANIMATION_NAME, 0.1f, 0 );
 				animator.CrossFadeInFixedTime( SWORD_ANIMATION_NAME_PREFIX + IDLE_ANIMATION_NAME, 0.1f, 1 );
 			}
 		}
 
-		public void LookTowards( Vector3 target, bool useLerp = true ) {
+		public void LookTowards( Vector3 target, bool useLerp = true )
+		{
 			TargetLookRotation = Vector3.SignedAngle( transform.forward, target - transform.position, transform.up );
 			RefreshVisualsRotation( useLerp );
 		}

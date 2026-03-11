@@ -2,8 +2,10 @@ using TMPro;
 
 using UnityEngine;
 
-namespace DigDig2.Debugging.Notes {
-	public class DebugNoteBillboard : MonoBehaviour {
+namespace DigDig2.Debugging.Notes
+{
+	public class DebugNoteBillboard : MonoBehaviour
+	{
 		[SerializeField] private TMP_Text titleText;
 		[SerializeField] private TMP_Text noteText;
 		[SerializeField] private TMP_Text authorText;
@@ -17,7 +19,8 @@ namespace DigDig2.Debugging.Notes {
 
 		private void Awake( ) { SetFocused( false ); }
 
-		private void Update( ) {
+		private void Update( )
+		{
 			if ( Mathf.Approximately( focusAnimationProgress, focusAnimationTarget ) ) return;
 
 			focusAnimationProgress = Mathf.Lerp( focusAnimationProgress, focusAnimationTarget, Time.deltaTime * animationSpeed );
@@ -28,7 +31,8 @@ namespace DigDig2.Debugging.Notes {
 			authorText.color = Color.Lerp( unfocusedColor, Color.white, focusAnimationProgress );
 		}
 
-		public void ApplyNoteData( DebugNoteData debugNoteData ) {
+		public void ApplyNoteData( DebugNoteData debugNoteData )
+		{
 			titleText.text = debugNoteData.title;
 			noteText.text = debugNoteData.note;
 			authorText.text = $"by {debugNoteData.author}";

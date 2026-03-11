@@ -3,8 +3,10 @@ using DigDig2.EffectSystem;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace DigDig2.Combat {
-	public class Attackable : MonoBehaviour {
+namespace DigDig2.Combat
+{
+	public class Attackable : MonoBehaviour
+	{
 		[Tooltip( "Duration of invincibility after a hit." )]
 		[SerializeField] private float invincibilityTime = 0.05f;
 
@@ -23,20 +25,24 @@ namespace DigDig2.Combat {
 
 		private float invincibilityTimer;
 
-		public string Group {
+		public string Group
+		{
 			get => group;
 		}
 
-		private void Awake( ) {
+		private void Awake( )
+		{
 			TryGetComponent( out healthComponent );
 			TryGetComponent( out entityCharacterController );
 		}
 
-		private void Update( ) {
+		private void Update( )
+		{
 			if ( invincibilityTimer > 0 ) invincibilityTimer -= Time.deltaTime;
 		}
 
-		public void Hit( Attack attack, Attacker attacker = null ) {
+		public void Hit( Attack attack, Attacker attacker = null )
+		{
 			if ( invincibilityTimer > 0 ) return;
 
 			invincibilityTimer = invincibilityTime;
@@ -49,7 +55,8 @@ namespace DigDig2.Combat {
 
 		public bool IsInvincible( ) => invincibilityTimer > 0;
 
-		public void ApplyKnockback( Vector3 direction, float strength ) {
+		public void ApplyKnockback( Vector3 direction, float strength )
+		{
 			if ( entityCharacterController ) entityCharacterController.ApplyKnockback( direction, strength );
 		}
 	}

@@ -8,8 +8,10 @@ using Newtonsoft.Json;
 
 using UnityEngine;
 
-namespace DigDig2 {
-	public class OceanFollow : MonoBehaviour, ISaveable {
+namespace DigDig2
+{
+	public class OceanFollow : MonoBehaviour, ISaveable
+	{
 		[Tooltip( "the object to follow" )]
 		[SerializeField] private Transform target;
 
@@ -26,13 +28,15 @@ namespace DigDig2 {
 		private float targetY;
 		private bool waterParticlesPlaying;
 
-		private void Start( ) {
+		private void Start( )
+		{
 			targetY = transform.position.y;
 
 			SaveManager.Instance.RegisterSavable( "Ocean", this );
 		}
 
-		private void Update( ) {
+		private void Update( )
+		{
 			if ( !target && GameCamera.Instance ) target = GameCamera.Instance.transform;
 
 			transform.position = new( 0, Mathf.Lerp( transform.position.y, targetY, Time.deltaTime * verticalSpeed ), 0 );
@@ -43,8 +47,10 @@ namespace DigDig2 {
 				Mathf.Round( target.position.z / gridSize.y ) * gridSize.y
 			);
 
-			if ( waterParticlesPlaying && Mathf.Abs( Mathf.Abs( transform.position.y ) - Mathf.Abs( targetY ) ) < 1 ) {
-				foreach ( ParticleSystem ps in waterSplashParticles ) {
+			if ( waterParticlesPlaying && Mathf.Abs( Mathf.Abs( transform.position.y ) - Mathf.Abs( targetY ) ) < 1 )
+			{
+				foreach ( ParticleSystem ps in waterSplashParticles )
+				{
 					ps.Stop( );
 					Debug.Log( "STOPPING water splash particles." );
 				}
@@ -57,10 +63,12 @@ namespace DigDig2 {
 
 		public object CollectData( ) => targetY;
 
-		public void RestoreState( object dataObject ) {
+		public void RestoreState( object dataObject )
+		{
 			if ( dataObject == null )
 				Debug.Log( "WÄÄÄÄÄÄÄÄ" );
-			else {
+			else
+			{
 				try { targetY = (float)dataObject; } catch { targetY = JsonConvert.DeserializeObject<float>( dataObject.ToString( ) ); }
 
 				print( targetY );
@@ -68,11 +76,13 @@ namespace DigDig2 {
 			}
 		}
 
-		public void LowerWater( float amount ) {
+		public void LowerWater( float amount )
+		{
 			targetY -= amount;
 			onWaterLowerEffect.Play( );
 			Debug.Log( "Lowering water. New target Y: " + targetY );
-			foreach ( ParticleSystem ps in waterSplashParticles ) {
+			foreach ( ParticleSystem ps in waterSplashParticles )
+			{
 				ps.Play( );
 				Debug.Log( "Playing water splash particles." );
 			}

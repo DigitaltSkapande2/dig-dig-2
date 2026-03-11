@@ -10,9 +10,11 @@ using UnityEditor;
 // SUMMARY
 // Lets you assign InputContexts to InputActionMaps in an InputActionAsset
 
-namespace DigDig2.Input {
+namespace DigDig2.Input
+{
 	[Flags]
-	public enum InputContext {
+	public enum InputContext
+	{
 		None = 0,
 		PauseMenu = 1 << 0,
 		Gameplay = 1 << 1,
@@ -22,27 +24,32 @@ namespace DigDig2.Input {
 	}
 
 	[CreateAssetMenu( fileName = "InputContextConfig", menuName = "Input/Context Config" )]
-	public class InputContextConfig : ScriptableObject {
+	public class InputContextConfig : ScriptableObject
+	{
 		public InputActionAsset inputActions;
 
 		public MapContext[ ] mapContexts;
 
 		[Serializable]
-		public struct MapContext {
+		public struct MapContext
+		{
 			public string mapName;
 			public InputContext context;
 		}
 	}
 	#if UNITY_EDITOR
 	[CustomEditor( typeof( InputContextConfig ) )]
-	public class InputContextConfigEditor : Editor {
-		public override void OnInspectorGUI( ) {
+	public class InputContextConfigEditor : Editor
+	{
+		public override void OnInspectorGUI( )
+		{
 			DrawDefaultInspector( );
 
 			if ( GUILayout.Button( "Sync Maps" ) ) SyncMaps( );
 		}
 
-		private void SyncMaps( ) {
+		private void SyncMaps( )
+		{
 			var config = (InputContextConfig)target;
 
 			if ( !config.inputActions ) return;
@@ -52,11 +59,14 @@ namespace DigDig2.Input {
 			ReadOnlyArray<InputActionMap> maps = config.inputActions.actionMaps;
 
 			config.mapContexts = new InputContextConfig.MapContext[ maps.Count ];
-			for ( int i = 0; i < maps.Count; i++ ) {
-				if ( previousMapContext != null ) {
+			for ( int i = 0; i < maps.Count; i++ )
+			{
+				if ( previousMapContext != null )
+				{
 					// Check if map was already existing in previous array
 					InputContextConfig.MapContext existing = Array.Find( previousMapContext, m => m.mapName == maps[ i ].name );
-					if ( existing.mapName == maps[ i ].name ) {
+					if ( existing.mapName == maps[ i ].name )
+					{
 						config.mapContexts[ i ] = existing;
 						continue;
 					}
