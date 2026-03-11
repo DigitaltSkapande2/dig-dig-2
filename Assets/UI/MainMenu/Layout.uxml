@@ -42,7 +42,7 @@
                 <ui:Label text="How would you like to play?" style="font-size: 48px; -unity-text-align: middle-center;"/>
                 <ui:VisualElement style="flex-grow: 1; height: 50px;"/>
                 <ui:Button text="Singleplayer" name="singleplayer"/>
-                <ui:Button text="Multiplayer" name="multiplayer" enabled="false"/>
+                <ui:Button text="Multiplayer" name="multiplayer"/>
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>

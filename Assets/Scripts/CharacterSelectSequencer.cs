@@ -1,8 +1,10 @@
 
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 
 namespace DigDig2
@@ -13,9 +15,7 @@ namespace DigDig2
         [Header("Prefabs")]
         [SerializeField] private GameObject maxPrefab;
         [SerializeField] private GameObject minisPrefab;
-        [SerializeField] private GameObject maxDummyPrefab;
-        [SerializeField] private GameObject minisDummyPrefab;
-
+        [SerializeField] private GameObject playerInputManagerPrefab; 
         [Header("Scene Refs")]
         [SerializeField] private Transform maxSpawnPoint;
         [SerializeField] private Transform minisSpawnPoint;
@@ -31,7 +31,8 @@ namespace DigDig2
         private GameObject maxDummyInstance;
         private GameObject minisDummyInstance;
         
-
+        PlayerInputManager playerInputManager;
+        
         #endregion
         #region UnityCallbacks
 
@@ -43,28 +44,27 @@ namespace DigDig2
                 gameObject.SetActive(false);
                 Destroy(gameObject);
             }
+            
+            playerInputManager = Instantiate(playerInputManagerPrefab).GetComponent<PlayerInputManager>();
         }
 
         private void Start()
         {
-            // maxClickableCollider.clickStart.AddListener(() => OnCharacterClicked(CharacterType.Max, maxClickableCollider));
-            // minisClickableCollider.clickStart.AddListener(() => OnCharacterClicked(CharacterType.Mini, minisClickableCollider));
-            
-            switchCharacterButton.interactable = false;
-            startButton.interactable = false;
-
-            maxDummyInstance = Instantiate(maxDummyPrefab, maxSpawnPoint.position, maxSpawnPoint.rotation);
-            minisDummyInstance = Instantiate(minisDummyPrefab, minisSpawnPoint.position, minisSpawnPoint.rotation);
+            maxDummyInstance = Instantiate(maxPrefab, maxSpawnPoint.position, maxSpawnPoint.rotation);
+            minisDummyInstance = Instantiate(minisPrefab, minisSpawnPoint.position, minisSpawnPoint.rotation);
 
             switchCharacterButton.interactable = true;
             startButton.interactable = true;
 
             switchCharacterButton.onClick.AddListener(OnSwitchCharacterButtonClicked);
             startButton.onClick.AddListener(OnStartButtonClicked);
-
-            VerboseLog("Server ready. Waiting for clients to connect before spawning characters.");
         }
-        
+
+        private void OnEnable()
+        {
+            playerInputManager.EnableJoining();
+        }
+
         #endregion
         
 
@@ -83,28 +83,20 @@ namespace DigDig2
             GameObject maxInstance = Instantiate(maxPrefab, maxSpawnPoint.position, maxSpawnPoint.rotation);
             GameObject minisInstance = Instantiate(minisPrefab, minisSpawnPoint.position, minisSpawnPoint.rotation);
 
-            GameObject hostCharObjInstance = PlayerOneIsMax ? maxInstance : minisInstance;
-            GameObject clientCharObjInstance = PlayerOneIsMax ? minisInstance : maxInstance;
-
-            //hostCharObjInstance.name = PlayerOneIsMax ? "Max_connid: " + hostConn.connectionId : "Minis_connid: " + hostConn.connectionId;
-            //clientCharObjInstance.name = PlayerOneIsMax ? "Minis_connid: " + clientConn.connectionId : "Max_connid: " + clientConn.connectionId;
-
-            // NetworkServer.RemovePlayerForConnection(hostConn, RemovePlayerOptions.Destroy);
-            // NetworkServer.RemovePlayerForConnection(clientConn, RemovePlayerOptions.Destroy);
-            
-            
-            await System.Threading.Tasks.Task.Delay(100); // wait a frame for the ReplacePlayerForConnection to complete before enabling input
-
-            EnablePlayerInput();
+            GameObject playerOneCharacterInstance = PlayerOneIsMax ? maxInstance : minisInstance;
+            GameObject playerTwoCharacterInstance = PlayerOneIsMax ? minisInstance : maxInstance;
         }
         
 
         
         private void EnablePlayerInput() 
         {
-            GameManager.Instance.PlayerOneCharacter.GetComponent<PlayerCharacterInputController>().EnableInput();
-            GameManager.Instance.PlayerOneCharacter.GetComponent<PlayerAttackInput>().EnableInput();
             GameManager.Instance.PlayerOneCharacter.GetComponent<EntityCharacterController>().Frozen = false;
+        }
+
+        public void OnPlayerJoined()
+        {
+            print($"Player joined");
         }
         
         #region Util

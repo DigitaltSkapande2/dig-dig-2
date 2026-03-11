@@ -45,7 +45,7 @@ namespace DigDig2
         {
             lockTargetEffector.IsActive = true;
             VerboseLog("Spawning character select sequencer for multiplayer spawn...");
-            GameObject instance = Instantiate(characterSeclectSecuencerPrefab, transform.position, Quaternion.identity);
+            CharacterSelectSequencer instance = Instantiate(characterSeclectSecuencerPrefab, transform.position, Quaternion.identity).GetComponent<CharacterSelectSequencer>();
         }
 
         public async void ServerStartSingleplayerStartSequence()
@@ -65,7 +65,6 @@ namespace DigDig2
 
             if (reached)
             {
-                
                 savePointReached.Invoke();
             }
         }

@@ -12,7 +12,6 @@ namespace DigDig2.Effects
     {
         private Volume volume;
         private DepthOfField depthOfField;
-        
         Camera mainCamera;
         
         private void Start()
@@ -30,7 +29,6 @@ namespace DigDig2.Effects
         
         private void Update()
         {
-            float CameraNearFarDistance = mainCamera.farClipPlane - mainCamera.nearClipPlane;
             float targetdepth = Mathf.Abs(mainCamera.transform.localPosition.z + mainCamera.nearClipPlane);
             depthOfField.focusDistance.value = targetdepth;
         }

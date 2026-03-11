@@ -284,7 +284,7 @@ namespace DigDig2
                     }
                     break;
                 case HostingModeSelectionType.NewGameSave:
-                    SaveManager.Instance.CreateNewSave();
+                    SaveManager.Instance.CreateNewSave("", true);
                     StartMultiplayer();
                     break;
             }

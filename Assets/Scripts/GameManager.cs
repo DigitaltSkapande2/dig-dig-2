@@ -30,12 +30,12 @@ namespace DigDig2
         public struct GameManagerGameSaveData
         {
             public CharacterType singleplayerSelectedCharacter;
-            public bool isMultiplayer;
             public int highestReachedSavePointIndex;
             public int highestKilledCrystal;
         }
         public GameManagerGameSaveData loadedGameManagerSaveData;
         [SerializeField] public UnityEvent<CharacterType, GameObject> characterSwitched;
+        [SerializeField] public UnityEvent<bool> gameStarted;
 
         public bool Paused
         {
@@ -46,7 +46,7 @@ namespace DigDig2
         }
         [SerializeField] public UnityEvent<bool> pauseStateChanged;
         
-        public bool IsMultiplayer => loadedGameManagerSaveData.isMultiplayer;
+        public bool IsMultiplayer => SaveManager.Instance.IsMultiplayer;
 
         private PauseMenuController pauseMenuController;
         private GameHudController gameHudController;
@@ -59,7 +59,7 @@ namespace DigDig2
             {
 #if UNITY_EDITOR
                 if (players[0]) return players[0];
-                else Debug.LogError("No Players have been initialized");
+                //else Debug.LogError("No Players have been initialized");
                 #else
                     return players[0];
                 #endif
