@@ -30,6 +30,9 @@ namespace DigDig2.CinemaCamera
 
 		private void Update( )
 		{
+			targetPos = Vector3.zero;
+			targetRotation = Quaternion.identity;
+			
 			float frustumSize = defaultFrustumHeight;
 
 			foreach ( CameraEffector effector in CameraEffector.GetEffectivePivotCameraEffectors( ) )
