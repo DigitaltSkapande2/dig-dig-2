@@ -67,13 +67,10 @@ namespace DigDig2
 
         #endregion
         
-
-        
         private void OnSwitchCharacterButtonClicked()
         {
             PlayerOneIsMax = !PlayerOneIsMax;
         }
-
         
         private async void OnStartButtonClicked()
         {
@@ -86,9 +83,7 @@ namespace DigDig2
             GameObject playerOneCharacterInstance = PlayerOneIsMax ? maxInstance : minisInstance;
             GameObject playerTwoCharacterInstance = PlayerOneIsMax ? minisInstance : maxInstance;
         }
-        
 
-        
         private void EnablePlayerInput() 
         {
             GameManager.Instance.PlayerOneCharacter.GetComponent<EntityCharacterController>().Frozen = false;

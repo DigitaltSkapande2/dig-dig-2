@@ -1,4 +1,4 @@
-Shader "Hidden/Universal Render Pipeline/BokehDepthOfField"
+﻿Shader "Anton/BokehDepthOfField"
 {
     HLSLINCLUDE
         #pragma multi_compile_local_fragment _ _USE_FAST_SRGB_LINEAR_CONVERSION

@@ -321,6 +321,7 @@ MonoBehaviour:
   defaultSingleplayerCharacter: 0
   maxPrefab: {fileID: 4442565222488509090, guid: d5a3d3276e47631bfb60f1dda5c99ef2, type: 3}
   miniPrefab: {fileID: 4442565222488509090, guid: f67aae0ed0287714d978db69befa66ce, type: 3}
+  singlePlayerInputRoot: {fileID: 7231145364351669735, guid: 34a3ce8abd341f986beb987ef0d1763a, type: 3}
   savePoints:
   - {fileID: 0}
   - {fileID: 0}
@@ -335,10 +336,12 @@ MonoBehaviour:
   - {fileID: 0}
   loadedGameManagerSaveData:
     singleplayerSelectedCharacter: 0
-    isMultiplayer: 0
     highestReachedSavePointIndex: 0
     highestKilledCrystal: 0
   characterSwitched:
+    m_PersistentCalls:
+      m_Calls: []
+  gameStarted:
     m_PersistentCalls:
       m_Calls: []
   pauseStateChanged:

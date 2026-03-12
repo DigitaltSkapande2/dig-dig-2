@@ -21,6 +21,7 @@ namespace DigDig2
         [SerializeField] private CharacterType defaultSingleplayerCharacter = CharacterType.Max;
         [SerializeField] private GameObject maxPrefab;
         [SerializeField] private GameObject miniPrefab;
+        [SerializeField] private GameObject singlePlayerInputRoot;
 
         [Header("SavePoints")]
         [SerializeField] private SavePoint[] savePoints;
@@ -78,6 +79,8 @@ namespace DigDig2
                 return null;
             }
         }
+
+        private GameObject singleplayerInputRootInstance;
 
         // Character
         public CharacterType currentCharacter { private set; get; } = CharacterType.Max;
@@ -196,7 +199,15 @@ namespace DigDig2
                 Debug.LogError("Tried to initialize singleplayer character in multiplayer mode, this is not allowed.");
                 return;
             }
-            GameObject playerCharacter = Instantiate(GetCharacterPrefabFromCharacterType(loadedGameManagerSaveData.singleplayerSelectedCharacter), spawnPosition, spawnRotation);
+
+            singleplayerInputRootInstance = Instantiate(singlePlayerInputRoot);
+            GameObject playerCharacter = Instantiate(
+                GetCharacterPrefabFromCharacterType(loadedGameManagerSaveData.singleplayerSelectedCharacter),
+                spawnPosition,
+                spawnRotation,
+                singleplayerInputRootInstance.transform
+            );
+
             players[0] = playerCharacter;
             Debug.Log("GAMEMANAGER: Singleplayer Character Initialized!");
         }
@@ -227,7 +238,7 @@ namespace DigDig2
 
             // Spawn new player
             GameObject newPrefab = GetCharacterPrefabFromCharacterType(currentCharacter);
-            GameObject playerCharacter = Instantiate(newPrefab, oldPlayerPos, Quaternion.identity);
+            GameObject playerCharacter = Instantiate(newPrefab, oldPlayerPos, Quaternion.identity, singleplayerInputRootInstance.transform);
             
             // Inject Old Player percistance data
             EntityCharacterController playerEntityCharacterController = playerCharacter.GetComponent<EntityCharacterController>();
