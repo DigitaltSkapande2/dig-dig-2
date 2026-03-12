@@ -4,6 +4,7 @@ using DigDig2.CinemaCamera;
 using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
@@ -26,15 +27,7 @@ namespace DigDig2
         [Header("SavePoints")]
         [SerializeField] private SavePoint[] savePoints;
         [SerializeField] private Crystal[] crystals;
-
-        [Serializable]
-        public struct GameManagerGameSaveData
-        {
-            public CharacterType singleplayerSelectedCharacter;
-            public int highestReachedSavePointIndex;
-            public int highestKilledCrystal;
-        }
-        public GameManagerGameSaveData loadedGameManagerSaveData;
+        
         [SerializeField] public UnityEvent<CharacterType, GameObject> characterSwitched;
         [SerializeField] public UnityEvent<bool> gameStarted;
 
@@ -49,11 +42,20 @@ namespace DigDig2
         
         public bool IsMultiplayer => SaveManager.Instance.IsMultiplayer;
 
-        private PauseMenuController pauseMenuController;
-        private GameHudController gameHudController;
+
+        
+        // Saving
+        [Serializable]
+        public struct GameManagerGameSaveData
+        {
+            public CharacterType singleplayerSelectedCharacter;
+            public int highestReachedSavePointIndex;
+            public int highestKilledCrystal;
+        }
+        public GameManagerGameSaveData loadedGameManagerSaveData;
 
         // Player
-        private GameObject[] players = new GameObject[2];
+        public GameObject[] players = new GameObject[2];
         public GameObject PlayerOneCharacter
         {
             get
@@ -79,8 +81,13 @@ namespace DigDig2
                 return null;
             }
         }
+        
+        private PauseMenuController pauseMenuController;
+        private GameHudController gameHudController;
 
-        private GameObject singleplayerInputRootInstance;
+        // Input
+        public  PlayerInput playerOneInput;
+        public  PlayerInput playerTwoInput;
 
         // Character
         public CharacterType currentCharacter { private set; get; } = CharacterType.Max;
@@ -200,12 +207,12 @@ namespace DigDig2
                 return;
             }
 
-            singleplayerInputRootInstance = Instantiate(singlePlayerInputRoot);
+            playerOneInput = Instantiate(singlePlayerInputRoot).GetComponent<PlayerInput>();
             GameObject playerCharacter = Instantiate(
                 GetCharacterPrefabFromCharacterType(loadedGameManagerSaveData.singleplayerSelectedCharacter),
                 spawnPosition,
                 spawnRotation,
-                singleplayerInputRootInstance.transform
+                playerOneInput.transform
             );
 
             players[0] = playerCharacter;
@@ -238,7 +245,7 @@ namespace DigDig2
 
             // Spawn new player
             GameObject newPrefab = GetCharacterPrefabFromCharacterType(currentCharacter);
-            GameObject playerCharacter = Instantiate(newPrefab, oldPlayerPos, Quaternion.identity, singleplayerInputRootInstance.transform);
+            GameObject playerCharacter = Instantiate(newPrefab, oldPlayerPos, Quaternion.identity, playerOneInput.transform);
             
             // Inject Old Player percistance data
             EntityCharacterController playerEntityCharacterController = playerCharacter.GetComponent<EntityCharacterController>();
@@ -257,16 +264,11 @@ namespace DigDig2
 
         #region Multiplayer
 
-        private void InitializeMultiplayerPlayers()
+        public void RegisterMultiplayerPlayers(GameObject playerOne, GameObject playerTwo)
         {
-
-            GameObject maxPlayerCharacter = Instantiate(maxPrefab);
-            
-            GameObject miniPlayerCharacter = Instantiate(miniPrefab);
-            
-            // TODO: FIX CONTROLLS
-            
-            Debug.Log("GAMEMANAGER: Multiplayer Characters Initialized!");
+            players[0] = playerOne;
+            players[1] = playerTwo;
+            Debug.Log("GAMEMANAGER: Multiplayer Characters registered!");
         }
 
         #endregion

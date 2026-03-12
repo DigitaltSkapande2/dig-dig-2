@@ -2,9 +2,11 @@
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Serialization;
-using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
+using Image = UnityEngine.UIElements.Image;
 
 
 namespace DigDig2
@@ -20,10 +22,7 @@ namespace DigDig2
         [SerializeField] private Transform maxSpawnPoint;
         [SerializeField] private Transform minisSpawnPoint;
         [Header("UI Refs")]
-        [SerializeField] private Button switchCharacterButton;
-        [SerializeField] private Button startButton;
-        [SerializeField] private TMP_Text maxNameplateText;
-        [SerializeField] private TMP_Text minisNameplateText;
+        [SerializeField] private UIDocument uiDocument;
         [Header("Debug")]
         [SerializeField] bool verboseLogging = false;
         [FormerlySerializedAs("hostIsMax")] [SerializeField] private bool PlayerOneIsMax = true;
@@ -32,6 +31,14 @@ namespace DigDig2
         private GameObject minisDummyInstance;
         
         PlayerInputManager playerInputManager;
+        
+        PlayerInput playerOneInput;
+        PlayerInput playerTwoInput;
+        
+        Image playerOneCharacterImage;
+        Image playerTwoCharacterImage;
+        
+        [NonSerialized] public UnityEvent gameStartedEvent;
         
         #endregion
         #region UnityCallbacks
@@ -46,6 +53,7 @@ namespace DigDig2
             }
             
             playerInputManager = Instantiate(playerInputManagerPrefab).GetComponent<PlayerInputManager>();
+            playerInputManager.playerJoinedEvent.AddListener(OnPlayerJoined);
         }
 
         private void Start()
@@ -53,11 +61,13 @@ namespace DigDig2
             maxDummyInstance = Instantiate(maxPrefab, maxSpawnPoint.position, maxSpawnPoint.rotation);
             minisDummyInstance = Instantiate(minisPrefab, minisSpawnPoint.position, minisSpawnPoint.rotation);
 
-            switchCharacterButton.interactable = true;
-            startButton.interactable = true;
+            VisualElement visualElementBoundBox = uiDocument.rootVisualElement.Query("BoundBox");
 
-            switchCharacterButton.onClick.AddListener(OnSwitchCharacterButtonClicked);
-            startButton.onClick.AddListener(OnStartButtonClicked);
+            playerOneCharacterImage = visualElementBoundBox.Query<Image>("PlayerOne");
+            playerTwoCharacterImage = visualElementBoundBox.Query<Image>("PlayerTwo");
+            
+            playerOneCharacterImage.visible = false;
+            playerTwoCharacterImage.visible = false;
         }
 
         private void OnEnable()
@@ -82,16 +92,49 @@ namespace DigDig2
 
             GameObject playerOneCharacterInstance = PlayerOneIsMax ? maxInstance : minisInstance;
             GameObject playerTwoCharacterInstance = PlayerOneIsMax ? minisInstance : maxInstance;
+            
+            playerOneCharacterInstance.transform.SetParent(playerOneInput.transform);
+            playerTwoCharacterInstance.transform.SetParent(playerTwoInput.transform);
+            
+            GameManager.Instance.RegisterMultiplayerPlayers(playerOneCharacterInstance, playerTwoCharacterInstance);
+            
+            playerOneCharacterInstance.GetComponent<EntityCharacterController>().Frozen = false;
+            playerOneCharacterInstance.GetComponent<EntityCharacterController>().Frozen = false;
         }
 
         private void EnablePlayerInput() 
         {
-            GameManager.Instance.PlayerOneCharacter.GetComponent<EntityCharacterController>().Frozen = false;
+
         }
 
-        public void OnPlayerJoined()
+        public void OnPlayerJoined(PlayerInput playerInput)
         {
-            print($"Player joined");
+            if (playerOneInput == null)
+            {
+                playerOneInput = playerInput;
+                playerOneCharacterImage.visible = true;
+            }
+            else if (playerTwoInput == null)
+            {
+                playerTwoInput = playerInput;
+                playerTwoCharacterImage.visible = true;
+                OnBothPlayersJoined();
+            }
+            else
+            {
+                Debug.LogError("Too many players joined, this should not be allowed by the PlayerInputManager.");
+            }
+            
+            playerInput.SwitchCurrentActionMap("UI");
+            playerInput.notificationBehavior = PlayerNotifications.InvokeUnityEvents;
+            
+            
+            print($"Player joined, {playerInput.user}");
+        }
+
+        private void OnBothPlayersJoined()
+        {
+            
         }
         
         #region Util
