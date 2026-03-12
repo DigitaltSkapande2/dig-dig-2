@@ -20,20 +20,19 @@ namespace DigDig2.Debugging.Menu
 		[SerializeField] private GameObject debugMenuElementPrefab;
 
 		private readonly List<DebugMenuElement> debugMenuElements = new( );
-		private ProjectWideInputActions.DebugMenuActions inputMap;
 
-		private void Start( )
-		{
-			inputMap = InputManager.Instance.inputActions.DebugMenu;
-			inputMap.OpenDebugMenu.started += OpenMenuFromEvent;
-			inputMap.CloseDebugMenu.started += CloseMenuFromEvent;
-		}
-
-		private void OnDisable( )
-		{
-			inputMap.OpenDebugMenu.started -= OpenMenuFromEvent;
-			inputMap.CloseDebugMenu.started -= CloseMenuFromEvent;
-		}
+		// private void Start( )
+		// {
+		// 	inputMap = InputManager.Instance.inputActions.DebugMenu;
+		// 	inputMap.OpenDebugMenu.started += OpenMenuFromEvent;
+		// 	inputMap.CloseDebugMenu.started += CloseMenuFromEvent;
+		// }
+		//
+		// private void OnDisable( )
+		// {
+		// 	inputMap.OpenDebugMenu.started -= OpenMenuFromEvent;
+		// 	inputMap.CloseDebugMenu.started -= CloseMenuFromEvent;
+		// }
 
 		public void OpenMenu( )
 		{

@@ -13,7 +13,7 @@ using UnityEngine.InputSystem;
 
 namespace DigDig2.Debugging.Console
 {
-	public class DebugConsole : Singleton<DebugConsole>, ProjectWideInputActions.IDebugConsoleActions
+	public class DebugConsole : Singleton<DebugConsole>
 	{
 		[SerializeField] [TextArea] private string standardSuggestion;
 		[SerializeField] private ConsoleCommand[ ] commands;
@@ -36,9 +36,7 @@ namespace DigDig2.Debugging.Console
 		private int currentSuggestionIndex = -1;
 		private List<string> currentSuggestions = new( );
 		private int historyIndex = -1;
-
-		// Input handling
-		private ProjectWideInputActions.DebugConsoleActions inputMap;
+		
 
 		// Console state management
 		private bool isConsoleOpen;
@@ -117,14 +115,7 @@ namespace DigDig2.Debugging.Console
 		}
 
 		#region Unity Messages
-
-		private void Start( )
-		{
-			inputMap = InputManager.Instance.inputActions.DebugConsole;
-			inputMap.SetCallbacks( this );
-		}
-
-		private void OnDisable( ) { inputMap.RemoveCallbacks( this ); }
+		
 
 		#endregion
 

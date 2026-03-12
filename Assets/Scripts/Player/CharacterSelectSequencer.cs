@@ -7,6 +7,7 @@ using UnityEngine.Serialization;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 using DigDig2.Game;
+using DigDig2.Player;
 
 
 namespace DigDig2
@@ -30,15 +31,20 @@ namespace DigDig2
         private GameObject maxDummyInstance;
         private GameObject minisDummyInstance;
         
-        PlayerInputManager playerInputManager;
+        private PlayerInputManager playerInputManager;
         
-        PlayerInput playerOneInput;
-        PlayerInput playerTwoInput;
+        private PlayerInput playerOneInput;
+        private PlayerInput playerTwoInput;
+
+        private VisualElement realRoot; // For Opacity Transition
+        private Image playerOneCharacterImage;
+        private Image playerTwoCharacterImage;
+        private Button startButton;
+
+        private int playerOneNavigation = 2;
+        private int playerTwoNavigation = 2;
         
-        Image playerOneCharacterImage;
-        Image playerTwoCharacterImage;
-        
-        [NonSerialized] public UnityEvent gameStartedEvent;
+        [NonSerialized] public UnityEvent gameStartedEvent = new();
         
         #endregion
         #region UnityCallbacks
@@ -61,7 +67,11 @@ namespace DigDig2
             maxDummyInstance = Instantiate(maxPrefab, maxSpawnPoint.position, maxSpawnPoint.rotation);
             minisDummyInstance = Instantiate(minisPrefab, minisSpawnPoint.position, minisSpawnPoint.rotation);
 
-            VisualElement visualElementBoundBox = uiDocument.rootVisualElement.Query("BoundBox");
+            realRoot = uiDocument.rootVisualElement.Query("RealRoot");
+            VisualElement visualElementBoundBox = realRoot.Query("BoundBox");
+            startButton = realRoot.Query<Button>("StartButton");
+            startButton.visible = false;
+            startButton.clicked += OnStartButtonClicked;
 
             playerOneCharacterImage = visualElementBoundBox.Query<Image>("PlayerOne");
             playerTwoCharacterImage = visualElementBoundBox.Query<Image>("PlayerTwo");
@@ -100,6 +110,17 @@ namespace DigDig2
             
             playerOneCharacterInstance.GetComponent<EntityCharacterController>().Frozen = false;
             playerOneCharacterInstance.GetComponent<EntityCharacterController>().Frozen = false;
+            playerOneInput.notificationBehavior = PlayerNotifications.BroadcastMessages;
+            playerTwoInput.notificationBehavior = PlayerNotifications.BroadcastMessages;
+
+            realRoot.style.opacity = new StyleFloat(0f);
+            Invoke(nameof(DisableUIDoc), 0.5f);
+            gameStartedEvent.Invoke();
+        }
+
+        private void DisableUIDoc()
+        {
+            uiDocument.enabled = false;
         }
 
         private void EnablePlayerInput() 
@@ -112,12 +133,16 @@ namespace DigDig2
             if (playerOneInput == null)
             {
                 playerOneInput = playerInput;
+                playerInput.onActionTriggered += OnPlayerOneInputActionTriggered;
+                playerOneNavigation = 0;
                 playerOneCharacterImage.visible = true;
             }
             else if (playerTwoInput == null)
             {
                 playerTwoInput = playerInput;
                 playerTwoCharacterImage.visible = true;
+                playerInput.onActionTriggered += OnPlayerTwoInputActionTriggered;
+                playerTwoNavigation = 0;
                 OnBothPlayersJoined();
             }
             else
@@ -125,16 +150,79 @@ namespace DigDig2
                 Debug.LogError("Too many players joined, this should not be allowed by the PlayerInputManager.");
             }
             
-            playerInput.SwitchCurrentActionMap("UI");
-            playerInput.notificationBehavior = PlayerNotifications.InvokeUnityEvents;
-            
+            playerInput.notificationBehavior = PlayerNotifications.InvokeCSharpEvents;
+
+            UpdatePlayerIconPositions();
             
             print($"Player joined, {playerInput.user}");
+        }
+
+        private void OnPlayerOneInputActionTriggered(InputAction.CallbackContext context)
+        {
+            if (context.started && context.action.name == "Move")
+            {
+                Vector2 input = context.ReadValue<Vector2>();
+
+                playerOneNavigation += Math.Sign(input.x);
+                playerOneNavigation = Math.Clamp(playerOneNavigation, -1, 1);
+                UpdatePlayerIconPositions();
+            }
+        }
+        
+        private void OnPlayerTwoInputActionTriggered(InputAction.CallbackContext context)
+        {
+            if (context.started && context.action.name == "Move")
+            {
+                Vector2 input = context.ReadValue<Vector2>();
+                playerTwoNavigation += Math.Sign(input.x);
+                playerTwoNavigation = Math.Clamp(playerTwoNavigation, -1, 1);
+                
+                UpdatePlayerIconPositions();
+            }
+        }
+
+        private bool CanStartGame()
+        {
+            return playerOneNavigation != playerTwoNavigation && playerOneNavigation != 0 && playerTwoNavigation != 0 &&
+                   playerOneInput && playerTwoInput;
         }
 
         private void OnBothPlayersJoined()
         {
             
+        }
+
+        private void UpdatePlayerIconPositions()
+        {
+            playerOneCharacterImage.style.translate = new StyleTranslate(
+                new Translate(
+                    new Length(playerOneNavigation * 50, LengthUnit.Percent),
+                    new Length(playerOneNavigation == playerTwoNavigation ? 50 : 0, LengthUnit.Percent)
+                )
+            );
+            
+            playerTwoCharacterImage.style.translate = new StyleTranslate(
+                new Translate(
+                    new Length(playerTwoNavigation * 50, LengthUnit.Percent),
+                    new Length(playerTwoNavigation == playerOneNavigation ? -50 : 0, LengthUnit.Percent)
+                )
+            );
+
+            if (CanStartGame())
+            {
+                if ( playerOneInput.devices[0] is Keyboard || playerOneInput.devices[0] is Mouse )
+                {
+                    startButton.visible = true;
+                }
+                else if ( playerOneInput.devices[0] is Gamepad )
+                {
+                    
+                }
+            }
+            else
+            {
+                startButton.visible = false;
+            }
         }
         
         #region Util

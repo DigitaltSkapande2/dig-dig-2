@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 namespace DigDig2.Util.ClickableMeshes
 {
 	[RequireComponent( typeof( Camera ) )]
-	public class MeshClickerCamera : MonoBehaviour, ProjectWideInputActions.IUIActions
+	public class MeshClickerCamera : MonoBehaviour
 	{
 		[SerializeField] private LayerMask clickableLayerMask;
 
@@ -28,9 +28,9 @@ namespace DigDig2.Util.ClickableMeshes
 			raycastHit.collider?.GetComponent<ClickableMesh>( )?.OnPointerClickStart( );
 		}
 
-		private void OnEnable( ) { InputManager.Instance.inputActions.UI.SetCallbacks( this ); }
-
-		private void OnDisable( ) { InputManager.Instance.inputActions.UI.SetCallbacks( this ); }
+		// private void OnEnable( ) { InputManager.Instance.inputActions.UI.SetCallbacks( this ); }
+		//
+		// private void OnDisable( ) { InputManager.Instance.inputActions.UI.SetCallbacks( this ); }
 
 		public void OnNavigate( InputAction.CallbackContext context ) { }
 

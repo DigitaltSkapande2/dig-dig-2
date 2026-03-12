@@ -74,7 +74,7 @@ namespace DigDig2.Input
     /// }
     /// </code>
     /// </example>
-    public partial class @ProjectWideInputActions: IInputActionCollection2, IDisposable
+    public partial class @GameInputSystem: IInputActionCollection2, IDisposable
     {
         /// <summary>
         /// Provides access to the underlying asset instance.
@@ -84,7 +84,7 @@ namespace DigDig2.Input
         /// <summary>
         /// Constructs a new instance.
         /// </summary>
-        public @ProjectWideInputActions()
+        public @GameInputSystem()
         {
             asset = InputActionAsset.FromJson(@"{
     ""version"": 1,
@@ -1313,12 +1313,12 @@ namespace DigDig2.Input
             m_DebugMenu_CloseDebugMenu = m_DebugMenu.FindAction("CloseDebugMenu", throwIfNotFound: true);
         }
 
-        ~@ProjectWideInputActions()
+        ~@GameInputSystem()
         {
-            UnityEngine.Debug.Assert(!m_GamePlay.enabled, "This will cause a leak and performance issues, ProjectWideInputActions.GamePlay.Disable() has not been called.");
-            UnityEngine.Debug.Assert(!m_UI.enabled, "This will cause a leak and performance issues, ProjectWideInputActions.UI.Disable() has not been called.");
-            UnityEngine.Debug.Assert(!m_DebugConsole.enabled, "This will cause a leak and performance issues, ProjectWideInputActions.DebugConsole.Disable() has not been called.");
-            UnityEngine.Debug.Assert(!m_DebugMenu.enabled, "This will cause a leak and performance issues, ProjectWideInputActions.DebugMenu.Disable() has not been called.");
+            UnityEngine.Debug.Assert(!m_GamePlay.enabled, "This will cause a leak and performance issues, GameInputSystem.GamePlay.Disable() has not been called.");
+            UnityEngine.Debug.Assert(!m_UI.enabled, "This will cause a leak and performance issues, GameInputSystem.UI.Disable() has not been called.");
+            UnityEngine.Debug.Assert(!m_DebugConsole.enabled, "This will cause a leak and performance issues, GameInputSystem.DebugConsole.Disable() has not been called.");
+            UnityEngine.Debug.Assert(!m_DebugMenu.enabled, "This will cause a leak and performance issues, GameInputSystem.DebugMenu.Disable() has not been called.");
         }
 
         /// <summary>
@@ -1408,12 +1408,12 @@ namespace DigDig2.Input
         /// </summary>
         public struct GamePlayActions
         {
-            private @ProjectWideInputActions m_Wrapper;
+            private @GameInputSystem m_Wrapper;
 
             /// <summary>
             /// Construct a new instance of the input action map wrapper class.
             /// </summary>
-            public GamePlayActions(@ProjectWideInputActions wrapper) { m_Wrapper = wrapper; }
+            public GamePlayActions(@GameInputSystem wrapper) { m_Wrapper = wrapper; }
             /// <summary>
             /// Provides access to the underlying input action "GamePlay/Move".
             /// </summary>
@@ -1594,12 +1594,12 @@ namespace DigDig2.Input
         /// </summary>
         public struct UIActions
         {
-            private @ProjectWideInputActions m_Wrapper;
+            private @GameInputSystem m_Wrapper;
 
             /// <summary>
             /// Construct a new instance of the input action map wrapper class.
             /// </summary>
-            public UIActions(@ProjectWideInputActions wrapper) { m_Wrapper = wrapper; }
+            public UIActions(@GameInputSystem wrapper) { m_Wrapper = wrapper; }
             /// <summary>
             /// Provides access to the underlying input action "UI/Navigate".
             /// </summary>
@@ -1794,12 +1794,12 @@ namespace DigDig2.Input
         /// </summary>
         public struct DebugConsoleActions
         {
-            private @ProjectWideInputActions m_Wrapper;
+            private @GameInputSystem m_Wrapper;
 
             /// <summary>
             /// Construct a new instance of the input action map wrapper class.
             /// </summary>
-            public DebugConsoleActions(@ProjectWideInputActions wrapper) { m_Wrapper = wrapper; }
+            public DebugConsoleActions(@GameInputSystem wrapper) { m_Wrapper = wrapper; }
             /// <summary>
             /// Provides access to the underlying input action "DebugConsole/OpenDebugConsole".
             /// </summary>
@@ -1931,12 +1931,12 @@ namespace DigDig2.Input
         /// </summary>
         public struct DebugMenuActions
         {
-            private @ProjectWideInputActions m_Wrapper;
+            private @GameInputSystem m_Wrapper;
 
             /// <summary>
             /// Construct a new instance of the input action map wrapper class.
             /// </summary>
-            public DebugMenuActions(@ProjectWideInputActions wrapper) { m_Wrapper = wrapper; }
+            public DebugMenuActions(@GameInputSystem wrapper) { m_Wrapper = wrapper; }
             /// <summary>
             /// Provides access to the underlying input action "DebugMenu/OpenDebugMenu".
             /// </summary>
