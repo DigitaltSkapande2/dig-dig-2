@@ -9,7 +9,7 @@ using UnityEngine.InputSystem;
 namespace DigDig2.Player
 {
 	[RequireComponent( typeof( EntityCharacterController ), typeof( SingleplayerCharacterSwitcher ) )]
-	public class PlayerCharacterInput : MonoBehaviour, ProjectWideInputActions.IPlayerActions
+	public class PlayerCharacterInput : MonoBehaviour
 	{
 		// Character Switching
 		private SingleplayerCharacterSwitcher characterSwitching;
@@ -24,9 +24,7 @@ namespace DigDig2.Player
 		private Interactor interactor;
 
 		private Camera mainCamera;
-
-		// Input
-		private ProjectWideInputActions.PlayerActions playerActions;
+		
 
 		public bool InputEnabled { get; private set; }
 
@@ -39,16 +37,6 @@ namespace DigDig2.Player
 
 		private void Start( )
 		{
-			if ( !GameManager.Instance.Paused ) EnableInput( );
-			GameManager.Instance.pauseStateChanged.AddListener( isPaused =>
-				{
-					if ( isPaused )
-						DisableInput( );
-					else
-						EnableInput( );
-				}
-			);
-
 			mainCamera = GameCamera.Instance.mainCamera;
 			hasStarted = true;
 		}
@@ -66,52 +54,40 @@ namespace DigDig2.Player
 				mainCamera = GameCamera.Instance.mainCamera;
 		}
 
-		private void OnEnable( )
-		{
-			if ( hasStarted ) EnableInput( );
-		}
-
-		private void OnDisable( ) { DisableInput( ); }
-
-		#region Input Setup
-
-		public void EnableInput( )
-		{
-			playerActions = InputManager.Instance.inputActions.Player;
-			playerActions.SetCallbacks( this );
-			InputEnabled = true;
-		}
-
-		private void DisableInput( )
-		{
-			playerActions.RemoveCallbacks( this );
-			InputEnabled = false;
-		}
-
-		#endregion
-
 		#region Input Action Callbacks
 
-		public void OnMove( InputAction.CallbackContext context ) { inputMoveVector = context.ReadValue<Vector2>( ); }
-
-		public void OnInteract( InputAction.CallbackContext context )
+		public void OnMove(InputValue context)
 		{
-			if ( interactor ) interactor.SendInteraction( context.phase );
+			inputMoveVector = context.Get<Vector2>();
 		}
 
-		public void OnSwitchCharacter( InputAction.CallbackContext context )
+		public void OnInteract(InputValue context)
 		{
-			if ( context.performed && characterSwitching != null ) characterSwitching.SwitchCharacter( );
+			//if (interactor) interactor.SendInteraction(context.phase); // TODO: Fix interactions
 		}
 
-		public void OnDash( InputAction.CallbackContext context )
+		public void OnSwitchCharacter(InputValue context)
 		{
-			if ( context.performed ) entityCharacterController.Dash( );
+			if (context.isPressed && characterSwitching != null)
+			{
+				characterSwitching.SwitchCharacter();
+			}
 		}
 
-		public void OnPause( InputAction.CallbackContext context )
+		public void OnDash(InputValue context)
 		{
-			if ( context.performed ) GameManager.Instance.Pause( );
+			if (context.isPressed)
+			{
+				entityCharacterController.Dash();
+			}
+		}
+
+		public void OnPause(InputValue context)
+		{
+			if (context.isPressed)
+			{
+				GameManager.Instance.Pause();
+			}
 		}
 
 		#endregion

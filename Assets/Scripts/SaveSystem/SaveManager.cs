@@ -17,6 +17,8 @@ namespace DigDig2.SaveSystem
 		private readonly Dictionary<string, ISaveable> registeredSavables = new( );
 		private readonly List<string> uniqueNames = new( );
 		private GameSave loadedGameSave;
+		
+		public bool IsMultiplayer => loadedGameSave.isMultiplayer;
 
 		private bool HasLoadedSave
 		{
@@ -36,6 +38,7 @@ namespace DigDig2.SaveSystem
 		public class GameSave
 		{
 			public string saveName;
+			public bool isMultiplayer;
 			public Dictionary<string, object> stateData;
 			public string version;
 		}
@@ -65,7 +68,7 @@ namespace DigDig2.SaveSystem
 
 		#region Save Creation
 
-		public void CreateNewSave( string saveName = "" )
+		public void CreateNewSave( bool isMultiplayer = false, string saveName = "" )
 		{
 			if ( saveName == string.Empty ) saveName = GetNextFreeSaveName( );
 
@@ -73,6 +76,7 @@ namespace DigDig2.SaveSystem
 			{
 				saveName = saveName,
 				version = Application.version,
+				isMultiplayer = isMultiplayer,
 				stateData = new( )
 			};
 		}

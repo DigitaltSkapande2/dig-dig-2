@@ -1,306 +1,353 @@
 using System;
-
 using DigDig2.CinemaCamera;
-using DigDig2.Combat;
+using DigDig2.Util;
 using DigDig2.SaveSystem;
 using DigDig2.UI.Controllers;
-using DigDig2.Util;
-
+using DigDig2.Combat;
 using Newtonsoft.Json;
-
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 namespace DigDig2.Game
 {
-	public enum CharacterType { Max, Mini }
+    public enum CharacterType
+    {
+        Max,
+        Mini,
+    }
 
-	public class GameManager : Singleton<GameManager>, ISaveable
-	{
-		[Header( "Player Prefabs" )]
-		[SerializeField] private CharacterType defaultSingleplayerCharacter = CharacterType.Max;
+    public class GameManager : Singleton<GameManager>, ISaveable
+    {
+        [Header("Player Prefabs")]
+        [SerializeField] private CharacterType defaultSingleplayerCharacter = CharacterType.Max;
+        [SerializeField] private GameObject maxPrefab;
+        [SerializeField] private GameObject miniPrefab;
+        [SerializeField] private GameObject singlePlayerInputRoot;
 
-		[SerializeField] private GameObject maxPrefab;
-		[SerializeField] private GameObject miniPrefab;
+        [Header("SavePoints")]
+        [SerializeField] private SavePoint[] savePoints;
+        [SerializeField] private Crystal[] crystals;
+        
+        [SerializeField] public UnityEvent<CharacterType, GameObject> characterSwitched;
+        [SerializeField] public UnityEvent<bool> gameStarted;
 
-		[Header( "SavePoints" )]
-		[SerializeField] private SavePoint[ ] savePoints;
+        public bool Paused
+        {
+            get
+            {
+                return pauseMenuController.Paused;
+            }
+        }
+        [SerializeField] public UnityEvent<bool> pauseStateChanged;
+        
+        public bool IsMultiplayer => SaveManager.Instance.IsMultiplayer;
 
-		[SerializeField] private Crystal[ ] crystals;
-		public GameManagerGameSaveData loadedGameManagerSaveData;
-		[SerializeField] public UnityEvent<CharacterType, GameObject> characterSwitched;
-		[SerializeField] public UnityEvent<bool> pauseStateChanged;
 
-		// Player
-		private readonly GameObject[ ] players = new GameObject[ 2 ];
-		private GameHudController gameHudController;
+        
+        // Saving
+        [Serializable]
+        public struct GameManagerGameSaveData
+        {
+            public CharacterType singleplayerSelectedCharacter;
+            public int highestReachedSavePointIndex;
+            public int highestKilledCrystal;
+        }
+        public GameManagerGameSaveData loadedGameManagerSaveData;
 
-		private PauseMenuController pauseMenuController;
-
-		public bool Paused
-		{
-			get => pauseMenuController.Paused;
-		}
-
-		public bool IsMultiplayer
-		{
-			get => loadedGameManagerSaveData.isMultiplayer;
-		}
-
-		public GameObject PlayerOneCharacter
-		{
-			get
-			{
-				#if UNITY_EDITOR
-				if ( players[ 0 ] ) return players[ 0 ];
-
-				Debug.LogError( "No Players have been initialized" );
-				#else
+        // Player
+        public GameObject[] players = new GameObject[2];
+        public GameObject PlayerOneCharacter
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (players[0]) return players[0];
+                //else Debug.LogError("No Players have been initialized");
+                #else
                     return players[0];
-				#endif
+                #endif
 
-				return null;
-			}
-		}
+                return null;
+            }
+        }
 
-		public GameObject PlayerTwoCharacter
-		{
-			get
-			{
-				if ( players[ 1 ] ) return players[ 1 ];
+        public GameObject PlayerTwoCharacter
+        {
+            get
+            {
+                if (players[1]) return players[1];
+                else Debug.LogAssertion("No Players have been initialized");
 
-				Debug.LogAssertion( "No Players have been initialized" );
+                return null;
+            }
+        }
+        
+        private PauseMenuController pauseMenuController;
+        private GameHudController gameHudController;
 
-				return null;
-			}
-		}
+        // Input
+        public  PlayerInput playerOneInput;
+        public  PlayerInput playerTwoInput;
 
-		// Character
-		public CharacterType CurrentCharacter { private set; get; } = CharacterType.Max;
+        // Character
+        public CharacterType currentCharacter { private set; get; } = CharacterType.Max;
 
-		protected override void Awake( )
-		{
-			base.Awake( );
 
-			pauseMenuController = GetComponentInChildren<PauseMenuController>( );
-			pauseMenuController.stateChanged.AddListener( state => { pauseStateChanged.Invoke( state ); } );
+        private void Awake()
+        {
+            pauseMenuController = GetComponentInChildren<PauseMenuController>();
+            pauseMenuController.stateChanged.AddListener((bool state) =>
+            {
+                pauseStateChanged.Invoke(state);
+            });
 
-			gameHudController = GetComponentInChildren<GameHudController>( );
-		}
+            gameHudController = GetComponentInChildren<GameHudController>();
+        }
 
-		public void Start( )
-		{
-			SaveManager.Instance.RegisterSavable( "GameManager", this );
+        public void Start()
+        {
+            SaveManager.Instance.RegisterSavable("GameManager", this, true);
+            
+            StartGame();
+        }
+        
+        private void StartGame()
+        {
+            InitializeSavePoint();
+            KillAlreadyKilledCrystals();
+            
+            Debug.Log(loadedGameManagerSaveData.highestReachedSavePointIndex);
+            SavePoint savePointToStartAt = savePoints[loadedGameManagerSaveData.highestReachedSavePointIndex];
 
-			StartGame( );
-		}
+            if (IsMultiplayer)
+            {
+                savePointToStartAt.ServerStartMultiplayerStartSequence();
+            }
+            else
+            {
+                savePointToStartAt.ServerStartSingleplayerStartSequence();
+                GameCamera.Instance.SetTargetRotation(savePointToStartAt.cameraYRotation, true);
+            }
+        }
 
-		private void OnDestroy( )
-		{
-			if ( SaveManager.Instance ) SaveManager.Instance.Reset( );
-		}
+        private void InitializeSavePoint()
+        {
+            Debug.Log($"savePointReached in Loaded Save {loadedGameManagerSaveData.highestReachedSavePointIndex}");
 
-		private void StartGame( )
-		{
-			InitializeSavePoint( );
-			KillAlreadyKilledCrystals( );
+            for (int i = 0; i < savePoints.Length; i++)
+            {
+                if (savePoints[i])
+                {
+                    SavePoint savePoint = savePoints[i];
+                    int gay = i;
+                    savePoint.SetSpawnPointReached(i <= loadedGameManagerSaveData.highestReachedSavePointIndex);
+                    savePoint.savePointReached.AddListener(() => SetHighestReachedSavePointIndex(gay));
+                    Debug.Log(savePoint.name + " " + i);
+                }
+            }
+        }
 
-			Debug.Log( loadedGameManagerSaveData.highestReachedSavePointIndex );
-			SavePoint savePointToStartAt = savePoints[ loadedGameManagerSaveData.highestReachedSavePointIndex ];
+        private void KillAlreadyKilledCrystals()
+        {
+            Debug.Log($"Crystals killed in Loaded Save {loadedGameManagerSaveData.highestKilledCrystal}");
 
-			if ( IsMultiplayer )
-				savePointToStartAt.ServerStartMultiplayerStartSequence( );
-			else
-			{
-				savePointToStartAt.ServerStartSingleplayerStartSequence( );
-				GameCamera.Instance.SetTargetRotation( savePointToStartAt.cameraYRotation, true );
-			}
-		}
+            for (int i = 0; i < crystals.Length; i++)
+            {
+                if (crystals[i])
+                {
+                    Crystal crystal = crystals[i];
+                    int gay = i;
+                    if (i <= loadedGameManagerSaveData.highestKilledCrystal) 
+                    {
+                        Destroy(crystal.gameObject);
+                        Debug.Log($"crystal [{i}] KILLED");
+                    }
+                    else 
+                    {
+                        crystal.GetComponent<Health>().death.AddListener(() => SetHighestKilledCrystalIndex(gay));
+                    }
+                }
+            }
+        }
 
-		private void InitializeSavePoint( )
-		{
-			Debug.Log( $"savePointReached in Loaded Save {loadedGameManagerSaveData.highestReachedSavePointIndex}" );
+        void OnDestroy()
+        {
+            if (SaveManager.Instance) SaveManager.Instance.Reset();
+        }
 
-			for ( int i = 0; i < savePoints.Length; i++ )
-			{
-				if ( !savePoints[ i ] ) continue;
+        private GameObject GetCharacterPrefabFromCharacterType(CharacterType characterType)
+        {
+            return characterType switch
+            {
+                CharacterType.Max => maxPrefab,
+                CharacterType.Mini => miniPrefab,
+                _ => null,
+            };
+        }
 
-				SavePoint savePoint = savePoints[ i ];
-				int gay = i;
-				savePoint.SetSpawnPointReached( i <= loadedGameManagerSaveData.highestReachedSavePointIndex );
-				savePoint.savePointReached.AddListener( ( ) => SetHighestReachedSavePointIndex( gay ) );
-				Debug.Log( savePoint.name + " " + i );
-			}
-		}
+        public void SaveAndLoadMainMenu()
+        {
+            SaveManager.Instance.SaveAllAndWriteToFile();
+            SceneManager.LoadScene(0);
+        }
 
-		private void KillAlreadyKilledCrystals( )
-		{
-			Debug.Log( $"Crystals killed in Loaded Save {loadedGameManagerSaveData.highestKilledCrystal}" );
+        public async void ReloadGameScene()
+        {
+            await SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+            StartGame();
+        }
 
-			for ( int i = 0; i < crystals.Length; i++ )
-			{
-				if ( !crystals[ i ] ) continue;
+        #region Singleplayer
 
-				Crystal crystal = crystals[ i ];
-				int gay = i;
-				if ( i <= loadedGameManagerSaveData.highestKilledCrystal )
-				{
-					Destroy( crystal.gameObject );
-					Debug.Log( $"crystal [{i}] KILLED" );
-				}
-				else
-					crystal.GetComponent<Health>( ).death.AddListener( ( ) => SetHighestKilledCrystalIndex( gay ) );
-			}
-		}
+        public void InitializeSingleplayerCharacter(Vector3 spawnPosition, Quaternion spawnRotation)
+        {
+            if (IsMultiplayer)
+            {
+                Debug.LogError("Tried to initialize singleplayer character in multiplayer mode, this is not allowed.");
+                return;
+            }
 
-		private GameObject GetCharacterPrefabFromCharacterType( CharacterType characterType )
-		{
-			return characterType switch
-			{
-				CharacterType.Max => maxPrefab,
-				CharacterType.Mini => miniPrefab,
-				_ => null
-			};
-		}
+            playerOneInput = Instantiate(singlePlayerInputRoot).GetComponent<PlayerInput>();
+            GameObject playerCharacter = Instantiate(
+                GetCharacterPrefabFromCharacterType(loadedGameManagerSaveData.singleplayerSelectedCharacter),
+                spawnPosition,
+                spawnRotation,
+                playerOneInput.transform
+            );
 
-		public void SaveAndLoadMainMenu( )
-		{
-			SaveManager.Instance.SaveAllAndWriteToFile( );
-			SceneManager.LoadScene( 0 );
-		}
+            players[0] = playerCharacter;
+            Debug.Log("GAMEMANAGER: Singleplayer Character Initialized!");
+        }
 
-		public async void ReloadGameScene( )
-		{
-			await SceneManager.LoadSceneAsync( SceneManager.GetActiveScene( ).buildIndex );
-			StartGame( );
-		}
+        public void SingleplayerSwitchCharacter()
+        {
+            if (IsMultiplayer)
+            {
+                Debug.LogError("Tried to switch character in multiplayer mode, this is not allowed.");
+            }
 
-		#region Multiplayer
+            // Harvest old player data
+            EntityCharacterController oldPlayerEntityCharacterController = PlayerOneCharacter.GetComponent<EntityCharacterController>();
+            Health oldPlayerHealthComponent = PlayerOneCharacter.GetComponent<Health>();
 
-		private void InitializeMultiplayerPlayers( )
-		{
-			GameObject maxPlayerCharacter = Instantiate( maxPrefab );
+            Vector3 oldPlayerPos = PlayerOneCharacter.transform.position;
 
-			GameObject miniPlayerCharacter = Instantiate( miniPrefab );
+            Vector3 oldPlayerLookVector = oldPlayerEntityCharacterController.GetForwardVector();
+            Vector3 oldPlayerInputMoveVector = oldPlayerEntityCharacterController.inputMoveVector;
 
-			// TODO: FIX CONTROLS
+            int oldHealthPoints = oldPlayerHealthComponent.HealthPoints;
 
-			Debug.Log( "GAMEMANAGER: Multiplayer Characters Initialized!" );
-		}
+            // Kill old player
+            Destroy(PlayerOneCharacter);
 
-		#endregion
+            // Switch Logic
+            currentCharacter = CharacterType.Max == currentCharacter ? CharacterType.Mini : CharacterType.Max;
 
-		#region Enemy Focusing
+            // Spawn new player
+            GameObject newPrefab = GetCharacterPrefabFromCharacterType(currentCharacter);
+            GameObject playerCharacter = Instantiate(newPrefab, oldPlayerPos, Quaternion.identity, playerOneInput.transform);
+            
+            // Inject Old Player percistance data
+            EntityCharacterController playerEntityCharacterController = playerCharacter.GetComponent<EntityCharacterController>();
+            Health playerHealthComponent = playerCharacter.GetComponent<Health>();
+            
+            playerEntityCharacterController.LookTowards(playerCharacter.transform.position + oldPlayerLookVector, false);
+            playerEntityCharacterController.inputMoveVector = oldPlayerInputMoveVector;
+            
+            playerHealthComponent.HealthPoints = oldHealthPoints;
+            
+            players[0] = playerCharacter;
+            characterSwitched.Invoke(currentCharacter, playerCharacter);
+        }
 
-		public void FocusOnPosition( bool visible, Vector3 position ) { gameHudController.UpdateFocusTarget( visible, position ); }
+        #endregion
 
-		#endregion
+        #region Multiplayer
 
-		[Serializable]
-		public struct GameManagerGameSaveData
-		{
-			public CharacterType singleplayerSelectedCharacter;
-			public bool isMultiplayer;
-			public int highestReachedSavePointIndex;
-			public int highestKilledCrystal;
-		}
+        public void RegisterMultiplayerPlayers(GameObject playerOne, GameObject playerTwo)
+        {
+            players[0] = playerOne;
+            players[1] = playerTwo;
+            Debug.Log("GAMEMANAGER: Multiplayer Characters registered!");
+        }
 
-		#region Singleplayer
+        #endregion
 
-		public void InitializeSingleplayerCharacter( Vector3 spawnPosition, Quaternion spawnRotation )
-		{
-			if ( IsMultiplayer )
-			{
-				Debug.LogError( "Tried to initialize singleplayer character in multiplayer mode, this is not allowed." );
-				return;
-			}
+        #region Enemy Focusing
 
-			GameObject playerCharacter = Instantiate( GetCharacterPrefabFromCharacterType( loadedGameManagerSaveData.singleplayerSelectedCharacter ), spawnPosition, spawnRotation );
-			players[ 0 ] = playerCharacter;
-			Debug.Log( "GAMEMANAGER: Singleplayer Character Initialized!" );
-		}
+        public void FocusOnPosition(bool visible, Vector3 position)
+        {
+            gameHudController.UpdateFocusTarget(visible, position);
+        }
 
-		public void SingleplayerSwitchCharacter( )
-		{
-			if ( IsMultiplayer ) Debug.LogError( "Tried to switch character in multiplayer mode, this is not allowed." );
+        #endregion
+        #region Saving and Loading
 
-			// Harvest old player data
-			EntityCharacterController oldPlayerEntityCharacterController = PlayerOneCharacter.GetComponent<EntityCharacterController>( );
-			Health oldPlayerHealthComponent = PlayerOneCharacter.GetComponent<Health>( );
+        public object CollectData()
+        {
+            return loadedGameManagerSaveData;
+        }
 
-			Vector3 oldPlayerPos = PlayerOneCharacter.transform.position;
+        public void RestoreState(object dataObject)
+        {
+            Debug.Log("SUNG JINWOOOO");
+            if (dataObject == null)
+            {
+                Debug.Log("SUNG KIM");
+                loadedGameManagerSaveData = new GameManagerGameSaveData
+                {
+                    singleplayerSelectedCharacter = defaultSingleplayerCharacter,
+                    highestReachedSavePointIndex = 0,
+                    highestKilledCrystal = -1,
+                };
+            }
+            else
+            {
+                Debug.Log($"GAAAY {dataObject}");
+                try
+                {
+                    loadedGameManagerSaveData = (GameManagerGameSaveData)dataObject;
+                }
+                catch
+                {
+                    loadedGameManagerSaveData = JsonConvert.DeserializeObject<GameManagerGameSaveData>(dataObject.ToString());
+                }
+                
+                
+                
+                currentCharacter = loadedGameManagerSaveData.singleplayerSelectedCharacter;
+                Debug.Log(loadedGameManagerSaveData.highestReachedSavePointIndex);
+            }
+        }
 
-			Vector3 oldPlayerLookVector = oldPlayerEntityCharacterController.GetForwardVector( );
-			Vector3 oldPlayerInputMoveVector = oldPlayerEntityCharacterController.inputMoveVector;
+        public void SetHighestReachedSavePointIndex(int index)
+        {
+            loadedGameManagerSaveData.highestReachedSavePointIndex = index;
+        }
 
-			int oldHealthPoints = oldPlayerHealthComponent.HealthPoints;
+        public void SetHighestKilledCrystalIndex(int index)
+        {
+            loadedGameManagerSaveData.highestKilledCrystal = index;
+        }
 
-			// Kill old player
-			Destroy( PlayerOneCharacter );
+        #endregion
 
-			// Switch Logic
-			CurrentCharacter = CharacterType.Max == CurrentCharacter ? CharacterType.Mini : CharacterType.Max;
+        #region Pausing
 
-			// Spawn new player
-			GameObject newPrefab = GetCharacterPrefabFromCharacterType( CurrentCharacter );
-			GameObject playerCharacter = Instantiate( newPrefab, oldPlayerPos, Quaternion.identity );
+        public void Pause()
+        {
+            pauseMenuController.Open();
+        }
 
-			// Inject Old Player percistance data
-			EntityCharacterController playerEntityCharacterController = playerCharacter.GetComponent<EntityCharacterController>( );
-			Health playerHealthComponent = playerCharacter.GetComponent<Health>( );
+        public void Resume()
+        {
+            pauseMenuController.Close();
+        }
 
-			playerEntityCharacterController.LookTowards( playerCharacter.transform.position + oldPlayerLookVector, false );
-			playerEntityCharacterController.inputMoveVector = oldPlayerInputMoveVector;
+        #endregion
 
-			playerHealthComponent.HealthPoints = oldHealthPoints;
 
-			players[ 0 ] = playerCharacter;
-			characterSwitched.Invoke( CurrentCharacter, playerCharacter );
-		}
-
-		#endregion
-
-		#region Saving and Loading
-
-		public object CollectData( ) => loadedGameManagerSaveData;
-
-		public void RestoreState( object dataObject )
-		{
-			Debug.Log( "SUNG JINWOOOO" );
-			if ( dataObject == null )
-			{
-				Debug.Log( "SUNG KIM" );
-				loadedGameManagerSaveData = new( )
-				{
-					singleplayerSelectedCharacter = defaultSingleplayerCharacter,
-					highestReachedSavePointIndex = 0,
-					highestKilledCrystal = -1
-				};
-			}
-			else
-			{
-				Debug.Log( $"GAAAY {dataObject}" );
-				try { loadedGameManagerSaveData = (GameManagerGameSaveData)dataObject; }
-				catch { loadedGameManagerSaveData = JsonConvert.DeserializeObject<GameManagerGameSaveData>( dataObject.ToString( ) ); }
-
-				CurrentCharacter = loadedGameManagerSaveData.singleplayerSelectedCharacter;
-				Debug.Log( loadedGameManagerSaveData.highestReachedSavePointIndex );
-			}
-		}
-
-		public void SetHighestReachedSavePointIndex( int index ) { loadedGameManagerSaveData.highestReachedSavePointIndex = index; }
-
-		public void SetHighestKilledCrystalIndex( int index ) { loadedGameManagerSaveData.highestKilledCrystal = index; }
-
-		#endregion
-
-		#region Pausing
-
-		public void Pause( ) { pauseMenuController.Open( ); }
-
-		public void Resume( ) { pauseMenuController.Close( ); }
-
-		#endregion
-	}
+    }
 }

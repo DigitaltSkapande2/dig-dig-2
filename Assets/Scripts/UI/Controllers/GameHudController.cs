@@ -1,10 +1,8 @@
 using System.Collections.Generic;
 
 using Cysharp.Threading.Tasks;
-
 using DigDig2.Combat;
 using DigDig2.Game;
-
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -63,7 +61,7 @@ namespace DigDig2.UI.Controllers
 			GameManager.Instance.characterSwitched.AddListener( UpdateCharacter );
 
 			await UniTask.WaitUntil( ( ) => GameManager.Instance.PlayerOneCharacter );
-			UpdateCharacter( GameManager.Instance.CurrentCharacter, GameManager.Instance.PlayerOneCharacter );
+			UpdateCharacter( GameManager.Instance.currentCharacter, GameManager.Instance.PlayerOneCharacter );
 		}
 
 		private void UpdateCharacter( CharacterType characterType, GameObject characterObject )

@@ -275,7 +275,7 @@ namespace DigDig2.UI.Controllers
 
 					break;
 				case HostingModeSelectionType.NewGameSave:
-					SaveManager.Instance.CreateNewSave( );
+					SaveManager.Instance.CreateNewSave(  );
 					StartSingleplayer( );
 					break;
 				case HostingModeSelectionType.None: break;
@@ -302,7 +302,7 @@ namespace DigDig2.UI.Controllers
 
 					break;
 				case HostingModeSelectionType.NewGameSave:
-					SaveManager.Instance.CreateNewSave( );
+					SaveManager.Instance.CreateNewSave( true );
 					StartMultiplayer( );
 					break;
 				case HostingModeSelectionType.None: break;

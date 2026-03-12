@@ -91,7 +91,7 @@ namespace DigDig2.Input
     ""name"": ""InputSystem_Actions"",
     ""maps"": [
         {
-            ""name"": ""Player"",
+            ""name"": ""GamePlay"",
             ""id"": ""df70fa95-8a34-4494-b137-73ab6b9c7d37"",
             ""actions"": [
                 {
@@ -102,6 +102,42 @@ namespace DigDig2.Input
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""FocusTarget"",
+                    ""type"": ""Value"",
+                    ""id"": ""56d49d20-c03b-4198-ab27-b1f7f07bfdf1"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Focus"",
+                    ""type"": ""Button"",
+                    ""id"": ""a5b94ebf-c0f8-4a0a-b43c-aad3387422b0"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Attack2"",
+                    ""type"": ""Button"",
+                    ""id"": ""e0504abe-740c-4e1f-a614-25ecbc21e52e"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Attack1"",
+                    ""type"": ""Button"",
+                    ""id"": ""e593ec6d-1673-4651-9f8c-da13ca64b195"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 },
                 {
                     ""name"": ""Interact"",
@@ -250,6 +286,127 @@ namespace DigDig2.Input
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7a54325f-87d9-4787-80bd-83dfca8f617f"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""FocusTarget"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""39391611-ea8e-42b3-957b-0a953e1cd9e2"",
+                    ""path"": ""<Gamepad>/rightStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""FocusTarget"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""283e265a-c923-4e4a-a99d-5e8f531a6000"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Focus"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""77ae631f-e235-41a8-9ab7-34d54b72611b"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Focus"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""84f3c28f-76c6-4616-8200-f76ecdbd9f5b"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Attack2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2ef06bb1-3e35-4c4f-b55e-4428d59e79b8"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""Attack1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9b3c4e5c-aa92-43d1-a8b6-2133828ecd21"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Attack1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""295ae3fe-43d0-4551-83b4-2d2bc8574c2b"",
+                    ""path"": ""<Touchscreen>/primaryTouch/tap"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Touch"",
+                    ""action"": ""Attack1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c849301c-a67b-4f5a-958a-a5115495faea"",
+                    ""path"": ""<Joystick>/trigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Joystick"",
+                    ""action"": ""Attack1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""64319fb3-fd45-4fa7-a3ec-ee840a3e59fa"",
+                    ""path"": ""<XRController>/{PrimaryAction}"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""XR"",
+                    ""action"": ""Attack1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""71bfc328-a6a4-4982-bdec-5b81265dabdc"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Attack1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
@@ -1054,171 +1211,6 @@ namespace DigDig2.Input
                     ""isPartOfComposite"": false
                 }
             ]
-        },
-        {
-            ""name"": ""Attack"",
-            ""id"": ""5f26ae09-937e-461f-8cc7-873303ec384d"",
-            ""actions"": [
-                {
-                    ""name"": ""Attack1"",
-                    ""type"": ""Button"",
-                    ""id"": ""690c06f7-f69f-499f-8449-90ddafba4b50"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Attack2"",
-                    ""type"": ""Button"",
-                    ""id"": ""2db9ff37-e277-4cde-94dd-684ff227bdfd"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Focus"",
-                    ""type"": ""Button"",
-                    ""id"": ""8fad912f-41a7-4e5d-b8e8-0f558b7a12f4"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""FocusTarget"",
-                    ""type"": ""Value"",
-                    ""id"": ""167710a6-17ac-4c19-8d4e-cedea33debfa"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                }
-            ],
-            ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""32f12cbe-6756-4392-ba04-5c5e8351f41f"",
-                    ""path"": ""<Gamepad>/buttonWest"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Gamepad"",
-                    ""action"": ""Attack1"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""bdbf4cc9-4848-4594-84cc-dc22acef8e37"",
-                    ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Attack1"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""af406235-7252-4719-9989-96b58dccf8c9"",
-                    ""path"": ""<Touchscreen>/primaryTouch/tap"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Touch"",
-                    ""action"": ""Attack1"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""3967c129-f566-48c3-a02c-c48ebfae3add"",
-                    ""path"": ""<Joystick>/trigger"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Joystick"",
-                    ""action"": ""Attack1"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""aab4d832-1f6d-43f4-b2fc-12aec87b8487"",
-                    ""path"": ""<XRController>/{PrimaryAction}"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""XR"",
-                    ""action"": ""Attack1"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""17cce349-953a-458e-b587-7f08b2542de8"",
-                    ""path"": ""<Keyboard>/enter"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Attack1"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""7540bfd1-a06d-4e56-9c7d-52391614ca9e"",
-                    ""path"": ""<Mouse>/position"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""FocusTarget"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""47403358-1678-4f77-8f61-9e3e82dbb06d"",
-                    ""path"": ""<Gamepad>/rightStick"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Gamepad"",
-                    ""action"": ""FocusTarget"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""6cd84a35-4bcd-4b0f-8c8b-f25440a210ff"",
-                    ""path"": ""<Mouse>/rightButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Attack2"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""a1a20348-4d0a-407a-8b81-a186b834d445"",
-                    ""path"": ""<Keyboard>/shift"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Focus"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""f648fa57-deb0-4925-a0f0-84087c61269c"",
-                    ""path"": ""<Gamepad>/leftTrigger"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Focus"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                }
-            ]
         }
     ],
     ""controlSchemes"": [
@@ -1284,13 +1276,17 @@ namespace DigDig2.Input
         }
     ]
 }");
-            // Player
-            m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
-            m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
-            m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
-            m_Player_SwitchCharacter = m_Player.FindAction("SwitchCharacter", throwIfNotFound: true);
-            m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
-            m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
+            // GamePlay
+            m_GamePlay = asset.FindActionMap("GamePlay", throwIfNotFound: true);
+            m_GamePlay_Move = m_GamePlay.FindAction("Move", throwIfNotFound: true);
+            m_GamePlay_FocusTarget = m_GamePlay.FindAction("FocusTarget", throwIfNotFound: true);
+            m_GamePlay_Focus = m_GamePlay.FindAction("Focus", throwIfNotFound: true);
+            m_GamePlay_Attack2 = m_GamePlay.FindAction("Attack2", throwIfNotFound: true);
+            m_GamePlay_Attack1 = m_GamePlay.FindAction("Attack1", throwIfNotFound: true);
+            m_GamePlay_Interact = m_GamePlay.FindAction("Interact", throwIfNotFound: true);
+            m_GamePlay_SwitchCharacter = m_GamePlay.FindAction("SwitchCharacter", throwIfNotFound: true);
+            m_GamePlay_Dash = m_GamePlay.FindAction("Dash", throwIfNotFound: true);
+            m_GamePlay_Pause = m_GamePlay.FindAction("Pause", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
             m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1315,21 +1311,14 @@ namespace DigDig2.Input
             m_DebugMenu = asset.FindActionMap("DebugMenu", throwIfNotFound: true);
             m_DebugMenu_OpenDebugMenu = m_DebugMenu.FindAction("OpenDebugMenu", throwIfNotFound: true);
             m_DebugMenu_CloseDebugMenu = m_DebugMenu.FindAction("CloseDebugMenu", throwIfNotFound: true);
-            // Attack
-            m_Attack = asset.FindActionMap("Attack", throwIfNotFound: true);
-            m_Attack_Attack1 = m_Attack.FindAction("Attack1", throwIfNotFound: true);
-            m_Attack_Attack2 = m_Attack.FindAction("Attack2", throwIfNotFound: true);
-            m_Attack_Focus = m_Attack.FindAction("Focus", throwIfNotFound: true);
-            m_Attack_FocusTarget = m_Attack.FindAction("FocusTarget", throwIfNotFound: true);
         }
 
         ~@ProjectWideInputActions()
         {
-            UnityEngine.Debug.Assert(!m_Player.enabled, "This will cause a leak and performance issues, ProjectWideInputActions.Player.Disable() has not been called.");
+            UnityEngine.Debug.Assert(!m_GamePlay.enabled, "This will cause a leak and performance issues, ProjectWideInputActions.GamePlay.Disable() has not been called.");
             UnityEngine.Debug.Assert(!m_UI.enabled, "This will cause a leak and performance issues, ProjectWideInputActions.UI.Disable() has not been called.");
             UnityEngine.Debug.Assert(!m_DebugConsole.enabled, "This will cause a leak and performance issues, ProjectWideInputActions.DebugConsole.Disable() has not been called.");
             UnityEngine.Debug.Assert(!m_DebugMenu.enabled, "This will cause a leak and performance issues, ProjectWideInputActions.DebugMenu.Disable() has not been called.");
-            UnityEngine.Debug.Assert(!m_Attack.enabled, "This will cause a leak and performance issues, ProjectWideInputActions.Attack.Disable() has not been called.");
         }
 
         /// <summary>
@@ -1402,49 +1391,69 @@ namespace DigDig2.Input
             return asset.FindBinding(bindingMask, out action);
         }
 
-        // Player
-        private readonly InputActionMap m_Player;
-        private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
-        private readonly InputAction m_Player_Move;
-        private readonly InputAction m_Player_Interact;
-        private readonly InputAction m_Player_SwitchCharacter;
-        private readonly InputAction m_Player_Dash;
-        private readonly InputAction m_Player_Pause;
+        // GamePlay
+        private readonly InputActionMap m_GamePlay;
+        private List<IGamePlayActions> m_GamePlayActionsCallbackInterfaces = new List<IGamePlayActions>();
+        private readonly InputAction m_GamePlay_Move;
+        private readonly InputAction m_GamePlay_FocusTarget;
+        private readonly InputAction m_GamePlay_Focus;
+        private readonly InputAction m_GamePlay_Attack2;
+        private readonly InputAction m_GamePlay_Attack1;
+        private readonly InputAction m_GamePlay_Interact;
+        private readonly InputAction m_GamePlay_SwitchCharacter;
+        private readonly InputAction m_GamePlay_Dash;
+        private readonly InputAction m_GamePlay_Pause;
         /// <summary>
-        /// Provides access to input actions defined in input action map "Player".
+        /// Provides access to input actions defined in input action map "GamePlay".
         /// </summary>
-        public struct PlayerActions
+        public struct GamePlayActions
         {
             private @ProjectWideInputActions m_Wrapper;
 
             /// <summary>
             /// Construct a new instance of the input action map wrapper class.
             /// </summary>
-            public PlayerActions(@ProjectWideInputActions wrapper) { m_Wrapper = wrapper; }
+            public GamePlayActions(@ProjectWideInputActions wrapper) { m_Wrapper = wrapper; }
             /// <summary>
-            /// Provides access to the underlying input action "Player/Move".
+            /// Provides access to the underlying input action "GamePlay/Move".
             /// </summary>
-            public InputAction @Move => m_Wrapper.m_Player_Move;
+            public InputAction @Move => m_Wrapper.m_GamePlay_Move;
             /// <summary>
-            /// Provides access to the underlying input action "Player/Interact".
+            /// Provides access to the underlying input action "GamePlay/FocusTarget".
             /// </summary>
-            public InputAction @Interact => m_Wrapper.m_Player_Interact;
+            public InputAction @FocusTarget => m_Wrapper.m_GamePlay_FocusTarget;
             /// <summary>
-            /// Provides access to the underlying input action "Player/SwitchCharacter".
+            /// Provides access to the underlying input action "GamePlay/Focus".
             /// </summary>
-            public InputAction @SwitchCharacter => m_Wrapper.m_Player_SwitchCharacter;
+            public InputAction @Focus => m_Wrapper.m_GamePlay_Focus;
             /// <summary>
-            /// Provides access to the underlying input action "Player/Dash".
+            /// Provides access to the underlying input action "GamePlay/Attack2".
             /// </summary>
-            public InputAction @Dash => m_Wrapper.m_Player_Dash;
+            public InputAction @Attack2 => m_Wrapper.m_GamePlay_Attack2;
             /// <summary>
-            /// Provides access to the underlying input action "Player/Pause".
+            /// Provides access to the underlying input action "GamePlay/Attack1".
             /// </summary>
-            public InputAction @Pause => m_Wrapper.m_Player_Pause;
+            public InputAction @Attack1 => m_Wrapper.m_GamePlay_Attack1;
+            /// <summary>
+            /// Provides access to the underlying input action "GamePlay/Interact".
+            /// </summary>
+            public InputAction @Interact => m_Wrapper.m_GamePlay_Interact;
+            /// <summary>
+            /// Provides access to the underlying input action "GamePlay/SwitchCharacter".
+            /// </summary>
+            public InputAction @SwitchCharacter => m_Wrapper.m_GamePlay_SwitchCharacter;
+            /// <summary>
+            /// Provides access to the underlying input action "GamePlay/Dash".
+            /// </summary>
+            public InputAction @Dash => m_Wrapper.m_GamePlay_Dash;
+            /// <summary>
+            /// Provides access to the underlying input action "GamePlay/Pause".
+            /// </summary>
+            public InputAction @Pause => m_Wrapper.m_GamePlay_Pause;
             /// <summary>
             /// Provides access to the underlying input action map instance.
             /// </summary>
-            public InputActionMap Get() { return m_Wrapper.m_Player; }
+            public InputActionMap Get() { return m_Wrapper.m_GamePlay; }
             /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
             public void Enable() { Get().Enable(); }
             /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
@@ -1452,9 +1461,9 @@ namespace DigDig2.Input
             /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
             public bool enabled => Get().enabled;
             /// <summary>
-            /// Implicitly converts an <see ref="PlayerActions" /> to an <see ref="InputActionMap" /> instance.
+            /// Implicitly converts an <see ref="GamePlayActions" /> to an <see ref="InputActionMap" /> instance.
             /// </summary>
-            public static implicit operator InputActionMap(PlayerActions set) { return set.Get(); }
+            public static implicit operator InputActionMap(GamePlayActions set) { return set.Get(); }
             /// <summary>
             /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
             /// </summary>
@@ -1462,14 +1471,26 @@ namespace DigDig2.Input
             /// <remarks>
             /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
             /// </remarks>
-            /// <seealso cref="PlayerActions" />
-            public void AddCallbacks(IPlayerActions instance)
+            /// <seealso cref="GamePlayActions" />
+            public void AddCallbacks(IGamePlayActions instance)
             {
-                if (instance == null || m_Wrapper.m_PlayerActionsCallbackInterfaces.Contains(instance)) return;
-                m_Wrapper.m_PlayerActionsCallbackInterfaces.Add(instance);
+                if (instance == null || m_Wrapper.m_GamePlayActionsCallbackInterfaces.Contains(instance)) return;
+                m_Wrapper.m_GamePlayActionsCallbackInterfaces.Add(instance);
                 @Move.started += instance.OnMove;
                 @Move.performed += instance.OnMove;
                 @Move.canceled += instance.OnMove;
+                @FocusTarget.started += instance.OnFocusTarget;
+                @FocusTarget.performed += instance.OnFocusTarget;
+                @FocusTarget.canceled += instance.OnFocusTarget;
+                @Focus.started += instance.OnFocus;
+                @Focus.performed += instance.OnFocus;
+                @Focus.canceled += instance.OnFocus;
+                @Attack2.started += instance.OnAttack2;
+                @Attack2.performed += instance.OnAttack2;
+                @Attack2.canceled += instance.OnAttack2;
+                @Attack1.started += instance.OnAttack1;
+                @Attack1.performed += instance.OnAttack1;
+                @Attack1.canceled += instance.OnAttack1;
                 @Interact.started += instance.OnInteract;
                 @Interact.performed += instance.OnInteract;
                 @Interact.canceled += instance.OnInteract;
@@ -1490,12 +1511,24 @@ namespace DigDig2.Input
             /// <remarks>
             /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
             /// </remarks>
-            /// <seealso cref="PlayerActions" />
-            private void UnregisterCallbacks(IPlayerActions instance)
+            /// <seealso cref="GamePlayActions" />
+            private void UnregisterCallbacks(IGamePlayActions instance)
             {
                 @Move.started -= instance.OnMove;
                 @Move.performed -= instance.OnMove;
                 @Move.canceled -= instance.OnMove;
+                @FocusTarget.started -= instance.OnFocusTarget;
+                @FocusTarget.performed -= instance.OnFocusTarget;
+                @FocusTarget.canceled -= instance.OnFocusTarget;
+                @Focus.started -= instance.OnFocus;
+                @Focus.performed -= instance.OnFocus;
+                @Focus.canceled -= instance.OnFocus;
+                @Attack2.started -= instance.OnAttack2;
+                @Attack2.performed -= instance.OnAttack2;
+                @Attack2.canceled -= instance.OnAttack2;
+                @Attack1.started -= instance.OnAttack1;
+                @Attack1.performed -= instance.OnAttack1;
+                @Attack1.canceled -= instance.OnAttack1;
                 @Interact.started -= instance.OnInteract;
                 @Interact.performed -= instance.OnInteract;
                 @Interact.canceled -= instance.OnInteract;
@@ -1511,12 +1544,12 @@ namespace DigDig2.Input
             }
 
             /// <summary>
-            /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="PlayerActions.UnregisterCallbacks(IPlayerActions)" />.
+            /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="GamePlayActions.UnregisterCallbacks(IGamePlayActions)" />.
             /// </summary>
-            /// <seealso cref="PlayerActions.UnregisterCallbacks(IPlayerActions)" />
-            public void RemoveCallbacks(IPlayerActions instance)
+            /// <seealso cref="GamePlayActions.UnregisterCallbacks(IGamePlayActions)" />
+            public void RemoveCallbacks(IGamePlayActions instance)
             {
-                if (m_Wrapper.m_PlayerActionsCallbackInterfaces.Remove(instance))
+                if (m_Wrapper.m_GamePlayActionsCallbackInterfaces.Remove(instance))
                     UnregisterCallbacks(instance);
             }
 
@@ -1526,21 +1559,21 @@ namespace DigDig2.Input
             /// <remarks>
             /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
             /// </remarks>
-            /// <seealso cref="PlayerActions.AddCallbacks(IPlayerActions)" />
-            /// <seealso cref="PlayerActions.RemoveCallbacks(IPlayerActions)" />
-            /// <seealso cref="PlayerActions.UnregisterCallbacks(IPlayerActions)" />
-            public void SetCallbacks(IPlayerActions instance)
+            /// <seealso cref="GamePlayActions.AddCallbacks(IGamePlayActions)" />
+            /// <seealso cref="GamePlayActions.RemoveCallbacks(IGamePlayActions)" />
+            /// <seealso cref="GamePlayActions.UnregisterCallbacks(IGamePlayActions)" />
+            public void SetCallbacks(IGamePlayActions instance)
             {
-                foreach (var item in m_Wrapper.m_PlayerActionsCallbackInterfaces)
+                foreach (var item in m_Wrapper.m_GamePlayActionsCallbackInterfaces)
                     UnregisterCallbacks(item);
-                m_Wrapper.m_PlayerActionsCallbackInterfaces.Clear();
+                m_Wrapper.m_GamePlayActionsCallbackInterfaces.Clear();
                 AddCallbacks(instance);
             }
         }
         /// <summary>
-        /// Provides a new <see cref="PlayerActions" /> instance referencing this action map.
+        /// Provides a new <see cref="GamePlayActions" /> instance referencing this action map.
         /// </summary>
-        public PlayerActions @Player => new PlayerActions(this);
+        public GamePlayActions @GamePlay => new GamePlayActions(this);
 
         // UI
         private readonly InputActionMap m_UI;
@@ -1994,135 +2027,6 @@ namespace DigDig2.Input
         /// Provides a new <see cref="DebugMenuActions" /> instance referencing this action map.
         /// </summary>
         public DebugMenuActions @DebugMenu => new DebugMenuActions(this);
-
-        // Attack
-        private readonly InputActionMap m_Attack;
-        private List<IAttackActions> m_AttackActionsCallbackInterfaces = new List<IAttackActions>();
-        private readonly InputAction m_Attack_Attack1;
-        private readonly InputAction m_Attack_Attack2;
-        private readonly InputAction m_Attack_Focus;
-        private readonly InputAction m_Attack_FocusTarget;
-        /// <summary>
-        /// Provides access to input actions defined in input action map "Attack".
-        /// </summary>
-        public struct AttackActions
-        {
-            private @ProjectWideInputActions m_Wrapper;
-
-            /// <summary>
-            /// Construct a new instance of the input action map wrapper class.
-            /// </summary>
-            public AttackActions(@ProjectWideInputActions wrapper) { m_Wrapper = wrapper; }
-            /// <summary>
-            /// Provides access to the underlying input action "Attack/Attack1".
-            /// </summary>
-            public InputAction @Attack1 => m_Wrapper.m_Attack_Attack1;
-            /// <summary>
-            /// Provides access to the underlying input action "Attack/Attack2".
-            /// </summary>
-            public InputAction @Attack2 => m_Wrapper.m_Attack_Attack2;
-            /// <summary>
-            /// Provides access to the underlying input action "Attack/Focus".
-            /// </summary>
-            public InputAction @Focus => m_Wrapper.m_Attack_Focus;
-            /// <summary>
-            /// Provides access to the underlying input action "Attack/FocusTarget".
-            /// </summary>
-            public InputAction @FocusTarget => m_Wrapper.m_Attack_FocusTarget;
-            /// <summary>
-            /// Provides access to the underlying input action map instance.
-            /// </summary>
-            public InputActionMap Get() { return m_Wrapper.m_Attack; }
-            /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
-            public void Enable() { Get().Enable(); }
-            /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
-            public void Disable() { Get().Disable(); }
-            /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
-            public bool enabled => Get().enabled;
-            /// <summary>
-            /// Implicitly converts an <see ref="AttackActions" /> to an <see ref="InputActionMap" /> instance.
-            /// </summary>
-            public static implicit operator InputActionMap(AttackActions set) { return set.Get(); }
-            /// <summary>
-            /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
-            /// </summary>
-            /// <param name="instance">Callback instance.</param>
-            /// <remarks>
-            /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
-            /// </remarks>
-            /// <seealso cref="AttackActions" />
-            public void AddCallbacks(IAttackActions instance)
-            {
-                if (instance == null || m_Wrapper.m_AttackActionsCallbackInterfaces.Contains(instance)) return;
-                m_Wrapper.m_AttackActionsCallbackInterfaces.Add(instance);
-                @Attack1.started += instance.OnAttack1;
-                @Attack1.performed += instance.OnAttack1;
-                @Attack1.canceled += instance.OnAttack1;
-                @Attack2.started += instance.OnAttack2;
-                @Attack2.performed += instance.OnAttack2;
-                @Attack2.canceled += instance.OnAttack2;
-                @Focus.started += instance.OnFocus;
-                @Focus.performed += instance.OnFocus;
-                @Focus.canceled += instance.OnFocus;
-                @FocusTarget.started += instance.OnFocusTarget;
-                @FocusTarget.performed += instance.OnFocusTarget;
-                @FocusTarget.canceled += instance.OnFocusTarget;
-            }
-
-            /// <summary>
-            /// Removes <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
-            /// </summary>
-            /// <remarks>
-            /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
-            /// </remarks>
-            /// <seealso cref="AttackActions" />
-            private void UnregisterCallbacks(IAttackActions instance)
-            {
-                @Attack1.started -= instance.OnAttack1;
-                @Attack1.performed -= instance.OnAttack1;
-                @Attack1.canceled -= instance.OnAttack1;
-                @Attack2.started -= instance.OnAttack2;
-                @Attack2.performed -= instance.OnAttack2;
-                @Attack2.canceled -= instance.OnAttack2;
-                @Focus.started -= instance.OnFocus;
-                @Focus.performed -= instance.OnFocus;
-                @Focus.canceled -= instance.OnFocus;
-                @FocusTarget.started -= instance.OnFocusTarget;
-                @FocusTarget.performed -= instance.OnFocusTarget;
-                @FocusTarget.canceled -= instance.OnFocusTarget;
-            }
-
-            /// <summary>
-            /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="AttackActions.UnregisterCallbacks(IAttackActions)" />.
-            /// </summary>
-            /// <seealso cref="AttackActions.UnregisterCallbacks(IAttackActions)" />
-            public void RemoveCallbacks(IAttackActions instance)
-            {
-                if (m_Wrapper.m_AttackActionsCallbackInterfaces.Remove(instance))
-                    UnregisterCallbacks(instance);
-            }
-
-            /// <summary>
-            /// Replaces all existing callback instances and previously registered input action callbacks associated with them with callbacks provided via <param cref="instance" />.
-            /// </summary>
-            /// <remarks>
-            /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
-            /// </remarks>
-            /// <seealso cref="AttackActions.AddCallbacks(IAttackActions)" />
-            /// <seealso cref="AttackActions.RemoveCallbacks(IAttackActions)" />
-            /// <seealso cref="AttackActions.UnregisterCallbacks(IAttackActions)" />
-            public void SetCallbacks(IAttackActions instance)
-            {
-                foreach (var item in m_Wrapper.m_AttackActionsCallbackInterfaces)
-                    UnregisterCallbacks(item);
-                m_Wrapper.m_AttackActionsCallbackInterfaces.Clear();
-                AddCallbacks(instance);
-            }
-        }
-        /// <summary>
-        /// Provides a new <see cref="AttackActions" /> instance referencing this action map.
-        /// </summary>
-        public AttackActions @Attack => new AttackActions(this);
         private int m_KeyboardMouseSchemeIndex = -1;
         /// <summary>
         /// Provides access to the input control scheme.
@@ -2189,11 +2093,11 @@ namespace DigDig2.Input
             }
         }
         /// <summary>
-        /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Player" which allows adding and removing callbacks.
+        /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "GamePlay" which allows adding and removing callbacks.
         /// </summary>
-        /// <seealso cref="PlayerActions.AddCallbacks(IPlayerActions)" />
-        /// <seealso cref="PlayerActions.RemoveCallbacks(IPlayerActions)" />
-        public interface IPlayerActions
+        /// <seealso cref="GamePlayActions.AddCallbacks(IGamePlayActions)" />
+        /// <seealso cref="GamePlayActions.RemoveCallbacks(IGamePlayActions)" />
+        public interface IGamePlayActions
         {
             /// <summary>
             /// Method invoked when associated input action "Move" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
@@ -2202,6 +2106,34 @@ namespace DigDig2.Input
             /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
             void OnMove(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "FocusTarget" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnFocusTarget(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "Focus" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnFocus(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "Attack2" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnAttack2(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "Attack1" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnAttack1(InputAction.CallbackContext context);
             /// <summary>
             /// Method invoked when associated input action "Interact" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
             /// </summary>
@@ -2380,42 +2312,6 @@ namespace DigDig2.Input
             /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
             void OnCloseDebugMenu(InputAction.CallbackContext context);
-        }
-        /// <summary>
-        /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Attack" which allows adding and removing callbacks.
-        /// </summary>
-        /// <seealso cref="AttackActions.AddCallbacks(IAttackActions)" />
-        /// <seealso cref="AttackActions.RemoveCallbacks(IAttackActions)" />
-        public interface IAttackActions
-        {
-            /// <summary>
-            /// Method invoked when associated input action "Attack1" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-            /// </summary>
-            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-            void OnAttack1(InputAction.CallbackContext context);
-            /// <summary>
-            /// Method invoked when associated input action "Attack2" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-            /// </summary>
-            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-            void OnAttack2(InputAction.CallbackContext context);
-            /// <summary>
-            /// Method invoked when associated input action "Focus" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-            /// </summary>
-            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-            void OnFocus(InputAction.CallbackContext context);
-            /// <summary>
-            /// Method invoked when associated input action "FocusTarget" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-            /// </summary>
-            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-            void OnFocusTarget(InputAction.CallbackContext context);
         }
     }
 }
