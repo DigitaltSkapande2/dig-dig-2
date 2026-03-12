@@ -19,7 +19,7 @@ namespace DigDig2.EffectSystem.Effects
 			volume = GetComponent<Volume>( );
 			mainCamera = GameCamera.Instance.mainCamera;
 
-			// Ensure the volume has a Vignette effect
+			// Ensure the volume has a DepthOfField effect
 			if ( volume.profile.TryGet( out depthOfField ) ) return;
 
 			depthOfField = volume.profile.Add<DepthOfField>( );

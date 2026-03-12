@@ -6,7 +6,7 @@ namespace DigDig2
 	public class Movable : MonoBehaviour
 	{
 		[SerializeField] private float moveTime;
-		[SerializeField] private AnimationCurve speedCurve;
+		[SerializeField] private AnimationCurve positionCurve;
 
 		[SerializeField] private SplineContainer path;
 
@@ -25,9 +25,9 @@ namespace DigDig2
 			time += Time.deltaTime;
 			float value = time / moveTime;
 
-			float lerp = speedCurve.Evaluate( value );
+			float pos = positionCurve.Evaluate( value );
 
-			transform.position = path.EvaluatePosition( splineIndex, lerp );
+			transform.position = path.EvaluatePosition( splineIndex, pos );
 
 			if ( !( value >= 1 ) || !reusable ) return;
 
