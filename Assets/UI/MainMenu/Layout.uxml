@@ -1,4 +1,4 @@
-<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+<ui:UXML xmlns:ui="UnityEngine.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/MainStyle.uss?fileID=7433441132597879392&amp;guid=57c2164d8f5e7a4f5bf7c6109294bfec&amp;type=3#MainStyle"/>
     <Style src="project://database/Assets/UI/MainMenu/Style.uss?fileID=7433441132597879392&amp;guid=7b25c9c7deefb56afbed8e4df3da8aac&amp;type=3#Style"/>
     <Style src="project://database/Assets/UI/SaveFile/SaveFile.uss?fileID=7433441132597879392&amp;guid=971dc12079fc4f588813e0f119b3b0d4&amp;type=3#SaveFile"/>
@@ -14,7 +14,7 @@
         <ui:VisualElement name="menuContainer" style="flex-grow: 1; position: absolute; right: 200px; height: 700px; width: 1000px; top: 50%; left: auto; bottom: 50%; transform-origin: center; align-content: center; translate: 0 -50%;">
             <ui:VisualElement name="saveMenu" enabled="true" class="menu" style="flex-grow: 1; visibility: visible; position: absolute; height: 100%; width: 100%; top: 0; left: 0; right: 0; bottom: 0;">
                 <ui:Label text="SAVES" name="" class="title"/>
-                <DigDig2.UIElements.SubmittableListView name="saveFileList" virtualization-method="DynamicHeight" class="navigationStart" style="opacity: 1;"/>
+                <DigDig2.UI.UxmlElements.SubmittableListView name="saveFileList" virtualization-method="DynamicHeight" show-border="false" allow-remove="false" allow-add="false" style="height: 100%;"/>
                 <ui:VisualElement name="saveManagement" style="flex-grow: 1; position: absolute; bottom: -50px; right: -50px; padding-right: 20px; padding-left: 20px; padding-top: 20px; padding-bottom: 20px; background-color: rgba(0, 0, 0, 0.47); width: 500px;">
                     <ui:Label text="Save Name" name="saveName"/>
                     <ui:Button text="Load" name="load"/>

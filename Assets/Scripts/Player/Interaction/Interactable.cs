@@ -1,49 +1,42 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace DigDig2
+namespace DigDig2.Player.Interaction
 {
-    public class Interactable : MonoBehaviour
-    {
-        [SerializeField] private Transform interactableSource;
+	public class Interactable : MonoBehaviour
+	{
+		[SerializeField] private Transform interactableSource;
 
-        [Header("Events")]
-        [SerializeField] private UnityEvent<Interactor.InteractionPhase> onInteract = new();
-        [SerializeField] private UnityEvent onFocused = new();
-        [SerializeField] private UnityEvent onUnfocused = new();
+		[Header( "Events" )]
+		[SerializeField] private UnityEvent<Interactor.InteractionPhase> onInteract = new( );
 
-        private bool focused;
+		[SerializeField] private UnityEvent onFocused = new( );
+		[SerializeField] private UnityEvent onUnfocused = new( );
 
+		private bool focused;
 
+		private void Awake( )
+		{
+			Rigidbody triggerRigidbody = gameObject.AddComponent<Rigidbody>( );
+			triggerRigidbody.isKinematic = true;
+			triggerRigidbody.freezeRotation = true;
+			triggerRigidbody.constraints = RigidbodyConstraints.FreezeAll;
+		}
 
-        private void Awake()
-        {
-            Rigidbody triggerRigidbody = gameObject.AddComponent<Rigidbody>();
-            triggerRigidbody.isKinematic = true;
-            triggerRigidbody.freezeRotation = true;
-            triggerRigidbody.constraints = RigidbodyConstraints.FreezeAll;
-        }
+		public Transform GetInteractableSource( ) => interactableSource ? interactableSource : transform;
 
-        public Transform GetInteractableSource()
-        {
-            return interactableSource != null ? interactableSource : transform;
-        }
+		public void Interact( Interactor.InteractionPhase phase = Interactor.InteractionPhase.Unknown ) { onInteract.Invoke( phase ); }
 
-        public void Interact(Interactor.InteractionPhase phase = Interactor.InteractionPhase.Unknown)
-        {
-            onInteract.Invoke(phase);
-        }
+		public void SetFocus( bool isFocused )
+		{
+			focused = isFocused;
 
-        public void SetFocus(bool isFocused)
-        {
-            focused = isFocused;
+			if ( isFocused )
+				onFocused.Invoke( );
+			else
+				onUnfocused.Invoke( );
+		}
 
-            if (isFocused) { onFocused.Invoke(); } else { onUnfocused.Invoke(); }
-        }
-
-        public bool IsFocused()
-        {
-            return focused;
-        }
-    }
+		public bool IsFocused( ) => focused;
+	}
 }

@@ -1,10 +1,10 @@
-namespace DigDig2
+namespace DigDig2.Util.ClickableMeshes
 {
-    public interface IClickableMesh
-    {
-        void OnPointerHoverEnter();
-        void OnPointerHoverExit();
-        void OnPointerClickStart();
-        void OnPointerClickRelease();
-    }
+	public interface IClickableMesh
+	{
+		void OnPointerHoverEnter( );
+		void OnPointerHoverExit( );
+		void OnPointerClickStart( );
+		void OnPointerClickRelease( );
+	}
 }

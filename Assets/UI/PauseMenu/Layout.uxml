@@ -1,8 +1,11 @@
-<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+<ui:UXML xmlns:ui="UnityEngine.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd"
+         editor-extension-mode="False">
     <Style src="project://database/Assets/UI/MainStyle.uss?fileID=7433441132597879392&amp;guid=57c2164d8f5e7a4f5bf7c6109294bfec&amp;type=3#MainStyle"/>
     <Style src="project://database/Assets/UI/PauseMenu/Style.uss?fileID=7433441132597879392&amp;guid=eae85a0c963ecef608dd8d2e874b7474&amp;type=3#Style"/>
-    <ui:VisualElement name="animationContainer" style="flex-grow: 1; transition-property: translate, opacity; transition-duration: 0.1s, 0.1s; transition-timing-function: ease, ease; transition-delay: 0s, 0s;">
-        <ui:VisualElement name="container" style="flex-grow: 1; position: absolute; top: 50%; left: 50%; padding-left: 20px; padding-right: 20px; padding-top: 20px; padding-bottom: 20px; translate: -50% -50%; background-color: rgba(0, 0, 0, 0.78); width: 500px;">
+    <ui:VisualElement name="animationContainer"
+                      style="flex-grow: 1; transition-property: translate, opacity; transition-duration: 0.1s, 0.1s; transition-timing-function: ease, ease; transition-delay: 0s, 0s;">
+        <ui:VisualElement name="container"
+                          style="flex-grow: 1; position: absolute; top: 50%; left: 50%; padding-left: 20px; padding-right: 20px; padding-top: 20px; padding-bottom: 20px; translate: -50% -50%; background-color: rgba(0, 0, 0, 0.78); width: 500px;">
             <ui:Label text="Paused" style="font-size: 48px; -unity-text-align: middle-center; margin-bottom: 20px;"/>
             <ui:Button text="Resume" name="resume"/>
             <ui:Button text="Settings" name="settings" enabled="false"/>
