@@ -5,47 +5,51 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="50c3eb56-0f37-4789-a838-f82a855a30c4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Debugging/BetterDebug.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Debugging/BetterDebug.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Input/InputContext.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Input/InputContext.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Input/InputModule.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Input/InputModule.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Input/InputPlayer.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Input/InputPlayer.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Input/InputPlayerManager.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Input/InputPlayerManager.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Input/InputPlayerManagers.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Input/InputPlayerManagers/ControlSchemeDevicesInputPlayerManager.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Input/GameInputSystem.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Input/GameInputSystem.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Textures/UI/Crosshairs/Focused.png~" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/UIElementsSchema/DigDig2.UI.UxmlElements.xsd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/UIElementsSchema/Unity.Multiplayer.PlayMode.Editor.xsd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/UIElementsSchema/Unity.UIToolkit.Editor.xsd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/UIElementsSchema/UnityEditor.Toolbars.xsd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/UIElementsSchema/UnityEditor.VFX.UI.xsd" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.dig-dig-2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.dig-dig-2/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/InputSystem_Actions.inputactions" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/InputSystem_Actions.inputactions" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/InputSystem_Actions.inputactions.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/InputSystem_Actions.inputactions.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Characters/CharacterSelectSequencer.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Player/Characters/CharacterSelectSequencer.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Characters/Max/MaxPlayerCharacterController.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Player/Characters/Max/MaxPlayerCharacterController.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Characters/Mini/MiniPlayerCharacterController.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Player/Characters/Mini/MiniPlayerCharacterController.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Singletons/GameInputManager.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Singletons/GameInputManager.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Singletons/GameManager.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Singletons/GameManager.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Singletons/SaveManager.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Singletons/SaveManager.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vscode/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vscode/settings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/SavePoint.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/SavePoint.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/GameScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/GameScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/MainMenu.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/MainMenu.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Debugging/Console/DebugConsole.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Debugging/Console/DebugConsole.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Debugging/Menu/DebugMenu.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Debugging/Menu/DebugMenu.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/GameScene/EffectCoreVolume Profile 2.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/GameScene/EffectCoreVolume Profile 2.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/CinemaCamera/CameraEffector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CinemaCamera/CameraEffector.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/CinemaCamera/CameraEffectors/AbsoluteCameraEffector.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/CinemaCamera/CameraEffectors/AbsoluteCameraEffector.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/CinemaCamera/CameraEffectors/PlayerFollowCameraEffector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CinemaCamera/CameraEffectors/PlayerFollowCameraEffector.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/CinemaCamera/GameCamera.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CinemaCamera/GameCamera.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Combat/Attacker.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Combat/Attacker.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/GameManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Input/GameInputSystem.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Input/GameInputSystem.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Input/InputContextConfig.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Input/InputContextConfig.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Input/InputManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Input/InputManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/CharacterSelectSequencer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/CharacterSelectSequencer.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/Combat/PlayerAttackInput.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/Combat/PlayerAttackInput.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerCharacterInput.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerCharacterInput.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SaveSystem/FileSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SaveSystem/FileSystem.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/SingleplayerCharacterSwitcher.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/SingleplayerCharacterSwitcher.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/SaveSystem/SaveManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SaveSystem/SaveManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/Controllers/MainMenuController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/Controllers/MainMenuController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/Controllers/PauseMenuController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/Controllers/PauseMenuController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Util/ClickableMeshes/MeshClickerCamera.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Util/ClickableMeshes/MeshClickerCamera.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Util/Singleton.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Util/Singleton.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SaveSystem/SavePoint.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SaveSystem/SavePoint.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/Controllers/GameHudController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/Controllers/GameHudController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Textures/UI/Crosshairs/Focused.png" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/UI/Crosshairs/Focused.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UI/CharacterSelect/Layout.uxml" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UI/CharacterSelect/Layout.uxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UI/GameHud/Layout.uxml" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UI/GameHud/Layout.uxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UIElementsSchema/UIElements.xsd" beforeDir="false" afterPath="$PROJECT_DIR$/UIElementsSchema/UIElements.xsd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UIElementsSchema/Unity.AppUI.UI.xsd" beforeDir="false" afterPath="$PROJECT_DIR$/UIElementsSchema/Unity.AppUI.UI.xsd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UIElementsSchema/Unity.Behavior.xsd" beforeDir="false" afterPath="$PROJECT_DIR$/UIElementsSchema/Unity.Behavior.xsd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UIElementsSchema/Unity.Profiling.Editor.UI.xsd" beforeDir="false" afterPath="$PROJECT_DIR$/UIElementsSchema/Unity.Profiling.Editor.UI.xsd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UIElementsSchema/Unity.UI.Builder.xsd" beforeDir="false" afterPath="$PROJECT_DIR$/UIElementsSchema/Unity.UI.Builder.xsd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UIElementsSchema/UnityEditor.Accessibility.xsd" beforeDir="false" afterPath="$PROJECT_DIR$/UIElementsSchema/UnityEditor.Accessibility.xsd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UIElementsSchema/UnityEditor.Audio.UIElements.xsd" beforeDir="false" afterPath="$PROJECT_DIR$/UIElementsSchema/UnityEditor.Audio.UIElements.xsd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UIElementsSchema/UnityEditor.Experimental.GraphView.xsd" beforeDir="false" afterPath="$PROJECT_DIR$/UIElementsSchema/UnityEditor.Experimental.GraphView.xsd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UIElementsSchema/UnityEditor.Inspector.xsd" beforeDir="false" afterPath="$PROJECT_DIR$/UIElementsSchema/UnityEditor.Inspector.xsd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UIElementsSchema/UnityEditor.Overlays.xsd" beforeDir="false" afterPath="$PROJECT_DIR$/UIElementsSchema/UnityEditor.Overlays.xsd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UIElementsSchema/UnityEditor.PackageManager.UI.Internal.xsd" beforeDir="false" afterPath="$PROJECT_DIR$/UIElementsSchema/UnityEditor.PackageManager.UI.Internal.xsd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UIElementsSchema/UnityEditor.Rendering.xsd" beforeDir="false" afterPath="$PROJECT_DIR$/UIElementsSchema/UnityEditor.Rendering.xsd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UIElementsSchema/UnityEditor.ShaderGraph.Drawing.xsd" beforeDir="false" afterPath="$PROJECT_DIR$/UIElementsSchema/UnityEditor.ShaderGraph.Drawing.xsd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UIElementsSchema/UnityEditor.UIElements.ProjectSettings.xsd" beforeDir="false" afterPath="$PROJECT_DIR$/UIElementsSchema/UnityEditor.UIElements.ProjectSettings.xsd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UIElementsSchema/UnityEditor.UIElements.xsd" beforeDir="false" afterPath="$PROJECT_DIR$/UIElementsSchema/UnityEditor.UIElements.xsd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UIElementsSchema/UnityEngine.UIElements.xsd" beforeDir="false" afterPath="$PROJECT_DIR$/UIElementsSchema/UnityEngine.UIElements.xsd" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,11 +67,9 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/89603abb451e4fa3afe5c645123238b4255600/87/48c12aae/ClickEvent.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/3ea01e77be99618395f448b16bd7cc2bd4248bd9e5d8474964b2d97f39c5d74/System.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/ILViewer/df4bc4b58db846d4914dd273bb80376942800/70/65cd97e1/02000020pdb27.il" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Audio/AudioManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/CinemaCamera/CameraEffector.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/CinemaCamera/CameraEffectors/AbsoluteCameraEffector.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/CinemaCamera/CameraEffectors/CameraCurveEffector.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/CinemaCamera/CameraEffectors/CameraScreenShakeEffector.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/CinemaCamera/CameraEffectors/LockTargetCameraEffector.cs" root0="FORCE_HIGHLIGHTING" />
@@ -107,6 +109,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Entity/EntityCharacterController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Game/Crystal.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Game/CrystalLine.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Game/GameManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Game/OceanFollow.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Input/InputContext.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Input/InputManager.cs" root0="FORCE_HIGHLIGHTING" />
@@ -117,6 +120,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Player/CharacterSelectSequencer.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Player/Combat/PlayerAttackInput.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Player/DeathSequence.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Player/Interaction/Interactable.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Player/Interaction/Interactor.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Player/PlayerCharacterInput.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Player/SingleplayerCharacterSwitcher.cs" root0="FORCE_HIGHLIGHTING" />
@@ -148,8 +152,10 @@
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.dt.app-ui@8ac7e730dd5d/Runtime/UI/Exceptions/VisualElementNotFoundException.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.dt.app-ui@8ac7e730dd5d/Runtime/UI/Extensions/SingleExtensions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@57d0e36f6123/InputSystem/Actions/InputAction.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@57d0e36f6123/InputSystem/Actions/InputActionState.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@57d0e36f6123/InputSystem/Devices/InputDevice.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@57d0e36f6123/InputSystem/Editor/Analytics/PlayerInputManagerEditorAnalytic.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@57d0e36f6123/InputSystem/Plugins/PlayerInput/InputValue.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@57d0e36f6123/InputSystem/Plugins/PlayerInput/PlayerInput.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@57d0e36f6123/InputSystem/Plugins/PlayerInput/PlayerInputManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@57d0e36f6123/InputSystem/Plugins/PlayerInput/PlayerInputManagerEditor.cs" root0="SKIP_HIGHLIGHTING" />
@@ -184,29 +190,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Attach to Unity Player.Unity (Unknown Project).executor&quot;: &quot;Debug&quot;,
-    &quot;Device#class com.jetbrains.rider.plugins.unity.run.devices.UnityEditorDeviceKind#com.jetbrains.rider.plugins.unity.run.devices.UnityDevicesProvider#Unity Attach To: Attach to&quot;: &quot;Unity Editor&quot;,
-    &quot;DeviceKind#com.jetbrains.rider.plugins.unity.run.devices.UnityDevicesProvider&quot;: &quot;Unity Editor&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;Unity Attach To.Attach to.executor&quot;: &quot;Debug&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/inurentto/Projects/Unity/InputTest&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.sourceCode&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Attach to Unity Player.Unity (Unknown Project).executor": "Debug",
+    "Device#class com.jetbrains.rider.plugins.unity.run.devices.UnityEditorDeviceKind#com.jetbrains.rider.plugins.unity.run.devices.UnityDevicesProvider#Unity Attach To: Attach to": "Unity Editor",
+    "DeviceKind#com.jetbrains.rider.plugins.unity.run.devices.UnityDevicesProvider": "Unity Editor",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.MCP Project settings loaded": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "Unity Attach To.Attach to.executor": "Debug",
+    "git-widget-placeholder": "Rebasing main",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "/home/inurentto/Projects/Unity/InputTest",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.sourceCode",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunAnythingCache">
     <option name="myCommands">
       <command value="format" />

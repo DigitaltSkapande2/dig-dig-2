@@ -1,11 +1,11 @@
 using System;
 using DigDig2.CinemaCamera;
 using DigDig2.Util;
+using DigDig2.SaveSystem;
+using DigDig2.UI.Controllers;
 using DigDig2.Combat;
 using DigDig2.Debugging;
 using DigDig2.Input;
-using DigDig2.SaveSystem;
-using DigDig2.UI.Controllers;
 using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Events;
@@ -17,7 +17,7 @@ namespace DigDig2.Game
     public enum CharacterType
     {
         Max,
-        Mini,
+        Minis,
     }
 
     public class GameManager : Singleton<GameManager>, ISaveable
@@ -31,8 +31,8 @@ namespace DigDig2.Game
         [SerializeField] private SavePoint[] savePoints;
         [SerializeField] private Crystal[] crystals;
         
-        [SerializeField] public UnityEvent<CharacterType, GameObject> characterSwitched;
-        [SerializeField] public UnityEvent<bool> gameStarted;
+        [SerializeField] public UnityEvent<CharacterType, GameObject> characterSwitched = new();
+        [SerializeField] public UnityEvent gameStarted = new();
 
         public bool Paused
         {
@@ -60,29 +60,16 @@ namespace DigDig2.Game
         }
         public GameManagerGameSaveData loadedGameManagerSaveData;
 
+        // Character
+        public CharacterType singlePlayerCurrentCharacter { private set; get; } = CharacterType.Max;
+        
         // Player
         public GameObject[] players = new GameObject[2];
-        public GameObject PlayerOneCharacter
-        {
-            get
-            {
-                if (players[0]) return players[0];
-                else BetterDebug.Log( "Player one has not been initialized", LogSeverity.Error );
+        public GameObject PlayerOneCharacter => players[0];
+        public GameObject PlayerTwoCharacter => players[1];
+        public int maxPlayerID;
+        public int minisPlayerID;
 
-                return null;
-            }
-        }
-
-        public GameObject PlayerTwoCharacter
-        {
-            get
-            {
-                if (players[1]) return players[1];
-                else BetterDebug.Log( "Player two has not been initialized", LogSeverity.Error );
-
-                return null;
-            }
-        }
         
         private PauseMenuController pauseMenuController;
         private GameHudController gameHudController;
@@ -90,6 +77,8 @@ namespace DigDig2.Game
         // Input
         public  PlayerInput playerOneInput;
         public  PlayerInput playerTwoInput;
+        
+        #region UnityCallbacks
 
         // Character
         public CharacterType currentCharacter { private set; get; } = CharacterType.Max;
@@ -114,6 +103,14 @@ namespace DigDig2.Game
             StartGame();
         }
         
+        void OnDestroy()
+        {
+            if (SaveManager.Instance) SaveManager.Instance.Reset();
+        }
+        
+        #endregion
+        #region StartGame
+        
         private void StartGame()
         {
             InitializeSavePoint();
@@ -121,6 +118,7 @@ namespace DigDig2.Game
             
             Debug.Log(loadedGameManagerSaveData.highestReachedSavePointIndex);
             SavePoint savePointToStartAt = savePoints[loadedGameManagerSaveData.highestReachedSavePointIndex];
+            savePointToStartAt.startSequenceDone.AddListener(OnSavePointStartUpSequenceDone);
 
             if (IsMultiplayer)
             {
@@ -131,6 +129,12 @@ namespace DigDig2.Game
                 savePointToStartAt.ServerStartSingleplayerStartSequence();
                 GameCamera.Instance.SetTargetRotation(savePointToStartAt.cameraYRotation, true);
             }
+        }
+
+        private void OnSavePointStartUpSequenceDone()
+        {
+            Debug.Log("GAME STARTED EVENT !!! ");
+            gameStarted.Invoke();
         }
 
         private void InitializeSavePoint()
@@ -172,18 +176,15 @@ namespace DigDig2.Game
                 }
             }
         }
-
-        private void OnDestroy()
-        {
-            if (SaveManager.Instance) SaveManager.Instance.Reset();
-        }
+        
+        #endregion
 
         private GameObject GetCharacterPrefabFromCharacterType(CharacterType characterType)
         {
             return characterType switch
             {
                 CharacterType.Max => maxPrefab,
-                CharacterType.Mini => miniPrefab,
+                CharacterType.Minis => miniPrefab,
                 _ => null,
             };
         }
@@ -242,13 +243,14 @@ namespace DigDig2.Game
             Destroy(PlayerOneCharacter);
 
             // Switch Logic
-            currentCharacter = CharacterType.Max == currentCharacter ? CharacterType.Mini : CharacterType.Max;
+            singlePlayerCurrentCharacter = CharacterType.Max == singlePlayerCurrentCharacter ? CharacterType.Minis : CharacterType.Max;
 
             // Spawn new player
-            GameObject newPrefab = GetCharacterPrefabFromCharacterType(currentCharacter);
+            GameObject newPrefab = GetCharacterPrefabFromCharacterType(singlePlayerCurrentCharacter);
             GameObject playerCharacter = Instantiate(newPrefab, oldPlayerPos, Quaternion.identity);
+
             
-            // Inject Old Player persistence data
+            // Inject Old Player percistance data
             EntityCharacterController playerEntityCharacterController = playerCharacter.GetComponent<EntityCharacterController>();
             Health playerHealthComponent = playerCharacter.GetComponent<Health>();
             
@@ -265,20 +267,14 @@ namespace DigDig2.Game
 
         #region Multiplayer
 
-        public void RegisterMultiplayerPlayers(GameObject playerOne, GameObject playerTwo)
+        public void RegisterMultiplayerPlayers(GameObject playerOne, CharacterType playerOneCharacterType, GameObject playerTwo, CharacterType playerTwoCharacterType)
         {
             players[0] = playerOne;
             players[1] = playerTwo;
+
+            maxPlayerID = playerOneCharacterType == CharacterType.Max ? 0 : 1;
+            minisPlayerID = playerOneCharacterType == CharacterType.Minis ? 0 : 1;
             Debug.Log("GAMEMANAGER: Multiplayer Characters registered!");
-        }
-
-        #endregion
-
-        #region Enemy Focusing
-
-        public void FocusOnPosition(bool visible, Vector3 position)
-        {
-            gameHudController.UpdateFocusTarget(visible, position);
         }
 
         #endregion
@@ -316,7 +312,7 @@ namespace DigDig2.Game
                 
                 
                 
-                currentCharacter = loadedGameManagerSaveData.singleplayerSelectedCharacter;
+                singlePlayerCurrentCharacter = loadedGameManagerSaveData.singleplayerSelectedCharacter;
                 Debug.Log(loadedGameManagerSaveData.highestReachedSavePointIndex);
             }
         }

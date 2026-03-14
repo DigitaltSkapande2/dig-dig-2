@@ -5,6 +5,6 @@
             <ui:Image source="project://database/Assets/Materials/Crystal/Circle.png?fileID=2800000&amp;guid=0821c0adc7d2f2649951205046003815&amp;type=3#Circle" name="PlayerOne" tint-color="rgb(29, 209, 63)" style="left: 0; top: 0; right: 0; bottom: 0; position: absolute; transition-property: translate; transition-timing-function: ease-out; transition-duration: 0.3s;"/>
             <ui:Image source="project://database/Assets/Materials/Crystal/Circle.png?fileID=2800000&amp;guid=0821c0adc7d2f2649951205046003815&amp;type=3#Circle" name="PlayerTwo" tint-color="rgb(241, 60, 250)" style="position: absolute; bottom: 0; right: 0; top: 0; left: 0; transition-property: translate; transition-duration: 0.3s; transition-timing-function: ease-out;"/>
         </ui:VisualElement>
-        <ui:Button text="Button" name="StartButton" style="position: absolute; top: auto; left: 50%; height: 128px; width: 393px; bottom: 150px; right: auto; translate: -50% 0;"/>
+        <ui:Button text="Start" name="StartButton" style="position: absolute; top: auto; left: 50%; height: 128px; width: 393px; bottom: 150px; right: auto; translate: -50% 0;"/>
     </ui:VisualElement>
 </ui:UXML>

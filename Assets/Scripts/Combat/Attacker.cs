@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
-
+using System.Linq;
+using UnityEngine.Events;
 using DigDig2.CinemaCamera;
 using DigDig2.Game;
 
@@ -61,6 +63,9 @@ namespace DigDig2.Combat
 		private Attack lastPerformedAttack;
 		private AttackType lastPerformedAttackType;
 		private float performanceStartTime = -1;
+        
+        [NonSerialized] public UnityEvent<Vector3> focusPositionUpdated = new();
+        [NonSerialized] public UnityEvent<bool> isFocusingStateChanged = new();
 
 		public CombatState State { get; private set; } = CombatState.Idle;
 
@@ -383,38 +388,47 @@ namespace DigDig2.Combat
 		public void StartFocus( )
 		{
 			Attackable closestEnemy = GetClosestEnemyInRadius( focusScanRadius );
-			if ( closestEnemy && IsAttackableVisibleOnScreen( closestEnemy ) ) focusedEnemy = closestEnemy;
-		}
+            if (closestEnemy && IsAttackableVisibleOnScreen(closestEnemy))
+            {
+                focusedEnemy = closestEnemy;
+                isFocusingStateChanged.Invoke(true);
+            }
+
+        }
 
 		public void EndFocus( )
 		{
 			focusedEnemy = null;
-
 			if ( entityCharacterController ) entityCharacterController.SetAutomaticLookRotationLock( false );
+            
+            isFocusingStateChanged.Invoke(false);
 		}
 
 		private void UpdateEnemyFocus( )
 		{
-			if ( focusedEnemy )
+            bool hasFocusedEnemy = (bool)focusedEnemy;
+            
+            // If focused enemy not on screen EndFocus()
+			if ( hasFocusedEnemy && !IsAttackableVisibleOnScreen( focusedEnemy ) )
 			{
-				if ( !IsAttackableVisibleOnScreen( focusedEnemy ) ) focusedEnemy = null;
-			}
-
-			bool hasFocusedEnemy = (bool)focusedEnemy;
+                EndFocus();
+                return;
+            }
 
 			// Set Screen Marker Position
-			if ( GameManager.Instance.PlayerOneCharacter == gameObject )
+			if ( hasFocusedEnemy && GameManager.Instance.players.Contains(gameObject))
 			{
-				Vector3 enemyPosition = Vector3.zero;
-				if ( hasFocusedEnemy ) enemyPosition = focusedEnemy!.transform.position;
-				GameManager.Instance.FocusOnPosition( hasFocusedEnemy, enemyPosition ); // TODO: feels a bit odd calling GameManager, and the GameManager relays the info down the tree again
+                Vector3 enemyPosition = focusedEnemy!.transform.position;
+                
+				focusPositionUpdated.Invoke(enemyPosition);
 			}
 
 			// EntityCharacter Controller rotation
-			if ( !entityCharacterController ) return;
-
-			entityCharacterController.SetAutomaticLookRotationLock( hasFocusedEnemy );
-			if ( hasFocusedEnemy ) entityCharacterController.LookTowards( focusedEnemy!.transform.position );
+            if (entityCharacterController)
+            {
+                entityCharacterController.SetAutomaticLookRotationLock( hasFocusedEnemy );
+                if ( hasFocusedEnemy ) entityCharacterController.LookTowards( focusedEnemy!.transform.position );
+            }
 		}
 
 		public bool IsAttackableVisibleOnScreen( Attackable attackable )

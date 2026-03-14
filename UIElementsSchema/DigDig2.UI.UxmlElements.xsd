@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:appui="Unity.AppUI.UI" xmlns:editor="UnityEditor.UIElements" xmlns:nav="Unity.AppUI.Navigation" xmlns:engine="UnityEngine.UIElements" xmlns="UnityEditor.Accessibility" elementFormDefault="qualified" targetNamespace="DigDig2.UI.UxmlElements" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="UnityEngine.UIElements.xsd" namespace="UnityEngine.UIElements" />
+  <xs:simpleType name="SubmittableListView_virtualization-method_Type">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="FixedHeight" />
+      <xs:enumeration value="DynamicHeight" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="SubmittableListView_selection-type_Type">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="None" />
+      <xs:enumeration value="Single" />
+      <xs:enumeration value="Multiple" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="SubmittableListView_show-alternating-row-backgrounds_Type">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="None" />
+      <xs:enumeration value="ContentOnly" />
+      <xs:enumeration value="All" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="SubmittableListView_reorder-mode_Type">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Simple" />
+      <xs:enumeration value="Animated" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="SubmittableListView_binding-source-selection-mode_Type">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Manual" />
+      <xs:enumeration value="AutoAssign" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="SubmittableListViewType">
+    <xs:complexContent mixed="false">
+      <xs:restriction base="engine:VisualElementType">
+        <xs:attribute default="" name="name" type="xs:string" use="optional" />
+        <xs:attribute default="true" name="enabled" type="xs:boolean" use="optional" />
+        <xs:attribute default="" name="view-data-key" type="xs:string" use="optional" />
+        <xs:attribute default="Ignore" name="picking-mode" type="engine:VisualElement_picking-mode_Type" use="optional" />
+        <xs:attribute default="" name="tooltip" type="xs:string" use="optional" />
+        <xs:attribute default="None" name="usage-hints" type="engine:VisualElement_usage-hints_Type" use="optional" />
+        <xs:attribute default="0" name="tabindex" type="xs:int" use="optional" />
+        <xs:attribute default="true" name="focusable" type="xs:boolean" use="optional" />
+        <xs:attribute default="Inherit" name="language-direction" type="engine:VisualElement_language-direction_Type" use="optional" />
+        <xs:attribute default="" name="data-source" type="xs:string" use="optional" />
+        <xs:attribute default="" name="data-source-path" type="xs:string" use="optional" />
+        <xs:attribute default="" name="data-source-type" type="xs:string" use="optional" />
+        <xs:attribute default="" name="binding-path" type="xs:string" use="optional" />
+        <xs:attribute default="22" name="fixed-item-height" type="xs:float" use="optional" />
+        <xs:attribute default="FixedHeight" name="virtualization-method" xmlns:q1="DigDig2.UI.UxmlElements" type="q1:SubmittableListView_virtualization-method_Type" use="optional" />
+        <xs:attribute default="false" name="show-border" type="xs:boolean" use="optional" />
+        <xs:attribute default="Single" name="selection-type" xmlns:q2="DigDig2.UI.UxmlElements" type="q2:SubmittableListView_selection-type_Type" use="optional" />
+        <xs:attribute default="None" name="show-alternating-row-backgrounds" xmlns:q3="DigDig2.UI.UxmlElements" type="q3:SubmittableListView_show-alternating-row-backgrounds_Type" use="optional" />
+        <xs:attribute default="false" name="reorderable" type="xs:boolean" use="optional" />
+        <xs:attribute default="false" name="horizontal-scrolling" type="xs:boolean" use="optional" />
+        <xs:attribute default="false" name="show-foldout-header" type="xs:boolean" use="optional" />
+        <xs:attribute default="" name="header-title" type="xs:string" use="optional" />
+        <xs:attribute default="false" name="show-add-remove-footer" type="xs:boolean" use="optional" />
+        <xs:attribute default="true" name="allow-add" type="xs:boolean" use="optional" />
+        <xs:attribute default="true" name="allow-remove" type="xs:boolean" use="optional" />
+        <xs:attribute default="Simple" name="reorder-mode" xmlns:q4="DigDig2.UI.UxmlElements" type="q4:SubmittableListView_reorder-mode_Type" use="optional" />
+        <xs:attribute default="true" name="show-bound-collection-size" type="xs:boolean" use="optional" />
+        <xs:attribute default="Manual" name="binding-source-selection-mode" xmlns:q5="DigDig2.UI.UxmlElements" type="q5:SubmittableListView_binding-source-selection-mode_Type" use="optional" />
+        <xs:attribute default="" name="item-template" type="xs:string" use="optional" />
+        <xs:attribute default="" name="content-container" type="xs:string" use="optional" />
+        <xs:attribute default="" name="class" type="xs:string" use="optional" />
+        <xs:attribute default="" name="style" type="xs:string" use="optional" />
+        <xs:anyAttribute processContents="lax" />
+      </xs:restriction>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SubmittableListView" substitutionGroup="engine:VisualElement" xmlns:q6="DigDig2.UI.UxmlElements" type="q6:SubmittableListViewType" />
+  <xs:complexType name="SaveFileType">
+    <xs:complexContent mixed="false">
+      <xs:restriction base="engine:VisualElementType">
+        <xs:attribute default="" name="name" type="xs:string" use="optional" />
+        <xs:attribute default="true" name="enabled" type="xs:boolean" use="optional" />
+        <xs:attribute default="" name="view-data-key" type="xs:string" use="optional" />
+        <xs:attribute default="Position" name="picking-mode" type="engine:VisualElement_picking-mode_Type" use="optional" />
+        <xs:attribute default="" name="tooltip" type="xs:string" use="optional" />
+        <xs:attribute default="None" name="usage-hints" type="engine:VisualElement_usage-hints_Type" use="optional" />
+        <xs:attribute default="0" name="tabindex" type="xs:int" use="optional" />
+        <xs:attribute default="true" name="focusable" type="xs:boolean" use="optional" />
+        <xs:attribute default="Inherit" name="language-direction" type="engine:VisualElement_language-direction_Type" use="optional" />
+        <xs:attribute default="" name="data-source" type="xs:string" use="optional" />
+        <xs:attribute default="" name="data-source-path" type="xs:string" use="optional" />
+        <xs:attribute default="" name="data-source-type" type="xs:string" use="optional" />
+        <xs:attribute default="" name="save-name" type="xs:string" use="optional" />
+        <xs:attribute default="Save Info" name="save-info" type="xs:string" use="optional" />
+        <xs:attribute default="" name="content-container" type="xs:string" use="optional" />
+        <xs:attribute default="" name="class" type="xs:string" use="optional" />
+        <xs:attribute default="" name="style" type="xs:string" use="optional" />
+        <xs:anyAttribute processContents="lax" />
+      </xs:restriction>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SaveFile" substitutionGroup="engine:VisualElement" xmlns:q7="DigDig2.UI.UxmlElements" type="q7:SaveFileType" />
+</xs:schema>

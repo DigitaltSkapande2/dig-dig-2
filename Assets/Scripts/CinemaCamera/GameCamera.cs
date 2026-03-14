@@ -1,82 +1,83 @@
-using DigDig2.SaveSystem;
+using System;
+using System.Collections.Generic;
 using DigDig2.Util;
-
 using Unity.Mathematics;
-
 using UnityEngine;
 
 namespace DigDig2.CinemaCamera
 {
-	public class GameCamera : Singleton<GameCamera>, ISaveable
-	{
-		[Tooltip( "the time in seconds it will take for the camera to get to the target position" )]
-		[SerializeField] public float followSpeed = 5f;
+    public class GameCamera : Singleton<GameCamera>
+    {
+        [Tooltip("Seconds to reach target position")]
+        [SerializeField] public float followSpeed = 5f;
+        [SerializeField] public float rotationSpeed = 1f;
 
-		[SerializeField] public float rotationSpeed = 1;
+        [SerializeField]
+        private List<CameraEffector> effectors;
 
-		public Camera mainCamera;
-		private Quaternion baseTargetRotation;
-		private float defaultFrustumHeight;
-		private float targetFrustumSize;
+        public Camera mainCamera;
+        private Quaternion baseTargetRotation = Quaternion.identity;
+        private float defaultFrustumHeight;
 
-		private Vector3 targetPos = Vector3.zero;
-		private Quaternion targetRotation = Quaternion.identity;
+        private void Start()
+        {
+            mainCamera = GetComponentInChildren<Camera>();
+            defaultFrustumHeight = mainCamera.orthographicSize;
+            if (baseTargetRotation == new Quaternion(0, 0, 0, 0)) baseTargetRotation = Quaternion.identity;
+        }
 
-		private void Start( )
-		{
-			mainCamera = GetComponentInChildren<Camera>( );
-			defaultFrustumHeight = mainCamera.orthographicSize;
-		}
+        private void OnEnable()
+        {
+            var (targetPos, targetRotation, frustumSize) = GetEffectorEffects();
+            transform.position = targetPos;
+            transform.rotation = targetRotation;
+            mainCamera.orthographicSize = frustumSize;
+        }
 
-		private void Update( )
-		{
-			// i don't know how this witchcraft works...
-			Vector3 targetPos = Vector3.zero;
-			Quaternion targetRotation = Quaternion.identity;
-			
-			float frustumSize = defaultFrustumHeight;
+        private void Update()
+        {
+            var (targetPos, targetRotation, frustumSize) = GetEffectorEffects();
+            
+            transform.position = Vector3.Lerp(transform.position, targetPos, 1f - Mathf.Exp(-followSpeed * Time.deltaTime));
+            transform.rotation = targetRotation; //Quaternion.Slerp(transform.rotation, targetRotation, 1f - Mathf.Exp(-rotationSpeed * Time.deltaTime));
+            mainCamera.orthographicSize = Mathf.Lerp(mainCamera.orthographicSize, frustumSize, 1f - Mathf.Exp(-followSpeed * Time.deltaTime));
+        }
 
-			foreach ( CameraEffector effector in CameraEffector.GetEffectivePivotCameraEffectors( ) )
-			{
-				targetPos += effector.position;
-				if ( effector.rotation.eulerAngles.magnitude > float.Epsilon ) targetRotation.eulerAngles += effector.rotation.eulerAngles;
+        private (Vector3, Quaternion, float) GetEffectorEffects()
+        {
+            effectors = CameraEffector.GetEffectiveEffectors();
 
-				frustumSize += effector.frustumSize;
-			}
+            Vector3 targetPos = Vector3.zero;
+            Quaternion targetRotation = Quaternion.identity;
+            float frustumSize = defaultFrustumHeight;
 
-			transform.position = Vector3.Lerp( transform.position, targetPos, followSpeed * Time.deltaTime );
-			targetRotation.eulerAngles += this.targetRotation.eulerAngles;
+            targetRotation *= baseTargetRotation;
+            
+            foreach (CameraEffector effector in effectors)
+            {
+                effector.TickWeight(Time.deltaTime);
 
-			this.targetRotation = Quaternion.Slerp( this.targetRotation, baseTargetRotation, Time.deltaTime * rotationSpeed );
+                float w = effector.Weight;
+                if (w <= 0f) continue;
 
-			transform.rotation = targetRotation;
+                targetPos += effector.position * w;
+                frustumSize += effector.frustumSize * w;
+                
+                Quaternion weightedRot = Quaternion.Slerp(Quaternion.identity, effector.rotation, w);
+                targetRotation *= weightedRot;
+            }
 
-			mainCamera.orthographicSize = frustumSize;
-		}
+            return (targetPos, targetRotation, frustumSize);
+        }
 
-		public void SetRotationSpeed( float speed ) { rotationSpeed = speed; }
+        public void SetRotationSpeed(float speed) => rotationSpeed = speed;
 
-		public void SetTargetRotation( float angle ) { SetTargetRotation( angle, false ); }
+        public void SetTargetRotation(float angle) => SetTargetRotation(angle, false);
 
-		public void SetTargetRotation( float angle, bool setInstant )
-		{
-			baseTargetRotation = quaternion.Euler( 0, Mathf.Deg2Rad * angle, 0 );
-			Debug.Log( $"Set Camera Rotation to {angle} {setInstant}" );
-			if ( setInstant ) transform.rotation = baseTargetRotation;
-		}
-
-		#region Saving
-
-		public object CollectData( ) => baseTargetRotation;
-
-		public void RestoreState( object dataObject )
-		{
-			if ( dataObject == null ) return;
-
-			baseTargetRotation = (Quaternion)dataObject;
-			transform.rotation = baseTargetRotation;
-		}
-
-		#endregion
-	}
+        public void SetTargetRotation(float angle, bool setInstant)
+        {
+            baseTargetRotation = Quaternion.Euler(0, angle, 0);
+            if (setInstant) transform.rotation = baseTargetRotation;
+        }
+    }
 }

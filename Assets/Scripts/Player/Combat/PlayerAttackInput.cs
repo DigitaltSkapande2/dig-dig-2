@@ -1,8 +1,8 @@
 using DigDig2.Combat;
-using DigDig2.Game;
 using DigDig2.Input;
-
+using DigDig2.Game;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace DigDig2.Player.Combat
 {

@@ -2,8 +2,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-using DigDig2.Debugging;
 using DigDig2.Util;
+using DigDig2.Debugging;
 
 using UnityEngine;
 

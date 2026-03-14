@@ -196,7 +196,6 @@ MonoBehaviour:
   - {fileID: -1136981287343783183}
   - {fileID: -109661715582125673}
   - {fileID: -3489435796083114049}
-  - {fileID: 4107109600578518510}
 --- !u!114 &2591735699449001729
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -225,19 +224,3 @@ MonoBehaviour:
   rounded:
     m_OverrideState: 0
     m_Value: 0
---- !u!114 &4107109600578518510
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff6d8b53a86622946b15542c049aa0aa, type: 3}
-  m_Name: BetterBokehDOFVolumeComponent
-  m_EditorClassIdentifier: Assembly-CSharp::BetterBokehDOFVolumeComponent
-  active: 1
-  intensity:
-    m_OverrideState: 1
-    m_Value: 1

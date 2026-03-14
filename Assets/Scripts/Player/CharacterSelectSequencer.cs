@@ -109,7 +109,12 @@ namespace DigDig2
             playerOneCharacterInstance.transform.SetParent(playerOneInput.transform);
             playerTwoCharacterInstance.transform.SetParent(playerTwoInput.transform);
             
-            GameManager.Instance.RegisterMultiplayerPlayers(playerOneCharacterInstance, playerTwoCharacterInstance);
+            GameManager.Instance.RegisterMultiplayerPlayers(
+                playerOneCharacterInstance, 
+                PlayerOneIsMax ? CharacterType.Max : CharacterType.Minis,
+                playerTwoCharacterInstance, 
+                PlayerOneIsMax ?  CharacterType.Minis : CharacterType.Max
+            );
             
             playerOneCharacterInstance.GetComponent<EntityCharacterController>().Frozen = false;
             playerOneCharacterInstance.GetComponent<EntityCharacterController>().Frozen = false;

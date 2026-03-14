@@ -16,6 +16,7 @@ namespace DigDig2.SaveSystem
         [SerializeField] public float cameraYRotation;
         [Header("Events")]
         [SerializeField] public UnityEvent savePointReached;
+        [SerializeField] public UnityEvent startSequenceDone = new();
         [SerializeField] private EffectPlayer onReachedEffect;
         [SerializeField] private float timeUntilReleaseCamera = 2;
         private new Collider collider;
@@ -30,17 +31,14 @@ namespace DigDig2.SaveSystem
             } 
         }
         
+        
 
         private void Awake()
         {
             collider = GetComponent<Collider>();
             lockTargetEffector.IsActive = false;
         }
-
-        public void Start()
-        {
-            
-        }
+        
         
         public void ServerStartMultiplayerStartSequence()
         {
@@ -54,6 +52,7 @@ namespace DigDig2.SaveSystem
         private void OnMultiplayerCharacterSelectDone()
         {
             lockTargetEffector.IsActive = false;
+            startSequenceDone.Invoke();
         }
 
         public async void ServerStartSingleplayerStartSequence()
@@ -64,6 +63,7 @@ namespace DigDig2.SaveSystem
 
             await Task.Delay((int)(timeUntilReleaseCamera * 1000));
             lockTargetEffector.IsActive = false;
+            startSequenceDone.Invoke();
         }
 
         public void SetSpawnPointReached(bool reached)

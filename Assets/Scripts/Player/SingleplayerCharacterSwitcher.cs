@@ -14,18 +14,9 @@ namespace DigDig2.Player
 
 		private float lastTimeSwitched;
 
-        private void Start()
-        {
-            if (!GameManager.Instance.IsMultiplayer)
-            {
-                enabled = false;
-                Destroy(this);
-            }
-        }
-
         public void SwitchCharacter( )
 		{
-			if ( Time.time - lastTimeSwitched > cooldown && !GameManager.Instance.IsMultiplayer ) GameManager.Instance.SingleplayerSwitchCharacter( );
+			if ( Time.time - lastTimeSwitched > cooldown && !GameManager.Instance.IsMultiplayer) GameManager.Instance.SingleplayerSwitchCharacter( );
 		}
 	}
 }
