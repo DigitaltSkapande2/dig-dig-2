@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 3642323388508694445}
   - component: {fileID: 7968362205111387252}
   - component: {fileID: 8854238412085537991}
-  - component: {fileID: 8380068149354741287}
+  - component: {fileID: 8707165426076141490}
+  - component: {fileID: 1327132284024772282}
   - component: {fileID: 1410852915097579326}
   - component: {fileID: 5158197556070359596}
   - component: {fileID: 7301495581908410387}
@@ -83,7 +84,7 @@ MonoBehaviour:
     m_EventCameras: []
     m_PanelInputRedirection: 0
     m_AutoCreatePanelComponents: 1
---- !u!114 &8380068149354741287
+--- !u!114 &8707165426076141490
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -92,27 +93,31 @@ MonoBehaviour:
   m_GameObject: {fileID: 2722246383216992363}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Script: {fileID: 11500000, guid: 06872317693a4f8890b4d7d21b27bfaf, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.PlayerInput
-  m_Actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  m_NotificationBehavior: 0
-  m_UIInputModule: {fileID: 5158197556070359596}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents: []
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: UI
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
+  m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Input.InputModule
+  priority: 0
+  allowedInputPlayerIndex: -1
+  actionMapName: Game
+  activeContexts:
+  - {fileID: 11400000, guid: 72844612df5b0e3e2ae45edd4ba932fe, type: 2}
+--- !u!114 &1327132284024772282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2722246383216992363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06872317693a4f8890b4d7d21b27bfaf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Input.InputModule
+  priority: 0
+  allowedInputPlayerIndex: -1
+  actionMapName: UI
+  activeContexts:
+  - {fileID: 11400000, guid: 35e361e66c11de44ba5fe95434284bad, type: 2}
 --- !u!114 &1410852915097579326
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -297,7 +302,7 @@ Transform:
   m_GameObject: {fileID: 6097956373199808459}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.11445, y: 0.5, z: -0.42955}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -317,27 +322,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5a69ce4e2163104e9e3728891f8940c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destroyOnLoad: 0
+  dontDestroyOnLoad: 0
   defaultSingleplayerCharacter: 0
   maxPrefab: {fileID: 4442565222488509090, guid: d5a3d3276e47631bfb60f1dda5c99ef2, type: 3}
   miniPrefab: {fileID: 4442565222488509090, guid: f67aae0ed0287714d978db69befa66ce, type: 3}
-  singlePlayerInputRoot: {fileID: 7231145364351669735, guid: 34a3ce8abd341f986beb987ef0d1763a, type: 3}
-  savePoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  savePoints: []
   crystals:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  loadedGameManagerSaveData:
-    singleplayerSelectedCharacter: 0
-    highestReachedSavePointIndex: 0
-    highestKilledCrystal: 0
   characterSwitched:
     m_PersistentCalls:
       m_Calls: []
@@ -347,3 +342,14 @@ MonoBehaviour:
   pauseStateChanged:
     m_PersistentCalls:
       m_Calls: []
+  gameInputContext: {fileID: 11400000, guid: 72844612df5b0e3e2ae45edd4ba932fe, type: 2}
+  pauseMenuInputContext: {fileID: 11400000, guid: 35e361e66c11de44ba5fe95434284bad, type: 2}
+  loadedGameManagerSaveData:
+    singleplayerSelectedCharacter: 0
+    highestReachedSavePointIndex: 0
+    highestKilledCrystal: 0
+  players:
+  - {fileID: 0}
+  - {fileID: 0}
+  playerOneInput: {fileID: 0}
+  playerTwoInput: {fileID: 0}

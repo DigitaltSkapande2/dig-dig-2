@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
+using DigDig2.Debugging;
 using DigDig2.Util;
 
 using UnityEngine;
@@ -29,11 +30,9 @@ namespace DigDig2.SaveSystem
 		{
 			base.Awake( );
 			string saveDirectoryPath = GetSavesDirectoryPath( );
-			VerboseLog( $"Saving files in: {saveDirectoryPath}" );
+			BetterDebug.Log( $"Saving files in: {saveDirectoryPath}" );
 			if ( !Directory.Exists( saveDirectoryPath ) ) Directory.CreateDirectory( saveDirectoryPath );
 		}
-
-		private void VerboseLog( string message ) { Debug.Log( "SAVEMANAGER: " + message ); }
 
 		public class GameSave
 		{
@@ -98,7 +97,7 @@ namespace DigDig2.SaveSystem
 			loadedGameSave.saveName = saveName == string.Empty ? loadedGameSave.saveName : saveName;
 			loadedGameSave.version = Application.version;
 			FileSystem.WriteDataToFile( GetSaveFilePathFromName( loadedGameSave.saveName ), loadedGameSave );
-			VerboseLog( $"Wrote save file \"{loadedGameSave.saveName}\" to disk, State data = {loadedGameSave.stateData.Count} entries" );
+			BetterDebug.Log( $"Wrote save file \"{loadedGameSave.saveName}\" to disk, State data = {loadedGameSave.stateData.Count} entries" );
 		}
 
 		public void SaveAll( )
@@ -109,7 +108,7 @@ namespace DigDig2.SaveSystem
 		public void WriteToSaveData( string uniqueName, object data )
 		{
 			loadedGameSave.stateData[ uniqueName ] = data;
-			VerboseLog( $"wrote save data for key \"{uniqueName}\"" );
+			BetterDebug.Log( $"wrote save data for key \"{uniqueName}\"" );
 		}
 
 		#endregion
@@ -122,12 +121,12 @@ namespace DigDig2.SaveSystem
 		{
 			if ( gameSave == null )
 			{
-				Debug.LogError( "TRYING TO LOAD NULL GAMESAVE" );
+				BetterDebug.Log( "TRYING TO LOAD NULL GAMESAVE", LogSeverity.Error );
 				return false;
 			}
 
 			loadedGameSave = gameSave;
-			VerboseLog( $"Loaded save of name {gameSave.saveName}" );
+			BetterDebug.Log( $"Loaded save of name {gameSave.saveName}" );
 
 			return true;
 		}
@@ -137,7 +136,7 @@ namespace DigDig2.SaveSystem
 			GameSave gameSave = ReadSaveFile( saveName );
 			if ( gameSave != null ) return LoadSave( gameSave );
 
-			Debug.LogWarning( $"Trying to Load Save of unknown name: {saveName}" );
+			BetterDebug.Log( $"Trying to Load Save of unknown name: {saveName}", LogSeverity.Warning );
 			return false;
 		}
 
@@ -156,9 +155,9 @@ namespace DigDig2.SaveSystem
 		public void RegisterSavable( string uniqueName, ISaveable saveable, bool restoreOnRegister = true )
 		{
 			if ( uniqueNames.Contains( uniqueName ) )
-				Debug.LogWarning( $"Trying to register Savable with already registered uniqueName: {uniqueName}, aborting" );
+				BetterDebug.Log( $"Trying to register Savable with already registered uniqueName: {uniqueName}, aborting", LogSeverity.Warning );
 			else
-				VerboseLog( $"Registered NEW Savable with uniqueName \"{uniqueName}\"" );
+				BetterDebug.Log( $"Registered NEW Savable with uniqueName \"{uniqueName}\"" );
 
 			uniqueNames.Add( uniqueName );
 			registeredSavables.Add( uniqueName, saveable );
@@ -170,7 +169,7 @@ namespace DigDig2.SaveSystem
 		{
 			if ( !HasLoadedSave )
 			{
-				Debug.LogError( "Trying to restore Savable state with no save loaded, be sure to load a save first!" );
+				BetterDebug.Log( "Trying to restore Savable state with no save loaded, be sure to load a save first!", LogSeverity.Error );
 				return;
 			}
 
@@ -185,12 +184,12 @@ namespace DigDig2.SaveSystem
 			if ( loadedGameSave.stateData.Keys.Contains( uniqueName ) )
 			{
 				saveable.RestoreState( loadedGameSave.stateData[ uniqueName ] );
-				VerboseLog( $"Restored state for Savable with uniqueName \"{uniqueName}\"" );
+				BetterDebug.Log( $"Restored state for Savable with uniqueName \"{uniqueName}\"" );
 			}
 			else
 			{
 				saveable.RestoreState( null );
-				VerboseLog( $"Restored state NULL for Savable with uniqueName \"{uniqueName}\"" );
+				BetterDebug.Log( $"Restored state NULL for Savable with uniqueName \"{uniqueName}\"" );
 			}
 		}
 

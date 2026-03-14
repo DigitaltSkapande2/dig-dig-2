@@ -1,56 +1,50 @@
 using DigDig2.Combat;
+using DigDig2.Game;
+using DigDig2.Input;
+
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace DigDig2.Player.Combat
 {
-    [RequireComponent(typeof(Attacker))]
-    public class PlayerAttackInput : MonoBehaviour
-    {
-        private Attacker attacker;
-        private bool hasStarted;
+	[RequireComponent( typeof( Attacker ) )]
+	public class PlayerAttackInput : MonoBehaviour
+	{
+		private Attacker attacker;
 
-        public bool InputEnabled { get; private set; }
+		private void Awake( ) { attacker = GetComponent<Attacker>( ); }
 
-        private void Awake()
-        {
-            attacker = GetComponent<Attacker>();
-        }
+		#region Input Action Callbacks
 
-        private void Start()
-        {
-            hasStarted = true;
-        }
+		private void OnInputCombatAttack1( InputInfo inputInfo )
+		{
+			if ( GameManager.Instance.Paused ) return;
+			
+			if ( inputInfo.context.performed )
+				attacker.RequestAttackStart( 0 );
+			else
+				attacker.RequestAttackEnd( );
+		}
 
-        
-        #region Input Action Callbacks
+		private void OnInputCombatAttack2( InputInfo inputInfo )
+		{
+			if ( GameManager.Instance.Paused ) return;
+			
+			if ( inputInfo.context.performed )
+				attacker.RequestAttackStart( 1 );
+			else
+				attacker.RequestAttackEnd( );
+		}
 
-        public void OnAttack1(InputValue context)
-        {
-            if (context.isPressed) attacker.RequestAttackStart(0);
-            else attacker.RequestAttackEnd();
-        }
+		private void OnInputCombatFocus( InputInfo inputInfo )
+		{
+			if ( inputInfo.context.performed && !GameManager.Instance.Paused )
+				attacker.StartFocus( );
+			else
+				attacker.EndFocus( );
+		}
 
-        public void OnAttack2(InputValue context)
-        {
-            if (context.isPressed) attacker.RequestAttackStart(1);
-            else attacker.RequestAttackEnd();
-        }
+		private void OnInputCombatFocusTarget( InputInfo inputInfo ) { }
 
-        public void OnFocus(InputValue context)
-        {
-            if (context.isPressed) attacker.StartFocus();
-            else attacker.EndFocus();
-        }
-
-        public void OnFocusTarget(InputValue context)
-        {
-        }
-
-        public void OnFocusTarget(InputAction.CallbackContext context)
-        {
-        }
-
-        #endregion
-    }
+		#endregion
+	}
 }

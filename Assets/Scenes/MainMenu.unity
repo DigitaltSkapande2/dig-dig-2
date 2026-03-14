@@ -362,6 +362,63 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.InputActionReference
   m_Asset: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_ActionId: dad70c86-b58c-4b17-88ad-f5e53adf419e
+--- !u!1001 &1151751223
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2588531598960594254, guid: 6674aa8d5e425fa388ba9da11694ca00, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2588531598960594254, guid: 6674aa8d5e425fa388ba9da11694ca00, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2588531598960594254, guid: 6674aa8d5e425fa388ba9da11694ca00, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2588531598960594254, guid: 6674aa8d5e425fa388ba9da11694ca00, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2588531598960594254, guid: 6674aa8d5e425fa388ba9da11694ca00, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2588531598960594254, guid: 6674aa8d5e425fa388ba9da11694ca00, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2588531598960594254, guid: 6674aa8d5e425fa388ba9da11694ca00, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2588531598960594254, guid: 6674aa8d5e425fa388ba9da11694ca00, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2588531598960594254, guid: 6674aa8d5e425fa388ba9da11694ca00, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2588531598960594254, guid: 6674aa8d5e425fa388ba9da11694ca00, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4926445381038683340, guid: 6674aa8d5e425fa388ba9da11694ca00, type: 3}
+      propertyPath: m_Name
+      value: InputManager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6674aa8d5e425fa388ba9da11694ca00, type: 3}
 --- !u!1 &1196496123
 GameObject:
   m_ObjectHideFlags: 0
@@ -373,7 +430,7 @@ GameObject:
   - component: {fileID: 1196496125}
   - component: {fileID: 1196496124}
   - component: {fileID: 1196496127}
-  - component: {fileID: 1196496128}
+  - component: {fileID: 1196496132}
   - component: {fileID: 1196496130}
   - component: {fileID: 1196496129}
   - component: {fileID: 1196496126}
@@ -460,36 +517,6 @@ MonoBehaviour:
     m_EventCameras: []
     m_PanelInputRedirection: 0
     m_AutoCreatePanelComponents: 1
---- !u!114 &1196496128
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1196496123}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.PlayerInput
-  m_Actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  m_NotificationBehavior: 0
-  m_UIInputModule: {fileID: 1196496129}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents: []
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: UI
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
 --- !u!114 &1196496129
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -554,6 +581,23 @@ MonoBehaviour:
   navigatedTo:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1196496132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1196496123}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06872317693a4f8890b4d7d21b27bfaf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Input.InputModule
+  priority: 0
+  allowedInputPlayerIndex: -1
+  actionMapName: UI
+  activeContexts:
+  - {fileID: 11400000, guid: 173b3a281a439d035a77b0346b32ffbc, type: 2}
 --- !u!1 &1265907025
 GameObject:
   m_ObjectHideFlags: 0
@@ -800,6 +844,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 703330897}
+  - {fileID: 1151751223}
   - {fileID: 6998961939628204977}
   - {fileID: 1265907026}
   - {fileID: 357738355}

@@ -16,7 +16,6 @@ namespace DigDig2.Player
 
 		// Character Controller
 		private EntityCharacterController entityCharacterController;
-		private bool hasStarted;
 
 		private Vector2 inputMoveVector = Vector2.zero;
 
@@ -24,9 +23,6 @@ namespace DigDig2.Player
 		private Interactor interactor;
 
 		private Camera mainCamera;
-		
-
-		public bool InputEnabled { get; private set; }
 
 		private void Awake( )
 		{
@@ -38,12 +34,11 @@ namespace DigDig2.Player
 		private void Start( )
 		{
 			mainCamera = GameCamera.Instance.mainCamera;
-			hasStarted = true;
 		}
 
 		private void Update( )
 		{
-			if ( !InputEnabled ) entityCharacterController.inputMoveVector = Vector3.zero;
+			if ( GameManager.Instance.Paused ) entityCharacterController.inputMoveVector = Vector3.zero;
 
 			if ( mainCamera )
 			{
@@ -56,38 +51,29 @@ namespace DigDig2.Player
 
 		#region Input Action Callbacks
 
-		public void OnMove(InputValue context)
+		private void OnInputGameMove( InputInfo inputInfo )
 		{
-			inputMoveVector = context.Get<Vector2>();
+			inputMoveVector = inputInfo.context.ReadValue<Vector2>( );
 		}
 
-		public void OnInteract(InputValue context)
+		private void OnInputGameInteract( InputInfo inputInfo )
 		{
-			//if (interactor) interactor.SendInteraction(context.phase); // TODO: Fix interactions
+			if ( interactor ) interactor.SendInteraction( inputInfo.context.phase );
 		}
 
-		public void OnSwitchCharacter(InputValue context)
+		private void OnInputGameSwitchCharacter( InputInfo inputInfo )
 		{
-			if (context.isPressed && characterSwitching != null)
-			{
-				characterSwitching.SwitchCharacter();
-			}
+			if ( inputInfo.context.performed && characterSwitching ) characterSwitching.SwitchCharacter( );
 		}
 
-		public void OnDash(InputValue context)
+		private void OnInputGameDash( InputInfo inputInfo )
 		{
-			if (context.isPressed)
-			{
-				entityCharacterController.Dash();
-			}
+			if ( inputInfo.context.performed ) entityCharacterController.Dash( );
 		}
 
-		public void OnPause(InputValue context)
+		private void OnInputGamePause( InputInfo inputInfo )
 		{
-			if (context.isPressed)
-			{
-				GameManager.Instance.Pause();
-			}
+			if ( inputInfo.context.performed ) GameManager.Instance.Pause( );
 		}
 
 		#endregion

@@ -6,7 +6,6 @@ using System.Reflection;
 using DigDig2.Input;
 
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 namespace DigDig2.Debugging.Menu
@@ -21,19 +20,6 @@ namespace DigDig2.Debugging.Menu
 
 		private readonly List<DebugMenuElement> debugMenuElements = new( );
 
-		// private void Start( )
-		// {
-		// 	inputMap = InputManager.Instance.inputActions.DebugMenu;
-		// 	inputMap.OpenDebugMenu.started += OpenMenuFromEvent;
-		// 	inputMap.CloseDebugMenu.started += CloseMenuFromEvent;
-		// }
-		//
-		// private void OnDisable( )
-		// {
-		// 	inputMap.OpenDebugMenu.started -= OpenMenuFromEvent;
-		// 	inputMap.CloseDebugMenu.started -= CloseMenuFromEvent;
-		// }
-
 		public void OpenMenu( )
 		{
 			SetMenuActive( true );
@@ -42,8 +28,8 @@ namespace DigDig2.Debugging.Menu
 
 		public void CloseMenu( ) { SetMenuActive( false ); }
 
-		private void OpenMenuFromEvent( InputAction.CallbackContext _ ) { OpenMenu( ); }
-		private void CloseMenuFromEvent( InputAction.CallbackContext _ ) { CloseMenu( ); }
+		private void OnInputDebugMenuOpenDebugMenu( InputInfo _ ) { OpenMenu( ); }
+		private void OnInputDebugMenuCloseDebugMenu( InputInfo _ ) { CloseMenu( ); }
 
 		private void SetMenuActive( bool state ) { debugMenuGraphics.SetActive( state ); }
 

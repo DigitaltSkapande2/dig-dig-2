@@ -44,4 +44,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b49b8643bb99544db090f93c5d7fb38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.SaveManager
-  destroyOnLoad: 1
+  dontDestroyOnLoad: 1

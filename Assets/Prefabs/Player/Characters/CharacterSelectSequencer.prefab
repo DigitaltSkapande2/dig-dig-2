@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1413771652208686820}
   - component: {fileID: 4547182407843707554}
   m_Layer: 0
-  m_Name: CameraEffectori
+  m_Name: CameraEffector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -63,6 +63,7 @@ GameObject:
   - component: {fileID: 3953838307727054804}
   - component: {fileID: 3679867525421735052}
   - component: {fileID: 5406046794743086968}
+  - component: {fileID: 2380653131750046554}
   m_Layer: 0
   m_Name: CharacterSelectSequencer
   m_TagString: Untagged
@@ -131,6 +132,23 @@ MonoBehaviour:
   m_PivotReferenceSize: 0
   m_Pivot: 0
   m_WorldSpaceCollider: {fileID: 0}
+--- !u!114 &2380653131750046554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2732685959610631463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06872317693a4f8890b4d7d21b27bfaf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Input.InputModule
+  priority: 100
+  allowedInputPlayerIndex: -1
+  actionMapName: Game
+  activeContexts:
+  - {fileID: 11400000, guid: 049102b04eb9677cda85c680be4c4a68, type: 2}
 --- !u!1 &7083856845481056325
 GameObject:
   m_ObjectHideFlags: 0

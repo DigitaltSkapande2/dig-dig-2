@@ -1,3 +1,5 @@
+using DigDig2.Debugging;
+
 using UnityEngine;
 
 namespace DigDig2.Util
@@ -7,7 +9,7 @@ namespace DigDig2.Util
 		private static T instance;
 
 		[Header( "Singleton Settings" )]
-		[SerializeField] private bool destroyOnLoad = true;
+		[SerializeField] private bool dontDestroyOnLoad = true;
 
 		public static T Instance
 		{
@@ -18,7 +20,7 @@ namespace DigDig2.Util
 				T potentialFoundInstance = FindFirstObjectByType<T>( );
 				if ( !potentialFoundInstance )
 				{
-					Debug.LogError( $"No singleton of type {typeof( T ).Name} has been initialized." );
+					BetterDebug.Log( $"Attempted to get instance of singleton \"{typeof( T ).Name}\" but none has been initialized.", LogSeverity.Error );
 					return null;
 				}
 
@@ -39,8 +41,8 @@ namespace DigDig2.Util
 			}
 
 			Instance = this as T;
-			Debug.Log( "Set instance of " + gameObject.name );
-			if ( destroyOnLoad ) DontDestroyOnLoad( gameObject );
+			BetterDebug.Log( "Set instance of " + gameObject.name );
+			if ( dontDestroyOnLoad ) DontDestroyOnLoad( gameObject );
 		}
 	}
 }

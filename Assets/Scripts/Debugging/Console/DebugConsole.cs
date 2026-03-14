@@ -9,7 +9,6 @@ using DigDig2.Util;
 using TMPro;
 
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace DigDig2.Debugging.Console
 {
@@ -36,7 +35,6 @@ namespace DigDig2.Debugging.Console
 		private int currentSuggestionIndex = -1;
 		private List<string> currentSuggestions = new( );
 		private int historyIndex = -1;
-		
 
 		// Console state management
 		private bool isConsoleOpen;
@@ -114,11 +112,6 @@ namespace DigDig2.Debugging.Console
 			if ( c == char.Parse( " " ) ) InsertCurrentlySelectedSuggestion( );
 		}
 
-		#region Unity Messages
-		
-
-		#endregion
-
 		#region Public Methods
 
 		private void PrintConsoleMessage( string message )
@@ -152,9 +145,9 @@ namespace DigDig2.Debugging.Console
 
 		#region Input Handling
 
-		public void OnConfirm( InputAction.CallbackContext context )
+		public void OnInputDebugConsoleConfirm( InputInfo inputInfo )
 		{
-			if ( !context.performed ) return;
+			if ( !inputInfo.context.performed ) return;
 			if ( !isConsoleOpen || inputField.text == string.Empty ) return;
 
 			if ( currentSuggestionIndex != -1 && currentSuggestions.Count > 0 )
@@ -170,28 +163,28 @@ namespace DigDig2.Debugging.Console
 			}
 		}
 
-		public void OnCycleSuggestions( InputAction.CallbackContext context )
+		public void OnInputDebugConsoleCycleSuggestions( InputInfo inputInfo )
 		{
 			if ( !isConsoleOpen ) return;
 
-			if ( context.started ) CycleSuggestionSelection( );
+			if ( inputInfo.context.started ) CycleSuggestionSelection( );
 		}
 
-		public void OnOpenDebugConsole( InputAction.CallbackContext context )
+		public void OnInputDebugConsoleOpenDebugConsole( InputInfo inputInfo )
 		{
-			if ( context.performed ) ToggleDevConsole( );
+			if ( inputInfo.context.performed ) ToggleDevConsole( );
 		}
 
-		public void OnCloseDebugConsole( InputAction.CallbackContext context )
+		public void OnInputDebugConsoleCloseDebugConsole( InputInfo inputInfo )
 		{
-			if ( context.performed ) CloseConsole( );
+			if ( inputInfo.context.performed ) CloseConsole( );
 		}
 
-		public void OnHistoryNavigation( InputAction.CallbackContext context )
+		public void OnInputDebugConsoleHistoryNavigation( InputInfo inputInfo )
 		{
 			if ( !isConsoleOpen ) return;
 
-			if ( context.ReadValue<float>( ) > 0 )
+			if ( inputInfo.context.ReadValue<float>( ) > 0 )
 				HandleHistoryNavigationUp( );
 			else
 				HandleHistoryNavigationDown( );

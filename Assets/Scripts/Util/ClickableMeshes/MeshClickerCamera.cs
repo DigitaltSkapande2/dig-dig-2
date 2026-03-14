@@ -28,24 +28,20 @@ namespace DigDig2.Util.ClickableMeshes
 			raycastHit.collider?.GetComponent<ClickableMesh>( )?.OnPointerClickStart( );
 		}
 
-		// private void OnEnable( ) { InputManager.Instance.inputActions.UI.SetCallbacks( this ); }
-		//
-		// private void OnDisable( ) { InputManager.Instance.inputActions.UI.SetCallbacks( this ); }
+		public void OnInputUINavigate( InputInfo inputInfo ) { }
 
-		public void OnNavigate( InputAction.CallbackContext context ) { }
+		public void OnInputUISubmit( InputInfo inputInfo ) { }
 
-		public void OnSubmit( InputAction.CallbackContext context ) { }
+		public void OnInputUICancel( InputInfo inputInfo ) { }
 
-		public void OnCancel( InputAction.CallbackContext context ) { }
+		public void OnInputUIPoint( InputInfo inputInfo ) { }
 
-		public void OnPoint( InputAction.CallbackContext context ) { }
-
-		public void OnClick( InputAction.CallbackContext context )
+		public void OnInputUIClick( InputInfo inputInfo )
 		{
 			// Debug.Log("On Click " + context.ReadValueAsButton());
-			if ( isPointerDown == context.ReadValueAsButton( ) ) return;
+			if ( isPointerDown == inputInfo.context.ReadValueAsButton( ) ) return;
 
-			isPointerDown = context.ReadValueAsButton( );
+			isPointerDown = inputInfo.context.ReadValueAsButton( );
 
 			if ( isPointerDown )
 				currentCollider?.GetComponent<ClickableMesh>( )?.OnPointerClickStart( );
@@ -53,16 +49,16 @@ namespace DigDig2.Util.ClickableMeshes
 				currentCollider?.GetComponent<ClickableMesh>( )?.OnPointerClickRelease( );
 		}
 
-		public void OnRightClick( InputAction.CallbackContext context ) { }
+		public void OnInputUIRightClick( InputInfo inputInfo ) { }
 
-		public void OnMiddleClick( InputAction.CallbackContext context ) { }
+		public void OnInputUIMiddleClick( InputInfo inputInfo ) { }
 
-		public void OnScrollWheel( InputAction.CallbackContext context ) { }
+		public void OnInputUIScrollWheel( InputInfo inputInfo ) { }
 
-		public void OnTrackedDevicePosition( InputAction.CallbackContext context ) { }
+		public void OnInputUITrackedDevicePosition( InputInfo inputInfo ) { }
 
-		public void OnTrackedDeviceOrientation( InputAction.CallbackContext context ) { }
+		public void OnInputUITrackedDeviceOrientation( InputInfo inputInfo ) { }
 
-		public void OnReset( InputAction.CallbackContext context ) { }
+		public void OnInputUIReset( InputInfo inputInfo ) { }
 	}
 }

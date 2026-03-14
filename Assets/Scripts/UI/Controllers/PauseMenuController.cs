@@ -105,7 +105,7 @@ namespace DigDig2.UI.Controllers
 
 		private void SaveAndExit( ) { GameManager.Instance.SaveAndLoadMainMenu( ); }
 
-		private void OnCancel( )
+		private void OnInputUICancel( )
 		{
 			if ( openCooldownTimer <= 0 ) navigator.NavigateBack( );
 		}

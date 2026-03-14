@@ -314,7 +314,7 @@ namespace DigDig2.UI.Controllers
 
 		public void StartMultiplayer( ) { SceneManager.LoadScene( gameSceneName ); }
 
-		private void OnCancel( ) { navigator.NavigateBack( ); }
+		private void OnInputUICancel( ) { navigator.NavigateBack( ); }
 
 		private void OnReset( ) { navigator.NavigateTo( "/", true ); }
 

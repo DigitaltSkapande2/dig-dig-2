@@ -1,5 +1,8 @@
 
 using System;
+
+using DigDig2.Debugging;
+
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -92,7 +95,7 @@ namespace DigDig2
             PlayerOneIsMax = !PlayerOneIsMax;
         }
         
-        private async void OnStartButtonClicked()
+        private void OnStartButtonClicked()
         {
             Destroy(maxDummyInstance);
             Destroy(minisDummyInstance);
@@ -123,27 +126,22 @@ namespace DigDig2
             uiDocument.enabled = false;
         }
 
-        private void EnablePlayerInput() 
+        public void OnPlayerJoined( PlayerInput playerInput )
         {
-
-        }
-
-        public void OnPlayerJoined(PlayerInput playerInput)
-        {
-            if (playerOneInput == null)
+            if ( !playerOneInput )
             {
                 playerOneInput = playerInput;
                 playerInput.onActionTriggered += OnPlayerOneInputActionTriggered;
                 playerOneNavigation = 0;
                 playerOneCharacterImage.visible = true;
             }
-            else if (playerTwoInput == null)
+            else if ( !playerTwoInput )
             {
                 playerTwoInput = playerInput;
                 playerTwoCharacterImage.visible = true;
                 playerInput.onActionTriggered += OnPlayerTwoInputActionTriggered;
                 playerTwoNavigation = 0;
-                OnBothPlayersJoined();
+                OnBothPlayersJoined( );
             }
             else
             {
@@ -153,9 +151,9 @@ namespace DigDig2
             playerInput.notificationBehavior = PlayerNotifications.InvokeCSharpEvents;
 
             UpdatePlayerIconPositions();
-            
-            print($"Player joined, {playerInput.user}");
-        }
+
+			BetterDebug.Log( $"Player joined, {playerInput.user}" );
+		}
 
         private void OnPlayerOneInputActionTriggered(InputAction.CallbackContext context)
         {

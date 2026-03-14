@@ -1,9 +1,11 @@
 using System;
 using DigDig2.CinemaCamera;
 using DigDig2.Util;
+using DigDig2.Combat;
+using DigDig2.Debugging;
+using DigDig2.Input;
 using DigDig2.SaveSystem;
 using DigDig2.UI.Controllers;
-using DigDig2.Combat;
 using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Events;
@@ -24,9 +26,8 @@ namespace DigDig2.Game
         [SerializeField] private CharacterType defaultSingleplayerCharacter = CharacterType.Max;
         [SerializeField] private GameObject maxPrefab;
         [SerializeField] private GameObject miniPrefab;
-        [SerializeField] private GameObject singlePlayerInputRoot;
 
-        [Header("SavePoints")]
+        [Header("Save Points")]
         [SerializeField] private SavePoint[] savePoints;
         [SerializeField] private Crystal[] crystals;
         
@@ -44,6 +45,9 @@ namespace DigDig2.Game
         
         public bool IsMultiplayer => SaveManager.Instance.IsMultiplayer;
 
+        [Header( "Input Context" )]
+		[SerializeField] private InputContext gameInputContext;
+		[SerializeField] private InputContext pauseMenuInputContext;
 
         
         // Saving
@@ -62,12 +66,8 @@ namespace DigDig2.Game
         {
             get
             {
-#if UNITY_EDITOR
                 if (players[0]) return players[0];
-                //else Debug.LogError("No Players have been initialized");
-                #else
-                    return players[0];
-                #endif
+                else BetterDebug.Log( "Player one has not been initialized", LogSeverity.Error );
 
                 return null;
             }
@@ -78,7 +78,7 @@ namespace DigDig2.Game
             get
             {
                 if (players[1]) return players[1];
-                else Debug.LogAssertion("No Players have been initialized");
+                else BetterDebug.Log( "Player two has not been initialized", LogSeverity.Error );
 
                 return null;
             }
@@ -95,7 +95,7 @@ namespace DigDig2.Game
         public CharacterType currentCharacter { private set; get; } = CharacterType.Max;
 
 
-        private void Awake()
+        protected override void Awake()
         {
             pauseMenuController = GetComponentInChildren<PauseMenuController>();
             pauseMenuController.stateChanged.AddListener((bool state) =>
@@ -109,6 +109,7 @@ namespace DigDig2.Game
         public void Start()
         {
             SaveManager.Instance.RegisterSavable("GameManager", this, true);
+            InputManager.Instance.CurrentInputContext = gameInputContext;
             
             StartGame();
         }
@@ -151,7 +152,7 @@ namespace DigDig2.Game
 
         private void KillAlreadyKilledCrystals()
         {
-            Debug.Log($"Crystals killed in Loaded Save {loadedGameManagerSaveData.highestKilledCrystal}");
+			BetterDebug.Log( $"Crystals killed in Loaded Save {loadedGameManagerSaveData.highestKilledCrystal}" );
 
             for (int i = 0; i < crystals.Length; i++)
             {
@@ -172,7 +173,7 @@ namespace DigDig2.Game
             }
         }
 
-        void OnDestroy()
+        private void OnDestroy()
         {
             if (SaveManager.Instance) SaveManager.Instance.Reset();
         }
@@ -205,27 +206,25 @@ namespace DigDig2.Game
         {
             if (IsMultiplayer)
             {
-                Debug.LogError("Tried to initialize singleplayer character in multiplayer mode, this is not allowed.");
+                BetterDebug.Log( "Tried to initialize singleplayer character in multiplayer mode, this is not allowed.", LogSeverity.Error );
                 return;
             }
-
-            playerOneInput = Instantiate(singlePlayerInputRoot).GetComponent<PlayerInput>();
+			
             GameObject playerCharacter = Instantiate(
                 GetCharacterPrefabFromCharacterType(loadedGameManagerSaveData.singleplayerSelectedCharacter),
                 spawnPosition,
-                spawnRotation,
-                playerOneInput.transform
+                spawnRotation
             );
 
             players[0] = playerCharacter;
-            Debug.Log("GAMEMANAGER: Singleplayer Character Initialized!");
+            BetterDebug.Log( "Singleplayer Character Initialized!" );
         }
 
         public void SingleplayerSwitchCharacter()
         {
             if (IsMultiplayer)
             {
-                Debug.LogError("Tried to switch character in multiplayer mode, this is not allowed.");
+                BetterDebug.Log( "Tried to switch character in multiplayer mode, this is not allowed.", LogSeverity.Error );
             }
 
             // Harvest old player data
@@ -247,9 +246,9 @@ namespace DigDig2.Game
 
             // Spawn new player
             GameObject newPrefab = GetCharacterPrefabFromCharacterType(currentCharacter);
-            GameObject playerCharacter = Instantiate(newPrefab, oldPlayerPos, Quaternion.identity, playerOneInput.transform);
+            GameObject playerCharacter = Instantiate(newPrefab, oldPlayerPos, Quaternion.identity);
             
-            // Inject Old Player percistance data
+            // Inject Old Player persistence data
             EntityCharacterController playerEntityCharacterController = playerCharacter.GetComponent<EntityCharacterController>();
             Health playerHealthComponent = playerCharacter.GetComponent<Health>();
             
@@ -347,7 +346,5 @@ namespace DigDig2.Game
         }
 
         #endregion
-
-
     }
 }

@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
+using DigDig2.Debugging;
+
 using Newtonsoft.Json;
 
 using UnityEngine;
@@ -20,7 +22,7 @@ namespace DigDig2.SaveSystem
 			{
 				case ".json":
 					dataString = JsonConvert.SerializeObject( data, Formatting.Indented );
-					Debug.Log( dataString );
+					BetterDebug.Log( dataString );
 					break;
 			}
 
@@ -35,7 +37,7 @@ namespace DigDig2.SaveSystem
 			switch ( extension )
 			{
 				case ".json":
-					Debug.Log( "Reading: " + JsonConvert.SerializeObject( JsonConvert.DeserializeObject<T>( dataString ) ) );
+					BetterDebug.Log( "Reading: " + JsonConvert.SerializeObject( JsonConvert.DeserializeObject<T>( dataString ) ) );
 					return JsonConvert.DeserializeObject<T>( dataString );
 				default: return default;
 			}

@@ -18,6 +18,8 @@ GameObject:
   - component: {fileID: 440174058403782015}
   - component: {fileID: 2644439905992683439}
   - component: {fileID: 4848744646254258847}
+  - component: {fileID: 5846033344297062216}
+  - component: {fileID: 8034696099376195831}
   m_Layer: 3
   m_Name: MiniPlayerCharacterController
   m_TagString: Player
@@ -341,7 +343,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Health
   maxHealthPoints: 5
   healthPoints: 5
-  DestroyOnDeath: 0
+  destroyOnDeath: 0
   deathEffectPlayer:
     spawnPrefab: 0
     spawnPrefabEffectData:
@@ -541,6 +543,40 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.SingleplayerCharacterSwitcher
   otherPrefab: {fileID: 0}
   cooldown: 0
+--- !u!114 &5846033344297062216
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4442565222488509090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06872317693a4f8890b4d7d21b27bfaf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Input.InputModule
+  priority: 0
+  allowedInputPlayerIndex: -1
+  actionMapName: Game
+  activeContexts:
+  - {fileID: 11400000, guid: 72844612df5b0e3e2ae45edd4ba932fe, type: 2}
+--- !u!114 &8034696099376195831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4442565222488509090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06872317693a4f8890b4d7d21b27bfaf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Input.InputModule
+  priority: 0
+  allowedInputPlayerIndex: -1
+  actionMapName: Combat
+  activeContexts:
+  - {fileID: 11400000, guid: 72844612df5b0e3e2ae45edd4ba932fe, type: 2}
 --- !u!1 &4933219036402945239
 GameObject:
   m_ObjectHideFlags: 0
@@ -611,7 +647,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactionSource: {fileID: 6683684807395102275}
   interactionAngle: 60
-  interactionRange: 3
   interactionPromptBillboardPrefab: {fileID: 9165150777985612149, guid: c09aa9a1e8f1bc7e885bd4e65498e198, type: 3}
 --- !u!1 &7251259118998489019
 GameObject:
@@ -699,11 +734,23 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2416112746756125568, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
+      propertyPath: targetMeshRenderers.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2416112746756125568, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
       propertyPath: 'targetMeshRenderer.Array.data[0]'
       value: 
       objectReference: {fileID: 6965108698693947457}
     - target: {fileID: 2416112746756125568, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
       propertyPath: 'targetMeshRenderer.Array.data[1]'
+      value: 
+      objectReference: {fileID: 3869839782317373076}
+    - target: {fileID: 2416112746756125568, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
+      propertyPath: 'targetMeshRenderers.Array.data[0]'
+      value: 
+      objectReference: {fileID: 6965108698693947457}
+    - target: {fileID: 2416112746756125568, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
+      propertyPath: 'targetMeshRenderers.Array.data[1]'
       value: 
       objectReference: {fileID: 3869839782317373076}
     - target: {fileID: 2996078269563199115, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
