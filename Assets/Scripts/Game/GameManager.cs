@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using DigDig2.CinemaCamera;
 using DigDig2.Util;
 using DigDig2.SaveSystem;
@@ -6,6 +7,7 @@ using DigDig2.UI.Controllers;
 using DigDig2.Combat;
 using DigDig2.Debugging;
 using DigDig2.Input;
+using DigDig2.Player;
 using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Events;
@@ -59,16 +61,23 @@ namespace DigDig2.Game
             public int highestKilledCrystal;
         }
         public GameManagerGameSaveData loadedGameManagerSaveData;
-
-        // Character
-        public CharacterType singlePlayerCurrentCharacter { private set; get; } = CharacterType.Max;
         
         // Player
-        public GameObject[] players = new GameObject[2];
-        public GameObject PlayerOneCharacter => players[0];
-        public GameObject PlayerTwoCharacter => players[1];
+        public PlayerRef[] players = new PlayerRef[2];
+        public PlayerRef PlayerOne => players[0];
+        public PlayerRef PlayerTwo => players[1];
         public int maxPlayerID;
         public int minisPlayerID;
+        public PlayerRef playerMax => players[maxPlayerID];
+        public PlayerRef playerMinis => players[minisPlayerID];
+
+        public GameObject[] PlayerCharacterObjects
+        {
+            get
+            {
+                return players.Where(g => g.characterObject).Select(p => p.characterObject).ToArray();
+            }
+        }
 
         
         private PauseMenuController pauseMenuController;
@@ -98,7 +107,6 @@ namespace DigDig2.Game
         public void Start()
         {
             SaveManager.Instance.RegisterSavable("GameManager", this, true);
-            InputManager.Instance.CurrentInputContext = gameInputContext;
             
             StartGame();
         }
@@ -134,6 +142,7 @@ namespace DigDig2.Game
         private void OnSavePointStartUpSequenceDone()
         {
             Debug.Log("GAME STARTED EVENT !!! ");
+            InputManager.Instance.CurrentInputContext = gameInputContext;
             gameStarted.Invoke();
         }
 
@@ -210,14 +219,13 @@ namespace DigDig2.Game
                 BetterDebug.Log( "Tried to initialize singleplayer character in multiplayer mode, this is not allowed.", LogSeverity.Error );
                 return;
             }
-			
-            GameObject playerCharacter = Instantiate(
+            
+            PlayerOne.characterObject = Instantiate( // SinglePlayerRef initialized in Restore state
                 GetCharacterPrefabFromCharacterType(loadedGameManagerSaveData.singleplayerSelectedCharacter),
                 spawnPosition,
                 spawnRotation
             );
-
-            players[0] = playerCharacter;
+            
             BetterDebug.Log( "Singleplayer Character Initialized!" );
         }
 
@@ -229,10 +237,10 @@ namespace DigDig2.Game
             }
 
             // Harvest old player data
-            EntityCharacterController oldPlayerEntityCharacterController = PlayerOneCharacter.GetComponent<EntityCharacterController>();
-            Health oldPlayerHealthComponent = PlayerOneCharacter.GetComponent<Health>();
+            EntityCharacterController oldPlayerEntityCharacterController = PlayerOne.characterObject.GetComponent<EntityCharacterController>();
+            Health oldPlayerHealthComponent = PlayerOne.characterObject.GetComponent<Health>();
 
-            Vector3 oldPlayerPos = PlayerOneCharacter.transform.position;
+            Vector3 oldPlayerPos = PlayerOne.characterObject.transform.position;
 
             Vector3 oldPlayerLookVector = oldPlayerEntityCharacterController.GetForwardVector();
             Vector3 oldPlayerInputMoveVector = oldPlayerEntityCharacterController.inputMoveVector;
@@ -240,40 +248,40 @@ namespace DigDig2.Game
             int oldHealthPoints = oldPlayerHealthComponent.HealthPoints;
 
             // Kill old player
-            Destroy(PlayerOneCharacter);
+            Destroy(PlayerOne.characterObject);
 
             // Switch Logic
-            singlePlayerCurrentCharacter = CharacterType.Max == singlePlayerCurrentCharacter ? CharacterType.Minis : CharacterType.Max;
+            PlayerOne.characterType = CharacterType.Max == PlayerOne.characterType ? CharacterType.Minis : CharacterType.Max;
 
             // Spawn new player
-            GameObject newPrefab = GetCharacterPrefabFromCharacterType(singlePlayerCurrentCharacter);
-            GameObject playerCharacter = Instantiate(newPrefab, oldPlayerPos, Quaternion.identity);
+            GameObject newPrefab = GetCharacterPrefabFromCharacterType(PlayerOne.characterType);
+            GameObject newPlayerCharacter = Instantiate(newPrefab, oldPlayerPos, Quaternion.identity);
 
             
             // Inject Old Player percistance data
-            EntityCharacterController playerEntityCharacterController = playerCharacter.GetComponent<EntityCharacterController>();
-            Health playerHealthComponent = playerCharacter.GetComponent<Health>();
+            EntityCharacterController playerEntityCharacterController = newPlayerCharacter.GetComponent<EntityCharacterController>();
+            Health playerHealthComponent = newPlayerCharacter.GetComponent<Health>();
             
-            playerEntityCharacterController.LookTowards(playerCharacter.transform.position + oldPlayerLookVector, false);
+            playerEntityCharacterController.LookTowards(newPlayerCharacter.transform.position + oldPlayerLookVector, false);
             playerEntityCharacterController.inputMoveVector = oldPlayerInputMoveVector;
             
             playerHealthComponent.HealthPoints = oldHealthPoints;
             
-            players[0] = playerCharacter;
-            characterSwitched.Invoke(currentCharacter, playerCharacter);
+            PlayerOne.characterObject = newPlayerCharacter;
+            characterSwitched.Invoke(currentCharacter, newPlayerCharacter);
         }
 
         #endregion
 
         #region Multiplayer
 
-        public void RegisterMultiplayerPlayers(GameObject playerOne, CharacterType playerOneCharacterType, GameObject playerTwo, CharacterType playerTwoCharacterType)
+        public void RegisterMultiplayerPlayers(PlayerRef playerOne, PlayerRef playerTwo)
         {
             players[0] = playerOne;
             players[1] = playerTwo;
 
-            maxPlayerID = playerOneCharacterType == CharacterType.Max ? 0 : 1;
-            minisPlayerID = playerOneCharacterType == CharacterType.Minis ? 0 : 1;
+            maxPlayerID = playerOne.characterType == CharacterType.Max ? 0 : 1;
+            minisPlayerID = playerOne.characterType == CharacterType.Minis ? 0 : 1;
             Debug.Log("GAMEMANAGER: Multiplayer Characters registered!");
         }
 
@@ -309,10 +317,10 @@ namespace DigDig2.Game
                 {
                     loadedGameManagerSaveData = JsonConvert.DeserializeObject<GameManagerGameSaveData>(dataObject.ToString());
                 }
-                
-                
-                
-                singlePlayerCurrentCharacter = loadedGameManagerSaveData.singleplayerSelectedCharacter;
+
+                PlayerRef singlePlayerChar = new();
+                singlePlayerChar.characterType = loadedGameManagerSaveData.singleplayerSelectedCharacter;
+                players[0] = singlePlayerChar;
                 Debug.Log(loadedGameManagerSaveData.highestReachedSavePointIndex);
             }
         }

@@ -10,6 +10,7 @@ using UnityEngine.Serialization;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 using DigDig2.Game;
+using DigDig2.Input;
 using DigDig2.Player;
 
 
@@ -18,10 +19,15 @@ namespace DigDig2
     public class CharacterSelectSequencer : MonoBehaviour
     {
         #region Variables
+
+        [Header("config")]
+        [SerializeField] private float secondsToHoldToDissconnect = 1.5f;
+
+        [SerializeField] private float secondsReadyUntilStart = 0.8f;
         [Header("Prefabs")]
         [SerializeField] private GameObject maxPrefab;
         [SerializeField] private GameObject minisPrefab;
-        [SerializeField] private GameObject playerInputManagerPrefab; 
+        [SerializeField] private InputContext characterSelectContext;
         [Header("Scene Refs")]
         [SerializeField] private Transform maxSpawnPoint;
         [SerializeField] private Transform minisSpawnPoint;
@@ -29,22 +35,23 @@ namespace DigDig2
         [SerializeField] private UIDocument uiDocument;
         [Header("Debug")]
         [SerializeField] bool verboseLogging = false;
-        [FormerlySerializedAs("hostIsMax")] [SerializeField] private bool PlayerOneIsMax = true;
         
-        private GameObject maxDummyInstance;
-        private GameObject minisDummyInstance;
-        
-        private PlayerInputManager playerInputManager;
-        
-        private PlayerInput playerOneInput;
-        private PlayerInput playerTwoInput;
+        private GameObject maxInstance;
+        private GameObject minisInstance;
 
         private VisualElement realRoot; // For Opacity Transition
         private Image playerOneCharacterImage;
+        private VisualElement playerOneReadyIcon;
         private Image playerTwoCharacterImage;
+        private VisualElement playerTwoReadyIcon;
         private Button startButton;
 
+        private PlayerRef playerOne = new();
+        private bool playerOneReady = false;
         private int playerOneNavigation = 2;
+
+        private PlayerRef playerTwo = new();
+        private bool playerTwoReady = false;
         private int playerTwoNavigation = 2;
         
         [NonSerialized] public UnityEvent gameStartedEvent = new();
@@ -60,134 +67,72 @@ namespace DigDig2
                 gameObject.SetActive(false);
                 Destroy(gameObject);
             }
-            
-            playerInputManager = Instantiate(playerInputManagerPrefab).GetComponent<PlayerInputManager>();
-            playerInputManager.playerJoinedEvent.AddListener(OnPlayerJoined);
         }
 
         private void Start()
         {
-            maxDummyInstance = Instantiate(maxPrefab, maxSpawnPoint.position, maxSpawnPoint.rotation);
-            minisDummyInstance = Instantiate(minisPrefab, minisSpawnPoint.position, minisSpawnPoint.rotation);
+            maxInstance = Instantiate(maxPrefab, maxSpawnPoint.position, maxSpawnPoint.rotation);
+            minisInstance = Instantiate(minisPrefab, minisSpawnPoint.position, minisSpawnPoint.rotation);
+
+            InputManager.Instance.CurrentInputContext = characterSelectContext;
 
             realRoot = uiDocument.rootVisualElement.Query("RealRoot");
             VisualElement visualElementBoundBox = realRoot.Query("BoundBox");
-            startButton = realRoot.Query<Button>("StartButton");
-            startButton.visible = false;
-            startButton.clicked += OnStartButtonClicked;
 
             playerOneCharacterImage = visualElementBoundBox.Query<Image>("PlayerOne");
+            playerOneReadyIcon = playerOneCharacterImage.Query("ReadyIcon");
             playerTwoCharacterImage = visualElementBoundBox.Query<Image>("PlayerTwo");
+            playerTwoReadyIcon = playerTwoCharacterImage.Query("ReadyIcon");
             
             playerOneCharacterImage.visible = false;
             playerTwoCharacterImage.visible = false;
         }
 
-        private void OnEnable()
-        {
-            playerInputManager.EnableJoining();
-        }
-
         #endregion
-        
-        private void OnSwitchCharacterButtonClicked()
+
+        #region InputMessageCalls
+
+        private void OnInputCharacterSelectConfirm( InputInfo info )
         {
-            PlayerOneIsMax = !PlayerOneIsMax;
-        }
-        
-        private void OnStartButtonClicked()
-        {
-            Destroy(maxDummyInstance);
-            Destroy(minisDummyInstance);
-
-            GameObject maxInstance = Instantiate(maxPrefab, maxSpawnPoint.position, maxSpawnPoint.rotation);
-            GameObject minisInstance = Instantiate(minisPrefab, minisSpawnPoint.position, minisSpawnPoint.rotation);
-
-            GameObject playerOneCharacterInstance = PlayerOneIsMax ? maxInstance : minisInstance;
-            GameObject playerTwoCharacterInstance = PlayerOneIsMax ? minisInstance : maxInstance;
-            
-            playerOneCharacterInstance.transform.SetParent(playerOneInput.transform);
-            playerTwoCharacterInstance.transform.SetParent(playerTwoInput.transform);
-            
-            GameManager.Instance.RegisterMultiplayerPlayers(
-                playerOneCharacterInstance, 
-                PlayerOneIsMax ? CharacterType.Max : CharacterType.Minis,
-                playerTwoCharacterInstance, 
-                PlayerOneIsMax ?  CharacterType.Minis : CharacterType.Max
-            );
-            
-            playerOneCharacterInstance.GetComponent<EntityCharacterController>().Frozen = false;
-            playerOneCharacterInstance.GetComponent<EntityCharacterController>().Frozen = false;
-            playerOneInput.notificationBehavior = PlayerNotifications.BroadcastMessages;
-            playerTwoInput.notificationBehavior = PlayerNotifications.BroadcastMessages;
-
-            realRoot.style.opacity = new StyleFloat(0f);
-            Invoke(nameof(DisableUIDoc), 0.5f);
-            gameStartedEvent.Invoke();
-        }
-
-        private void DisableUIDoc()
-        {
-            uiDocument.enabled = false;
-        }
-
-        public void OnPlayerJoined( PlayerInput playerInput )
-        {
-            if ( !playerOneInput )
+            if (!info.context.started) return;
+            print($"Confirm {info.inputPlayerIndex}");
+            // Check for ready
+            if (!playerOneReady && info.inputPlayerIndex == playerOne.inputPlayerIndex)
             {
-                playerOneInput = playerInput;
-                playerInput.onActionTriggered += OnPlayerOneInputActionTriggered;
-                playerOneNavigation = 0;
-                playerOneCharacterImage.visible = true;
+                playerOneReady = true;
+                Invoke(nameof(TryStartGame), secondsReadyUntilStart);
             }
-            else if ( !playerTwoInput )
+            else if (!playerTwoReady && info.inputPlayerIndex == playerTwo.inputPlayerIndex)
             {
-                playerTwoInput = playerInput;
+                playerTwoReady = true;
+                Invoke(nameof(TryStartGame), secondsReadyUntilStart);
+            }
+
+            UpdateReadyIcons();
+            
+            // Check if new InputPlayer
+            if ( playerOne.inputPlayerIndex == -1)
+            {
+                playerOne.inputPlayerIndex = info.inputPlayerIndex;
+                playerOneCharacterImage.visible = true;
+                BetterDebug.Log( $"Player '{info.inputPlayerIndex}' joined" );
+                playerOneNavigation = 0;
+            }
+            else if ( playerTwo.inputPlayerIndex == -1 && playerOne.inputPlayerIndex != info.inputPlayerIndex )
+            {
+                playerTwo.inputPlayerIndex = info.inputPlayerIndex;
                 playerTwoCharacterImage.visible = true;
-                playerInput.onActionTriggered += OnPlayerTwoInputActionTriggered;
                 playerTwoNavigation = 0;
+                BetterDebug.Log( $"Player '{info.inputPlayerIndex}' joined" );
                 OnBothPlayersJoined( );
             }
-            else
+            else if (info.inputPlayerIndex != playerTwo.inputPlayerIndex && info.inputPlayerIndex != playerOne.inputPlayerIndex)
             {
-                Debug.LogError("Too many players joined, this should not be allowed by the PlayerInputManager.");
+                BetterDebug.Log($"More than 2 InputPlayers trying to connect. InputPlayerIndex: [{info.inputPlayerIndex}]", LogSeverity.Warning);
+                return;
             }
             
-            playerInput.notificationBehavior = PlayerNotifications.InvokeCSharpEvents;
-
             UpdatePlayerIconPositions();
-
-			BetterDebug.Log( $"Player joined, {playerInput.user}" );
-		}
-
-        private void OnPlayerOneInputActionTriggered(InputAction.CallbackContext context)
-        {
-            if (context.started && context.action.name == "Move")
-            {
-                Vector2 input = context.ReadValue<Vector2>();
-
-                playerOneNavigation += Math.Sign(input.x);
-                playerOneNavigation = Math.Clamp(playerOneNavigation, -1, 1);
-                UpdatePlayerIconPositions();
-            }
-        }
-        
-        private void OnPlayerTwoInputActionTriggered(InputAction.CallbackContext context)
-        {
-            if (context.started && context.action.name == "Move")
-            {
-                Vector2 input = context.ReadValue<Vector2>();
-                playerTwoNavigation += Math.Sign(input.x);
-                playerTwoNavigation = Math.Clamp(playerTwoNavigation, -1, 1);
-                
-                UpdatePlayerIconPositions();
-            }
-        }
-
-        private bool CanStartGame()
-        {
-            return playerOneNavigation != playerTwoNavigation && playerOneNavigation != 0 && playerTwoNavigation != 0 &&
-                   playerOneInput && playerTwoInput;
         }
 
         private void OnBothPlayersJoined()
@@ -195,8 +140,138 @@ namespace DigDig2
             
         }
 
+        private void OnInputCharacterSelectCancel(InputInfo info)
+        {
+            if (!info.context.started) return;
+            
+            if (info.inputPlayerIndex == playerOne.inputPlayerIndex)
+            {
+                if (playerOneReady)
+                {
+                    // Unready
+                    playerOneReady = false;
+                }
+                else if (info.context.duration >= secondsToHoldToDissconnect)
+                {
+                    // disconnect player one TODO: (make player two player one)
+                    playerOne = null;
+                    playerOneNavigation = -1;
+                    playerOneCharacterImage.visible = false;
+
+                }
+            }
+            else if (info.inputPlayerIndex == playerTwo.inputPlayerIndex)
+            {
+                if (playerTwoReady) 
+                {
+                    // Unready
+                    playerTwoReady = false;
+                }
+                else
+                {
+                    // disconnect player two
+                    playerTwo = null;
+                    playerTwoNavigation = -1;
+                    playerTwoCharacterImage.visible = false;
+                }
+            }
+            
+            UpdateReadyIcons();
+            UpdatePlayerIconPositions();
+        }
+
+        private void OnInputCharacterSelectMove( InputInfo info )
+        {
+            if (!info.context.started) return;
+            print(info.context.ReadValue<Vector2>());
+            if (info.inputPlayerIndex == playerOne.inputPlayerIndex)
+            {
+                Vector2 input = info.context.ReadValue<Vector2>();
+                playerOneNavigation += Math.Sign(input.x);
+                playerOneNavigation = Math.Clamp(playerOneNavigation, -1, 1);
+            }
+            else if (info.inputPlayerIndex == playerTwo.inputPlayerIndex)
+            {
+                Vector2 input = info.context.ReadValue<Vector2>();
+                playerTwoNavigation += Math.Sign(input.x);
+                playerTwoNavigation = Math.Clamp(playerTwoNavigation, -1, 1);
+            }
+            
+            UpdatePlayerIconPositions();
+        }
+
+        #endregion
+
+
+        private void TryStartGame()
+        {
+            if (playerOneReady && playerTwoReady) StartGame();
+        }
+        
+        private void StartGame()
+        {
+            bool playerOneIsMax = playerOneNavigation == 1;
+            
+            GameObject playerOneCharacterInstance = playerOneIsMax ? maxInstance : minisInstance;
+            GameObject playerTwoCharacterInstance = playerOneIsMax ? minisInstance : maxInstance;
+
+            SetCharacterInputPlayerIndex( playerOneCharacterInstance, playerOne.inputPlayerIndex );
+            SetCharacterInputPlayerIndex( playerTwoCharacterInstance, playerTwo.inputPlayerIndex );
+
+            playerOne.characterObject = playerOneCharacterInstance;
+            playerOne.characterType = playerOneIsMax ? CharacterType.Max : CharacterType.Minis;
+            
+            playerTwo.characterObject = playerTwoCharacterInstance;
+            playerTwo.characterType = playerOneIsMax ? CharacterType.Minis : CharacterType.Max;
+            
+            GameManager.Instance.RegisterMultiplayerPlayers(
+                playerOne, 
+                playerTwo 
+            );
+            
+            playerOneCharacterInstance.GetComponent<EntityCharacterController>().Frozen = false;
+            playerOneCharacterInstance.GetComponent<EntityCharacterController>().Frozen = false;
+
+            realRoot.style.opacity = new StyleFloat(0f);
+            Invoke(nameof(Die), 0.5f);
+            gameStartedEvent.Invoke();
+        }
+
+        private void SetCharacterInputPlayerIndex(GameObject obj, int index)
+        {
+            foreach (var inputModule in obj.GetComponents<InputModule>())
+            {
+                inputModule.enabled = true;
+                inputModule.AllowedInputPlayerIndex = index;
+            }
+        }
+
+        private void Die()
+        {
+            Destroy(gameObject);
+        }
+
+        private bool CanStartGame()
+        {
+            return playerOneNavigation != playerTwoNavigation && playerOneNavigation != 0 && playerTwoNavigation != 0 &&
+                   playerTwo.inputPlayerIndex != -1 && playerTwo.inputPlayerIndex != -1;
+        }
+        
+
+        private void UpdateReadyIcons()
+        {
+            playerOneReadyIcon.style.opacity = new StyleFloat(playerOneReady ? 100 : 0);
+            playerOneReadyIcon.style.scale =
+                new StyleScale(playerOneReady ? new Vector2(1.5f, 1.5f) : new Vector2(1f, 1f));
+
+            playerTwoReadyIcon.style.opacity = new StyleFloat(playerTwoReady ? 100 : 0);
+            playerTwoReadyIcon.style.scale =
+                new StyleScale(playerTwoReady ? new Vector2(1.5f, 1.5f) : new Vector2(1f, 1f));
+        }
+
         private void UpdatePlayerIconPositions()
         {
+            print( playerOneNavigation);
             playerOneCharacterImage.style.translate = new StyleTranslate(
                 new Translate(
                     new Length(playerOneNavigation * 50, LengthUnit.Percent),
@@ -204,28 +279,13 @@ namespace DigDig2
                 )
             );
             
+            
             playerTwoCharacterImage.style.translate = new StyleTranslate(
                 new Translate(
                     new Length(playerTwoNavigation * 50, LengthUnit.Percent),
                     new Length(playerTwoNavigation == playerOneNavigation ? -50 : 0, LengthUnit.Percent)
                 )
             );
-
-            if (CanStartGame())
-            {
-                if ( playerOneInput.devices[0] is Keyboard || playerOneInput.devices[0] is Mouse )
-                {
-                    startButton.visible = true;
-                }
-                else if ( playerOneInput.devices[0] is Gamepad )
-                {
-                    
-                }
-            }
-            else
-            {
-                startButton.visible = false;
-            }
         }
         
         #region Util

@@ -112,8 +112,8 @@ namespace DigDig2.UI.Controllers
 		{
 			GameManager.Instance.characterSwitched.AddListener( OnCharacterSwitch );
 
-			await UniTask.WaitUntil( ( ) => GameManager.Instance.PlayerOneCharacter );
-			OnCharacterSwitch( GameManager.Instance.singlePlayerCurrentCharacter, GameManager.Instance.PlayerOneCharacter );
+			await UniTask.WaitUntil( ( ) => GameManager.Instance.PlayerOne.characterObject );
+			OnCharacterSwitch( GameManager.Instance.PlayerOne.characterType, GameManager.Instance.PlayerOne.characterObject );
 		}
 
         private void SinglePlayerUpdate()
@@ -157,8 +157,8 @@ namespace DigDig2.UI.Controllers
             FetchMultiPlayerUIDocumentReferences();
             multiPlayerContainer.style.opacity = new StyleFloat(100);
 
-            GameObject maxCharacterObj = GameManager.Instance.players[GameManager.Instance.maxPlayerID];
-            GameObject minisCharacterObj = GameManager.Instance.players[GameManager.Instance.minisPlayerID];
+            GameObject maxCharacterObj = GameManager.Instance.players[GameManager.Instance.maxPlayerID].characterObject;
+            GameObject minisCharacterObj = GameManager.Instance.players[GameManager.Instance.minisPlayerID].characterObject;
             
             
             // Setup Health callbacks

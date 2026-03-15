@@ -8,16 +8,13 @@ namespace DigDig2.EffectSystem.Effects
 
 		internal override void OnEffectEnd( CumulativeEffectInstanceData effect )
 		{
-			Debug.Log( $"SKIBIDI TOILET {effectInstances.Count}" );
 			if ( effectInstances.Count > 1 ) return;
-
-			Debug.Log( "WIZZZ" );
+            
 			SetTimeScale( 1 );
 		}
 
 		private void SetTimeScale( float timeScale )
 		{
-			Debug.Log( "TIMESCALE: " + timeScale );
 			Time.timeScale = timeScale;
 		}
 	}

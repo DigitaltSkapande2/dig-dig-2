@@ -44,8 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bca4acf1d243928d1b117ebb1c7645fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.CinemaCamera.LockTargetEffector
+  startActive: 0
   priorityLevel: 10
   overridesLowerPriority: 0
+  transitionSpeed: 3
   isActive: 1
   position: {x: 0, y: 0, z: 0}
   rotation: {x: 0, y: 0, z: 0, w: 0}
@@ -101,14 +103,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c795a7af6fc37549b2aac1abf17d192, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.CharacterSelectSequencer
+  secondsToHoldToDissconnect: 1.5
+  secondsReadyUntilStart: 0.8
   maxPrefab: {fileID: 4442565222488509090, guid: d5a3d3276e47631bfb60f1dda5c99ef2, type: 3}
   minisPrefab: {fileID: 4442565222488509090, guid: f67aae0ed0287714d978db69befa66ce, type: 3}
-  playerInputManagerPrefab: {fileID: 8010005607439235654, guid: eced4c7bf7ad5ce46a914145828f03fe, type: 3}
+  characterSelectContext: {fileID: 11400000, guid: 049102b04eb9677cda85c680be4c4a68, type: 2}
   maxSpawnPoint: {fileID: 8097027346526215108}
   minisSpawnPoint: {fileID: 6100783926166531798}
   uiDocument: {fileID: 5406046794743086968}
   verboseLogging: 1
-  PlayerOneIsMax: 1
 --- !u!114 &5406046794743086968
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -146,7 +149,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Input.InputModule
   priority: 100
   allowedInputPlayerIndex: -1
-  actionMapName: Game
+  actionMapName: CharacterSelect
   activeContexts:
   - {fileID: 11400000, guid: 049102b04eb9677cda85c680be4c4a68, type: 2}
 --- !u!1 &7083856845481056325

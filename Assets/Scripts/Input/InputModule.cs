@@ -27,16 +27,19 @@ namespace DigDig2.Input
 		public int Priority
 		{
 			get => priority;
+            set => priority = value;
 		}
 
 		public int AllowedInputPlayerIndex
 		{
 			get => allowedInputPlayerIndex;
-		}
+            set => allowedInputPlayerIndex = value;
+        }
 
 		public string ActionMapName
 		{
 			get => actionMapName;
+            set => actionMapName = value;
 		}
 
 		public List<InputContext> ActiveContexts

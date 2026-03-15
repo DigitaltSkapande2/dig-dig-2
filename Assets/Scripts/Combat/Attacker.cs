@@ -416,7 +416,7 @@ namespace DigDig2.Combat
             }
 
 			// Set Screen Marker Position
-			if ( hasFocusedEnemy && GameManager.Instance.players.Contains(gameObject))
+			if ( hasFocusedEnemy && GameManager.Instance.PlayerCharacterObjects.Contains(gameObject))
 			{
                 Vector3 enemyPosition = focusedEnemy!.transform.position;
                 
