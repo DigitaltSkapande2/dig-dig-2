@@ -5,24 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="50c3eb56-0f37-4789-a838-f82a855a30c4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerRef.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerRef.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.dig-dig-2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.dig-dig-2/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/InputSystem_Actions.inputactions" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/InputSystem_Actions.inputactions" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Characters/CharacterSelectSequencer.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Player/Characters/CharacterSelectSequencer.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Characters/Max/MaxPlayerCharacterController.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Player/Characters/Max/MaxPlayerCharacterController.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Characters/Mini/MiniPlayerCharacterController.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Player/Characters/Mini/MiniPlayerCharacterController.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/PlayerInputRoot.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/PlayerInputRoot.prefab.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/CinemaCamera/CameraEffectors/PlayerFollowCameraEffector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CinemaCamera/CameraEffectors/PlayerFollowCameraEffector.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Combat/Attacker.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Combat/Attacker.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Debugging/Notes/DebugNotesManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Debugging/Notes/DebugNotesManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/EffectSystem/Effects/TimeSlowEffect.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/EffectSystem/Effects/TimeSlowEffect.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/GameManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Input/InputModule.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Input/InputModule.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/CharacterSelectSequencer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/CharacterSelectSequencer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/Controllers/GameHudController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/Controllers/GameHudController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/UI/CharacterSelect/Layout.uxml" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UI/CharacterSelect/Layout.uxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerCharacterInput.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerCharacterInput.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerRef.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerRef.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

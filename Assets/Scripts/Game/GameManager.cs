@@ -106,6 +106,8 @@ namespace DigDig2.Game
 
         public void Start()
         {
+            players[0] = new();
+            players[1] = new();
             SaveManager.Instance.RegisterSavable("GameManager", this, true);
             
             StartGame();
@@ -238,6 +240,7 @@ namespace DigDig2.Game
 
             // Harvest old player data
             EntityCharacterController oldPlayerEntityCharacterController = PlayerOne.characterObject.GetComponent<EntityCharacterController>();
+            PlayerCharacterInput oldPlayerCharacterInput = PlayerOne.characterObject.GetComponent<PlayerCharacterInput>();
             Health oldPlayerHealthComponent = PlayerOne.characterObject.GetComponent<Health>();
 
             Vector3 oldPlayerPos = PlayerOne.characterObject.transform.position;
@@ -260,10 +263,12 @@ namespace DigDig2.Game
             
             // Inject Old Player percistance data
             EntityCharacterController playerEntityCharacterController = newPlayerCharacter.GetComponent<EntityCharacterController>();
+            PlayerCharacterInput playerCharacterInput = newPlayerCharacter.GetComponent<PlayerCharacterInput>();
             Health playerHealthComponent = newPlayerCharacter.GetComponent<Health>();
             
             playerEntityCharacterController.LookTowards(newPlayerCharacter.transform.position + oldPlayerLookVector, false);
             playerEntityCharacterController.inputMoveVector = oldPlayerInputMoveVector;
+            playerCharacterInput.inputMoveVector = oldPlayerCharacterInput.inputMoveVector;
             
             playerHealthComponent.HealthPoints = oldHealthPoints;
             
@@ -305,6 +310,8 @@ namespace DigDig2.Game
                     highestReachedSavePointIndex = 0,
                     highestKilledCrystal = -1,
                 };
+                
+                
             }
             else
             {
@@ -317,12 +324,11 @@ namespace DigDig2.Game
                 {
                     loadedGameManagerSaveData = JsonConvert.DeserializeObject<GameManagerGameSaveData>(dataObject.ToString());
                 }
-
-                PlayerRef singlePlayerChar = new();
-                singlePlayerChar.characterType = loadedGameManagerSaveData.singleplayerSelectedCharacter;
-                players[0] = singlePlayerChar;
+                
                 Debug.Log(loadedGameManagerSaveData.highestReachedSavePointIndex);
             }
+            
+            PlayerOne.characterType = loadedGameManagerSaveData.singleplayerSelectedCharacter;
         }
 
         public void SetHighestReachedSavePointIndex(int index)

@@ -8,7 +8,7 @@ namespace DigDig2.Player
     {
         public GameObject characterObject;
         public CharacterType characterType;
-        public int inputPlayerIndex = -1;
+        public int inputPlayerIndex;
         public InputDevice InputDevice;
     }
 }

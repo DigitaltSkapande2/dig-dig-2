@@ -17,7 +17,7 @@ namespace DigDig2.Player
 		// Character Controller
 		private EntityCharacterController entityCharacterController;
 
-		private Vector2 inputMoveVector = Vector2.zero;
+		public Vector2 inputMoveVector = Vector2.zero;
 
 		// Interactors
 		private Interactor interactor;

@@ -15,7 +15,7 @@ namespace DigDig2.CinemaCamera.CameraEffectors
 
         private void Update( )
         {
-            if (GameManager.Instance && GameManager.Instance.PlayerOne != null)
+            if (GameManager.Instance && GameManager.Instance.PlayerOne.characterObject)
             {
                 updateAction.Invoke();
             }
