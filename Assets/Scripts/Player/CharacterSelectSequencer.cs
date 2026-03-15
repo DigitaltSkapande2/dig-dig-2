@@ -22,7 +22,6 @@ namespace DigDig2
 
         [Header("config")]
         [SerializeField] private float secondsToHoldToDissconnect = 1.5f;
-
         [SerializeField] private float secondsReadyUntilStart = 0.8f;
         [Header("Prefabs")]
         [SerializeField] private GameObject maxPrefab;
@@ -71,8 +70,13 @@ namespace DigDig2
 
         private void Start()
         {
-            maxInstance = Instantiate(maxPrefab, maxSpawnPoint.position, maxSpawnPoint.rotation);
-            minisInstance = Instantiate(minisPrefab, minisSpawnPoint.position, minisSpawnPoint.rotation);
+            maxInstance = Instantiate(maxPrefab);
+            minisInstance = Instantiate(minisPrefab);
+
+            maxInstance.GetComponent<EntityCharacterController>()
+                .Teleport(maxSpawnPoint.position, maxSpawnPoint.rotation.eulerAngles.y);
+            minisInstance.GetComponent<EntityCharacterController>()
+                .Teleport(minisSpawnPoint.position, minisSpawnPoint.rotation.eulerAngles.y);
 
             InputManager.Instance.CurrentInputContext = characterSelectContext;
 
@@ -95,16 +99,19 @@ namespace DigDig2
         private void OnInputCharacterSelectConfirm( InputInfo info )
         {
             if (!info.context.started) return;
-            print($"Confirm {info.inputPlayerIndex}");
+            BetterDebug.Log(info.inputPlayerIndex);
             // Check for ready
             if (!playerOneReady && info.inputPlayerIndex == playerOne.inputPlayerIndex)
             {
                 playerOneReady = true;
-                Invoke(nameof(TryStartGame), secondsReadyUntilStart);
             }
             else if (!playerTwoReady && info.inputPlayerIndex == playerTwo.inputPlayerIndex)
             {
                 playerTwoReady = true;
+            }
+
+            if (playerOneReady && playerTwoReady)
+            {
                 Invoke(nameof(TryStartGame), secondsReadyUntilStart);
             }
 
@@ -115,7 +122,7 @@ namespace DigDig2
             {
                 playerOne.inputPlayerIndex = info.inputPlayerIndex;
                 playerOneCharacterImage.visible = true;
-                BetterDebug.Log( $"Player '{info.inputPlayerIndex}' joined" );
+                BetterDebug.Log( $"Player One is '{info.inputPlayerIndex}'" );
                 playerOneNavigation = 0;
             }
             else if ( playerTwo.inputPlayerIndex == -1 && playerOne.inputPlayerIndex != info.inputPlayerIndex )
@@ -123,7 +130,7 @@ namespace DigDig2
                 playerTwo.inputPlayerIndex = info.inputPlayerIndex;
                 playerTwoCharacterImage.visible = true;
                 playerTwoNavigation = 0;
-                BetterDebug.Log( $"Player '{info.inputPlayerIndex}' joined" );
+                BetterDebug.Log( $"Player Two is '{info.inputPlayerIndex}'" );
                 OnBothPlayersJoined( );
             }
             else if (info.inputPlayerIndex != playerTwo.inputPlayerIndex && info.inputPlayerIndex != playerOne.inputPlayerIndex)
@@ -271,7 +278,6 @@ namespace DigDig2
 
         private void UpdatePlayerIconPositions()
         {
-            print( playerOneNavigation);
             playerOneCharacterImage.style.translate = new StyleTranslate(
                 new Translate(
                     new Length(playerOneNavigation * 50, LengthUnit.Percent),

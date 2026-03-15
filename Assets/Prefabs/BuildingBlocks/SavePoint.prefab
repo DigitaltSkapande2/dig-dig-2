@@ -90,6 +90,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+  startSequenceDone:
+    m_PersistentCalls:
+      m_Calls: []
   onReachedEffect:
     spawnPrefab: 1
     spawnPrefabEffectData:
@@ -238,7 +241,7 @@ MonoBehaviour:
         m_RotationOrder: 4
       duration: 0.4
       intensity: 1
-  timeUntilReleaseCamera: 0
+  timeUntilReleaseCamera: 1
 --- !u!1 &6038896450173204486
 GameObject:
   m_ObjectHideFlags: 0
@@ -314,12 +317,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfa65a23d2e27a5809256c455d8a5cdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.CinemaCamera.LockTargetEffector
+  startActive: 0
   priorityLevel: 3
   overridesLowerPriority: 1
-  transitionSpeed: 3
+  transitionSpeed: 1
   isActive: 1
-  Weight: 1
-  targetWeight: 0
   position: {x: 9.052458, y: -1.7482209, z: -3.2969162}
   rotation: {x: -0.04711788, y: 0.37977153, z: 0.11375285, w: 0.9168499}
   frustumSize: -5.3

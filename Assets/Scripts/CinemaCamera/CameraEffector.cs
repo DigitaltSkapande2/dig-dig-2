@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using DigDig2.Debugging;
 using UnityEngine;
 
 namespace DigDig2.CinemaCamera
@@ -81,7 +82,7 @@ namespace DigDig2.CinemaCamera
             }
             
             effectivePivotCameraEffectors = allCameraEffectors
-                .Where(effector => effector.targetWeight || effector.Weight > 0.001f)
+                .Where(effector => effector.targetWeight || effector.Weight > float.Epsilon)
                 .OrderByDescending(effector => effector.PriorityLevel)
                 .ToList();
         }
@@ -94,13 +95,13 @@ namespace DigDig2.CinemaCamera
         public void TickWeight(float deltaTime)
         {
             float target = targetWeight ? 1f : 0f;
-            float t = 1f - Mathf.Exp(-transitionSpeed * deltaTime);
-            Weight = Mathf.Lerp(Weight, target, t);
+            Weight = Mathf.Lerp(Weight, target, 1f - Mathf.Exp(-transitionSpeed * deltaTime));
 
             // remove if fully faded out
-            if (!targetWeight && Weight <= 0.001f && allCameraEffectors.Contains(this))
+            if (!targetWeight && Weight <= float.Epsilon && allCameraEffectors.Contains(this))
             {
-                allCameraEffectors.Remove(this);
+                Debug.Log("BIDEN SUCKS DIH");
+                BetterDebug.Log(Weight -target);
                 ReCompileEffectiveEffectors();
             }
         }

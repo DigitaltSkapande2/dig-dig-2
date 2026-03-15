@@ -5,6 +5,7 @@ using DigDig2.Debugging;
 
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Utilities;
 
 namespace DigDig2.Input.InputPlayerManagers
 {
@@ -49,7 +50,19 @@ namespace DigDig2.Input.InputPlayerManagers
 
 					InputPlayer controlSchemeInputPlayer = new( );
 					controlSchemeInputPlayer.connectedDevices.AddRange( deviceSearchMatchResult.devices.ToArray( ) );
-					controlSchemeInputPlayer.name = controlScheme.name;
+                    controlSchemeInputPlayer.name = controlScheme.name;
+                    
+                    List<InputActionMap> newListOfActionMaps = new List<InputActionMap>();
+                    foreach (var actionMap in InputSystem.actions.actionMaps)
+                    {
+                        var newActionMap = actionMap.Clone();
+                        newActionMap.devices = new ReadOnlyArray<InputDevice>(controlSchemeInputPlayer.connectedDevices.ToArray());
+                        newActionMap.Enable();
+                        newActionMap.actionTriggered += controlSchemeInputPlayer.OnActionTriggered;
+                        newListOfActionMaps.Add(newActionMap);
+                    }
+                    controlSchemeInputPlayer.actionMaps.AddRange(newListOfActionMaps);
+
 					inputPlayers.Add( controlSchemeInputPlayer );
 
 					successfulConstructions++;

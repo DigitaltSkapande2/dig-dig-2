@@ -426,7 +426,7 @@ namespace DigDig2
 		}
 
 		// Teleport the entity to a new position & y-rotation, if you want to set the entity's transform manually, use EntityCharacterController.frozen instead.
-		private void Teleport( Vector3 teleportPosition )
+		public void Teleport( Vector3 teleportPosition )
 		{
 			Frozen = true;
 
@@ -435,30 +435,23 @@ namespace DigDig2
 			Frozen = false;
 		}
 
-		private void Teleport( Vector3 teleportPosition, float teleportYRotation )
+        public void Teleport( Vector3 teleportPosition, float teleportYRotation )
 		{
 			Frozen = true;
 
 			transform.position = teleportPosition;
 
-			// Apply teleportYRotation
-			Vector3 currentRotation = transform.rotation.eulerAngles;
-			currentRotation.y = teleportYRotation;
-			transform.rotation = Quaternion.Euler( currentRotation );
+            TargetLookRotation = teleportYRotation;
 
 			Frozen = false;
 		}
 
-		private void Teleport( Vector3 teleportPosition, Vector3 teleportLookDirection )
+        public void Teleport( Vector3 teleportPosition, Vector3 teleportLookDirection )
 		{
 			Frozen = true;
 
 			transform.position = teleportPosition;
-
-			// Apply teleportLookDirection
-			Vector3 currentRotation = transform.rotation.eulerAngles;
-			currentRotation.y = Quaternion.FromToRotation( Vector3.forward, teleportLookDirection ).eulerAngles.y;
-			transform.rotation = Quaternion.Euler( currentRotation );
+            TargetLookRotation = Quaternion.FromToRotation( Vector3.forward, teleportLookDirection ).eulerAngles.y;
 
 			Frozen = false;
 		}

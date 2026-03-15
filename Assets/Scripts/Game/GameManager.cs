@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using DigDig2.CinemaCamera;
 using DigDig2.Util;
 using DigDig2.SaveSystem;
@@ -13,6 +14,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 
 namespace DigDig2.Game
 {
@@ -91,10 +93,17 @@ namespace DigDig2.Game
 
         // Character
         public CharacterType currentCharacter { private set; get; } = CharacterType.Max;
-
+        
+        // Fade From Black
+        private UIDocument fadeBlackUiDocument;
+        private VisualElement fadeBlackImage;
 
         protected override void Awake()
         {
+            base.Awake();
+            fadeBlackUiDocument = GetComponent<UIDocument>();
+            fadeBlackImage = fadeBlackUiDocument.rootVisualElement.Query("image");
+            
             pauseMenuController = GetComponentInChildren<PauseMenuController>();
             pauseMenuController.stateChanged.AddListener((bool state) =>
             {
@@ -112,7 +121,15 @@ namespace DigDig2.Game
             
             StartGame();
         }
-        
+
+        private async void OnEnable()
+        {
+            await Task.Delay(800);
+            fadeBlackImage.style.opacity = new StyleFloat(0f);
+            await Task.Delay((int)(fadeBlackImage.style.transitionDuration.value[0].value * 1000));
+            fadeBlackImage.style.display = new StyleEnum<DisplayStyle>(DisplayStyle.None);
+        }
+
         void OnDestroy()
         {
             if (SaveManager.Instance) SaveManager.Instance.Reset();
@@ -208,6 +225,8 @@ namespace DigDig2.Game
 
         public async void ReloadGameScene()
         {
+            fadeBlackImage.style.opacity = new StyleFloat(100);
+            await Task.Delay((int)(fadeBlackImage.style.transitionDuration.value[0].value * 1000));
             await SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
             StartGame();
         }
@@ -227,6 +246,7 @@ namespace DigDig2.Game
                 spawnPosition,
                 spawnRotation
             );
+            PlayerOne.characterObject.GetComponent<EntityCharacterController>().Teleport(spawnPosition, spawnRotation.eulerAngles.y);
             
             BetterDebug.Log( "Singleplayer Character Initialized!" );
         }

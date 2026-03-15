@@ -6,13 +6,13 @@ using DigDig2.Util;
 
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Utilities;
 
 namespace DigDig2.Input
 {
 	// TODO:
 	// Fix memory leaks (check unity console) - Maybe fixed?
 	// Add support for multiple action maps on InputModules
-	// Fix input "lag" issue when filtering InputPlayer
 	public class InputManager : Singleton<InputManager>
 	{
 		public InputPlayerManager InputPlayerManager
@@ -41,7 +41,7 @@ namespace DigDig2.Input
 
 		private readonly List<string> validActionMapNames = new( );
 
-		private List<InputPlayer> inputPlayers = new( );
+        [SerializeField] private List<InputPlayer> inputPlayers = new( );
 
 		protected override void Awake( )
 		{
@@ -56,7 +56,6 @@ namespace DigDig2.Input
 			RefreshValidActionMapNames( );
 
 			SetupDeviceMonitoring( );
-			SetupInputMonitoring( );
 		}
 
 		private void Start( )
@@ -71,7 +70,6 @@ namespace DigDig2.Input
 		private void OnEnable( )
 		{
 			SetupDeviceMonitoring( );
-			SetupInputMonitoring( );
 		}
 
 		private void OnDisable( ) { Cleanup( ); }
@@ -101,32 +99,36 @@ namespace DigDig2.Input
 
 		#region Input Monitoring
 
-		private void SetupInputMonitoring( )
-		{
-			foreach ( InputActionMap actionMap in InputSystem.actions.actionMaps ) { actionMap.actionTriggered += OnActionTriggered; }
-		}
-
 		private void CleanupInputMonitoring( )
 		{
-			foreach ( InputActionMap actionMap in InputSystem.actions.actionMaps ) { actionMap.actionTriggered -= OnActionTriggered; }
+            foreach (InputPlayer inputPlayer in inputPlayers)
+            {
+                foreach (InputActionMap actionMap in inputPlayer.actionMaps)
+                {
+                    actionMap.actionTriggered -= inputPlayer.OnActionTriggered;
+                    actionMap.Disable();
+                    actionMap.Dispose();
+                }
+            }
 		}
 
-		private void OnActionTriggered( InputAction.CallbackContext context )
+		internal void OnActionTriggered(InputPlayer inputPlayer, InputAction.CallbackContext context )
 		{
-			for ( int inputPlayerIndex = 0; inputPlayerIndex < inputPlayers.Count; inputPlayerIndex++ )
-			{
-				InputPlayer inputPlayer = inputPlayers[ inputPlayerIndex ];
-				if ( !inputPlayer.connectedDevices.Contains( context.control.device ) ) continue;
-				if ( !inputPlayer.active ) continue;
+            //BetterDebug.Log(context.control.device.name + " " + context.action.name + " " + context.action.actionMap.name + " " + context.phase);
+            int inputPlayerIndex = inputPlayers.IndexOf(inputPlayer);
 
-				foreach ( InputModule prioritizedInputModule in prioritizedInputModules[ inputPlayer ][ context.action.actionMap.name ] )
-				{
-					if ( prioritizedInputModule.AllowedInputPlayerIndex == -1 || prioritizedInputModule.AllowedInputPlayerIndex == inputPlayerIndex ) prioritizedInputModule.SendInput( context, inputPlayer, inputPlayerIndex );
-				}
+			foreach ( InputModule prioritizedInputModule in prioritizedInputModules[ inputPlayer ][ context.action.actionMap.name ] )
+			{
+				if ( prioritizedInputModule.AllowedInputPlayerIndex == -1 || prioritizedInputModule.AllowedInputPlayerIndex == inputPlayerIndex ) prioritizedInputModule.SendInput( context, inputPlayer, inputPlayerIndex );
 			}
 		}
 
-		#endregion
+        private void OnActionTriggered(InputAction.CallbackContext context)
+        {
+
+        }
+
+        #endregion
 
 		#region Input Devices & Players
 
@@ -145,13 +147,12 @@ namespace DigDig2.Input
 
 			if ( change == InputDeviceChange.Added || change == InputDeviceChange.Removed )
 			{
-				int activeInputPlayers = 0;
-				foreach ( InputPlayer inputPlayer in inputPlayers )
-				{
-					if ( inputPlayer.active ) activeInputPlayers++;
-				}
-				
-				BetterDebug.Log( $"Devices changed, {activeInputPlayers} InputPlayer(s) active." );
+                int activeInputPlayers = 0;
+                foreach ( InputPlayer inputPlayer in inputPlayers )
+                {
+                    if ( inputPlayer.active ) activeInputPlayers++;
+                }
+                BetterDebug.Log( $"Devices changed, {activeInputPlayers} InputPlayer(s) active." );
 				RefreshInputModulePrioritizationLists( );
 			}
 		}

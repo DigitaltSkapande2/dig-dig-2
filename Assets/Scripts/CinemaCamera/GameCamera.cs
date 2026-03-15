@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using DigDig2.Debugging;
 using DigDig2.Util;
 using Unity.Mathematics;
 using UnityEngine;
@@ -24,10 +25,7 @@ namespace DigDig2.CinemaCamera
             mainCamera = GetComponentInChildren<Camera>();
             defaultFrustumHeight = mainCamera.orthographicSize;
             if (baseTargetRotation == new Quaternion(0, 0, 0, 0)) baseTargetRotation = Quaternion.identity;
-        }
-
-        private void OnEnable()
-        {
+            
             var (targetPos, targetRotation, frustumSize) = GetEffectorEffects();
             transform.position = targetPos;
             transform.rotation = targetRotation;

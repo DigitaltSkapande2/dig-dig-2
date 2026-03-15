@@ -54,7 +54,7 @@ MonoBehaviour:
   m_PanelSettings: {fileID: 11400000, guid: a6162823c5324d023b511fac917011a4, type: 2}
   m_ParentUI: {fileID: 0}
   sourceAsset: {fileID: 9197481963319205126, guid: a696ba33abc56b2a5b313d816cfa848e, type: 3}
-  m_SortingOrder: 1000
+  m_SortingOrder: 100
   m_Position: 0
   m_WorldSpaceSizeMode: 1
   m_WorldSpaceWidth: 1920
@@ -286,6 +286,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5595240476577189436}
   - component: {fileID: 6443512540634913117}
+  - component: {fileID: 4762207790659403197}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -348,8 +349,30 @@ MonoBehaviour:
     singleplayerSelectedCharacter: 0
     highestReachedSavePointIndex: 0
     highestKilledCrystal: 0
-  players:
-  - {fileID: 0}
-  - {fileID: 0}
+  maxPlayerID: 0
+  minisPlayerID: 0
   playerOneInput: {fileID: 0}
   playerTwoInput: {fileID: 0}
+--- !u!114 &4762207790659403197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6097956373199808459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.UIElements.UIDocument
+  m_PanelSettings: {fileID: 11400000, guid: a6162823c5324d023b511fac917011a4, type: 2}
+  m_ParentUI: {fileID: 0}
+  sourceAsset: {fileID: 9197481963319205126, guid: 7d179c4a71655377698e7f355684a3f4, type: 3}
+  m_SortingOrder: 2000
+  m_Position: 0
+  m_WorldSpaceSizeMode: 1
+  m_WorldSpaceWidth: 1920
+  m_WorldSpaceHeight: 1080
+  m_PivotReferenceSize: 0
+  m_Pivot: 0
+  m_WorldSpaceCollider: {fileID: 0}
