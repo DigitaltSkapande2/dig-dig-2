@@ -36,6 +36,8 @@ namespace DigDig2.Combat
 		[Tooltip( "The groups of this entity's enemies" )]
 		[SerializeField] private List<string> enemyGroups = new( );
 
+        [SerializeField] private string[] focusEnemyGroupPriorityList;
+
 		[Tooltip( "The radius to scan for enemies at when focusing" )]
 		[SerializeField] private float focusScanRadius = 10;
 
@@ -356,18 +358,34 @@ namespace DigDig2.Combat
 
 		public List<Attackable> GetEnemiesInRadius( float radius )
 		{
-			List<Attackable> enemyAttackables = new( );
 
 			Collider[ ] scannedColliders = Physics.OverlapSphere( transform.position, radius );
+            Dictionary<string, List<Attackable>> scannedenemyGroupedAttackables = new();
 			foreach ( Collider scannedCollider in scannedColliders )
 			{
 				if ( !scannedCollider.TryGetComponent( out Attackable enemyAttackable ) ) continue;
 
-				if ( enemyGroups.Contains( enemyAttackable.Group ) ) enemyAttackables.Add( enemyAttackable );
+                if (scannedenemyGroupedAttackables.ContainsKey(enemyAttackable.Group))
+                {
+                    scannedenemyGroupedAttackables[enemyAttackable.Group].Add(enemyAttackable);
+                }
+                else
+                {
+                    scannedenemyGroupedAttackables.Add(enemyAttackable.Group, new List<Attackable>() { enemyAttackable });
+                }
+                
 			}
 
-			return enemyAttackables;
-		}
+            for (int i = 0; i < focusEnemyGroupPriorityList.Length; i++)
+            {
+                if (scannedenemyGroupedAttackables.ContainsKey(focusEnemyGroupPriorityList[i]))
+                {
+                    return scannedenemyGroupedAttackables[focusEnemyGroupPriorityList[i]];
+                }
+            }
+
+            return new();
+        }
 
 		public Attackable GetClosestEnemyInRadius( float radius )
 		{
@@ -409,7 +427,7 @@ namespace DigDig2.Combat
             bool hasFocusedEnemy = (bool)focusedEnemy;
             
             // If focused enemy not on screen EndFocus()
-			if ( hasFocusedEnemy && !IsAttackableVisibleOnScreen( focusedEnemy ) )
+			if ( !hasFocusedEnemy || !IsAttackableVisibleOnScreen( focusedEnemy ) )
 			{
                 EndFocus();
                 return;

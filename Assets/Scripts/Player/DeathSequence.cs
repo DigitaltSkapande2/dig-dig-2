@@ -28,7 +28,7 @@ namespace DigDig2.Player
 			{
 				foreach ( Material mat in targetMeshRenderer.materials )
 				{
-					float newDissolveAmount = Mathf.Lerp( mat.GetFloat( disolveFloatName ), 1f, disolveWeight * Time.deltaTime );
+					float newDissolveAmount = Mathf.Lerp( mat.GetFloat( disolveFloatName ), 1f, 1f - Mathf.Exp(-disolveWeight * Time.deltaTime) );
 					mat.SetFloat( disolveFloatName, newDissolveAmount );
 				}
 			}
@@ -41,7 +41,8 @@ namespace DigDig2.Player
 			if ( GameManager.Instance.IsMultiplayer )
 			{
 				// TODO: Implement multiplayer respawn system
-			}
+                isDying = true;
+            }
 			else
 			{
 				isDying = true;
