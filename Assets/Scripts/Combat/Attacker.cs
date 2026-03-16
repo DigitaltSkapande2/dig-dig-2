@@ -371,15 +371,17 @@ namespace DigDig2.Combat
                 }
                 else
                 {
-                    scannedenemyGroupedAttackables.Add(enemyAttackable.Group, new List<Attackable>() { enemyAttackable });
+					scannedenemyGroupedAttackables.Add(enemyAttackable.Group, new List<Attackable>() { enemyAttackable });
+					Debug.Log($"Added tracking for {enemyAttackable.Group}");
                 }
                 
 			}
 
             for (int i = 0; i < focusEnemyGroupPriorityList.Length; i++)
-            {
+			{
                 if (scannedenemyGroupedAttackables.ContainsKey(focusEnemyGroupPriorityList[i]))
-                {
+				{
+					Debug.Log($"yay: {focusEnemyGroupPriorityList[i]}");
                     return scannedenemyGroupedAttackables[focusEnemyGroupPriorityList[i]];
                 }
             }
