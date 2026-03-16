@@ -25,8 +25,8 @@ namespace DigDig2.EffectSystem.Effects
 			if ( curveValue <= 0f )
 			{
 				// reset when no shake
-				screenShakeEffector.rotation = Quaternion.identity;
-				screenShakeEffector.position = Vector3.zero;
+				screenShakeEffector.targetRotation = Quaternion.identity;
+				screenShakeEffector.targetPosition = Vector3.zero;
 				return;
 			}
 
@@ -39,13 +39,13 @@ namespace DigDig2.EffectSystem.Effects
 			float rotRoll = ( Mathf.PerlinNoise( 0f, t ) - 0.5f ) * 2f * ( shakeAmplitude * 0.5f ) * curveValue; // Z-axis
 
 			// Apply rotation as small offsets around local axes (pitch, roll)
-			screenShakeEffector.rotation = Quaternion.Euler( rotPitch, 0f, rotRoll );
+			screenShakeEffector.targetRotation = Quaternion.Euler( rotPitch, 0f, rotRoll );
 
 			// position: smooth perlin-based planar offset (in camera local plane)
 			float px = ( Mathf.PerlinNoise( t + 37.1f, 9.2f ) - 0.5f ) * 2f * shakeAmplitude * 0.1f * curveValue;
 			float py = ( Mathf.PerlinNoise( 8.3f, t + 21.7f ) - 0.5f ) * 2f * shakeAmplitude * 0.1f * curveValue;
 			Vector3 planarOffset = GameCamera.Instance.transform.up * py + GameCamera.Instance.transform.right * px;
-			screenShakeEffector.position = planarOffset;
+			screenShakeEffector.targetPosition = planarOffset;
 		}
 	}
 

@@ -36,13 +36,12 @@ namespace DigDig2.SaveSystem
         private void Awake()
         {
             collider = GetComponent<Collider>();
-            lockTargetEffector.IsActive = false;
         }
         
         
         public void ServerStartMultiplayerStartSequence()
         {
-            lockTargetEffector.IsActive = true;
+            lockTargetEffector.enabled = true;
             VerboseLog("Spawning character select sequencer for multiplayer spawn...");
             CharacterSelectSequencer instance = Instantiate(characterSeclectSecuencerPrefab, transform.position, Quaternion.identity).GetComponent<CharacterSelectSequencer>();
             
@@ -57,9 +56,9 @@ namespace DigDig2.SaveSystem
 
         public async void ServerStartSingleplayerStartSequence()
         {
-            lockTargetEffector.IsActive = true;
+            lockTargetEffector.enabled = true;
             VerboseLog("Initializing singleplayer spawn...");
-            GameManager.Instance.InitializeSingleplayerCharacter(singlePlayerSpawnPoint.position, Quaternion.identity);
+            GameManager.Instance.InitializeSingleplayerCharacter(singlePlayerSpawnPoint.position, singlePlayerSpawnPoint.rotation);
 
             await Task.Delay((int)(timeUntilReleaseCamera * 1000));
             lockTargetEffector.IsActive = false;

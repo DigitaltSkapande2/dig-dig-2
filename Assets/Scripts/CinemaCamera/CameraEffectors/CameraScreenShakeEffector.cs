@@ -11,7 +11,7 @@ namespace DigDig2.CinemaCamera.CameraEffectors
 		[SerializeField] private float shakeFrequency = 5;
 		[SerializeField] private float shakeAmplitude = 5;
 
-		private void Update( )
+        private void Update( )
 		{
 			if ( shakeIntensity == 0f ) return;
 
@@ -23,11 +23,11 @@ namespace DigDig2.CinemaCamera.CameraEffectors
 
 			shakeOffset *= shakeIntensity;
 
-			rotation = Quaternion.Euler( shakeOffset.y, shakeOffset.x, 0f );
+			lerpedRotation = Quaternion.Euler( shakeOffset.y, shakeOffset.x, 0f );
 
 			// position 
 			Vector2 offset = Random.insideUnitCircle * shakeIntensity;
-			position = GameCamera.Instance.transform.up * offset.y + GameCamera.Instance.transform.right * offset.x;
+			lerpedPosition = GameCamera.Instance.mainCamera.transform.up * offset.y + GameCamera.Instance.mainCamera.transform.right * offset.x;
 
 			shakeIntensity = shakeIntensity < 0.001f ? 0f : Mathf.Lerp( shakeIntensity, 0f, Time.deltaTime * 2f );
 		}

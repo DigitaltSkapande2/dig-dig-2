@@ -138,6 +138,7 @@ GameObject:
   m_Component:
   - component: {fileID: 268625382850607440}
   - component: {fileID: 2811014238215475634}
+  - component: {fileID: 2434467799552173279}
   m_Layer: 0
   m_Name: GameCamera
   m_TagString: Untagged
@@ -174,10 +175,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5506e98a6c8c1680b8ff2dcab1d3aa77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destroyOnLoad: 0
+  dontDestroyOnLoad: 0
   followSpeed: 5
   rotationSpeed: 1
+  effectors: []
   mainCamera: {fileID: 0}
+  selfCameraRotation: {fileID: 2434467799552173279}
+--- !u!114 &2434467799552173279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4739365238837224391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2a31279e53ffe94eb194e88e159a2bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DigDig2.CinemaCamera.CameraEffector
+  startActive: 0
+  priorityLevel: 20000
+  overridesLowerPriority: 0
+  transitionSpeed: 3
+  isActive: 1
+  Weight: 0
+  position: {x: 0, y: 0, z: 0}
+  rotation: {x: 0, y: 0, z: 0, w: 0}
+  frustumSize: 0
 --- !u!1 &6740415488379349219
 GameObject:
   m_ObjectHideFlags: 0

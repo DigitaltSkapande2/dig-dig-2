@@ -30,12 +30,12 @@ namespace DigDig2.CinemaCamera.CameraEffectors
                 count++;
                 sumPos += player.transform.position;
             }
-            position = sumPos / count;
+            targetPosition = sumPos / count;
         }
 
         private void SinglePlayerUpdate()
         {
-            position = GameManager.Instance.PlayerOne.characterObject.transform.position;
+            targetPosition = GameManager.Instance.PlayerOne.characterObject.transform.position;
         }
 	}
 }

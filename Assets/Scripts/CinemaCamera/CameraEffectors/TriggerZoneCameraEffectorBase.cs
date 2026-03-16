@@ -1,3 +1,4 @@
+using DigDig2.Debugging;
 using UnityEngine;
 
 namespace DigDig2.CinemaCamera.CameraEffectors
@@ -9,10 +10,8 @@ namespace DigDig2.CinemaCamera.CameraEffectors
 
 		protected void Start( )
 		{
-			Debug.Log( "ZINKKKKK" );
-
 			collider = GetComponent<Collider>( );
-			if ( collider == null ) Debug.LogError( "CinematicZoneEffector requires a Collider component." );
+			if ( collider == null ) BetterDebug.Log( "CinematicZoneEffector requires a Collider component.", LogSeverity.Error);
 
 			target = GameCamera.Instance.GetComponent<Transform>( );
 		}

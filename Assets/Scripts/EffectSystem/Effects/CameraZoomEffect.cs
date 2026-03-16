@@ -15,8 +15,8 @@ namespace DigDig2.EffectSystem.Effects
 			cameraZoomEffector = cameraZoomEffectorObject.AddComponent<CameraEffector>( );
 		}
 
-		internal override void UpdateEffect( float curveValue ) { cameraZoomEffector.frustumSize = curveValue; }
+		internal override void UpdateEffect( float curveValue ) { cameraZoomEffector.targetFrustumSize = curveValue; }
 
-		internal override void OnEffectEnd( CumulativeEffectInstanceData effect ) { cameraZoomEffector.frustumSize = 0; }
+		internal override void OnEffectEnd( CumulativeEffectInstanceData effect ) { cameraZoomEffector.targetFrustumSize = 0; }
 	}
 }

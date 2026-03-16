@@ -17,14 +17,15 @@ namespace DigDig2.CinemaCamera
         private List<CameraEffector> effectors;
 
         public Camera mainCamera;
-        private Quaternion baseTargetRotation = Quaternion.identity;
+
+        [SerializeField] private CameraEffector selfCameraRotation;
+
         private float defaultFrustumHeight;
 
         private void Start()
         {
             mainCamera = GetComponentInChildren<Camera>();
             defaultFrustumHeight = mainCamera.orthographicSize;
-            if (baseTargetRotation == new Quaternion(0, 0, 0, 0)) baseTargetRotation = Quaternion.identity;
             
             var (targetPos, targetRotation, frustumSize) = GetEffectorEffects();
             transform.position = targetPos;
@@ -35,10 +36,12 @@ namespace DigDig2.CinemaCamera
         private void Update()
         {
             var (targetPos, targetRotation, frustumSize) = GetEffectorEffects();
-            
-            transform.position = Vector3.Lerp(transform.position, targetPos, 1f - Mathf.Exp(-followSpeed * Time.deltaTime));
-            transform.rotation = targetRotation; //Quaternion.Slerp(transform.rotation, targetRotation, 1f - Mathf.Exp(-rotationSpeed * Time.deltaTime));
-            mainCamera.orthographicSize = Mathf.Lerp(mainCamera.orthographicSize, frustumSize, 1f - Mathf.Exp(-followSpeed * Time.deltaTime));
+
+            //BetterDebug.Log($"Update: pos: {targetPos},\nrot: {targetRotation.eulerAngles},\nsize: {frustumSize}");
+
+            transform.position = targetPos;
+            transform.rotation = targetRotation;
+            mainCamera.orthographicSize = frustumSize;
         }
 
         private (Vector3, Quaternion, float) GetEffectorEffects()
@@ -48,34 +51,36 @@ namespace DigDig2.CinemaCamera
             Vector3 targetPos = Vector3.zero;
             Quaternion targetRotation = Quaternion.identity;
             float frustumSize = defaultFrustumHeight;
-
-            targetRotation *= baseTargetRotation;
             
             foreach (CameraEffector effector in effectors)
             {
-                effector.TickWeight(Time.deltaTime);
+                effector.UpdateEffector(Time.deltaTime);
 
                 float w = effector.Weight;
                 if (w <= 0f) continue;
 
-                targetPos += effector.position * w;
-                frustumSize += effector.frustumSize * w;
+                targetPos += effector.lerpedPosition * w;
+                frustumSize += effector.lerpedFrustumSize * w;
                 
-                Quaternion weightedRot = Quaternion.Slerp(Quaternion.identity, effector.rotation, w);
+                // rotations are evil
+                //BetterDebug.Log($"name: {effector.name}, {w}");
+                if (effector.lerpedRotation == default) continue;
+                Quaternion weightedRot = Quaternion.Slerp(Quaternion.identity, effector.lerpedRotation, w);
+                //BetterDebug.Log($"{weightedRot}");
                 targetRotation *= weightedRot;
             }
 
             return (targetPos, targetRotation, frustumSize);
         }
 
-        public void SetRotationSpeed(float speed) => rotationSpeed = speed;
-
-        public void SetTargetRotation(float angle) => SetTargetRotation(angle, false);
-
-        public void SetTargetRotation(float angle, bool setInstant)
+        public void SetRotationSpeed(float speed)
         {
-            baseTargetRotation = Quaternion.Euler(0, angle, 0);
-            if (setInstant) transform.rotation = baseTargetRotation;
+            selfCameraRotation.SetRotationSpeed(speed);
+        }
+
+        public void SetTargetRotation(float angle)
+        {
+            selfCameraRotation.targetRotation = Quaternion.Euler(0, angle, 0);
         }
     }
 }

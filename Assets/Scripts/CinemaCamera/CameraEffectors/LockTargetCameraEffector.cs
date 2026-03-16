@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace DigDig2.CinemaCamera.CameraEffectors
@@ -6,12 +7,17 @@ namespace DigDig2.CinemaCamera.CameraEffectors
 	{
 		[SerializeField] public Transform targetTransform;
 
-		private void Update( )
+        private void Awake()
+        {
+            Update();
+        }
+
+        private void Update( )
 		{
 			if ( !targetTransform ) return;
 
-			position = targetTransform.position;
-			rotation = targetTransform.rotation;
+			targetPosition = targetTransform.position;
+			targetRotation = targetTransform.rotation;
 		}
 	}
 }

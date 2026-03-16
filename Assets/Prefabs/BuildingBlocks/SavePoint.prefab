@@ -266,13 +266,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6038896450173204486}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0.70710707, z: -0, w: 0.70710653}
   m_LocalPosition: {x: -3, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7165053757399966656}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!1 &6847600465374579405
 GameObject:
   m_ObjectHideFlags: 0
@@ -312,19 +312,69 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6847600465374579405}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bfa65a23d2e27a5809256c455d8a5cdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.CinemaCamera.LockTargetEffector
-  startActive: 0
+  startActive: 1
   priorityLevel: 3
   overridesLowerPriority: 1
-  transitionSpeed: 1
-  isActive: 1
-  position: {x: 9.052458, y: -1.7482209, z: -3.2969162}
-  rotation: {x: -0.04711788, y: 0.37977153, z: 0.11375285, w: 0.9168499}
-  frustumSize: -5.3
+  transitionFadeDuration: 3
+  positionLerpSpeed: 1
+  rotationLerpSpeed: 1
+  frustumSizeLerpSpeed: 1
+  targetPosition: {x: 0, y: 0, z: 0}
+  targetRotation: {x: 0, y: 0, z: 0, w: 0}
+  targetFrustumSize: -4
+  easeInCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: -0.0017856956
+      value: 0
+      inSlope: 0.0028011205
+      outSlope: 0.0028011205
+      tangentMode: 0
+      weightedMode: 3
+      inWeight: 0
+      outWeight: 0.70000005
+    - serializedVersion: 3
+      time: 0.9982143
+      value: 1
+      inSlope: -0.0027868592
+      outSlope: -0.0027868592
+      tangentMode: 0
+      weightedMode: 3
+      inWeight: 0.7035714
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  easeOutCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0.0028082416
+      outSlope: 0.0028082416
+      tangentMode: 0
+      weightedMode: 3
+      inWeight: 0
+      outWeight: 0.6982143
+    - serializedVersion: 3
+      time: 1
+      value: -0.001953125
+      inSlope: 0.000010858938
+      outSlope: 0.000010858938
+      tangentMode: 0
+      weightedMode: 3
+      inWeight: 0.70535713
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   targetTransform: {fileID: 3699966138620905476}
 --- !u!1001 &167236367830913226
 PrefabInstance:

@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using DigDig2.CinemaCamera;
+using DigDig2.CinemaCamera.CameraEffectors;
 using DigDig2.Util;
 using DigDig2.SaveSystem;
 using DigDig2.UI.Controllers;
@@ -84,10 +85,7 @@ namespace DigDig2.Game
         
         private PauseMenuController pauseMenuController;
         private GameHudController gameHudController;
-
-        // Input
-        public  PlayerInput playerOneInput;
-        public  PlayerInput playerTwoInput;
+        
         
         #region UnityCallbacks
 
@@ -95,13 +93,12 @@ namespace DigDig2.Game
         public CharacterType currentCharacter { private set; get; } = CharacterType.Max;
         
         // Fade From Black
-        private UIDocument fadeBlackUiDocument;
+        [SerializeField] private UIDocument fadeBlackUiDocument;
         private VisualElement fadeBlackImage;
 
         protected override void Awake()
         {
             base.Awake();
-            fadeBlackUiDocument = GetComponent<UIDocument>();
             fadeBlackImage = fadeBlackUiDocument.rootVisualElement.Query("image");
             
             pauseMenuController = GetComponentInChildren<PauseMenuController>();
@@ -120,9 +117,10 @@ namespace DigDig2.Game
             SaveManager.Instance.RegisterSavable("GameManager", this, true);
             
             StartGame();
+            FadeFromBlack();
         }
 
-        private async void OnEnable()
+        private async void FadeFromBlack()
         {
             await Task.Delay(800);
             fadeBlackImage.style.opacity = new StyleFloat(0f);
@@ -154,7 +152,7 @@ namespace DigDig2.Game
             else
             {
                 savePointToStartAt.ServerStartSingleplayerStartSequence();
-                GameCamera.Instance.SetTargetRotation(savePointToStartAt.cameraYRotation, true);
+                GameCamera.Instance.SetTargetRotation(savePointToStartAt.cameraYRotation);
             }
         }
 
@@ -242,9 +240,7 @@ namespace DigDig2.Game
             }
             
             PlayerOne.characterObject = Instantiate( // SinglePlayerRef initialized in Restore state
-                GetCharacterPrefabFromCharacterType(loadedGameManagerSaveData.singleplayerSelectedCharacter),
-                spawnPosition,
-                spawnRotation
+                GetCharacterPrefabFromCharacterType(loadedGameManagerSaveData.singleplayerSelectedCharacter)
             );
             PlayerOne.characterObject.GetComponent<EntityCharacterController>().Teleport(spawnPosition, spawnRotation.eulerAngles.y);
             
