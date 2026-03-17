@@ -66,7 +66,7 @@ namespace DigDig2.Game
         public GameManagerGameSaveData loadedGameManagerSaveData;
         
         // Player
-        public PlayerRef[] players = new PlayerRef[2];
+        [SerializeField] public PlayerRef[] players = new PlayerRef[2];
         public PlayerRef PlayerOne => players[0];
         public PlayerRef PlayerTwo => players[1];
         public int maxPlayerID;
@@ -88,9 +88,7 @@ namespace DigDig2.Game
         
         
         #region UnityCallbacks
-
-        // Character
-        public CharacterType currentCharacter { private set; get; } = CharacterType.Max;
+        
         
         // Fade From Black
         [SerializeField] private UIDocument fadeBlackUiDocument;
@@ -268,10 +266,10 @@ namespace DigDig2.Game
 
             // Kill old player
             Destroy(PlayerOne.characterObject);
-
+            
             // Switch Logic
             PlayerOne.characterType = CharacterType.Max == PlayerOne.characterType ? CharacterType.Minis : CharacterType.Max;
-
+            BetterDebug.Log($"NEW character: {PlayerOne.characterType}");
             // Spawn new player
             GameObject newPrefab = GetCharacterPrefabFromCharacterType(PlayerOne.characterType);
             GameObject newPlayerCharacter = Instantiate(newPrefab, oldPlayerPos, Quaternion.identity);
@@ -289,7 +287,7 @@ namespace DigDig2.Game
             playerHealthComponent.HealthPoints = oldHealthPoints;
             
             PlayerOne.characterObject = newPlayerCharacter;
-            characterSwitched.Invoke(currentCharacter, newPlayerCharacter);
+            characterSwitched.Invoke(PlayerOne.characterType, newPlayerCharacter);
         }
 
         #endregion
@@ -340,10 +338,14 @@ namespace DigDig2.Game
                 {
                     loadedGameManagerSaveData = JsonConvert.DeserializeObject<GameManagerGameSaveData>(dataObject.ToString());
                 }
-                
-                Debug.Log(loadedGameManagerSaveData.highestReachedSavePointIndex);
             }
-            
+
+            InitializeTheLoadedSave();
+        }
+
+
+        private void InitializeTheLoadedSave()
+        {
             PlayerOne.characterType = loadedGameManagerSaveData.singleplayerSelectedCharacter;
         }
 

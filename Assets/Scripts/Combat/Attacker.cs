@@ -36,11 +36,6 @@ namespace DigDig2.Combat
 		[Tooltip( "The groups of this entity's enemies" )]
 		[SerializeField] private List<string> enemyGroups = new( );
 
-        [SerializeField] private string[] focusEnemyGroupPriorityList;
-
-		[Tooltip( "The radius to scan for enemies at when focusing" )]
-		[SerializeField] private float focusScanRadius = 10;
-
 		[SerializeField] private bool verboseLogging;
 
 		private readonly Dictionary<string, BindableAttackHitbox> activeAttacks = new( );
@@ -65,9 +60,6 @@ namespace DigDig2.Combat
 		private Attack lastPerformedAttack;
 		private AttackType lastPerformedAttackType;
 		private float performanceStartTime = -1;
-        
-        [NonSerialized] public UnityEvent<Vector3> focusPositionUpdated = new();
-        [NonSerialized] public UnityEvent<bool> isFocusingStateChanged = new();
 
 		public CombatState State { get; private set; } = CombatState.Idle;
 
@@ -79,8 +71,7 @@ namespace DigDig2.Combat
 		}
 
 		private void Update( )
-		{
-			UpdateEnemyFocus( );
+        {
 
 			if ( ( State == CombatState.Idle || attackRequestChain > 0 ) && !attackRequestProcessed )
 			{
@@ -351,113 +342,6 @@ namespace DigDig2.Combat
 		}
 
 		public BindableAttackHitbox GetBindableAttackHitbox( int index ) => bindableAttackHitboxes[ index ];
-
-		#endregion
-
-		#region Enemy Focusing
-
-		public List<Attackable> GetEnemiesInRadius( float radius )
-		{
-
-			Collider[ ] scannedColliders = Physics.OverlapSphere( transform.position, radius );
-            Dictionary<string, List<Attackable>> scannedenemyGroupedAttackables = new();
-			foreach ( Collider scannedCollider in scannedColliders )
-			{
-				if ( !scannedCollider.TryGetComponent( out Attackable enemyAttackable ) ) continue;
-
-                if (scannedenemyGroupedAttackables.ContainsKey(enemyAttackable.Group))
-                {
-                    scannedenemyGroupedAttackables[enemyAttackable.Group].Add(enemyAttackable);
-                }
-                else
-                {
-					scannedenemyGroupedAttackables.Add(enemyAttackable.Group, new List<Attackable>() { enemyAttackable });
-					Debug.Log($"Added tracking for {enemyAttackable.Group}");
-                }
-                
-			}
-
-            for (int i = 0; i < focusEnemyGroupPriorityList.Length; i++)
-			{
-                if (scannedenemyGroupedAttackables.ContainsKey(focusEnemyGroupPriorityList[i]))
-				{
-					Debug.Log($"yay: {focusEnemyGroupPriorityList[i]}");
-                    return scannedenemyGroupedAttackables[focusEnemyGroupPriorityList[i]];
-                }
-            }
-
-            return new();
-        }
-
-		public Attackable GetClosestEnemyInRadius( float radius )
-		{
-			Attackable closestEnemy = null;
-			float closestEnemyDistance = -1;
-			foreach ( Attackable enemy in GetEnemiesInRadius( radius ) )
-			{
-				float enemyDistance = Vector3.Distance( transform.position, enemy.transform.position );
-				if ( !Mathf.Approximately( closestEnemyDistance, -1 ) && !( enemyDistance < closestEnemyDistance ) ) continue;
-
-				closestEnemy = enemy;
-				closestEnemyDistance = enemyDistance;
-			}
-
-			return closestEnemy;
-		}
-
-		public void StartFocus( )
-		{
-			Attackable closestEnemy = GetClosestEnemyInRadius( focusScanRadius );
-            if (closestEnemy && IsAttackableVisibleOnScreen(closestEnemy))
-            {
-                focusedEnemy = closestEnemy;
-                isFocusingStateChanged.Invoke(true);
-            }
-
-        }
-
-		public void EndFocus( )
-		{
-			focusedEnemy = null;
-			if ( entityCharacterController ) entityCharacterController.SetAutomaticLookRotationLock( false );
-            
-            isFocusingStateChanged.Invoke(false);
-		}
-
-		private void UpdateEnemyFocus( )
-		{
-            bool hasFocusedEnemy = (bool)focusedEnemy;
-            
-            // If focused enemy not on screen EndFocus()
-			if ( !hasFocusedEnemy || !IsAttackableVisibleOnScreen( focusedEnemy ) )
-			{
-                EndFocus();
-                return;
-            }
-
-			// Set Screen Marker Position
-			if ( hasFocusedEnemy && GameManager.Instance.PlayerCharacterObjects.Contains(gameObject))
-			{
-                Vector3 enemyPosition = focusedEnemy!.transform.position;
-                
-				focusPositionUpdated.Invoke(enemyPosition);
-			}
-
-			// EntityCharacter Controller rotation
-            if (entityCharacterController)
-            {
-                entityCharacterController.SetAutomaticLookRotationLock( hasFocusedEnemy );
-                if ( hasFocusedEnemy ) entityCharacterController.LookTowards( focusedEnemy!.transform.position );
-            }
-		}
-
-		public bool IsAttackableVisibleOnScreen( Attackable attackable )
-		{
-			if ( !attackable.TryGetComponent( out Collider attackableCollider ) ) return false;
-
-			Plane[ ] cameraFrustumPlanes = GeometryUtility.CalculateFrustumPlanes( GameCamera.Instance.mainCamera );
-			return GeometryUtility.TestPlanesAABB( cameraFrustumPlanes, attackableCollider.bounds );
-		}
 
 		#endregion
 

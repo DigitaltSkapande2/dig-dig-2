@@ -1,9 +1,11 @@
+using System;
 using UnityEngine;
 using DigDig2.Game;
 using UnityEngine.InputSystem;
 
 namespace DigDig2.Player
 {
+    [Serializable]
     public class PlayerRef
     {
         public GameObject characterObject;

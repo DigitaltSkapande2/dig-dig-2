@@ -35,16 +35,6 @@ namespace DigDig2.Player.Combat
 				attacker.RequestAttackEnd( );
 		}
 
-		private void OnInputCombatFocus( InputInfo inputInfo )
-		{
-			if ( inputInfo.context.performed && !GameManager.Instance.Paused )
-				attacker.StartFocus( );
-			else
-				attacker.EndFocus( );
-		}
-
-		private void OnInputCombatFocusTarget( InputInfo inputInfo ) { }
-
 		#endregion
 	}
 }

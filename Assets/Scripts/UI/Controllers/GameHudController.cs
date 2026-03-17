@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using DigDig2.Combat;
 using DigDig2.Game;
+using DigDig2.Player.Combat;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -141,10 +142,10 @@ namespace DigDig2.UI.Controllers
 			UpdateHealthBar( singlePlayerHealthBarImage, healthComponent.HealthPoints );
             
             // Focus Indicator
-            if (characterObject.TryGetComponent(out Attacker attacker))
+            if (characterObject.TryGetComponent(out PlayerFocuser playerFocuser))
             {
-                attacker.isFocusingStateChanged.AddListener((active) => { SetFocusIndicatorActive(singlePlayerFocusIndicator, active); });
-                attacker.focusPositionUpdated.AddListener((pos) => { UpdateFocusIndicatorPosition(singlePlayerFocusIndicator, pos);});
+                playerFocuser.isFocusingStateChanged.AddListener((active) => { SetFocusIndicatorActive(singlePlayerFocusIndicator, active); });
+                playerFocuser.focusPositionUpdated.AddListener((pos) => { UpdateFocusIndicatorPosition(singlePlayerFocusIndicator, pos);});
             }
 		}
         
@@ -172,15 +173,15 @@ namespace DigDig2.UI.Controllers
             
             
             // Hook up focusing
-            if (maxCharacterObj.TryGetComponent(out Attacker maxAttacker))
+            if (maxCharacterObj.TryGetComponent(out PlayerFocuser maxPlayerFocuser))
             {
-                maxAttacker.isFocusingStateChanged.AddListener((active) => { SetFocusIndicatorActive(maxFocusIndicator, active); });
-                maxAttacker.focusPositionUpdated.AddListener((pos) => { UpdateFocusIndicatorPosition(maxFocusIndicator, pos); });
+                maxPlayerFocuser.isFocusingStateChanged.AddListener((active) => { SetFocusIndicatorActive(maxFocusIndicator, active); });
+                maxPlayerFocuser.focusPositionUpdated.AddListener((pos) => { UpdateFocusIndicatorPosition(maxFocusIndicator, pos); });
             }
-            if (minisCharacterObj.TryGetComponent(out Attacker minisAttacker))
+            if (minisCharacterObj.TryGetComponent(out PlayerFocuser minisPlayerFocuser))
             {
-                minisAttacker.isFocusingStateChanged.AddListener((active) => { SetFocusIndicatorActive(minisFocusIndicator, active); });
-                minisAttacker.focusPositionUpdated.AddListener((pos) => { UpdateFocusIndicatorPosition(minisFocusIndicator, pos); });
+                minisPlayerFocuser.isFocusingStateChanged.AddListener((active) => { SetFocusIndicatorActive(minisFocusIndicator, active); });
+                minisPlayerFocuser.focusPositionUpdated.AddListener((pos) => { UpdateFocusIndicatorPosition(minisFocusIndicator, pos); });
             }
         }
         

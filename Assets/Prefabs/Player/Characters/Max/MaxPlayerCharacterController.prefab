@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 4462975226504938332}
   - component: {fileID: 8036543768434000166}
   - component: {fileID: 8684774071357908738}
+  - component: {fileID: 6368188702471082521}
   m_Layer: 3
   m_Name: MaxPlayerCharacterController
   m_TagString: Player
@@ -147,11 +148,6 @@ MonoBehaviour:
   enemyGroups:
   - enemy
   - crystal
-  focusEnemyGroupPriorityList:
-  - enemy
-  - crystal
-  - environment
-  focusScanRadius: 10
   verboseLogging: 0
 --- !u!114 &1195255877809228181
 MonoBehaviour:
@@ -527,7 +523,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.SingleplayerCharacterSwitching
   otherPrefab: {fileID: 0}
-  cooldown: 0
+  cooldown: 0.2
 --- !u!95 &2644439905992683439
 Animator:
   serializedVersion: 7
@@ -625,6 +621,25 @@ MonoBehaviour:
   actionMapName: Combat
   activeContexts:
   - {fileID: 11400000, guid: 72844612df5b0e3e2ae45edd4ba932fe, type: 2}
+--- !u!114 &6368188702471082521
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4442565222488509090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aec1e04abe9d4dde9dc0a05bfc776b24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Player.Combat.PlayerFocuser
+  focusEnemyGroupPriorityList:
+  - enemy
+  - crystal
+  - environment
+  focusScanRadius: 10
+  cameraFocusFollowFactor: 0.3
+  cameraFocusFrustumSize: -1
 --- !u!1 &4933219036402945239
 GameObject:
   m_ObjectHideFlags: 0

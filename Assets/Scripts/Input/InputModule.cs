@@ -75,7 +75,6 @@ namespace DigDig2.Input
 
 		private void OnDisable( ) { Deregister( ); }
         
-        private void OnDestroy( ) { Deregister( ); }
 
 		#region Input
 

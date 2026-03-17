@@ -11,9 +11,6 @@ namespace DigDig2.Player
 	[RequireComponent( typeof( EntityCharacterController ), typeof( SingleplayerCharacterSwitcher ) )]
 	public class PlayerCharacterInput : MonoBehaviour
 	{
-		// Character Switching
-		private SingleplayerCharacterSwitcher characterSwitching;
-
 		// Character Controller
 		private EntityCharacterController entityCharacterController;
 
@@ -27,7 +24,6 @@ namespace DigDig2.Player
 		private void Awake( )
 		{
 			entityCharacterController = GetComponent<EntityCharacterController>( );
-			characterSwitching = GetComponent<SingleplayerCharacterSwitcher>( );
 			interactor = GetComponentInChildren<Interactor>( );
 		}
 
@@ -61,19 +57,9 @@ namespace DigDig2.Player
 			if ( interactor ) interactor.SendInteraction( inputInfo.context.phase );
 		}
 
-		private void OnInputGameSwitchCharacter( InputInfo inputInfo )
-		{
-			if ( inputInfo.context.performed && characterSwitching ) characterSwitching.SwitchCharacter( );
-		}
-
 		private void OnInputGameDash( InputInfo inputInfo )
 		{
 			if ( inputInfo.context.performed ) entityCharacterController.Dash( );
-		}
-
-		private void OnInputGamePause( InputInfo inputInfo )
-		{
-			if ( inputInfo.context.performed ) GameManager.Instance.Pause( );
 		}
 
 		#endregion

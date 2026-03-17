@@ -101,6 +101,7 @@ namespace DigDig2.Input
 
 		private void CleanupInputMonitoring( )
 		{
+            
             foreach (InputPlayer inputPlayer in inputPlayers)
             {
                 foreach (InputActionMap actionMap in inputPlayer.actionMaps)
@@ -122,11 +123,7 @@ namespace DigDig2.Input
 				if ( prioritizedInputModule.AllowedInputPlayerIndex == -1 || prioritizedInputModule.AllowedInputPlayerIndex == inputPlayerIndex ) prioritizedInputModule.SendInput( context, inputPlayer, inputPlayerIndex );
 			}
 		}
-
-        private void OnActionTriggered(InputAction.CallbackContext context)
-        {
-
-        }
+        
 
         #endregion
 

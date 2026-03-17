@@ -536,8 +536,9 @@ namespace DigDig2
 
 		public void LookTowards( Vector3 target, bool useLerp = true )
 		{
-			TargetLookRotation = Vector3.SignedAngle( transform.forward, target - transform.position, transform.up );
-			RefreshVisualsRotation( useLerp );
+            Vector3 dir = target - transform.position;
+            TargetLookRotation = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg;
+            RefreshVisualsRotation(useLerp);
 		}
 
 		public Vector3 GetForwardVector( ) => new( -Mathf.Cos( TargetLookRotation * Mathf.Deg2Rad + Mathf.PI / 2 ), 0, Mathf.Sin( TargetLookRotation * Mathf.Deg2Rad + Mathf.PI / 2 ) );

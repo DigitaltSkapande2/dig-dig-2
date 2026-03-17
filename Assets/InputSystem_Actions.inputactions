@@ -16,15 +16,6 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "FocusTarget",
-                    "type": "Value",
-                    "id": "56d49d20-c03b-4198-ab27-b1f7f07bfdf1",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
                     "name": "Focus",
                     "type": "Button",
                     "id": "a5b94ebf-c0f8-4a0a-b43c-aad3387422b0",
@@ -198,28 +189,6 @@
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
-                },
-                {
-                    "name": "",
-                    "id": "7a54325f-87d9-4787-80bd-83dfca8f617f",
-                    "path": "<Mouse>/position",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "FocusTarget",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "39391611-ea8e-42b3-957b-0a953e1cd9e2",
-                    "path": "<Gamepad>/rightStick",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Gamepad",
-                    "action": "FocusTarget",
-                    "isComposite": false,
-                    "isPartOfComposite": false
                 },
                 {
                     "name": "",
@@ -1163,6 +1132,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "FocusTargetMouse",
+                    "type": "Value",
+                    "id": "cd7305eb-9c6a-43a7-8c7d-baa03e4e2ba8",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -1234,23 +1212,23 @@
                 },
                 {
                     "name": "",
-                    "id": "7540bfd1-a06d-4e56-9c7d-52391614ca9e",
-                    "path": "<Mouse>/position",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "FocusTarget",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "47403358-1678-4f77-8f61-9e3e82dbb06d",
                     "path": "<Gamepad>/rightStick",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
                     "action": "FocusTarget",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "36a4666b-5aba-44dd-b35d-42e58293a380",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "FocusTargetMouse",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
