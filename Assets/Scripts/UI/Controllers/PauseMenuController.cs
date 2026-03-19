@@ -91,7 +91,7 @@ namespace DigDig2.UI.Controllers
 		private void ButtonHover( EventBase _ ) { PlaySoundEffect( buttonHoverEffectPrefab ); }
 
 		private void PlaySoundEffect( GameObject effectPrefab ) { Destroy( Instantiate( effectPrefab, Vector3.zero, Quaternion.identity, transform ), 10f ); }
-
+        
 		public void Open( )
 		{
 			navigator.NavigateTo( "/pauseMenu" );

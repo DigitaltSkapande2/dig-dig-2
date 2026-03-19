@@ -1,5 +1,5 @@
 using System;
-
+using DigDig2.Audio;
 using DigDig2.EffectSystem.Effects;
 
 using UnityEditor;
@@ -13,6 +13,8 @@ namespace DigDig2.EffectSystem
 	{
 		public bool spawnPrefab;
 		public SpawnPrefabEffectData spawnPrefabEffectData;
+        public bool playSound;
+        public AudioClip[] audioClipsToPlay;
 		public bool screenShake;
 		public CumulativeEffectInstanceData screenShakeEffectData;
 		public bool cameraZoom;
@@ -21,10 +23,13 @@ namespace DigDig2.EffectSystem
 		public CumulativeEffectInstanceData timeSlowEffectData;
 		public bool vignettePulse;
 		public VignettePulseEffectInstanceData vignettePulseEffectData;
+        public bool gamepadRumble;
+        public GamepadRumbleEffectInstanceData gamepadRumbleEffectData;
 		public bool greyscale;
 		public CumulativeEffectInstanceData greyscaleEffectData;
+        
 
-		public void Play( Vector3 position = default, Quaternion rotation = default, Vector3 scale = default, Transform parent = null )
+		public void Play( Vector3 position = default, Quaternion rotation = default, Vector3 scale = default, Transform parent = null, int inputPlayerID = -1)
 		{
 			if ( scale == Vector3.zero ) scale = Vector3.one;
 
@@ -41,6 +46,15 @@ namespace DigDig2.EffectSystem
 					spawnPrefabEffect.PlayEffectInstance( effectInstance );
 				}
 			}
+
+            if (playSound)
+            {
+                foreach (var audioClip in audioClipsToPlay)
+                {
+                    AudioManager.Instance?.PlaySound(audioClip);
+                }
+                
+            }
 
 			if ( screenShake )
 			{
@@ -65,6 +79,11 @@ namespace DigDig2.EffectSystem
 				VignettePulseEffect vignettePulseEffect = EffectCore.Instance.vignettePulseEffect;
 				if ( vignettePulseEffect ) vignettePulseEffect.PlayEffectInstance( vignettePulseEffectData );
 			}
+            
+            if (gamepadRumble)
+            {
+                EffectCore.Instance.gamepadRumbleEffect.PlayEffectInstance(gamepadRumbleEffectData, inputPlayerID);
+            }
 
 			if ( greyscale )
 			{
@@ -133,6 +152,11 @@ namespace DigDig2.EffectSystem
 			SerializedProperty spawnPrefabProp = property.FindPropertyRelative( "spawnPrefab" );
 			SerializedProperty spawnPrefabDataProp = property.FindPropertyRelative( "spawnPrefabEffectData" );
 			DrawEffectSection( "Spawn Prefab", spawnPrefabProp, spawnPrefabDataProp, subPanelColor );
+            
+            // SpawnPrefab
+            SerializedProperty playSoundProp = property.FindPropertyRelative( "playSound" );
+            SerializedProperty playSoundDataProp = property.FindPropertyRelative( "audioClipsToPlay" );
+            DrawEffectSection( "Play Sound", playSoundProp, playSoundDataProp, subPanelColor );
 
 			// screenShake
 			SerializedProperty screenShakeProp = property.FindPropertyRelative( "screenShake" );
@@ -153,6 +177,11 @@ namespace DigDig2.EffectSystem
 			SerializedProperty vignetteProp = property.FindPropertyRelative( "vignettePulse" );
 			SerializedProperty vignetteDataProp = property.FindPropertyRelative( "vignettePulseEffectData" );
 			DrawEffectSection( "Vignette Pulse", vignetteProp, vignetteDataProp, subPanelColor );
+            
+            // Gamepad Rumble
+            SerializedProperty gamepadRumbleProp = property.FindPropertyRelative( "gamepadRumble" );
+            SerializedProperty gamepadRumbleDataProp = property.FindPropertyRelative( "gamepadRumbleEffectData" );
+            DrawEffectSection( "Gamepad Rumble", gamepadRumbleProp, gamepadRumbleDataProp, subPanelColor );
 
 			// greyscale
 			SerializedProperty greyscaleProp = property.FindPropertyRelative( "greyscale" );
@@ -166,7 +195,7 @@ namespace DigDig2.EffectSystem
 			{
 				// Build a runtime EffectPlayer from serialized props and play it via EffectCore
 				EffectPlayer runtime = BuildRuntimeFromSerialized( property );
-				runtime.Play( );
+				runtime.Play();
 			}
 
 			GUI.enabled = true;
@@ -189,6 +218,11 @@ namespace DigDig2.EffectSystem
 			SerializedProperty spawnPrefabDataProp = property.FindPropertyRelative( "spawnPrefabEffectData" );
 			height += lineHeight + spacing;
 			if ( spawnPrefabProp.boolValue ) height += EditorGUI.GetPropertyHeight( spawnPrefabDataProp, true ) + spacing;
+            
+            SerializedProperty playSoundProp = property.FindPropertyRelative( "playSound" );
+            SerializedProperty playSoundDataProp = property.FindPropertyRelative( "audioClipsToPlay" );
+            height += lineHeight + spacing;
+            if ( playSoundProp.boolValue ) height += EditorGUI.GetPropertyHeight( playSoundDataProp, true ) + spacing;
 
 			// screenShake
 			SerializedProperty screenShakeProp = property.FindPropertyRelative( "screenShake" );
@@ -213,6 +247,11 @@ namespace DigDig2.EffectSystem
 			SerializedProperty vignetteDataProp = property.FindPropertyRelative( "vignettePulseEffectData" );
 			height += lineHeight + spacing;
 			if ( vignetteProp.boolValue ) height += EditorGUI.GetPropertyHeight( vignetteDataProp, true ) + spacing;
+            
+            SerializedProperty gamepadRumbleProp = property.FindPropertyRelative( "gamepadRumble" );
+            SerializedProperty gamepadRumbleDataProp = property.FindPropertyRelative( "gamepadRumbleEffectData" );
+            height += lineHeight + spacing;
+            if ( gamepadRumbleProp.boolValue ) height += EditorGUI.GetPropertyHeight( gamepadRumbleDataProp, true ) + spacing;
 
 			// timeSlow
 			SerializedProperty greyscaleProp = property.FindPropertyRelative( "greyscale" );

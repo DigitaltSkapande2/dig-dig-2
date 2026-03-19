@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using DigDig2.Combat;
 using DigDig2.Game;
+using DigDig2.Player;
 using DigDig2.Player.Combat;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -16,6 +17,8 @@ namespace DigDig2.UI.Controllers
 		[SerializeField] private float focusTargetIndicatorRotationSpeed = 10f;
 
 		[SerializeField] private List<Texture2D> healthBarTextures = new( );
+
+        [SerializeField] private Color playerDeadBannerTint;
 
         private VisualElement singlePlayerContainer;
         private VisualElement multiPlayerContainer;
@@ -33,11 +36,13 @@ namespace DigDig2.UI.Controllers
         
         // MultiPlayer
 
+        private VisualElement maxContainer;
         public VisualElement maxHealthBar;
         public VisualElement maxHealthBarImage;
         public VisualElement maxFocusIndicator;
         public VisualElement maxFocusIndicatorImage;
-        
+
+        private VisualElement minisContainer;
         public VisualElement minisHealthBar;
         public VisualElement minisHealthBarImage;
         public VisualElement minisFocusIndicator;
@@ -172,6 +177,9 @@ namespace DigDig2.UI.Controllers
             UpdateHealthBar( maxHealthBarImage, minisHealthComponent.HealthPoints );
             
             
+            GameManager.Instance.playerDeath.AddListener(OnPlayerDeath);
+            
+            
             // Hook up focusing
             if (maxCharacterObj.TryGetComponent(out PlayerFocuser maxPlayerFocuser))
             {
@@ -184,18 +192,33 @@ namespace DigDig2.UI.Controllers
                 minisPlayerFocuser.focusPositionUpdated.AddListener((pos) => { UpdateFocusIndicatorPosition(minisFocusIndicator, pos); });
             }
         }
+
+        private void OnPlayerDeath(PlayerRef player)
+        {
+            if (player.characterType == CharacterType.Max)
+            {
+                SetGrayTint(maxContainer);
+            }
+            else
+            {
+                SetGrayTint(minisContainer);
+            }
+        }
         
-        
+        private void SetGrayTint(VisualElement element)
+        {
+            element.style.unityBackgroundImageTintColor = new StyleColor(playerDeadBannerTint);
+        }
 
         private void FetchMultiPlayerUIDocumentReferences()
         {
-            VisualElement maxContainer = multiPlayerContainer.Query("maxContainer");
+            maxContainer = multiPlayerContainer.Query("maxContainer");
             maxHealthBar = maxContainer.Query("maxHealthBar");
             maxHealthBarImage = maxHealthBar.Query("image");
             maxFocusIndicator = maxContainer.Query("maxFocusTargetIndicator");
             maxFocusIndicatorImage = maxFocusIndicator.Query("image");
             
-            VisualElement minisContainer = multiPlayerContainer.Query("minisContainer");
+            minisContainer = multiPlayerContainer.Query("minisContainer");
             minisHealthBar = minisContainer.Query("minisHealthBar");
             minisHealthBarImage = minisHealthBar.Query("image");
             minisFocusIndicator = minisContainer.Query("minisFocusTargetIndicator");

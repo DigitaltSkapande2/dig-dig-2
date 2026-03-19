@@ -18,7 +18,6 @@ GameObject:
   - component: {fileID: 440174058403782015}
   - component: {fileID: 5749047405966691678}
   - component: {fileID: 2644439905992683439}
-  - component: {fileID: 4848744646254258847}
   - component: {fileID: 4462975226504938332}
   - component: {fileID: 8036543768434000166}
   - component: {fileID: 8684774071357908738}
@@ -179,6 +178,8 @@ MonoBehaviour:
     spawnPrefab: 0
     spawnPrefabEffectData:
       prefabToSpawn: []
+    playSound: 0
+    audioClipsToPlay: []
     screenShake: 1
     screenShakeEffectData:
       intensityCurve:
@@ -301,6 +302,36 @@ MonoBehaviour:
       duration: 0.4
       intensity: 1
       color: {r: 0.5849056, g: 0.08001069, b: 0.08001069, a: 0}
+    gamepadRumble: 0
+    gamepadRumbleEffectData:
+      intensityCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      duration: 0.4
+      intensity: 1
+      inputPlayerId: 0
+      highFrequencyIntensity: 0
     greyscale: 0
     greyscaleEffectData:
       intensityCurve:
@@ -351,6 +382,8 @@ MonoBehaviour:
     spawnPrefab: 0
     spawnPrefabEffectData:
       prefabToSpawn: []
+    playSound: 0
+    audioClipsToPlay: []
     screenShake: 0
     screenShakeEffectData:
       intensityCurve:
@@ -464,6 +497,36 @@ MonoBehaviour:
       duration: 0.4
       intensity: 1
       color: {r: 0, g: 0, b: 0, a: 0}
+    gamepadRumble: 0
+    gamepadRumbleEffectData:
+      intensityCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      duration: 0.4
+      intensity: 1
+      inputPlayerId: 0
+      highFrequencyIntensity: 0
     greyscale: 0
     greyscaleEffectData:
       intensityCurve:
@@ -546,20 +609,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &4848744646254258847
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4442565222488509090}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43932542731a1fb4d9f5ee8378890a02, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DigDig2.SingleplayerCharacterSwitcher
-  otherPrefab: {fileID: 0}
-  cooldown: 0
 --- !u!114 &4462975226504938332
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -638,6 +687,7 @@ MonoBehaviour:
   - crystal
   - environment
   focusScanRadius: 10
+  yDifferenceTolerance: 1
   cameraFocusFollowFactor: 0.3
   cameraFocusFrustumSize: -1
 --- !u!1 &4933219036402945239
@@ -959,6 +1009,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2416112746756125568, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
+      propertyPath: entityToFreeze
+      value: 
+      objectReference: {fileID: 4327746320760944597}
+    - target: {fileID: 2416112746756125568, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
+      propertyPath: characterObjectRef
+      value: 
+      objectReference: {fileID: 4442565222488509090}
     - target: {fileID: 2416112746756125568, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
       propertyPath: targetMeshRenderer
       value: 

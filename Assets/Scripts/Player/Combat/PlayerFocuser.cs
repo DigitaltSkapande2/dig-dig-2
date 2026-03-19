@@ -48,14 +48,20 @@ namespace DigDig2.Player.Combat
             if (!TryGetComponent<EntityCharacterController>(out entityController)) BetterDebug.Log("EntityCharacterController NOT FOUND.");
             gameCamera = GameCamera.Instance;
 
-            cameraEffector = gameObject.AddComponent<CameraEffector>();
+            cameraEffector = new GameObject().gameObject.AddComponent<CameraEffector>();
         }
 
         private void Update()
         {
             UpdateFocusing();
         }
-        
+
+        private void OnDestroy()
+        {
+            EndFocusing();
+            Destroy(cameraEffector.gameObject, 10f);
+        }
+
         #endregion
         #region Input Callbacks
         

@@ -27,6 +27,7 @@ namespace DigDig2.CinemaCamera.CameraEffectors
             int count = 0;
             foreach (var player in GameManager.Instance.PlayerCharacterObjects)
             {
+                if (player == null) continue;
                 count++;
                 sumPos += player.transform.position;
             }

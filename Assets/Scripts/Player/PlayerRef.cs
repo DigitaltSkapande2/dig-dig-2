@@ -12,5 +12,6 @@ namespace DigDig2.Player
         public CharacterType characterType;
         public int inputPlayerIndex = -1;
         public InputDevice InputDevice;
+        public bool isAlive = true;
     }
 }

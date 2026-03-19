@@ -78,9 +78,11 @@ namespace DigDig2.Game
         {
             get
             {
-                return players.Where(g => g.characterObject).Select(p => p.characterObject).ToArray();
+                return players.Where(g => g.characterObject && g.isAlive).Select(p => p.characterObject).ToArray();
             }
         }
+
+        public UnityEvent<PlayerRef> playerDeath = new();
 
         
         private PauseMenuController pauseMenuController;
@@ -225,6 +227,19 @@ namespace DigDig2.Game
             await Task.Delay((int)(fadeBlackImage.style.transitionDuration.value[0].value * 1000));
             await SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
             StartGame();
+        }
+
+        public void RegisterCharacterDeath(GameObject characterObject)
+        {
+            for (int i = players.Length-1; i >= 0; i--)
+            {
+                PlayerRef playerRef = players[i];
+                if (playerRef.characterObject == characterObject)
+                {
+                    playerDeath.Invoke(playerRef);
+                    playerRef.isAlive = false;
+                }
+            }
         }
 
         #region Singleplayer
@@ -374,5 +389,6 @@ namespace DigDig2.Game
         }
 
         #endregion
+        
     }
 }

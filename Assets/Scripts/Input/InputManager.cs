@@ -80,6 +80,12 @@ namespace DigDig2.Input
 			CleanupInputMonitoring( );
 		}
 
+        public List<InputDevice> GetInputPlayersDevices(int index)
+        {
+            if (index == -1) return InputSystem.devices.ToList();
+            return inputPlayers[index].connectedDevices;
+        }
+
 		private void RefreshValidActionMapNames( )
 		{
 			validActionMapNames.Clear( );
