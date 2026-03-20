@@ -45,17 +45,18 @@ namespace DigDig2
         private VisualElement playerTwoReadyIcon;
         private Button startButton;
 
-        private PlayerRef playerOne = new();
+        private Player.Player playerOne = new();
         private bool playerOneReady = false;
         private int playerOneNavigation = 2;
 
-        private PlayerRef playerTwo = new();
+        private Player.Player playerTwo = new();
         private bool playerTwoReady = false;
         private int playerTwoNavigation = 2;
         
         [NonSerialized] public UnityEvent gameStartedEvent = new();
         
         #endregion
+
         #region UnityCallbacks
 
         private void Awake()

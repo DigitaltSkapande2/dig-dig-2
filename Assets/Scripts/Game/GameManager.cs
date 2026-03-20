@@ -66,13 +66,13 @@ namespace DigDig2.Game
         public GameManagerGameSaveData loadedGameManagerSaveData;
         
         // Player
-        [SerializeField] public PlayerRef[] players = new PlayerRef[2];
-        public PlayerRef PlayerOne => players[0];
-        public PlayerRef PlayerTwo => players[1];
+        [SerializeField] public Player.Player[] players = new Player.Player[2];
+        public Player.Player PlayerOne => players[0];
+        public Player.Player PlayerTwo => players[1];
         public int maxPlayerID;
         public int minisPlayerID;
-        public PlayerRef playerMax => players[maxPlayerID];
-        public PlayerRef playerMinis => players[minisPlayerID];
+        public Player.Player playerMax => players[maxPlayerID];
+        public Player.Player playerMinis => players[minisPlayerID];
 
         public GameObject[] PlayerCharacterObjects
         {
@@ -82,7 +82,7 @@ namespace DigDig2.Game
             }
         }
 
-        public UnityEvent<PlayerRef> playerDeath = new();
+        public UnityEvent<Player.Player> playerDeath = new();
 
         
         private PauseMenuController pauseMenuController;
@@ -233,11 +233,11 @@ namespace DigDig2.Game
         {
             for (int i = players.Length-1; i >= 0; i--)
             {
-                PlayerRef playerRef = players[i];
-                if (playerRef.characterObject == characterObject)
+                Player.Player player = players[i];
+                if (player.characterObject == characterObject)
                 {
-                    playerDeath.Invoke(playerRef);
-                    playerRef.isAlive = false;
+                    playerDeath.Invoke(player);
+                    player.isAlive = false;
                 }
             }
         }
@@ -309,7 +309,7 @@ namespace DigDig2.Game
 
         #region Multiplayer
 
-        public void RegisterMultiplayerPlayers(PlayerRef playerOne, PlayerRef playerTwo)
+        public void RegisterMultiplayerPlayers(Player.Player playerOne, Player.Player playerTwo)
         {
             players[0] = playerOne;
             players[1] = playerTwo;

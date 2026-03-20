@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 namespace DigDig2.Player
 {
     [Serializable]
-    public class PlayerRef
+    public class Player
     {
         public GameObject characterObject;
         public CharacterType characterType;

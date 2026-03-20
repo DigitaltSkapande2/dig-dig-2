@@ -14,7 +14,7 @@
         </ui:VisualElement>
     </ui:VisualElement>
     <ui:VisualElement name="multiPlayerContainer" style="flex-grow: 1; position: absolute; right: 0; top: 0; left: 0; bottom: 0; transition-property: opacity; transition-duration: 0.6s; transition-timing-function: ease; transition-delay: 0s;">
-        <ui:VisualElement name="minisContainer" style="flex-grow: 1; left: 0; position: absolute; top: 0; right: 0; bottom: 0; opacity: 1;">
+        <ui:VisualElement name="minisContainer" style="flex-grow: 1; left: 0; position: absolute; top: 0; right: 0; bottom: 0; opacity: 1; filter: tint(rgb(255, 255, 255));">
             <ui:Image source="" name="minisBanner" class="character-indicator" style="height: 100px; flex-basis: auto; background-image: url(&quot;project://database/Assets/Textures/UI/GameHud/CharacterSwitching/Mini.png?fileID=2800000&amp;guid=ded09e77ba76f3e479b7ccb7ede55e6a&amp;type=3#Mini&quot;); width: 100%; -unity-background-scale-mode: scale-to-fit; background-position-x: right 0; left: 0%; background-size: contain; top: 30px; translate: 0 0; scale: -1 1; -unity-background-image-tint-color: rgb(255, 255, 255);"/>
             <ui:VisualElement name="minisHealthBar" style="flex-grow: 1; position: absolute; top: 50px; left: 220px; width: 400px; height: auto; aspect-ratio: 5.937198;">
                 <ui:Image name="image" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; right: auto; bottom: auto; background-image: url(&quot;project://database/Assets/Textures/UI/GameHud/HealthBar/HealthBar5.png?fileID=2800000&amp;guid=a08c6ffca5c018176ac97426ce0832be&amp;type=3#HealthBar5&quot;); background-position-x: left 0; background-position-y: top 0; background-size: 400px 100%;"/>

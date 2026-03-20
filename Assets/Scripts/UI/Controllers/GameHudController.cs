@@ -8,6 +8,7 @@ using DigDig2.Player;
 using DigDig2.Player.Combat;
 using UnityEngine;
 using UnityEngine.UIElements;
+using UnityEngine.UI.Collections;
 
 namespace DigDig2.UI.Controllers
 {
@@ -193,7 +194,7 @@ namespace DigDig2.UI.Controllers
             }
         }
 
-        private void OnPlayerDeath(PlayerRef player)
+        private void OnPlayerDeath(Player.Player player)
         {
             if (player.characterType == CharacterType.Max)
             {
@@ -207,7 +208,7 @@ namespace DigDig2.UI.Controllers
         
         private void SetGrayTint(VisualElement element)
         {
-            element.style.unityBackgroundImageTintColor = new StyleColor(playerDeadBannerTint);
+            element.style.filter.value[0].SetParameter(0, new FilterParameter(Color.gray));
         }
 
         private void FetchMultiPlayerUIDocumentReferences()
