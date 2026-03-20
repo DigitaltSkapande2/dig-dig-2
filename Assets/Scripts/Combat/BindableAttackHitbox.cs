@@ -73,7 +73,7 @@ namespace DigDig2.Combat
 						),
 						intermediateRotation
 					),
-					AttackHitboxShape.Sphere => Physics.OverlapSphere( intermediatePosition, sphereRadius ),
+					AttackHitboxShape.Sphere => Physics.OverlapSphere( intermediatePosition, sphereRadius * transform.lossyScale.magnitude ),
 					_ => Array.Empty<Collider>( )
 				};
 
