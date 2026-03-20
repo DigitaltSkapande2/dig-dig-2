@@ -46,4 +46,5 @@
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
+    <DigDig2.UI.UxmlElements.InputSymbol action="Player/Move" action-path="Game/Move" style="position: absolute; -unity-text-align: middle-left; font-size: 32px;"/>
 </ui:UXML>

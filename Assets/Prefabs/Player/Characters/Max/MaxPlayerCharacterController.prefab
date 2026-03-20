@@ -147,6 +147,8 @@ MonoBehaviour:
   enemyGroups:
   - enemy
   - crystal
+  - environment
+  - melee only
   verboseLogging: 0
 --- !u!114 &1195255877809228181
 MonoBehaviour:

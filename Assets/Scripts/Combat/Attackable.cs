@@ -41,9 +41,10 @@ namespace DigDig2.Combat
 			if ( invincibilityTimer > 0 ) invincibilityTimer -= Time.deltaTime;
 		}
 
-		public void Hit( Attack attack, Attacker attacker = null )
-		{
-			if ( invincibilityTimer > 0 ) return;
+		public bool Hit( Attack attack, Attacker attacker = null )
+        {
+            if ( attacker && !attacker.CanAttackGroup( group ) ) return false;
+			if ( invincibilityTimer > 0 ) return false;
 
 			invincibilityTimer = invincibilityTime;
 
@@ -51,7 +52,9 @@ namespace DigDig2.Combat
 
 			hit.Invoke( );
 			hitEffect.Play( transform.position );
-		}
+
+            return true;
+        }
 
 		public bool IsInvincible( ) => invincibilityTimer > 0;
 

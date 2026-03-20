@@ -146,6 +146,7 @@ MonoBehaviour:
   enemyGroups:
   - enemy
   - crystal
+  - environment
   verboseLogging: 0
 --- !u!114 &1195255877809228181
 MonoBehaviour:
@@ -1005,6 +1006,9 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: -6570004013466907400, guid: fb11f71a623f7354d8aac55a6cd6624f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8080944101158114336}
     - targetCorrespondingSourceObject: {fileID: -2232105780301148340, guid: fb11f71a623f7354d8aac55a6cd6624f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6418351296748806814}
@@ -1074,6 +1078,11 @@ MonoBehaviour:
   m_ForceModule: {fileID: 0}
   m_ForceScale: 1
   m_SimulateSpace: {fileID: 0}
+--- !u!4 &2120781545914961208 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -1484444592166993877, guid: fb11f71a623f7354d8aac55a6cd6624f, type: 3}
+  m_PrefabInstance: {fileID: 8505248102990744851}
+  m_PrefabAsset: {fileID: 0}
 --- !u!137 &3869839782317373076 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: -4342357548064064633, guid: fb11f71a623f7354d8aac55a6cd6624f, type: 3}
@@ -1084,6 +1093,71 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -3967280838818931944, guid: fb11f71a623f7354d8aac55a6cd6624f, type: 3}
   m_PrefabInstance: {fileID: 8505248102990744851}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &5970117511918518763 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -6570004013466907400, guid: fb11f71a623f7354d8aac55a6cd6624f, type: 3}
+  m_PrefabInstance: {fileID: 8505248102990744851}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8080944101158114336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5970117511918518763}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8aa2b9bccfefda549bd1cf67fd922ad8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: EZhex1991.EZSoftBone::EZhex1991.EZSoftBone.EZSoftBone
+  m_RootBones:
+  - {fileID: 2120781545914961208}
+  m_EndBones:
+  - {fileID: 8886958110696568500}
+  m_Material: {fileID: 11400000, guid: ce02265f3c7c47d42a8bd85329838232, type: 2}
+  m_StartDepth: 0
+  m_SiblingConstraints: 0
+  m_ClosedSiblings: 0
+  m_SiblingRotationConstraints: 1
+  m_LengthUnification: 0
+  m_CollisionLayers:
+    serializedVersion: 2
+    m_Bits: 1
+  m_ExtraColliders: []
+  m_Radius: 0
+  m_RadiusCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  m_DeltaTimeMode: 0
+  m_ConstantDeltaTime: 0.03
+  m_Iterations: 1
+  m_SleepThreshold: 0.005
+  m_GravityAligner: {fileID: 0}
+  m_Gravity: {x: 0, y: 0, z: 0}
+  m_ForceModule: {fileID: 0}
+  m_ForceScale: 1
+  m_SimulateSpace: {fileID: 0}
 --- !u!137 &6965108698693947457 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: 1630794972795428178, guid: fb11f71a623f7354d8aac55a6cd6624f, type: 3}
@@ -1097,5 +1171,10 @@ Transform:
 --- !u!4 &8559406457925122125 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 54510233050658142, guid: fb11f71a623f7354d8aac55a6cd6624f, type: 3}
+  m_PrefabInstance: {fileID: 8505248102990744851}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8886958110696568500 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 962757976207948711, guid: fb11f71a623f7354d8aac55a6cd6624f, type: 3}
   m_PrefabInstance: {fileID: 8505248102990744851}
   m_PrefabAsset: {fileID: 0}
