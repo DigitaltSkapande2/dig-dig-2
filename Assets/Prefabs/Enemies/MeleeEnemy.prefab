@@ -246,7 +246,7 @@ GameObject:
   - component: {fileID: 6762114074386312621}
   - component: {fileID: 4427047692297429573}
   m_Layer: 10
-  m_Name: TestEnemy
+  m_Name: MeleeEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -359,16 +359,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0038c16c34866b4f9e25c9c0dc0f7e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Graph: {fileID: 5585291459702331616, guid: e61f7705ed91bad23a3430ef27686a16, type: 2}
+  m_Graph: {fileID: -7228647020583101335, guid: 00a982bc3ab00f64fac80cfece4eafab, type: 2}
   m_BlackboardVariableOverridesList:
-  - rid: 1217018901321220182
-  m_OriginalGraph: {fileID: 0}
+  - rid: 6691007004047049496
+  - rid: 6691007004047049497
+  - rid: 6691007004047049498
+  m_OriginalGraph: {fileID: -7228647020583101335, guid: 00a982bc3ab00f64fac80cfece4eafab, type: 2}
   m_IsInitialised: 0
   m_IsStarted: 0
   references:
     version: 2
     RefIds:
-    - rid: 1217018901321220182
+    - rid: 6691007004047049496
       type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -376,6 +378,22 @@ MonoBehaviour:
           m_Value1: 0
         Name: Self
         m_Value: {fileID: 5585277213094831744}
+    - rid: 6691007004047049497
+      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 4347519987109069077
+          m_Value1: 12835165921848297507
+        Name: Enemy Scan Radius
+        m_Value: 5
+    - rid: 6691007004047049498
+      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 10951844992829612510
+          m_Value1: 1527918675621824467
+        Name: Patrol Radius
+        m_Value: 5
 --- !u!114 &6573185137410320209
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -395,7 +413,6 @@ MonoBehaviour:
   bindableAttackHitboxes:
   - {fileID: 6767000601036238277}
   enemyGroups: []
-  focusScanRadius: 10
   verboseLogging: 0
 --- !u!114 &6435232985193985838
 MonoBehaviour:
@@ -418,6 +435,8 @@ MonoBehaviour:
       - prefab: {fileID: 4950934811570952627, guid: 0c8861c4d881711a881abc9f02a89e22, type: 3}
         hasLifetime: 1
         lifetime: 1.05
+    playSound: 0
+    audioClipsToPlay: []
     screenShake: 0
     screenShakeEffectData:
       intensityCurve:
@@ -531,6 +550,36 @@ MonoBehaviour:
       duration: 0.4
       intensity: 1
       color: {r: 0, g: 0, b: 0, a: 0}
+    gamepadRumble: 0
+    gamepadRumbleEffectData:
+      intensityCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      duration: 0.4
+      intensity: 1
+      inputPlayerId: 0
+      highFrequencyIntensity: 0
     greyscale: 0
     greyscaleEffectData:
       intensityCurve:
@@ -576,7 +625,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Health
   maxHealthPoints: 2
   healthPoints: 2
-  DestroyOnDeath: 1
+  destroyOnDeath: 1
   deathEffectPlayer:
     spawnPrefab: 1
     spawnPrefabEffectData:
@@ -587,6 +636,8 @@ MonoBehaviour:
       - prefab: {fileID: 4950934811570952627, guid: f471bdc1490ebb553826dac56db434a6, type: 3}
         hasLifetime: 1
         lifetime: 1.5
+    playSound: 0
+    audioClipsToPlay: []
     screenShake: 0
     screenShakeEffectData:
       intensityCurve:
@@ -700,6 +751,36 @@ MonoBehaviour:
       duration: 0.4
       intensity: 1
       color: {r: 0, g: 0, b: 0, a: 0}
+    gamepadRumble: 0
+    gamepadRumbleEffectData:
+      intensityCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      duration: 0.4
+      intensity: 1
+      inputPlayerId: 0
+      highFrequencyIntensity: 0
     greyscale: 0
     greyscaleEffectData:
       intensityCurve:
