@@ -412,7 +412,9 @@ MonoBehaviour:
   chainTimeWindowBeforeAttackEnd: 0.5
   bindableAttackHitboxes:
   - {fileID: 6767000601036238277}
-  enemyGroups: []
+  enemyGroups:
+  - player
+  - environment
   verboseLogging: 0
 --- !u!114 &6435232985193985838
 MonoBehaviour:
