@@ -72,7 +72,6 @@ namespace DigDig2.Combat
 
 		private void Update( )
         {
-
 			if ( ( State == CombatState.Idle || attackRequestChain > 0 ) && !attackRequestProcessed )
 			{
 				if ( heldAttackType )
@@ -120,7 +119,7 @@ namespace DigDig2.Combat
 
 		private void FixedUpdate( )
 		{
-			foreach ( KeyValuePair<string, BindableAttackHitbox> activeAttack in activeAttacks ) { activeAttack.Value.Attack( activeAttack.Key ); }
+			foreach ( KeyValuePair<string, BindableAttackHitbox> activeAttack in activeAttacks ) { activeAttack.Value.Trigger( activeAttack.Key ); }
 		}
 
 		private void LogVerbose( string message )
@@ -322,6 +321,12 @@ namespace DigDig2.Combat
 		public bool IsPerformingAttack( ) => currentPerformingAttackType != null;
 
 		public float GetAttackPerformanceTime( ) => Time.time - performanceStartTime;
+
+        public bool CanAttackGroup( string group )
+        {
+            if ( enemyGroups.Count <= 0 ) return true;
+            return enemyGroups.Contains( group );
+        }
 
 		#endregion
 

@@ -29,9 +29,10 @@ namespace DigDig2.Combat
 			}
 		}
 
-		public void StartAttack( string attackId, Attacker attacker, Attack attack )
-		{
-			Attackable attackerAttackable = attacker.GetComponent<Attackable>( );
+		public void StartAttack( string attackId, Attacker attacker = null, Attack attack = null )
+        {
+            Attackable attackerAttackable = null;
+            if (attacker) attackerAttackable = attacker.GetComponent<Attackable>( );
 
 			activeAttacks[ attackId ] = new( )
 			{
@@ -43,7 +44,7 @@ namespace DigDig2.Combat
 			};
 		}
 
-		public void Attack( string attackId )
+		public void Trigger( string attackId )
 		{
 			AttackInfo attackInfo = activeAttacks[ attackId ];
 
@@ -80,12 +81,10 @@ namespace DigDig2.Combat
 				{
 					Attackable enemyAttackable = enemyCollider.GetComponent<Attackable>( );
 					if ( !enemyAttackable ) continue;
-					if ( enemyAttackable == attackInfo.attackerAttackable ) continue;
+					if ( attackInfo.attackerAttackable && enemyAttackable == attackInfo.attackerAttackable ) continue;
 					if ( attackInfo.attackedEntities.Contains( enemyAttackable ) ) continue;
-					if ( enemyAttackable.Group.Contains( "Melee Only" ) && attackInfo.attack is RangedAttack ) continue;
-
-					attackInfo.attackedEntities.Add( enemyAttackable );
-					enemyAttackable.Hit( attackInfo.attack, attackInfo.attacker );
+                    
+					if ( enemyAttackable.Hit( attackInfo.attack, attackInfo.attacker ) ) attackInfo.attackedEntities.Add( enemyAttackable );
 				}
 			}
 
