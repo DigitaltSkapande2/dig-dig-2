@@ -1,10 +1,12 @@
 using UnityEngine;
+using DigDig2.EffectSystem;
 
 namespace DigDig2.Combat
 {
 	public abstract class Attack : ScriptableObject
 	{
 		[SerializeField] protected float attackDuration = 1f;
+        [SerializeField] public EffectPlayer onPerformEffect;
 
 		public float AttackDuration
 		{

@@ -24,7 +24,7 @@ namespace DigDig2.Combat
 		[SerializeField] private EffectPlayer deathEffectPlayer;
 
 		[Tooltip( "Event is called when health is below 0." )]
-		[SerializeField] public UnityEvent death;
+		[SerializeField] public UnityEvent<GameObject> death;
 
 		[SerializeField] public UnityEvent<int> healthChanged;
 
@@ -38,6 +38,8 @@ namespace DigDig2.Combat
 			get => healthPoints;
 			set => SetHealth( value );
 		}
+
+        public bool IsAlive => healthPoints <= 0;
 
 		private void Start( ) { SetHealth( healthPoints ); }
 
@@ -66,8 +68,8 @@ namespace DigDig2.Combat
 		{
 			healthPoints = 0;
 
-			death.Invoke( );
-			deathEffectPlayer.Play( transform.position, Quaternion.identity, Vector3.one, transform.parent );
+			death.Invoke(gameObject);
+			deathEffectPlayer?.Play( transform.position, Quaternion.identity, Vector3.one, transform.parent );
 			if ( destroyOnDeath )
 				Destroy( gameObject );
 			else
