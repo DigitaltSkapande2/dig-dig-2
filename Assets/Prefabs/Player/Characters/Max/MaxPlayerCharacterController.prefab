@@ -688,6 +688,7 @@ MonoBehaviour:
   focusEnemyGroupPriorityList:
   - enemy
   - crystal
+  - button
   - environment
   focusScanRadius: 10
   yDifferenceTolerance: 1
