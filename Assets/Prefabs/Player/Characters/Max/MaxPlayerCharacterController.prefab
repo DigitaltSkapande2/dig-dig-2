@@ -149,6 +149,7 @@ MonoBehaviour:
   - crystal
   - environment
   - melee only
+  - button
   verboseLogging: 0
 --- !u!114 &1195255877809228181
 MonoBehaviour:
