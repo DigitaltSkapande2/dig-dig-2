@@ -19,8 +19,7 @@ namespace DigDig2.Player
         public void OnInputGameSwitchCharacter( InputInfo inputInfo )
         {
             Debug.Log($"{name} phaseeee: {inputInfo.context.phase}, ind: {inputInfo.inputPlayerIndex}, device: {inputInfo.context.control.device.name}");
-            if (inputInfo.context.started && Time.time - lastTimeSwitched > cooldown &&
-                !GameManager.Instance.IsMultiplayer) Switch();
+            if (inputInfo.context.started && Time.time - lastTimeSwitched > cooldown && !GameManager.Instance.IsMultiplayer) Invoke(nameof(Switch), 0.03f);
         }
 
         private void Switch()

@@ -289,10 +289,10 @@ namespace DigDig2.Game
             Destroy(PlayerOne.gameObject);
             
             // Switch Logic
-            PlayerOne.characterType = CharacterType.Max == PlayerOne.characterType ? CharacterType.Minis : CharacterType.Max;
-            BetterDebug.Log($"NEW character: {PlayerOne.characterType}");
+            CharacterType newCharacterType = CharacterType.Max == PlayerOne.characterType ? CharacterType.Minis : CharacterType.Max;
+            BetterDebug.Log($"NEW character: {newCharacterType}");
             // Spawn new player
-            GameObject newPrefab = GetCharacterPrefabFromCharacterType(PlayerOne.characterType);
+            GameObject newPrefab = GetCharacterPrefabFromCharacterType(newCharacterType);
             GameObject newPlayerCharacter = Instantiate(newPrefab, oldPlayerPos, Quaternion.identity);
 
             
@@ -300,6 +300,8 @@ namespace DigDig2.Game
             EntityCharacterController playerEntityCharacterController = newPlayerCharacter.GetComponent<EntityCharacterController>();
             PlayerController playerController = newPlayerCharacter.GetComponent<PlayerController>();
             Health playerHealthComponent = newPlayerCharacter.GetComponent<Health>();
+
+            playerController.characterType = newCharacterType;
             
             playerEntityCharacterController.LookTowards(newPlayerCharacter.transform.position + oldPlayerLookVector, false);
             playerEntityCharacterController.inputMoveVector = oldPlayerInputMoveVector;

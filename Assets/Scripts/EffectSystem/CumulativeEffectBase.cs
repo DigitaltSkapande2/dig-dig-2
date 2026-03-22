@@ -64,5 +64,7 @@ namespace DigDig2.EffectSystem
 		{
 			
 		}
+        
+        
 	}
 }

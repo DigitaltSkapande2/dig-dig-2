@@ -52,6 +52,7 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 65
+  onHitEffect: {fileID: 11400000, guid: 1c44e8a50f645dfd491ad2613b2a54de, type: 2}
 --- !u!114 &6157267824931984468
 MonoBehaviour:
   m_ObjectHideFlags: 0
