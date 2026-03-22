@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 
+using DigDig2.Game;
 using DigDig2.SaveSystem;
 using DigDig2.UI.Events;
 using DigDig2.UI.Navigation;
@@ -17,7 +18,7 @@ namespace DigDig2.UI.Controllers
 	[RequireComponent( typeof( UIDocument ), typeof( UserInterfaceNavigator ) )]
 	public class MainMenuController : MonoBehaviour
 	{
-		[SerializeField] private string gameSceneName = "GameScene";
+		[SerializeField] private int gameSceneBuildIndex = 1;
 
 		[SerializeField] private GameObject buttonHoverEffectPrefab;
 		[SerializeField] private GameObject buttonClickEffectPrefab;
@@ -310,9 +311,9 @@ namespace DigDig2.UI.Controllers
 			}
 		}
 
-		public void StartSingleplayer( ) { SceneManager.LoadScene( gameSceneName ); }
+		public void StartSingleplayer( ) { LoadingScreenManager.Instance.LoadScene( gameSceneBuildIndex ); }
 
-		public void StartMultiplayer( ) { SceneManager.LoadScene( gameSceneName ); }
+		public void StartMultiplayer( ) { LoadingScreenManager.Instance.LoadScene( gameSceneBuildIndex ); }
 
 		private void OnInputUICancel( ) { navigator.NavigateBack( ); }
 

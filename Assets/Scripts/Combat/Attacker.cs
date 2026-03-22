@@ -295,6 +295,8 @@ namespace DigDig2.Combat
 			currentPerformingAttack.Trigger( this, currentPerformingAttackType, Time.time - chargeStartTime );
 			State = CombatState.Performing;
 			performanceStartTime = Time.time;
+            
+            currentPerformingAttack.onPerformEffect?.Play();
 
 			lastPerformedAttackType = currentPerformingAttackType;
 			lastPerformedAttack = currentPerformingAttack;

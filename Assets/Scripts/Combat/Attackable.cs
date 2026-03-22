@@ -51,7 +51,7 @@ namespace DigDig2.Combat
 			if ( attack ) attack.Hit( attacker, this, healthComponent, entityCharacterController );
 
 			hit.Invoke( );
-			hitEffect.Play( transform.position );
+			hitEffect?.Play( transform.position );
 
             return true;
         }

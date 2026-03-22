@@ -109,7 +109,7 @@ namespace DigDig2.Debugging.Notes
 		// Get the nearest note and focus it, if a note is already focused then unfocus the old one
 		private void FocusNearestNote( )
 		{
-			if ( !GameManager.Instance.PlayerOne.characterObject )
+			if ( !GameManager.Instance.PlayerOne.gameObject )
 			{
 				if ( focusedNoteIndex == -1 ) return;
 
@@ -129,7 +129,7 @@ namespace DigDig2.Debugging.Notes
 				DebugNoteBillboard noteBillboard = GetNoteBillboardFromNoteIndex( noteIndex );
 				if ( !noteBillboard.gameObject.activeSelf ) continue;
 
-				float noteDistance = Vector3.Distance( GameManager.Instance.PlayerOne.characterObject.transform.position, noteBillboard.transform.position );
+				float noteDistance = Vector3.Distance( GameManager.Instance.PlayerOne.transform.position, noteBillboard.transform.position );
 				if ( !( noteDistance <= maxFocusDistance ) ) continue;
 
 				if ( nearestNote == -1 )
@@ -315,7 +315,7 @@ namespace DigDig2.Debugging.Notes
 
 		private void ShowNoteManagementInterface( NoteManagementMode managementMode )
 		{
-			if ( !GameManager.Instance.PlayerOne.characterObject ) return;
+			if ( !GameManager.Instance.PlayerOne ) return;
 
 			noteManagementMode = managementMode;
 			interfaceTitle.text = managementMode switch
@@ -327,16 +327,16 @@ namespace DigDig2.Debugging.Notes
 
 			interfaceCanvas.SetActive( true );
 
-			GameManager.Instance.PlayerOne.characterObject.GetComponent<EntityCharacterController>( ).Frozen = true;
+			GameManager.Instance.PlayerOne.GetComponent<EntityCharacterController>( ).Frozen = true;
 		}
 
 		private void HideNoteManagementInterface( )
 		{
-			if ( !GameManager.Instance.PlayerOne.characterObject ) return;
+			if ( !GameManager.Instance.PlayerOne ) return;
 
 			interfaceCanvas.SetActive( false );
 
-			GameManager.Instance.PlayerOne.characterObject.GetComponent<EntityCharacterController>( ).Frozen = false;
+			GameManager.Instance.PlayerOne.GetComponent<EntityCharacterController>( ).Frozen = false;
 
 			interfaceArchiveButton.interactable = false;
 
@@ -350,7 +350,7 @@ namespace DigDig2.Debugging.Notes
 		// Player pressed the confirm button on the note management interface
 		public void OnNoteConfirmPressed( )
 		{
-			if ( !GameManager.Instance.PlayerOne.characterObject ) return;
+			if ( !GameManager.Instance.PlayerOne ) return;
 			if ( interfaceTitleInputField.text.Length <= 0 ) return;
 
 			switch ( noteManagementMode )
@@ -360,7 +360,7 @@ namespace DigDig2.Debugging.Notes
 						interfaceTitleInputField.text,
 						interfaceNoteInputField.text,
 						interfaceAuthorInputField.text,
-						GameManager.Instance.PlayerOne.characterObject.transform.position + notePlacePositionOffset
+						GameManager.Instance.PlayerOne.transform.position + notePlacePositionOffset
 					); break;
 				case NoteManagementMode.Edit:
 					EditNote(

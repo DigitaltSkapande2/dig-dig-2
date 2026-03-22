@@ -1,0 +1,230 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 078f6059bad84650ac4c8bcaa0efc638, type: 3}
+  m_Name: CrystalDeathEffect
+  m_EditorClassIdentifier: Assembly-CSharp:DigDig2.EffectSystem:EffectPlayerAsset
+  spawnPrefab: 1
+  spawnPrefabEffectData:
+    prefabToSpawn:
+    - prefab: {fileID: 7897868338809870288, guid: 8a151044b9bd2ae00a36f4196086499f, type: 3}
+      hasLifetime: 0
+      lifetime: 0
+  playSound: 1
+  audioClipsToPlay:
+  - {fileID: 8300000, guid: 05e5a8ae410ed65a0a82edf35a28cbdc, type: 3}
+  screenShake: 0
+  screenShakeEffectData:
+    intensityCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 3
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.4
+        value: 1
+        inSlope: -0.01032055
+        outSlope: -0.01032055
+        tangentMode: 0
+        weightedMode: 3
+        inWeight: 0.5223214
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: -0.007449788
+        outSlope: -0.007449788
+        tangentMode: 0
+        weightedMode: 3
+        inWeight: 0.4404762
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    duration: 5
+    intensity: 0.4
+  cameraZoom: 0
+  cameraZoomEffectData:
+    intensityCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 3
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.29
+        value: 1.0039215
+        inSlope: 0.009433183
+        outSlope: 0.009433183
+        tangentMode: 0
+        weightedMode: 3
+        inWeight: 0.7167488
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 3
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 3
+        inWeight: 0.84523815
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    duration: 7
+    intensity: 7
+  timeSlow: 1
+  timeSlowEffectData:
+    intensityCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0.7000122
+        inSlope: 103.48544
+        outSlope: 103.48544
+        tangentMode: 0
+        weightedMode: 3
+        inWeight: 0
+        outWeight: 0.0017857143
+      - serializedVersion: 3
+        time: 1
+        value: 0.9981537
+        inSlope: -0.0055709514
+        outSlope: -0.0055709514
+        tangentMode: 0
+        weightedMode: 3
+        inWeight: 0.81273156
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    duration: 1
+    intensity: 0.5
+  vignettePulse: 1
+  vignettePulseEffectData:
+    intensityCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: -0.008050175
+        outSlope: -0.008050175
+        tangentMode: 0
+        weightedMode: 3
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: -0.0040480145
+        outSlope: -0.0040480145
+        tangentMode: 0
+        weightedMode: 3
+        inWeight: 0.6944445
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    duration: 3
+    intensity: 0.4
+    color: {r: 0, g: 0, b: 0, a: 0}
+  gamepadRumble: 0
+  gamepadRumbleEffectData:
+    intensityCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 3
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.4
+        value: 1
+        inSlope: -0.01032055
+        outSlope: -0.01032055
+        tangentMode: 0
+        weightedMode: 3
+        inWeight: 0.5223214
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: -0.007449788
+        outSlope: -0.007449788
+        tangentMode: 0
+        weightedMode: 3
+        inWeight: 0.4404762
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    duration: 5
+    intensity: 0.6
+    inputPlayerId: 0
+    highFrequencyIntensity: 0
+  greyscale: 0
+  greyscaleEffectData:
+    intensityCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    duration: 0.4
+    intensity: 1

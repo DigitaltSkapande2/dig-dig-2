@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Linq;
 using System.Threading.Tasks;
 using DigDig2.CinemaCamera;
@@ -66,23 +67,23 @@ namespace DigDig2.Game
         public GameManagerGameSaveData loadedGameManagerSaveData;
         
         // Player
-        [SerializeField] public Player.Player[] players = new Player.Player[2];
-        public Player.Player PlayerOne => players[0];
-        public Player.Player PlayerTwo => players[1];
+        [SerializeField] public PlayerController[] players = new PlayerController[2];
+        public PlayerController PlayerOne => players[0];
+        public PlayerController PlayerTwo => players[1];
         public int maxPlayerID;
         public int minisPlayerID;
-        public Player.Player playerMax => players[maxPlayerID];
-        public Player.Player playerMinis => players[minisPlayerID];
+        public PlayerController playerMax => players[maxPlayerID];
+        public PlayerController playerMinis => players[minisPlayerID];
 
         public GameObject[] PlayerCharacterObjects
         {
             get
             {
-                return players.Where(g => g.characterObject && g.isAlive).Select(p => p.characterObject).ToArray();
+                return players.Where(g => g).Select(p => p.gameObject).ToArray();
             }
         }
 
-        public UnityEvent<Player.Player> playerDeath = new();
+        public UnityEvent<PlayerController> playerDeath = new();
 
         
         private PauseMenuController pauseMenuController;
@@ -197,7 +198,7 @@ namespace DigDig2.Game
                     }
                     else 
                     {
-                        crystal.GetComponent<Health>().death.AddListener(() => SetHighestKilledCrystalIndex(gay));
+                        crystal.GetComponent<Health>().death.AddListener((_) => SetHighestKilledCrystalIndex(gay));
                     }
                 }
             }
@@ -218,26 +219,30 @@ namespace DigDig2.Game
         public void SaveAndLoadMainMenu()
         {
             SaveManager.Instance.SaveAllAndWriteToFile();
-            SceneManager.LoadScene(0);
+			LoadingScreenManager.Instance.LoadScene( 0 );
         }
 
-        public async void ReloadGameScene()
-        {
-            fadeBlackImage.style.opacity = new StyleFloat(100);
-            await Task.Delay((int)(fadeBlackImage.style.transitionDuration.value[0].value * 1000));
-            await SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
-            StartGame();
-        }
+        public void ReloadGameScene()
+		{
+			StartCoroutine( ReloadGameSceneAsync( ) );
+		}
+
+		private IEnumerator ReloadGameSceneAsync( )
+		{
+			fadeBlackImage.style.opacity = new StyleFloat(100);
+			yield return fadeBlackImage.resolvedStyle.transitionDuration;
+			yield return LoadingScreenManager.Instance.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+			StartGame();
+		}
 
         public void RegisterCharacterDeath(GameObject characterObject)
         {
             for (int i = players.Length-1; i >= 0; i--)
             {
-                Player.Player player = players[i];
-                if (player.characterObject == characterObject)
+                PlayerController player = players[i];
+                if (player.gameObject == characterObject)
                 {
                     playerDeath.Invoke(player);
-                    player.isAlive = false;
                 }
             }
         }
@@ -252,11 +257,12 @@ namespace DigDig2.Game
                 return;
             }
             
-            PlayerOne.characterObject = Instantiate( // SinglePlayerRef initialized in Restore state
+            players[0] = Instantiate( // SinglePlayerRef initialized in Restore state
                 GetCharacterPrefabFromCharacterType(loadedGameManagerSaveData.singleplayerSelectedCharacter)
-            );
-            PlayerOne.characterObject.GetComponent<EntityCharacterController>().Teleport(spawnPosition, spawnRotation.eulerAngles.y);
-            
+            ).GetComponent<PlayerController>();
+            players[0].gameObject.GetComponent<EntityCharacterController>().Teleport(spawnPosition, spawnRotation.eulerAngles.y);
+            players[0].health.death.AddListener(RegisterCharacterDeath);
+                
             BetterDebug.Log( "Singleplayer Character Initialized!" );
         }
 
@@ -268,11 +274,11 @@ namespace DigDig2.Game
             }
 
             // Harvest old player data
-            EntityCharacterController oldPlayerEntityCharacterController = PlayerOne.characterObject.GetComponent<EntityCharacterController>();
-            PlayerCharacterInput oldPlayerCharacterInput = PlayerOne.characterObject.GetComponent<PlayerCharacterInput>();
-            Health oldPlayerHealthComponent = PlayerOne.characterObject.GetComponent<Health>();
+            EntityCharacterController oldPlayerEntityCharacterController = PlayerOne.gameObject.GetComponent<EntityCharacterController>();
+            PlayerController oldPlayerController = PlayerOne.gameObject.GetComponent<PlayerController>();
+            Health oldPlayerHealthComponent = PlayerOne.gameObject.GetComponent<Health>();
 
-            Vector3 oldPlayerPos = PlayerOne.characterObject.transform.position;
+            Vector3 oldPlayerPos = PlayerOne.gameObject.transform.position;
 
             Vector3 oldPlayerLookVector = oldPlayerEntityCharacterController.GetForwardVector();
             Vector3 oldPlayerInputMoveVector = oldPlayerEntityCharacterController.inputMoveVector;
@@ -280,28 +286,30 @@ namespace DigDig2.Game
             int oldHealthPoints = oldPlayerHealthComponent.HealthPoints;
 
             // Kill old player
-            Destroy(PlayerOne.characterObject);
+            Destroy(PlayerOne.gameObject);
             
             // Switch Logic
-            PlayerOne.characterType = CharacterType.Max == PlayerOne.characterType ? CharacterType.Minis : CharacterType.Max;
-            BetterDebug.Log($"NEW character: {PlayerOne.characterType}");
+            CharacterType newCharacterType = CharacterType.Max == PlayerOne.characterType ? CharacterType.Minis : CharacterType.Max;
+            BetterDebug.Log($"NEW character: {newCharacterType}");
             // Spawn new player
-            GameObject newPrefab = GetCharacterPrefabFromCharacterType(PlayerOne.characterType);
+            GameObject newPrefab = GetCharacterPrefabFromCharacterType(newCharacterType);
             GameObject newPlayerCharacter = Instantiate(newPrefab, oldPlayerPos, Quaternion.identity);
 
             
             // Inject Old Player percistance data
             EntityCharacterController playerEntityCharacterController = newPlayerCharacter.GetComponent<EntityCharacterController>();
-            PlayerCharacterInput playerCharacterInput = newPlayerCharacter.GetComponent<PlayerCharacterInput>();
+            PlayerController playerController = newPlayerCharacter.GetComponent<PlayerController>();
             Health playerHealthComponent = newPlayerCharacter.GetComponent<Health>();
+
+            playerController.characterType = newCharacterType;
             
             playerEntityCharacterController.LookTowards(newPlayerCharacter.transform.position + oldPlayerLookVector, false);
             playerEntityCharacterController.inputMoveVector = oldPlayerInputMoveVector;
-            playerCharacterInput.inputMoveVector = oldPlayerCharacterInput.inputMoveVector;
+            playerController.inputMoveVector = oldPlayerController.inputMoveVector;
             
             playerHealthComponent.HealthPoints = oldHealthPoints;
             
-            PlayerOne.characterObject = newPlayerCharacter;
+            players[0] = newPlayerCharacter.GetComponent<PlayerController>();
             characterSwitched.Invoke(PlayerOne.characterType, newPlayerCharacter);
         }
 
@@ -309,7 +317,7 @@ namespace DigDig2.Game
 
         #region Multiplayer
 
-        public void RegisterMultiplayerPlayers(Player.Player playerOne, Player.Player playerTwo)
+        public void RegisterMultiplayerPlayers(PlayerController playerOne, PlayerController playerTwo)
         {
             players[0] = playerOne;
             players[1] = playerTwo;

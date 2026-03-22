@@ -1,3 +1,4 @@
+using DigDig2.EffectSystem;
 using UnityEngine;
 
 namespace DigDig2.Combat
@@ -6,6 +7,7 @@ namespace DigDig2.Combat
 	{
 		[SerializeField] private GameObject hitEffect;
 		[SerializeField] private LayerMask layerMask;
+        [SerializeField] private EffectPlayer onHitEffect;
 
 		private Attacker attacker;
 		private string hitboxID;
@@ -13,7 +15,11 @@ namespace DigDig2.Combat
 
 		private void Update( ) { transform.position += speed * Time.deltaTime * transform.forward; }
 
-		private void OnTriggerEnter( Collider other ) { DestroyProjectile( ); }
+        private void OnTriggerEnter(Collider other)
+        {
+            onHitEffect?.Play();
+            DestroyProjectile( );
+        }
 
 		public void SetInfo( Attack attack, Attacker attacker, float speed, float lifeTime )
 		{

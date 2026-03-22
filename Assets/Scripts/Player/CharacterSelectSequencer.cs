@@ -45,11 +45,13 @@ namespace DigDig2
         private VisualElement playerTwoReadyIcon;
         private Button startButton;
 
-        private Player.Player playerOne = new();
+        private PlayerController playerOne;
+        private int playerOneInputPlayerindex = -1;
         private bool playerOneReady = false;
         private int playerOneNavigation = 2;
 
-        private Player.Player playerTwo = new();
+        private PlayerController playerTwo;
+        private int playerTwoInputPlayerindex = -1;
         private bool playerTwoReady = false;
         private int playerTwoNavigation = 2;
         
@@ -102,13 +104,13 @@ namespace DigDig2
             if (!info.context.started) return;
             BetterDebug.Log(info.inputPlayerIndex);
             // Check for ready
-            if (!playerOneReady && info.inputPlayerIndex == playerOne.inputPlayerIndex)
+            if (!playerOneReady && info.inputPlayerIndex == playerOneInputPlayerindex)
             {
-                playerOneReady = true;
+                playerOneReady = playerOneNavigation != 0;
             }
-            else if (!playerTwoReady && info.inputPlayerIndex == playerTwo.inputPlayerIndex)
+            else if (!playerTwoReady && info.inputPlayerIndex == playerTwoInputPlayerindex)
             {
-                playerTwoReady = true;
+                playerTwoReady = playerTwoNavigation != 0;
             }
 
             if (playerOneReady && playerTwoReady)
@@ -119,22 +121,22 @@ namespace DigDig2
             UpdateReadyIcons();
             
             // Check if new InputPlayer
-            if ( playerOne.inputPlayerIndex == -1)
+            if ( playerOneInputPlayerindex == -1)
             {
-                playerOne.inputPlayerIndex = info.inputPlayerIndex;
+                playerOneInputPlayerindex = info.inputPlayerIndex;
                 playerOneCharacterImage.visible = true;
                 BetterDebug.Log( $"Player One is '{info.inputPlayerIndex}'" );
                 playerOneNavigation = 0;
             }
-            else if ( playerTwo.inputPlayerIndex == -1 && playerOne.inputPlayerIndex != info.inputPlayerIndex )
+            else if ( playerTwoInputPlayerindex == -1 && playerOneInputPlayerindex != info.inputPlayerIndex )
             {
-                playerTwo.inputPlayerIndex = info.inputPlayerIndex;
+                playerTwoInputPlayerindex = info.inputPlayerIndex;
                 playerTwoCharacterImage.visible = true;
                 playerTwoNavigation = 0;
                 BetterDebug.Log( $"Player Two is '{info.inputPlayerIndex}'" );
                 OnBothPlayersJoined( );
             }
-            else if (info.inputPlayerIndex != playerTwo.inputPlayerIndex && info.inputPlayerIndex != playerOne.inputPlayerIndex)
+            else if (info.inputPlayerIndex != playerTwoInputPlayerindex && info.inputPlayerIndex != playerOneInputPlayerindex)
             {
                 BetterDebug.Log($"More than 2 InputPlayers trying to connect. InputPlayerIndex: [{info.inputPlayerIndex}]", LogSeverity.Warning);
                 return;
@@ -152,7 +154,7 @@ namespace DigDig2
         {
             if (!info.context.started) return;
             
-            if (info.inputPlayerIndex == playerOne.inputPlayerIndex)
+            if (info.inputPlayerIndex == playerOneInputPlayerindex)
             {
                 if (playerOneReady)
                 {
@@ -168,7 +170,7 @@ namespace DigDig2
 
                 }
             }
-            else if (info.inputPlayerIndex == playerTwo.inputPlayerIndex)
+            else if (info.inputPlayerIndex == playerTwoInputPlayerindex)
             {
                 if (playerTwoReady) 
                 {
@@ -192,13 +194,13 @@ namespace DigDig2
         {
             if (!info.context.started) return;
             print(info.context.ReadValue<Vector2>());
-            if (info.inputPlayerIndex == playerOne.inputPlayerIndex)
+            if (info.inputPlayerIndex == playerOneInputPlayerindex)
             {
                 Vector2 input = info.context.ReadValue<Vector2>();
                 playerOneNavigation += Math.Sign(input.x);
                 playerOneNavigation = Math.Clamp(playerOneNavigation, -1, 1);
             }
-            else if (info.inputPlayerIndex == playerTwo.inputPlayerIndex)
+            else if (info.inputPlayerIndex == playerTwoInputPlayerindex)
             {
                 Vector2 input = info.context.ReadValue<Vector2>();
                 playerTwoNavigation += Math.Sign(input.x);
@@ -223,18 +225,18 @@ namespace DigDig2
             GameObject playerOneCharacterInstance = playerOneIsMax ? maxInstance : minisInstance;
             GameObject playerTwoCharacterInstance = playerOneIsMax ? minisInstance : maxInstance;
 
-            SetCharacterInputPlayerIndex( playerOneCharacterInstance, playerOne.inputPlayerIndex );
-            SetCharacterInputPlayerIndex( playerTwoCharacterInstance, playerTwo.inputPlayerIndex );
-
-            playerOne.characterObject = playerOneCharacterInstance;
-            playerOne.characterType = playerOneIsMax ? CharacterType.Max : CharacterType.Minis;
+            PlayerController playerOneController = playerOneCharacterInstance.GetComponent<PlayerController>();
+            PlayerController playerTwoController = playerTwoCharacterInstance.GetComponent<PlayerController>();
             
-            playerTwo.characterObject = playerTwoCharacterInstance;
-            playerTwo.characterType = playerOneIsMax ? CharacterType.Minis : CharacterType.Max;
+            playerOneController.characterType = playerOneIsMax ? CharacterType.Max : CharacterType.Minis;
+            playerOneController.SetInputPlayerID(playerOneInputPlayerindex);
+            
+            playerTwoController.characterType = playerOneIsMax ? CharacterType.Minis : CharacterType.Max;
+            playerTwoController.SetInputPlayerID(playerTwoInputPlayerindex);
             
             GameManager.Instance.RegisterMultiplayerPlayers(
-                playerOne, 
-                playerTwo 
+                playerOneController, 
+                playerTwoController 
             );
             
             playerOneCharacterInstance.GetComponent<EntityCharacterController>().Frozen = false;
@@ -243,15 +245,6 @@ namespace DigDig2
             realRoot.style.opacity = new StyleFloat(0f);
             Invoke(nameof(Die), 0.5f);
             gameStartedEvent.Invoke();
-        }
-
-        private void SetCharacterInputPlayerIndex(GameObject obj, int index)
-        {
-            foreach (var inputModule in obj.GetComponents<InputModule>())
-            {
-                inputModule.enabled = true;
-                inputModule.AllowedInputPlayerIndex = index;
-            }
         }
 
         private void Die()

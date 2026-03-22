@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: LightRangedAttack3
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.RangedAttack
   attackDuration: 0.2
+  onPerformEffect: {fileID: 11400000, guid: 47dcc31010a9eb1dc998f04672a7082c, type: 2}
   animationStateName: LightAttack3
   damage: 1
   projectilePrefab: {fileID: 2449068539807903354, guid: 4d8765dee0d501e42834aad8e63b0be8, type: 3}

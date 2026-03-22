@@ -80,7 +80,7 @@ namespace DigDig2
 		public void LowerWater( float amount )
 		{
 			targetY -= amount;
-			onWaterLowerEffect.Play( );
+			onWaterLowerEffect?.Play( );
 			Debug.Log( "Lowering water. New target Y: " + targetY );
 			foreach ( ParticleSystem ps in waterSplashParticles )
 			{
