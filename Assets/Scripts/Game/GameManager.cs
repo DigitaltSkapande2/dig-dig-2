@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Linq;
 using System.Threading.Tasks;
 using DigDig2.CinemaCamera;
@@ -218,16 +219,21 @@ namespace DigDig2.Game
         public void SaveAndLoadMainMenu()
         {
             SaveManager.Instance.SaveAllAndWriteToFile();
-            SceneManager.LoadScene(0);
+			LoadingScreenManager.Instance.LoadScene( 0 );
         }
 
-        public async void ReloadGameScene()
-        {
-            fadeBlackImage.style.opacity = new StyleFloat(100);
-            await Task.Delay((int)(fadeBlackImage.style.transitionDuration.value[0].value * 1000));
-            await SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
-            StartGame();
-        }
+        public void ReloadGameScene()
+		{
+			StartCoroutine( ReloadGameSceneAsync( ) );
+		}
+
+		private IEnumerator ReloadGameSceneAsync( )
+		{
+			fadeBlackImage.style.opacity = new StyleFloat(100);
+			yield return fadeBlackImage.resolvedStyle.transitionDuration;
+			yield return LoadingScreenManager.Instance.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+			StartGame();
+		}
 
         public void RegisterCharacterDeath(GameObject characterObject)
         {
