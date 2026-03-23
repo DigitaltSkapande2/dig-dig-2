@@ -13,11 +13,17 @@ namespace DigDig2.Combat
 		[SerializeField] private GameObject hitEffect;
 		[SerializeField] private float knockbackStrength = 50;
 
-		public override void ChargeStart( Attacker attacker, AttackType attackType ) { }
+		public override void ChargeStart( Attacker attacker, AttackType attackType )
+		{
+			Debug.Log("Started Charge");
+		}
 
 		public override void Charge( Attacker attacker, AttackType attackType, float chargeTime ) { }
 
-		public override void ChargeFull( Attacker attacker, AttackType attackType ) { }
+		public override void ChargeFull( Attacker attacker, AttackType attackType )
+		{
+			Debug.Log("Charge Full");
+		}
 
 		public override void Trigger( Attacker attacker, AttackType attackGroup, float chargeTime )
 		{

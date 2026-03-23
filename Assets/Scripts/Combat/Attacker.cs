@@ -93,7 +93,7 @@ namespace DigDig2.Combat
 				case CombatState.Charging:
 				{
 					currentPerformingAttack.Charge( this, currentPerformingAttackType, Mathf.Clamp( Time.time - chargeStartTime, 0, currentPerformingAttackType.chargeDuration ) );
-					if ( Time.time - chargeStartTime >= currentPerformingAttackType.chargeDuration )
+					if ( Time.time - chargeStartTime >= currentPerformingAttackType.chargeDuration && chargeStartTime > 0 )
 					{
 						State = CombatState.FullyCharged;
 						currentPerformingAttack.ChargeFull( this, currentPerformingAttackType );
@@ -205,6 +205,7 @@ namespace DigDig2.Combat
 		{
 			// Perform the Charged attack (if there is one and it's valid)
 			if ( IsChargeValid( ) ) PerformAttack( heldAttackType );
+			else EndAttackCharge( );
 
 			heldAttackType = null;
 			attackRequestProcessed = true;
@@ -244,6 +245,8 @@ namespace DigDig2.Combat
 				Debug.LogError( "Could not cancel attack charge, there is no attack being charged." );
 				return;
 			}
+
+			Debug.Log("Attack Charge Ended");
 
 			chargeStartTime = -1;
 		}
