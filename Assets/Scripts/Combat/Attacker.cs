@@ -61,6 +61,8 @@ namespace DigDig2.Combat
 		private AttackType lastPerformedAttackType;
 		private float performanceStartTime = -1;
 
+		[SerializeField] CombatState combatState;
+
 		public CombatState State { get; private set; } = CombatState.Idle;
 
 		private void Awake( )
@@ -72,6 +74,7 @@ namespace DigDig2.Combat
 
 		private void Update( )
         {
+			combatState = State;
 			if ( ( State == CombatState.Idle || attackRequestChain > 0 ) && !attackRequestProcessed )
 			{
 				if ( heldAttackType )
@@ -247,7 +250,7 @@ namespace DigDig2.Combat
 			}
 
 			Debug.Log("Attack Charge Ended");
-
+			EndAttack( );
 			chargeStartTime = -1;
 		}
 
@@ -295,7 +298,7 @@ namespace DigDig2.Combat
 				return;
 			}
 
-			currentPerformingAttack.Trigger( this, currentPerformingAttackType, Time.time - chargeStartTime );
+			currentPerformingAttack.Trigger( this, currentPerformingAttackType, Mathf.Clamp( Time.time - chargeStartTime, 0, currentPerformingAttackType.chargeDuration ) );
 			State = CombatState.Performing;
 			performanceStartTime = Time.time;
             
@@ -345,9 +348,9 @@ namespace DigDig2.Combat
 
 		public void EndHitboxAttack( string id )
 		{
-			if ( !activeAttacks.TryGetValue( id, out BindableAttackHitbox attack ) ) return;
+			if ( !activeAttacks.TryGetValue( id, out BindableAttackHitbox attackHitbox ) ) return;
 
-			attack.EndAttack( id );
+			attackHitbox.EndAttack( id );
 			activeAttacks.Remove( id );
 		}
 

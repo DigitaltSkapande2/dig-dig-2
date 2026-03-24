@@ -7,7 +7,8 @@ namespace DigDig2.Combat
     {
         [SerializeField] private string animationStateName;
 		[SerializeField] private int damage = 1;
-        [SerializeField] private float AOEForwardOffset;
+		[SerializeField] private float aoeDuration;
+        [SerializeField] private float aoeForwardOffset;
         [SerializeField] private GameObject hitboxPrefab;
 		[SerializeField] private int bindableAttackHitboxIndex;
 		[SerializeField] private GameObject hitEffect;
@@ -18,7 +19,10 @@ namespace DigDig2.Combat
 			Debug.Log("Started Charge");
 		}
 
-		public override void Charge( Attacker attacker, AttackType attackType, float chargeTime ) { }
+		public override void Charge( Attacker attacker, AttackType attackType, float chargeTime )
+		{
+			Debug.Log("Charge is " + chargeTime);
+		}
 
 		public override void ChargeFull( Attacker attacker, AttackType attackType )
 		{
@@ -29,14 +33,16 @@ namespace DigDig2.Combat
 		{
 			attacker.PlayAnimation( animationStateName );
             Vector3 forwardVector = attacker.GetComponent<EntityCharacterController>().GetForwardVector();
-            Vector3 centerOffset = forwardVector * AOEForwardOffset;
+            Vector3 centerOffset = forwardVector * aoeForwardOffset;
             BindableAttackHitbox hitbox = Instantiate(hitboxPrefab, attacker.transform.position + centerOffset, Quaternion.identity).GetComponent<BindableAttackHitbox>();
+			hitbox.SetSphereRadius(chargeTime);
 			attacker.AddMoveSpeedDebuff( animationStateName, attacker.GetBaseMoveSpeed( ) );
 			attacker.PushInDirection( Vector3.forward, 10 );
 		}
 
 		public override void Ended( Attacker attacker, AttackType attackGroup )
 		{
+			Debug.Log("Attack Ended");
 			attacker.RemoveMoveSpeedDebuff( animationStateName );
 		}
 

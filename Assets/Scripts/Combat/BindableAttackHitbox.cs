@@ -16,6 +16,16 @@ namespace DigDig2.Combat
 
 		private readonly Dictionary<string, AttackInfo> activeAttacks = new( );
 
+		public void SetSphereRadius(float radius)
+		{
+			sphereRadius = radius;
+		}
+
+		public void SetBoxSize(Vector3 size)
+		{
+			boxSize = size;
+		}
+
 		private void OnDrawGizmos( )
 		{
 			Gizmos.matrix = transform.localToWorldMatrix;
