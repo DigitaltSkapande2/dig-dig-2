@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Combat.AOEAttack
   attackDuration: 1
   onPerformEffect: {fileID: 0}
-  animationStateName: 
+  animationStateName: Test
   damage: 1
-  AOEForwardOffset: 3
+  aoeDuration: 0
+  aoeForwardOffset: 2
   hitboxPrefab: {fileID: 3511951452291022375, guid: 271eb4979fe45df4f903237b96eb445e, type: 3}
-  bindableAttackHitboxIndex: 0
   hitEffect: {fileID: 0}
   knockbackStrength: 50

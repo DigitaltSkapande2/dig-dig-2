@@ -66,7 +66,7 @@ namespace DigDig2.Combat
 			}
 
 			for ( int intermediateAttackIndex = 0;
-				intermediateAttackIndex < intermediateAttacks;
+				intermediateAttackIndex <= intermediateAttacks;
 				intermediateAttackIndex++ )
 			{
 				var intermediatePosition = Vector3.Lerp( attackInfo.lastPosition, transform.position, (float)intermediateAttackIndex / intermediateAttacks );
@@ -83,9 +83,10 @@ namespace DigDig2.Combat
 						),
 						intermediateRotation
 					),
-					AttackHitboxShape.Sphere => Physics.OverlapSphere( intermediatePosition, sphereRadius * transform.lossyScale.magnitude ),
+					AttackHitboxShape.Sphere => Physics.OverlapSphere( intermediatePosition, sphereRadius * transform.lossyScale.magnitude),
 					_ => Array.Empty<Collider>( )
 				};
+				Debug.Log("sfe " + enemyColliders.Length);
 
 				foreach ( Collider enemyCollider in enemyColliders )
 				{
@@ -93,7 +94,7 @@ namespace DigDig2.Combat
 					if ( !enemyAttackable ) continue;
 					if ( attackInfo.attackerAttackable && enemyAttackable == attackInfo.attackerAttackable ) continue;
 					if ( attackInfo.attackedEntities.Contains( enemyAttackable ) ) continue;
-                    
+                    Debug.Log("Attacked " + enemyAttackable.name);
 					if ( enemyAttackable.Hit( attackInfo.attack, attackInfo.attacker ) ) attackInfo.attackedEntities.Add( enemyAttackable );
 				}
 			}

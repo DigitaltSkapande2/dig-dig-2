@@ -10,23 +10,22 @@ namespace DigDig2.Combat
 		[SerializeField] private float aoeDuration;
         [SerializeField] private float aoeForwardOffset;
         [SerializeField] private GameObject hitboxPrefab;
-		[SerializeField] private int bindableAttackHitboxIndex;
 		[SerializeField] private GameObject hitEffect;
 		[SerializeField] private float knockbackStrength = 50;
 
 		public override void ChargeStart( Attacker attacker, AttackType attackType )
 		{
-			Debug.Log("Started Charge");
+
 		}
 
 		public override void Charge( Attacker attacker, AttackType attackType, float chargeTime )
 		{
-			Debug.Log("Charge is " + chargeTime);
+
 		}
 
 		public override void ChargeFull( Attacker attacker, AttackType attackType )
 		{
-			Debug.Log("Charge Full");
+			
 		}
 
 		public override void Trigger( Attacker attacker, AttackType attackGroup, float chargeTime )
@@ -36,13 +35,13 @@ namespace DigDig2.Combat
             Vector3 centerOffset = forwardVector * aoeForwardOffset;
             BindableAttackHitbox hitbox = Instantiate(hitboxPrefab, attacker.transform.position + centerOffset, Quaternion.identity).GetComponent<BindableAttackHitbox>();
 			hitbox.SetSphereRadius(chargeTime);
+			attacker.StartHitboxAttack( this, animationStateName, hitbox);
 			attacker.AddMoveSpeedDebuff( animationStateName, attacker.GetBaseMoveSpeed( ) );
 			attacker.PushInDirection( Vector3.forward, 10 );
 		}
 
 		public override void Ended( Attacker attacker, AttackType attackGroup )
 		{
-			Debug.Log("Attack Ended");
 			attacker.RemoveMoveSpeedDebuff( animationStateName );
 		}
 
