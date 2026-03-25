@@ -50,7 +50,8 @@ namespace DigDig2.Combat
 				attackerAttackable = attackerAttackable,
 				attack = attack,
 				attackedEntities = new( ),
-				hasCheckedOnce = false
+				hasCheckedOnce = false,
+				lastPosition = transform.position
 			};
 		}
 
@@ -69,8 +70,8 @@ namespace DigDig2.Combat
 				intermediateAttackIndex <= intermediateAttacks;
 				intermediateAttackIndex++ )
 			{
-				var intermediatePosition = Vector3.Lerp( attackInfo.lastPosition, transform.position, (float)intermediateAttackIndex / intermediateAttacks );
-				var intermediateRotation = Quaternion.Slerp( attackInfo.lastRotation, transform.rotation, (float)intermediateAttackIndex / intermediateAttacks );
+				var intermediatePosition = intermediateAttacks != 0 ? Vector3.Lerp( attackInfo.lastPosition, transform.position, (float)intermediateAttackIndex / intermediateAttacks ) : transform.position;
+				var intermediateRotation = intermediateAttacks != 0 ? Quaternion.Slerp( attackInfo.lastRotation, transform.rotation, (float)intermediateAttackIndex / intermediateAttacks ) : transform.rotation;
 				Debug.DrawLine( intermediatePosition, intermediatePosition + Vector3.up / 10f, Color.blue, 1f );
 				Collider[ ] enemyColliders = shape switch
 				{
@@ -86,7 +87,7 @@ namespace DigDig2.Combat
 					AttackHitboxShape.Sphere => Physics.OverlapSphere( intermediatePosition, sphereRadius * transform.lossyScale.magnitude),
 					_ => Array.Empty<Collider>( )
 				};
-				Debug.Log("sfe " + enemyColliders.Length);
+				Debug.Log("sfe " + intermediatePosition);
 
 				foreach ( Collider enemyCollider in enemyColliders )
 				{

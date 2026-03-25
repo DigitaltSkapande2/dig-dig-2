@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b860433e6bd2b354fa9257ca241def15, type: 3}
   m_Name: TestAOE
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Combat.AttackType
-  endCooldown: 0.05
-  chargeDuration: 2
-  chargeMode: 1
+  endCooldown: 0.2
+  chargeDuration: 1
+  chargeMode: 2
   chain:
   - {fileID: 11400000, guid: e44151907fa296f4f96f3dd5f0a3908a, type: 2}
