@@ -11,6 +11,7 @@ namespace DigDig2.Player
 		[SerializeField] private float timeUntilRespawn = 2f;
 		[SerializeField] private GameObject emptyPlayerPrefab;
 		[SerializeField] private EffectPlayer deathEffectPlayer;
+        [SerializeField] private EffectPlayer multiplayerDeathEffectPlayer;
 		[SerializeField] private float disolveWeight = 3f;
 
         [Header("Multiplayer")]
@@ -40,17 +41,18 @@ namespace DigDig2.Player
 
 		public void StartDeathSequence( )
 		{
-			deathEffectPlayer.Play( transform.position, Quaternion.identity, Vector3.one );
+			
             entityToFreeze.Frozen = true;
 
 			if ( GameManager.Instance.IsMultiplayer )
 			{
+                multiplayerDeathEffectPlayer?.Play( transform.position, Quaternion.identity, Vector3.one );
 				GameManager.Instance.RegisterCharacterDeath(characterObjectRef);
                 isDying = true;
             }
 			else
 			{
-                
+                deathEffectPlayer?.Play( transform.position, Quaternion.identity, Vector3.one );
 				isDying = true;
 				Invoke( nameof( SingleplayerResetScene ), timeUntilRespawn );
 			}

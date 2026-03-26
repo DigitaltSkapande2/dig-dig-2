@@ -81,7 +81,7 @@ namespace DigDig2.Game
         {
             get
             {
-                return playerControllers.Where(g => g).Select(p => p.characterObject).ToArray();
+                return playerControllers.Select(p => p.characterObject).ToArray();
             }
         }
 
@@ -94,15 +94,9 @@ namespace DigDig2.Game
         
         #region UnityCallbacks
         
-        
-        // Fade From Black
-        [SerializeField] private UIDocument fadeBlackUiDocument;
-        private VisualElement fadeBlackImage;
-
         protected override void Awake()
         {
             base.Awake();
-            fadeBlackImage = fadeBlackUiDocument.rootVisualElement.Query("image");
             
             pauseMenuController = GetComponentInChildren<PauseMenuController>();
             pauseMenuController.stateChanged.AddListener((bool state) =>
@@ -118,16 +112,8 @@ namespace DigDig2.Game
             SaveManager.Instance.RegisterSavable("GameManager", this, true);
             
             StartGame();
-            FadeFromBlack();
         }
-
-        private async void FadeFromBlack()
-        {
-            await Task.Delay(800);
-            fadeBlackImage.style.opacity = new StyleFloat(0f);
-            await Task.Delay((int)(fadeBlackImage.style.transitionDuration.value[0].value * 1000));
-            fadeBlackImage.style.display = new StyleEnum<DisplayStyle>(DisplayStyle.None);
-        }
+        
 
         void OnDestroy()
         {
@@ -144,7 +130,7 @@ namespace DigDig2.Game
             
             Debug.Log(loadedGameManagerSaveData.highestReachedSavePointIndex);
             SavePoint savePointToStartAt = savePoints[loadedGameManagerSaveData.highestReachedSavePointIndex];
-            savePointToStartAt.startSequenceDone += OnSavePointStartUpSequenceDone;
+            savePointToStartAt.startSequenceDone.AddListener(OnSavePointStartUpSequenceDone);
 
             if (IsMultiplayer)
             {
@@ -229,22 +215,29 @@ namespace DigDig2.Game
 
 		private IEnumerator ReloadGameSceneAsync( )
 		{
-			fadeBlackImage.style.opacity = new StyleFloat(100);
-			yield return fadeBlackImage.resolvedStyle.transitionDuration;
 			yield return LoadingScreenManager.Instance.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
 			StartGame();
 		}
 
         public void RegisterCharacterDeath(GameObject characterObject)
         {
+            
             for (int i = playerControllers.Length-1; i >= 0; i--)
             {
                 PlayerController player = playerControllers[i];
-                if (player.gameObject == characterObject)
+                if (player.characterObject == characterObject)
                 {
                     playerDeath.Invoke(player);
                 }
             }
+            
+            bool boolplayerIsAlive = false;
+            foreach (var player in playerControllers)
+            {
+                if (player.IsAlive) boolplayerIsAlive = true;
+            }
+
+            if (boolplayerIsAlive) ReloadGameScene();
         }
 
         #region Singleplayer

@@ -16,8 +16,8 @@ namespace DigDig2.SaveSystem
         [SerializeField] private Transform singlePlayerSpawnPoint;
         [SerializeField] public float cameraYRotation;
         [Header("Events")]
-        [SerializeField] public UnityEvent savePointReached;
-        [SerializeField] public Action startSequenceDone;
+        [SerializeField] public UnityEvent savePointReached = new();
+        [SerializeField] public UnityEvent startSequenceDone = new();
         [SerializeField] private EffectPlayer onReachedEffect;
         [SerializeField] private float timeUntilReleaseCamera = 2;
         private new Collider collider;
@@ -47,13 +47,13 @@ namespace DigDig2.SaveSystem
             VerboseLog("Spawning character select sequencer for multiplayer spawn...");
             CharacterSelectSequencer instance = Instantiate(characterSeclectSecuencerPrefab, transform.position, Quaternion.identity).GetComponent<CharacterSelectSequencer>();
             
-            instance.gameStartedEvent += OnMultiplayerCharacterSelectDone;
+            instance.gameStartedEvent.AddListener(OnMultiplayerCharacterSelectDone);
         }
 
         private void OnMultiplayerCharacterSelectDone()
         {
             lockTargetEffector.IsActive = false;
-            startSequenceDone?.Invoke();
+            startSequenceDone.Invoke();
         }
 
         public async void PlaySingleplayerStartSequence()
@@ -64,7 +64,7 @@ namespace DigDig2.SaveSystem
 
             await Task.Delay((int)(timeUntilReleaseCamera * 1000));
             lockTargetEffector.IsActive = false;
-            startSequenceDone?.Invoke();
+            startSequenceDone.Invoke();
         }
 
         public void SetSpawnPointReached(bool reached)

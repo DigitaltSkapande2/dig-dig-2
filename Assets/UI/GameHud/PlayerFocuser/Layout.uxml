@@ -1,4 +1,5 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/MainStyle.uss?fileID=7433441132597879392&amp;guid=57c2164d8f5e7a4f5bf7c6109294bfec&amp;type=3#MainStyle"/>
     <ui:VisualElement name="focusTargetIndicator" style="flex-grow: 1; position: absolute; display: flex; opacity: 0; transition-property: opacity, scale; transition-duration: 0.2s, 0.2s; transition-timing-function: ease-out, ease-out; scale: 2 2 2;">
         <ui:VisualElement name="image" style="flex-grow: 1; position: absolute; translate: -50% -50%; width: 100px; height: 100px; -unity-background-scale-mode: scale-to-fit; background-image: url(&quot;project://database/Assets/Textures/UI/Crosshairs/Focused.png?fileID=2800000&amp;guid=b72a3b39ce959ca4792ed10d8cb3b315&amp;type=3#Focused&quot;);"/>
     </ui:VisualElement>

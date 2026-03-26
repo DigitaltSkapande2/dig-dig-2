@@ -13,6 +13,7 @@ namespace DigDig2.Player.Combat
 {
     public class PlayerFocuser : MonoBehaviour
     {
+        [SerializeField] private PlayerController targetPlayer;
         [Header("Focusing")]
         [SerializeField] private float focusTargetIndicatorRotationSpeed = 10f;
         [SerializeField] private string[] focusEnemyGroupPriorityList;
@@ -33,10 +34,7 @@ namespace DigDig2.Player.Combat
         private bool isTargeting;
         private float targetingDirection;
         
-        [NonSerialized] public UnityEvent<Vector3> focusPositionUpdated = new();
-        [NonSerialized] public UnityEvent<bool> isFocusingStateChanged = new();
-        
-        private EntityCharacterController entityController;
+        private EntityCharacterController entityController => targetPlayer.entityController;
         private GameCamera gameCamera;
         private CameraEffector cameraEffector;
 
@@ -54,7 +52,7 @@ namespace DigDig2.Player.Combat
             singlePlayerFocusIndicator = uiDocument.rootVisualElement.Query("focusTargetIndicator");
             singlePlayerFocusTargetIndicatorImage = singlePlayerFocusIndicator.Query("image");
 
-            cameraEffector = new GameObject().gameObject.AddComponent<CameraEffector>();
+            cameraEffector = gameObject.AddComponent<CameraEffector>();
         }
 
         private void Update()
@@ -66,7 +64,6 @@ namespace DigDig2.Player.Combat
         private void OnDestroy()
         {
             EndFocusing();
-            Destroy(cameraEffector.gameObject, 10f);
         }
 
         #endregion
@@ -124,13 +121,13 @@ namespace DigDig2.Player.Combat
 
 		public List<Attackable> GetEnemiesInRadius( float radius )
         {
-            float myYPos = transform.position.y;
-			Collider[ ] scannedColliders = Physics.OverlapSphere( transform.position, radius );
+            Vector3 myPos = targetPlayer.characterObject.transform.position;
+			Collider[ ] scannedColliders = Physics.OverlapSphere( myPos, radius );
             Dictionary<string, List<Attackable>> scannedenemyGroupedAttackables = new();
 			foreach ( Collider scannedCollider in scannedColliders )
 			{
 				if ( !scannedCollider.TryGetComponent( out Attackable enemyAttackable ) ) continue;
-                if (Mathf.Abs(scannedCollider.transform.position.y - myYPos) > yDifferenceTolerance) continue;
+                if (Mathf.Abs(scannedCollider.transform.position.y - myPos.y) > yDifferenceTolerance) continue;
 
                 if (scannedenemyGroupedAttackables.ContainsKey(enemyAttackable.Group))
                 {
@@ -224,7 +221,7 @@ namespace DigDig2.Player.Combat
                                             cameraFocusFollowFactor;
 
 			// Set Screen Marker Position
-			if ( hasFocusedEnemy && GameManager.Instance.PlayerCharacterObjects.Contains(gameObject))
+			if ( hasFocusedEnemy )
 			{
                 Vector3 enemyPosition = currentlyFocusedAttackable!.transform.position;
                 
@@ -264,12 +261,14 @@ namespace DigDig2.Player.Combat
         
         public void UpdateFocusIndicatorPosition(Vector3 worldPosition )
         {
+            BetterDebug.Log($"UpdateFocusIndicatorPosition {worldPosition}");
             Vector2 screenPosition = RuntimePanelUtils.CameraTransformWorldToPanel( uiDocument.rootVisualElement.panel, worldPosition, gameCamera.mainCamera );
             singlePlayerFocusIndicator.style.translate = new( new Translate( screenPosition.x, screenPosition.y ) );
         }
 
         private void SetFocusIndicatorActive(bool active)
         {
+            BetterDebug.Log($"SetFocusIndicatorActive {active}");
             singlePlayerFocusIndicator.style.display = new( active ? DisplayStyle.Flex : DisplayStyle.None );
             singlePlayerFocusIndicator.style.opacity = new( active ? 1f : 0f );
             singlePlayerFocusIndicator.style.scale = new( new Scale( active ? new( 1f, 1f ) : new Vector2( 2f, 2f ) ) );

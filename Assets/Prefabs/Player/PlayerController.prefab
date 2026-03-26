@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7476643621839910184}
   - component: {fileID: 1082993047466123142}
   - component: {fileID: 7999355616595189319}
+  - component: {fileID: 5647305051449727530}
   m_Layer: 0
   m_Name: PlayerFocuser
   m_TagString: Untagged
@@ -45,15 +46,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aec1e04abe9d4dde9dc0a05bfc776b24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Player.Combat.PlayerFocuser
+  targetPlayer: {fileID: 4784226320931657236}
   focusTargetIndicatorRotationSpeed: 10
   focusEnemyGroupPriorityList:
-  - Enemy
-  - Crystal
-  - Environment
+  - enemy
+  - crystal
+  - environment
   focusScanRadius: 10
-  yDifferenceTolerance: 1
+  yDifferenceTolerance: 2
   cameraFocusFollowFactor: 0.2
-  cameraFocusFrustumSize: -4
+  cameraFocusFrustumSize: -1
 --- !u!114 &7999355616595189319
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -77,6 +79,23 @@ MonoBehaviour:
   m_PivotReferenceSize: 0
   m_Pivot: 0
   m_WorldSpaceCollider: {fileID: 0}
+--- !u!114 &5647305051449727530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 875732506010863125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06872317693a4f8890b4d7d21b27bfaf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Input.InputModule
+  priority: 0
+  allowedInputPlayerIndex: -1
+  actionMapName: Combat
+  activeContexts:
+  - {fileID: 11400000, guid: 72844612df5b0e3e2ae45edd4ba932fe, type: 2}
 --- !u!1 &1517051220970631788
 GameObject:
   m_ObjectHideFlags: 0
@@ -87,7 +106,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6292457703512992313}
   - component: {fileID: 4784226320931657236}
-  - component: {fileID: -2138191834729313197}
+  - component: {fileID: 6378784851022249765}
   m_Layer: 0
   m_Name: PlayerController
   m_TagString: Untagged
@@ -126,7 +145,7 @@ MonoBehaviour:
   characterType: 0
   inputPlayerIndex: -1
   cooldown: 0
---- !u!114 &-2138191834729313197
+--- !u!114 &6378784851022249765
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -141,5 +160,4 @@ MonoBehaviour:
   priority: 0
   allowedInputPlayerIndex: -1
   actionMapName: Game
-  activeContexts:
-  - {fileID: 11400000, guid: 72844612df5b0e3e2ae45edd4ba932fe, type: 2}
+  activeContexts: []

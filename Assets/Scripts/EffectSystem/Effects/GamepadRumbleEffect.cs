@@ -31,7 +31,7 @@ namespace DigDig2.EffectSystem.Effects
             if (id == -1)
             {
                 InputManager inputManager = InputManager.Instance;
-                affectedDevices = GameManager.Instance.playerControllers.Select(p => inputManager.GetInputPlayersDevices(p.inputPlayerIndex)[0]).ToList();
+                affectedDevices = GameManager.Instance.playerControllers.Where(p => p).Select(p => inputManager.GetInputPlayersDevices(p.inputPlayerIndex)[0]).ToList();
             }
             else
             {

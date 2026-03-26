@@ -5,37 +5,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="50c3eb56-0f37-4789-a838-f82a855a30c4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerCharacterInput.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerCharacterInput.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.dig-dig-2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.dig-dig-2/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/GroundDirt/DirtCorner.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/GroundDirt/DirtCorner.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/GroundDirt/DirtDiagonalLeftEdge.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/GroundDirt/DirtDiagonalLeftEdge.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/GroundDirt/DirtDiagonalMiddleEdge.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/GroundDirt/DirtDiagonalMiddleEdge.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/GroundDirt/DirtDiagonalRightEdge.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/GroundDirt/DirtDiagonalRightEdge.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/GroundDirt/DirtEdge1.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/GroundDirt/DirtEdge1.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/GroundDirt/DirtEdge2.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/GroundDirt/DirtEdge2.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/GroundDirt/DirtOnlyCorners.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/GroundDirt/DirtOnlyCorners.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Characters/Max/MaxPlayerCharacterController.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Player/Characters/Max/MaxPlayerCharacterController.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Characters/Max/MaxPlayerDummy.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Characters/Max/MaxPlayerDummy.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Characters/Mini/MiniPlayerCharacterController.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Player/Characters/Mini/MiniPlayerCharacterController.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Characters/Mini/MiniPlayerDummy.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Characters/Mini/MiniPlayerDummy.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Characters/CharacterSelectSequencer.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Player/Characters/CharacterSelectSequencer.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/PlayerController.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Player/PlayerController.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Singletons/GameManager.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Singletons/GameManager.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/GameScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/GameScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/MainMenu.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/MainMenu.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/CinemaCamera/CameraEffectors/PlayerFollowCameraEffector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CinemaCamera/CameraEffectors/PlayerFollowCameraEffector.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/EffectSystem/Effects/GamepadRumbleEffect.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/EffectSystem/Effects/GamepadRumbleEffect.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/EffectSystem/Effects/ScreenShakeEffect.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/EffectSystem/Effects/ScreenShakeEffect.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/GameManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/CharacterSelectSequencer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/CharacterSelectSequencer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/Combat/PlayerAttackInput.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/Combat/PlayerAttackInput.cs.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/Combat/PlayerFocuser.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/Combat/PlayerFocuser.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/SingleplayerCharacterSwitcher.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/SingleplayerCharacterSwitcher.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/DeathSequence.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/DeathSequence.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/SaveSystem/SavePoint.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SaveSystem/SavePoint.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/Controllers/GameHudController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/Controllers/GameHudController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Settings/PC_RPAsset.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Settings/PC_RPAsset.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/UI/GameHud/Layout.uxml" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UI/GameHud/Layout.uxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/Packages/com.unity.probuilder/Settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/Packages/com.unity.probuilder/Settings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UI/GameHud/PlayerFocuser/Layout.uxml" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UI/GameHud/PlayerFocuser/Layout.uxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UI/LoadingScreen/Layout.uxml" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UI/LoadingScreen/Layout.uxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -320,7 +306,7 @@
       <workItem from="1774193441998" duration="3475000" />
       <workItem from="1774295845622" duration="2125000" />
       <workItem from="1774451075642" duration="6154000" />
-      <workItem from="1774520086688" duration="16181000" />
+      <workItem from="1774520086688" duration="25673000" />
     </task>
     <servers />
   </component>

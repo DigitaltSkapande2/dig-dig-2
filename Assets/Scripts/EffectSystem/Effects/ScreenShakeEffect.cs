@@ -54,7 +54,7 @@ namespace DigDig2.EffectSystem.Effects
 			// Apply rotation as small offsets around local axes (pitch, roll)
 			screenShakeEffector.targetRotation = Quaternion.Euler( rotPitch, 0f, rotRoll );
             
-            BetterDebug.Log(pys.Sum()/pys.Count);
+            //BetterDebug.Log(pys.Sum()/pys.Count);
 		}
 
         internal override void OnEffectEnd(CumulativeEffectInstanceData effect)

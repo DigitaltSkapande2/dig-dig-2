@@ -57,7 +57,7 @@ namespace DigDig2
         private bool playerTwoReady = false;
         private int playerTwoNavigation = 2;
         
-        [NonSerialized] public Action gameStartedEvent;
+        [NonSerialized] public UnityEvent gameStartedEvent = new();
         
         #endregion
 

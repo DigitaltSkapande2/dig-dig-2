@@ -36,7 +36,7 @@ namespace DigDig2.CinemaCamera.CameraEffectors
 
         private void SinglePlayerUpdate()
         {
-            targetPosition = GameManager.Instance.PlayerOne.transform.position;
+            targetPosition = GameManager.Instance.PlayerOne.characterObject.transform.position;
         }
 	}
 }
