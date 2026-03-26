@@ -23,7 +23,9 @@ namespace DigDig2
         [Header("config")]
         [SerializeField] private float secondsToHoldToDissconnect = 1.5f;
         [SerializeField] private float secondsReadyUntilStart = 0.8f;
+
         [Header("Prefabs")]
+        [SerializeField] private GameObject playerControllerPrefab;
         [SerializeField] private GameObject maxPrefab;
         [SerializeField] private GameObject minisPrefab;
         [SerializeField] private InputContext characterSelectContext;
@@ -55,7 +57,7 @@ namespace DigDig2
         private bool playerTwoReady = false;
         private int playerTwoNavigation = 2;
         
-        [NonSerialized] public UnityEvent gameStartedEvent = new();
+        [NonSerialized] public Action gameStartedEvent;
         
         #endregion
 
@@ -225,26 +227,33 @@ namespace DigDig2
             GameObject playerOneCharacterInstance = playerOneIsMax ? maxInstance : minisInstance;
             GameObject playerTwoCharacterInstance = playerOneIsMax ? minisInstance : maxInstance;
 
-            PlayerController playerOneController = playerOneCharacterInstance.GetComponent<PlayerController>();
-            PlayerController playerTwoController = playerTwoCharacterInstance.GetComponent<PlayerController>();
+            PlayerController playerOneController = Instantiate(playerControllerPrefab).GetComponent<PlayerController>();
+            PlayerController playerTwoController = Instantiate(playerControllerPrefab).GetComponent<PlayerController>();
             
+            // player One
+            playerOneCharacterInstance.transform.SetParent(playerOneController.transform);
+            playerOneController.SetCharacterObject(playerOneCharacterInstance);
             playerOneController.characterType = playerOneIsMax ? CharacterType.Max : CharacterType.Minis;
-            playerOneController.SetInputPlayerID(playerOneInputPlayerindex);
+            playerOneController.SetInputPlayerIDRecursive(playerOneInputPlayerindex);
             
+            // Player Two
+            playerTwoCharacterInstance.transform.SetParent(playerTwoController.transform);
+            playerTwoController.SetCharacterObject(playerTwoCharacterInstance);
             playerTwoController.characterType = playerOneIsMax ? CharacterType.Minis : CharacterType.Max;
-            playerTwoController.SetInputPlayerID(playerTwoInputPlayerindex);
+            playerTwoController.SetInputPlayerIDRecursive(playerTwoInputPlayerindex);
             
+            // finalize
             GameManager.Instance.RegisterMultiplayerPlayers(
                 playerOneController, 
                 playerTwoController 
             );
             
-            playerOneCharacterInstance.GetComponent<EntityCharacterController>().Frozen = false;
-            playerOneCharacterInstance.GetComponent<EntityCharacterController>().Frozen = false;
+            playerOneController.entityController.Frozen = false;
+            playerTwoController.entityController.Frozen = false;
 
             realRoot.style.opacity = new StyleFloat(0f);
             Invoke(nameof(Die), 0.5f);
-            gameStartedEvent.Invoke();
+            gameStartedEvent?.Invoke();
         }
 
         private void Die()

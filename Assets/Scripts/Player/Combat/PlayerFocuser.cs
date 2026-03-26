@@ -8,14 +8,13 @@ using DigDig2.Combat;
 using DigDig2.CinemaCamera;
 using DigDig2.Game;
 using DigDig2.Debugging;
-using UnityEngine.InputSystem;
-
+using UnityEngine.UIElements;
 namespace DigDig2.Player.Combat
 {
-    [RequireComponent(typeof(EntityCharacterController))]
     public class PlayerFocuser : MonoBehaviour
     {
         [Header("Focusing")]
+        [SerializeField] private float focusTargetIndicatorRotationSpeed = 10f;
         [SerializeField] private string[] focusEnemyGroupPriorityList;
         [Tooltip( "The radius to scan for enemies at when focusing" )]
         [SerializeField] private float focusScanRadius = 10;
@@ -40,13 +39,20 @@ namespace DigDig2.Player.Combat
         private EntityCharacterController entityController;
         private GameCamera gameCamera;
         private CameraEffector cameraEffector;
+
+        private UIDocument uiDocument;
+        private VisualElement singlePlayerFocusIndicator;
+        private VisualElement singlePlayerFocusTargetIndicatorImage;
         
         #region UnityCallbacks
-
+        
         private void Start()
         {
-            if (!TryGetComponent<EntityCharacterController>(out entityController)) BetterDebug.Log("EntityCharacterController NOT FOUND.");
+            uiDocument = GetComponent<UIDocument>();
             gameCamera = GameCamera.Instance;
+
+            singlePlayerFocusIndicator = uiDocument.rootVisualElement.Query("focusTargetIndicator");
+            singlePlayerFocusTargetIndicatorImage = singlePlayerFocusIndicator.Query("image");
 
             cameraEffector = new GameObject().gameObject.AddComponent<CameraEffector>();
         }
@@ -54,6 +60,7 @@ namespace DigDig2.Player.Combat
         private void Update()
         {
             UpdateFocusing();
+            RotateFocusIndicatorImage(singlePlayerFocusIndicator, singlePlayerFocusTargetIndicatorImage);
         }
 
         private void OnDestroy()
@@ -67,8 +74,6 @@ namespace DigDig2.Player.Combat
         
         private void OnInputCombatFocus( InputInfo inputInfo )
         {
-            isFocusing = !inputInfo.context.canceled;
-
             if (inputInfo.context.started)
             {
                 BeginFocusing();
@@ -124,7 +129,6 @@ namespace DigDig2.Player.Combat
             Dictionary<string, List<Attackable>> scannedenemyGroupedAttackables = new();
 			foreach ( Collider scannedCollider in scannedColliders )
 			{
-                
 				if ( !scannedCollider.TryGetComponent( out Attackable enemyAttackable ) ) continue;
                 if (Mathf.Abs(scannedCollider.transform.position.y - myYPos) > yDifferenceTolerance) continue;
 
@@ -166,26 +170,27 @@ namespace DigDig2.Player.Combat
 				closestEnemy = enemy;
                 closestEnemyAngle = delta;
             }
-            //BetterDebug.Log($"name: {closestEnemy.name}, {gay}, {entityController.TargetLookRotation}");
 
 			return closestEnemy;
 		}
 
 		public void BeginFocusing( )
         {
+            isFocusing = true;
             cameraEffector.targetFrustumSize = cameraFocusFrustumSize;
             UpdateFocusTarget();
         }
 
 		public void EndFocusing( )
         {
+            isFocusing = false;
             cameraEffector.targetFrustumSize = 0f;
             cameraEffector.targetPosition = Vector3.zero;
             
             currentlyFocusedAttackable = null;
 			if ( entityController ) entityController.SetAutomaticLookRotationLock( false );
             
-            isFocusingStateChanged.Invoke(false);
+            SetFocusIndicatorActive(false);
 		}
 
         public void UpdateFocusTarget()
@@ -194,7 +199,7 @@ namespace DigDig2.Player.Combat
             if (closestEnemy && IsAttackableVisibleOnScreen(closestEnemy))
             {
                 currentlyFocusedAttackable = closestEnemy;
-                isFocusingStateChanged.Invoke(true);
+                SetFocusIndicatorActive(true);
             }
             else
             {
@@ -210,8 +215,8 @@ namespace DigDig2.Player.Combat
             // If focused enemy not on screen EndFocus()
 			if ( !hasFocusedEnemy || !IsAttackableVisibleOnScreen( currentlyFocusedAttackable ) )
             {
-                UpdateFocusTarget();
-                if (!currentlyFocusedAttackable) return;
+                EndFocusing();
+                return;
             } 
             
             // Camera effector
@@ -223,7 +228,7 @@ namespace DigDig2.Player.Combat
 			{
                 Vector3 enemyPosition = currentlyFocusedAttackable!.transform.position;
                 
-				focusPositionUpdated.Invoke(enemyPosition);
+				UpdateFocusIndicatorPosition(enemyPosition);
 			}
 
 			// EntityCharacter Controller rotation
@@ -243,5 +248,34 @@ namespace DigDig2.Player.Combat
 		}
 
 		#endregion
+
+        #region UIGraphics
+
+        private void RotateFocusIndicatorImage(VisualElement indicator, VisualElement indicatorImage)
+        {
+            indicatorImage.style.rotate = new(
+                new Rotate(
+                    indicatorImage.resolvedStyle.rotate.angle.value +
+                    Time.deltaTime * focusTargetIndicatorRotationSpeed / indicator.resolvedStyle.scale.value.x
+                )
+            );
+        }
+        
+        
+        public void UpdateFocusIndicatorPosition(Vector3 worldPosition )
+        {
+            Vector2 screenPosition = RuntimePanelUtils.CameraTransformWorldToPanel( uiDocument.rootVisualElement.panel, worldPosition, gameCamera.mainCamera );
+            singlePlayerFocusIndicator.style.translate = new( new Translate( screenPosition.x, screenPosition.y ) );
+        }
+
+        private void SetFocusIndicatorActive(bool active)
+        {
+            singlePlayerFocusIndicator.style.display = new( active ? DisplayStyle.Flex : DisplayStyle.None );
+            singlePlayerFocusIndicator.style.opacity = new( active ? 1f : 0f );
+            singlePlayerFocusIndicator.style.scale = new( new Scale( active ? new( 1f, 1f ) : new Vector2( 2f, 2f ) ) );
+
+        }
+
+        #endregion
     }
 }

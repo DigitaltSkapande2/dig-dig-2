@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using DigDig2.CinemaCamera.CameraEffectors;
 using DigDig2.EffectSystem;
@@ -16,7 +17,7 @@ namespace DigDig2.SaveSystem
         [SerializeField] public float cameraYRotation;
         [Header("Events")]
         [SerializeField] public UnityEvent savePointReached;
-        [SerializeField] public UnityEvent startSequenceDone = new();
+        [SerializeField] public Action startSequenceDone;
         [SerializeField] private EffectPlayer onReachedEffect;
         [SerializeField] private float timeUntilReleaseCamera = 2;
         private new Collider collider;
@@ -39,22 +40,23 @@ namespace DigDig2.SaveSystem
         }
         
         
-        public void ServerStartMultiplayerStartSequence()
+        
+        public void PlayMultiplayerStartSequence()
         {
             lockTargetEffector.enabled = true;
             VerboseLog("Spawning character select sequencer for multiplayer spawn...");
             CharacterSelectSequencer instance = Instantiate(characterSeclectSecuencerPrefab, transform.position, Quaternion.identity).GetComponent<CharacterSelectSequencer>();
             
-            instance.gameStartedEvent.AddListener(OnMultiplayerCharacterSelectDone);
+            instance.gameStartedEvent += OnMultiplayerCharacterSelectDone;
         }
 
         private void OnMultiplayerCharacterSelectDone()
         {
             lockTargetEffector.IsActive = false;
-            startSequenceDone.Invoke();
+            startSequenceDone?.Invoke();
         }
 
-        public async void ServerStartSingleplayerStartSequence()
+        public async void PlaySingleplayerStartSequence()
         {
             lockTargetEffector.enabled = true;
             VerboseLog("Initializing singleplayer spawn...");
@@ -62,7 +64,7 @@ namespace DigDig2.SaveSystem
 
             await Task.Delay((int)(timeUntilReleaseCamera * 1000));
             lockTargetEffector.IsActive = false;
-            startSequenceDone.Invoke();
+            startSequenceDone?.Invoke();
         }
 
         public void SetSpawnPointReached(bool reached)

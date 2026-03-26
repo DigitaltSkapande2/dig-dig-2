@@ -11,17 +11,14 @@ GameObject:
   - component: {fileID: 3368673675683253185}
   - component: {fileID: 3395938736747772053}
   - component: {fileID: 4327746320760944597}
-  - component: {fileID: 1459444429970365189}
   - component: {fileID: 8839264378030991054}
-  - component: {fileID: 1195255877809228181}
   - component: {fileID: 1621004928720741753}
   - component: {fileID: 440174058403782015}
-  - component: {fileID: 5749047405966691678}
   - component: {fileID: 2644439905992683439}
   - component: {fileID: 4462975226504938332}
   - component: {fileID: 8036543768434000166}
   - component: {fileID: 8684774071357908738}
-  - component: {fileID: 6368188702471082521}
+  - component: {fileID: 7433290090025494693}
   m_Layer: 3
   m_Name: MaxPlayerCharacterController
   m_TagString: Player
@@ -112,22 +109,6 @@ MonoBehaviour:
   visualsParent: {fileID: 7251259118998489019}
   visualsRotationSpeed: 15
   automaticLookRotationLocked: 0
---- !u!114 &1459444429970365189
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4442565222488509090}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f82f8e188fb257caa9b8dc73bdae740, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inputMoveVector: {x: 0, y: 0}
-  characterType: 0
-  inputPlayerIndex: -1
-  health: {fileID: 0}
 --- !u!114 &8839264378030991054
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -154,18 +135,7 @@ MonoBehaviour:
   - melee only
   - button
   verboseLogging: 0
---- !u!114 &1195255877809228181
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4442565222488509090}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6131312a667f03449029662d2f690ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DigDig2.PlayerAttackInput
+  combatState: 0
 --- !u!114 &1621004928720741753
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -218,20 +188,6 @@ MonoBehaviour:
   healthChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &5749047405966691678
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4442565222488509090}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43932542731a1fb4d9f5ee8378890a02, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DigDig2.SingleplayerCharacterSwitching
-  otherPrefab: {fileID: 0}
-  cooldown: 0.2
 --- !u!95 &2644439905992683439
 Animator:
   serializedVersion: 7
@@ -315,7 +271,7 @@ MonoBehaviour:
   actionMapName: Combat
   activeContexts:
   - {fileID: 11400000, guid: 72844612df5b0e3e2ae45edd4ba932fe, type: 2}
---- !u!114 &6368188702471082521
+--- !u!114 &7433290090025494693
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -324,18 +280,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4442565222488509090}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aec1e04abe9d4dde9dc0a05bfc776b24, type: 3}
+  m_Script: {fileID: 11500000, guid: 474e8449e51a47b3bb55263059c1e3ba, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Player.Combat.PlayerFocuser
-  focusEnemyGroupPriorityList:
-  - enemy
-  - crystal
-  - button
-  - environment
-  focusScanRadius: 10
-  yDifferenceTolerance: 1
-  cameraFocusFollowFactor: 0.3
-  cameraFocusFrustumSize: -1
+  m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Player.PlayerCharacterInput
+  inputMoveVector: {x: 0, y: 0}
 --- !u!1 &4933219036402945239
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using DigDig2.Debugging;
+using DigDig2.Game;
 using DigDig2.Input;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -24,39 +26,49 @@ namespace DigDig2.EffectSystem.Effects
         public void PlayEffectInstance(GamepadRumbleEffectInstanceData effectInstance, int id)
         {
             BetterDebug.Log("Added GamepadRuimble");
-            Gamepad targetGamepad = null;
-            foreach (InputDevice inputPlayersDevice in InputManager.Instance.GetInputPlayersDevices(id))
-            {
-                if (inputPlayersDevice is Gamepad) targetGamepad = (Gamepad)inputPlayersDevice;
-            }
 
-            if (targetGamepad == null) return; // No Gamepad Connected
-            
-            // Add gamepad tracking
-            GamepadRumbleEffectInstanceData copy = (GamepadRumbleEffectInstanceData)effectInstance.Clone( );
-            
-            if (effectInstances.TryGetValue(targetGamepad, out var effectInstanceDatas))
+            List<InputDevice> affectedDevices;
+            if (id == -1)
             {
-                if (effectInstanceDatas.Count == 0)
-                {
-                    targetGamepad.ResumeHaptics();
-                }
-                
-                effectInstanceDatas.Add(copy);
+                InputManager inputManager = InputManager.Instance;
+                affectedDevices = GameManager.Instance.playerControllers.Select(p => inputManager.GetInputPlayersDevices(p.inputPlayerIndex)[0]).ToList();
             }
             else
             {
-                effectInstances.Add(targetGamepad, new List<GamepadRumbleEffectInstanceData>() { copy });
+                affectedDevices = InputManager.Instance.GetInputPlayersDevices(id);
             }
             
-            BetterDebug.Log("GamepadRuimble SUCESS");
             
-            OnEffectStart(copy);
+            
+            foreach (InputDevice inputPlayersDevice in affectedDevices)
+            {
+                if (!(inputPlayersDevice is Gamepad)) continue;
+
+                Gamepad gamePad = (Gamepad)inputPlayersDevice;
+                
+                GamepadRumbleEffectInstanceData copy = (GamepadRumbleEffectInstanceData)effectInstance.Clone( );
+                
+                if (effectInstances.TryGetValue(gamePad, out var effectInstanceDatas))
+                {
+                    if (effectInstanceDatas.Count == 0)
+                    {
+                        gamePad.ResumeHaptics();
+                    }
+                    
+                    effectInstanceDatas.Add(copy);
+                }
+                else
+                {
+                    effectInstances.Add(gamePad, new List<GamepadRumbleEffectInstanceData>() { copy });
+                }
+            }
+            
+            
         }
 
         internal override void OnEffectStart(CumulativeEffectInstanceData effect)
         {
-            
+            // THIS IS NEVER CALLED, IMLEMENT IF NEEDED
         }
 
         public new void Update()
