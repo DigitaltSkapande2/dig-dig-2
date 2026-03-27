@@ -175,7 +175,18 @@ namespace DigDig2.Combat
 		public void PlayAnimation( string animationStateName )
 		{
 			animator.CrossFadeInFixedTime( animationStateName, 0.1f, 0 );
-			animator.CrossFadeInFixedTime( animationStateName, 0.1f, 1 );
+			//animator.CrossFadeInFixedTime( animationStateName, 0.1f, 1 );
+		}
+
+		public void AnimationEvent( string animEventName )
+		{
+			if (!currentPerformingAttack)
+			{
+				Debug.LogError("There is no preforming attack somehow?");
+				return;
+			}
+
+			currentPerformingAttack.AnimationEvent( this, currentPerformingAttackType, animEventName );
 		}
 
 		#endregion

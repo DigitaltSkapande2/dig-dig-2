@@ -368,7 +368,14 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.17133957
+        functionName: AnimationEvent
+        data: Human Velocity
+        objectReferenceParameter: {fileID: 11500000, guid: 9159de995a6f4794dbddc1f67ad7f200, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}

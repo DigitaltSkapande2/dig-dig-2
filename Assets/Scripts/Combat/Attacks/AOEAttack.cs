@@ -17,6 +17,7 @@ namespace DigDig2.Combat
 		[SerializeField] private float knockbackStrength = 50;
 
 		private Vector3 lastHitboxPosition;
+		private float lastChargeTime;
 
 		public override void ChargeStart( Attacker attacker, AttackType attackType )
 		{
@@ -31,21 +32,29 @@ namespace DigDig2.Combat
 
 		public override void ChargeFull( Attacker attacker, AttackType attackType )
 		{
-			// Fully charged effect
+
 		}
 
 		public override void Trigger( Attacker attacker, AttackType attackGroup, float chargeTime )
 		{
+			lastChargeTime = chargeTime;
 			attacker.PlayAnimation( triggerAnimationStateName );
-            Vector3 forwardVector = attacker.GetComponent<EntityCharacterController>().GetForwardVector();
+			attacker.PushInDirection( Vector3.forward, 5 );
+		}
+
+        public override void AnimationEvent(Attacker attacker, AttackType attackGroup, string animEventName)
+        {
+			if (animEventName != "TriggerAOE") return;
+			
+			Vector3 forwardVector = attacker.GetComponent<EntityCharacterController>().GetForwardVector();
             Vector3 centerOffset = forwardVector * aoeForwardOffset;
             BindableAttackHitbox hitbox = Instantiate(hitboxPrefab, attacker.transform.position + centerOffset, Quaternion.identity).GetComponent<BindableAttackHitbox>();
 			lastHitboxPosition = hitbox.transform.position;
-			float radius = Mathf.Lerp(minRaduis, maxRadius, chargeTime / attackGroup.chargeDuration);
+			float radius = Mathf.Lerp(minRaduis, maxRadius, lastChargeTime / attackGroup.chargeDuration);
 			hitbox.SetSphereRadius(radius);
 			attacker.StartHitboxAttack( this, triggerAnimationStateName, hitbox);
 			attacker.PushInDirection( Vector3.forward, -10 );
-		}
+        }
 
 		public override void Ended( Attacker attacker, AttackType attackGroup )
 		{

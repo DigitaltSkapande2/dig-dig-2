@@ -84,10 +84,9 @@ namespace DigDig2.Combat
 						),
 						intermediateRotation
 					),
-					AttackHitboxShape.Sphere => Physics.OverlapSphere( intermediatePosition, sphereRadius * transform.lossyScale.magnitude),
+					AttackHitboxShape.Sphere => Physics.OverlapSphere( intermediatePosition, sphereRadius * (transform.lossyScale.x + transform.lossyScale.y + transform.lossyScale.z) / 3),
 					_ => Array.Empty<Collider>( )
 				};
-				Debug.Log("sfe " + intermediatePosition);
 
 				foreach ( Collider enemyCollider in enemyColliders )
 				{
@@ -95,7 +94,6 @@ namespace DigDig2.Combat
 					if ( !enemyAttackable ) continue;
 					if ( attackInfo.attackerAttackable && enemyAttackable == attackInfo.attackerAttackable ) continue;
 					if ( attackInfo.attackedEntities.Contains( enemyAttackable ) ) continue;
-                    Debug.Log("Attacked " + enemyAttackable.name);
 					if ( enemyAttackable.Hit( attackInfo.attack, attackInfo.attacker ) ) attackInfo.attackedEntities.Add( enemyAttackable );
 				}
 			}
