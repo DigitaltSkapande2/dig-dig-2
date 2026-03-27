@@ -8,13 +8,10 @@ using Newtonsoft.Json;
 
 using UnityEngine;
 
-namespace DigDig2
+namespace DigDig2.Game
 {
 	public class OceanFollow : MonoBehaviour, ISaveable
 	{
-		[Tooltip( "the object to follow" )]
-		[SerializeField] private Transform target;
-
 		[SerializeField] private Transform plane;
 
 		[Tooltip( "the interval at witch to snap to. The sice of one grid piece" )]
@@ -28,7 +25,7 @@ namespace DigDig2
 		private float targetY;
 		private bool waterParticlesPlaying;
 
-		private void Start( )
+        private void Start( )
 		{
 			targetY = transform.position.y;
 
@@ -37,14 +34,16 @@ namespace DigDig2
 
 		private void Update( )
 		{
-			if ( !target && GameCamera.Instance ) target = GameCamera.Instance.transform;
-
 			transform.position = new( 0, Mathf.Lerp( transform.position.y, targetY, Time.deltaTime * verticalSpeed ), 0 );
+            Plane waterPlane = new(Vector3.up, new Vector3(0f, transform.position.y, 0f));
+
+            waterPlane.Raycast(new Ray(GameCamera.Instance.mainCamera.transform.position, GameCamera.Instance.mainCamera.transform.forward), out float raycastDistance);
+            Vector3 cameraViewPositionOnPlane = GameCamera.Instance.mainCamera.transform.position + GameCamera.Instance.mainCamera.transform.forward * raycastDistance;
 
 			var newPosition = new Vector3(
-				Mathf.Round( target.position.x / gridSize.x ) * gridSize.x,
+				Mathf.Round( cameraViewPositionOnPlane.x / gridSize.x ) * gridSize.x,
 				transform.position.y,
-				Mathf.Round( target.position.z / gridSize.y ) * gridSize.y
+				Mathf.Round( cameraViewPositionOnPlane.z / gridSize.y ) * gridSize.y
 			);
 
 			if ( waterParticlesPlaying && Mathf.Abs( Mathf.Abs( transform.position.y ) - Mathf.Abs( targetY ) ) < 1 )
@@ -58,8 +57,8 @@ namespace DigDig2
 				waterParticlesPlaying = false;
 			}
 
-			plane.position = newPosition;
-		}
+            plane.position = newPosition;
+        }
 
 		public object CollectData( ) => targetY;
 
