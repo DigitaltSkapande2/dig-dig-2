@@ -15,12 +15,12 @@ MonoBehaviour:
   attackDuration: 0.2
   onPerformEffect: {fileID: 0}
   chargeAnimationStateName: Charge
-  triggerAnimationStateName: Trigger
+  triggerAnimationStateName: HeavyTemp
   minRaduis: 3
   maxRadius: 3
   damage: 3
   aoeForwardOffset: 3
   chargingMoveSpeedFactor: 0
   hitboxPrefab: {fileID: 3511951452291022375, guid: 271eb4979fe45df4f903237b96eb445e, type: 3}
-  hitEffect: {fileID: 0}
+  hitEffect: {fileID: 6931098926697571914, guid: 3d36de908b6d4fc4cbed789d229020ac, type: 3}
   knockbackStrength: 50

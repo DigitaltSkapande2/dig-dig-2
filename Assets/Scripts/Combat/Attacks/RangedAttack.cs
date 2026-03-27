@@ -29,6 +29,11 @@ namespace DigDig2.Combat.Attacks
 			projectile.SetInfo( this, attacker, projectileSpeed, projectileLifetime );
 		}
 
+		public override void AnimationEvent(Attacker attacker, AttackType attackGroup, string animEventName)
+        {
+			
+        }
+
 		public override void Ended( Attacker attacker, AttackType attackGroup ) { attacker.RemoveMoveSpeedDebuff( animationStateName ); }
 
 		public override void Hit( Attacker attacker, Attackable attackable, Health healthComponent, EntityCharacterController entityCharacterController )

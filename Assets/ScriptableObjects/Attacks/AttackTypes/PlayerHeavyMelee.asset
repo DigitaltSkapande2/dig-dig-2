@@ -12,9 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b860433e6bd2b354fa9257ca241def15, type: 3}
   m_Name: PlayerHeavyMelee
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.AttackType
-  endCooldown: 0.1
-  chargeDuration: 0
-  requireCharge: 0
+  endCooldown: 0.2
+  chargeDuration: 1
+  chargeMode: 2
   chain:
-  - {fileID: 11400000, guid: 66084614f9ba26f439939e575ed3982d, type: 2}
-  - {fileID: 11400000, guid: 66084614f9ba26f439939e575ed3982d, type: 2}
+  - {fileID: 11400000, guid: e44151907fa296f4f96f3dd5f0a3908a, type: 2}

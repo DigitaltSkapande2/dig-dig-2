@@ -26,6 +26,11 @@ namespace DigDig2.Combat.Attacks
 			attacker.AddMoveSpeedDebuff( animationStateName, attacker.GetBaseMoveSpeed( ) );
 			attacker.PushInDirection( Vector3.forward, 10 );
 		}
+		
+		public override void AnimationEvent(Attacker attacker, AttackType attackGroup, string animEventName)
+        {
+
+        }
 
 		public override void Ended( Attacker attacker, AttackType attackGroup )
 		{
