@@ -99,9 +99,32 @@ MonoBehaviour:
   edgeScanSlopeLimit: 75
   movingPlatformGroundRaycastDistance: 2
   canDash: 1
-  dashStrength: 15
-  dashDecaySpeed: 10
-  dashCooldown: 0.5
+  dashPower: 6
+  dashDuration: 0.5
+  dashCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0.0025184
+      outSlope: 0.0025184
+      tangentMode: 0
+      weightedMode: 3
+      inWeight: 0
+      outWeight: 0.7785714
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -12.133323
+      outSlope: -12.133323
+      tangentMode: 0
+      weightedMode: 3
+      inWeight: 0.06544459
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   pushDecaySpeed: 10
   knockbackStrengthMultiplier: 0.75
   knockbackDecaySpeed: 20
@@ -492,13 +515,13 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4442565222488509090}
     - target: {fileID: 2416112746756125568, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
-      propertyPath: targetMeshRenderer.Array.size
-      value: 2
-      objectReference: {fileID: 0}
+      propertyPath: 'targetMeshRenderers.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2348115868383819424}
     - target: {fileID: 2416112746756125568, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
-      propertyPath: targetMeshRenderers.Array.size
-      value: 2
-      objectReference: {fileID: 0}
+      propertyPath: 'targetMeshRenderers.Array.data[1]'
+      value: 
+      objectReference: {fileID: 467301618842546181}
     - target: {fileID: 2996078269563199115, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
       propertyPath: m_Name
       value: DeathSequence
@@ -593,6 +616,16 @@ PrefabInstance:
       addedObject: {fileID: 4297079755838292127}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8bc97a51a87c02c4d9f9eda0212fbbe7, type: 3}
+--- !u!137 &467301618842546181 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 3713995180077079399, guid: 8bc97a51a87c02c4d9f9eda0212fbbe7, type: 3}
+  m_PrefabInstance: {fileID: 3888562135878527842}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &2348115868383819424 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 1540473351639358914, guid: 8bc97a51a87c02c4d9f9eda0212fbbe7, type: 3}
+  m_PrefabInstance: {fileID: 3888562135878527842}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3637865979401178249 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 8bc97a51a87c02c4d9f9eda0212fbbe7, type: 3}

@@ -98,9 +98,32 @@ MonoBehaviour:
   edgeScanSlopeLimit: 75
   movingPlatformGroundRaycastDistance: 2
   canDash: 1
-  dashStrength: 15
-  dashDecaySpeed: 10
-  dashCooldown: 0.5
+  dashPower: 6
+  dashDuration: 0.5
+  dashCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0.0025184
+      outSlope: 0.0025184
+      tangentMode: 0
+      weightedMode: 3
+      inWeight: 0
+      outWeight: 0.7785714
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -12.133323
+      outSlope: -12.133323
+      tangentMode: 0
+      weightedMode: 3
+      inWeight: 0.06544459
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   pushDecaySpeed: 10
   knockbackStrengthMultiplier: 1
   knockbackDecaySpeed: 20

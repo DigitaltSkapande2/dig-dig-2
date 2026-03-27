@@ -36,10 +36,9 @@ namespace DigDig2.Game
 
 		public IEnumerator LoadSceneAsync( int sceneBuildIndex )
 		{
-			AsyncOperation operation = SceneManager.LoadSceneAsync( sceneBuildIndex, LoadSceneMode.Single );
-			if ( operation == null ) yield break;
-
 			yield return PlayFadeIn( );
+            AsyncOperation operation = SceneManager.LoadSceneAsync( sceneBuildIndex, LoadSceneMode.Single );
+            if ( operation == null ) yield break;
 			yield return new WaitWhile( ( ) => !operation.isDone );
 			BetterDebug.Log("FADING OUT");
 			yield return PlayFadeOut( );

@@ -1,7 +1,9 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
 using DigDig2.Combat;
+using DigDig2.Debugging;
 using DigDig2.Debugging.Menu;
 
 using UnityEngine;
@@ -71,11 +73,10 @@ namespace DigDig2
 		[Tooltip( "If the entity has the ability to dash." )]
 		[SerializeField] private bool canDash;
 
-		[SerializeField] private float dashStrength = 10;
-
-		[SerializeField] private float dashDecaySpeed = 20;
-
-		[SerializeField] private float dashCooldown = 2;
+        [SerializeField] float dashPower = 5f;
+        [SerializeField] float dashDuration = 0.5f;
+        [SerializeField] private float dashCooldown = 0.7f;
+        [SerializeField] AnimationCurve dashCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
 
 		[Space( 20 )]
 		[SerializeField] private float pushDecaySpeed = 10;
@@ -106,7 +107,8 @@ namespace DigDig2
 
 		// Movement
 		private CharacterController characterController;
-		private float dashCooldownTimer;
+
+        private bool isDashing = false;
 
 		private Vector3 dashVelocity;
 
@@ -169,7 +171,7 @@ namespace DigDig2
 				if ( stunTimer <= 0 ) ProcessMove( );
 				ProcessSlope( );
 				ProcessKnockback( );
-				ProcessDash( );
+                ProcessDash();
 				ProcessPush( );
 
 				ApplyMovement( );
@@ -264,10 +266,7 @@ namespace DigDig2
 
 		private void ProcessDash( )
 		{
-			if ( dashCooldownTimer > 0 ) dashCooldownTimer = Mathf.Max( dashCooldownTimer - Time.deltaTime, 0 );
-
-			velocity += dashVelocity;
-			dashVelocity = Vector3.Lerp( dashVelocity, Vector3.zero, dashDecaySpeed * Time.deltaTime );
+			if (isDashing) velocity += dashVelocity;
 		}
 
 		private void ProcessPush( )
@@ -397,15 +396,44 @@ namespace DigDig2
 
 		public void Dash( )
 		{
-			if ( !canDash || !( dashCooldownTimer <= 0 ) ) return;
+			if ( !canDash || isDashing ) return;
 
-			dashVelocity = inputMoveVector * dashStrength;
-			dashCooldownTimer = dashCooldown;
+            StartCoroutine(DashRoutine());
+            
 			if ( !attacker ) return;
 
-			attacker.EndAttack( );
-			attacker.EndAttackCharge( );
+			attacker.EndAttack( true, true );
+			attacker.EndAttackCharge( true );
 		}
+
+        private IEnumerator DashRoutine()
+        {
+            isDashing = true;
+            BetterDebug.Log("START Dashing");
+            Vector3 dashDirection = inputMoveVector == Vector3.zero ? inputMoveVector : GetForwardVector();
+            BetterDebug.Log(" Dashing dir " + dashDirection);
+            float elapsed = 0f;
+
+            while (elapsed < dashDuration)  
+            {
+                elapsed += Time.deltaTime;
+                float t = Mathf.Clamp01(elapsed / dashDuration);
+
+                float curveValue = dashCurve.Evaluate(t);
+
+                dashVelocity = dashDirection * (curveValue * dashPower);
+
+                yield return null;
+            }
+
+            BetterDebug.Log("END dash");
+
+            dashVelocity = Vector3.zero;
+
+            yield return new WaitForSeconds(dashCooldown);
+            
+            isDashing = false;
+        }
 
 		public float GetMoveSpeed( )
 		{
@@ -511,7 +539,7 @@ namespace DigDig2
 
 				state = EntityState.Dashing;
 				animator.CrossFadeInFixedTime( DASH_ANIMATION_NAME, 0.1f, 0 );
-				animator.CrossFadeInFixedTime( SWORD_ANIMATION_NAME_PREFIX + DASH_ANIMATION_NAME, 0.1f, 1 );
+                //animator.CrossFadeInFixedTime( SWORD_ANIMATION_NAME_PREFIX + DASH_ANIMATION_NAME, 0.1f, 1 );
 
 				return;
 			}
@@ -522,7 +550,7 @@ namespace DigDig2
 
 				state = EntityState.Sprinting;
 				animator.CrossFadeInFixedTime( SPRINT_ANIMATION_NAME, 0.1f, 0 );
-				animator.CrossFadeInFixedTime( SWORD_ANIMATION_NAME_PREFIX + SPRINT_ANIMATION_NAME, 0.1f, 1 );
+                //animator.CrossFadeInFixedTime( SWORD_ANIMATION_NAME_PREFIX + SPRINT_ANIMATION_NAME, 0.1f, 1 );
 				return;
 			}
 
@@ -530,7 +558,7 @@ namespace DigDig2
 			{
 				state = EntityState.Idle;
 				animator.CrossFadeInFixedTime( IDLE_ANIMATION_NAME, 0.1f, 0 );
-				animator.CrossFadeInFixedTime( SWORD_ANIMATION_NAME_PREFIX + IDLE_ANIMATION_NAME, 0.1f, 1 );
+				//animator.CrossFadeInFixedTime( SWORD_ANIMATION_NAME_PREFIX + IDLE_ANIMATION_NAME, 0.1f, 1 );
 			}
 		}
 

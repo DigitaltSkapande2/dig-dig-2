@@ -7,7 +7,7 @@ namespace DigDig2
 {
     public class MergeMeshTool
     {
-        [MenuItem("Tools/MergeMeshes %r")]
+        [MenuItem("Tools/MergeMeshes")]
         public static void CombineMeshes()
         {
             BetterDebug.Log("Merging Meshes");
@@ -22,7 +22,7 @@ namespace DigDig2
                 }
             }
 
-
+            Debug.Log($"combining {meshFilters.Count} meshFilters");
             CombineInstance[] instances = new CombineInstance[meshFilters.Count];
 
             for (int i = 0; i < meshFilters.Count; i++)
@@ -36,6 +36,7 @@ namespace DigDig2
                 };
 
                 meshFilter.gameObject.SetActive(false);
+                
             }
 
             Mesh combinedMesh = new Mesh();
@@ -47,7 +48,7 @@ namespace DigDig2
             {
                 finalMeshFilter = Selection.activeGameObject.AddComponent<MeshFilter>();
             }
-            finalMeshFilter.sharedMesh = combinedMesh;
+            finalMeshFilter.mesh = combinedMesh;
             finalMeshFilter.gameObject.SetActive(true);
         }
 

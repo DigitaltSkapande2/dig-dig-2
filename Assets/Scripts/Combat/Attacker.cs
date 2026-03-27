@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.Events;
 using DigDig2.CinemaCamera;
+using DigDig2.Debugging;
 using DigDig2.Game;
 
 using UnityEngine;
@@ -215,11 +216,11 @@ namespace DigDig2.Combat
 			attackRequestProcessed = false;
 		}
 
-		public void RequestAttackEnd( )
+		public void RequestAttackEnd( bool ignoreWarnings = false )
 		{
 			// Perform the Charged attack (if there is one and it's valid)
 			if ( IsChargeValid( ) ) PerformAttack( heldAttackType );
-			else EndAttackCharge( );
+			else EndAttackCharge( ignoreWarnings );
 
 			heldAttackType = null;
 			attackRequestProcessed = true;
@@ -252,11 +253,11 @@ namespace DigDig2.Combat
 			chargeStartTime = Time.time;
 		}
 
-		public void EndAttackCharge( )
+		public void EndAttackCharge( bool ignoreWarning = false )
 		{
 			if ( !IsChargingAttack( ) )
 			{
-				Debug.LogError( "Could not cancel attack charge, there is no attack being charged." );
+                if ( !ignoreWarning ) BetterDebug.Log( "Could not cancel attack charge, there is no attack being charged.", LogSeverity.Error );
 				return;
 			}
 
@@ -323,7 +324,7 @@ namespace DigDig2.Combat
 		{
 			if ( !currentPerformingAttackType )
 			{
-				if ( !ignoreWarning ) Debug.LogError( "Can't end attack, no attack is being performed right now." );
+				if ( !ignoreWarning ) BetterDebug.Log( "Can't end attack, no attack is being performed right now.", LogSeverity.Error );
 				return;
 			}
 

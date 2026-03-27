@@ -61,7 +61,7 @@ namespace DigDig2.Player
             if ( inputInfo.context.performed )
                 attacker.RequestAttackStart( 0 );
             else
-                attacker.RequestAttackEnd( );
+                attacker.RequestAttackEnd( true );
         }
 
         private void OnInputCombatAttack2( InputInfo inputInfo )
@@ -86,7 +86,7 @@ namespace DigDig2.Player
 
         private void OnInputGameDash( InputInfo inputInfo )
         {
-            if ( inputInfo.context.performed ) entityCharacterController.Dash( );
+            if ( inputInfo.context.started ) entityCharacterController.Dash( );
         }
 
         #endregion
