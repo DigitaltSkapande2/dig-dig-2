@@ -1,5 +1,5 @@
 using System.Collections;
-
+using DigDig2.Debugging;
 using DigDig2.Util;
 
 using UnityEngine;
@@ -41,7 +41,10 @@ namespace DigDig2.Game
 
 			yield return PlayFadeIn( );
 			yield return new WaitWhile( ( ) => !operation.isDone );
+			BetterDebug.Log("FADING OUT");
 			yield return PlayFadeOut( );
+			BetterDebug.Log("DONE FADING OUT");
+
 		}
 
 		private IEnumerator PlayFadeIn( )
