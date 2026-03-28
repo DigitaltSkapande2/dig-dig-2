@@ -8,7 +8,7 @@ using DigDig2.Debugging.Menu;
 
 using UnityEngine;
 
-namespace DigDig2
+namespace DigDig2.Entity
 {
 	[Debug( DebugMenuToggleable.NonToggleable )] [RequireComponent( typeof( CharacterController ) )]
 	public class EntityCharacterController : MonoBehaviour
@@ -70,15 +70,6 @@ namespace DigDig2
 		[SerializeField] private float movingPlatformGroundRaycastDistance = 2f;
 
 		[Space( 20 )]
-		[Tooltip( "If the entity has the ability to dash." )]
-		[SerializeField] private bool canDash;
-
-        [SerializeField] float dashPower = 5f;
-        [SerializeField] float dashDuration = 0.5f;
-        [SerializeField] private float dashCooldown = 0.7f;
-        [SerializeField] AnimationCurve dashCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
-
-		[Space( 20 )]
 		[SerializeField] private float pushDecaySpeed = 10;
 
 		[Header( "Combat" )]
@@ -100,6 +91,9 @@ namespace DigDig2
 
 		[Tooltip( "Locks the automatic visuals rotation when input is detected." )]
 		[SerializeField] private bool automaticLookRotationLocked;
+
+        [Tooltip("the dash to use, leave empty if dont want a dash")]
+        [SerializeField] private Dash dash;
 
 		private readonly Dictionary<string, float> moveSpeedDebuffs = new( );
 		private Animator animator;
@@ -219,7 +213,13 @@ namespace DigDig2
 		private void ProcessMove( )
 		{
 			// Lerp move input vector to create smooth acceleration and deceleration
-			moveVelocity = Vector3.Lerp( moveVelocity, inputMoveVector * GetMoveSpeed( ), Time.deltaTime * moveInputVectorLerpSpeed );
+            if (isDashing)
+            {
+                velocity = Vector3.zero;
+                return;
+            }
+
+            moveVelocity = Vector3.Lerp( moveVelocity, inputMoveVector * GetMoveSpeed( ), Time.deltaTime * moveInputVectorLerpSpeed );
 			velocity = new( moveVelocity.x, velocity.y, moveVelocity.z );
 		}
 
@@ -265,7 +265,8 @@ namespace DigDig2
 		}
 
 		private void ProcessDash( )
-		{
+        {
+            dashVelocity = dash?.GetVelocity() ?? Vector3.zero;
 			if (isDashing) velocity += dashVelocity;
 		}
 
@@ -396,7 +397,7 @@ namespace DigDig2
 
 		public void Dash( )
 		{
-			if ( !canDash || isDashing ) return;
+			if ( !dash || isDashing || !dash.CanDash()) return;
 
             StartCoroutine(DashRoutine());
             
@@ -409,29 +410,10 @@ namespace DigDig2
         private IEnumerator DashRoutine()
         {
             isDashing = true;
-            BetterDebug.Log("START Dashing");
-            Vector3 dashDirection = inputMoveVector == Vector3.zero ? inputMoveVector : GetForwardVector();
-            BetterDebug.Log(" Dashing dir " + dashDirection);
-            float elapsed = 0f;
-
-            while (elapsed < dashDuration)  
-            {
-                elapsed += Time.deltaTime;
-                float t = Mathf.Clamp01(elapsed / dashDuration);
-
-                float curveValue = dashCurve.Evaluate(t);
-
-                dashVelocity = dashDirection * (curveValue * dashPower);
-
-                yield return null;
-            }
-
-            BetterDebug.Log("END dash");
-
-            dashVelocity = Vector3.zero;
-
-            yield return new WaitForSeconds(dashCooldown);
             
+            Vector3 dashDirection = inputMoveVector == Vector3.zero ? GetForwardVector() : inputMoveVector;
+            yield return StartCoroutine(dash.PerformDash(dashDirection, this));
+
             isDashing = false;
         }
 
@@ -573,6 +555,8 @@ namespace DigDig2
 
 		public void SetAutomaticLookRotationLock( bool isLocked ) { automaticLookRotationLocked = isLocked; }
 
-		#endregion
-	}
+        public GameObject GetVisualsParent() => visualsParent;
+
+        #endregion
+    }
 }

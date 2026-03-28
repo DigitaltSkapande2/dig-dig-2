@@ -6,6 +6,7 @@ using DigDig2.Debugging;
 using DigDig2.Game;
 using DigDig2.Input;
 using DigDig2.Player.Interaction;
+using DigDig2.Entity;
 
 using UnityEngine;
 using UnityEngine.Events;

@@ -1,10 +1,6 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using UnityEngine.Events;
-using DigDig2.CinemaCamera;
 using DigDig2.Debugging;
-using DigDig2.Game;
+using DigDig2.Entity;
 
 using UnityEngine;
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 using DigDig2.Game;
 using DigDig2.Util;
+using DigDig2.Entity;
 
 using TMPro;
 

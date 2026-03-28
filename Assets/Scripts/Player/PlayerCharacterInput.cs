@@ -4,6 +4,7 @@ using UnityEngine;
 using DigDig2.Combat;
 using DigDig2.Input;
 using DigDig2.Game;
+using DigDig2.Entity;
 
 
 namespace DigDig2.Player

@@ -12,6 +12,7 @@ using UnityEngine.UIElements;
 using DigDig2.Game;
 using DigDig2.Input;
 using DigDig2.Player;
+using DigDig2.Entity;
 
 
 namespace DigDig2

@@ -1,6 +1,6 @@
 using DigDig2.EffectSystem;
 using DigDig2.Game;
-
+using DigDig2.Entity;
 using UnityEngine;
 using UnityEngine.Serialization;
 

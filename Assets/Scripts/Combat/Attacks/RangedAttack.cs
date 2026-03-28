@@ -1,5 +1,5 @@
 using Unity.Mathematics;
-
+using DigDig2.Entity;
 using UnityEngine;
 
 namespace DigDig2.Combat.Attacks

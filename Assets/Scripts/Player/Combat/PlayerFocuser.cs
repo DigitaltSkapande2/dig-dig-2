@@ -4,7 +4,9 @@ using DigDig2.Input;
 using DigDig2.Combat;
 using DigDig2.CinemaCamera;
 using DigDig2.Debugging;
+using DigDig2.Entity;
 using UnityEngine.UIElements;
+
 namespace DigDig2.Player.Combat
 {
     public class PlayerFocuser : MonoBehaviour

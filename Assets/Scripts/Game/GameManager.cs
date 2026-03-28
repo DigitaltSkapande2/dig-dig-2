@@ -216,7 +216,8 @@ namespace DigDig2.Game
 		private IEnumerator ReloadGameSceneAsync( )
 		{
 			yield return LoadingScreenManager.Instance.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
-			StartGame();
+            SaveManager.Instance.Reset();
+			Start();
 		}
 
         public void RegisterCharacterDeath(GameObject characterObject)

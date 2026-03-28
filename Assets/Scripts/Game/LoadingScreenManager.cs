@@ -39,7 +39,10 @@ namespace DigDig2.Game
 			yield return PlayFadeIn( );
             AsyncOperation operation = SceneManager.LoadSceneAsync( sceneBuildIndex, LoadSceneMode.Single );
             if ( operation == null ) yield break;
-			yield return new WaitWhile( ( ) => !operation.isDone );
+            while (!operation.isDone)
+            {
+                yield return null;
+            }
 			BetterDebug.Log("FADING OUT");
 			yield return PlayFadeOut( );
 			BetterDebug.Log("DONE FADING OUT");

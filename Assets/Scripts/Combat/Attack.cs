@@ -1,5 +1,6 @@
 using UnityEngine;
 using DigDig2.EffectSystem;
+using DigDig2.Entity;
 
 namespace DigDig2.Combat
 {

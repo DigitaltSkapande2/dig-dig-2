@@ -1,4 +1,6 @@
 using DigDig2.EffectSystem;
+using DigDig2.Entity;
+
 
 using UnityEngine;
 using UnityEngine.Events;

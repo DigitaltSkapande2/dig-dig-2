@@ -2,7 +2,9 @@ using DigDig2.Debugging;
 
 using Unity.Properties;
 
+#if UNITY_EDITOR
 using UnityEditor;
+
 
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -114,3 +116,5 @@ namespace DigDig2.UI.UxmlElements
 		}
 	}
 }
+
+#endif

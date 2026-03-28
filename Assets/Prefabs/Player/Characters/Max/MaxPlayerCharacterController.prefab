@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3368673675683253185}
   - component: {fileID: 3395938736747772053}
   - component: {fileID: 4327746320760944597}
+  - component: {fileID: 8499426207652418851}
   - component: {fileID: 8839264378030991054}
   - component: {fileID: 1621004928720741753}
   - component: {fileID: 440174058403782015}
@@ -98,33 +99,6 @@ MonoBehaviour:
   edgeScanDistance: 0.25
   edgeScanSlopeLimit: 75
   movingPlatformGroundRaycastDistance: 2
-  canDash: 1
-  dashPower: 6
-  dashDuration: 0.5
-  dashCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0.0025184
-      outSlope: 0.0025184
-      tangentMode: 0
-      weightedMode: 3
-      inWeight: 0
-      outWeight: 0.7785714
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: -12.133323
-      outSlope: -12.133323
-      tangentMode: 0
-      weightedMode: 3
-      inWeight: 0.06544459
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
   pushDecaySpeed: 10
   knockbackStrengthMultiplier: 0.75
   knockbackDecaySpeed: 20
@@ -132,6 +106,46 @@ MonoBehaviour:
   visualsParent: {fileID: 7251259118998489019}
   visualsRotationSpeed: 15
   automaticLookRotationLocked: 0
+  dash: {fileID: 8499426207652418851}
+--- !u!114 &8499426207652418851
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4442565222488509090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25bab1a5b350494d9485ee8e7b33f1b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Entity.RollDash
+  dashPower: 4
+  dashDuration: 0.5
+  dashCooldown: 0.4
+  dashCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: -0.007271068
+      outSlope: -0.007271068
+      tangentMode: 0
+      weightedMode: 3
+      inWeight: 0
+      outWeight: 0.8887903
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -21.369427
+      outSlope: -21.369427
+      tangentMode: 0
+      weightedMode: 3
+      inWeight: 0.020998955
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &8839264378030991054
 MonoBehaviour:
   m_ObjectHideFlags: 0
