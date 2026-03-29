@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-
+using Cysharp.Threading.Tasks;
 using DigDig2.Combat;
 using DigDig2.Debugging;
 using DigDig2.Game;
@@ -9,7 +9,6 @@ using DigDig2.Player.Interaction;
 using DigDig2.Entity;
 
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 namespace DigDig2.Player
@@ -23,6 +22,7 @@ namespace DigDig2.Player
         public bool IsAlive => health?.IsAlive ?? false;
         
         // Character
+        [NonSerialized] public PlayerCharacterController playerCharacterController;
         [NonSerialized] public EntityCharacterController entityController;
         [NonSerialized] public GameObject characterObject;
         [NonSerialized] public Health health;
@@ -80,9 +80,11 @@ namespace DigDig2.Player
 
         public void SetCharacterObject(GameObject newCharacter)
         {
-            if (characterObject) Destroy(characterObject); // TODO: Dissolving
+            if (characterObject) playerCharacterController.Disappear(true).Forget();
             characterObject = newCharacter;
+            playerCharacterController = newCharacter.GetComponent<PlayerCharacterController>();
             entityController = newCharacter.GetComponent<EntityCharacterController>();
+            
             health = newCharacter.GetComponent<Health>();
         }
         
@@ -97,7 +99,7 @@ namespace DigDig2.Player
                 !gameManager.IsMultiplayer) Invoke(nameof(SingleplayerSwitchCharacter), 0.03f);
         }
         
-        public void SingleplayerSwitchCharacter()
+        public async void SingleplayerSwitchCharacter()
         {
             if (gameManager.IsMultiplayer)
             {
@@ -111,27 +113,28 @@ namespace DigDig2.Player
             BetterDebug.Log($"NEW character: {newCharacterType}");
             // Spawn new player
             GameObject newPrefab = gameManager.GetCharacterPrefabFromCharacterType(newCharacterType);
-            GameObject newCharacterObj = Instantiate(
+            var newCharacterObj = await InstantiateAsync(
                 newPrefab, 
+                transform,
                 characterObject.transform.position, 
-                Quaternion.identity, 
-                transform
+                Quaternion.identity
             );
             characterType = newCharacterType;
             
-            TransferCharacterData(characterObject, newCharacterObj);
-            SetCharacterObject(newCharacterObj);
+            TransferCharacterData(characterObject, newCharacterObj[0]);
+            SetCharacterObject(newCharacterObj[0]);
+            playerCharacterController.shouldStartDissolved = true;
             
-            gameManager.characterSwitched.Invoke(characterType, newCharacterObj);
+            gameManager.characterSwitched.Invoke(characterType, newCharacterObj[0]);
         }
         
         public void TransferCharacterData(GameObject oldObj, GameObject newObj) 
         {
             if (newObj.TryGetComponent(out EntityCharacterController newEntityController) &&
-                newObj.TryGetComponent(out PlayerCharacterInput newPlayerinput) && 
+                newObj.TryGetComponent(out PlayerCharacterController newPlayerinput) && 
                 newObj.TryGetComponent(out Health newHealth) &&
                 oldObj.TryGetComponent(out EntityCharacterController oldEntityController) &&
-                oldObj.TryGetComponent(out PlayerCharacterInput oldPlayerinput) && 
+                oldObj.TryGetComponent(out PlayerCharacterController oldPlayerinput) && 
                 oldObj.TryGetComponent(out Health oldHealth))
             {
                 newEntityController.LookTowards(newObj.transform.position + oldEntityController.GetForwardVector(), false);

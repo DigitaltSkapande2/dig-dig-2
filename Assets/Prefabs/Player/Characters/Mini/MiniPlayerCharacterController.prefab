@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3368673675683253185}
   - component: {fileID: 3395938736747772053}
+  - component: {fileID: 1114290267908366805}
   - component: {fileID: 4327746320760944597}
   - component: {fileID: -6151381021393059777}
   - component: {fileID: 8839264378030991054}
@@ -18,7 +19,6 @@ GameObject:
   - component: {fileID: 2644439905992683439}
   - component: {fileID: 5846033344297062216}
   - component: {fileID: 8034696099376195831}
-  - component: {fileID: 1114290267908366805}
   m_Layer: 3
   m_Name: MiniPlayerCharacterController
   m_TagString: Player
@@ -41,7 +41,6 @@ Transform:
   m_Children:
   - {fileID: 6683684807395102275}
   - {fileID: 1498176944971182097}
-  - {fileID: 5627873792138924850}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &3395938736747772053
@@ -69,6 +68,27 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: -0.5, z: 0}
+--- !u!114 &1114290267908366805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4442565222488509090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474e8449e51a47b3bb55263059c1e3ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Player.PlayerCharacterInput
+  singleplayerDeathEffectPlayer: {fileID: 0}
+  multiplayerDeathEffectPlayer: {fileID: 0}
+  disolveWeight: 6
+  targetMeshRenderers:
+  - {fileID: 6965108698693947457}
+  - {fileID: 3869839782317373076}
+  dissolveFloatName: _DissolveAmount
+  shouldStartDissolved: 0
+  inputMoveVector: {x: 0, y: 0}
 --- !u!114 &4327746320760944597
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -118,14 +138,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa54ff382c67455daba6ae1b2d2d82aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Entity.BlinkDash
-  numberOfFrames: 2
-  dashLenght: 4
+  blinkDisappearTime: 0.1
+  dashLenght: 3.5
   dashCooldown: 0.5
+  maxBlinkDistance: 5
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
   groundCheckTries: 14
   blinkYTolerance: 2.2
+  entityHeight: 0.7
+  entityRadius: 0.7
+  cannotBlinkThroughLayers:
+    serializedVersion: 2
+    m_Bits: 8193
 --- !u!114 &8839264378030991054
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -189,7 +215,7 @@ MonoBehaviour:
   death:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7089034120670168891}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: DigDig2.DeathSequence, Assembly-CSharp
         m_MethodName: StartDeathSequence
         m_Mode: 1
@@ -260,19 +286,6 @@ MonoBehaviour:
   actionMapName: Combat
   activeContexts:
   - {fileID: 11400000, guid: 72844612df5b0e3e2ae45edd4ba932fe, type: 2}
---- !u!114 &1114290267908366805
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4442565222488509090}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 474e8449e51a47b3bb55263059c1e3ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Player.PlayerCharacterInput
-  inputMoveVector: {x: 0, y: 0}
 --- !u!1 &4933219036402945239
 GameObject:
   m_ObjectHideFlags: 0
@@ -377,111 +390,6 @@ Transform:
   - {fileID: 5552331625012262920}
   m_Father: {fileID: 3368673675683253185}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &4892755570703627451
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 3368673675683253185}
-    m_Modifications:
-    - target: {fileID: 1007880672321316745, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1007880672321316745, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1007880672321316745, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.68803
-      objectReference: {fileID: 0}
-    - target: {fileID: 1007880672321316745, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1007880672321316745, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1007880672321316745, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1007880672321316745, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1007880672321316745, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1007880672321316745, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1007880672321316745, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2416112746756125568, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
-      propertyPath: entityToFreeze
-      value: 
-      objectReference: {fileID: 4327746320760944597}
-    - target: {fileID: 2416112746756125568, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
-      propertyPath: characterObjectRef
-      value: 
-      objectReference: {fileID: 4442565222488509090}
-    - target: {fileID: 2416112746756125568, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
-      propertyPath: targetMeshRenderer.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2416112746756125568, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
-      propertyPath: targetMeshRenderers.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2416112746756125568, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
-      propertyPath: 'targetMeshRenderer.Array.data[0]'
-      value: 
-      objectReference: {fileID: 6965108698693947457}
-    - target: {fileID: 2416112746756125568, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
-      propertyPath: 'targetMeshRenderer.Array.data[1]'
-      value: 
-      objectReference: {fileID: 3869839782317373076}
-    - target: {fileID: 2416112746756125568, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
-      propertyPath: 'targetMeshRenderers.Array.data[0]'
-      value: 
-      objectReference: {fileID: 6965108698693947457}
-    - target: {fileID: 2416112746756125568, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
-      propertyPath: 'targetMeshRenderers.Array.data[1]'
-      value: 
-      objectReference: {fileID: 3869839782317373076}
-    - target: {fileID: 2996078269563199115, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
-      propertyPath: m_Name
-      value: DeathSequence
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
---- !u!4 &5627873792138924850 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1007880672321316745, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
-  m_PrefabInstance: {fileID: 4892755570703627451}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &7089034120670168891 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2416112746756125568, guid: 58bf5034fdba5a9e3b3b768c2460a373, type: 3}
-  m_PrefabInstance: {fileID: 4892755570703627451}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5e451c31b1ea573390ac83e40e653eb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DigDig2.DeathSequence
 --- !u!1001 &5370368074584727523
 PrefabInstance:
   m_ObjectHideFlags: 0

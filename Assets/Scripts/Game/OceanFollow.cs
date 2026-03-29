@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using DigDig2.CinemaCamera;
 using DigDig2.EffectSystem;
 using DigDig2.SaveSystem;
-
+using DigDig2.Util;
 using Newtonsoft.Json;
 
 using UnityEngine;
 
 namespace DigDig2.Game
 {
-	public class OceanFollow : MonoBehaviour, ISaveable
+	public class OceanFollow : Singleton<OceanFollow>
 	{
 		[SerializeField] private Transform plane;
 
@@ -28,8 +28,6 @@ namespace DigDig2.Game
         private void Start( )
 		{
 			targetY = transform.position.y;
-
-			SaveManager.Instance.RegisterSavable( "Ocean", this );
 		}
 
 		private void Update( )
@@ -60,33 +58,21 @@ namespace DigDig2.Game
             plane.position = newPosition;
         }
 
-		public object CollectData( ) => targetY;
-
-		public void RestoreState( object dataObject )
-		{
-			if ( dataObject == null )
-				Debug.Log( "WÄÄÄÄÄÄÄÄ" );
-			else
-			{
-				try { targetY = (float)dataObject; }
-				catch { targetY = JsonConvert.DeserializeObject<float>( dataObject.ToString( ) ); }
-
-				print( targetY );
-				transform.position = new( 0, targetY, 0 );
-			}
-		}
-
-		public void LowerWater( float amount )
+		public void LowerWater( float amount, bool instant = false )
 		{
 			targetY -= amount;
+            if (instant)
+            {
+                transform.position = new Vector3(transform.position.x, targetY, transform.position.z);
+                return;
+            }
+            
+            // Water effecs
 			onWaterLowerEffect?.Play( );
-			Debug.Log( "Lowering water. New target Y: " + targetY );
 			foreach ( ParticleSystem ps in waterSplashParticles )
 			{
 				ps.Play( );
-				Debug.Log( "Playing water splash particles." );
 			}
-
 			waterParticlesPlaying = true;
 		}
 	}

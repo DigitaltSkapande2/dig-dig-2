@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using DigDig2.CinemaCamera.CameraEffectors;
+using DigDig2.Debugging;
 using DigDig2.EffectSystem;
 using DigDig2.Game;
 using UnityEngine;
@@ -9,7 +10,7 @@ using UnityEngine.Events;
 namespace DigDig2.SaveSystem
 {
 
-    public class SavePoint : MonoBehaviour
+    public class SavePoint : MonoBehaviour, IOrderedPropSaveable
     {
         [SerializeField] private GameObject characterSeclectSecuencerPrefab;
         [SerializeField] private LockTargetEffector lockTargetEffector;
@@ -21,18 +22,8 @@ namespace DigDig2.SaveSystem
         [SerializeField] private EffectPlayer onReachedEffect;
         [SerializeField] private float timeUntilReleaseCamera = 2;
         private new Collider collider;
-        private int HighestReachedSavePointIndex { 
-            get
-            {
-                return GameManager.Instance.loadedGameManagerSaveData.highestReachedSavePointIndex;
-            } 
-            set
-            {
-                GameManager.Instance.SetHighestReachedSavePointIndex(value);
-            } 
-        }
-        
-        
+
+        private OrderedPropSaver saver;
 
         private void Awake()
         {
@@ -44,7 +35,7 @@ namespace DigDig2.SaveSystem
         public void PlayMultiplayerStartSequence()
         {
             lockTargetEffector.enabled = true;
-            VerboseLog("Spawning character select sequencer for multiplayer spawn...");
+            BetterDebug.Log("Spawning character select sequencer for multiplayer spawn...");
             CharacterSelectSequencer instance = Instantiate(characterSeclectSecuencerPrefab, transform.position, transform.rotation).GetComponent<CharacterSelectSequencer>();
             
             instance.gameStartedEvent.AddListener(OnMultiplayerCharacterSelectDone);
@@ -54,23 +45,25 @@ namespace DigDig2.SaveSystem
         {
             lockTargetEffector.IsActive = false;
             startSequenceDone.Invoke();
+            GameManager.Instance.StartGame();
         }
 
         public async void PlaySingleplayerStartSequence()
         {
             lockTargetEffector.enabled = true;
-            VerboseLog("Initializing singleplayer spawn...");
+            BetterDebug.Log("Initializing singleplayer spawn...");
             GameManager.Instance.InitializeSingleplayerCharacter(singlePlayerSpawnPoint.position, singlePlayerSpawnPoint.rotation);
 
             await Task.Delay((int)(timeUntilReleaseCamera * 1000));
             lockTargetEffector.IsActive = false;
             startSequenceDone.Invoke();
+            GameManager.Instance.StartGame();
         }
 
         public void SetSpawnPointReached(bool reached)
         {
             collider.enabled = !reached;
-            VerboseLog($"i am active, {name}");
+            BetterDebug.Log($"i am active, {name}");
 
             if (reached)
             {
@@ -80,16 +73,39 @@ namespace DigDig2.SaveSystem
 
         private void OnTriggerEnter(Collider other)
         {
-            VerboseLog("reached: " + gameObject.name);
+            BetterDebug.Log("reached: " + gameObject.name);
 
             SetSpawnPointReached(true);
-            onReachedEffect.Play();
+            onReachedEffect?.Play();
+            
             SaveManager.Instance.SaveAllAndWriteToFile();
         }
-
-        private void VerboseLog(string message)
+        
+        public void OnLoaded(int myId, int activeId, OrderedPropSaver propSaver)
         {
-            Debug.Log("SAVEPOINT: " + message);
+            SetSpawnPointReached(myId <= activeId);
+            if (myId > activeId)
+            {
+                saver = propSaver;
+                savePointReached.AddListener(IncrementSaverActiveIndex);
+            }
+
+            if (myId == activeId)
+            {
+                if (GameManager.Instance.IsMultiplayer)
+                {
+                    PlayMultiplayerStartSequence();
+                }
+                else
+                {
+                    PlaySingleplayerStartSequence();
+                }
+            }
+        }
+
+        private void IncrementSaverActiveIndex()
+        {
+            saver.IncrementActiveIndex();
         }
     }
 }

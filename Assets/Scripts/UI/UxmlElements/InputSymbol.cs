@@ -2,10 +2,6 @@ using DigDig2.Debugging;
 
 using Unity.Properties;
 
-#if UNITY_EDITOR
-using UnityEditor;
-
-
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
@@ -90,7 +86,7 @@ namespace DigDig2.UI.UxmlElements
 
 		private Sprite GetSymbolSprite( )
 		{
-			return AssetDatabase.LoadAssetAtPath<Sprite>( "Assets/Textures/UI/InputSymbols/InputSymbols.png" );
+			return Resources.Load<Sprite>( "UI/InputSymbols/InputSymbols.png" );
 		}
 		
 		[UxmlAttribute] public string ActionPath
@@ -116,5 +112,3 @@ namespace DigDig2.UI.UxmlElements
 		}
 	}
 }
-
-#endif

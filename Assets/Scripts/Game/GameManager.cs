@@ -1,9 +1,7 @@
 using System;
 using System.Collections;
 using System.Linq;
-using System.Threading.Tasks;
 using DigDig2.CinemaCamera;
-using DigDig2.CinemaCamera.CameraEffectors;
 using DigDig2.Util;
 using DigDig2.SaveSystem;
 using DigDig2.UI.Controllers;
@@ -14,9 +12,7 @@ using DigDig2.Player;
 using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
-using UnityEngine.UIElements;
 
 namespace DigDig2.Game
 {
@@ -110,8 +106,7 @@ namespace DigDig2.Game
         public void Start()
         {
             SaveManager.Instance.RegisterSavable("GameManager", this, true);
-            
-            StartGame();
+
         }
         
 
@@ -122,54 +117,18 @@ namespace DigDig2.Game
         
         #endregion
         #region StartGame
-        
-        private void StartGame()
-        {
-            InitializeSavePoint();
-            KillAlreadyKilledCrystals();
-            
-            Debug.Log(loadedGameManagerSaveData.highestReachedSavePointIndex);
-            SavePoint savePointToStartAt = savePoints[loadedGameManagerSaveData.highestReachedSavePointIndex];
-            savePointToStartAt.startSequenceDone.AddListener(OnSavePointStartUpSequenceDone);
 
-            if (IsMultiplayer)
-            {
-                savePointToStartAt.PlayMultiplayerStartSequence();
-            }
-            else
-            {
-                savePointToStartAt.PlaySingleplayerStartSequence();
-                GameCamera.Instance.SetTargetRotation(savePointToStartAt.cameraYRotation);
-            }
-        }
 
-        private void OnSavePointStartUpSequenceDone()
+        public void StartGame()
         {
-            Debug.Log("GAME STARTED EVENT !!! ");
+            BetterDebug.Log("Game Started!");
             InputManager.Instance.CurrentInputContext = gameInputContext;
             gameStarted.Invoke();
         }
 
-        private void InitializeSavePoint()
-        {
-            Debug.Log($"savePointReached in Loaded Save {loadedGameManagerSaveData.highestReachedSavePointIndex}");
-
-            for (int i = 0; i < savePoints.Length; i++)
-            {
-                if (savePoints[i])
-                {
-                    SavePoint savePoint = savePoints[i];
-                    int gay = i;
-                    savePoint.SetSpawnPointReached(i <= loadedGameManagerSaveData.highestReachedSavePointIndex);
-                    savePoint.savePointReached.AddListener(() => SetHighestReachedSavePointIndex(gay));
-                    Debug.Log(savePoint.name + " " + i);
-                }
-            }
-        }
-
         private void KillAlreadyKilledCrystals()
         {
-			BetterDebug.Log( $"Crystals killed in Loaded Save {loadedGameManagerSaveData.highestKilledCrystal}" );
+			//BetterDebug.Log( $"Crystals killed in Loaded Save {loadedGameManagerSaveData.highestKilledCrystal}" );
 
             for (int i = 0; i < crystals.Length; i++)
             {
@@ -210,14 +169,8 @@ namespace DigDig2.Game
 
         public void ReloadGameScene()
 		{
-			StartCoroutine( ReloadGameSceneAsync( ) );
-		}
-
-		private IEnumerator ReloadGameSceneAsync( )
-		{
-			yield return LoadingScreenManager.Instance.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
             SaveManager.Instance.Reset();
-			Start();
+            LoadingScreenManager.Instance.LoadScene(SceneManager.GetActiveScene().buildIndex);
 		}
 
         public void RegisterCharacterDeath(GameObject characterObject)

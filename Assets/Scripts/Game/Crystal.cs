@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 
 using DigDig2.Combat;
-
+using DigDig2.SaveSystem;
 using Unity.Mathematics;
 
 using UnityEngine;
@@ -10,7 +10,7 @@ using UnityEngine;
 namespace DigDig2.Game
 {
 	[RequireComponent( typeof( Attackable ), typeof( Health ) )]
-	public class Crystal : MonoBehaviour
+	public class Crystal : MonoBehaviour, IOrderedPropSaveable
 	{
 		private const float NO_CRACK_STAGE = 0.2f;
 		private const float LIGHT_CRACK_STAGE = 0.015f;
@@ -35,6 +35,10 @@ namespace DigDig2.Game
 		[Tooltip( "How fast the crystal bobs up and down" )]
 		[SerializeField] private float bobSpeed;
 
+        [Header("Ocean")]
+        [SerializeField] private OceanFollow ocean;
+        [SerializeField] private float oceanLowerAmount;
+
 		private Attackable attackable;
 		private MeshRenderer crystalMeshRenderer;
 
@@ -47,6 +51,8 @@ namespace DigDig2.Game
 		{
 			attackable = GetComponent<Attackable>( );
 			health = GetComponent<Health>( );
+            
+            health.death.AddListener(OnDeath);
 
 			attackable.hit.AddListener( OnHit );
 		}
@@ -73,6 +79,7 @@ namespace DigDig2.Game
 
 			shield.SetActive( hasShield );
 			health.enabled = !hasShield;
+            attackable.enabled = !hasShield;
 
 			for ( int index = enemyConnections.Count - 1; index >= 0; index-- )
 			{
@@ -99,6 +106,11 @@ namespace DigDig2.Game
 
 			if ( enemyConnections.Count <= 0 ) hasShield = false;
 		}
+
+        private void OnDeath(GameObject _)
+        {
+            ocean.LowerWater(oceanLowerAmount);
+        }
 
 		private void OnHit( )
 		{
@@ -129,5 +141,16 @@ namespace DigDig2.Game
 			[NonSerialized] public GameObject lineDrawer;
 			[NonSerialized] public CrystalLine lineComponent;
 		}
-	}
+
+        public void OnLoaded(int myId, int activeId, OrderedPropSaver propSaver)
+        {
+            if (myId < activeId)
+            {
+                ocean.LowerWater(oceanLowerAmount);
+                Destroy(gameObject);
+                return;
+            }
+            health.death.AddListener((_) => propSaver.IncrementActiveIndex()); 
+        }
+    }
 }

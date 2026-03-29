@@ -1,6 +1,6 @@
 :root {
     -unity-font-definition: url("project://database/Assets/Fonts/milky_nice/MilkyNice-Clean.ttf?fileID=12800000&guid=df4971c7b58b624419a9bd44d18b85ac&type=3#MilkyNice-Clean");
-    color: rgb(255, 255, 255);
+    color: rgba(255, 255, 255, 255);
 }
 
 Button {

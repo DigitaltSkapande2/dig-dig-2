@@ -2,15 +2,17 @@
 }
 
 .character-indicator.selected {
+    background-color: rgba(0, 0, 0, 0);
     translate: 0 0;
-    -unity-background-image-tint-color: rgb(255, 255, 255);
+    -unity-background-image-tint-color: rgba(255, 255, 255, 255);
 }
 
 .character-indicator {
+    background-color: rgba(0, 0, 0, 0);
     translate: 50px 0;
     transition-property: translate, -unity-background-image-tint-color;
     transition-duration: 0.1s, 0.1s;
-    -unity-background-image-tint-color: rgb(178, 178, 178);
+    -unity-background-image-tint-color: rgba(178, 178, 178, 255);
 }
 
 
