@@ -83,17 +83,14 @@ namespace DigDig2.Player
         private async UniTask DissolveRoutine(float startVal, float targetVal)
         {
             float newDissolveAmount = startVal;
-            BetterDebug.Log($"STARTING Dissolve {startVal}, {targetVal}");
             while (Mathf.Abs(newDissolveAmount - targetVal) > 0.01f )
             {
                 newDissolveAmount = Mathf.Lerp( newDissolveAmount, targetVal, 1f - Mathf.Exp(-disolveWeight * Time.deltaTime) );
-                BetterDebug.Log($"Dissolve update { newDissolveAmount }");
                 foreach ( SkinnedMeshRenderer targetMeshRenderer in targetMeshRenderers )
                 {
                     Material[] mats = targetMeshRenderer.materials;
                     foreach ( Material mat in mats )
                     {
-                        BetterDebug.Log($"mat { mat.name }");
                         mat.SetFloat( dissolveFloatName, newDissolveAmount );
                     }
                     targetMeshRenderer.materials = mats;

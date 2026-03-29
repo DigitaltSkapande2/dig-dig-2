@@ -67,6 +67,7 @@ namespace DigDig2.Combat
 		public void Kill( )
 		{
 			healthPoints = 0;
+            
 
 			death.Invoke(gameObject);
 			deathEffectPlayer?.Play( transform.position, Quaternion.identity, Vector3.one, transform.parent );

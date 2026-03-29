@@ -146,7 +146,7 @@ namespace DigDig2.Game
         {
             if (myId < activeId)
             {
-                ocean.LowerWater(oceanLowerAmount);
+                ocean.LowerWater(oceanLowerAmount, true);
                 Destroy(gameObject);
                 return;
             }

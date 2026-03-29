@@ -175,23 +175,19 @@ namespace DigDig2.Game
 
         public void RegisterCharacterDeath(GameObject characterObject)
         {
-            
+            bool playerIsAlive = false;
             for (int i = playerControllers.Length-1; i >= 0; i--)
             {
                 PlayerController player = playerControllers[i];
-                if (player.characterObject == characterObject)
+                if (player != null)
                 {
-                    playerDeath.Invoke(player);
+                    if (player.characterObject == characterObject) playerDeath.Invoke(player);
+                    if (player.IsAlive) playerIsAlive = true;
                 }
             }
             
-            bool boolplayerIsAlive = false;
-            foreach (var player in playerControllers)
-            {
-                if (player.IsAlive) boolplayerIsAlive = true;
-            }
-
-            if (boolplayerIsAlive) ReloadGameScene();
+            BetterDebug.Log("Character has died, and any player alive = " + playerIsAlive);
+            if (playerIsAlive) ReloadGameScene();
         }
 
         #region Singleplayer
