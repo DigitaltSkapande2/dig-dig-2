@@ -322,10 +322,6 @@ MonoBehaviour:
   edgeScanDistance: 0.25
   edgeScanSlopeLimit: 75
   movingPlatformGroundRaycastDistance: 2
-  canDash: 0
-  dashStrength: 10
-  dashDecaySpeed: 20
-  dashCooldown: 2
   pushDecaySpeed: 10
   knockbackStrengthMultiplier: 1
   knockbackDecaySpeed: 20
@@ -333,6 +329,7 @@ MonoBehaviour:
   visualsParent: {fileID: 6919876567945806958}
   visualsRotationSpeed: 15
   automaticLookRotationLocked: 0
+  dash: {fileID: 0}
 --- !u!114 &8863147776240216943
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -385,7 +382,7 @@ MonoBehaviour:
           m_Value0: 4347519987109069077
           m_Value1: 12835165921848297507
         Name: Enemy Scan Radius
-        m_Value: 5
+        m_Value: 8
     - rid: 6691007004047049498
       type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
@@ -416,6 +413,7 @@ MonoBehaviour:
   - player
   - environment
   verboseLogging: 0
+  combatState: 0
 --- !u!114 &6435232985193985838
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -430,186 +428,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Attackable
   invincibilityTime: 0.05
   group: enemy
-  hitEffect:
-    spawnPrefab: 1
-    spawnPrefabEffectData:
-      prefabToSpawn:
-      - prefab: {fileID: 4950934811570952627, guid: 0c8861c4d881711a881abc9f02a89e22, type: 3}
-        hasLifetime: 1
-        lifetime: 1.05
-    playSound: 0
-    audioClipsToPlay: []
-    screenShake: 0
-    screenShakeEffectData:
-      intensityCurve:
-        serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: 0
-          value: 1
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 1
-          value: 0
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      duration: 0.4
-      intensity: 1
-    cameraZoom: 0
-    cameraZoomEffectData:
-      intensityCurve:
-        serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: 0
-          value: 1
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 1
-          value: 0
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      duration: 0.4
-      intensity: 1
-    timeSlow: 1
-    timeSlowEffectData:
-      intensityCurve:
-        serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: 0
-          value: 0.15000153
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 1
-          value: 0.1499939
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      duration: 0.05
-      intensity: 1
-    vignettePulse: 0
-    vignettePulseEffectData:
-      intensityCurve:
-        serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: 0
-          value: 1
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 1
-          value: 0
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      duration: 0.4
-      intensity: 1
-      color: {r: 0, g: 0, b: 0, a: 0}
-    gamepadRumble: 0
-    gamepadRumbleEffectData:
-      intensityCurve:
-        serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: 0
-          value: 1
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 1
-          value: 0
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      duration: 0.4
-      intensity: 1
-      inputPlayerId: 0
-      highFrequencyIntensity: 0
-    greyscale: 0
-    greyscaleEffectData:
-      intensityCurve:
-        serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: 0
-          value: 1
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 1
-          value: 0
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      duration: 0.4
-      intensity: 1
+  hitEffect: {fileID: 0}
   hit:
     m_PersistentCalls:
       m_Calls: []
@@ -628,189 +447,7 @@ MonoBehaviour:
   maxHealthPoints: 2
   healthPoints: 2
   destroyOnDeath: 1
-  deathEffectPlayer:
-    spawnPrefab: 1
-    spawnPrefabEffectData:
-      prefabToSpawn:
-      - prefab: {fileID: 900025642660281898, guid: 81eab515c76aa20ecb1fcefa090d93ea, type: 3}
-        hasLifetime: 1
-        lifetime: 1.5
-      - prefab: {fileID: 4950934811570952627, guid: f471bdc1490ebb553826dac56db434a6, type: 3}
-        hasLifetime: 1
-        lifetime: 1.5
-    playSound: 0
-    audioClipsToPlay: []
-    screenShake: 0
-    screenShakeEffectData:
-      intensityCurve:
-        serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: 0
-          value: 1
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 1
-          value: 0
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      duration: 0.4
-      intensity: 1
-    cameraZoom: 0
-    cameraZoomEffectData:
-      intensityCurve:
-        serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: 0
-          value: 1
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 1
-          value: 0
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      duration: 0.4
-      intensity: 1
-    timeSlow: 0
-    timeSlowEffectData:
-      intensityCurve:
-        serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: 0
-          value: 1
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 1
-          value: 0
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      duration: 0.4
-      intensity: 1
-    vignettePulse: 0
-    vignettePulseEffectData:
-      intensityCurve:
-        serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: 0
-          value: 1
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 1
-          value: 0
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      duration: 0.4
-      intensity: 1
-      color: {r: 0, g: 0, b: 0, a: 0}
-    gamepadRumble: 0
-    gamepadRumbleEffectData:
-      intensityCurve:
-        serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: 0
-          value: 1
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 1
-          value: 0
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      duration: 0.4
-      intensity: 1
-      inputPlayerId: 0
-      highFrequencyIntensity: 0
-    greyscale: 0
-    greyscaleEffectData:
-      intensityCurve:
-        serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: 0
-          value: 1
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 1
-          value: 0
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      duration: 0.4
-      intensity: 1
+  deathEffectPlayer: {fileID: 0}
   death:
     m_PersistentCalls:
       m_Calls: []
@@ -941,6 +578,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: squid_enemy_ranged_Finished
       objectReference: {fileID: 0}
+    - target: {fileID: 1630794972795428178, guid: 5f0d6a87ddc1fbc56a0e03f70433fd12, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: bffb157281f3ff5928e4dcba2f90f57a, type: 2}
+    - target: {fileID: 1630794972795428178, guid: 5f0d6a87ddc1fbc56a0e03f70433fd12, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: -9205961241041939864, guid: 5f0d6a87ddc1fbc56a0e03f70433fd12, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:

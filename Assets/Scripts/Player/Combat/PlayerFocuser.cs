@@ -1,4 +1,9 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using DigDig2.Input;
 using DigDig2.Combat;
@@ -24,11 +29,10 @@ namespace DigDig2.Player.Combat
         [Header("Camera Focus Effect")]
         [Tooltip( "how much to lerp towards the focus target" )]
         [SerializeField] private float cameraFocusFollowFactor;
-
         [SerializeField] private float cameraFocusFrustumSize;
 
         private Attackable currentlyFocusedAttackable;
-        private bool isFocusing;
+        public bool isFocusing;
         private bool isTargeting;
         private float targetingDirection;
         
@@ -39,9 +43,25 @@ namespace DigDig2.Player.Combat
         private UIDocument uiDocument;
         private VisualElement singlePlayerFocusIndicator;
         private VisualElement singlePlayerFocusTargetIndicatorImage;
+
+        private int currentlyFocusedEnemyGroupIndex;
         
+        
+        // Scan routine - routinely scan for attackables
+        private CancellationTokenSource _scanCancelationTokenSource;
+        public Collider[] _colliderBuffer = new Collider[64]; // Used to store colliders during routine scans,
+                                                                        // Why: Rider complained on me that i should use NonAloc, and someone online said
+                                                                        // using just OverlapSphere every frame is heavy on the allocation stuff, so
+                                                                        // defining one array then using that is peak
+        public List<Attackable> currentTargetableEnemies = new(); // Same as above
+
         #region UnityCallbacks
-        
+
+        private void OnEnable()
+        {
+            ScanLoop(this.GetCancellationTokenOnDestroy()).Forget();
+        }
+
         private void Start()
         {
             uiDocument = GetComponent<UIDocument>();
@@ -53,10 +73,42 @@ namespace DigDig2.Player.Combat
             cameraEffector = gameObject.AddComponent<CameraEffector>();
         }
 
+        private async UniTask ScanLoop(CancellationToken ct)
+        {
+            while (!ct.IsCancellationRequested)
+            {
+                Debug.Log("rrrrrrrrrrr");
+                if (isFocusing)
+                {
+                    Debug.Log("aaaaaaaaaaa");
+                    ScanForAttackables();
+                    await UniTask.Delay(200, cancellationToken: ct);
+                }
+                await UniTask.Delay(200, cancellationToken: ct);
+                // else
+                // {
+                //     BetterDebug.Log("AOFKG+ekg");
+                //     await UniTask.WaitUntil(() => isFocusing, cancellationToken: ct);
+                // }
+            }
+        }
+
         private void Update()
         {
             UpdateFocusing();
             RotateFocusIndicatorImage(singlePlayerFocusIndicator, singlePlayerFocusTargetIndicatorImage);
+            
+            if ( currentlyFocusedAttackable )
+            {
+                Vector3 enemyPosition = currentlyFocusedAttackable!.transform.position;
+                UpdateFocusIndicatorPosition(enemyPosition);
+            }
+            
+            if (entityController)
+            {
+                entityController.SetAutomaticLookRotationLock( currentlyFocusedAttackable );
+                if ( currentlyFocusedAttackable ) entityController.LookTowards( currentlyFocusedAttackable!.transform.position );
+            }
         }
 
         private void OnDestroy()
@@ -65,6 +117,7 @@ namespace DigDig2.Player.Combat
         }
 
         #endregion
+        
         #region Input Callbacks
         
         private void OnInputCombatFocus( InputInfo inputInfo )
@@ -95,13 +148,14 @@ namespace DigDig2.Player.Combat
             if (!isFocusing) return;
             Debug.Log(inputInfo.context.ReadValue<Vector2>());
             
+            // Transform Mouse position to joistick aim in screen space
             Vector2 mouseScreenPos = inputInfo.context.ReadValue<Vector2>();
-            Vector2 playerScreenPos = Camera.main.WorldToScreenPoint(transform.position);
+            Vector2 playerScreenPos = gameCamera.mainCamera.WorldToScreenPoint(transform.position);
 
             Vector2 screenDir = (mouseScreenPos - playerScreenPos).normalized;
             
             float stickAngle = Mathf.Atan2(screenDir.x, screenDir.y) * Mathf.Rad2Deg;
-            targetingDirection = stickAngle + Camera.main.transform.eulerAngles.y;
+            targetingDirection = stickAngle + gameCamera.mainCamera.transform.eulerAngles.y;
             
             
             SetTargeting(!inputInfo.context.canceled);
@@ -110,90 +164,50 @@ namespace DigDig2.Player.Combat
         private void SetTargeting(bool active)
         {
             isTargeting = active;
-            UpdateFocusTarget();
+            ReCalculateFocusTarget();
         }
 
         #endregion
         
         #region Enemy Focusing
-
-		public List<Attackable> GetEnemiesInRadius( float radius )
+        
+        public void BeginFocusing( )
         {
-            Vector3 myPos = targetPlayer.characterObject.transform.position;
-			Collider[ ] scannedColliders = Physics.OverlapSphere( myPos, radius );
-            Dictionary<string, List<Attackable>> scannedenemyGroupedAttackables = new();
-			foreach ( Collider scannedCollider in scannedColliders )
-			{
-				if ( !scannedCollider.TryGetComponent( out Attackable enemyAttackable ) ) continue;
-                if (Mathf.Abs(scannedCollider.transform.position.y - myPos.y) > yDifferenceTolerance) continue;
-
-                if (scannedenemyGroupedAttackables.ContainsKey(enemyAttackable.Group))
-                {
-                    scannedenemyGroupedAttackables[enemyAttackable.Group].Add(enemyAttackable);
-                }
-                else
-                {
-					scannedenemyGroupedAttackables.Add(enemyAttackable.Group, new List<Attackable>() { enemyAttackable });
-                }
-                
-			}
-
-            for (int i = 0; i < focusEnemyGroupPriorityList.Length; i++)
-			{
-                if (scannedenemyGroupedAttackables.ContainsKey(focusEnemyGroupPriorityList[i]))
-				{
-                    return scannedenemyGroupedAttackables[focusEnemyGroupPriorityList[i]];
-                }
-            }
-
-            return new();
-        }
-
-		public Attackable GetClosestEnemyInRadius( float radius )
-		{
-			Attackable closestEnemy = null;
-			float closestEnemyAngle = 180;
-			foreach ( Attackable enemy in GetEnemiesInRadius( radius ) )
-			{
-				
-                if (!isTargeting) targetingDirection = entityController.TargetLookRotation;
-                Vector3 toEnemy = enemy.transform.position - transform.position;
-                float enemyAngle = Mathf.Atan2(toEnemy.x, toEnemy.z) * Mathf.Rad2Deg;
-                float delta = Mathf.Abs(Mathf.DeltaAngle(enemyAngle, targetingDirection));
-                if (closestEnemyAngle <= delta) continue;
-
-				closestEnemy = enemy;
-                closestEnemyAngle = delta;
-            }
-
-			return closestEnemy;
-		}
-
-		public void BeginFocusing( )
-        {
+            ScanForAttackables();
             isFocusing = true;
             cameraEffector.targetFrustumSize = cameraFocusFrustumSize;
-            UpdateFocusTarget();
+            ReCalculateFocusTarget();
         }
 
-		public void EndFocusing( )
+        public void EndFocusing( )
         {
             isFocusing = false;
             cameraEffector.targetFrustumSize = 0f;
             cameraEffector.targetPosition = Vector3.zero;
             
             currentlyFocusedAttackable = null;
-			if ( entityController ) entityController.SetAutomaticLookRotationLock( false );
+            currentlyFocusedEnemyGroupIndex = -1;
+            if ( entityController ) entityController.SetAutomaticLookRotationLock( false );
             
             SetFocusIndicatorActive(false);
-		}
+        }
 
-        public void UpdateFocusTarget()
+        private void UpdateFocusing( )
         {
-            Attackable closestEnemy = GetClosestEnemyInRadius( focusScanRadius );
-            if (closestEnemy && IsAttackableVisibleOnScreen(closestEnemy))
+            if (!isFocusing) return;
+            
+            if ( !currentlyFocusedAttackable || !IsAttackableVisibleOnScreen( currentlyFocusedAttackable ) )
             {
-                currentlyFocusedAttackable = closestEnemy;
+                ReCalculateFocusTarget();
+                if ( !currentlyFocusedAttackable ) EndFocusing();
+            } 
+        }
+        
+        public void ReCalculateFocusTarget()
+        {
+            if (TryGetClosestEnemy(out var attackable) && IsAttackableVisibleOnScreen(attackable)) 
+            {
+                currentlyFocusedAttackable = attackable;
                 SetFocusIndicatorActive(true);
             }
             else
@@ -201,40 +215,65 @@ namespace DigDig2.Player.Combat
                 EndFocusing();
             }
         }
-
-		private void UpdateFocusing( )
-		{
-            if (!isFocusing) return;
-            bool hasFocusedEnemy = (bool)currentlyFocusedAttackable;
-            
-            // If focused enemy not on screen EndFocus()
-			if ( !hasFocusedEnemy || !IsAttackableVisibleOnScreen( currentlyFocusedAttackable ) )
+        
+        public bool TryGetClosestEnemy(out Attackable closestEnemy)
+        {
+            closestEnemy = null;
+            float closestEnemyAngle = 180;
+            foreach ( Attackable enemy in currentTargetableEnemies )
             {
-                EndFocusing();
-                return;
-            } 
-            
-            // Camera effector
-            cameraEffector.targetPosition = (currentlyFocusedAttackable.transform.position - gameCamera.transform.position) *
-                                            cameraFocusFollowFactor;
+                if (!enemy) continue;
+                if (!isTargeting) targetingDirection = entityController.TargetLookRotation;
+                Vector3 toEnemy = enemy.transform.position - transform.position;
+                float enemyAngle = Mathf.Atan2(toEnemy.x, toEnemy.z) * Mathf.Rad2Deg;
+                float delta = Mathf.Abs(Mathf.DeltaAngle(enemyAngle, targetingDirection));
+                if (closestEnemyAngle <= delta) continue;
 
-			// Set Screen Marker Position
-			if ( hasFocusedEnemy )
-			{
-                Vector3 enemyPosition = currentlyFocusedAttackable!.transform.position;
-                
-				UpdateFocusIndicatorPosition(enemyPosition);
-			}
-
-			// EntityCharacter Controller rotation
-            if (entityController)
-            {
-                entityController.SetAutomaticLookRotationLock( hasFocusedEnemy );
-                if ( hasFocusedEnemy ) entityController.LookTowards( currentlyFocusedAttackable!.transform.position );
+                closestEnemy = enemy;
+                closestEnemyAngle = delta;
             }
-		}
+            
+            return closestEnemy != null;
+        }
 
-		public bool IsAttackableVisibleOnScreen( Attackable attackable )
+        private void ScanForAttackables()
+        {
+            BetterDebug.Log("Attackable Scan :>");
+            Vector3 myPos = targetPlayer.characterObject.transform.position;
+            int colliderCount = Physics.OverlapSphereNonAlloc( myPos, focusScanRadius, _colliderBuffer );
+            
+            // -- Get and Sort Attackables
+            var priorityIndexSortedAttackables = new Dictionary<int, List<Attackable>>();
+            
+            for (int i = 0; i < colliderCount; i++)
+            {
+                if (!_colliderBuffer[i].TryGetComponent(out Attackable attackable)) continue;
+                if (Mathf.Abs(_colliderBuffer[i].transform.position.y - myPos.y) > yDifferenceTolerance) continue;
+                
+                int priorityIndex = Array.IndexOf(focusEnemyGroupPriorityList, attackable.Group);
+                if (priorityIndex < 0) continue;
+
+                // Add to list, if no list, make new list :>
+                if (!priorityIndexSortedAttackables.ContainsKey(priorityIndex))
+                {
+                    priorityIndexSortedAttackables[priorityIndex] = new();
+                }
+                priorityIndexSortedAttackables[priorityIndex].Add(attackable);
+            }
+            
+            // -- Update list
+            int highestPriorityIndex = priorityIndexSortedAttackables.Keys.Min();
+            
+            currentTargetableEnemies.Clear();
+            currentTargetableEnemies.AddRange(priorityIndexSortedAttackables[highestPriorityIndex]);
+            if (currentlyFocusedEnemyGroupIndex != highestPriorityIndex)
+            {
+                currentlyFocusedEnemyGroupIndex = highestPriorityIndex;
+                ReCalculateFocusTarget();
+            }
+        }
+
+		public static bool IsAttackableVisibleOnScreen( Attackable attackable )
 		{
 			if ( !attackable.TryGetComponent( out Collider attackableCollider ) ) return false;
 
@@ -243,6 +282,14 @@ namespace DigDig2.Player.Combat
 		}
 
 		#endregion
+        #region Camera Effector
+
+        private void UpdateCameraEffector()
+        {
+            cameraEffector.targetPosition = (currentlyFocusedAttackable.transform.position - gameCamera.transform.position) * cameraFocusFollowFactor;
+        }
+        
+        #endregion
 
         #region UIGraphics
 

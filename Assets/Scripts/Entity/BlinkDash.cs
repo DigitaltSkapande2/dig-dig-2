@@ -1,100 +1,95 @@
+using System;
 using System.Collections;
+using System.Linq;
 using DigDig2.Debugging;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace DigDig2.Entity
 {
     public class BlinkDash : Dash
     {
-        [SerializeField] private int numberOfFrames = 2;
+        [SerializeField] private float blinkDisappearTime = 0.1f;
         [SerializeField] private float dashLenght = 4f;
         [SerializeField] private float dashCooldown = 0.5f;
+        [Tooltip("prevents dashing too far in case you try to blink to a lower platform")]
+        [SerializeField] private float maxBlinkDistance = 5f;
+
+        
         [Header("Ground Detection")]
         [SerializeField] private LayerMask groundLayer;
-
         [SerializeField] private int groundCheckTries = 14;
         [SerializeField] private float blinkYTolerance = 3f;
+        [SerializeField] private float entityHeight = 0.7f;
+        [SerializeField] private float entityRadius = 0.7f;
+        [SerializeField] private LayerMask cannotBlinkThroughLayers;
  
         private float lastTimeDashed = 0f;
         
         public override IEnumerator PerformDash(Vector3 direction, EntityCharacterController entitycontroller)
         {
             entitycontroller.GetVisualsParent().SetActive(false);
-            for (int i = 0; i < numberOfFrames; i++)
-            {
-                yield return null;
-            }
-            entitycontroller.GetVisualsParent().SetActive(true);
-
-            Ray entityHeightRay = new Ray(entitycontroller.transform.position, Vector3.down);
-            float entityheight = 0f;
-            if (Physics.Raycast(entityHeightRay, out var hit, groundLayer))
-            {
-                entityheight = Mathf.Abs(hit.point.y - entitycontroller.transform.position.y);
-                BetterDebug.Log($"ENTITY HEIGHT {entityheight}, {hit.point}, {entitycontroller.transform.position}");
-            }
+            yield return new WaitForSeconds(blinkDisappearTime);
             
             Vector3 localTarget = direction * dashLenght;
             Vector3 initialTargetPosition = entitycontroller.transform.position + localTarget;
 
             Vector3 finalTeleportTarget = entitycontroller.transform.position;
 
-            if (IsValidGround(initialTargetPosition, out var iniPos))
+            if (IsValidGround(initialTargetPosition, out var iniPos) && 
+                CanBlinkFromTo(entitycontroller.transform.position, iniPos))
             {
                 finalTeleportTarget = iniPos;
-                
             }
             else 
             {
                 for (int i = groundCheckTries; i > 0; i--)
                 {
                     Vector3 target = entitycontroller.transform.position + (localTarget / groundCheckTries) * i;
-                    if (IsValidGround(target, out var pos))
+                    if (IsValidGround(target, out var pos)&& 
+                        CanBlinkFromTo(entitycontroller.transform.position, pos))
                     {
-                        finalTeleportTarget = pos + -(localTarget / 6);
+                        finalTeleportTarget = pos;
                         break;
                     }
                 }
             }
-            
-            
-            entitycontroller.Teleport(finalTeleportTarget + new Vector3(0, 10 * entityheight, 0));
-            // _TeleportPosPos = finalTeleportTarget + new Vector3(0, 10 * entityheight, 0);
-            
+
+
+            entitycontroller.Teleport(finalTeleportTarget);
+            entitycontroller.GetVisualsParent().SetActive(true);
             lastTimeDashed = Time.time;
         }
-
-        // private Vector3? _debugGroundPos;
-        // private Vector3? _TeleportPosPos;
+        
 
         private bool IsValidGround(Vector3 targetPosition, out Vector3 groundPos)
         {
-            Ray initialGroundCheckRay = new Ray(targetPosition + new Vector3(0, blinkYTolerance, 0), Vector3.down);
+            Ray initialGroundCheckRay = new Ray(targetPosition + new Vector3(0, 10f, 0), Vector3.down);
     
             if (Physics.Raycast(initialGroundCheckRay, out var hitInfo) &&
-                Mathf.Abs(targetPosition.y - hitInfo.point.y) < blinkYTolerance &&
                 (groundLayer.value & (1 << hitInfo.collider.gameObject.layer)) != 0)
             {
-                groundPos = hitInfo.point;
-                // _debugGroundPos = groundPos;
-                return true;
+                Vector3 entityPos = hitInfo.point + new Vector3(0, entityHeight, 0);
+                var colliders = new Collider[5];
+                Physics.OverlapSphereNonAlloc(entityPos, entityRadius, colliders);
+                if (colliders.Any())
+                {
+                    groundPos = entityPos;
+                    return true;
+                }
             }
-
-            // _debugGroundPos = null;
+            
             groundPos = Vector3.zero;
             return false;
         }
 
-        // private void OnDrawGizmos()
-        // {
-        //     if (_debugGroundPos.HasValue)
-        //     {
-        //         Gizmos.color = Color.green;
-        //         Gizmos.DrawSphere(_debugGroundPos.Value, 0.4f);
-        //         Gizmos.color = Color.mediumVioletRed;
-        //         Gizmos.DrawSphere(_TeleportPosPos.Value, 0.4f);
-        //     }
-        // }
+
+
+        private bool CanBlinkFromTo(Vector3 startPos, Vector3 endPos)
+        {
+            Ray ray = new Ray(startPos, endPos - startPos);
+            return Mathf.Abs(startPos.y - endPos.y) <= blinkYTolerance && Vector3.Distance(startPos, endPos) <= maxBlinkDistance && !Physics.Raycast(ray, (endPos - startPos).magnitude, cannotBlinkThroughLayers);
+        }
 
         public override Vector3 GetVelocity()
         {
