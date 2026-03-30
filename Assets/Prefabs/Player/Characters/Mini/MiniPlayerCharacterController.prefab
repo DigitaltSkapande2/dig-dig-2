@@ -151,7 +151,7 @@ MonoBehaviour:
   entityRadius: 0.7
   cannotBlinkThroughLayers:
     serializedVersion: 2
-    m_Bits: 8193
+    m_Bits: 1
 --- !u!114 &8839264378030991054
 MonoBehaviour:
   m_ObjectHideFlags: 0
