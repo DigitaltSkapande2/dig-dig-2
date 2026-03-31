@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 078f6059bad84650ac4c8bcaa0efc638, type: 3}
-  m_Name: SingleplayerDeathEffect
+  m_Name: RangedEnemyDeathEffect
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.EffectSystem.EffectPlayer
   spawnPrefab: 0
   spawnPrefabEffectData:
@@ -101,7 +101,7 @@ MonoBehaviour:
       m_RotationOrder: 4
     duration: 0.4
     intensity: 1
-  vignettePulse: 1
+  vignettePulse: 0
   vignettePulseEffectData:
     intensityCurve:
       serializedVersion: 2
@@ -160,14 +160,14 @@ MonoBehaviour:
     intensity: 1
     inputPlayerId: 0
     highFrequencyIntensity: 0
-  greyscale: 1
+  greyscale: 0
   greyscaleEffectData:
     intensityCurve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0
+        value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -176,9 +176,9 @@ MonoBehaviour:
         outWeight: 0
       - serializedVersion: 3
         time: 1
-        value: 1
-        inSlope: 2
-        outSlope: 2
+        value: 0
+        inSlope: 0
+        outSlope: 0
         tangentMode: 0
         weightedMode: 0
         inWeight: 0

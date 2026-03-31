@@ -428,7 +428,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Attackable
   invincibilityTime: 0.05
   group: enemy
-  hitEffect: {fileID: 0}
+  hitEffect: {fileID: 11400000, guid: c99de281225537e43ac4eda1d2185f1c, type: 2}
   hit:
     m_PersistentCalls:
       m_Calls: []
@@ -447,7 +447,7 @@ MonoBehaviour:
   maxHealthPoints: 2
   healthPoints: 2
   destroyOnDeath: 1
-  deathEffectPlayer: {fileID: 0}
+  deathEffectPlayer: {fileID: 11400000, guid: 5510b994481a5bd43aaef299bedfd930, type: 2}
   death:
     m_PersistentCalls:
       m_Calls: []
@@ -578,14 +578,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: squid_enemy_ranged_Finished
       objectReference: {fileID: 0}
-    - target: {fileID: 1630794972795428178, guid: 5f0d6a87ddc1fbc56a0e03f70433fd12, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: bffb157281f3ff5928e4dcba2f90f57a, type: 2}
-    - target: {fileID: 1630794972795428178, guid: 5f0d6a87ddc1fbc56a0e03f70433fd12, type: 3}
-      propertyPath: 'm_Materials.Array.data[1]'
-      value: 
-      objectReference: {fileID: -9205961241041939864, guid: 5f0d6a87ddc1fbc56a0e03f70433fd12, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:

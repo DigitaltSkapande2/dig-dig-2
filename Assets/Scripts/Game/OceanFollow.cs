@@ -71,7 +71,7 @@ namespace DigDig2.Game
 			onWaterLowerEffect?.Play( );
 			foreach ( ParticleSystem ps in waterSplashParticles )
 			{
-				ps.Play( );
+				ps?.Play( );
 			}
 			waterParticlesPlaying = true;
 		}
