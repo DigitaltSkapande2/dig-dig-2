@@ -9364,6 +9364,7 @@ GameObject:
   - component: {fileID: 921060878}
   - component: {fileID: 921060888}
   - component: {fileID: 921060889}
+  - component: {fileID: 921060890}
   m_Layer: 0
   m_Name: EffectCoreVolume
   m_TagString: Untagged
@@ -9522,6 +9523,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.EffectSystem.Effects.GamepadRumbleEffect
   useUnscaledTime: 1
+--- !u!114 &921060890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 921060877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38b616df533bebf48941c6b4f841478d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DigDig2.DayCycle
+  dayDurationInMinutes: 0.5
+  nightValue: {x: 0, y: 0, z: 0.9, w: 0.3}
 --- !u!1 &921269199
 GameObject:
   m_ObjectHideFlags: 0
@@ -21566,6 +21581,10 @@ PrefabInstance:
     - target: {fileID: 4529280045292771309, guid: a3c096587ae185fadb0388ed6e8ce17f, type: 3}
       propertyPath: m_Name
       value: Stage 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4529280045292771309, guid: a3c096587ae185fadb0388ed6e8ce17f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4685994237155358431, guid: a3c096587ae185fadb0388ed6e8ce17f, type: 3}
       propertyPath: m_Mesh
