@@ -39,7 +39,7 @@ namespace DigDig2.Combat
 			set => SetHealth( value );
 		}
 
-        public bool IsAlive => healthPoints <= 0;
+        public bool IsAlive => healthPoints > 0;
 
 		private void Start( ) { SetHealth( healthPoints ); }
 

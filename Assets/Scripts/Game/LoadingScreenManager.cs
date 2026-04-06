@@ -1,4 +1,6 @@
 using System.Collections;
+using System.Linq;
+using Cysharp.Threading.Tasks;
 using DigDig2.Debugging;
 using DigDig2.Util;
 
@@ -26,49 +28,56 @@ namespace DigDig2.Game
 			screenCover = uiDocument.rootVisualElement.Query<VisualElement>( "Cover" );
 			loadingIndicator = screenCover.Query<VisualElement>( "Indicator" );
 
-			PlayFadeOut( );
+			PlayFadeOut( ).Forget( );
 		}
 
 		public void LoadScene( int sceneBuildIndex )
 		{
-			StartCoroutine( LoadSceneAsync( sceneBuildIndex ) );
+			LoadSceneAsync( sceneBuildIndex ).Forget( );
 		}
 
-		public IEnumerator LoadSceneAsync( int sceneBuildIndex )
+		public async UniTask LoadSceneAsync( int sceneBuildIndex )
 		{
-			yield return PlayFadeIn( );
-            AsyncOperation operation = SceneManager.LoadSceneAsync( sceneBuildIndex, LoadSceneMode.Single );
-            if ( operation == null ) yield break;
-            while (!operation.isDone)
-            {
-                yield return null;
-            }
-			BetterDebug.Log("FADING OUT");
-			yield return PlayFadeOut( );
-			BetterDebug.Log("DONE FADING OUT");
-
+			await PlayFadeIn( );
+            await SceneManager.LoadSceneAsync( sceneBuildIndex, LoadSceneMode.Single );
+			await PlayFadeOut( );
 		}
 
-		private IEnumerator PlayFadeIn( )
+		private async UniTask PlayFadeIn( )
 		{
 			screenCover.style.display = new( DisplayStyle.Flex );
 			screenCover.style.visibility = new( Visibility.Visible );
 			screenCover.style.opacity = new( 1f );
-			
-			yield return screenCover.resolvedStyle.transitionDuration;
+            
+            float duration = screenCover.resolvedStyle.transitionDuration
+                .Select(t => t.unit == TimeUnit.Millisecond ? t.value / 1000f : t.value)
+                .DefaultIfEmpty(0f)
+                .Max();
+
+            await UniTask.WaitForSeconds(duration);
 			
 			loadingIndicator.style.opacity = new( 1f );
 		}
 
-		private IEnumerator PlayFadeOut( )
+		private async UniTask PlayFadeOut( )
 		{
 			loadingIndicator.style.opacity = new( 0f );
 			
-			yield return loadingIndicator.resolvedStyle.transitionDuration;
+            float loadingIndicatorDuration = loadingIndicator.resolvedStyle.transitionDuration
+                .Select(t => t.unit == TimeUnit.Millisecond ? t.value / 1000f : t.value)
+                .DefaultIfEmpty(0f)
+                .Max();
+            
+            await UniTask.WaitForSeconds(loadingIndicatorDuration);
 			
 			screenCover.style.opacity = new( 0f );
 
-			yield return screenCover.resolvedStyle.transitionDuration;
+            float duration = screenCover.resolvedStyle.transitionDuration
+                .Select(t => t.unit == TimeUnit.Millisecond ? t.value / 1000f : t.value)
+                .DefaultIfEmpty(0f)
+                .Max();
+
+            await UniTask.WaitForSeconds(duration);
 			
 			screenCover.style.display = new( DisplayStyle.None );
 			screenCover.style.visibility = new( Visibility.Hidden );

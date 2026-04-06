@@ -15,4 +15,6 @@
     -unity-background-image-tint-color: rgba(178, 178, 178, 255);
 }
 
-
+.grayscale {
+    filter: grayscale(1);
+}

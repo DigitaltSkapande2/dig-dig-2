@@ -176,7 +176,7 @@ namespace DigDig2.UI.Controllers
         
         private void SetGrayTint(VisualElement element)
         {
-            element.style.filter.value[0].SetParameter(0, new FilterParameter(Color.gray));
+            element.AddToClassList("grayscale");
         }
 
         private void FetchMultiPlayerUIDocumentReferences()

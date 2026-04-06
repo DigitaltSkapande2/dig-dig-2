@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 using DigDig2.CinemaCamera;
 using DigDig2.Util;
 using DigDig2.SaveSystem;
@@ -22,7 +23,7 @@ namespace DigDig2.Game
         Minis,
     }
 
-    public class GameManager : Singleton<GameManager>, ISaveable
+    public class GameManager : Singleton<GameManager>
     {
         [Header("Player Prefabs")]
         [SerializeField] private CharacterType defaultSingleplayerCharacter = CharacterType.Max;
@@ -47,22 +48,11 @@ namespace DigDig2.Game
         }
         [SerializeField] public UnityEvent<bool> pauseStateChanged;
         
-        public bool IsMultiplayer => SaveManager.Instance.IsMultiplayer;
+        public bool IsMultiplayer => SaveManager.Instance.isMultiplayer;
 
         [Header( "Input Context" )]
 		[SerializeField] private InputContext gameInputContext;
 		[SerializeField] private InputContext pauseMenuInputContext;
-
-        
-        // Saving
-        [Serializable]
-        public struct GameManagerGameSaveData
-        {
-            public CharacterType singleplayerSelectedCharacter;
-            public int highestReachedSavePointIndex;
-            public int highestKilledCrystal;
-        }
-        public GameManagerGameSaveData loadedGameManagerSaveData;
         
         // Player
         [SerializeField] public PlayerController[] playerControllers = new PlayerController[2];
@@ -103,12 +93,6 @@ namespace DigDig2.Game
             gameHudController = GetComponentInChildren<GameHudController>();
         }
 
-        public void Start()
-        {
-            SaveManager.Instance.RegisterSavable("GameManager", this, true);
-        }
-        
-
         void OnDestroy()
         {
             if (SaveManager.Instance) SaveManager.Instance.Reset();
@@ -140,29 +124,36 @@ namespace DigDig2.Game
         {
             SaveManager.Instance.SaveAllAndWriteToFile();
 			LoadingScreenManager.Instance.LoadScene( 0 );
+            Destroy(gameObject);
         }
 
-        public void ReloadGameScene()
-		{
+        public async UniTask ReloadGameScene()
+        {
+            playerControllers[0] = null;
+            playerControllers[1] = null;
+            
             SaveManager.Instance.Reset();
-            LoadingScreenManager.Instance.LoadScene(SceneManager.GetActiveScene().buildIndex);
-		}
+            await LoadingScreenManager.Instance.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+        }
 
         public void RegisterCharacterDeath(GameObject characterObject)
         {
             bool playerIsAlive = false;
-            for (int i = playerControllers.Length-1; i >= 0; i--)
+            foreach (PlayerController player in playerControllers)
             {
-                PlayerController player = playerControllers[i];
                 if (player != null)
                 {
                     if (player.characterObject == characterObject) playerDeath.Invoke(player);
-                    if (player.IsAlive) playerIsAlive = true;
+                    if (player.IsAlive)
+                    {
+                        BetterDebug.Log(player.name  + " is alive!");
+                        playerIsAlive = true;
+                    }
                 }
             }
             
             BetterDebug.Log("Character has died, and any player alive = " + playerIsAlive);
-            if (playerIsAlive) ReloadGameScene();
+            if (!playerIsAlive) ReloadGameScene().Forget();
         }
 
         #region Singleplayer
@@ -178,7 +169,7 @@ namespace DigDig2.Game
             PlayerController newPlayerController = Instantiate(playerControllerPrefab).GetComponent<PlayerController>();
 
             GameObject newCharacter = Instantiate( // SinglePlayerRef initialized in Restore state
-                GetCharacterPrefabFromCharacterType(loadedGameManagerSaveData.singleplayerSelectedCharacter)
+                GetCharacterPrefabFromCharacterType(defaultSingleplayerCharacter)
             );
             
             newCharacter.transform.SetParent(newPlayerController.transform);
@@ -204,61 +195,6 @@ namespace DigDig2.Game
             maxPlayerID = playerOne.characterType == CharacterType.Max ? 0 : 1;
             minisPlayerID = playerOne.characterType == CharacterType.Minis ? 0 : 1;
             Debug.Log("GAMEMANAGER: Multiplayer Characters registered!");
-        }
-
-        #endregion
-        #region Saving and Loading
-
-        public object CollectData()
-        {
-            return loadedGameManagerSaveData;
-        }
-
-        public void RestoreState(object dataObject)
-        {
-            Debug.Log("SUNG JINWOOOO");
-            if (dataObject == null)
-            {
-                Debug.Log("SUNG KIM");
-                loadedGameManagerSaveData = new GameManagerGameSaveData
-                {
-                    singleplayerSelectedCharacter = defaultSingleplayerCharacter,
-                    highestReachedSavePointIndex = 0,
-                    highestKilledCrystal = -1,
-                };
-                
-                
-            }
-            else
-            {
-                Debug.Log($"GAAAY {dataObject}");
-                try
-                {
-                    loadedGameManagerSaveData = (GameManagerGameSaveData)dataObject;
-                }
-                catch
-                {
-                    loadedGameManagerSaveData = JsonConvert.DeserializeObject<GameManagerGameSaveData>(dataObject.ToString());
-                }
-            }
-
-            InitializeTheLoadedSave();
-        }
-
-
-        private void InitializeTheLoadedSave()
-        {
-            // PlayerOne.characterType = loadedGameManagerSaveData.singleplayerSelectedCharacter;
-        }
-
-        public void SetHighestReachedSavePointIndex(int index)
-        {
-            loadedGameManagerSaveData.highestReachedSavePointIndex = index;
-        }
-
-        public void SetHighestKilledCrystalIndex(int index)
-        {
-            loadedGameManagerSaveData.highestKilledCrystal = index;
         }
 
         #endregion

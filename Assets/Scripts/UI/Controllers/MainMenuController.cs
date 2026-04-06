@@ -296,7 +296,7 @@ namespace DigDig2.UI.Controllers
 					{
 						string saveFilePath = saveFiles[ loadedSaveFileIndex ];
 						SaveManager.GameSave gameSave = FileSystem.ReadDataFromFile<SaveManager.GameSave>( saveFilePath );
-						SaveManager.Instance.LoadSave( gameSave );
+						SaveManager.Instance.LoadSave( gameSave, true );
 
 						StartMultiplayer( );
 					}

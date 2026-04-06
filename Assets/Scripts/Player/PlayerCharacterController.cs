@@ -64,10 +64,12 @@ namespace DigDig2.Player
             if (GameManager.Instance.IsMultiplayer)
             {
                 multiplayerDeathEffectPlayer?.Play( transform.position, Quaternion.identity, Vector3.one );
+                await Disappear(true);
                 GameManager.Instance.RegisterCharacterDeath(gameObject);
             }
             else
             {
+                singleplayerDeathEffectPlayer?.Play( transform.position, Quaternion.identity, Vector3.one );
                 await Disappear(true);
                 GameManager.Instance.RegisterCharacterDeath(gameObject); 
             }

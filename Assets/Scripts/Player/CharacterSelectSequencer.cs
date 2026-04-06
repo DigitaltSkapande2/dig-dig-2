@@ -236,12 +236,14 @@ namespace DigDig2
             playerOneCharacterInstance.transform.SetParent(playerOneController.transform);
             playerOneController.SetCharacterObject(playerOneCharacterInstance);
             playerOneController.characterType = playerOneIsMax ? CharacterType.Max : CharacterType.Minis;
+            playerOneController.name = $"PlayerOneController {playerOneController.characterType}";
             playerOneController.SetInputPlayerIDRecursive(playerOneInputPlayerindex);
             
             // Player Two
             playerTwoCharacterInstance.transform.SetParent(playerTwoController.transform);
             playerTwoController.SetCharacterObject(playerTwoCharacterInstance);
             playerTwoController.characterType = playerOneIsMax ? CharacterType.Minis : CharacterType.Max;
+            playerTwoController.name = $"PlayerTwoController {playerTwoController.characterType}";
             playerTwoController.SetInputPlayerIDRecursive(playerTwoInputPlayerindex);
             
             // finalize

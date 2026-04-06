@@ -8,14 +8,18 @@ namespace DigDig2.CinemaCamera.CameraEffectors
     {
         private Action updateAction;
 
+        private GameManager gameManager;
+        
+        
         private void Start()
         {
-            updateAction = GameManager.Instance.IsMultiplayer ? MultiPlayerUpdate : SinglePlayerUpdate;
+            gameManager = GameManager.Instance;
+            updateAction = gameManager.IsMultiplayer ? MultiPlayerUpdate : SinglePlayerUpdate;
         }
 
         private void Update( )
         {
-            if (GameManager.Instance && GameManager.Instance.PlayerOne)
+            if (gameManager && gameManager.PlayerOne)
             {
                 updateAction.Invoke();
             }
@@ -31,6 +35,7 @@ namespace DigDig2.CinemaCamera.CameraEffectors
                 count++;
                 sumPos += player.transform.position;
             }
+            if (count <= 0) return;
             targetPosition = sumPos / count;
         }
 

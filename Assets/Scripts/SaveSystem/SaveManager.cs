@@ -16,10 +16,9 @@ namespace DigDig2.SaveSystem
 		private const string NEW_SAVE_PREFIX = "Save";
 
 		private readonly Dictionary<string, ISaveable> registeredSavables = new( );
-		private readonly List<string> uniqueNames = new( );
 		private GameSave loadedGameSave;
 		
-		public bool IsMultiplayer => loadedGameSave.isMultiplayer;
+		public bool isMultiplayer;
 
 		private bool HasLoadedSave
 		{
@@ -37,7 +36,6 @@ namespace DigDig2.SaveSystem
 		public class GameSave
 		{
 			public string saveName;
-			public bool isMultiplayer;
 			public Dictionary<string, object> stateData;
 			public string version;
 		}
@@ -71,11 +69,12 @@ namespace DigDig2.SaveSystem
 		{
 			if ( saveName == string.Empty ) saveName = GetNextFreeSaveName( );
 
+            this.isMultiplayer = isMultiplayer;
+
 			loadedGameSave = new( )
 			{
 				saveName = saveName,
 				version = Application.version,
-				isMultiplayer = isMultiplayer,
 				stateData = new( )
 			};
 		}
@@ -117,7 +116,7 @@ namespace DigDig2.SaveSystem
 
 		public GameSave ReadSaveFile( string saveName ) => FileSystem.ReadDataFromFile<GameSave>( GetSaveFilePathFromName( saveName ) );
 
-		public bool LoadSave( GameSave gameSave )
+		public bool LoadSave( GameSave gameSave,  bool isMultiplayer = false )
 		{
 			if ( gameSave == null )
 			{
@@ -125,16 +124,17 @@ namespace DigDig2.SaveSystem
 				return false;
 			}
 
+            this.isMultiplayer = isMultiplayer;
 			loadedGameSave = gameSave;
 			BetterDebug.Log( $"Loaded save of name {gameSave.saveName}" );
 
 			return true;
 		}
 
-		public bool LoadSave( string saveName )
+		public bool LoadSave( string saveName,  bool isMultiplayer = false )
 		{
 			GameSave gameSave = ReadSaveFile( saveName );
-			if ( gameSave != null ) return LoadSave( gameSave );
+			if ( gameSave != null ) return LoadSave( gameSave, isMultiplayer );
 
 			BetterDebug.Log( $"Trying to Load Save of unknown name: {saveName}", LogSeverity.Warning );
 			return false;
@@ -146,20 +146,40 @@ namespace DigDig2.SaveSystem
 
 		#region ISaveable Interaction
 
+        public void GarbageCollectISavables()
+        {
+            foreach (KeyValuePair<string, ISaveable> keyValuePair in registeredSavables)
+            {
+                if (keyValuePair.Value == null)
+                {
+                    registeredSavables.Remove(keyValuePair.Key);
+                }
+            }
+        }
+        
 		public void Reset( )
 		{
-			uniqueNames.Clear( );
 			registeredSavables.Clear( );
 		}
 
 		public void RegisterSavable( string uniqueName, ISaveable saveable, bool restoreOnRegister = true )
 		{
-			if ( uniqueNames.Contains( uniqueName ) )
-				BetterDebug.Log( $"Trying to register Savable with already registered uniqueName: {uniqueName}, aborting", LogSeverity.Warning );
+            if (registeredSavables.ContainsKey(uniqueName))
+            {
+                if (registeredSavables[uniqueName] != null)
+                {
+                    BetterDebug.Log( $"Trying to register Savable with already registered uniqueName: {uniqueName}, aborting", LogSeverity.Warning );
+                }
+                else
+                {
+                    registeredSavables.Remove(uniqueName);
+                }
+            }
 			else
-				BetterDebug.Log( $"Registered NEW Savable with uniqueName \"{uniqueName}\"" );
-
-			uniqueNames.Add( uniqueName );
+            {
+                BetterDebug.Log($"Registered NEW Savable with uniqueName \"{uniqueName}\"");
+            }
+            
 			registeredSavables.Add( uniqueName, saveable );
 
 			if ( restoreOnRegister ) RestoreISavable( uniqueName, saveable );

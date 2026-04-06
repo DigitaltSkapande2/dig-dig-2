@@ -103,11 +103,20 @@ namespace DigDig2.UI.Controllers
 			if ( openCooldownTimer <= 0 ) navigator.NavigateTo( "/" );
 		}
 
-		private void SaveAndExit( ) { GameManager.Instance.SaveAndLoadMainMenu( ); }
+        private void SaveAndExit()
+        {
+            GameManager.Instance.SaveAndLoadMainMenu( );
+        }
 
 		private void OnInputUICancel( )
 		{
 			if ( openCooldownTimer <= 0 ) navigator.NavigateBack( );
 		}
-	}
+
+        private void OnInputGamePause()
+        {
+            if (Paused) Close();
+            else Open();
+        }
+    }
 }
