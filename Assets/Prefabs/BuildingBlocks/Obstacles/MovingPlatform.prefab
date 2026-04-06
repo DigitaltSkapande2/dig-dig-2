@@ -314,6 +314,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Button (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 4433467691967501007, guid: 6597054ffdc9cbe488e80e7642a217e3, type: 3}
+      propertyPath: hit.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 6619205836259246015}
+    - target: {fileID: 4433467691967501007, guid: 6597054ffdc9cbe488e80e7642a217e3, type: 3}
+      propertyPath: hit.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Trigger
+      objectReference: {fileID: 0}
     - target: {fileID: 6437245124593979683, guid: 6597054ffdc9cbe488e80e7642a217e3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3
@@ -375,6 +383,14 @@ PrefabInstance:
     - target: {fileID: 2390683898653837072, guid: 6597054ffdc9cbe488e80e7642a217e3, type: 3}
       propertyPath: m_Name
       value: Button
+      objectReference: {fileID: 0}
+    - target: {fileID: 4433467691967501007, guid: 6597054ffdc9cbe488e80e7642a217e3, type: 3}
+      propertyPath: hit.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 6619205836259246015}
+    - target: {fileID: 4433467691967501007, guid: 6597054ffdc9cbe488e80e7642a217e3, type: 3}
+      propertyPath: hit.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Trigger
       objectReference: {fileID: 0}
     - target: {fileID: 6437245124593979683, guid: 6597054ffdc9cbe488e80e7642a217e3, type: 3}
       propertyPath: m_LocalPosition.x
