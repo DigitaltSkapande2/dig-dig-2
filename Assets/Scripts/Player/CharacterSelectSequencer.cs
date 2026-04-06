@@ -42,9 +42,10 @@ namespace DigDig2
         private GameObject minisInstance;
 
         private VisualElement realRoot; // For Opacity Transition
-        private Image playerOneCharacterImage;
+        private VisualElement playerBoundingBox;
+        private VisualElement playerOneCharacterImage;
         private VisualElement playerOneReadyIcon;
-        private Image playerTwoCharacterImage;
+        private VisualElement playerTwoCharacterImage;
         private VisualElement playerTwoReadyIcon;
         private Button startButton;
 
@@ -87,12 +88,12 @@ namespace DigDig2
             InputManager.Instance.CurrentInputContext = characterSelectContext;
 
             realRoot = uiDocument.rootVisualElement.Query("RealRoot");
-            VisualElement visualElementBoundBox = realRoot.Query("BoundBox");
+            playerBoundingBox = realRoot.Query("BoundBox");
 
-            playerOneCharacterImage = visualElementBoundBox.Query<Image>("PlayerOne");
-            playerOneReadyIcon = playerOneCharacterImage.Query("ReadyIcon");
-            playerTwoCharacterImage = visualElementBoundBox.Query<Image>("PlayerTwo");
-            playerTwoReadyIcon = playerTwoCharacterImage.Query("ReadyIcon");
+            playerOneCharacterImage = playerBoundingBox.Query("PlayerOne");
+            playerOneReadyIcon = ((VisualElement)playerOneCharacterImage.Query("checkBox")).Query("ReadyIcon");
+            playerTwoCharacterImage = playerBoundingBox.Query("PlayerTwo");
+            playerTwoReadyIcon = ((VisualElement)playerTwoCharacterImage.Query("checkBox")).Query("ReadyIcon");
             
             playerOneCharacterImage.visible = false;
             playerTwoCharacterImage.visible = false;
@@ -282,18 +283,19 @@ namespace DigDig2
 
         private void UpdatePlayerIconPositions()
         {
+            BetterDebug.Log(playerOneCharacterImage.name);
             playerOneCharacterImage.style.translate = new StyleTranslate(
                 new Translate(
-                    new Length(playerOneNavigation * 50, LengthUnit.Percent),
-                    new Length(playerOneNavigation == playerTwoNavigation ? 50 : 0, LengthUnit.Percent)
+                    new Length(playerOneNavigation * playerBoundingBox.resolvedStyle.width * 0.5f, LengthUnit.Pixel),
+                    new Length(playerOneNavigation == playerTwoNavigation ? playerBoundingBox.resolvedStyle.height * 0.5f : 0, LengthUnit.Pixel)
                 )
             );
             
             
             playerTwoCharacterImage.style.translate = new StyleTranslate(
                 new Translate(
-                    new Length(playerTwoNavigation * 50, LengthUnit.Percent),
-                    new Length(playerTwoNavigation == playerOneNavigation ? -50 : 0, LengthUnit.Percent)
+                    new Length(playerTwoNavigation * playerBoundingBox.resolvedStyle.width * 0.5f, LengthUnit.Pixel),
+                    new Length(playerTwoNavigation == playerOneNavigation ? -(playerBoundingBox.resolvedStyle.height * 0.5f) : 0, LengthUnit.Pixel)
                 )
             );
         }

@@ -3,10 +3,28 @@
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
+  <component name="CMakeProjectFlavorService">
+    <option name="flavorId" value="CMakePlainProjectFlavor" />
+  </component>
+  <component name="CMakeSettings">
+    <configurations />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="50c3eb56-0f37-4789-a838-f82a855a30c4" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.dig-dig-2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.dig-dig-2/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animations/AnimEvents.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Obstacles/Door&amp;Button.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Obstacles/Door&amp;Button.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Characters/Max/MaxPlayerCharacterController.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Player/Characters/Max/MaxPlayerCharacterController.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Characters/Mini/MiniPlayerCharacterController.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Player/Characters/Mini/MiniPlayerCharacterController.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/GameScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/GameScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ScriptableObjects/EffectPlayers/Enemies/MeleeEnemy/MeleeEnemyGetsHitEffect.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ScriptableObjects/EffectPlayers/Enemies/MeleeEnemy/MeleeEnemyGetsHitEffect.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ScriptableObjects/EffectPlayers/Enemies/RangedEnemy/RangedEnemyGetsHitEffect.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ScriptableObjects/EffectPlayers/Enemies/RangedEnemy/RangedEnemyGetsHitEffect.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Crystal.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Crystal.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/GameManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Input/InputManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Input/InputManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/CharacterSelectSequencer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/CharacterSelectSequencer.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/Combat/PlayerFocuser.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/Combat/PlayerFocuser.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UI/CharacterSelect/Layout.uxml" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UI/CharacterSelect/Layout.uxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -134,6 +152,7 @@
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.dt.app-ui@8ac7e730dd5d/Runtime/UI/Exceptions/VisualElementNotFoundException.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.dt.app-ui@8ac7e730dd5d/Runtime/UI/Extensions/SingleExtensions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@57d0e36f6123/InputSystem/Actions/InputAction.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@57d0e36f6123/InputSystem/Actions/InputActionMap.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@57d0e36f6123/InputSystem/Actions/InputActionState.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@57d0e36f6123/InputSystem/Actions/InputControlScheme.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@57d0e36f6123/InputSystem/Devices/InputDevice.cs" root0="SKIP_HIGHLIGHTING" />
@@ -176,9 +195,13 @@
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
     &quot;Unity Attach To.Attach to.executor&quot;: &quot;Debug&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;/home/inurentto/Projects/Unity/dig-dig-2/dig-dig-2.slnx&quot;,
@@ -198,7 +221,7 @@
   </component>
   <component name="RunManager" selected="Unity Attach To.Attach to">
     <configuration name="Standalone Player" type="RunUnityExe" factoryName="Unity Executable">
-      <option name="EXE_PATH" value="$PROJECT_DIR$/../WhiskersOfTheTideWin/Linux27Mar/WiskersOftheTide27Mar.x86_64" />
+      <option name="EXE_PATH" value="$PROJECT_DIR$/../WhiskersOfTheTideWin/5april/LinuxOfTheTide5April/WhiskersofTheTide5April.x86_64" />
       <option name="PROGRAM_PARAMETERS" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../Builds" />
       <option name="PASS_PARENT_ENVS" value="1" />
@@ -307,6 +330,9 @@
       <workItem from="1774786356482" duration="3918000" />
       <workItem from="1774790302430" duration="13886000" />
       <workItem from="1774819077348" duration="10629000" />
+      <workItem from="1775382511515" duration="1892000" />
+      <workItem from="1775405983105" duration="11101000" />
+      <workItem from="1775481791191" duration="2169000" />
     </task>
     <servers />
   </component>

@@ -15,8 +15,9 @@ MonoBehaviour:
   spawnPrefab: 0
   spawnPrefabEffectData:
     prefabToSpawn: []
-  playSound: 0
-  audioClipsToPlay: []
+  playSound: 1
+  audioClipsToPlay:
+  - {fileID: 0}
   screenShake: 1
   screenShakeEffectData:
     intensityCurve:
@@ -99,8 +100,8 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    duration: 0.4
-    intensity: 0.2
+    duration: 0.2
+    intensity: 0.5
   vignettePulse: 0
   vignettePulseEffectData:
     intensityCurve:

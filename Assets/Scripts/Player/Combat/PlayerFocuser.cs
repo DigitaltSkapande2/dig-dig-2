@@ -23,7 +23,6 @@ namespace DigDig2.Player.Combat
         [Tooltip( "The radius to scan for enemies at when focusing" )]
         [SerializeField] private float focusScanRadius = 10;
         [Tooltip( "The distance in Y (elevation) for focusing, prevents focusing on stuff under water etc" )]
-
         [SerializeField] private float yDifferenceTolerance = 1f;
 
         [Header("Camera Focus Effect")]
@@ -34,7 +33,7 @@ namespace DigDig2.Player.Combat
         private Attackable currentlyFocusedAttackable;
         public bool isFocusing;
         private bool isTargeting;
-        private float targetingDirection;
+        private Vector3 targetingDirection = Vector3.forward;
         
         private EntityCharacterController entityController => targetPlayer.entityController;
         private GameCamera gameCamera;
@@ -53,7 +52,7 @@ namespace DigDig2.Player.Combat
                                                                         // Why: Rider complained on me that i should use NonAloc, and someone online said
                                                                         // using just OverlapSphere every frame is heavy on the allocation stuff, so
                                                                         // defining one array then using that is peak
-        public List<Attackable> currentTargetableEnemies = new(); // Same as above
+        public List<Attackable> currentTargetableEnemies = new();
 
         #region UnityCallbacks
 
@@ -77,10 +76,8 @@ namespace DigDig2.Player.Combat
         {
             while (!ct.IsCancellationRequested)
             {
-                Debug.Log("rrrrrrrrrrr");
                 if (isFocusing)
                 {
-                    Debug.Log("aaaaaaaaaaa");
                     ScanForAttackables();
                     await UniTask.Delay(200, cancellationToken: ct);
                 }
@@ -135,29 +132,33 @@ namespace DigDig2.Player.Combat
         private void OnInputCombatFocusTarget(InputInfo inputInfo)
         {
             if (!isFocusing) return;
-            
+
             Vector2 vector = inputInfo.context.ReadValue<Vector2>();
-            float stickAngle = Mathf.Atan2(vector.x, vector.y) * Mathf.Rad2Deg;
-            targetingDirection = stickAngle + gameCamera.mainCamera.transform.eulerAngles.y;
-            
+
+            Transform cam = gameCamera.mainCamera.transform;
+            Vector3 camRight   = Vector3.ProjectOnPlane(cam.right,   Vector3.up).normalized;
+            Vector3 camForward = Vector3.ProjectOnPlane(cam.forward, Vector3.up).normalized;
+
+            targetingDirection = (camRight * vector.x + camForward * vector.y).normalized;
+
             SetTargeting(!inputInfo.context.canceled);
         }
 
         private void OnInputCombatFocusTargetMouse(InputInfo inputInfo)
         {
             if (!isFocusing) return;
-            Debug.Log(inputInfo.context.ReadValue<Vector2>());
-            
-            // Transform Mouse position to joistick aim in screen space
-            Vector2 mouseScreenPos = inputInfo.context.ReadValue<Vector2>();
-            Vector2 playerScreenPos = gameCamera.mainCamera.WorldToScreenPoint(transform.position);
 
+            Vector2 mouseScreenPos = inputInfo.context.ReadValue<Vector2>();
+            Vector2 playerScreenPos = gameCamera.mainCamera.WorldToScreenPoint(
+                targetPlayer.characterObject.transform.position
+            );
             Vector2 screenDir = (mouseScreenPos - playerScreenPos).normalized;
             
-            float stickAngle = Mathf.Atan2(screenDir.x, screenDir.y) * Mathf.Rad2Deg;
-            targetingDirection = stickAngle + gameCamera.mainCamera.transform.eulerAngles.y;
-            
-            
+            Vector3 camRight   = Vector3.ProjectOnPlane(gameCamera.mainCamera.transform.right,   Vector3.up).normalized;
+            Vector3 camForward = Vector3.ProjectOnPlane(gameCamera.mainCamera.transform.forward, Vector3.up).normalized;
+
+            targetingDirection = (camRight * screenDir.x + camForward * screenDir.y).normalized;
+
             SetTargeting(!inputInfo.context.canceled);
         }
 
@@ -219,20 +220,28 @@ namespace DigDig2.Player.Combat
         public bool TryGetClosestEnemy(out Attackable closestEnemy)
         {
             closestEnemy = null;
-            float closestEnemyAngle = 180;
-            foreach ( Attackable enemy in currentTargetableEnemies )
+            float bestDot = -1f;
+
+            foreach (Attackable enemy in currentTargetableEnemies)
             {
                 if (!enemy) continue;
-                if (!isTargeting) targetingDirection = entityController.TargetLookRotation;
-                Vector3 toEnemy = enemy.transform.position - transform.position;
-                float enemyAngle = Mathf.Atan2(toEnemy.x, toEnemy.z) * Mathf.Rad2Deg;
-                float delta = Mathf.Abs(Mathf.DeltaAngle(enemyAngle, targetingDirection));
-                if (closestEnemyAngle <= delta) continue;
+
+                Vector3 toEnemy = (enemy.transform.position - targetPlayer.characterObject.transform.position);
+                toEnemy.y = 0f;
+                toEnemy.Normalize();
+
+                Vector3 referenceDir = isTargeting ? targetingDirection : Vector3.ProjectOnPlane(
+                        Quaternion.Euler(0, entityController.TargetLookRotation, 0) * Vector3.forward,
+                        Vector3.up
+                    ).normalized;
+
+                float dot = Vector3.Dot(toEnemy, referenceDir);
+                if (dot <= bestDot) continue;
 
                 closestEnemy = enemy;
-                closestEnemyAngle = delta;
+                bestDot = dot;
             }
-            
+
             return closestEnemy != null;
         }
 
@@ -306,14 +315,14 @@ namespace DigDig2.Player.Combat
         
         public void UpdateFocusIndicatorPosition(Vector3 worldPosition )
         {
-            BetterDebug.Log($"UpdateFocusIndicatorPosition {worldPosition}");
+            //BetterDebug.Log($"UpdateFocusIndicatorPosition {worldPosition}");
             Vector2 screenPosition = RuntimePanelUtils.CameraTransformWorldToPanel( uiDocument.rootVisualElement.panel, worldPosition, gameCamera.mainCamera );
             singlePlayerFocusIndicator.style.translate = new( new Translate( screenPosition.x, screenPosition.y ) );
         }
 
         private void SetFocusIndicatorActive(bool active)
         {
-            BetterDebug.Log($"SetFocusIndicatorActive {active}");
+            //BetterDebug.Log($"SetFocusIndicatorActive {active}");
             singlePlayerFocusIndicator.style.display = new( active ? DisplayStyle.Flex : DisplayStyle.None );
             singlePlayerFocusIndicator.style.opacity = new( active ? 1f : 0f );
             singlePlayerFocusIndicator.style.scale = new( new Scale( active ? new( 1f, 1f ) : new Vector2( 2f, 2f ) ) );

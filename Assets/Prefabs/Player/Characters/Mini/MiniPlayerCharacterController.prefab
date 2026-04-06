@@ -508,6 +508,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 309747ce6d081b647882a412c89cc82f, type: 2}
+    - target: {fileID: 635547659545568360, guid: fb11f71a623f7354d8aac55a6cd6624f, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: fb11f71a623f7354d8aac55a6cd6624f, type: 3}
       propertyPath: m_Name
       value: littleCat_with_Staff_Finished
@@ -520,6 +524,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[1]'
       value: 
       objectReference: {fileID: 2100000, guid: a0fd55cc35b8cbb4d997eeee9ba6b0b8, type: 2}
+    - target: {fileID: 6633253267746993225, guid: fb11f71a623f7354d8aac55a6cd6624f, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

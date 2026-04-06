@@ -170,7 +170,7 @@ namespace DigDig2.Input
 			foreach ( InputPlayer inputPlayer in inputPlayers )
 			{
 				Dictionary<string, List<InputModule>> inputPlayerPrioritizedInputModules = new( );
-				foreach ( InputActionMap actionMap in InputSystem.actions.actionMaps ) { inputPlayerPrioritizedInputModules.Add( actionMap.name, new( ) ); }
+				foreach ( InputActionMap actionMap in inputPlayer.actionMaps ) { inputPlayerPrioritizedInputModules.Add( actionMap.name, new( ) ); }
 
 				prioritizedInputModules.Add( inputPlayer, inputPlayerPrioritizedInputModules );
 			}

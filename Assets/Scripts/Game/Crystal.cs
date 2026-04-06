@@ -150,6 +150,12 @@ namespace DigDig2.Game
                 Destroy(gameObject);
                 return;
             }
+
+            if (myId == activeId)
+            {
+                
+            }
+            
             health.death.AddListener((_) => propSaver.IncrementActiveIndex()); 
         }
     }

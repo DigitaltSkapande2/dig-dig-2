@@ -106,7 +106,6 @@ namespace DigDig2.Game
         public void Start()
         {
             SaveManager.Instance.RegisterSavable("GameManager", this, true);
-
         }
         
 
@@ -117,36 +116,12 @@ namespace DigDig2.Game
         
         #endregion
         #region StartGame
-
-
+        
         public void StartGame()
         {
             BetterDebug.Log("Game Started!");
             InputManager.Instance.CurrentInputContext = gameInputContext;
             gameStarted.Invoke();
-        }
-
-        private void KillAlreadyKilledCrystals()
-        {
-			//BetterDebug.Log( $"Crystals killed in Loaded Save {loadedGameManagerSaveData.highestKilledCrystal}" );
-
-            for (int i = 0; i < crystals.Length; i++)
-            {
-                if (crystals[i])
-                {
-                    Crystal crystal = crystals[i];
-                    int gay = i;
-                    if (i <= loadedGameManagerSaveData.highestKilledCrystal) 
-                    {
-                        Destroy(crystal.gameObject);
-                        Debug.Log($"crystal [{i}] KILLED");
-                    }
-                    else 
-                    {
-                        crystal.GetComponent<Health>().death.AddListener((_) => SetHighestKilledCrystalIndex(gay));
-                    }
-                }
-            }
         }
         
         #endregion
