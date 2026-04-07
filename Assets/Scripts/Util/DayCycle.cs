@@ -27,9 +27,10 @@ namespace DigDig2
 
         void Update()
         {
-            float lerpValue = (Mathf.Cos(Mathf.PI * Time.time / (dayDurationInMinutes * 30)) + 1) / 2;
-
-            smh.midtones.value = Vector4.Lerp(startValue, nightValue, lerpValue);
+            // float lerpValue = (Mathf.Cos(Mathf.PI * Time.time / (dayDurationInMinutes * 30)) + 1) / 2;
+            //
+            // smh.midtones.value = Vector4.Lerp(startValue, nightValue, lerpValue);
+            smh.midtones.value = nightValue;
         }
     }
 }
