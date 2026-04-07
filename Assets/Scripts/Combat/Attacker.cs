@@ -35,7 +35,7 @@ namespace DigDig2.Combat
 
 		[SerializeField] private bool verboseLogging;
 
-		private readonly Dictionary<string, BindableAttackHitbox> activeAttacks = new( );
+		public readonly Dictionary<string, BindableAttackHitbox> activeAttacks = new( );
 
 		private Animator animator;
 		private float attackCooldownTimer;
@@ -105,7 +105,6 @@ namespace DigDig2.Combat
 				{
 					if ( Time.time - performanceStartTime >= currentPerformingAttack.AttackDuration ) 
 					{
-						Debug.Log("Truing to end attack");
 						EndAttack( true );
 					}
 
@@ -261,7 +260,6 @@ namespace DigDig2.Combat
 				return;
 			}
 
-			Debug.Log("Attack Charge Ended");
 			EndAttack( );
 			chargeStartTime = -1;
 		}
@@ -313,8 +311,6 @@ namespace DigDig2.Combat
 			currentPerformingAttack.Trigger( this, currentPerformingAttackType, Mathf.Clamp( Time.time - chargeStartTime, 0, currentPerformingAttackType.chargeDuration ) );
 			State = CombatState.Performing;
 			performanceStartTime = Time.time;
-            
-            currentPerformingAttack.onPerformEffect?.Play();
 
 			lastPerformedAttackType = currentPerformingAttackType;
 			lastPerformedAttack = currentPerformingAttack;
@@ -354,7 +350,6 @@ namespace DigDig2.Combat
 
 		public void StartHitboxAttack( Attack attack, string id, BindableAttackHitbox bindableAttackHitbox )
 		{
-			Debug.Log("Started hitbox attack with id " + id);
 			bindableAttackHitbox.StartAttack( id, this, attack );
 			activeAttacks[ id ] = bindableAttackHitbox;
 		}

@@ -19,7 +19,9 @@ namespace DigDig2.Combat
 			RaycastHit hit;
 			if (Physics.Raycast(transform.position, transform.forward, out hit, speed * Time.deltaTime))
 			{
-				hitAttack.TriggerIndependent(attacker, hit.point, hitboxID);
+				hitAttack.TriggerIndependent(attacker, hit.point, hitboxID, transform);
+				attacker.activeAttacks[hitboxID].Trigger(hitboxID);
+				transform.position = hit.point;
 				DestroyProjectile();
 			}
 

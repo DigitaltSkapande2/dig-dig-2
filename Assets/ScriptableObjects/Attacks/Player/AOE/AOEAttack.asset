@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f0c4b2054f4761408fe92aced04ae34, type: 3}
   m_Name: AOEAttack
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Combat.AOEAttack
-  attackDuration: 1
+  attackDuration: 0.8
   onPerformEffect: {fileID: 11400000, guid: 9eb55989aac38d6e0b67a610a8ed1c66, type: 2}
   chargeAnimationStateName: Charge
   triggerAnimationStateName: Trigger

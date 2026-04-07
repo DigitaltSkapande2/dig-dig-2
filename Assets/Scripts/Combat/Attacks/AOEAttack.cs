@@ -48,9 +48,8 @@ namespace DigDig2.Combat
         public override void AnimationEvent(Attacker attacker, AttackType attackGroup, string animEventName)
         {
 			if (animEventName != "TriggerAOE") return;
-
-			Debug.Log("AnimationEvent Triggered");
 			
+			onPerformEffect?.Play();
 			Vector3 forwardVector = attacker.GetComponent<EntityCharacterController>().GetForwardVector();
             Vector3 centerOffset = forwardVector * aoeForwardOffset;
             BindableAttackHitbox hitbox = Instantiate(hitboxPrefab, attacker.transform.position + centerOffset, Quaternion.identity).GetComponent<BindableAttackHitbox>();
@@ -61,9 +60,9 @@ namespace DigDig2.Combat
 			attacker.PushInDirection( Vector3.forward, -10 );
         }
 
-		public void TriggerIndependent(Attacker attacker, Vector3 position, string hitboxID)
+		public void TriggerIndependent(Attacker attacker, Vector3 position, string hitboxID, Transform parent)
 		{
-            BindableAttackHitbox hitbox = Instantiate(hitboxPrefab, position, Quaternion.identity).GetComponent<BindableAttackHitbox>();
+            BindableAttackHitbox hitbox = Instantiate(hitboxPrefab, position, Quaternion.identity, parent).GetComponent<BindableAttackHitbox>();
 			independentID = hitboxID;
 			attacker.StartHitboxAttack( this, independentID, hitbox);
 		}
@@ -71,6 +70,7 @@ namespace DigDig2.Combat
 		public override void Ended( Attacker attacker, AttackType attackGroup )
 		{
 			attacker.EndHitboxAttack( triggerAnimationStateName );
+			attacker.RemoveMoveSpeedDebuff(chargeAnimationStateName);
 		}
 
 		public override void Hit( Attacker attacker, Attackable attackable, Health healthComponent, EntityCharacterController entityCharacterController )

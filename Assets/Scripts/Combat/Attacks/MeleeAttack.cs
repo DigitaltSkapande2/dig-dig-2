@@ -22,6 +22,7 @@ namespace DigDig2.Combat.Attacks
 		public override void Trigger( Attacker attacker, AttackType attackGroup, float chargeTime )
 		{
 			if ( hasTrailEffect ) attacker.GetattackTrailRenderer( ).enabled = true;
+			onPerformEffect?.Play();
 			attacker.PlayAnimation( animationStateName );
 			attacker.StartHitboxAttack( this, animationStateName, attacker.GetBindableAttackHitbox( bindableAttackHitboxIndex ) );
 			attacker.AddMoveSpeedDebuff( animationStateName, attacker.GetBaseMoveSpeed( ) );
