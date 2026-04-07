@@ -12,23 +12,7 @@
   <component name="ChangeListManager">
     <list default="true" id="50c3eb56-0f37-4789-a838-f82a855a30c4" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.dig-dig-2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.dig-dig-2/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Models/Enemies/Ranged/squid_enemy_ranged_Finished Variant.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Models/Enemies/Ranged/squid_enemy_ranged_Finished Variant.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Models/Structures/Interactables/MovingWall Variant.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Models/Structures/Interactables/MovingWall Variant.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Water.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Water.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/GameScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/GameScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/CinemaCamera/CameraEffectors/PlayerFollowCameraEffector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CinemaCamera/CameraEffectors/PlayerFollowCameraEffector.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/CinemaCamera/GameCamera.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CinemaCamera/GameCamera.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Combat/Health.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Combat/Health.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/GameManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/LoadingScreenManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/LoadingScreenManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/CharacterSelectSequencer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/CharacterSelectSequencer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerCharacterController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerCharacterController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SaveSystem/SaveManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SaveSystem/SaveManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/Controllers/GameHudController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/Controllers/GameHudController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/Controllers/MainMenuController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/Controllers/MainMenuController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/Controllers/PauseMenuController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/Controllers/PauseMenuController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/UI/GameHud/Layout.uxml" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UI/GameHud/Layout.uxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/UI/GameHud/Style.uss" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UI/GameHud/Style.uss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -225,7 +209,7 @@
   </component>
   <component name="RunManager" selected="Unity Attach To.Attach to">
     <configuration name="Standalone Player" type="RunUnityExe" factoryName="Unity Executable">
-      <option name="EXE_PATH" value="$PROJECT_DIR$/../WhiskersOfTheTideWin/5april/LinuxOfTheTide5April/WhiskersofTheTide5April.x86_64" />
+      <option name="EXE_PATH" value="$PROJECT_DIR$/../WhiskersOfTheTideWin/7april/LinuxOfTheTide/WhiskersofTheTide7April.x86_64" />
       <option name="PROGRAM_PARAMETERS" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../Builds" />
       <option name="PASS_PARENT_ENVS" value="1" />
@@ -336,7 +320,8 @@
       <workItem from="1774819077348" duration="10629000" />
       <workItem from="1775382511515" duration="1892000" />
       <workItem from="1775405983105" duration="11101000" />
-      <workItem from="1775481791191" duration="14958000" />
+      <workItem from="1775481791191" duration="23624000" />
+      <workItem from="1775555913882" duration="8027000" />
     </task>
     <servers />
   </component>

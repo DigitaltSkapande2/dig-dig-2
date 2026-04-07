@@ -139,6 +139,8 @@ namespace DigDig2.UI.Controllers
             PlayerController maxCharacterObj = gameManager.playerControllers[gameManager.maxPlayerID];
             PlayerController minisCharacterObj = gameManager.playerControllers[gameManager.minisPlayerID];
             
+            ClearGrayTint(maxContainer);
+            ClearGrayTint(minisContainer);
             
             // Setup Health callbacks
             Health maxHealthComponent = maxCharacterObj.health;
@@ -148,9 +150,15 @@ namespace DigDig2.UI.Controllers
             Health minisHealthComponent = minisCharacterObj.health;
             minisHealthComponent.healthChanged.AddListener( (health) => UpdateHealthBar( minisHealthBarImage, health) );
             UpdateHealthBar( maxHealthBarImage, minisHealthComponent.HealthPoints );
-            
-            
-            gameManager.playerDeath.AddListener(OnPlayerDeath);
+
+
+            foreach (var player in gameManager.playerControllers)
+            {
+                player.health.death.AddListener( _ =>
+                {
+                    OnPlayerDeath(player);
+                });
+            }
         }
 
         private void ForEachChild(VisualElement rootElement, Action<VisualElement> func)
@@ -177,6 +185,11 @@ namespace DigDig2.UI.Controllers
         private void SetGrayTint(VisualElement element)
         {
             element.AddToClassList("grayscale");
+        }
+
+        private void ClearGrayTint(VisualElement element)
+        {
+            element.RemoveFromClassList("grayscale");
         }
 
         private void FetchMultiPlayerUIDocumentReferences()

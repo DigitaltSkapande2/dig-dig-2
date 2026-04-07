@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 using UnityEngine;
@@ -74,9 +75,14 @@ namespace DigDig2.Input
 		}
 
 		private void OnDisable( ) { Deregister( ); }
-        
 
-		#region Input
+        private void OnDestroy()
+        {
+            Deregister( );
+        }
+
+
+        #region Input
 
 		// ReSharper disable once MemberCanBeMadeStatic.Global
 		public void SendInput( InputAction.CallbackContext context, InputPlayer inputPlayer, int inputPlayerIndex )

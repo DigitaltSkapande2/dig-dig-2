@@ -1,10 +1,7 @@
-using System;
-using System.Collections;
 using Cysharp.Threading.Tasks;
 using DigDig2.CinemaCamera;
 using UnityEngine;
 using DigDig2.Combat;
-using DigDig2.Debugging;
 using DigDig2.EffectSystem;
 using DigDig2.Input;
 using DigDig2.Game;
@@ -58,21 +55,17 @@ namespace DigDig2.Player
 
         #region Dissolve & Death
 
-        public async void OnDeath(GameObject _)
+        private async void OnDeath(GameObject _)
         {
             entityCharacterController.Frozen = true;
+
             if (GameManager.Instance.IsMultiplayer)
-            {
-                multiplayerDeathEffectPlayer?.Play( transform.position, Quaternion.identity, Vector3.one );
-                await Disappear(true);
-                GameManager.Instance.RegisterCharacterDeath(gameObject);
-            }
+                multiplayerDeathEffectPlayer?.Play(transform.position, Quaternion.identity, Vector3.one);
             else
-            {
-                singleplayerDeathEffectPlayer?.Play( transform.position, Quaternion.identity, Vector3.one );
-                await Disappear(true);
-                GameManager.Instance.RegisterCharacterDeath(gameObject); 
-            }
+                singleplayerDeathEffectPlayer?.Play(transform.position, Quaternion.identity, Vector3.one);
+
+            await Disappear(true);
+            GameManager.Instance.RegisterCharacterDeath();
         }
 
         public async UniTask Disappear( bool destroyAfter )
