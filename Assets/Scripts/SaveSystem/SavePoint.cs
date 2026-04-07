@@ -4,6 +4,7 @@ using DigDig2.CinemaCamera.CameraEffectors;
 using DigDig2.Debugging;
 using DigDig2.EffectSystem;
 using DigDig2.Game;
+using DigDig2.Player;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -29,8 +30,6 @@ namespace DigDig2.SaveSystem
         {
             collider = GetComponent<Collider>();
         }
-        
-        
         
         public void PlayMultiplayerStartSequence()
         {
@@ -77,6 +76,14 @@ namespace DigDig2.SaveSystem
 
             SetSpawnPointReached(true);
             onReachedEffect?.Play();
+
+            if (SaveManager.Instance.isMultiplayer)
+            {
+                foreach (PlayerController player in GameManager.Instance.playerControllers)
+                {
+                    if (!player.IsAlive) player.ReSpawnCharacter(singlePlayerSpawnPoint.transform.position);
+                }
+            }
             
             SaveManager.Instance.SaveAllAndWriteToFile();
         }

@@ -58,8 +58,11 @@ namespace DigDig2.Game
         [SerializeField] public PlayerController[] playerControllers = new PlayerController[2];
         public PlayerController PlayerOne => playerControllers[0];
         public PlayerController PlayerTwo => playerControllers[1];
-        public int maxPlayerID;
-        public int minisPlayerID;
+        [NonSerialized] public int maxPlayerID = -1;
+        [NonSerialized] public int maxInputPlayerIndex = -1;
+        [NonSerialized] public int minisPlayerID = -1;
+        [NonSerialized] public int minisInputPlayerIndex = -1;
+        [NonSerialized] public bool hasCharacterBeenSelected = false;
         public PlayerController playerMax => playerControllers[maxPlayerID];
         public PlayerController playerMinis => playerControllers[minisPlayerID];
 
@@ -70,9 +73,6 @@ namespace DigDig2.Game
                 return playerControllers.Select(p => p.characterObject).ToArray();
             }
         }
-
-        public UnityEvent<PlayerController> playerDeath = new();
-
         
         private PauseMenuController pauseMenuController;
         private GameHudController gameHudController;
@@ -125,6 +125,7 @@ namespace DigDig2.Game
             SaveManager.Instance.SaveAllAndWriteToFile();
 			LoadingScreenManager.Instance.LoadScene( 0 );
             Destroy(gameObject);
+            Destroy(SaveManager.Instance);
         }
 
         public async UniTask ReloadGameScene()
@@ -136,19 +137,15 @@ namespace DigDig2.Game
             await LoadingScreenManager.Instance.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
         }
 
-        public void RegisterCharacterDeath(GameObject characterObject)
+        public void RegisterCharacterDeath()
         {
             bool playerIsAlive = false;
             foreach (PlayerController player in playerControllers)
             {
-                if (player != null)
+                if (player != null &&  player.IsAlive)
                 {
-                    if (player.characterObject == characterObject) playerDeath.Invoke(player);
-                    if (player.IsAlive)
-                    {
-                        BetterDebug.Log(player.name  + " is alive!");
-                        playerIsAlive = true;
-                    }
+                    BetterDebug.Log(player.name  + " is alive!");
+                    playerIsAlive = true;
                 }
             }
             
@@ -176,7 +173,6 @@ namespace DigDig2.Game
             newPlayerController.SetCharacterObject(newCharacter); // MUST BE DONE FIRST
             
             newPlayerController.entityController.Teleport(spawnPosition, spawnRotation.eulerAngles.y);
-            newPlayerController.health.death.AddListener(RegisterCharacterDeath);
 
             playerControllers[0] = newPlayerController;
                 
@@ -187,16 +183,35 @@ namespace DigDig2.Game
 
         #region Multiplayer
 
-        public void RegisterMultiplayerPlayers(PlayerController playerOne, PlayerController playerTwo)
+        public void RegisterMultiplayerPlayers(PlayerController playerOne, int playerOneInputPlayerIndex, PlayerController playerTwo, int playerTwoInputPlayerIndex)
         {
             playerControllers[0] = playerOne;
             playerControllers[1] = playerTwo;
+            hasCharacterBeenSelected = true;
 
-            maxPlayerID = playerOne.characterType == CharacterType.Max ? 0 : 1;
-            minisPlayerID = playerOne.characterType == CharacterType.Minis ? 0 : 1;
+            if (playerOne.characterType == CharacterType.Max)
+            {
+                maxPlayerID = 0;
+                maxInputPlayerIndex = playerOneInputPlayerIndex;
+                minisPlayerID = 1;
+                minisInputPlayerIndex = playerTwoInputPlayerIndex;
+            }
+            else
+            {
+                maxPlayerID = 1;
+                maxInputPlayerIndex = playerTwoInputPlayerIndex;
+                minisPlayerID = 0;
+                minisInputPlayerIndex = playerOneInputPlayerIndex;
+            }
             Debug.Log("GAMEMANAGER: Multiplayer Characters registered!");
         }
 
+        #endregion
+        
+        #region Player Spawning
+        
+        
+            
         #endregion
 
         #region Pausing

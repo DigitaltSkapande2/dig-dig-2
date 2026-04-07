@@ -94,10 +94,33 @@ namespace DigDig2
             playerOneReadyIcon = ((VisualElement)playerOneCharacterImage.Query("checkBox")).Query("ReadyIcon");
             playerTwoCharacterImage = playerBoundingBox.Query("PlayerTwo");
             playerTwoReadyIcon = ((VisualElement)playerTwoCharacterImage.Query("checkBox")).Query("ReadyIcon");
-            
+
             playerOneCharacterImage.visible = false;
             playerTwoCharacterImage.visible = false;
+
+            if (GameManager.Instance.maxPlayerID == -1 || GameManager.Instance.minisPlayerID == -1)
+            {
+                return;
+            }
+
+            if (GameManager.Instance.maxPlayerID == 0)
+            {
+                playerOneInputPlayerindex = GameManager.Instance.maxInputPlayerIndex;
+                playerTwoInputPlayerindex = GameManager.Instance.minisInputPlayerIndex;
+                playerOneNavigation = 1;
+                playerTwoNavigation = -1;
+            }
+            else
+            {
+                playerOneInputPlayerindex = GameManager.Instance.minisInputPlayerIndex;
+                playerTwoInputPlayerindex = GameManager.Instance.maxInputPlayerIndex;
+                playerOneNavigation = -1;
+                playerTwoNavigation = 1;
+            }
+
+            StartGame();
         }
+
 
         #endregion
 
@@ -198,13 +221,13 @@ namespace DigDig2
         {
             if (!info.context.started) return;
             print(info.context.ReadValue<Vector2>());
-            if (info.inputPlayerIndex == playerOneInputPlayerindex)
+            if (info.inputPlayerIndex == playerOneInputPlayerindex && !playerOneReady)
             {
                 Vector2 input = info.context.ReadValue<Vector2>();
                 playerOneNavigation += Math.Sign(input.x);
                 playerOneNavigation = Math.Clamp(playerOneNavigation, -1, 1);
             }
-            else if (info.inputPlayerIndex == playerTwoInputPlayerindex)
+            else if (info.inputPlayerIndex == playerTwoInputPlayerindex && !playerTwoReady)
             {
                 Vector2 input = info.context.ReadValue<Vector2>();
                 playerTwoNavigation += Math.Sign(input.x);
@@ -236,6 +259,7 @@ namespace DigDig2
             playerOneCharacterInstance.transform.SetParent(playerOneController.transform);
             playerOneController.SetCharacterObject(playerOneCharacterInstance);
             playerOneController.characterType = playerOneIsMax ? CharacterType.Max : CharacterType.Minis;
+            playerOneController.SetCharacterPrefab(playerOneIsMax ? maxPrefab : minisPrefab);
             playerOneController.name = $"PlayerOneController {playerOneController.characterType}";
             playerOneController.SetInputPlayerIDRecursive(playerOneInputPlayerindex);
             
@@ -243,13 +267,16 @@ namespace DigDig2
             playerTwoCharacterInstance.transform.SetParent(playerTwoController.transform);
             playerTwoController.SetCharacterObject(playerTwoCharacterInstance);
             playerTwoController.characterType = playerOneIsMax ? CharacterType.Minis : CharacterType.Max;
+            playerTwoController.SetCharacterPrefab(playerOneIsMax ? minisPrefab : maxPrefab);
             playerTwoController.name = $"PlayerTwoController {playerTwoController.characterType}";
             playerTwoController.SetInputPlayerIDRecursive(playerTwoInputPlayerindex);
             
             // finalize
             GameManager.Instance.RegisterMultiplayerPlayers(
                 playerOneController, 
-                playerTwoController 
+                playerOneInputPlayerindex,
+                playerTwoController,
+                playerTwoInputPlayerindex
             );
             
             playerOneController.entityController.Frozen = false;

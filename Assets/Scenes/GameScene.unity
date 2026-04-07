@@ -12144,8 +12144,16 @@ PrefabInstance:
       value: GameManager
       objectReference: {fileID: 0}
     - target: {fileID: 6443512540634913117, guid: c4def05584750e44487f095b637b62b5, type: 3}
+      propertyPath: maxPlayerID
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6443512540634913117, guid: c4def05584750e44487f095b637b62b5, type: 3}
+      propertyPath: minisPlayerID
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6443512540634913117, guid: c4def05584750e44487f095b637b62b5, type: 3}
       propertyPath: dontDestroyOnLoad
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6443512540634913117, guid: c4def05584750e44487f095b637b62b5, type: 3}
       propertyPath: 'crystals.Array.data[0]'

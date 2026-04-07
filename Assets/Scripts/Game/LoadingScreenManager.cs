@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Linq;
 using Cysharp.Threading.Tasks;
@@ -16,22 +17,19 @@ namespace DigDig2.Game
 
 		private VisualElement screenCover;
 		private VisualElement loadingIndicator;
+        
 
-		
+        private void Start()
+        {
+            uiDocument = GetComponent<UIDocument>( );
 
-		protected override void Awake( )
-		{
-			base.Awake( );
+            if (screenCover == null) screenCover = uiDocument.rootVisualElement.Query<VisualElement>( "Cover" );
+            if (loadingIndicator == null) loadingIndicator = screenCover.Query<VisualElement>( "Indicator" );
 
-			uiDocument = GetComponent<UIDocument>( );
+            PlayFadeOut( ).Forget( );
+        }
 
-			screenCover = uiDocument.rootVisualElement.Query<VisualElement>( "Cover" );
-			loadingIndicator = screenCover.Query<VisualElement>( "Indicator" );
-
-			PlayFadeOut( ).Forget( );
-		}
-
-		public void LoadScene( int sceneBuildIndex )
+        public void LoadScene( int sceneBuildIndex )
 		{
 			LoadSceneAsync( sceneBuildIndex ).Forget( );
 		}

@@ -32,6 +32,8 @@ namespace DigDig2.Player
         [SerializeField] private float cooldown;
         
         private float lastTimeSwitched;
+
+        private GameObject characterPrefab;
         
 		// Interactors
 		private Interactor interactor;
@@ -81,11 +83,35 @@ namespace DigDig2.Player
         public void SetCharacterObject(GameObject newCharacter)
         {
             if (characterObject) playerCharacterController.Disappear(true).Forget();
+            
+            if (!newCharacter.transform.IsChildOf(transform)) newCharacter.transform.SetParent(transform);
             characterObject = newCharacter;
             playerCharacterController = newCharacter.GetComponent<PlayerCharacterController>();
             entityController = newCharacter.GetComponent<EntityCharacterController>();
             
             health = newCharacter.GetComponent<Health>();
+        }
+
+        public void SetCharacterPrefab(GameObject newcharacterPrefab)
+        {
+            this.characterPrefab = newcharacterPrefab;
+        }
+
+        public void ReSpawnCharacter(Vector3 position)
+        {
+            if (characterObject)
+            {
+                BetterDebug.Log($"trying to respawn already spawned player {characterObject.name}", LogSeverity.Warning);
+                return;
+            }
+            if (!characterPrefab)
+            {
+                BetterDebug.Log($"{name} trying to respawn its character but no Prefab has been set", LogSeverity.Warning);
+                return;
+            }
+
+            SetCharacterObject(Instantiate(characterPrefab, position, Quaternion.identity));
+            SetInputPlayerIDRecursive(transform, inputPlayerIndex);
         }
         
         #endregion
@@ -95,8 +121,10 @@ namespace DigDig2.Player
         // -- INPUT METHOD -- //
         public void OnInputGameSwitchCharacter(InputInfo inputInfo)
         {
-            if (inputInfo.context.started && Time.time - lastTimeSwitched > cooldown &&
-                !gameManager.IsMultiplayer) Invoke(nameof(SingleplayerSwitchCharacter), 0.03f);
+            if (inputInfo.context.started && Time.time - lastTimeSwitched > cooldown && !gameManager.IsMultiplayer)
+            {
+                Invoke(nameof(SingleplayerSwitchCharacter), 0.03f);
+            }
         }
         
         public async void SingleplayerSwitchCharacter()
@@ -106,6 +134,7 @@ namespace DigDig2.Player
                 BetterDebug.Log( "Tried to switch character in multiplayer mode, this is not allowed.", LogSeverity.Error );
             }
             
+            lastTimeSwitched = Time.time;
             Vector3 oldPlayerPos = characterObject.transform.position;
             
             // get New Character Type
