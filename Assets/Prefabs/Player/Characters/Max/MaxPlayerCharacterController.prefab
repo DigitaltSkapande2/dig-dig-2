@@ -166,6 +166,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  dashVFX: {fileID: 1164710485556655839, guid: cb9d79279fa464245abb967ea084873a, type: 3}
 --- !u!114 &8839264378030991054
 MonoBehaviour:
   m_ObjectHideFlags: 0

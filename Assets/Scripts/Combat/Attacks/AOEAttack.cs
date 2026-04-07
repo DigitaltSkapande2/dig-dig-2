@@ -20,6 +20,7 @@ namespace DigDig2.Combat
 
 		private Vector3 lastHitboxPosition;
 		private float lastChargeTime;
+		private string independentID;
 
 		public override void ChargeStart( Attacker attacker, AttackType attackType )
 		{
@@ -47,6 +48,8 @@ namespace DigDig2.Combat
         public override void AnimationEvent(Attacker attacker, AttackType attackGroup, string animEventName)
         {
 			if (animEventName != "TriggerAOE") return;
+
+			Debug.Log("AnimationEvent Triggered");
 			
 			Vector3 forwardVector = attacker.GetComponent<EntityCharacterController>().GetForwardVector();
             Vector3 centerOffset = forwardVector * aoeForwardOffset;
@@ -58,9 +61,15 @@ namespace DigDig2.Combat
 			attacker.PushInDirection( Vector3.forward, -10 );
         }
 
+		public void TriggerIndependent(Attacker attacker, Vector3 position, string hitboxID)
+		{
+            BindableAttackHitbox hitbox = Instantiate(hitboxPrefab, position, Quaternion.identity).GetComponent<BindableAttackHitbox>();
+			independentID = hitboxID;
+			attacker.StartHitboxAttack( this, independentID, hitbox);
+		}
+
 		public override void Ended( Attacker attacker, AttackType attackGroup )
 		{
-			attacker.RemoveMoveSpeedDebuff( chargeAnimationStateName );
 			attacker.EndHitboxAttack( triggerAnimationStateName );
 		}
 

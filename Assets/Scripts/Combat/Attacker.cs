@@ -103,7 +103,11 @@ namespace DigDig2.Combat
 				}
 				case CombatState.Performing:
 				{
-					if ( Time.time - performanceStartTime >= currentPerformingAttack.AttackDuration ) EndAttack( true );
+					if ( Time.time - performanceStartTime >= currentPerformingAttack.AttackDuration ) 
+					{
+						Debug.Log("Truing to end attack");
+						EndAttack( true );
+					}
 
 					break;
 				}
@@ -350,6 +354,7 @@ namespace DigDig2.Combat
 
 		public void StartHitboxAttack( Attack attack, string id, BindableAttackHitbox bindableAttackHitbox )
 		{
+			Debug.Log("Started hitbox attack with id " + id);
 			bindableAttackHitbox.StartAttack( id, this, attack );
 			activeAttacks[ id ] = bindableAttackHitbox;
 		}

@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1364313220727672859}
   - component: {fileID: 5157565281986007563}
-  - component: {fileID: 6157267824931984468}
   - component: {fileID: 6125296657685598787}
   - component: {fileID: 4073095900257206370}
   m_Layer: 0
@@ -48,27 +47,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bac83335b7709d547b97a781863d5e00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Projectile
+  hitAttack: {fileID: 11400000, guid: e44151907fa296f4f96f3dd5f0a3908a, type: 2}
   hitEffect: {fileID: 6931098926697571914, guid: 089616541135d5146a3f22e635605a69, type: 3}
   layerMask:
     serializedVersion: 2
     m_Bits: 65
   onHitEffect: {fileID: 11400000, guid: 1c44e8a50f645dfd491ad2613b2a54de, type: 2}
---- !u!114 &6157267824931984468
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2449068539807903354}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f34981b6f187eedd5a6b03e7f76f142b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DigDig2.BindableAttackHitbox
-  shape: 0
-  boxSize: {x: 1.2, y: 1.2, z: 1.2}
-  sphereRadius: 1
-  unitsPerIntermediateCheck: 0.05
 --- !u!65 &6125296657685598787
 BoxCollider:
   m_ObjectHideFlags: 0

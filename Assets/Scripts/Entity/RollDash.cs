@@ -10,6 +10,7 @@ namespace DigDig2.Entity
         [SerializeField] float dashDuration = 0.5f;
         [SerializeField] private float dashCooldown = 0.7f;
         [SerializeField] AnimationCurve dashCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
+        [SerializeField] GameObject dashVFX;
 
         private Vector3 dashVelocity;
         private float lastTimeDashed = 0;
@@ -21,6 +22,8 @@ namespace DigDig2.Entity
             BetterDebug.Log("START Dashing");
             BetterDebug.Log(" Dashing dir " + direction);
             float elapsed = 0f;
+
+            Instantiate(dashVFX, transform.position - Vector3.up, Quaternion.identity, transform).transform.forward = -direction;
 
             while (elapsed < dashDuration)  
             {

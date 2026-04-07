@@ -5,6 +5,7 @@ namespace DigDig2.Combat
 {
 	public class Projectile : MonoBehaviour
 	{
+		[SerializeField] AOEAttack hitAttack;
 		[SerializeField] private GameObject hitEffect;
 		[SerializeField] private LayerMask layerMask;
         [SerializeField] private EffectPlayer onHitEffect;
@@ -13,22 +14,23 @@ namespace DigDig2.Combat
 		private string hitboxID;
 		private float speed;
 
-		private void Update( ) { transform.position += speed * Time.deltaTime * transform.forward; }
+		private void Update( ) 
+		{
+			RaycastHit hit;
+			if (Physics.Raycast(transform.position, transform.forward, out hit, speed * Time.deltaTime))
+			{
+				hitAttack.TriggerIndependent(attacker, hit.point, hitboxID);
+				DestroyProjectile();
+			}
 
-        private void OnTriggerEnter(Collider other)
-        {
-            onHitEffect?.Play();
-            DestroyProjectile( );
-        }
+			transform.position += speed * Time.deltaTime * transform.forward; 
+		}
 
 		public void SetInfo( Attack attack, Attacker attacker, float speed, float lifeTime )
 		{
 			hitboxID = Time.time.ToString( );
 			this.attacker = attacker;
 			this.speed = speed;
-
-			BindableAttackHitbox projectileBindableAttackHitbox = GetComponent<BindableAttackHitbox>( );
-			attacker.StartHitboxAttack( attack, hitboxID, projectileBindableAttackHitbox );
 
 			Invoke( nameof( DestroyProjectile ), lifeTime );
 		}
