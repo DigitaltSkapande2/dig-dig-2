@@ -31,19 +31,15 @@ namespace DigDig2.Combat.Attacks
 
 		public override void Trigger( Attacker attacker, AttackType attackGroup, float chargeTime )
 		{
-			Debug.Log( "Hello i am a ranged attack" );
-			onPerformEffect?.Play();
 			attacker.PlayAnimation( triggerAnimationStateName );
 			attacker.AddMoveSpeedDebuff( triggerAnimationStateName, attacker.GetBaseMoveSpeed( ) / 2 );
-			Vector3 forward = attacker.GetComponent<EntityCharacterController>( ).GetForwardVector( );
-			Projectile projectile = Instantiate( projectilePrefab, attacker.transform.position + forward, quaternion.LookRotation( forward, Vector3.up ) ).GetComponent<Projectile>( );
-			projectile.SetInfo( this, attacker, projectileSpeed, projectileLifetime );
 		}
 
 		public override void AnimationEvent(Attacker attacker, AttackType attackGroup, string animEventName)
 		{
 			if (animEventName == "Trigger")
 			{
+				Debug.Log( "Hello i am a ranged attack" );
 				onPerformEffect?.Play();
 				Vector3 forward = attacker.GetComponent<EntityCharacterController>( ).GetForwardVector( );
 				Projectile projectile = Instantiate( projectilePrefab, attacker.transform.position + forward, quaternion.LookRotation( forward, Vector3.up ) ).GetComponent<Projectile>( );

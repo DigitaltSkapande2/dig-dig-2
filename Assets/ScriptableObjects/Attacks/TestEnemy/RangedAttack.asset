@@ -12,10 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 646c568138afd454fb3cdfd4d433b498, type: 3}
   m_Name: RangedAttack
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.RangedAttack
-  attackDuration: 0.75
+  attackDuration: 1.75
   onPerformEffect: {fileID: 11400000, guid: 78069f44225caa3c68112e0aa5ce19cd, type: 2}
-  animationStateName: LightAttack1
+  chargeAnimationStateName: 
+  triggerAnimationStateName: MeleeAttack
   damage: 1
+  chargingMoveSpeedFactor: 0
   projectilePrefab: {fileID: 2449068539807903354, guid: b1bdaad8516f55a489aa29ba4138aa5a, type: 3}
   projectileSpeed: 45
   projectileLifetime: 1
