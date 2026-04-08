@@ -23,7 +23,11 @@ namespace DigDig2.Combat.Attacks
 
 		public override void Charge( Attacker attacker, AttackType attackType, float chargeTime ) { }
 
-		public override void ChargeFull( Attacker attacker, AttackType attackType ) { }
+		public override void ChargeFull( Attacker attacker, AttackType attackType )
+		{
+			attacker.RemoveMoveSpeedDebuff(chargeAnimationStateName);
+			attacker.AddMoveSpeedDebuff(chargeAnimationStateName, attacker.GetBaseMoveSpeed( ) / 2);
+		}
 
 		public override void Trigger( Attacker attacker, AttackType attackGroup, float chargeTime )
 		{

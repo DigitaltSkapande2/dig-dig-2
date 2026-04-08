@@ -51,7 +51,7 @@ MonoBehaviour:
   hitEffect: {fileID: 6931098926697571914, guid: 089616541135d5146a3f22e635605a69, type: 3}
   layerMask:
     serializedVersion: 2
-    m_Bits: 65
+    m_Bits: 3137
   onHitEffect: {fileID: 11400000, guid: 1c44e8a50f645dfd491ad2613b2a54de, type: 2}
 --- !u!65 &6125296657685598787
 BoxCollider:

@@ -1,4 +1,6 @@
+using DigDig2.EffectSystem;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Splines;
 
 namespace DigDig2
@@ -9,13 +11,13 @@ namespace DigDig2
 		[SerializeField] private AnimationCurve positionCurve;
 
 		[SerializeField] private SplineContainer path;
+		[SerializeField] private EffectPlayer effect;
 
 		[SerializeField] private bool reusable;
+		[SerializeField] private UnityEvent triggerEvent;
 		private int splineIndex;
 
-		private Vector3 startPos;
 		private float time;
-
 		private bool triggered;
 
 		private void Update( )
@@ -40,7 +42,10 @@ namespace DigDig2
 
 		public void Trigger( )
 		{
-			startPos = transform.position;
+			if (triggered) return;
+
+			effect?.Play();
+			triggerEvent.Invoke();
 			triggered = true;
 		}
 	}
