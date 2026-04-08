@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Numerics;
 using Cysharp.Threading.Tasks;
 using DigDig2.Combat;
 using DigDig2.Debugging;
+using DigDig2.EffectSystem;
 using DigDig2.Game;
 using DigDig2.Input;
 using DigDig2.Player.Interaction;
@@ -10,6 +12,8 @@ using DigDig2.Entity;
 
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Quaternion = UnityEngine.Quaternion;
+using Vector3 = UnityEngine.Vector3;
 
 namespace DigDig2.Player
 {
@@ -20,6 +24,9 @@ namespace DigDig2.Player
         public int inputPlayerIndex = -1;
         public List<InputDevice> inputDevice;
         public bool IsAlive => health?.IsAlive ?? false;
+        [SerializeField] private EffectPlayer switchToMaxEffect;
+        [SerializeField] private EffectPlayer switchToMinisEffect;
+        [SerializeField] private float effectOffsetFromGround;
         
         // Character
         [NonSerialized] public PlayerCharacterController playerCharacterController;
@@ -139,6 +146,9 @@ namespace DigDig2.Player
             
             // get New Character Type
             CharacterType newCharacterType = characterType == CharacterType.Max ? CharacterType.Minis : CharacterType.Max;
+            
+            (newCharacterType == CharacterType.Max ? switchToMaxEffect : switchToMinisEffect).Play( oldPlayerPos + Vector3.up * effectOffsetFromGround );
+            
             BetterDebug.Log($"NEW character: {newCharacterType}");
             // Spawn new player
             GameObject newPrefab = gameManager.GetCharacterPrefabFromCharacterType(newCharacterType);
@@ -153,6 +163,7 @@ namespace DigDig2.Player
             TransferCharacterData(characterObject, newCharacterObj[0]);
             SetCharacterObject(newCharacterObj[0]);
             playerCharacterController.shouldStartDissolved = true;
+
             
             gameManager.characterSwitched.Invoke(characterType, newCharacterObj[0]);
         }

@@ -81,7 +81,8 @@ namespace DigDig2.Player.Combat
                     ScanForAttackables();
                     await UniTask.Delay(200, cancellationToken: ct);
                 }
-                await UniTask.Delay(200, cancellationToken: ct);
+
+                await UniTask.Yield(PlayerLoopTiming.FixedUpdate, ct);
                 // else
                 // {
                 //     BetterDebug.Log("AOFKG+ekg");
