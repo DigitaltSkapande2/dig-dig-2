@@ -43,7 +43,11 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _BottomY: -15.3
     - _NormalMapIntensity: 1
-    m_Colors: []
+    - _TopY: 1
+    m_Colors:
+    - _BottomColor: {r: 0.2754717, g: 0.026507648, b: 0.026507648, a: 1}
+    - _TopColor: {r: 0.4037736, g: 0.24033771, b: 0.15465288, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
