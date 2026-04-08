@@ -18,6 +18,8 @@ namespace DigDig2.Player
         [Header("Dissolve Visuals")]
         [SerializeField] private SkinnedMeshRenderer[ ] targetMeshRenderers;
         [SerializeField] private string dissolveFloatName = "_DissolveAmount";
+        [SerializeField] private string dissolveColorName = "_DissolveColor";
+        [SerializeField] private Color deathDissolveColor;
 
         private Health health;
         private Attacker attacker;
@@ -27,6 +29,7 @@ namespace DigDig2.Player
 
         public bool shouldStartDissolved;
         public Vector2 inputMoveVector = Vector2.zero;
+
 
         private bool isActive = true;
 
@@ -44,7 +47,7 @@ namespace DigDig2.Player
             gameManager = GameManager.Instance;
             mainCamera = GameCamera.Instance?.mainCamera ?? Camera.main;
             
-            if (shouldStartDissolved) DissolveRoutine(1, 0).Forget();
+            if (shouldStartDissolved) DissolveRoutine(1, 0, Color.papayaWhip).Forget();
             isActive = true;
         }
 
@@ -64,19 +67,29 @@ namespace DigDig2.Player
             else
                 singleplayerDeathEffectPlayer?.Play(transform.position, Quaternion.identity, Vector3.one);
 
-            await Disappear(true);
+            await Disappear(true, deathDissolveColor);
             GameManager.Instance.RegisterCharacterDeath();
         }
 
-        public async UniTask Disappear( bool destroyAfter )
+        public async UniTask Disappear( bool destroyAfter, Color dissolveColor)
         {
             isActive = false;
-            await DissolveRoutine(0, 1);
+            await DissolveRoutine(0, 1, dissolveColor);
             if (destroyAfter) Destroy(gameObject);
         }
 
-        private async UniTask DissolveRoutine(float startVal, float targetVal)
+        private async UniTask DissolveRoutine(float startVal, float targetVal, Color color)
         {
+            foreach ( SkinnedMeshRenderer targetMeshRenderer in targetMeshRenderers )
+            {
+                Material[] mats = targetMeshRenderer.materials;
+                foreach ( Material mat in mats )
+                {
+                    mat.SetColor( dissolveColorName, color );
+                }
+                targetMeshRenderer.materials = mats;
+            }
+            
             float newDissolveAmount = startVal;
             while (Mathf.Abs(newDissolveAmount - targetVal) > 0.01f )
             {

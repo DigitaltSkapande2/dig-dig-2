@@ -1,5 +1,6 @@
 using System;
 using Cysharp.Threading.Tasks;
+using DigDig2.Debugging;
 using UnityEngine;
 
 namespace DigDig2.Util
@@ -50,7 +51,7 @@ namespace DigDig2.Util
         {
             if (isTransitioning) return;
             isActive = false;
-            FadeFromTo(targetRenderers, colorVarName, fadeDuration, activatedValue, deactivatedValue, fadeUnactive).Forget();
+            FadeFromTo(targetRenderers, colorVarName, fadeDuration, deactivatedValue, activatedValue, fadeUnactive).Forget();
         }
 
         private async UniTask FadeFromTo(MeshRenderer[] targetRenderers, string varName, float duration, Color fromValue, Color toValue, AnimationCurve curve)
@@ -70,7 +71,9 @@ namespace DigDig2.Util
             }
             
             // Finalize
-            SetColorVal(targetRenderers, varName, toValue);
+            float c = curve.Evaluate(1);
+            Color f = Color.Lerp(fromValue, toValue, c);
+            SetColorVal(targetRenderers, varName, f);
             isTransitioning = false;
         }
 

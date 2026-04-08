@@ -89,7 +89,7 @@ namespace DigDig2.Player
 
         public void SetCharacterObject(GameObject newCharacter)
         {
-            if (characterObject) playerCharacterController.Disappear(true).Forget();
+            if (characterObject) playerCharacterController.Disappear(true, Color.papayaWhip).Forget();
             
             if (!newCharacter.transform.IsChildOf(transform)) newCharacter.transform.SetParent(transform);
             characterObject = newCharacter;

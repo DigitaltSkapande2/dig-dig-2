@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6650042988420217842}
   - component: {fileID: 6619205836259246015}
   - component: {fileID: 3684801610527028645}
+  - component: {fileID: 4654584012588428802}
   m_Layer: 0
   m_Name: Platform
   m_TagString: Untagged
@@ -72,7 +73,46 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   path: {fileID: 60350082067689763}
-  reusable: 1
+  reusable: 0
+  triggerEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4654584012588428802}
+        m_TargetAssemblyTypeName: DigDig2.Util.MaterialColorToggler, Assembly-CSharp
+        m_MethodName: ActivateForDuration
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 8000099762899284563}
+        m_TargetAssemblyTypeName: DigDig2.Util.MaterialColorToggler, Assembly-CSharp
+        m_MethodName: ActivateForDuration
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 7046548164276943154}
+        m_TargetAssemblyTypeName: DigDig2.Util.MaterialColorToggler, Assembly-CSharp
+        m_MethodName: ActivateForDuration
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!65 &3684801610527028645
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -94,6 +134,73 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 6, y: 3, z: 6}
   m_Center: {x: 0, y: 1.5, z: 0}
+--- !u!114 &4654584012588428802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2932009782100011193}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a6e8498556141b398d20f3db76f5992, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Util.MaterialFloatToggler
+  targetRenderers:
+  - {fileID: 7008860569342805676}
+  colorVarName: _GlowColor
+  activatedValue: {r: 0, g: 4.5111203, b: 5.216476, a: 1}
+  deactivatedValue: {r: 0, g: 0.29978666, b: 0.34493518, a: 1}
+  fadeActive:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  fadeUnactive:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: -2.3989944
+      outSlope: -2.3989944
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.07021893
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -0.002410845
+      outSlope: -0.002410845
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.11785716
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  fadeDuration: 0.6
+  isActive: 0
 --- !u!1 &5377027337637364574
 GameObject:
   m_ObjectHideFlags: 0
@@ -307,44 +414,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4433467691967501007, guid: 6597054ffdc9cbe488e80e7642a217e3, type: 3}
       propertyPath: hit.m_PersistentCalls.m_Calls.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4433467691967501007, guid: 6597054ffdc9cbe488e80e7642a217e3, type: 3}
-      propertyPath: hit.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4433467691967501007, guid: 6597054ffdc9cbe488e80e7642a217e3, type: 3}
       propertyPath: hit.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 6619205836259246015}
-    - target: {fileID: 4433467691967501007, guid: 6597054ffdc9cbe488e80e7642a217e3, type: 3}
-      propertyPath: hit.m_PersistentCalls.m_Calls.Array.data[1].m_Target
-      value: 
-      objectReference: {fileID: 2648664824021501247}
-    - target: {fileID: 4433467691967501007, guid: 6597054ffdc9cbe488e80e7642a217e3, type: 3}
-      propertyPath: hit.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4433467691967501007, guid: 6597054ffdc9cbe488e80e7642a217e3, type: 3}
-      propertyPath: hit.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Trigger
-      objectReference: {fileID: 0}
-    - target: {fileID: 4433467691967501007, guid: 6597054ffdc9cbe488e80e7642a217e3, type: 3}
-      propertyPath: hit.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: ActivateForDuration
-      objectReference: {fileID: 0}
-    - target: {fileID: 4433467691967501007, guid: 6597054ffdc9cbe488e80e7642a217e3, type: 3}
-      propertyPath: hit.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
-      value: DigDig2.Util.MaterialColorToggler, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 4433467691967501007, guid: 6597054ffdc9cbe488e80e7642a217e3, type: 3}
-      propertyPath: hit.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_FloatArgument
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4433467691967501007, guid: 6597054ffdc9cbe488e80e7642a217e3, type: 3}
-      propertyPath: hit.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
     - target: {fileID: 6437245124593979683, guid: 6597054ffdc9cbe488e80e7642a217e3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3
@@ -388,88 +463,19 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 2390683898653837072, guid: 6597054ffdc9cbe488e80e7642a217e3, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2648664824021501247}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6597054ffdc9cbe488e80e7642a217e3, type: 3}
---- !u!1 &304896484534702316 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2390683898653837072, guid: 6597054ffdc9cbe488e80e7642a217e3, type: 3}
+--- !u!114 &8000099762899284563 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5336853189981021615, guid: 6597054ffdc9cbe488e80e7642a217e3, type: 3}
   m_PrefabInstance: {fileID: 2672428889002137596}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2648664824021501247
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 304896484534702316}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1a6e8498556141b398d20f3db76f5992, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Util.MaterialFloatToggler
-  targetRenderers:
-  - {fileID: 1202243033841893480}
-  colorVarName: _GlowColor
-  activatedValue: {r: 0, g: 4.5111203, b: 5.216476, a: 1}
-  deactivatedValue: {r: 0, g: 0.29978666, b: 0.34493518, a: 1}
-  fadeActive:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  fadeUnactive:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: -0.77548623
-      outSlope: -0.77548623
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.05
-    - serializedVersion: 3
-      time: 1
-      value: 0.70000076
-      inSlope: -0.002410845
-      outSlope: -0.002410845
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.11785716
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  fadeDuration: 0.6
-  isActive: 0
---- !u!23 &1202243033841893480 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 3871237785094674324, guid: 6597054ffdc9cbe488e80e7642a217e3, type: 3}
-  m_PrefabInstance: {fileID: 2672428889002137596}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8954264091786790623 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6437245124593979683, guid: 6597054ffdc9cbe488e80e7642a217e3, type: 3}
@@ -486,6 +492,10 @@ PrefabInstance:
     - target: {fileID: 2390683898653837072, guid: 6597054ffdc9cbe488e80e7642a217e3, type: 3}
       propertyPath: m_Name
       value: Button
+      objectReference: {fileID: 0}
+    - target: {fileID: 4433467691967501007, guid: 6597054ffdc9cbe488e80e7642a217e3, type: 3}
+      propertyPath: hit.m_PersistentCalls.m_Calls.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4433467691967501007, guid: 6597054ffdc9cbe488e80e7642a217e3, type: 3}
       propertyPath: hit.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -540,6 +550,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6597054ffdc9cbe488e80e7642a217e3, type: 3}
+--- !u!114 &7046548164276943154 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5336853189981021615, guid: 6597054ffdc9cbe488e80e7642a217e3, type: 3}
+  m_PrefabInstance: {fileID: 3159857381267135645}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a6e8498556141b398d20f3db76f5992, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Util.MaterialFloatToggler
 --- !u!4 &8254994618338823614 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6437245124593979683, guid: 6597054ffdc9cbe488e80e7642a217e3, type: 3}
@@ -618,6 +639,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 470002bb98a892c4fbafab69aee68322, type: 3}
+--- !u!23 &7008860569342805676 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 470002bb98a892c4fbafab69aee68322, type: 3}
+  m_PrefabInstance: {fileID: 8540491944001346088}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8146824057584909763 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 470002bb98a892c4fbafab69aee68322, type: 3}

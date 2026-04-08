@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Splines;
 
 namespace DigDig2
@@ -12,7 +13,7 @@ namespace DigDig2
 		[SerializeField] private SplineContainer path;
 
 		[SerializeField] private bool reusable;
-        [SerializeField] private UnityEvent
+        [SerializeField] private UnityEvent<float> triggerEvent;
 		private int splineIndex;
         
 		private float startTime;
@@ -24,6 +25,7 @@ namespace DigDig2
 		public void Trigger( )
 		{
             if (triggered) return;
+            triggerEvent?.Invoke(moveTime);
             startTime = Time.time;
             MovePlatformToTarget().Forget();
         }
@@ -43,14 +45,14 @@ namespace DigDig2
 
                 transform.position = path.EvaluatePosition( splineIndex, pos );
             }
-            
-            if ( reusable )
+
+            if (reusable)
             {
                 splineIndex++;
-                if ( splineIndex >= path.Splines.Count ) splineIndex = 0;
+                if (splineIndex >= path.Splines.Count) splineIndex = 0;
+
+                triggered = false;
             }
-            
-            triggered = false;
         }
 	}
 }

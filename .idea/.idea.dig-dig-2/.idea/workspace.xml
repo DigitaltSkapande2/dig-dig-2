@@ -11,14 +11,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="50c3eb56-0f37-4789-a838-f82a855a30c4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Util/MaterialColorToggler.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Util/MaterialColorToggler.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.dig-dig-2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.dig-dig-2/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Obstacles/MovingPlatform.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Obstacles/MovingPlatform.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Stages/Stage 1.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Stages/Stage 1.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/CinemaCamera/GameCamera.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CinemaCamera/GameCamera.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SaveSystem/SavePoint.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SaveSystem/SavePoint.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerCharacterController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerCharacterController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Util/MaterialColorToggler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Util/MaterialColorToggler.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Util/Movable.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Util/Movable.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/Packages/com.unity.probuilder/Settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/Packages/com.unity.probuilder/Settings.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -332,7 +331,7 @@
       <workItem from="1775481791191" duration="23624000" />
       <workItem from="1775555913882" duration="8027000" />
       <workItem from="1775650017392" duration="7347000" />
-      <workItem from="1775661516989" duration="7280000" />
+      <workItem from="1775661516989" duration="9990000" />
     </task>
     <servers />
   </component>
