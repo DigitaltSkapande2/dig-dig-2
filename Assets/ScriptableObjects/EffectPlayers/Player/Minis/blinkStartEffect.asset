@@ -17,7 +17,7 @@ MonoBehaviour:
     prefabToSpawn:
     - prefab: {fileID: 4470345625133635168, guid: 94944c19ce8d8ed48a670c8d5ab999f0, type: 3}
       hasLifetime: 1
-      lifetime: 3
+      lifetime: 2
   playSound: 0
   audioClipsToPlay: []
   screenShake: 0

@@ -133,11 +133,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1669717697061847897, guid: 0c3548ad1bb33504bb48fbb9333bbcdf, type: 3}
       propertyPath: m_Range
-      value: 10
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 1669717697061847897, guid: 0c3548ad1bb33504bb48fbb9333bbcdf, type: 3}
       propertyPath: m_Intensity
-      value: 10
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2156324537169070974, guid: 0c3548ad1bb33504bb48fbb9333bbcdf, type: 3}
       propertyPath: m_Name
