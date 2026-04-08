@@ -42,6 +42,8 @@ Material:
     - _BottomNoisePower: 0.8
     - _BottomNoiseSize: 27
     - _BottomNoiseSpeed: 0.05
+    - _DissolveAmount: 0
+    - _DissolveNoiseScale: 42.6
     - _QueueControl: 0
     - _QueueOffset: 10
     - _TopFrenselPower: 1.5
