@@ -74,8 +74,9 @@ namespace DigDig2.CinemaCamera
         {
             selfCameraRotation.SetRotationSpeed(speed);
         }
+        
 
-        public void SetTargetRotation(float angle, bool instant = false)
+        public void SetTargetRotation(float angle)
         {
             selfCameraRotation.targetRotation = Quaternion.Euler(0, angle, 0);
         }

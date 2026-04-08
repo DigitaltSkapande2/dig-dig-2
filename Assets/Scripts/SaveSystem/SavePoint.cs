@@ -100,7 +100,7 @@ namespace DigDig2.SaveSystem
 
             if (myId == activeId)
             {
-                GameCamera.Instance.SetTargetRotation(cameraYRotation, true);
+                GameCamera.Instance.SetTargetRotation(cameraYRotation);
                 if (GameManager.Instance.IsMultiplayer)
                 {
                     PlayMultiplayerStartSequence();
