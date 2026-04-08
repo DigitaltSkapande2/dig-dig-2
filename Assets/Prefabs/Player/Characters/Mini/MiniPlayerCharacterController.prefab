@@ -138,10 +138,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa54ff382c67455daba6ae1b2d2d82aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Entity.BlinkDash
-  blinkDisappearTime: 0.1
-  dashLenght: 3.5
+  blinkDisappearTime: 0.2
+  dashLenght: 4
   dashCooldown: 0.5
   maxBlinkDistance: 5
+  blinkStartEffect: {fileID: 11400000, guid: bca486e463b18d210b0dffd44f5bce88, type: 2}
+  blinkEndEffect: {fileID: 11400000, guid: 182e29415c6f0ad82bc16b16444e887d, type: 2}
+  endBlinkEffectTimeOffset: -0.1
+  effectYOffset: -0.5
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -303,7 +307,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1498176944971182097
 Transform:
   m_ObjectHideFlags: 0
@@ -336,7 +340,7 @@ CapsuleCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.5
   m_Height: 1
@@ -349,7 +353,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4933219036402945239}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 018e4fbdc7050b986b8483e827f15cc4, type: 3}
   m_Name: 

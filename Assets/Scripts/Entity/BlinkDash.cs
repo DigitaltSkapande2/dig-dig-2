@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Linq;
 using DigDig2.Debugging;
+using DigDig2.EffectSystem;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -15,6 +16,10 @@ namespace DigDig2.Entity
         [Tooltip("prevents dashing too far in case you try to blink to a lower platform")]
         [SerializeField] private float maxBlinkDistance = 5f;
 
+        [SerializeField] private EffectPlayer blinkStartEffect;
+        [SerializeField] private EffectPlayer blinkEndEffect;
+        [SerializeField] private float endBlinkEffectTimeOffset;
+        [SerializeField] private float effectYOffset;
         
         [Header("Ground Detection")]
         [SerializeField] private LayerMask groundLayer;
@@ -29,7 +34,8 @@ namespace DigDig2.Entity
         public override IEnumerator PerformDash(Vector3 direction, EntityCharacterController entitycontroller)
         {
             entitycontroller.GetVisualsParent().SetActive(false);
-            yield return new WaitForSeconds(blinkDisappearTime);
+            blinkStartEffect.Play(entitycontroller.transform.position + Vector3.up * effectYOffset);
+            yield return new WaitForSeconds(blinkDisappearTime + endBlinkEffectTimeOffset);
             
             Vector3 localTarget = direction * dashLenght;
             Vector3 initialTargetPosition = entitycontroller.transform.position + localTarget;
@@ -54,9 +60,9 @@ namespace DigDig2.Entity
                     }
                 }
             }
-
-
+            blinkEndEffect.Play(finalTeleportTarget + Vector3.up * effectYOffset);
             entitycontroller.Teleport(finalTeleportTarget);
+            yield return new WaitForSeconds(Mathf.Abs(endBlinkEffectTimeOffset));
             entitycontroller.GetVisualsParent().SetActive(true);
             lastTimeDashed = Time.time;
         }
