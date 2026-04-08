@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using DigDig2.CinemaCamera;
 using DigDig2.CinemaCamera.CameraEffectors;
 using DigDig2.Debugging;
 using DigDig2.EffectSystem;
@@ -99,6 +100,7 @@ namespace DigDig2.SaveSystem
 
             if (myId == activeId)
             {
+                GameCamera.Instance.SetTargetRotation(cameraYRotation, true);
                 if (GameManager.Instance.IsMultiplayer)
                 {
                     PlayMultiplayerStartSequence();

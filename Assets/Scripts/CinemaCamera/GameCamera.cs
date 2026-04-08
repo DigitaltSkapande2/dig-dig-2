@@ -62,10 +62,8 @@ namespace DigDig2.CinemaCamera
                 frustumSize += effector.lerpedFrustumSize * w;
                 
                 // rotations are evil
-                //BetterDebug.Log($"name: {effector.name}, {w}");
                 if (effector.lerpedRotation == default) continue;
                 Quaternion weightedRot = Quaternion.Slerp(Quaternion.identity, effector.lerpedRotation, w);
-                //BetterDebug.Log($"{weightedRot}");
                 targetRotation *= weightedRot;
             }
 
@@ -77,7 +75,7 @@ namespace DigDig2.CinemaCamera
             selfCameraRotation.SetRotationSpeed(speed);
         }
 
-        public void SetTargetRotation(float angle)
+        public void SetTargetRotation(float angle, bool instant = false)
         {
             selfCameraRotation.targetRotation = Quaternion.Euler(0, angle, 0);
         }

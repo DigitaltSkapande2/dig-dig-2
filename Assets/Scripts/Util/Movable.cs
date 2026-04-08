@@ -1,6 +1,5 @@
-using DigDig2.EffectSystem;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.Splines;
 
 namespace DigDig2
@@ -11,42 +10,47 @@ namespace DigDig2
 		[SerializeField] private AnimationCurve positionCurve;
 
 		[SerializeField] private SplineContainer path;
-		[SerializeField] private EffectPlayer effect;
 
 		[SerializeField] private bool reusable;
-		[SerializeField] private UnityEvent triggerEvent;
+        [SerializeField] private UnityEvent
 		private int splineIndex;
+        
+		private float startTime;
 
-		private float time;
 		private bool triggered;
 
-		private void Update( )
-		{
-			if ( !triggered ) return;
-
-			time += Time.deltaTime;
-			float value = time / moveTime;
-
-			float pos = positionCurve.Evaluate( value );
-
-			transform.position = path.EvaluatePosition( splineIndex, pos );
-
-			if ( !( value >= 1 ) || !reusable ) return;
-
-			time = 0;
-			triggered = false;
-
-			splineIndex++;
-			if ( splineIndex >= path.Splines.Count ) splineIndex = 0;
-		}
+        private UniTask currentlyMovingOperation;
 
 		public void Trigger( )
 		{
-			if (triggered) return;
+            if (triggered) return;
+            startTime = Time.time;
+            MovePlatformToTarget().Forget();
+        }
 
-			effect?.Play();
-			triggerEvent.Invoke();
-			triggered = true;
-		}
+        private async UniTask MovePlatformToTarget()
+        {
+            triggered = true;
+
+            float value = 0f;
+            
+            while (value < 1f)
+            {
+                await UniTask.Yield(PlayerLoopTiming.Update);
+                value = (Time.time - startTime) / moveTime;
+
+                float pos = positionCurve.Evaluate( value );
+
+                transform.position = path.EvaluatePosition( splineIndex, pos );
+            }
+            
+            if ( reusable )
+            {
+                splineIndex++;
+                if ( splineIndex >= path.Splines.Count ) splineIndex = 0;
+            }
+            
+            triggered = false;
+        }
 	}
 }

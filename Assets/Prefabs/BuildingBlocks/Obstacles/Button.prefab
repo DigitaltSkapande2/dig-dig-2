@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6437245124593979683}
   - component: {fileID: 6500092655521725223}
   - component: {fileID: 4433467691967501007}
+  - component: {fileID: 5336853189981021615}
   m_Layer: 0
   m_Name: Button
   m_TagString: Untagged
@@ -85,6 +86,85 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 5336853189981021615}
+        m_TargetAssemblyTypeName: DigDig2.Util.MaterialColorToggler, Assembly-CSharp
+        m_MethodName: ActivateForDuration
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 1
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &5336853189981021615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2390683898653837072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a6e8498556141b398d20f3db76f5992, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Util.MaterialFloatToggler
+  targetRenderers:
+  - {fileID: 3871237785094674324}
+  colorVarName: _GlowColor
+  activatedValue: {r: 0, g: 4.5111203, b: 5.216476, a: 1}
+  deactivatedValue: {r: 0, g: 0.29978666, b: 0.34493518, a: 1}
+  fadeActive:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  fadeUnactive:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: -0.77548623
+      outSlope: -0.77548623
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.05
+    - serializedVersion: 3
+      time: 1
+      value: 0.70000076
+      inSlope: -0.002410845
+      outSlope: -0.002410845
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.11785716
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  fadeDuration: 0.6
+  isActive: 0
 --- !u!1001 &6933445110323260405
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -177,6 +257,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 9026754234834548942}
   m_SourcePrefab: {fileID: 100100000, guid: 96b81e14e81086158bea461da657cb61, type: 3}
+--- !u!23 &3871237785094674324 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -3061904764030682015, guid: 96b81e14e81086158bea461da657cb61, type: 3}
+  m_PrefabInstance: {fileID: 6933445110323260405}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7472090715464518686 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 96b81e14e81086158bea461da657cb61, type: 3}
