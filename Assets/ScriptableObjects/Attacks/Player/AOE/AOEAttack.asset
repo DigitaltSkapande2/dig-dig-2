@@ -16,8 +16,8 @@ MonoBehaviour:
   onPerformEffect: {fileID: 11400000, guid: 9eb55989aac38d6e0b67a610a8ed1c66, type: 2}
   chargeAnimationStateName: Charge
   triggerAnimationStateName: Trigger
-  minRaduis: 3
-  maxRadius: 3
+  minRaduis: 2.5
+  maxRadius: 2.5
   damage: 3
   aoeForwardOffset: 3
   chargingMoveSpeedFactor: 0

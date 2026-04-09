@@ -42,14 +42,14 @@ namespace DigDig2.Util
 
         public void Activate()
         {
-            if (isTransitioning) return;
+            if (isTransitioning || isActive) return;
             isActive = true;
             FadeFromTo(targetRenderers, colorVarName, fadeDuration, deactivatedValue, activatedValue, fadeActive).Forget();
         }
         
         public void DeActivate()
         {
-            if (isTransitioning) return;
+            if (isTransitioning || !isActive) return;
             isActive = false;
             FadeFromTo(targetRenderers, colorVarName, fadeDuration, deactivatedValue, activatedValue, fadeUnactive).Forget();
         }

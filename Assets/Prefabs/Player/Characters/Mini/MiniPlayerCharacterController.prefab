@@ -158,6 +158,9 @@ MonoBehaviour:
   cannotBlinkThroughLayers:
     serializedVersion: 2
     m_Bits: 1
+  triggerLayers:
+    serializedVersion: 2
+    m_Bits: 8192
 --- !u!114 &8839264378030991054
 MonoBehaviour:
   m_ObjectHideFlags: 0

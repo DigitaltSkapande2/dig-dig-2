@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using DigDig2.Debugging;
+using DigDig2.Combat;
 
 namespace DigDig2.Entity
 {
@@ -24,6 +25,10 @@ namespace DigDig2.Entity
             float elapsed = 0f;
 
             Instantiate(dashVFX, transform.position - Vector3.up, Quaternion.identity, transform).transform.forward = -direction;
+            if (TryGetComponent(out Attackable attackable))
+            {
+                attackable.SetInvincible(dashDuration);
+            }
 
             while (elapsed < dashDuration)  
             {

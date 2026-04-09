@@ -58,6 +58,11 @@ namespace DigDig2.Combat
             return true;
         }
 
+		public void SetInvincible(float time)
+		{
+			invincibilityTimer = time;
+		}
+
 		public bool IsInvincible( ) => invincibilityTimer > 0;
 
 		public void ApplyKnockback( Vector3 direction, float strength )

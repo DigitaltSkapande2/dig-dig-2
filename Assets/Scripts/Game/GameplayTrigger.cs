@@ -6,7 +6,7 @@ namespace DigDig2.Game
 	[RequireComponent( typeof( Collider ) )]
 	public class GameplayTrigger : MonoBehaviour
 	{
-		[SerializeField] private UnityEvent triggerEvent;
+		public UnityEvent triggerEvent;
 
 		private void OnTriggerEnter( Collider other )
 		{

@@ -57,6 +57,8 @@ namespace DigDig2.Combat
 
 		public void Trigger( string attackId )
 		{
+			if (!gameObject.activeSelf) return;
+			
 			AttackInfo attackInfo = activeAttacks[ attackId ];
 
 			int intermediateAttacks = 0;

@@ -8,6 +8,7 @@ namespace DigDig2.Combat.Attacks
 	{
 		[SerializeField] private string animationStateName;
 		[SerializeField] private int damage = 1;
+		[SerializeField] private float pushAmount;
 		[SerializeField] private int bindableAttackHitboxIndex;
 		[SerializeField] private GameObject hitEffect;
 		[SerializeField] private bool hasTrailEffect;
@@ -26,12 +27,14 @@ namespace DigDig2.Combat.Attacks
 			attacker.PlayAnimation( animationStateName );
 			attacker.StartHitboxAttack( this, animationStateName, attacker.GetBindableAttackHitbox( bindableAttackHitboxIndex ) );
 			attacker.AddMoveSpeedDebuff( animationStateName, attacker.GetBaseMoveSpeed( ) );
-			attacker.PushInDirection( Vector3.forward, 10 );
 		}
 		
 		public override void AnimationEvent(Attacker attacker, AttackType attackGroup, string animEventName)
         {
-
+			if (animEventName == "Push")
+			{
+				attacker.PushInDirection( Vector3.forward, pushAmount );
+			}
         }
 
 		public override void Ended( Attacker attacker, AttackType attackGroup )

@@ -178,7 +178,7 @@ namespace DigDig2.Combat
 			//animator.CrossFadeInFixedTime( animationStateName, 0.1f, 1 );
 		}
 
-		public void AnimationEvent( string animEventName )
+		public void AnimationEvent( string animEventName)
 		{
 			if (!currentPerformingAttack)
 			{
@@ -186,7 +186,7 @@ namespace DigDig2.Combat
 				return;
 			}
 
-			currentPerformingAttack.AnimationEvent( this, currentPerformingAttackType, animEventName );
+			currentPerformingAttack.AnimationEvent( this, currentPerformingAttackType, animEventName);
 		}
 
 		#endregion

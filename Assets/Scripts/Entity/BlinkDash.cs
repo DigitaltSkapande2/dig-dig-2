@@ -3,6 +3,7 @@ using System.Collections;
 using System.Linq;
 using DigDig2.Debugging;
 using DigDig2.EffectSystem;
+using DigDig2.Game;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -28,6 +29,7 @@ namespace DigDig2.Entity
         [SerializeField] private float entityHeight = 0.7f;
         [SerializeField] private float entityRadius = 0.7f;
         [SerializeField] private LayerMask cannotBlinkThroughLayers;
+        [SerializeField] private LayerMask triggerLayers;
  
         private float lastTimeDashed = 0f;
         
@@ -60,6 +62,19 @@ namespace DigDig2.Entity
                     }
                 }
             }
+
+            Vector3 teleportVector = finalTeleportTarget - entitycontroller.transform.position;
+            RaycastHit[] triggers = Physics.RaycastAll(entitycontroller.transform.position, teleportVector, teleportVector.magnitude, triggerLayers);
+
+            foreach (var trigger in triggers)
+            {
+                GameplayTrigger gameplayTrigger;
+                if (trigger.transform.TryGetComponent<GameplayTrigger>(out gameplayTrigger))
+                {
+                    gameplayTrigger.triggerEvent.Invoke();
+                }
+            }
+
             blinkEndEffect.Play(finalTeleportTarget + Vector3.up * effectYOffset);
             entitycontroller.Teleport(finalTeleportTarget);
             yield return new WaitForSeconds(Mathf.Abs(endBlinkEffectTimeOffset));
