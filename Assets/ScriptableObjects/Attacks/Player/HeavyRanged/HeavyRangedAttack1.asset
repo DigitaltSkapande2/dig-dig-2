@@ -20,4 +20,4 @@ MonoBehaviour:
   chargingMoveSpeedFactor: 0
   projectilePrefab: {fileID: 2449068539807903354, guid: 4d8765dee0d501e42834aad8e63b0be8, type: 3}
   projectileSpeed: 45
-  projectileLifetime: 1
+  projectileLifetime: 10
