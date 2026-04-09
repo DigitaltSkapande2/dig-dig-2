@@ -18,7 +18,8 @@ namespace DigDig2.UI.Controllers
 	[RequireComponent( typeof( UIDocument ), typeof( UserInterfaceNavigator ) )]
 	public class MainMenuController : MonoBehaviour
 	{
-		[SerializeField] private int gameSceneBuildIndex = 1;
+        [SerializeField] private int cutsceneSceneBuildIndex = 1;
+		[SerializeField] private int gameSceneBuildIndex = 2;
 
 		[SerializeField] private GameObject buttonHoverEffectPrefab;
 		[SerializeField] private GameObject buttonClickEffectPrefab;
@@ -277,7 +278,7 @@ namespace DigDig2.UI.Controllers
 					break;
 				case HostingModeSelectionType.NewGameSave:
 					SaveManager.Instance.CreateNewSave(  );
-					StartSingleplayer( );
+					StartSingleplayer( true );
 					break;
 				case HostingModeSelectionType.None: break;
 				default: throw new ArgumentOutOfRangeException( );
@@ -304,16 +305,16 @@ namespace DigDig2.UI.Controllers
 					break;
 				case HostingModeSelectionType.NewGameSave:
 					SaveManager.Instance.CreateNewSave( true );
-					StartMultiplayer( );
+					StartMultiplayer( true );
 					break;
 				case HostingModeSelectionType.None: break;
 				default: throw new ArgumentOutOfRangeException( );
 			}
 		}
 
-		public void StartSingleplayer( ) { LoadingScreenManager.Instance.LoadScene( gameSceneBuildIndex ); }
+		public void StartSingleplayer( bool playCutscene = false ) { LoadingScreenManager.Instance.LoadScene( playCutscene ? cutsceneSceneBuildIndex : gameSceneBuildIndex ); }
 
-		public void StartMultiplayer( ) { LoadingScreenManager.Instance.LoadScene( gameSceneBuildIndex ); }
+		public void StartMultiplayer( bool playCutscene = false ) { LoadingScreenManager.Instance.LoadScene( playCutscene ? cutsceneSceneBuildIndex : gameSceneBuildIndex ); }
 
 		private void OnInputUICancel( ) { navigator.NavigateBack( ); }
 
