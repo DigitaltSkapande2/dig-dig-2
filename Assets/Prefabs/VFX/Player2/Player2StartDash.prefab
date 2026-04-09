@@ -980,7 +980,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 30
+        scalar: 15
         minScalar: 30
         maxCurve:
           serializedVersion: 2
@@ -5883,7 +5883,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 30
+        scalar: 15
         minScalar: 30
         maxCurve:
           serializedVersion: 2
@@ -10093,7 +10093,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.15
+      scalar: 0.1
       minScalar: 0.33
       maxCurve:
         serializedVersion: 2
@@ -10199,7 +10199,7 @@ ParticleSystem:
     startSizeZ:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.15
+      scalar: 0.1
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -10478,7 +10478,7 @@ ParticleSystem:
     donutRadius: 0.2
     m_Position: {x: 0, y: 0, z: 0}
     m_Rotation: {x: -90, y: 0, z: 0}
-    m_Scale: {x: 1.2, y: 1.2, z: 1}
+    m_Scale: {x: 1, y: 1, z: 1}
     placementMode: 0
     m_MeshMaterialIndex: 0
     m_MeshNormalOffset: 0
@@ -10786,7 +10786,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 15
+        scalar: 10
         minScalar: 30
         maxCurve:
           serializedVersion: 2
@@ -15023,7 +15023,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 3
+      scalar: 2
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -15781,39 +15781,30 @@ ParticleSystem:
         m_Curve:
         - serializedVersion: 3
           time: 0
-          value: 0.9111113
-          inSlope: 0.98156476
-          outSlope: 0.98156476
+          value: 0.8996309
+          inSlope: 2.2017453
+          outSlope: 2.2017453
           tangentMode: 0
           weightedMode: 0
           inWeight: 0
-          outWeight: 0.44743806
+          outWeight: 0.99971265
         - serializedVersion: 3
-          time: 0.07193759
-          value: 1
-          inSlope: 0.22221297
-          outSlope: 0.22221297
+          time: 0.096227735
+          value: 0.99074024
+          inSlope: -0.19245544
+          outSlope: -0.19245544
           tangentMode: 0
           weightedMode: 0
           inWeight: 0.33333334
           outWeight: 0.33333334
         - serializedVersion: 3
-          time: 0.56065995
-          value: 1
-          inSlope: -0.12395084
-          outSlope: -0.12395084
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0.46910235
-          outWeight: 0.22831549
-        - serializedVersion: 3
           time: 1
           value: 0
-          inSlope: -2.141634
-          outSlope: -2.141634
+          inSlope: -2
+          outSlope: -2
           tangentMode: 0
           weightedMode: 0
-          inWeight: 0.11807283
+          inWeight: 0
           outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
@@ -19935,7 +19926,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 2
+      scalar: 1.25
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -20693,39 +20684,30 @@ ParticleSystem:
         m_Curve:
         - serializedVersion: 3
           time: 0
-          value: 0.9111113
-          inSlope: 0.98156476
-          outSlope: 0.98156476
+          value: 0.8996309
+          inSlope: 2.2017453
+          outSlope: 2.2017453
           tangentMode: 0
           weightedMode: 0
           inWeight: 0
-          outWeight: 0.44743806
+          outWeight: 0.99971265
         - serializedVersion: 3
-          time: 0.07193759
-          value: 1
-          inSlope: 0.22221297
-          outSlope: 0.22221297
+          time: 0.096227735
+          value: 0.99074024
+          inSlope: -0.19245544
+          outSlope: -0.19245544
           tangentMode: 0
           weightedMode: 0
           inWeight: 0.33333334
           outWeight: 0.33333334
         - serializedVersion: 3
-          time: 0.56065995
-          value: 1
-          inSlope: -0.12395084
-          outSlope: -0.12395084
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0.46910235
-          outWeight: 0.22831549
-        - serializedVersion: 3
           time: 1
           value: 0
-          inSlope: -2.141634
-          outSlope: -2.141634
+          inSlope: -2
+          outSlope: -2
           tangentMode: 0
           weightedMode: 0
-          inWeight: 0.11807283
+          inWeight: 0
           outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
