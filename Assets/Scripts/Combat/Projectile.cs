@@ -1,28 +1,36 @@
 using DigDig2.EffectSystem;
+using NUnit.Framework;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace DigDig2.Combat
 {
 	public class Projectile : MonoBehaviour
 	{
 		[SerializeField] AOEAttack hitAttack;
-		[SerializeField] private GameObject hitEffect;
 		[SerializeField] private LayerMask layerMask;
         [SerializeField] private EffectPlayer onHitEffect;
+		[SerializeField] private UnityEvent hit;
 
 		private Attacker attacker;
 		private string hitboxID;
 		private float speed;
 
+		bool hasHit;
+
 		private void Update( ) 
 		{
+			if (hasHit) return;
+
 			RaycastHit hit;
 			if (Physics.Raycast(transform.position, transform.forward, out hit, speed * Time.deltaTime, layerMask))
 			{
 				hitAttack.TriggerIndependent(attacker, hit.point, hitboxID, transform);
 				attacker.activeAttacks[hitboxID].Trigger(hitboxID);
 				transform.position = hit.point;
-				DestroyProjectile();
+				ProjectileHit();
+				hasHit = true;
+				return;
 			}
 
 			transform.position += speed * Time.deltaTime * transform.forward; 
@@ -34,13 +42,22 @@ namespace DigDig2.Combat
 			this.attacker = attacker;
 			this.speed = speed;
 
-			Invoke( nameof( DestroyProjectile ), lifeTime );
+			Invoke( nameof( ProjectileHit ), lifeTime );
 		}
 
-		private void DestroyProjectile( )
+		private void ProjectileHit( )
 		{
+			if (hasHit) return;
+
+			hit.Invoke();
+
 			attacker.EndHitboxAttack( hitboxID );
-			Instantiate( hitEffect, transform.position, Quaternion.identity );
+			speed = 0;
+			Invoke(nameof(DestroyProjectile), 5);
+		}
+
+		private void DestroyProjectile()
+		{
 			Destroy( gameObject );
 		}
 	}

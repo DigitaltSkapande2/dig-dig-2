@@ -225,6 +225,17 @@
                 },
                 {
                     "name": "",
+                    "id": "f4cfab39-7102-4feb-a6ce-69eecd4f4a2a",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "Attack2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "2ef06bb1-3e35-4c4f-b55e-4428d59e79b8",
                     "path": "<Gamepad>/buttonWest",
                     "interactions": "",
@@ -347,7 +358,7 @@
                 {
                     "name": "",
                     "id": "6b126b22-f7ae-4b06-90cc-caf0cfa0ef07",
-                    "path": "<Gamepad>/buttonEast",
+                    "path": "<Gamepad>/buttonSouth",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

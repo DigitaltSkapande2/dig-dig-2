@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1364313220727672859}
   - component: {fileID: 5157565281986007563}
-  - component: {fileID: 6125296657685598787}
   - component: {fileID: 4073095900257206370}
   m_Layer: 0
   m_Name: Pro Jec Tile
@@ -53,27 +52,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 3137
   onHitEffect: {fileID: 11400000, guid: 1c44e8a50f645dfd491ad2613b2a54de, type: 2}
---- !u!65 &6125296657685598787
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2449068539807903354}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 65
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 8192
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.9, y: 0.9, z: 0.9}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &4073095900257206370
 Rigidbody:
   m_ObjectHideFlags: 0

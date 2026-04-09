@@ -1228,7 +1228,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &656291976
 Transform:
   m_ObjectHideFlags: 0
@@ -1279,6 +1279,7 @@ GameObject:
   m_Component:
   - component: {fileID: 743425617}
   - component: {fileID: 743425618}
+  - component: {fileID: 743425619}
   m_Layer: 0
   m_Name: Cutscene
   m_TagString: Untagged
@@ -1322,7 +1323,7 @@ PlayableDirector:
   m_InitialState: 1
   m_WrapMode: 2
   m_DirectorUpdateMode: 1
-  m_InitialTime: 0
+  m_InitialTime: -1
   m_SceneBindings:
   - key: {fileID: 5640035555652968963, guid: 7bf912aa0020ed3e9b995504d8463bdf, type: 2}
     value: {fileID: 656291977}
@@ -1350,6 +1351,20 @@ PlayableDirector:
     value: {fileID: 1327806390}
   m_ExposedReferences:
     m_References: []
+--- !u!114 &743425619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 743425616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70015657b59a4e78a457e7273e552fcd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Util.PlayableDirectorStopSceneLoader
+  targetPlayable: {fileID: 743425618}
+  sceneIndexToLoad: 2
 --- !u!1 &757014574
 GameObject:
   m_ObjectHideFlags: 0
@@ -1887,7 +1902,7 @@ Transform:
   m_GameObject: {fileID: 1045986823}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 19.6, y: 0, z: 0}
+  m_LocalPosition: {x: 30.1, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1947,7 +1962,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2
-  m_Size: {x: 20, y: 100}
+  m_Size: {x: 41, y: 100}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -2152,7 +2167,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1327806391
 Transform:
   m_ObjectHideFlags: 0
@@ -2310,7 +2325,7 @@ Transform:
   m_GameObject: {fileID: 1431014370}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -19.6, y: 0, z: 0}
+  m_LocalPosition: {x: -30.1, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2370,7 +2385,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2
-  m_Size: {x: 20, y: 100}
+  m_Size: {x: 41, y: 100}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
