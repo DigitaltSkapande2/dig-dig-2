@@ -46,6 +46,7 @@ namespace DigDig2.Input
 		protected override void Awake( )
 		{
 			base.Awake( );
+            if (Instance != this) return;
 
 			if ( !inputPlayerManager )
 			{
@@ -123,6 +124,10 @@ namespace DigDig2.Input
 		{
             //BetterDebug.Log(context.control.device.name + " " + context.action.name + " " + context.action.actionMap.name + " " + context.phase);
             int inputPlayerIndex = inputPlayers.IndexOf(inputPlayer);
+            
+            BetterDebug.Log(inputPlayer.name +"  "+inputPlayer.GetHashCode());
+            foreach(var gay in prioritizedInputModules.Keys)
+                BetterDebug.Log(gay.name + "  " + gay.GetHashCode());
 
 			foreach ( InputModule prioritizedInputModule in prioritizedInputModules[ inputPlayer ][ context.action.actionMap.name ] )
 			{
@@ -141,6 +146,7 @@ namespace DigDig2.Input
 
 		private void OnDeviceChanged( InputDevice device, InputDeviceChange change )
 		{
+            BetterDebug.Log($"Device Change: [{device.name}, {change}]");
 			inputPlayers = change switch
 			{
 				InputDeviceChange.Added => inputPlayerManager.AddDevice( inputPlayers, device ),
@@ -155,7 +161,7 @@ namespace DigDig2.Input
                 {
                     if ( inputPlayer.active ) activeInputPlayers++;
                 }
-                BetterDebug.Log( $"Devices changed, {activeInputPlayers} InputPlayer(s) active." );
+                BetterDebug.Log( $"Devices changed, {activeInputPlayers} InputPlayer(s) active. {change}" );
 				RefreshInputModulePrioritizationLists( );
 			}
 		}

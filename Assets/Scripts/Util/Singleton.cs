@@ -36,6 +36,7 @@ namespace DigDig2.Util
 		{
 			if ( instance && instance != this )
 			{
+                gameObject.SetActive(false);
 				Destroy( gameObject );
 				return;
 			}

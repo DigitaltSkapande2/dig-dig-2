@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -30,6 +31,7 @@ namespace DigDig2.Input.InputPlayerManagers
 			hasGeneratedList = true;
 
 			unusedDevices = InputSystem.devices.ToArray( ).ToList( );
+            BetterDebug.Log($"unUsedDevices = {String.Join(", ",unusedDevices.Select(d=>d.name))}");
 			
 			return ReconcileInputPlayers( );
 		}
@@ -80,16 +82,20 @@ namespace DigDig2.Input.InputPlayerManagers
 
 		public override List<InputPlayer> AddDevice( List<InputPlayer> inputPlayers, InputDevice device )
 		{
+            BetterDebug.Log($"Trying to Add device for!!!: { device.name }");
 			bool deviceUnused = true;
 			foreach ( InputPlayer inputPlayer in inputPlayers )
 			{
 				if ( !inputPlayer.connectedDevices.Contains( device ) ) continue;
 				
 				bool fullControlSchemeFound = false;
+                BetterDebug.Log($"checking ControllSchemes for { inputPlayer.name }");
 				foreach ( InputControlScheme controlScheme in InputSystem.actions.controlSchemes )
 				{
 					InputControlScheme.MatchResult deviceSearchMatchResult = controlScheme.PickDevicesFrom( inputPlayer.connectedDevices );
+                    BetterDebug.Log($"{controlScheme} matchResult: { deviceSearchMatchResult.score }");
 					if ( deviceSearchMatchResult.hasMissingRequiredDevices ) continue;
+                    BetterDebug.Log("Successfull Match?");
 
 					fullControlSchemeFound = true;
 					break;
@@ -97,7 +103,14 @@ namespace DigDig2.Input.InputPlayerManagers
 
 				if ( fullControlSchemeFound )
 				{
+                    BetterDebug.Log($"ADDING InputPlayer: {inputPlayer.name}");
 					inputPlayer.active = true;
+                    foreach (InputActionMap inputPlayerActionMap in inputPlayer.actionMaps)
+                    {
+                        BetterDebug.Log($"ENABELING actionMap: {inputPlayerActionMap.name} for InputPlayer: {inputPlayer.name}");
+                        inputPlayerActionMap.devices = new ReadOnlyArray<InputDevice>( inputPlayer.connectedDevices.ToArray() );
+                        inputPlayerActionMap.Enable();
+                    }
 					inputPlayerReconnected.Invoke( inputPlayer, inputPlayers.IndexOf( inputPlayer ) );
 				}
 				
@@ -114,7 +127,12 @@ namespace DigDig2.Input.InputPlayerManagers
 			foreach ( InputPlayer inputPlayer in inputPlayers )
 			{
 				if ( !inputPlayer.connectedDevices.Contains( device ) ) continue;
-
+                BetterDebug.Log($"Removing InputPlayer: {inputPlayer.name}");
+                foreach (InputActionMap inputPlayerActionMap in inputPlayer.actionMaps)
+                {
+                    BetterDebug.Log($"Dissabeling actionMap: {inputPlayerActionMap.name} for InputPlayer: {inputPlayer.name}");
+                    inputPlayerActionMap.Disable();
+                }
 				inputPlayer.active = false;
 				inputPlayerDisconnected.Invoke( inputPlayer, inputPlayers.IndexOf( inputPlayer ) );
 			}
