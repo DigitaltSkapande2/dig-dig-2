@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.Serialization;
 
 namespace DigDig2
 {
@@ -10,8 +11,11 @@ namespace DigDig2
         Volume volume;
         ShadowsMidtonesHighlights smh;
         [SerializeField] float dayDurationInMinutes;
-        [SerializeField] Vector4 nightValue;
-        private Vector4 startValue; 
+        [FormerlySerializedAs("nightValue")] [SerializeField] Vector4 nightMidtones;
+        [SerializeField] private Light sceneDirectionalLight;
+        [SerializeField] private float nightDirectionalLightIntensity;
+        private Vector4 startMidtones;
+        private float startDirectionalLightIntensity;
 
         void Awake( )
         {
@@ -22,14 +26,19 @@ namespace DigDig2
                 smh = volume.profile.Add<ShadowsMidtonesHighlights>();
             }
 
-            startValue = smh.midtones.value;
+            startMidtones = smh.midtones.value;
+            startDirectionalLightIntensity = sceneDirectionalLight.intensity;
         }
 
         void Update()
         {
-            // float lerpValue = (Mathf.Cos(Mathf.PI * Time.time / (dayDurationInMinutes * 30)) + 1) / 2;
-            //
-            // smh.midtones.value = Vector4.Lerp(startValue, nightValue, lerpValue);
+            float lerpValue = (Mathf.Cos(Mathf.PI * Time.time / (dayDurationInMinutes * 30)) + 1) / 2;
+            
+            smh.midtones.value = Vector4.Lerp(startMidtones, nightMidtones, lerpValue);
+
+            sceneDirectionalLight.intensity =
+                Mathf.Lerp(startDirectionalLightIntensity, nightDirectionalLightIntensity, lerpValue);
+
             // smh.midtones.value = nightValue;
         }
     }

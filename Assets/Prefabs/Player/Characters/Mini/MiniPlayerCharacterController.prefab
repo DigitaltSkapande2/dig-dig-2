@@ -87,6 +87,8 @@ MonoBehaviour:
   - {fileID: 2826848245502152704}
   - {fileID: 8225714986031707861}
   dissolveFloatName: _DissolveAmount
+  dissolveColorName: _DissolveColor
+  deathDissolveColor: {r: 0, g: 0, b: 0, a: 0}
   shouldStartDissolved: 0
   inputMoveVector: {x: 0, y: 0}
 --- !u!114 &4327746320760944597
@@ -138,13 +140,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa54ff382c67455daba6ae1b2d2d82aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Entity.BlinkDash
-  blinkDisappearTime: 0.2
+  blinkDisappearTime: 0
   dashLenght: 4
   dashCooldown: 0.5
   maxBlinkDistance: 5
   blinkStartEffect: {fileID: 11400000, guid: bca486e463b18d210b0dffd44f5bce88, type: 2}
   blinkEndEffect: {fileID: 11400000, guid: 182e29415c6f0ad82bc16b16444e887d, type: 2}
-  endBlinkEffectTimeOffset: -0.1
+  endBlinkEffectTimeOffset: -0.2
   effectYOffset: -0.5
   groundLayer:
     serializedVersion: 2
