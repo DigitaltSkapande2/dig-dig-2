@@ -18,6 +18,6 @@ MonoBehaviour:
   triggerAnimationStateName: LightAttack2
   damage: 1
   chargingMoveSpeedFactor: 0
-  projectilePrefab: {fileID: 2449068539807903354, guid: 4d8765dee0d501e42834aad8e63b0be8, type: 3}
+  projectilePrefab: {fileID: 2449068539807903354, guid: b1163a9b5989b774a9d786deee2d82f8, type: 3}
   projectileSpeed: 45
   projectileLifetime: 1
