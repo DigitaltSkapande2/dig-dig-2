@@ -492,7 +492,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d53554dc6e0e430dfafb5158e0b1b58e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.MainMenu
-  gameSceneBuildIndex: 1
+  cutsceneSceneBuildIndex: 1
+  gameSceneBuildIndex: 2
   buttonHoverEffectPrefab: {fileID: 362008255487461446, guid: c4f6662c5a7c008168d5c9bf1547d889, type: 3}
   buttonClickEffectPrefab: {fileID: 3654640647498616962, guid: e492fc05f2bfc56beb1728e872b91e86, type: 3}
 --- !u!114 &1196496127
