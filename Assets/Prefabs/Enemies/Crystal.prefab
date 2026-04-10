@@ -215,9 +215,40 @@ MonoBehaviour:
   enemyConnections: []
   crystal: {fileID: 2519747040841795025}
   shield: {fileID: 6672083611941458192}
+  shieldDissolveAmountFloatName: _DissolveAmount
+  shieldVoronoiColorName: _VoronoiColor
+  deactivatedShieldTargetVoronoiColor: {r: 0.6837782, g: 0.6242435, b: 0.7924528, a: 1}
+  deactivatedShieldTargetScale: 3.2
+  shieldDissolveCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  shieldDissolveAnimationDuration: 0.85
   linePrefab: {fileID: 2737389797727682940, guid: 39c911a686f973c4fabe982863ac4797, type: 3}
   bobStrength: 0.4
   bobSpeed: 1.5
+  ocean: {fileID: 0}
+  oceanLowerAmount: 0
 --- !u!1 &6672083611941458192
 GameObject:
   m_ObjectHideFlags: 0

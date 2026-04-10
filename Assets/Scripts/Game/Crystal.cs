@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-
+using Cysharp.Threading.Tasks;
 using DigDig2.Combat;
 using DigDig2.SaveSystem;
 using Unity.Mathematics;
@@ -25,6 +25,15 @@ namespace DigDig2.Game
 
 		[Tooltip( "The shield visual GameObject." )]
 		[SerializeField] private GameObject shield;
+        [SerializeField] private string shieldDissolveAmountFloatName;
+        [SerializeField] private string shieldVoronoiColorName;
+
+        [SerializeField, ColorUsage(true, true)]
+        private Color deactivatedShieldTargetVoronoiColor;
+
+        [SerializeField] private float deactivatedShieldTargetScale;
+        [SerializeField] private AnimationCurve shieldDissolveCurve;
+        [SerializeField] private float shieldDissolveAnimationDuration;
 
 		[Tooltip( "The line prefab." )]
 		[SerializeField] private GameObject linePrefab;
@@ -41,6 +50,7 @@ namespace DigDig2.Game
 
 		private Attackable attackable;
 		private MeshRenderer crystalMeshRenderer;
+        private MeshRenderer shieldMeshRenderer;
 
 		private bool hasShield = true;
 		private Health health;
@@ -66,9 +76,12 @@ namespace DigDig2.Game
 			}
 
 			crystalMeshRenderer = crystal.GetComponent<MeshRenderer>( );
+            shieldMeshRenderer = shield.GetComponent<MeshRenderer>( );
 
 			Material material = crystalMeshRenderer.material;
 			material.SetFloat( crackStage, NO_CRACK_STAGE );
+            
+            if ( enemyConnections.Count <= 0 ) DeactivateShield(true);
 
 			originalPos = transform.position;
 		}
@@ -76,10 +89,6 @@ namespace DigDig2.Game
 		private void Update( )
 		{
 			HeightBob( );
-
-			shield.SetActive( hasShield );
-			health.enabled = !hasShield;
-            attackable.enabled = !hasShield;
 
 			for ( int index = enemyConnections.Count - 1; index >= 0; index-- )
 			{
@@ -104,7 +113,7 @@ namespace DigDig2.Game
 				enemyConnection.lineComponent.SetPositions( transform.position, enemyConnection.enemy.transform.position );
 			}
 
-			if ( enemyConnections.Count <= 0 ) hasShield = false;
+			if ( enemyConnections.Count <= 0 ) DeactivateShield(false);
 		}
 
         private void OnDeath(GameObject _)
@@ -133,6 +142,48 @@ namespace DigDig2.Game
 
 			crystal.transform.parent.position = originalPos + offset * Vector3.up;
 		}
+
+        private void DeactivateShield(bool instant)
+        {
+            if (!hasShield) return;
+            hasShield = false;
+            health.enabled = true;
+            attackable.enabled = true;
+            if (instant)
+            {
+                shield.SetActive(false);
+                return;
+            }
+            
+            DissolveShield().Forget();
+        }
+
+        private async UniTask DissolveShield()
+        {
+            float startTime = Time.time;
+            float timeElapsed = 0f;
+            
+            // Get default
+            Color defaultVoronoiColor = shieldMeshRenderer.material.GetColor(shieldVoronoiColorName);
+            Vector3 startScale = shield.transform.localScale;
+
+            while (timeElapsed < shieldDissolveAnimationDuration)
+            {
+                await UniTask.Yield(PlayerLoopTiming.Update);
+
+                timeElapsed = (Time.time - startTime);
+                float t = timeElapsed / shieldDissolveAnimationDuration;
+                float curveVal = shieldDissolveCurve.Evaluate(t);
+            
+                shieldMeshRenderer.material.SetFloat(shieldDissolveAmountFloatName, curveVal);
+                shieldMeshRenderer.material.SetColor(shieldVoronoiColorName, Color.Lerp(defaultVoronoiColor, deactivatedShieldTargetVoronoiColor, curveVal));
+                shield.transform.localScale = Vector3.Lerp(startScale, Vector3.one * deactivatedShieldTargetScale, curveVal);
+            }
+            
+            shieldMeshRenderer.material.SetFloat(shieldDissolveAmountFloatName, 1f);
+            shieldMeshRenderer.material.SetColor(shieldVoronoiColorName, Color.Lerp(defaultVoronoiColor, deactivatedShieldTargetVoronoiColor, 1f));
+            shield.SetActive(false);
+        }
 
 		[Serializable]
 		private struct EnemyConnections

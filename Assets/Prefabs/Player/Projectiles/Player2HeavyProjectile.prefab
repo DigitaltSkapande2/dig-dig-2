@@ -46,10 +46,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bac83335b7709d547b97a781863d5e00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Projectile
-  hitAttack: {fileID: 11400000, guid: e44151907fa296f4f96f3dd5f0a3908a, type: 2}
+  hitAttack: {fileID: 11400000, guid: 5ca5620bc0c53214e99863c66ccd0430, type: 2}
   layerMask:
     serializedVersion: 2
-    m_Bits: 3137
+    m_Bits: 3265
   onHitEffect: {fileID: 11400000, guid: 1c44e8a50f645dfd491ad2613b2a54de, type: 2}
   hit:
     m_PersistentCalls:

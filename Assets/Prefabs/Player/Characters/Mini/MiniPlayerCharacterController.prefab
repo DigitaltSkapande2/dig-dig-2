@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 2644439905992683439}
   - component: {fileID: 5846033344297062216}
   - component: {fileID: 8034696099376195831}
+  - component: {fileID: 6313736305915559675}
   m_Layer: 3
   m_Name: MiniPlayerCharacterController
   m_TagString: Player
@@ -295,6 +296,33 @@ MonoBehaviour:
   actionMapName: Combat
   activeContexts:
   - {fileID: 11400000, guid: 72844612df5b0e3e2ae45edd4ba932fe, type: 2}
+--- !u!114 &6313736305915559675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4442565222488509090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46ded4608df14e43c944d9c54314dd94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Effects.FootstepSFXPlayer
+  effectPrefab:
+  - {fileID: 4950934811570952627, guid: 5832234b9f8408b04b5e43ccc80a3ed1, type: 3}
+  - {fileID: 4950934811570952627, guid: b937b6ea1cce7438185a2597fc2a394c, type: 3}
+  - {fileID: 4950934811570952627, guid: c7bc2ba5cb623ac728be02cf5b9861e8, type: 3}
+  overrideSense: 1
+  overrideSenseLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  overrideSenseRaycastVector: {x: 0, y: -3, z: 0}
+  footstepMaterialOverrides:
+  - material: {fileID: 2100000, guid: 0259b914fd455374885f889b6a8076bb, type: 2}
+    footstepSfxPrefab:
+    - {fileID: 4950934811570952627, guid: 996384664036cfd1c9da3d09c63fad33, type: 3}
+    - {fileID: 4950934811570952627, guid: 4718f71641c723da0b7d7a03f9af02c9, type: 3}
+    - {fileID: 4950934811570952627, guid: cd981cf6778291ea6ba927633d835ee8, type: 3}
 --- !u!1 &4933219036402945239
 GameObject:
   m_ObjectHideFlags: 0
