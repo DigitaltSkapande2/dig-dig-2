@@ -1,0 +1,24 @@
+:root {
+}
+
+.name {
+    -unity-text-align: upper-right;
+    font-size: 50px;
+    padding-right: 20px;
+    -unity-font-style: normal;
+    -unity-font-definition: url("project://database/Assets/Fonts/Roboto/static/Roboto-Black.ttf?fileID=12800000&guid=2e3e058792a9e396c9b3907da969c31e&type=3#Roboto-Black");
+    margin-top: -5px;
+    margin-bottom: -5px;
+}
+
+.area {
+    font-size: 50px;
+    padding-right: 0;
+    padding-left: 20px;
+    -unity-font-style: normal;
+    -unity-font-definition: url("project://database/Assets/Fonts/Roboto/static/Roboto-Light.ttf?fileID=12800000&guid=357564c47411e57a9b3e466e09ca6862&type=3#Roboto-Light");
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: -5px;
+    margin-bottom: -5px;
+}
