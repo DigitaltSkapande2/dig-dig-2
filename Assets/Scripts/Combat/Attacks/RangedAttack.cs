@@ -25,7 +25,8 @@ namespace DigDig2.Combat.Attacks
 			RaycastHit hit;
 			if (Physics.Raycast(rayOrigin, -attacker.transform.up, out hit, 5, LayerMask.GetMask("Ground")))
 			{
-				Instantiate(chargeVFX, hit.point, Quaternion.identity);
+				Quaternion rotation = Quaternion.LookRotation(attacker.GetForwardVector(), attacker.transform.up);
+				Destroy(Instantiate(chargeVFX, hit.point, rotation), 5);
 			}
 		}
 
