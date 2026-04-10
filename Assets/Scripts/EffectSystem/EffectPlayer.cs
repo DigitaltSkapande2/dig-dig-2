@@ -17,7 +17,7 @@ namespace DigDig2.EffectSystem
 		public SpawnPrefabEffectData spawnPrefabEffectData;
 
 		public bool playSound;
-		public AudioClip[] audioClipsToPlay;
+		public AudioClipData[] audioClipsToPlay;
 
 		public bool screenShake;
 		public CumulativeEffectInstanceData screenShakeEffectData;
@@ -37,6 +37,13 @@ namespace DigDig2.EffectSystem
 		public bool greyscale;
 		public CumulativeEffectInstanceData greyscaleEffectData;
 
+        public void Play()
+        {
+            Play(default);
+        }
+        
+        
+        
 		public void Play( Vector3 position = default, Quaternion rotation = default,
 		                  Vector3 scale = default, Transform parent = null, int inputPlayerID = -1 )
 		{

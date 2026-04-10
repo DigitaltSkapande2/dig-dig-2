@@ -16,7 +16,6 @@ namespace DigDig2.Input
         public void OnActionTriggered(InputAction.CallbackContext context)
         {
             if (active) InputManager.Instance.OnActionTriggered(this, context);
-            else BetterDebug.Log($"ME: {name}  triggering action {context.action.name} but i am INACTIVE");
         }
 
 		public override string ToString( ) => $"InputPlayer ({name})";
