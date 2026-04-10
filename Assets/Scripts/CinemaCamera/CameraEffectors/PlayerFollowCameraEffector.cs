@@ -11,8 +11,9 @@ namespace DigDig2.CinemaCamera.CameraEffectors
         private GameManager gameManager;
         
         
-        private void Start()
+        protected void OnEnable()
         {
+            base.Start();
             gameManager = GameManager.Instance;
             updateAction = gameManager.IsMultiplayer ? MultiPlayerUpdate : SinglePlayerUpdate;
         }

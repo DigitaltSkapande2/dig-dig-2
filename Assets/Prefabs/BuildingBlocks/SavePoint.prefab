@@ -93,186 +93,7 @@ MonoBehaviour:
   startSequenceDone:
     m_PersistentCalls:
       m_Calls: []
-  onReachedEffect:
-    spawnPrefab: 1
-    spawnPrefabEffectData:
-      prefabToSpawn:
-      - prefab: {fileID: 4950934811570952627, guid: f0fdf8a1d2bb011e68b99223681d1728, type: 3}
-        hasLifetime: 1
-        lifetime: 2.15
-    playSound: 0
-    audioClipsToPlay: []
-    screenShake: 0
-    screenShakeEffectData:
-      intensityCurve:
-        serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: 0
-          value: 1
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 1
-          value: 0
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      duration: 0.4
-      intensity: 1
-    cameraZoom: 0
-    cameraZoomEffectData:
-      intensityCurve:
-        serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: 0
-          value: 1
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 1
-          value: 0
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      duration: 0.4
-      intensity: 1
-    timeSlow: 0
-    timeSlowEffectData:
-      intensityCurve:
-        serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: 0
-          value: 1
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 1
-          value: 0
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      duration: 0.4
-      intensity: 1
-    vignettePulse: 0
-    vignettePulseEffectData:
-      intensityCurve:
-        serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: 0
-          value: 1
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 1
-          value: 0
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      duration: 0.4
-      intensity: 1
-      color: {r: 0, g: 0, b: 0, a: 0}
-    gamepadRumble: 0
-    gamepadRumbleEffectData:
-      intensityCurve:
-        serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: 0
-          value: 1
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 1
-          value: 0
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      duration: 0.4
-      intensity: 1
-      inputPlayerId: 0
-      highFrequencyIntensity: 0
-    greyscale: 0
-    greyscaleEffectData:
-      intensityCurve:
-        serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: 0
-          value: 1
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 1
-          value: 0
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      duration: 0.4
-      intensity: 1
+  onReachedEffect: {fileID: 0}
   timeUntilReleaseCamera: 1
 --- !u!1 &6038896450173204486
 GameObject:
@@ -351,62 +172,41 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.CinemaCamera.LockTargetEffector
   startActive: 1
   priorityLevel: 3
-  overridesLowerPriority: 1
-  transitionFadeDuration: 3
+  fadeOutCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: -0.0043932847
+      outSlope: -0.0043932847
+      tangentMode: 0
+      weightedMode: 3
+      inWeight: 0
+      outWeight: 0.79832214
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -0.001150375
+      outSlope: -0.001150375
+      tangentMode: 0
+      weightedMode: 3
+      inWeight: 0.8029986
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  fadeOutDuration: 4
   positionLerpSpeed: 1
   rotationLerpSpeed: 1
   frustumSizeLerpSpeed: 1
   targetPosition: {x: 0, y: 0, z: 0}
   targetRotation: {x: 0, y: 0, z: 0, w: 0}
   targetFrustumSize: -5
-  easeInCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: -0.0017856956
-      value: 0
-      inSlope: 0.0028011205
-      outSlope: 0.0028011205
-      tangentMode: 0
-      weightedMode: 3
-      inWeight: 0
-      outWeight: 0.70000005
-    - serializedVersion: 3
-      time: 0.9982143
-      value: 1
-      inSlope: -0.0027868592
-      outSlope: -0.0027868592
-      tangentMode: 0
-      weightedMode: 3
-      inWeight: 0.7035714
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  easeOutCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0.0028082416
-      outSlope: 0.0028082416
-      tangentMode: 0
-      weightedMode: 3
-      inWeight: 0
-      outWeight: 0.6982143
-    - serializedVersion: 3
-      time: 1
-      value: -0.001953125
-      inSlope: 0.000010858938
-      outSlope: 0.000010858938
-      tangentMode: 0
-      weightedMode: 3
-      inWeight: 0.70535713
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
+  Weight: 0
+  isActive: 0
+  targetIsCurrentEffector: 0
+  activationOrder: 0
   targetTransform: {fileID: 3699966138620905476}
 --- !u!1001 &167236367830913226
 PrefabInstance:

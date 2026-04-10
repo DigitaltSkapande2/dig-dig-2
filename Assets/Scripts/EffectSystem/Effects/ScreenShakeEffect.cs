@@ -13,7 +13,7 @@ namespace DigDig2.EffectSystem.Effects
 	{
 		[SerializeField] private float shakeFrequency = 5;
 		[SerializeField] private float shakeAmplitude = 5;
-		private CameraEffector screenShakeEffector;
+		private PartialCameraEffector screenShakeEffector;
 
         private List<float> pys = new();
 
@@ -21,7 +21,7 @@ namespace DigDig2.EffectSystem.Effects
 		{
 			var screenShakeEffectorObject = new GameObject( "ScreenShakeEffector" );
 			screenShakeEffectorObject.transform.SetParent( transform );
-			screenShakeEffector = screenShakeEffectorObject.AddComponent<CameraEffector>( );
+			screenShakeEffector = screenShakeEffectorObject.AddComponent<PartialCameraEffector>( );
 		}
 
 		internal override void UpdateEffect( float curveValue )

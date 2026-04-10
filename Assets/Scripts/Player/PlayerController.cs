@@ -147,8 +147,6 @@ namespace DigDig2.Player
             // get New Character Type
             CharacterType newCharacterType = characterType == CharacterType.Max ? CharacterType.Minis : CharacterType.Max;
             
-            (newCharacterType == CharacterType.Max ? switchToMaxEffect : switchToMinisEffect).Play( oldPlayerPos + Vector3.up * effectOffsetFromGround );
-            
             BetterDebug.Log($"NEW character: {newCharacterType}");
             // Spawn new player
             GameObject newPrefab = gameManager.GetCharacterPrefabFromCharacterType(newCharacterType);
@@ -163,6 +161,8 @@ namespace DigDig2.Player
             TransferCharacterData(characterObject, newCharacterObj[0]);
             SetCharacterObject(newCharacterObj[0]);
             playerCharacterController.shouldStartDissolved = true;
+            
+            (newCharacterType == CharacterType.Max ? switchToMaxEffect : switchToMinisEffect).Play( oldPlayerPos + Vector3.up * effectOffsetFromGround );
 
             
             gameManager.characterSwitched.Invoke(characterType, newCharacterObj[0]);

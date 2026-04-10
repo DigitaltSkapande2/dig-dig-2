@@ -31,10 +31,6 @@ namespace DigDig2.Game
         [SerializeField] private GameObject playerControllerPrefab;
         [SerializeField] private GameObject maxPrefab;
         [SerializeField] private GameObject miniPrefab;
-
-        [Header("Save Points")]
-        [SerializeField] private SavePoint[] savePoints;
-        [SerializeField] private Crystal[] crystals;
         
         [SerializeField] public UnityEvent<CharacterType, GameObject> characterSwitched = new();
         [SerializeField] public UnityEvent gameStarted = new();
@@ -130,11 +126,10 @@ namespace DigDig2.Game
 
         public async UniTask ReloadGameScene()
         {
-            playerControllers[0] = null;
-            playerControllers[1] = null;
-            
             SaveManager.Instance.Reset();
             await LoadingScreenManager.Instance.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+            playerControllers[0] = null;
+            playerControllers[1] = null;
         }
 
         public void RegisterCharacterDeath()
