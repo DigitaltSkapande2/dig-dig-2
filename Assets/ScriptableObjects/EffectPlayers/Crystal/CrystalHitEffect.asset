@@ -17,7 +17,9 @@ MonoBehaviour:
     prefabToSpawn: []
   playSound: 1
   audioClipsToPlay:
-  - {fileID: 8300000, guid: 55c7cd553503d9c10bd7ea924f49378e, type: 3}
+  - audioClip: {fileID: 8300000, guid: 55c7cd553503d9c10bd7ea924f49378e, type: 3}
+    volume: 1
+    pitchRange: {x: 0, y: 0}
   screenShake: 1
   screenShakeEffectData:
     intensityCurve:
@@ -45,7 +47,7 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     duration: 0.5
-    intensity: 0.4
+    intensity: 0.3
   cameraZoom: 0
   cameraZoomEffectData:
     intensityCurve:

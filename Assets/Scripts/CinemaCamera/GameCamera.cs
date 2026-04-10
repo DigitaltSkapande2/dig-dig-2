@@ -34,7 +34,7 @@ namespace DigDig2.CinemaCamera
         {
             var (targetPos, targetRotation, frustumSize) = GetEffectorEffects();
 
-            BetterDebug.Log($"Update: pos: {targetPos},\nrot: {targetRotation},\nsize: {frustumSize}");
+            //BetterDebug.Log($"Update: pos: {targetPos},\nrot: {targetRotation},\nsize: {frustumSize}");
 
             transform.SetPositionAndRotation(targetPos, targetRotation);
             mainCamera.orthographicSize = frustumSize;

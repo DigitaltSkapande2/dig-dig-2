@@ -1,4 +1,6 @@
+using DigDig2.Debugging;
 using DigDig2.Game;
+using DigDig2.Input;
 using DigDig2.UI.Navigation;
 
 using UnityEngine;
@@ -19,7 +21,7 @@ namespace DigDig2.UI.Controllers
 
 		private bool lastPausedState;
 		private UserInterfaceNavigator navigator;
-		private float openCooldownTimer;
+		private float lastPauseInputTime = 0f;
 
 		private VisualElement pauseMenuContainer;
 		private Button resumeButton;
@@ -81,11 +83,6 @@ namespace DigDig2.UI.Controllers
 			);
 		}
 
-		private void Update( )
-		{
-			if ( openCooldownTimer > 0 ) openCooldownTimer = Mathf.Max( openCooldownTimer - Time.deltaTime, 0 );
-		}
-
 		private void ButtonClick( EventBase _ ) { PlaySoundEffect( buttonClickEffectPrefab ); }
 
 		private void ButtonHover( EventBase _ ) { PlaySoundEffect( buttonHoverEffectPrefab ); }
@@ -95,12 +92,11 @@ namespace DigDig2.UI.Controllers
 		public void Open( )
 		{
 			navigator.NavigateTo( "/pauseMenu" );
-			openCooldownTimer = openCooldown;
 		}
 
 		public void Close( )
 		{
-			if ( openCooldownTimer <= 0 ) navigator.NavigateTo( "/" );
+            navigator.NavigateTo( "/" );
 		}
 
         private void SaveAndExit()
@@ -108,13 +104,9 @@ namespace DigDig2.UI.Controllers
             GameManager.Instance.SaveAndLoadMainMenu( );
         }
 
-		private void OnInputUICancel( )
-		{
-			if ( openCooldownTimer <= 0 ) navigator.NavigateBack( );
-		}
-
-        private void OnInputGamePause()
+        private void OnInputGamePause(InputInfo inputInfo)
         {
+            if (!inputInfo.context.started && Time.time - lastPauseInputTime <= openCooldown) return;
             if (Paused) Close();
             else Open();
         }
