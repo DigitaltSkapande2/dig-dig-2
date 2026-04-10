@@ -11,14 +11,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="50c3eb56-0f37-4789-a838-f82a855a30c4" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Game/DebrisRandomizer.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Game/DebrisRandomizer.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.dig-dig-2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.dig-dig-2/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/SavePoint.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/SavePoint.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/GameCamera.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/GameCamera.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Projectiles/Pro Jec Tile.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Player/Projectiles/Pro Jec Tile.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/GameScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/GameScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/CinemaCamera/CameraEffector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CinemaCamera/CameraEffector.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/CinemaCamera/GameCamera.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CinemaCamera/GameCamera.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Combat/Attacks/RangedAttack.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Combat/Attacks/RangedAttack.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Debris/BrokenBarrel.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Debris/BrokenBarrel.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Debris/BrokenCrystal.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Debris/BrokenCrystal.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Debris/BrokenTrunk.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Debris/BrokenTrunk.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SaveSystem/SaveManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SaveSystem/SaveManager.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -97,6 +96,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Entity/RollDash.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Game/Crystal.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Game/CrystalLine.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Game/DebrisRandomizer.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Game/GameManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Game/GameplayTrigger.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Game/LoadingScreenManager.cs" root0="FORCE_HIGHLIGHTING" />
@@ -163,6 +163,7 @@
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@57d0e36f6123/Samples~/RebindingUI/Game/GameplayManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.test-framework.performance@0840f58e4562/Runtime/PlayerCallbacks.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.timeline@bfd27f8016ff/Editor/State/PlayRange.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.timeline@bfd27f8016ff/Samples~/Customization/Video/Timeline.Samples.Video.asmdef" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="McpProjectServerCommands">
     <commands />
@@ -218,7 +219,7 @@
   </component>
   <component name="RunManager" selected="Unity Attach To.Attach to">
     <configuration name="Standalone Player" type="RunUnityExe" factoryName="Unity Executable">
-      <option name="EXE_PATH" value="$PROJECT_DIR$/../WhiskersOfTheTideWin/7april/LinuxOfTheTide/WhiskersofTheTide7April.x86_64" />
+      <option name="EXE_PATH" value="$PROJECT_DIR$/../WhiskersOfTheTideWindowsBuild/WhiskersOfTheTideFINAL2/Whiskers of the Tide.exe" />
       <option name="PROGRAM_PARAMETERS" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../Builds" />
       <option name="PASS_PARENT_ENVS" value="1" />
@@ -336,6 +337,7 @@
       <workItem from="1775750702904" duration="8412000" />
       <workItem from="1775759303526" duration="16931000" />
       <workItem from="1775815131040" duration="5766000" />
+      <workItem from="1775825834436" duration="1569000" />
     </task>
     <servers />
   </component>
