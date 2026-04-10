@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 5976209809697749524}
   - component: {fileID: 6573185137410320209}
   - component: {fileID: 6435232985193985838}
+  - component: {fileID: 994333425535516672}
   - component: {fileID: 6762114074386312621}
   - component: {fileID: 4427047692297429573}
   m_Layer: 10
@@ -203,7 +204,86 @@ MonoBehaviour:
   hitEffect: {fileID: 11400000, guid: 9916aa16ce65d804392e659d60f66680, type: 2}
   hit:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 994333425535516672}
+        m_TargetAssemblyTypeName: DigDig2.Util.MaterialFloatToggler, Assembly-CSharp
+        m_MethodName: ActivateForDuration
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0.1
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &994333425535516672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5585277213094831744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bfcd0f7c8ff44aabcacf276aeaac72f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Util.MaterialFloatToggler
+  targetRenderers:
+  - {fileID: 8598788983973741389}
+  floatVarName: _DamageFlashAmount
+  activatedValue: 1
+  deactivatedValue: 0
+  fadeActive:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  fadeUnactive:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  fadeDuration: 0
+  isActive: 0
 --- !u!114 &6762114074386312621
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -348,6 +428,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: squid_range_enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 1630794972795428178, guid: 3ec3a9d187bd75d4db6c17b7fdf32c03, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: f4975e16305831240a8ad12ba9c1a6fe, type: 2}
+    - target: {fileID: 1630794972795428178, guid: 3ec3a9d187bd75d4db6c17b7fdf32c03, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: f4975e16305831240a8ad12ba9c1a6fe, type: 2}
+    - target: {fileID: 1630794972795428178, guid: 3ec3a9d187bd75d4db6c17b7fdf32c03, type: 3}
+      propertyPath: 'm_Materials.Array.data[2]'
+      value: 
+      objectReference: {fileID: 2100000, guid: f4975e16305831240a8ad12ba9c1a6fe, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -356,5 +448,10 @@ PrefabInstance:
 --- !u!4 &7385357050123368948 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 3ec3a9d187bd75d4db6c17b7fdf32c03, type: 3}
+  m_PrefabInstance: {fileID: 7058467069070335519}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &8598788983973741389 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 1630794972795428178, guid: 3ec3a9d187bd75d4db6c17b7fdf32c03, type: 3}
   m_PrefabInstance: {fileID: 7058467069070335519}
   m_PrefabAsset: {fileID: 0}
