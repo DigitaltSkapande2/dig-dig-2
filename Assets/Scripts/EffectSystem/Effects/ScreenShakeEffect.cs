@@ -10,7 +10,8 @@ using UnityEditor;
 namespace DigDig2.EffectSystem.Effects
 {
 	public class ScreenShakeEffect : CumulativeEffectBase<CumulativeEffectInstanceData>
-	{
+    {
+        [SerializeField, Range(0, 1)] private float screenShakeLevel;
 		[SerializeField] private float shakeFrequency = 5;
 		[SerializeField] private float shakeAmplitude = 5;
 		private PartialCameraEffector screenShakeEffector;
@@ -28,33 +29,24 @@ namespace DigDig2.EffectSystem.Effects
 		{
 			if ( curveValue <= 0f )
 			{
-				// reset when no shake
 				screenShakeEffector.targetRotation = Quaternion.identity;
 				screenShakeEffector.targetPosition = Vector3.zero;
 				return;
 			}
-
-			// Use unscaled time so shake remains smooth when timeScale changes
+            
 			float t = Time.unscaledTime * shakeFrequency;
             
-            // position: smooth perlin-based planar offset (in camera local plane)
             
             float px = (Mathf.PerlinNoise(t + 37.1f, 9.2f) - Mathf.PerlinNoise(t + 137.1f, 9.2f)) * shakeAmplitude * curveValue;
             float py = (Mathf.PerlinNoise(21.7f, t + 9.2f) - Mathf.PerlinNoise(221.7f, t + 9.2f)) * shakeAmplitude * curveValue;
             pys.Add(py);
             Vector3 planarOffset = (GameCamera.Instance.mainCamera.transform.up * py + GameCamera.Instance.mainCamera.transform.right * px);
-            screenShakeEffector.targetPosition = planarOffset;
-
-			// Smooth Perlin-based rotation and position for natural motion
-			// rotation: use small pitch and roll (avoid large yaw changes that look jarring)
-			float rotPitch = ( Mathf.PerlinNoise( t, 0f ) - 0.5f ) * 2f * ( shakeAmplitude * 0.5f ) * curveValue; // X-axis
-			float rotRoll = ( Mathf.PerlinNoise( 0f, t ) - 0.5f ) * 2f * ( shakeAmplitude * 0.5f ) * curveValue; // Z-axis
+            screenShakeEffector.targetPosition = planarOffset * screenShakeLevel;
             
+			float rotPitch = ( Mathf.PerlinNoise( t, 0f ) - 0.5f ) * 2f * ( shakeAmplitude * 0.5f ) * curveValue;
+			float rotRoll = ( Mathf.PerlinNoise( 0f, t ) - 0.5f ) * 2f * ( shakeAmplitude * 0.5f ) * curveValue; 
             
-			// Apply rotation as small offsets around local axes (pitch, roll)
-			screenShakeEffector.targetRotation = Quaternion.Euler( rotPitch, 0f, rotRoll );
-            
-            //BetterDebug.Log(pys.Sum()/pys.Count);
+			screenShakeEffector.targetRotation = Quaternion.Normalize(Quaternion.Slerp(Quaternion.identity, Quaternion.Euler( rotPitch, 0f, rotRoll ), screenShakeLevel));
 		}
 
         internal override void OnEffectEnd(CumulativeEffectInstanceData effect)
