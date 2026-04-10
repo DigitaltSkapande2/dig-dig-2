@@ -12,6 +12,7 @@ namespace DigDig2.Combat.Attacks
 		[SerializeField] private int bindableAttackHitboxIndex;
 		[SerializeField] private GameObject hitEffect;
 		[SerializeField] private GameObject attackVFX;
+		[SerializeField] private float vfxLifeTime;
 		[SerializeField] private float knockbackStrength = 50;
 
 		public override void ChargeStart( Attacker attacker, AttackType attackType ) { }
@@ -38,19 +39,19 @@ namespace DigDig2.Combat.Attacks
 			if (animEventName == "AttackVFX")
 			{	
 				Quaternion rotation = Quaternion.LookRotation(attacker.GetForwardVector(), attacker.transform.up);
-				Destroy(Instantiate(attackVFX, attacker.transform.position, rotation, attacker.transform), 5);
+				Destroy(Instantiate(attackVFX, attacker.transform.position, rotation, attacker.transform), vfxLifeTime);
 			}
 
 			if (animEventName == "EnemyAttackVFX1")
 			{
 				Quaternion rotation = Quaternion.LookRotation(attacker.GetForwardVector(), attacker.transform.up + Vector3.Cross(attacker.GetForwardVector(), attacker.transform.up));
-				Destroy(Instantiate(attackVFX, attacker.transform.position + attacker.GetForwardVector(), rotation, attacker.transform), 5);
+				Destroy(Instantiate(attackVFX, attacker.transform.position + attacker.GetForwardVector(), rotation, attacker.transform), vfxLifeTime);
 			}
 
 			if (animEventName == "EnemyAttackVFX2")
 			{
 				Quaternion rotation = Quaternion.LookRotation(attacker.GetForwardVector(), attacker.transform.up - Vector3.Cross(attacker.GetForwardVector(), attacker.transform.up));
-				Destroy(Instantiate(attackVFX, attacker.transform.position + attacker.GetForwardVector(), rotation, attacker.transform), 5);
+				Destroy(Instantiate(attackVFX, attacker.transform.position + attacker.GetForwardVector(), rotation, attacker.transform), vfxLifeTime);
 			}
         }
 

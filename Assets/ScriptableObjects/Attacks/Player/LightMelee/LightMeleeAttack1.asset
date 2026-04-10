@@ -14,10 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.MeleeAttack
   attackDuration: 0.75
   onPerformEffect: {fileID: 11400000, guid: 1ad9e72196fbe33c18e11e7e3ed608f9, type: 2}
+  onChargeEffect: {fileID: 0}
   animationStateName: LightAttack1
   damage: 2
   pushAmount: 10
   bindableAttackHitboxIndex: 0
   hitEffect: {fileID: 6931098926697571914, guid: 3d36de908b6d4fc4cbed789d229020ac, type: 3}
   attackVFX: {fileID: 1941864467486260604, guid: a650b30473346c9408175112c1bd6842, type: 3}
+  vfxLifeTime: 0.3
   knockbackStrength: 100

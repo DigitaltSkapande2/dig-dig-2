@@ -19,7 +19,6 @@ namespace DigDig2.Combat
 		[SerializeField] private GameObject attackVFX;
 		[SerializeField] private float knockbackStrength = 50;
 
-		private Vector3 lastHitboxPosition;
 		private float lastChargeTime;
 		private string independentID;
 
@@ -60,7 +59,6 @@ namespace DigDig2.Combat
 			Quaternion rotation = Quaternion.LookRotation(forwardVector, attacker.transform.up);
             BindableAttackHitbox hitbox = Instantiate(hitboxPrefab, attacker.transform.position + centerOffset, rotation).GetComponent<BindableAttackHitbox>();
 			Destroy(hitbox.gameObject, 5);
-			lastHitboxPosition = hitbox.transform.position;
 			float radius = Mathf.Lerp(minRaduis, maxRadius, lastChargeTime / attackGroup.chargeDuration);
 			hitbox.SetSphereRadius(radius);
 			attacker.StartHitboxAttack( this, triggerAnimationStateName, hitbox);
@@ -85,7 +83,7 @@ namespace DigDig2.Combat
 		{
 			if ( hitEffect ) Instantiate( hitEffect, attackable.transform.position, Quaternion.identity );
 			if ( healthComponent ) healthComponent.Damage( damage );
-			attackable.ApplyKnockback( ( attackable.transform.position - lastHitboxPosition ).normalized, knockbackStrength );
+			attackable.ApplyKnockback( ( attackable.transform.position - attacker.transform.position ).normalized, knockbackStrength );
 		}
     }
 }
