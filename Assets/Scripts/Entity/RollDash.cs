@@ -1,4 +1,5 @@
 using System.Collections;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using DigDig2.Debugging;
 using DigDig2.Combat;
@@ -20,7 +21,7 @@ namespace DigDig2.Entity
 
         
 
-        public override IEnumerator PerformDash(Vector3 direction, EntityCharacterController entitycontroller)
+        public override async UniTask PerformDash(Vector3 direction, EntityCharacterController entitycontroller)
         {
             BetterDebug.Log("START Dashing");
             BetterDebug.Log(" Dashing dir " + direction);
@@ -33,16 +34,15 @@ namespace DigDig2.Entity
                 attackable.SetInvincible(dashDuration);
             }
 
-            while (elapsed < dashDuration)  
+            while (elapsed < dashDuration)
             {
+                await UniTask.Yield(PlayerLoopTiming.Update);
                 elapsed += Time.deltaTime;
                 float t = Mathf.Clamp01(elapsed / dashDuration);
 
                 float curveValue = dashCurve.Evaluate(t);
 
                 dashVelocity = (entitycontroller.GetMoveSpeed() * direction) + ( curveValue * dashPower * direction) ;
-
-                yield return null;
             }
 
             BetterDebug.Log("END dash");

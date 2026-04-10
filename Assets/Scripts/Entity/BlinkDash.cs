@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 using DigDig2.Debugging;
 using DigDig2.EffectSystem;
 using DigDig2.Game;
@@ -33,11 +34,11 @@ namespace DigDig2.Entity
  
         private float lastTimeDashed = 0f;
         
-        public override IEnumerator PerformDash(Vector3 direction, EntityCharacterController entitycontroller)
+        public override async UniTask PerformDash(Vector3 direction, EntityCharacterController entitycontroller)
         {
             entitycontroller.GetVisualsParent().SetActive(false);
             blinkStartEffect.Play(entitycontroller.transform.position + Vector3.up * effectYOffset);
-            yield return new WaitForSeconds(blinkDisappearTime + endBlinkEffectTimeOffset);
+            //await UniTask.WaitForSeconds(blinkDisappearTime + endBlinkEffectTimeOffset);
             
             Vector3 localTarget = direction * dashLenght;
             Vector3 initialTargetPosition = entitycontroller.transform.position + localTarget;
@@ -77,7 +78,7 @@ namespace DigDig2.Entity
 
             blinkEndEffect.Play(finalTeleportTarget + Vector3.up * effectYOffset);
             entitycontroller.Teleport(finalTeleportTarget);
-            yield return new WaitForSeconds(Mathf.Abs(endBlinkEffectTimeOffset));
+            await UniTask.WaitForSeconds(Mathf.Abs(endBlinkEffectTimeOffset));
             entitycontroller.GetVisualsParent().SetActive(true);
             lastTimeDashed = Time.time;
         }

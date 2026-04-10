@@ -104,7 +104,6 @@ namespace DigDig2.Player.Combat
             
             if (entityController)
             {
-                entityController.SetAutomaticLookRotationLock( currentlyFocusedAttackable );
                 if ( currentlyFocusedAttackable ) entityController.LookTowards( currentlyFocusedAttackable!.transform.position );
             }
         }
@@ -188,6 +187,7 @@ namespace DigDig2.Player.Combat
             cameraEffector.targetPosition = Vector3.zero;
             
             currentlyFocusedAttackable = null;
+            if (entityController) entityController.SetAutomaticLookRotationLock( currentlyFocusedAttackable );
             currentlyFocusedEnemyGroupIndex = -1;
             if ( entityController ) entityController.SetAutomaticLookRotationLock( false );
             
@@ -210,6 +210,7 @@ namespace DigDig2.Player.Combat
             if (TryGetClosestEnemy(out var attackable) && IsAttackableVisibleOnScreen(attackable)) 
             {
                 currentlyFocusedAttackable = attackable;
+                if (entityController) entityController.SetAutomaticLookRotationLock( currentlyFocusedAttackable );
                 SetFocusIndicatorActive(true);
             }
             else

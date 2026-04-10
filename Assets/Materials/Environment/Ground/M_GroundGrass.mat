@@ -71,7 +71,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _Blend: 1000
-    - _BottomY: -15.3
+    - _BottomY: 16
     - _Metallic: 0
     - _NoiseIntensity: 1
     - _NoiseScale: 15
@@ -86,7 +86,7 @@ Material:
     - _TextureStrength: 1
     - _TextureTiling: 0.05
     - _Tiling: 0.05
-    - _TopY: 1
+    - _TopY: 41
     m_Colors:
     - _BottomColor: {r: 0.02745098, g: 0.27058825, b: 0.09411765, a: 1}
     - _NoiseColor: {r: 0.045656823, g: 0.3584906, b: 0.13146782, a: 1}

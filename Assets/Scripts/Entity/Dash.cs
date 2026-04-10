@@ -1,11 +1,12 @@
 using System.Collections;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace DigDig2.Entity
 {
     public abstract class Dash : MonoBehaviour
     {
-        public abstract IEnumerator PerformDash(Vector3 direction, EntityCharacterController entitycontroller);
+        public abstract UniTask PerformDash(Vector3 direction, EntityCharacterController entitycontroller);
 
         public abstract Vector3 GetVelocity();
         

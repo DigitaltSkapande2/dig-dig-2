@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-
+using Cysharp.Threading.Tasks;
 using DigDig2.Combat;
 using DigDig2.Debugging;
 using DigDig2.Debugging.Menu;
@@ -399,7 +399,7 @@ namespace DigDig2.Entity
 		{
 			if ( !dash || isDashing || !dash.CanDash()) return;
 
-            StartCoroutine(DashRoutine());
+            DashRoutine().Forget();
             
 			if ( !attacker ) return;
 
@@ -407,13 +407,15 @@ namespace DigDig2.Entity
 			attacker.EndAttackCharge( true );
 		}
 
-        private IEnumerator DashRoutine()
+        private async UniTask DashRoutine()
         {
             isDashing = true;
+            SetAutomaticLookRotationLock(true);
             
             Vector3 dashDirection = inputMoveVector == Vector3.zero ? GetForwardVector() : inputMoveVector;
-            yield return StartCoroutine(dash.PerformDash(dashDirection, this));
+            await dash.PerformDash(dashDirection, this);
 
+            SetAutomaticLookRotationLock(false);
             isDashing = false;
         }
 

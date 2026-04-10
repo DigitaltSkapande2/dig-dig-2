@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: HeavyMeleeAttack
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Combat.AOEAttack
   attackDuration: 0.8
-  onPerformEffect: {fileID: 11400000, guid: 9eb55989aac38d6e0b67a610a8ed1c66, type: 2}
+  onPerformEffect: {fileID: 11400000, guid: 222e600ee2b1cb6cbb2f903a97cb3902, type: 2}
+  onChargeEffect: {fileID: 11400000, guid: 1a5a598eb394f6aff80661422bca2cfa, type: 2}
   chargeAnimationStateName: Charge
   triggerAnimationStateName: Trigger
   minRaduis: 2.5
