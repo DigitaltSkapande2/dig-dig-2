@@ -22,7 +22,7 @@ namespace DigDig2.CinemaCamera
 
         private static void Unregister(CameraEffector effector)
         {
-            allEffectors.Remove(effector);
+            if ( allEffectors.Contains(effector) ) allEffectors.Remove(effector);
             BetterDebug.Log($"Unregistered: {effector.name}");
             RecalculateCurrentEffector();
         }

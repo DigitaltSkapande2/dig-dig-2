@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: HeavyRangedAttack1
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.RangedAttack
   attackDuration: 1.8
-  onPerformEffect: {fileID: 11400000, guid: 78069f44225caa3c68112e0aa5ce19cd, type: 2}
+  onPerformEffect: {fileID: 11400000, guid: 26792db5970914f8caa4fcd2fef39cc8, type: 2}
   chargeAnimationStateName: Charge
   triggerAnimationStateName: Trigger
   damage: 1

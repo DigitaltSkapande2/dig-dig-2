@@ -9,6 +9,7 @@ namespace DigDig2.Combat
 		[SerializeField] protected float attackDuration = 1f;
         [SerializeField] public EffectPlayer onPerformEffect;
 
+
 		public float AttackDuration
 		{
 			get => attackDuration;

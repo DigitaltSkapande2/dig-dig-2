@@ -22166,6 +22166,10 @@ PrefabInstance:
       propertyPath: playerDeadBannerTint.r
       value: 0.2735849
       objectReference: {fileID: 0}
+    - target: {fileID: 1952792405588614888, guid: c4def05584750e44487f095b637b62b5, type: 3}
+      propertyPath: positionLerpSpeed
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5595240476577189436, guid: c4def05584750e44487f095b637b62b5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -25158,14 +25162,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7165053757399966656, guid: ee92603dd2b37dbe7b2955f4695f6409, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7971288690862353960, guid: ee92603dd2b37dbe7b2955f4695f6409, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7971288690862353960, guid: ee92603dd2b37dbe7b2955f4695f6409, type: 3}
-      propertyPath: startActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

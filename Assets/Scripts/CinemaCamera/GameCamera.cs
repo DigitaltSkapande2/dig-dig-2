@@ -54,7 +54,7 @@ namespace DigDig2.CinemaCamera
             foreach (var effector in CameraEffector.GetAll())
             {
                 effector.UpdateEffector(deltaTime);
-                BetterDebug.Log($"[{effector}, {effector.Weight}]");
+                //BetterDebug.Log($"[{effector}, {effector.Weight}]");
          
                 float w = effector.Weight;
                 if (w <= float.Epsilon) continue;
@@ -65,7 +65,7 @@ namespace DigDig2.CinemaCamera
                 baseFrustumSize += effector.lerpedFrustumSize * w; // this bad, But we already made it bad. Don't Drink bad milk
                 baseRotation = SafeQuaternion(Quaternion.Slerp(baseRotation, SafeQuaternion(effector.lerpedRotation), w));
             }
-            BetterDebug.Log($"base Rotation: {baseRotation}");
+            //BetterDebug.Log($"base Rotation: {baseRotation}");
             
             // Parial effectors
             Vector3 partialPositionOffset = Vector3.zero;
@@ -76,7 +76,7 @@ namespace DigDig2.CinemaCamera
             foreach (var partial in PartialCameraEffector.GetAll())
             {
                 partial.UpdateEffector(deltaTime);
-                BetterDebug.Log($"Partial: [{partial}, {partial.Weight}]");
+                //BetterDebug.Log($"Partial: [{partial}, {partial.Weight}]");
      
                 float w = partial.Weight;
                 if (w <= float.Epsilon) continue;
@@ -90,19 +90,13 @@ namespace DigDig2.CinemaCamera
      
                 partialFrustumSizeOffset += partial.lerpedFrustumSize * balancedW;
             }
-            BetterDebug.Log($"Partial Rotation: {partialRotationOffset}");
+            //BetterDebug.Log($"Partial Rotation: {partialRotationOffset}");
                         
             Vector3 finalPosition = basePosition + partialPositionOffset;
             Quaternion finalRotation = Quaternion.Normalize(SafeQuaternion(baseRotation) * SafeQuaternion(partialRotationOffset));
             float finalFrustumSize = baseFrustumSize + partialFrustumSizeOffset;
             
             return (finalPosition, finalRotation, finalFrustumSize);
-            
-
-            
-            BetterDebug.Log($"Final rot: {finalRotation}");
-         
-            
         }
 
         public void SetRotationSpeed(float speed)

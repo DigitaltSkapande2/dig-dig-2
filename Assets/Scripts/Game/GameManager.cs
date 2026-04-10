@@ -127,9 +127,9 @@ namespace DigDig2.Game
         public async UniTask ReloadGameScene()
         {
             SaveManager.Instance.Reset();
-            await LoadingScreenManager.Instance.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
             playerControllers[0] = null;
             playerControllers[1] = null;
+            await LoadingScreenManager.Instance.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
         }
 
         public void RegisterCharacterDeath()
