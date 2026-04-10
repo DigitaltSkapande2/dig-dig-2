@@ -18390,7 +18390,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38b616df533bebf48941c6b4f841478d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.DayCycle
-  dayDurationInMinutes: 2.5
+  dayDurationInMinutes: 3
   nightMidtones: {x: 0.75, y: 0, z: 1.75, w: 0.15}
   sceneDirectionalLight: {fileID: 165320763}
   nightDirectionalLightIntensity: 0.25

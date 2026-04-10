@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: M_Player2HeavyTrail
+  m_Name: M_Player1HeavytAttackTopSlash
   m_Shader: {fileID: -6465566751694194690, guid: 979b11c4fdbbbf64dad08a8fb8f42ee9, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -63,18 +63,18 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _DissolveScale: 21.89
+    - _DissolveScale: 69.39
     - _GradientStrength: 0.18
     - _NoiseStrength: 0.01
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Strength: 136.17
     m_Colors:
-    - _Color1: {r: 3.017892, g: 1.4005934, b: 0.4498364, a: 1}
-    - _Color2: {r: 0.07042945, g: 1.9217174, b: 0.89560974, a: 1}
+    - _Color1: {r: 1.1891397, g: 0.62656945, b: 0, a: 1}
+    - _Color2: {r: 54.8985, g: 39.1576, b: 19.784178, a: 1}
     - _GradientTiling: {r: 1, g: 1, b: 0, a: 0}
     - _NoiseSpeed: {r: -0.2, g: 0, b: 0, a: 0}
     - _TextureSPeed: {r: 0.1, g: 0, b: 0, a: 0}
-    - _TextureTiling: {r: 1, g: 1, b: 0, a: 0}
+    - _TextureTiling: {r: 1, g: 2.41, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
