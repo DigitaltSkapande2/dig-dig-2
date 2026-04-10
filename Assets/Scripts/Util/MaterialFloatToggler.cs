@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using DigDig2.Debugging;
 using UnityEngine;
@@ -44,17 +45,17 @@ namespace DigDig2.Util
         {
             if (isTransitioning || isActive) return;
             isActive = true;
-            FadeFromTo(targetRenderers, floatVarName, fadeDuration, deactivatedValue, activatedValue, fadeActive).Forget();
+            FadeFromTo(targetRenderers, floatVarName, fadeDuration, deactivatedValue, activatedValue, fadeActive, this.GetCancellationTokenOnDestroy()).Forget();
         }
         
         public void DeActivate()
         {
             if (isTransitioning || !isActive) return;
             isActive = false;
-            FadeFromTo(targetRenderers, floatVarName, fadeDuration, deactivatedValue, activatedValue, fadeUnactive).Forget();
+            FadeFromTo(targetRenderers, floatVarName, fadeDuration, deactivatedValue, activatedValue, fadeUnactive, this.GetCancellationTokenOnDestroy()).Forget();
         }
 
-        private async UniTask FadeFromTo(Renderer[] targetRenderers, string varName, float duration, float fromValue, float toValue, AnimationCurve curve)
+        private async UniTask FadeFromTo(Renderer[] targetRenderers, string varName, float duration, float fromValue, float toValue, AnimationCurve curve, CancellationToken ct)
         {
             isTransitioning = true;
 
@@ -64,7 +65,7 @@ namespace DigDig2.Util
                 float t = 0f;
                 while (t < 1f)
                 {
-                    await UniTask.Yield(PlayerLoopTiming.Update);
+                    await UniTask.Yield(PlayerLoopTiming.Update, ct);
                     t = (Time.time - startTime) / duration;
 
                     float curveValue = curve.Evaluate(t);
@@ -85,6 +86,7 @@ namespace DigDig2.Util
         {
             foreach (var renderer in targetRenderers)
             {
+                if (renderer == null) continue;
                 foreach (var mat in renderer.materials)
                 {
                     if (mat.HasFloat(varName))

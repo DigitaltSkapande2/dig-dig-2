@@ -19345,7 +19345,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Effects.ScreenShakeEffect
   useUnscaledTime: 1
-  screenShakeLevel: 1
+  screenShakeLevel: 0.8
   shakeFrequency: 100
   shakeAmplitude: 30
 --- !u!114 &921060884

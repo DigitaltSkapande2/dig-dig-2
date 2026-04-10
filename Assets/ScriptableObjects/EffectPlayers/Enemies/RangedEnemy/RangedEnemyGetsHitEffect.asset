@@ -103,7 +103,7 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     duration: 0.2
-    intensity: 0.2
+    intensity: 1
   vignettePulse: 0
   vignettePulseEffectData:
     intensityCurve:
