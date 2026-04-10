@@ -100,7 +100,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 11400000, guid: f30366c48ccf53312bf42618a23827a1, type: 2}
+      - m_Target: {fileID: 11400000, guid: a24f0ed7307895f44a36254a05273a16, type: 2}
         m_TargetAssemblyTypeName: DigDig2.EffectSystem.EffectPlayer, Assembly-CSharp
         m_MethodName: Play
         m_Mode: 1

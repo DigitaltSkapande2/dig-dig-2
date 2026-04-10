@@ -17,6 +17,9 @@ namespace DigDig2.Combat.Attacks
         // [SerializeField] private AudioClip chargeSFX;
  		[SerializeField] private float projectileSpeed;
 		[SerializeField] private float projectileLifetime;
+        [SerializeField] private float projectileSpawnYOffset = 0f;
+        [SerializeField] private float ProjectileSpawnAheadDistance = 1f;
+        [SerializeField] private LayerMask badLayerMasks;
 
 		private GameObject chargeVFXInstance;
         private AudioSource chargeAudioSourceInstance;
@@ -80,7 +83,22 @@ namespace DigDig2.Combat.Attacks
 				Debug.Log( "Hello i am a ranged attack" );
 				onPerformEffect?.Play();
 				Vector3 forward = attacker.GetComponent<EntityCharacterController>( ).GetForwardVector( );
-				Projectile projectile = Instantiate( projectilePrefab, attacker.transform.position, quaternion.LookRotation( forward, Vector3.up ) ).GetComponent<Projectile>( );
+                Projectile projectile = null;
+                if (!Physics.Raycast(
+                        attacker.transform.position + Vector3.up * projectileSpawnYOffset, 
+                        forward, 
+                        ProjectileSpawnAheadDistance,
+                        badLayerMasks))
+                {
+                    projectile = Instantiate( projectilePrefab, attacker.transform.position + Vector3.up * projectileSpawnYOffset + forward * ProjectileSpawnAheadDistance, quaternion.LookRotation( forward, Vector3.up ) ).GetComponent<Projectile>( );
+                }
+                else
+                {
+                    projectile = Instantiate( projectilePrefab, attacker.transform.position + Vector3.up * projectileSpawnYOffset, quaternion.LookRotation( forward, Vector3.up ) ).GetComponent<Projectile>( );
+                }
+                
+
+                
 				projectile.SetInfo( this, attacker, projectileSpeed, projectileLifetime );
 			}
 		}

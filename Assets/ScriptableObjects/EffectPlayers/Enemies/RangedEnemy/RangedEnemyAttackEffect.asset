@@ -17,7 +17,9 @@ MonoBehaviour:
     prefabToSpawn: []
   playSound: 1
   audioClipsToPlay:
-  - {fileID: 8300000, guid: c162e038c0ec89297999efd5116944e1, type: 3}
+  - audioClip: {fileID: 8300000, guid: e75223da9ac047acfb11ead2c3294388, type: 3}
+    volume: 1
+    pitchRange: {x: 0, y: 0}
   screenShake: 0
   screenShakeEffectData:
     intensityCurve:
