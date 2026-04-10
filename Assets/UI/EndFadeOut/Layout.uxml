@@ -2,9 +2,9 @@
     <Style src="project://database/Assets/UI/MainStyle.uss?fileID=7433441132597879392&amp;guid=57c2164d8f5e7a4f5bf7c6109294bfec&amp;type=3#MainStyle"/>
     <Style src="project://database/Assets/UI/EndFadeOut/Style.uss?fileID=7433441132597879392&amp;guid=0ab5e1ce3fd354d409d8bd48fc5a714e&amp;type=3#Style"/>
     <ui:VisualElement name="cover" style="flex-grow: 1; background-color: rgb(0, 0, 0); opacity: 0; transition-property: opacity; transition-duration: 0.1s;">
-        <ui:Image name="creditsBackground" style="background-image: url(&quot;project://database/Assets/Textures/Cutscene/scene%204/backrounds4.png?fileID=2800000&amp;guid=a512f1ec6ddeea036aaeed6c20d75ce2&amp;type=3#backrounds4&quot;); right: 0; top: 0; left: 0; bottom: 0; position: absolute; -unity-background-scale-mode: scale-and-crop; opacity: 0; transition-property: opacity; transition-duration: 3s; transition-timing-function: ease-in-cubic;"/>
+        <ui:Image name="creditsBackground" style="background-image: url(&quot;project://database/Assets/Textures/Cutscene/scene%204/backrounds4.png?fileID=2800000&amp;guid=a512f1ec6ddeea036aaeed6c20d75ce2&amp;type=3#backrounds4&quot;); right: 0; top: 0; left: 0; bottom: 0; position: absolute; -unity-background-scale-mode: scale-and-crop; opacity: 0; transition-property: opacity, -unity-background-image-tint-color; transition-duration: 1s, 3s; transition-timing-function: ease, ease; -unity-background-image-tint-color: rgb(255, 255, 255);"/>
         <ui:VisualElement name="scrollerContainer" style="flex-grow: 1; top: 0%; position: absolute; left: 50%; translate: -50% 0%; bottom: auto; flex-shrink: 0; height: auto; flex-direction: column; transition-property: top, opacity; transition-timing-function: linear, ease; transition-duration: 25s, 1s; opacity: 0;">
-            <ui:VisualElement name="scroller" style="flex-grow: 1; top: 0%; position: relative; left: auto; flex-shrink: 0; bottom: auto; transition-duration: 25s; transition-property: top; transition-timing-function: linear;">
+            <ui:VisualElement name="scroller" style="flex-grow: 1; top: 0%; position: relative; left: auto; flex-shrink: 0; bottom: auto; transition-duration: 25s; transition-property: top; transition-timing-function: linear; opacity: 1;">
                 <ui:VisualElement style="flex-grow: 0; height: 292px; flex-shrink: 0;"/>
                 <ui:Label text="Thank You for Playing" style="-unity-text-align: upper-center; font-size: 70px;"/>
                 <ui:Image style="background-image: url(&quot;project://database/Assets/Textures/UI/Title.png?fileID=2800000&amp;guid=887d5d3fdebb0904b9db8ff257ddda45&amp;type=3#Title&quot;); height: 380px; -unity-background-scale-mode: scale-and-crop; width: 1331px; flex-shrink: 0;"/>
@@ -80,10 +80,11 @@
                         <ui:Label text="Level Designer" name="" class="area"/>
                     </ui:VisualElement>
                 </ui:VisualElement>
-                <ui:VisualElement style="flex-grow: 1; flex-shrink: 0;">
+                <ui:VisualElement name="VisualElement" style="flex-grow: 1; flex-shrink: 0; margin-top: 900px;">
                     <ui:Image source="" style="height: 612px; flex-grow: 1; flex-shrink: 0; margin-top: 0; background-image: url(&quot;project://database/Assets/Textures/Cutscene/scene%205/cats5.png?fileID=2800000&amp;guid=8a2a5f797561f08bbb0807736fb3d821&amp;type=3#cats5&quot;); -unity-background-scale-mode: scale-and-crop; background-position-x: left 35px;"/>
                 </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
+        <ui:Label text="To be continued..." name="tbc" style="position: absolute; top: 30%; left: 50%; translate: -50% -50%; font-size: 70px; transition-duration: 1s; transition-property: opacity; opacity: 0;"/>
     </ui:VisualElement>
 </ui:UXML>
