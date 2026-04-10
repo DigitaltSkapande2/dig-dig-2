@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using DigDig2.Debugging;
 using DigDig2.Util;
 using Unity.Mathematics;
@@ -47,7 +48,9 @@ namespace DigDig2.CinemaCamera
             Vector3 basePosition = Vector3.zero;
             Quaternion baseRotation = Quaternion.identity;
             float baseFrustumSize = defaultFrustumHeight;
-         
+
+            float overridePartialsWeight = 0f;
+            
             foreach (var effector in CameraEffector.GetAll())
             {
                 effector.UpdateEffector(deltaTime);
@@ -55,6 +58,8 @@ namespace DigDig2.CinemaCamera
          
                 float w = effector.Weight;
                 if (w <= float.Epsilon) continue;
+                
+                if (effector.overridePartials) overridePartialsWeight += effector.Weight;
                 
                 basePosition = Vector3.Lerp(basePosition,effector.lerpedPosition, w);
                 baseFrustumSize += effector.lerpedFrustumSize * w; // this bad, But we already made it bad. Don't Drink bad milk
@@ -66,31 +71,38 @@ namespace DigDig2.CinemaCamera
             Vector3 partialPositionOffset = Vector3.zero;
             Quaternion partialRotationOffset = Quaternion.identity;
             float partialFrustumSizeOffset = 0f;
-         
+            
+
             foreach (var partial in PartialCameraEffector.GetAll())
             {
                 partial.UpdateEffector(deltaTime);
                 BetterDebug.Log($"Partial: [{partial}, {partial.Weight}]");
-         
+     
                 float w = partial.Weight;
                 if (w <= float.Epsilon) continue;
-                
-                partialPositionOffset += partial.lerpedPosition * w;
-                
-                Quaternion weightedRot = SafeQuaternion(Quaternion.Slerp(Quaternion.identity, SafeQuaternion(partial.lerpedRotation), w));
+
+                float balancedW = Mathf.Lerp(w, 0, Mathf.Clamp01(overridePartialsWeight));
+            
+                partialPositionOffset += partial.lerpedPosition * balancedW;
+            
+                Quaternion weightedRot = SafeQuaternion(Quaternion.Slerp(Quaternion.identity, SafeQuaternion(partial.lerpedRotation), balancedW));
                 partialRotationOffset = SafeQuaternion(partialRotationOffset * weightedRot);
-         
-                partialFrustumSizeOffset += partial.lerpedFrustumSize * w;
+     
+                partialFrustumSizeOffset += partial.lerpedFrustumSize * balancedW;
             }
             BetterDebug.Log($"Partial Rotation: {partialRotationOffset}");
-            
+                        
             Vector3 finalPosition = basePosition + partialPositionOffset;
             Quaternion finalRotation = Quaternion.Normalize(SafeQuaternion(baseRotation) * SafeQuaternion(partialRotationOffset));
             float finalFrustumSize = baseFrustumSize + partialFrustumSizeOffset;
             
+            return (finalPosition, finalRotation, finalFrustumSize);
+            
+
+            
             BetterDebug.Log($"Final rot: {finalRotation}");
          
-            return (finalPosition, finalRotation, finalFrustumSize);
+            
         }
 
         public void SetRotationSpeed(float speed)
