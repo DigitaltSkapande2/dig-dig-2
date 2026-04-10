@@ -21,7 +21,7 @@ MonoBehaviour:
   playSound: 1
   audioClipsToPlay:
   - {fileID: 8300000, guid: b98b4afbe91f446de9da6ddf2f310bda, type: 3}
-  screenShake: 0
+  screenShake: 1
   screenShakeEffectData:
     intensityCurve:
       serializedVersion: 2
@@ -48,7 +48,7 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     duration: 0.4
-    intensity: 1
+    intensity: 0.3
   cameraZoom: 0
   cameraZoomEffectData:
     intensityCurve:

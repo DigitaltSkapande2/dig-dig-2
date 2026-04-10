@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: HeavyRangedAttack
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Combat.AOEAttack
   attackDuration: 0
-  onPerformEffect: {fileID: 0}
+  onPerformEffect: {fileID: 11400000, guid: 5d23f0d93d7a21c1e93226843c2bbe29, type: 2}
+  onChargeEffect: {fileID: 0}
   chargeAnimationStateName: 
   triggerAnimationStateName: 
   minRaduis: 3

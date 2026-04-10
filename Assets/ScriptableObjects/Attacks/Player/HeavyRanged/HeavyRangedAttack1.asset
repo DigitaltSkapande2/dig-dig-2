@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.RangedAttack
   attackDuration: 1.8
   onPerformEffect: {fileID: 11400000, guid: 26792db5970914f8caa4fcd2fef39cc8, type: 2}
+  onChargeEffect: {fileID: 11400000, guid: 6bbec0bb7b675033c82c4a31c23c5e1e, type: 2}
   chargeAnimationStateName: Charge
   triggerAnimationStateName: Trigger
   damage: 1

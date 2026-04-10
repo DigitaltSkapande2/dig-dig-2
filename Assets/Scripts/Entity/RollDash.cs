@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using DigDig2.Debugging;
 using DigDig2.Combat;
+using DigDig2.EffectSystem;
 
 namespace DigDig2.Entity
 {
@@ -12,6 +13,7 @@ namespace DigDig2.Entity
         [SerializeField] private float dashCooldown = 0.7f;
         [SerializeField] AnimationCurve dashCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
         [SerializeField] GameObject dashVFX;
+        [SerializeField] private EffectPlayer onDashEffect;
 
         private Vector3 dashVelocity;
         private float lastTimeDashed = 0;
@@ -24,6 +26,7 @@ namespace DigDig2.Entity
             BetterDebug.Log(" Dashing dir " + direction);
             float elapsed = 0f;
 
+            onDashEffect?.Play();
             Instantiate(dashVFX, transform.position - Vector3.up, Quaternion.identity, transform).transform.forward = -direction;
             if (TryGetComponent(out Attackable attackable))
             {

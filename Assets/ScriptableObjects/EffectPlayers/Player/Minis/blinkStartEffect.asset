@@ -18,8 +18,9 @@ MonoBehaviour:
     - prefab: {fileID: 4470345625133635168, guid: 94944c19ce8d8ed48a670c8d5ab999f0, type: 3}
       hasLifetime: 1
       lifetime: 2
-  playSound: 0
-  audioClipsToPlay: []
+  playSound: 1
+  audioClipsToPlay:
+  - {fileID: 8300000, guid: 80948656c1473b9ac9a32d502348891f, type: 3}
   screenShake: 0
   screenShakeEffectData:
     intensityCurve:
