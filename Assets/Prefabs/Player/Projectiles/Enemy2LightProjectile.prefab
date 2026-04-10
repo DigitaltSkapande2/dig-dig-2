@@ -48,6 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Projectile
   hitAttack: {fileID: 11400000, guid: 7d59ff6f0e26afd4380fb42b0000d8bb, type: 2}
+  sphericalRadius: 0.1
   layerMask:
     serializedVersion: 2
     m_Bits: 1225

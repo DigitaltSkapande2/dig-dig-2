@@ -53,7 +53,7 @@ MonoBehaviour:
   - crystal
   - button
   - environment
-  focusScanRadius: 14
+  focusScanRadius: 11
   yDifferenceTolerance: 2
   cameraFocusFollowFactor: 0.2
   cameraFocusFrustumSize: -1

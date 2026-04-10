@@ -1,3 +1,5 @@
+using System;
+using DigDig2.Debugging;
 using DigDig2.EffectSystem;
 using NUnit.Framework;
 using UnityEngine;
@@ -8,22 +10,25 @@ namespace DigDig2.Combat
 	public class Projectile : MonoBehaviour
 	{
 		[SerializeField] AOEAttack hitAttack;
+        [SerializeField] private float sphericalRadius;
 		[SerializeField] private LayerMask layerMask;
         [SerializeField] private EffectPlayer onHitEffect;
 		[SerializeField] private UnityEvent hit;
+        
 
 		private Attacker attacker;
 		private string hitboxID;
 		private float speed;
 
 		bool hasHit;
+        
 
-		private void Update( ) 
+        private void Update( ) 
 		{
 			if (hasHit) return;
 
 			RaycastHit hit;
-			if (Physics.Raycast(transform.position, transform.forward, out hit, speed * Time.deltaTime, layerMask))
+			if (Physics.SphereCast(transform.position, sphericalRadius, transform.forward, out hit, speed * Time.deltaTime, layerMask))
 			{
 				transform.position = hit.point;
 				ProjectileHit();
@@ -34,7 +39,7 @@ namespace DigDig2.Combat
 			transform.position += speed * Time.deltaTime * transform.forward; 
 		}
 
-		public void SetInfo( Attack attack, Attacker attacker, float speed, float lifeTime )
+        public void SetInfo( Attack attack, Attacker attacker, float speed, float lifeTime )
 		{
 			hitboxID = Time.time.ToString( );
 			this.attacker = attacker;

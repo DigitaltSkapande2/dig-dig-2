@@ -45,23 +45,23 @@ MonoBehaviour:
       m_RotationOrder: 4
     duration: 0.4
     intensity: 1
-  cameraZoom: 0
+  cameraZoom: 1
   cameraZoomEffectData:
     intensityCurve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
+        value: 0
+        inSlope: 3.3673203
+        outSlope: 3.3673203
         tangentMode: 0
         weightedMode: 0
         inWeight: 0
-        outWeight: 0
+        outWeight: 0.026785715
       - serializedVersion: 3
         time: 1
-        value: 0
+        value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -71,8 +71,8 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    duration: 0.4
-    intensity: 1
+    duration: 4
+    intensity: 4
   timeSlow: 0
   timeSlowEffectData:
     intensityCurve:
@@ -108,16 +108,16 @@ MonoBehaviour:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
+        value: 0
+        inSlope: 3.3673203
+        outSlope: 3.3673203
         tangentMode: 0
         weightedMode: 0
         inWeight: 0
-        outWeight: 0
+        outWeight: 0.026785715
       - serializedVersion: 3
         time: 1
-        value: 0
+        value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -127,9 +127,9 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    duration: 0.4
-    intensity: 1
-    color: {r: 0, g: 0, b: 0, a: 0}
+    duration: 4
+    intensity: 0.3
+    color: {r: 0.735849, g: 0.05206478, b: 0.05206478, a: 0.9372549}
   gamepadRumble: 0
   gamepadRumbleEffectData:
     intensityCurve:
@@ -168,17 +168,17 @@ MonoBehaviour:
       - serializedVersion: 3
         time: 0
         value: 0
-        inSlope: 0
-        outSlope: 0
+        inSlope: 3.3673203
+        outSlope: 3.3673203
         tangentMode: 0
         weightedMode: 0
         inWeight: 0
-        outWeight: 0
+        outWeight: 0.026785715
       - serializedVersion: 3
         time: 1
         value: 1
-        inSlope: 2
-        outSlope: 2
+        inSlope: 0
+        outSlope: 0
         tangentMode: 0
         weightedMode: 0
         inWeight: 0
@@ -186,5 +186,5 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    duration: 0.4
+    duration: 4
     intensity: 1

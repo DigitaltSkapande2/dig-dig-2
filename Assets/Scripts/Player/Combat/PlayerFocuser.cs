@@ -46,8 +46,6 @@ namespace DigDig2.Player.Combat
         private int currentlyFocusedEnemyGroupIndex;
         
         
-        // Scan routine - routinely scan for attackables
-        private CancellationTokenSource _scanCancelationTokenSource;
         public Collider[] _colliderBuffer = new Collider[64]; // Used to store colliders during routine scans,
                                                                         // Why: Rider complained on me that i should use NonAloc, and someone online said
                                                                         // using just OverlapSphere every frame is heavy on the allocation stuff, so
