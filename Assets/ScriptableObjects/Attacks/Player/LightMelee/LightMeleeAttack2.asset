@@ -15,7 +15,7 @@ MonoBehaviour:
   attackDuration: 0.75
   onPerformEffect: {fileID: 11400000, guid: d8e530113d2cffb0a8050c7573294551, type: 2}
   animationStateName: LightAttack2
-  damage: 1
+  damage: 2
   pushAmount: 10
   bindableAttackHitboxIndex: 0
   hitEffect: {fileID: 6931098926697571914, guid: 3d36de908b6d4fc4cbed789d229020ac, type: 3}
