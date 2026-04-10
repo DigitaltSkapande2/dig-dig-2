@@ -172,6 +172,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.CinemaCamera.LockTargetEffector
   startActive: 1
   priorityLevel: 3
+  overridePartials: 1
   fadeOutCurve:
     serializedVersion: 2
     m_Curve:

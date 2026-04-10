@@ -70,6 +70,7 @@ namespace DigDig2.CinemaCamera
 
         [SerializeField] private bool startActive = true;
         [SerializeField] private int priorityLevel;
+        [SerializeField] public bool overridePartials = false;
 
         public int PriorityLevel
         {

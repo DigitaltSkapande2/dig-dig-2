@@ -50,7 +50,7 @@ namespace DigDig2.Combat.Attacks
 				Debug.Log( "Hello i am a ranged attack" );
 				onPerformEffect?.Play();
 				Vector3 forward = attacker.GetComponent<EntityCharacterController>( ).GetForwardVector( );
-				Projectile projectile = Instantiate( projectilePrefab, attacker.transform.position + forward, quaternion.LookRotation( forward, Vector3.up ) ).GetComponent<Projectile>( );
+				Projectile projectile = Instantiate( projectilePrefab, attacker.transform.position, quaternion.LookRotation( forward, Vector3.up ) ).GetComponent<Projectile>( );
 				projectile.SetInfo( this, attacker, projectileSpeed, projectileLifetime );
 			}
 		}
