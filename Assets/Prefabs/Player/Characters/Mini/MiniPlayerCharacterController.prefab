@@ -158,7 +158,7 @@ MonoBehaviour:
   entityRadius: 0.7
   cannotBlinkThroughLayers:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 65
   triggerLayers:
     serializedVersion: 2
     m_Bits: 8192

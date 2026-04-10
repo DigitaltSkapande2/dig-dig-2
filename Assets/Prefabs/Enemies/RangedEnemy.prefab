@@ -216,8 +216,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 809a18945f58a064abeeb94658cb72d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Health
-  maxHealthPoints: 2
-  healthPoints: 2
+  maxHealthPoints: 3
+  healthPoints: 3
   destroyOnDeath: 1
   deathEffectPlayer: {fileID: 11400000, guid: bb37e962d8de0fd49a6c98aec54d7407, type: 2}
   death:

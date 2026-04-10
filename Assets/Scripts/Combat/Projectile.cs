@@ -25,8 +25,6 @@ namespace DigDig2.Combat
 			RaycastHit hit;
 			if (Physics.Raycast(transform.position, transform.forward, out hit, speed * Time.deltaTime, layerMask))
 			{
-				hitAttack.TriggerIndependent(attacker, hit.point, hitboxID, transform);
-				attacker.activeAttacks[hitboxID].Trigger(hitboxID);
 				transform.position = hit.point;
 				ProjectileHit();
 				hasHit = true;
@@ -50,6 +48,9 @@ namespace DigDig2.Combat
 			if (hasHit) return;
 
 			hit.Invoke();
+
+			hitAttack.TriggerIndependent(attacker, transform.position, hitboxID, transform);
+			attacker.activeAttacks[hitboxID].Trigger(hitboxID);
 
 			attacker.EndHitboxAttack( hitboxID );
 			speed = 0;

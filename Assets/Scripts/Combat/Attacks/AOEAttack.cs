@@ -67,6 +67,7 @@ namespace DigDig2.Combat
 		public void TriggerIndependent(Attacker attacker, Vector3 position, string hitboxID, Transform parent)
 		{
             BindableAttackHitbox hitbox = Instantiate(hitboxPrefab, position, Quaternion.identity, parent).GetComponent<BindableAttackHitbox>();
+			hitbox.SetSphereRadius(maxRadius);
 			independentID = hitboxID;
 			attacker.StartHitboxAttack( this, independentID, hitbox);
 		}

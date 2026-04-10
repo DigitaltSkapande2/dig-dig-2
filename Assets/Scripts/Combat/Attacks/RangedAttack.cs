@@ -16,6 +16,8 @@ namespace DigDig2.Combat.Attacks
 		[SerializeField] private float projectileSpeed;
 		[SerializeField] private float projectileLifetime;
 
+		private GameObject chargeVFXInstance;
+
 		public override void ChargeStart( Attacker attacker, AttackType attackType )
 		{
 			attacker.PlayAnimation( chargeAnimationStateName );
@@ -26,7 +28,8 @@ namespace DigDig2.Combat.Attacks
 			if (Physics.Raycast(rayOrigin, -attacker.transform.up, out hit, 5, LayerMask.GetMask("Ground")))
 			{
 				Quaternion rotation = Quaternion.LookRotation(attacker.GetForwardVector(), attacker.transform.up);
-				Destroy(Instantiate(chargeVFX, hit.point, rotation), 5);
+				chargeVFXInstance = Instantiate(chargeVFX, hit.point, rotation);
+				Destroy(chargeVFXInstance, 5);
 			}
 		}
 
@@ -57,7 +60,9 @@ namespace DigDig2.Combat.Attacks
 		}
 
 		public override void Ended( Attacker attacker, AttackType attackGroup ) 
-		{ 
+		{
+			if (chargeVFXInstance && chargeVFXInstance.transform.GetChild(0).TryGetComponent(out Animator animator)) animator.enabled = false; 
+
 			attacker.RemoveMoveSpeedDebuff( chargeAnimationStateName ); 
 			attacker.RemoveMoveSpeedDebuff( triggerAnimationStateName );
 		}
