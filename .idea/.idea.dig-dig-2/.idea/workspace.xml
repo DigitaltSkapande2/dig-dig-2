@@ -12,13 +12,22 @@
   <component name="ChangeListManager">
     <list default="true" id="50c3eb56-0f37-4789-a838-f82a855a30c4" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.dig-dig-2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.dig-dig-2/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/SavePoint.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/SavePoint.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/GameCamera.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/GameCamera.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Projectiles/Pro Jec Tile.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Player/Projectiles/Pro Jec Tile.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animations/PlayerCharacter/Minis/MiniAnimationController.controller" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animations/PlayerCharacter/Minis/MiniAnimationController.controller" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Models/Characters/Max/Armature_BodyArmature_BodySprint.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Models/Characters/Max/Armature_BodyArmature_BodySprint.anim" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Models/Characters/Minis/Armature_sprint.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Models/Characters/Minis/Armature_sprint.anim" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Enemies/Crystal.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Enemies/Crystal.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Enemies/MeleeEnemy.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Enemies/MeleeEnemy.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Characters/Mini/MiniPlayerCharacterController.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Player/Characters/Mini/MiniPlayerCharacterController.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/SFX/Player/FootstepSFX 1.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/SFX/Player/FootstepSFX 1.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/SFX/Player/FootstepSFX 2.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/SFX/Player/FootstepSFX 2.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/SFX/Player/FootstepSFX 3.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/SFX/Player/FootstepSFX 3.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/SFX/Player/RockFootstepSFX 0.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/SFX/Player/RockFootstepSFX 0.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/SFX/Player/RockFootstepSFX 1.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/SFX/Player/RockFootstepSFX 1.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/SFX/Player/RockFootstepSFX 2.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/SFX/Player/RockFootstepSFX 2.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Singletons/GameManager.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Singletons/GameManager.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/GameScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/GameScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/CinemaCamera/CameraEffector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CinemaCamera/CameraEffector.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/CinemaCamera/GameCamera.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CinemaCamera/GameCamera.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Combat/Attacks/RangedAttack.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Combat/Attacks/RangedAttack.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/CinemaCamera/PartialCameraEffector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CinemaCamera/PartialCameraEffector.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Crystal.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Crystal.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -335,7 +344,7 @@
       <workItem from="1775661516989" duration="13586000" />
       <workItem from="1775750702904" duration="8412000" />
       <workItem from="1775759303526" duration="16931000" />
-      <workItem from="1775815131040" duration="5766000" />
+      <workItem from="1775815131040" duration="10437000" />
     </task>
     <servers />
   </component>

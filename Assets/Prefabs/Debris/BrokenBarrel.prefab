@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3877536282284559952}
+  - component: {fileID: 7388896978825024486}
   m_Layer: 12
   m_Name: BrokenBarrel
   m_TagString: Untagged
@@ -32,6 +33,27 @@ Transform:
   - {fileID: 2437809932881223424}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7388896978825024486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2900997506971962639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 787f8d04ac4f4f638a0744f4a1559d04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Game.DebrisRandomizer
+  linearVelocityStrength: 2
+  upExtraVelocityStrength: 4
+  angularVelocityStrength: 5
+  pieces:
+  - {fileID: 6290892440082000590}
+  - {fileID: 4073731201196856157}
+  - {fileID: 6197275219841984270}
+  - {fileID: 794213438675100280}
+  - {fileID: 4143342524883118985}
 --- !u!1001 &2764768488478259435
 PrefabInstance:
   m_ObjectHideFlags: 0

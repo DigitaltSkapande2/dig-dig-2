@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2385013672865564505}
+  - component: {fileID: 3554584621650163930}
   m_Layer: 12
   m_Name: BrokenTrunk
   m_TagString: Untagged
@@ -32,6 +33,25 @@ Transform:
   - {fileID: 2433931677569906490}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3554584621650163930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 92630624783402953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 787f8d04ac4f4f638a0744f4a1559d04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Game.DebrisRandomizer
+  linearVelocityStrength: 2
+  upExtraVelocityStrength: 4
+  angularVelocityStrength: 1
+  pieces:
+  - {fileID: 7135413915371795274}
+  - {fileID: 6277344717912290633}
+  - {fileID: 5975744099380629745}
 --- !u!1001 &2760062852208431313
 PrefabInstance:
   m_ObjectHideFlags: 0

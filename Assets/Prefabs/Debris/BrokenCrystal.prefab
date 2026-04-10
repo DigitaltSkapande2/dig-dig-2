@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4436296367171016928}
+  - component: {fileID: 5292586323831482184}
   m_Layer: 12
   m_Name: BrokenCrystal
   m_TagString: Untagged
@@ -32,6 +33,29 @@ Transform:
   - {fileID: 3639298896092842310}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5292586323831482184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7897868338809870288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 787f8d04ac4f4f638a0744f4a1559d04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Game.DebrisRandomizer
+  linearVelocityStrength: 3
+  upExtraVelocityStrength: 5
+  angularVelocityStrength: 10
+  pieces:
+  - {fileID: 2290365256234883432}
+  - {fileID: 8584268400022314579}
+  - {fileID: 2841719774440190621}
+  - {fileID: 3888371866314494258}
+  - {fileID: 5182866795629315001}
+  - {fileID: 5891068468232408066}
+  - {fileID: 4735176627195561878}
 --- !u!1001 &3822388870770110125
 PrefabInstance:
   m_ObjectHideFlags: 0

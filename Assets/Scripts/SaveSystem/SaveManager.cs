@@ -79,7 +79,7 @@ namespace DigDig2.SaveSystem
 			};
 		}
 
-		public string GetNextFreeSaveName( ) => NEW_SAVE_PREFIX + " " + GetSaveFiles( ).Count + 1;
+		public string GetNextFreeSaveName( ) => $"{NEW_SAVE_PREFIX} {GetSaveFiles( ).Count + 1}";
 
 		#endregion
 

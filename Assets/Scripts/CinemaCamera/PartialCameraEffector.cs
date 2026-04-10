@@ -38,9 +38,9 @@ namespace DigDig2.CinemaCamera
         [SerializeField] private float fadeInDuration = 0.3f;
         [SerializeField] private float fadeOutDuration = 0.3f;
 
-        [SerializeField] private float positionLerpSpeed = 8f;
-        [SerializeField] private float rotationLerpSpeed = 8f;
-        [SerializeField] private float frustumSizeLerpSpeed = 8f;
+        [SerializeField] private float positionLerpSpeed = 3f;
+        [SerializeField] private float rotationLerpSpeed = 3f;
+        [SerializeField] private float frustumSizeLerpSpeed = 3f;
 
         [Header("Offsets")]
         public Vector3 targetPosition = Vector3.zero;
