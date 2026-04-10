@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f0c4b2054f4761408fe92aced04ae34, type: 3}
+  m_Name: HeavyRangedAttack
+  m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Combat.AOEAttack
+  attackDuration: 0
+  onPerformEffect: {fileID: 0}
+  chargeAnimationStateName: 
+  triggerAnimationStateName: 
+  minRaduis: 1
+  maxRadius: 1
+  damage: 1
+  aoeForwardOffset: 0
+  chargingMoveSpeedFactor: 0
+  hitboxPrefab: {fileID: 3511951452291022375, guid: 271eb4979fe45df4f903237b96eb445e, type: 3}
+  hitEffect: {fileID: 6931098926697571914, guid: 3d36de908b6d4fc4cbed789d229020ac, type: 3}
+  attackVFX: {fileID: 3558728256003135093, guid: 77d39f5c63731f342882305422069799, type: 3}
+  knockbackStrength: 50
