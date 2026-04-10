@@ -18,8 +18,11 @@ MonoBehaviour:
     - prefab: {fileID: 6529025768580051706, guid: f5b8a67534155b5449331bd4b6155d82, type: 3}
       hasLifetime: 1
       lifetime: 2.5
-  playSound: 0
-  audioClipsToPlay: []
+  playSound: 1
+  audioClipsToPlay:
+  - audioClip: {fileID: 8300000, guid: 1886761454dc93cea9f4216060e400b1, type: 3}
+    volume: 1
+    pitchRange: {x: 1.15, y: 1.15}
   screenShake: 0
   screenShakeEffectData:
     intensityCurve:
