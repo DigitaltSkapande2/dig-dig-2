@@ -71393,9 +71393,23 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
+  - time: 0.16666667
+    functionName: AnimationEvent
+    data: EnemyAttackVFX1
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 0.6666667
     functionName: AnimationEvent
     data: Push
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.6666667
+    functionName: AnimationEvent
+    data: EnemyAttackVFX2
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0

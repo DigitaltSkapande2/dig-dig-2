@@ -40,6 +40,18 @@ namespace DigDig2.Combat.Attacks
 				Quaternion rotation = Quaternion.LookRotation(attacker.GetForwardVector(), attacker.transform.up);
 				Destroy(Instantiate(attackVFX, attacker.transform.position, rotation, attacker.transform), 5);
 			}
+
+			if (animEventName == "EnemyAttackVFX1")
+			{
+				Quaternion rotation = Quaternion.LookRotation(attacker.GetForwardVector(), attacker.transform.up + Vector3.Cross(attacker.GetForwardVector(), attacker.transform.up));
+				Destroy(Instantiate(attackVFX, attacker.transform.position + attacker.GetForwardVector(), rotation, attacker.transform), 5);
+			}
+
+			if (animEventName == "EnemyAttackVFX2")
+			{
+				Quaternion rotation = Quaternion.LookRotation(attacker.GetForwardVector(), attacker.transform.up - Vector3.Cross(attacker.GetForwardVector(), attacker.transform.up));
+				Destroy(Instantiate(attackVFX, attacker.transform.position + attacker.GetForwardVector(), rotation, attacker.transform), 5);
+			}
         }
 
 		public override void Ended( Attacker attacker, AttackType attackGroup )
