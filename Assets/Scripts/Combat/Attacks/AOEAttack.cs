@@ -57,7 +57,9 @@ namespace DigDig2.Combat
 			onPerformEffect?.Play();
 			Vector3 forwardVector = attacker.GetComponent<EntityCharacterController>().GetForwardVector();
             Vector3 centerOffset = forwardVector * aoeForwardOffset;
-            BindableAttackHitbox hitbox = Instantiate(hitboxPrefab, attacker.transform.position + centerOffset, Quaternion.identity).GetComponent<BindableAttackHitbox>();
+			Quaternion rotation = Quaternion.LookRotation(forwardVector, attacker.transform.up);
+            BindableAttackHitbox hitbox = Instantiate(hitboxPrefab, attacker.transform.position + centerOffset, rotation).GetComponent<BindableAttackHitbox>();
+			Destroy(hitbox.gameObject, 5);
 			lastHitboxPosition = hitbox.transform.position;
 			float radius = Mathf.Lerp(minRaduis, maxRadius, lastChargeTime / attackGroup.chargeDuration);
 			hitbox.SetSphereRadius(radius);
