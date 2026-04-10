@@ -47,11 +47,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Projectile
   hitAttack: {fileID: 11400000, guid: e44151907fa296f4f96f3dd5f0a3908a, type: 2}
-  hitEffect: {fileID: 6931098926697571914, guid: 089616541135d5146a3f22e635605a69, type: 3}
   layerMask:
     serializedVersion: 2
-    m_Bits: 3137
+    m_Bits: 3265
   onHitEffect: {fileID: 11400000, guid: 1c44e8a50f645dfd491ad2613b2a54de, type: 2}
+  hit:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!54 &4073095900257206370
 Rigidbody:
   m_ObjectHideFlags: 0

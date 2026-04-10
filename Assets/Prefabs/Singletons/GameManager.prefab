@@ -384,6 +384,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.CinemaCamera.PlayerFollowCameraEffector
   startActive: 1
   priorityLevel: 0
+  overridePartials: 0
   fadeOutCurve:
     serializedVersion: 2
     m_Curve:
@@ -409,7 +410,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   fadeOutDuration: 0.5
-  positionLerpSpeed: 0.8
+  positionLerpSpeed: 1
   rotationLerpSpeed: 1
   frustumSizeLerpSpeed: 1
   targetPosition: {x: 0, y: 0, z: 0}
