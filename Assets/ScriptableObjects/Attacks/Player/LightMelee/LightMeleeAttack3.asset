@@ -19,5 +19,5 @@ MonoBehaviour:
   pushAmount: 10
   bindableAttackHitboxIndex: 0
   hitEffect: {fileID: 6931098926697571914, guid: 3d36de908b6d4fc4cbed789d229020ac, type: 3}
-  hasTrailEffect: 0
+  attackVFX: {fileID: 6820685564788404705, guid: a6c81a016088ce64d8e0151bcb55fda0, type: 3}
   knockbackStrength: 100

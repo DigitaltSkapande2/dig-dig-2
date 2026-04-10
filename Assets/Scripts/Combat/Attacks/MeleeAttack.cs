@@ -11,7 +11,7 @@ namespace DigDig2.Combat.Attacks
 		[SerializeField] private float pushAmount;
 		[SerializeField] private int bindableAttackHitboxIndex;
 		[SerializeField] private GameObject hitEffect;
-		[SerializeField] private bool hasTrailEffect;
+		[SerializeField] private GameObject attackVFX;
 		[SerializeField] private float knockbackStrength = 50;
 
 		public override void ChargeStart( Attacker attacker, AttackType attackType ) { }
@@ -22,7 +22,6 @@ namespace DigDig2.Combat.Attacks
 
 		public override void Trigger( Attacker attacker, AttackType attackGroup, float chargeTime )
 		{
-			if ( hasTrailEffect ) attacker.GetattackTrailRenderer( ).enabled = true;
 			onPerformEffect?.Play();
 			attacker.PlayAnimation( animationStateName );
 			attacker.StartHitboxAttack( this, animationStateName, attacker.GetBindableAttackHitbox( bindableAttackHitboxIndex ) );
@@ -35,11 +34,16 @@ namespace DigDig2.Combat.Attacks
 			{
 				attacker.PushInDirection( Vector3.forward, pushAmount );
 			}
+
+			if (animEventName == "AttackVFX")
+			{	
+				Quaternion rotation = Quaternion.Euler(0, Vector3.Angle(attacker.transform.forward, attacker.GetForwardVector()), 0);
+				Destroy(Instantiate(attackVFX, attacker.transform.position, rotation, attacker.transform), 5);
+			}
         }
 
 		public override void Ended( Attacker attacker, AttackType attackGroup )
 		{
-			if ( hasTrailEffect ) attacker.GetattackTrailRenderer( ).enabled = false;
 			attacker.EndHitboxAttack( animationStateName );
 			attacker.RemoveMoveSpeedDebuff( animationStateName );
 		}

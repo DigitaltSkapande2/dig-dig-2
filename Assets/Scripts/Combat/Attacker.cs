@@ -385,6 +385,13 @@ namespace DigDig2.Combat
 			return 0;
 		}
 
+		public Vector3 GetForwardVector()
+		{
+			if (entityCharacterController) return entityCharacterController.GetForwardVector();
+
+			else return Vector3.zero;
+		}
+
 		public void PushInDirection( Vector3 direction, float strength )
 		{
 			if ( entityCharacterController ) entityCharacterController.PushInDirection( direction, strength );
