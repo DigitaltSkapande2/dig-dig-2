@@ -11,11 +11,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="50c3eb56-0f37-4789-a838-f82a855a30c4" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.dig-dig-2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.dig-dig-2/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Audio/Claw2.mp3" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Audio/Claw2.mp3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Audio/Claw2.mp3.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Audio/Claw2.mp3.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Audio/freesound_community-movement-101711.mp3" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Audio/freesound_community-movement-101711.mp3" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/GameScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/GameScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ScriptableObjects/EffectPlayers/Enemies/MeleeEnemy/MeleeEnemyAttackEffect.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ScriptableObjects/EffectPlayers/Enemies/MeleeEnemy/MeleeEnemyAttackEffect.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -333,7 +330,7 @@
       <workItem from="1775750702904" duration="8412000" />
       <workItem from="1775759303526" duration="16931000" />
       <workItem from="1775815131040" duration="13924000" />
-      <workItem from="1775834131827" duration="3571000" />
+      <workItem from="1775834131827" duration="4171000" />
     </task>
     <servers />
   </component>
