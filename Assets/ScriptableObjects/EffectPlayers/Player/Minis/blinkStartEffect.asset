@@ -20,7 +20,7 @@ MonoBehaviour:
       lifetime: 2
   playSound: 1
   audioClipsToPlay:
-  - {fileID: 8300000, guid: 476b32ee2ba0253289d07ff6fb8d864f, type: 3}
+  - {fileID: 8300000, guid: 80948656c1473b9ac9a32d502348891f, type: 3}
   screenShake: 0
   screenShakeEffectData:
     intensityCurve:
