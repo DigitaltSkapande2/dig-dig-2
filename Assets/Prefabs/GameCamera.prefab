@@ -138,7 +138,7 @@ GameObject:
   m_Component:
   - component: {fileID: 268625382850607440}
   - component: {fileID: 2811014238215475634}
-  - component: {fileID: 2434467799552173279}
+  - component: {fileID: 333865895359584077}
   m_Layer: 0
   m_Name: GameCamera
   m_TagString: Untagged
@@ -180,9 +180,9 @@ MonoBehaviour:
   followSpeed: 5
   rotationSpeed: 1
   effectors: []
-  mainCamera: {fileID: 0}
-  selfCameraRotation: {fileID: 2434467799552173279}
---- !u!114 &2434467799552173279
+  mainCamera: {fileID: 2609356722885718918}
+  selfCameraRotation: {fileID: 333865895359584077}
+--- !u!114 &333865895359584077
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -191,67 +191,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 4739365238837224391}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2a31279e53ffe94eb194e88e159a2bd, type: 3}
+  m_Script: {fileID: 11500000, guid: 64245ac870f44512908ccb68c4e1ef72, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DigDig2.CinemaCamera.CameraEffector
-  startActive: 0
-  priorityLevel: 20000
-  overridesLowerPriority: 0
-  transitionFadeDuration: 3
-  positionLerpSpeed: 1
-  rotationLerpSpeed: 1
-  frustumSizeLerpSpeed: 1
+  m_EditorClassIdentifier: Assembly-CSharp::DigDig2.CinemaCamera.PartialCameraEffector
+  startActive: 1
+  fadeInDuration: 0.3
+  fadeOutDuration: 0.3
+  positionLerpSpeed: 8
+  rotationLerpSpeed: 8
+  frustumSizeLerpSpeed: 8
   targetPosition: {x: 0, y: 0, z: 0}
   targetRotation: {x: 0, y: 0, z: 0, w: 1}
   targetFrustumSize: 0
-  easeInCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  easeOutCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!1 &6740415488379349219
 GameObject:
   m_ObjectHideFlags: 0

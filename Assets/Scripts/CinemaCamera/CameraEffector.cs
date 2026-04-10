@@ -8,163 +8,180 @@ namespace DigDig2.CinemaCamera
 {
     public class CameraEffector : MonoBehaviour
     {
-        #region Field Declaration
-        /// <summary>All active CameraEffector COMPONENTS</summary>> 
-        private static readonly List<CameraEffector> allCameraEffectors = new(); 
-        /// <summary>All CameraEffectors with active influence right now</summary>> 
-        private static List<CameraEffector> effectivePivotCameraEffectors = new();
+        #region Static
+
+        private static readonly List<CameraEffector> allEffectors = new();
+        private static CameraEffector currentlyEffectiveEffector;
+
+        private static void Register(CameraEffector effector)
+        {
+            allEffectors.Add(effector);
+            BetterDebug.Log($"Registered: {effector.name}");
+            RecalculateCurrentEffector();
+        }
+
+        private static void Unregister(CameraEffector effector)
+        {
+            allEffectors.Remove(effector);
+            BetterDebug.Log($"Unregistered: {effector.name}");
+            RecalculateCurrentEffector();
+        }
+
+        private static void RecalculateCurrentEffector()
+        {
+            CameraEffector next = allEffectors
+                .Where(e => e.isActive)
+                .OrderByDescending(e => e.priorityLevel)
+                .ThenByDescending(e => e.activationOrder)
+                .FirstOrDefault();
+
+            if (next == currentlyEffectiveEffector) return;
+
+            currentlyEffectiveEffector = next;
+
+            foreach (var e in allEffectors)
+            {
+                bool isNowTarget = (e == currentlyEffectiveEffector);
+
+                if (isNowTarget != e.targetIsCurrentEffector)
+                {
+                    e.fadeElapsed = 0f;
+                    
+                    if (isNowTarget) e.Weight = 1f;
+                }
+
+                e.targetIsCurrentEffector = isNowTarget;
+            }
+
+            BetterDebug.Log($"Current effector: {currentlyEffectiveEffector?.name ?? "none"}");
+        }
+
+        public static CameraEffector GetCurrentEffector() => currentlyEffectiveEffector;
+        public static IEnumerable<CameraEffector> GetAll() => allEffectors;
+
+        private static int activationCounter = 0;
+
+        private static Quaternion SafeQuaternion(Quaternion q) =>
+            q == default ? Quaternion.identity : Quaternion.Normalize(q);
+
+        #endregion
+
+        #region Fields
 
         [SerializeField] private bool startActive = true;
         [SerializeField] private int priorityLevel;
+
         public int PriorityLevel
         {
             get => priorityLevel;
-            set
-            {
-                priorityLevel = value; 
-                ReCompileEffectiveEffectors();
-            }
+            set { priorityLevel = value; RecalculateCurrentEffector(); }
         }
-
-        [SerializeField] public bool overridesLowerPriority;
-
-        [Tooltip("How fast this effector fades in/out (units per second, 1/x = seconds to full weight)")]
-        [SerializeField] private float transitionFadeDuration = 3f;
-
-        [SerializeField] private float positionLerpSpeed = 1f;
-        [SerializeField] private float rotationLerpSpeed = 1f;
-        [SerializeField] private float frustumSizeLerpSpeed = 1f;
         
-        [Header("StartPos")]
-        public Vector3 targetPosition;
-        public Vector3 lerpedPosition { get; protected set; }
-        
+        [SerializeField] private AnimationCurve fadeOutCurve = AnimationCurve.EaseInOut(0f, 1f, 1f, 0f);
+        [SerializeField] private float fadeOutDuration = 0.5f;
+
+        [SerializeField] private float positionLerpSpeed = 5f;
+        [SerializeField] private float rotationLerpSpeed = 5f;
+        [SerializeField] private float frustumSizeLerpSpeed = 5f;
+
+        [Header("Target Values")]
+        public Vector3 targetPosition = Vector3.zero;
         public Quaternion targetRotation = Quaternion.identity;
-        public Quaternion lerpedRotation { get; protected set; }
-        
-        public float targetFrustumSize;
-        public float lerpedFrustumSize { get; protected set; }
-        
-        
-        private bool isActive = true;
+        public float targetFrustumSize = 5f;
+
+        public Vector3 lerpedPosition { get; private set; }
+        public Quaternion lerpedRotation { get; private set; }
+        public float lerpedFrustumSize { get; private set; }
+
+        public float Weight;
+
+        public bool isActive;
+        public bool targetIsCurrentEffector;
+        public int  activationOrder;
+
+        private float fadeElapsed;
+
         public bool IsActive
         {
             get => isActive;
             set
             {
                 if (value == isActive) return;
-                activeChangeTime = Time.time;
                 isActive = value;
-                ReCompileEffectiveEffectors();
+                if (isActive) activationOrder = ++activationCounter;
+                RecalculateCurrentEffector();
             }
         }
 
-        private float activeChangeTime;
+        #endregion
 
-        // 0 = full effect, 1= no effect
-        [NonSerialized] public float Weight = 0f;
+        #region Unity Lifecycle
 
-        [SerializeField] private AnimationCurve easeInCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
-        [SerializeField] private AnimationCurve easeOutCurve = AnimationCurve.EaseInOut(0, 1, 1, 0);
+        protected virtual void Start()
+        {
+            isActive = startActive;
+
+            if (startActive)
+            {
+                activationOrder = ++activationCounter;
+                lerpedPosition = targetPosition;
+                lerpedRotation = SafeQuaternion(targetRotation);
+                lerpedFrustumSize = targetFrustumSize;
+                Weight = 1f;
+            }
+            else
+            {
+                Weight = 0f;
+            }
+
+            Register(this);
+        }
+
+        protected virtual void OnDisable()
+        {
+            Unregister(this);
+        }
+
+        private void Reset()
+        {
+            targetRotation = Quaternion.identity;
+        }
 
         #endregion
 
-        #region Static Methods
+        #region Update
 
-        private static void AddCameraEffector(CameraEffector effector)
-        {
-            BetterDebug.Log($"Adding Effector: {effector.name}");
-            allCameraEffectors.Add(effector);
-            ReCompileEffectiveEffectors();
-        }
-        
-        private static void RemoveCameraEffector(CameraEffector effector)
-        {
-            BetterDebug.Log($"Removing Effector: {effector.name}");
-            allCameraEffectors.Remove(effector);
-            ReCompileEffectiveEffectors();
-        }
-
-        private static void ReCompileEffectiveEffectors()
-        {
-            int cutOffPriority = allCameraEffectors
-                .Where(e => e.isActive && e.overridesLowerPriority)
-                .Select(e => e.PriorityLevel)
-                .DefaultIfEmpty(0)
-                .Max();
-            
-            effectivePivotCameraEffectors = allCameraEffectors
-                .Where(effector => (effector.isActive && effector.PriorityLevel >= cutOffPriority) || effector.Weight > float.Epsilon)
-                .OrderByDescending(effector => effector.PriorityLevel)
-                .ToList();
-            
-            BetterDebug.Log($"Recompiled effective effectors, cutofPriority: {cutOffPriority}, effectors {String.Join(", \n", effectivePivotCameraEffectors.Select(e => e.name))}");
-            
-        }
-
-        public static List<CameraEffector> GetEffectiveEffectors() => effectivePivotCameraEffectors;
-
-        #endregion
-
-        // Called by the GameCamera so all effectors get updated before the camera updates.
         public void UpdateEffector(float deltaTime)
         {
             TickWeight(deltaTime);
             UpdateLerping(deltaTime);
         }
-        
-        public void TickWeight(float deltaTime)
-        {
-            var targetCurve = isActive ? easeInCurve : easeOutCurve;
-            
-            Weight = targetCurve.Evaluate((Time.time - activeChangeTime) / transitionFadeDuration);
 
-            // remove if fully faded out
-            if (!isActive && Weight <= float.Epsilon && allCameraEffectors.Contains(this))
-            {
-                ReCompileEffectiveEffectors();
-            }
+        private void TickWeight(float deltaTime)
+        {
+            if (targetIsCurrentEffector) return;
+
+            fadeElapsed += deltaTime;
+            float t = fadeOutDuration > 0f
+                ? Mathf.Clamp01(fadeElapsed / fadeOutDuration)
+                : 1f;
+
+            Weight = fadeOutCurve.Evaluate(t);
         }
 
-        protected virtual void UpdateLerping(float deltaTime)
+        private void UpdateLerping(float deltaTime)
         {
-            lerpedPosition = Vector3.Lerp(lerpedPosition, targetPosition,1f - Mathf.Exp(-positionLerpSpeed * deltaTime));
-            lerpedRotation = Quaternion.Slerp(lerpedRotation, targetRotation,1f - Mathf.Exp(-rotationLerpSpeed * deltaTime));
-            lerpedFrustumSize = Mathf.Lerp(lerpedFrustumSize, targetFrustumSize,1f - Mathf.Exp(-frustumSizeLerpSpeed * deltaTime));
+            float pt = 1f - Mathf.Exp(-positionLerpSpeed * deltaTime);
+            float rt = 1f - Mathf.Exp(-rotationLerpSpeed * deltaTime);
+            float ft = 1f - Mathf.Exp(-frustumSizeLerpSpeed * deltaTime);
+
+            lerpedPosition = Vector3.Lerp(lerpedPosition, targetPosition, pt);
+            lerpedRotation = Quaternion.Slerp(SafeQuaternion(lerpedRotation), SafeQuaternion(targetRotation), rt);
+            lerpedFrustumSize = Mathf.Lerp(lerpedFrustumSize, targetFrustumSize, ft);
         }
 
-        protected void OnEnable()
-        {
-            isActive = startActive;
-            if (startActive)
-            {
-                Weight = 1f;
-                lerpedPosition = targetPosition;
-                lerpedRotation = targetRotation;
-                lerpedFrustumSize = targetFrustumSize;
-            }
-            else
-            {
-                lerpedRotation = Quaternion.identity;
-                targetRotation = Quaternion.identity;
-            }
-            
-            AddCameraEffector(this); 
-        }
+        #endregion
 
-        public void SetRotationSpeed(float speed)
-        {
-            rotationLerpSpeed = speed;
-        }
-
-        protected virtual void OnDisable()
-        {
-            RemoveCameraEffector(this);
-        }
-
-        public void SetActive(bool active)
-        {
-            IsActive = active;
-        }
+        public void SetActive(bool active) => IsActive = active;
     }
 }

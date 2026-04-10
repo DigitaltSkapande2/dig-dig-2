@@ -89,13 +89,13 @@ namespace DigDig2.Input.InputPlayerManagers
 				if ( !inputPlayer.connectedDevices.Contains( device ) ) continue;
 				
 				bool fullControlSchemeFound = false;
-                BetterDebug.Log($"checking ControllSchemes for { inputPlayer.name }");
+                // BetterDebug.Log($"checking ControllSchemes for { inputPlayer.name }");
 				foreach ( InputControlScheme controlScheme in InputSystem.actions.controlSchemes )
 				{
 					InputControlScheme.MatchResult deviceSearchMatchResult = controlScheme.PickDevicesFrom( inputPlayer.connectedDevices );
-                    BetterDebug.Log($"{controlScheme} matchResult: { deviceSearchMatchResult.score }");
+                    // BetterDebug.Log($"{controlScheme} matchResult: { deviceSearchMatchResult.score }");
 					if ( deviceSearchMatchResult.hasMissingRequiredDevices ) continue;
-                    BetterDebug.Log("Successfull Match?");
+                    // BetterDebug.Log("Successfull Match?");
 
 					fullControlSchemeFound = true;
 					break;
@@ -107,7 +107,7 @@ namespace DigDig2.Input.InputPlayerManagers
 					inputPlayer.active = true;
                     foreach (InputActionMap inputPlayerActionMap in inputPlayer.actionMaps)
                     {
-                        BetterDebug.Log($"ENABELING actionMap: {inputPlayerActionMap.name} for InputPlayer: {inputPlayer.name}");
+                        // BetterDebug.Log($"ENABELING actionMap: {inputPlayerActionMap.name} for InputPlayer: {inputPlayer.name}");
                         inputPlayerActionMap.devices = new ReadOnlyArray<InputDevice>( inputPlayer.connectedDevices.ToArray() );
                         inputPlayerActionMap.Enable();
                     }
@@ -130,7 +130,7 @@ namespace DigDig2.Input.InputPlayerManagers
                 BetterDebug.Log($"Removing InputPlayer: {inputPlayer.name}");
                 foreach (InputActionMap inputPlayerActionMap in inputPlayer.actionMaps)
                 {
-                    BetterDebug.Log($"Dissabeling actionMap: {inputPlayerActionMap.name} for InputPlayer: {inputPlayer.name}");
+                    // BetterDebug.Log($"Dissabeling actionMap: {inputPlayerActionMap.name} for InputPlayer: {inputPlayer.name}");
                     inputPlayerActionMap.Disable();
                 }
 				inputPlayer.active = false;

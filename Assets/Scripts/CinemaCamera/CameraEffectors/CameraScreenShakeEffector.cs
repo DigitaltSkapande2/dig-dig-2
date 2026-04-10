@@ -3,7 +3,7 @@ using UnityEngine.Serialization;
 
 namespace DigDig2.CinemaCamera.CameraEffectors
 {
-	public class ScreenShakeEffector : CameraEffector
+	public class ScreenShakeEffector : PartialCameraEffector
 	{
 		[FormerlySerializedAs( "ShakeIntensity" )]
 		[SerializeField] private float shakeIntensity;

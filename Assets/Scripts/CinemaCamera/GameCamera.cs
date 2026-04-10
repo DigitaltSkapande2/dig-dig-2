@@ -9,16 +9,12 @@ namespace DigDig2.CinemaCamera
 {
     public class GameCamera : Singleton<GameCamera>
     {
-        [Tooltip("Seconds to reach target position")]
-        [SerializeField] public float followSpeed = 5f;
-        [SerializeField] public float rotationSpeed = 1f;
-
-        [SerializeField]
-        private List<CameraEffector> effectors;
-
+        private static Quaternion SafeQuaternion(Quaternion q) => 
+            q == default ? Quaternion.identity : Quaternion.Normalize(q);
+        
         public Camera mainCamera;
 
-        [SerializeField] private CameraEffector selfCameraRotation;
+        [SerializeField] private PartialCameraEffector selfCameraRotation;
 
         private float defaultFrustumHeight;
 
@@ -37,42 +33,69 @@ namespace DigDig2.CinemaCamera
         {
             var (targetPos, targetRotation, frustumSize) = GetEffectorEffects();
 
-            //BetterDebug.Log($"Update: pos: {targetPos},\nrot: {targetRotation.eulerAngles},\nsize: {frustumSize}");
+            BetterDebug.Log($"Update: pos: {targetPos},\nrot: {targetRotation},\nsize: {frustumSize}");
 
             transform.SetPositionAndRotation(targetPos, targetRotation);
             mainCamera.orthographicSize = frustumSize;
         }
 
-        private (Vector3, Quaternion, float) GetEffectorEffects()
+        private (Vector3 position, Quaternion rotation, float frustumSize) GetEffectorEffects()
         {
-            effectors = CameraEffector.GetEffectiveEffectors();
-
-            Vector3 targetPos = Vector3.zero;
-            Quaternion targetRotation = Quaternion.identity;
-            float frustumSize = defaultFrustumHeight;
             
-            foreach (CameraEffector effector in effectors)
+            float deltaTime = Time.deltaTime;
+            
+            Vector3 basePosition = Vector3.zero;
+            Quaternion baseRotation = Quaternion.identity;
+            float baseFrustumSize = defaultFrustumHeight;
+         
+            foreach (var effector in CameraEffector.GetAll())
             {
-                effector.UpdateEffector(Time.deltaTime);
-
+                effector.UpdateEffector(deltaTime);
+                BetterDebug.Log($"[{effector}, {effector.Weight}]");
+         
                 float w = effector.Weight;
-                if (w <= 0f) continue;
-
-                targetPos += effector.lerpedPosition * w;
-                frustumSize += effector.lerpedFrustumSize * w;
+                if (w <= float.Epsilon) continue;
                 
-                // rotations are evil
-                if (effector.lerpedRotation == default) continue;
-                Quaternion weightedRot = Quaternion.Slerp(Quaternion.identity, effector.lerpedRotation, w);
-                targetRotation *= weightedRot;
+                basePosition = Vector3.Lerp(basePosition,effector.lerpedPosition, w);
+                baseFrustumSize += effector.lerpedFrustumSize * w; // this bad, But we already made it bad. Don't Drink bad milk
+                baseRotation = SafeQuaternion(Quaternion.Slerp(baseRotation, SafeQuaternion(effector.lerpedRotation), w));
             }
-
-            return (targetPos, targetRotation, frustumSize);
+            BetterDebug.Log($"base Rotation: {baseRotation}");
+            
+            // Parial effectors
+            Vector3 partialPositionOffset = Vector3.zero;
+            Quaternion partialRotationOffset = Quaternion.identity;
+            float partialFrustumSizeOffset = 0f;
+         
+            foreach (var partial in PartialCameraEffector.GetAll())
+            {
+                partial.UpdateEffector(deltaTime);
+                BetterDebug.Log($"Partial: [{partial}, {partial.Weight}]");
+         
+                float w = partial.Weight;
+                if (w <= float.Epsilon) continue;
+                
+                partialPositionOffset += partial.lerpedPosition * w;
+                
+                Quaternion weightedRot = SafeQuaternion(Quaternion.Slerp(Quaternion.identity, SafeQuaternion(partial.lerpedRotation), w));
+                partialRotationOffset = SafeQuaternion(partialRotationOffset * weightedRot);
+         
+                partialFrustumSizeOffset += partial.lerpedFrustumSize * w;
+            }
+            BetterDebug.Log($"Partial Rotation: {partialRotationOffset}");
+            
+            Vector3 finalPosition = basePosition + partialPositionOffset;
+            Quaternion finalRotation = Quaternion.Normalize(SafeQuaternion(baseRotation) * SafeQuaternion(partialRotationOffset));
+            float finalFrustumSize = baseFrustumSize + partialFrustumSizeOffset;
+            
+            BetterDebug.Log($"Final rot: {finalRotation}");
+         
+            return (finalPosition, finalRotation, finalFrustumSize);
         }
 
         public void SetRotationSpeed(float speed)
         {
-            selfCameraRotation.SetRotationSpeed(speed);
+            selfCameraRotation.SetRotationLerpSpeed(speed);
         }
         
 

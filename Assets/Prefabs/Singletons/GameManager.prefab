@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 7968362205111387252}
   - component: {fileID: 8854238412085537991}
   - component: {fileID: 8707165426076141490}
-  - component: {fileID: 1327132284024772282}
   - component: {fileID: 1410852915097579326}
   - component: {fileID: 5158197556070359596}
   - component: {fileID: 7301495581908410387}
@@ -101,22 +100,6 @@ MonoBehaviour:
   actionMapName: Game
   activeContexts:
   - {fileID: 11400000, guid: 72844612df5b0e3e2ae45edd4ba932fe, type: 2}
---- !u!114 &1327132284024772282
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2722246383216992363}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06872317693a4f8890b4d7d21b27bfaf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Input.InputModule
-  priority: 0
-  allowedInputPlayerIndex: -1
-  actionMapName: UI
-  activeContexts:
   - {fileID: 11400000, guid: 35e361e66c11de44ba5fe95434284bad, type: 2}
 --- !u!114 &1410852915097579326
 MonoBehaviour:
@@ -275,7 +258,7 @@ MonoBehaviour:
   - {fileID: 2800000, guid: d8cfb41426141ad89a1c826c64700714, type: 3}
   - {fileID: 2800000, guid: 17431cf5ab4cce8d78379485ff502c99, type: 3}
   - {fileID: 2800000, guid: a08c6ffca5c018176ac97426ce0832be, type: 3}
-  playerDeadBannerTint: {r: 0, g: 0, b: 0, a: 0}
+  playerDeadBannerTint: {r: 0.2735849, g: 0.2735849, b: 0.2735849, a: 1}
 --- !u!1 &6097956373199808459
 GameObject:
   m_ObjectHideFlags: 0
@@ -323,23 +306,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5a69ce4e2163104e9e3728891f8940c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dontDestroyOnLoad: 0
+  dontDestroyOnLoad: 1
   defaultSingleplayerCharacter: 0
   playerControllerPrefab: {fileID: 1517051220970631788, guid: 10bc798215f0ca1c09cb8ef8efb07d13, type: 3}
   maxPrefab: {fileID: 4442565222488509090, guid: d5a3d3276e47631bfb60f1dda5c99ef2, type: 3}
   miniPrefab: {fileID: 4442565222488509090, guid: f67aae0ed0287714d978db69befa66ce, type: 3}
-  savePoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  crystals:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   characterSwitched:
     m_PersistentCalls:
       m_Calls: []
@@ -364,18 +335,9 @@ MonoBehaviour:
       m_Calls: []
   gameInputContext: {fileID: 11400000, guid: 72844612df5b0e3e2ae45edd4ba932fe, type: 2}
   pauseMenuInputContext: {fileID: 11400000, guid: 35e361e66c11de44ba5fe95434284bad, type: 2}
-  loadedGameManagerSaveData:
-    singleplayerSelectedCharacter: 0
-    highestReachedSavePointIndex: 0
-    highestKilledCrystal: 0
   playerControllers:
   - {fileID: 0}
   - {fileID: 0}
-  maxPlayerID: 0
-  minisPlayerID: 0
-  playerDeath:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &8888605173559219949
 GameObject:
   m_ObjectHideFlags: 0
@@ -420,61 +382,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa20fb2225ac6b64bbe8508896de8c83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.CinemaCamera.PlayerFollowCameraEffector
-  startActive: 0
+  startActive: 1
   priorityLevel: 0
-  overridesLowerPriority: 0
-  transitionFadeDuration: 3
-  positionLerpSpeed: 3
+  fadeOutCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  fadeOutDuration: 0.5
+  positionLerpSpeed: 0.8
   rotationLerpSpeed: 1
   frustumSizeLerpSpeed: 1
   targetPosition: {x: 0, y: 0, z: 0}
   targetRotation: {x: 0, y: 0, z: 0, w: 0}
   targetFrustumSize: 0
-  easeInCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  easeOutCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
+  Weight: 0
+  isActive: 0
+  targetIsCurrentEffector: 0
+  activationOrder: 0

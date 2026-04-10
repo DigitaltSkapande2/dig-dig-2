@@ -37,7 +37,7 @@ namespace DigDig2.Player.Combat
         
         private EntityCharacterController entityController => targetPlayer.entityController;
         private GameCamera gameCamera;
-        private CameraEffector cameraEffector;
+        private PartialCameraEffector cameraEffector;
 
         private UIDocument uiDocument;
         private VisualElement singlePlayerFocusIndicator;
@@ -69,7 +69,7 @@ namespace DigDig2.Player.Combat
             singlePlayerFocusIndicator = uiDocument.rootVisualElement.Query("focusTargetIndicator");
             singlePlayerFocusTargetIndicatorImage = singlePlayerFocusIndicator.Query("image");
 
-            cameraEffector = gameObject.AddComponent<CameraEffector>();
+            cameraEffector = gameObject.AddComponent<PartialCameraEffector>();
         }
 
         private async UniTask ScanLoop(CancellationToken ct)

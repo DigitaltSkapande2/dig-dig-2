@@ -6,13 +6,13 @@ namespace DigDig2.EffectSystem.Effects
 {
 	public class CameraZoomEffect : CumulativeEffectBase<CumulativeEffectInstanceData>
 	{
-		private CameraEffector cameraZoomEffector;
+		private PartialCameraEffector cameraZoomEffector;
 
 		private void Awake( )
 		{
 			var cameraZoomEffectorObject = new GameObject( );
 			cameraZoomEffectorObject.transform.SetParent( transform );
-			cameraZoomEffector = cameraZoomEffectorObject.AddComponent<CameraEffector>( );
+			cameraZoomEffector = cameraZoomEffectorObject.AddComponent<PartialCameraEffector>( );
 		}
 
 		internal override void UpdateEffect( float curveValue ) { cameraZoomEffector.targetFrustumSize = curveValue; }

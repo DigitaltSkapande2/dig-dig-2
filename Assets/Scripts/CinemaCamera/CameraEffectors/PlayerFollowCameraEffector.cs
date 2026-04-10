@@ -11,8 +11,9 @@ namespace DigDig2.CinemaCamera.CameraEffectors
         private GameManager gameManager;
         
         
-        private void Start()
+        protected void OnEnable()
         {
+            base.Start();
             gameManager = GameManager.Instance;
             updateAction = gameManager.IsMultiplayer ? MultiPlayerUpdate : SinglePlayerUpdate;
         }
@@ -29,7 +30,7 @@ namespace DigDig2.CinemaCamera.CameraEffectors
         {
             Vector3 sumPos = Vector3.zero;
             int count = 0;
-            foreach (var player in GameManager.Instance.PlayerCharacterObjects)
+            foreach (var player in gameManager.PlayerCharacterObjects)
             {
                 if (player == null) continue;
                 count++;
@@ -41,7 +42,7 @@ namespace DigDig2.CinemaCamera.CameraEffectors
 
         private void SinglePlayerUpdate()
         {
-            targetPosition = GameManager.Instance.PlayerOne.characterObject.transform.position;
+            targetPosition = gameManager.PlayerOne.characterObject.transform.position;
         }
 	}
 }

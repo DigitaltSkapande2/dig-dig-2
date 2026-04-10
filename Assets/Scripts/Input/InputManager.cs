@@ -125,9 +125,9 @@ namespace DigDig2.Input
             //BetterDebug.Log(context.control.device.name + " " + context.action.name + " " + context.action.actionMap.name + " " + context.phase);
             int inputPlayerIndex = inputPlayers.IndexOf(inputPlayer);
             
-            BetterDebug.Log(inputPlayer.name +"  "+inputPlayer.GetHashCode());
-            foreach(var gay in prioritizedInputModules.Keys)
-                BetterDebug.Log(gay.name + "  " + gay.GetHashCode());
+            // BetterDebug.Log(inputPlayer.name +"  "+inputPlayer.GetHashCode());
+            // foreach(var gay in prioritizedInputModules.Keys)
+            //     BetterDebug.Log(gay.name + "  " + gay.GetHashCode());
 
 			foreach ( InputModule prioritizedInputModule in prioritizedInputModules[ inputPlayer ][ context.action.actionMap.name ] )
 			{
