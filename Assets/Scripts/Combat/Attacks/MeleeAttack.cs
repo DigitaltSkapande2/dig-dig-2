@@ -37,7 +37,7 @@ namespace DigDig2.Combat.Attacks
 
 			if (animEventName == "AttackVFX")
 			{	
-				Quaternion rotation = Quaternion.Euler(0, Vector3.Angle(attacker.transform.forward, attacker.GetForwardVector()), 0);
+				Quaternion rotation = Quaternion.LookRotation(attacker.GetForwardVector(), attacker.transform.up);
 				Destroy(Instantiate(attackVFX, attacker.transform.position, rotation, attacker.transform), 5);
 			}
         }

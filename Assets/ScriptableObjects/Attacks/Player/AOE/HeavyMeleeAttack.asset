@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6f0c4b2054f4761408fe92aced04ae34, type: 3}
-  m_Name: AOEAttack
+  m_Name: HeavyMeleeAttack
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Combat.AOEAttack
   attackDuration: 0.8
   onPerformEffect: {fileID: 11400000, guid: 9eb55989aac38d6e0b67a610a8ed1c66, type: 2}
@@ -23,4 +23,5 @@ MonoBehaviour:
   chargingMoveSpeedFactor: 0
   hitboxPrefab: {fileID: 3511951452291022375, guid: 271eb4979fe45df4f903237b96eb445e, type: 3}
   hitEffect: {fileID: 6931098926697571914, guid: 3d36de908b6d4fc4cbed789d229020ac, type: 3}
+  attackVFX: {fileID: 3558728256003135093, guid: 77d39f5c63731f342882305422069799, type: 3}
   knockbackStrength: 50

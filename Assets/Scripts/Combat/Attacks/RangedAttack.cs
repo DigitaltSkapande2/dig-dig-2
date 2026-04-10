@@ -12,6 +12,7 @@ namespace DigDig2.Combat.Attacks
 		[SerializeField] private int damage = 1;
 		[SerializeField] private float chargingMoveSpeedFactor;
 		[SerializeField] private GameObject projectilePrefab;
+		[SerializeField] private GameObject chargeVFX;
 		[SerializeField] private float projectileSpeed;
 		[SerializeField] private float projectileLifetime;
 
@@ -19,6 +20,13 @@ namespace DigDig2.Combat.Attacks
 		{
 			attacker.PlayAnimation( chargeAnimationStateName );
 			attacker.AddMoveSpeedDebuff( chargeAnimationStateName, attacker.GetBaseMoveSpeed( ) * (1-chargingMoveSpeedFactor) );
+
+			Vector3 rayOrigin = attacker.transform.position + attacker.GetForwardVector() * 0.5f;
+			RaycastHit hit;
+			if (Physics.Raycast(rayOrigin, -attacker.transform.up, out hit, 5, LayerMask.GetMask("Ground")))
+			{
+				Instantiate(chargeVFX, hit.point, Quaternion.identity);
+			}
 		}
 
 		public override void Charge( Attacker attacker, AttackType attackType, float chargeTime ) { }

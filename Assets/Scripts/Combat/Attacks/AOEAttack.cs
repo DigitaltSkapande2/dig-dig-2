@@ -16,6 +16,7 @@ namespace DigDig2.Combat
 		[SerializeField] private float chargingMoveSpeedFactor;
         [SerializeField] private GameObject hitboxPrefab;
 		[SerializeField] private GameObject hitEffect;
+		[SerializeField] private GameObject attackVFX;
 		[SerializeField] private float knockbackStrength = 50;
 
 		private Vector3 lastHitboxPosition;
@@ -43,6 +44,9 @@ namespace DigDig2.Combat
 			lastChargeTime = chargeTime;
 			attacker.PlayAnimation( triggerAnimationStateName );
 			attacker.PushInDirection( Vector3.forward, 5 );
+
+			Quaternion rotation = Quaternion.LookRotation(attacker.GetForwardVector(), attacker.transform.up);
+			Destroy(Instantiate(attackVFX, attacker.transform.position, rotation, attacker.transform), 5);
 		}
 
         public override void AnimationEvent(Attacker attacker, AttackType attackGroup, string animEventName)

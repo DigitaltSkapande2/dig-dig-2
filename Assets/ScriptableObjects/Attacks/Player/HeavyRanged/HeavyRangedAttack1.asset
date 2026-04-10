@@ -19,5 +19,6 @@ MonoBehaviour:
   damage: 1
   chargingMoveSpeedFactor: 0
   projectilePrefab: {fileID: 2449068539807903354, guid: b706ac510b9907d428fd73fa63f09412, type: 3}
+  chargeVFX: {fileID: 99340023945321762, guid: 30b355740bdb69f4897387d9e28b296d, type: 3}
   projectileSpeed: 45
   projectileLifetime: 2
