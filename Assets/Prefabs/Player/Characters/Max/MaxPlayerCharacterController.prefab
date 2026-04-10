@@ -88,6 +88,8 @@ MonoBehaviour:
   - {fileID: 5498305180799135212}
   - {fileID: 7685385926256782153}
   dissolveFloatName: _DissolveAmount
+  dissolveColorName: _DissolveColor
+  deathDissolveColor: {r: 0, g: 0, b: 0, a: 0}
   shouldStartDissolved: 0
   inputMoveVector: {x: 0, y: 0}
 --- !u!114 &4327746320760944597
@@ -167,6 +169,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   dashVFX: {fileID: 1164710485556655839, guid: cb9d79279fa464245abb967ea084873a, type: 3}
+  onDashEffect: {fileID: 11400000, guid: 18123f8ce26300c7380e6d86de0be644, type: 2}
 --- !u!114 &8839264378030991054
 MonoBehaviour:
   m_ObjectHideFlags: 0

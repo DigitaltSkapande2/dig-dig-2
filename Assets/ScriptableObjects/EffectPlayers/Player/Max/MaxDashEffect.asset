@@ -10,17 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 078f6059bad84650ac4c8bcaa0efc638, type: 3}
-  m_Name: blinkStartEffect
+  m_Name: MaxDashEffect
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.EffectSystem.EffectPlayer
-  spawnPrefab: 1
+  spawnPrefab: 0
   spawnPrefabEffectData:
-    prefabToSpawn:
-    - prefab: {fileID: 4470345625133635168, guid: 94944c19ce8d8ed48a670c8d5ab999f0, type: 3}
-      hasLifetime: 1
-      lifetime: 2
+    prefabToSpawn: []
   playSound: 1
   audioClipsToPlay:
-  - {fileID: 8300000, guid: 476b32ee2ba0253289d07ff6fb8d864f, type: 3}
+  - {fileID: 8300000, guid: 1cfebf2992b1074eab8412c9112f6c18, type: 3}
   screenShake: 0
   screenShakeEffectData:
     intensityCurve:
