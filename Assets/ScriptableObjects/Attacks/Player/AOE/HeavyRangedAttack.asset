@@ -22,7 +22,7 @@ MonoBehaviour:
   damage: 2
   aoeForwardOffset: 0
   chargingMoveSpeedFactor: 0
-  hitboxPrefab: {fileID: 3511951452291022375, guid: 271eb4979fe45df4f903237b96eb445e, type: 3}
+  hitboxPrefab: {fileID: 3511951452291022375, guid: 36ff10f7e4fc51842848d541d712975e, type: 3}
   hitEffect: {fileID: 6931098926697571914, guid: 3d36de908b6d4fc4cbed789d229020ac, type: 3}
   attackVFX: {fileID: 3558728256003135093, guid: 77d39f5c63731f342882305422069799, type: 3}
   knockbackStrength: 50
