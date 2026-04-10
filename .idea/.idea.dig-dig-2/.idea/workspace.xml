@@ -10,7 +10,20 @@
     <configurations />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="50c3eb56-0f37-4789-a838-f82a855a30c4" name="Changes" comment="" />
+    <list default="true" id="50c3eb56-0f37-4789-a838-f82a855a30c4" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Util/ToolTipWorldNote.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.dig-dig-2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.dig-dig-2/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Obstacles/Door&amp;Button.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Obstacles/Door&amp;Button.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Obstacles/MovingPlatform.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Obstacles/MovingPlatform.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/GameScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/GameScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ScriptableObjects/Attacks/Player/LightRanged/LightRangedAttack1.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ScriptableObjects/Attacks/Player/LightRanged/LightRangedAttack1.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ScriptableObjects/Attacks/Player/LightRanged/LightRangedAttack2.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ScriptableObjects/Attacks/Player/LightRanged/LightRangedAttack2.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ScriptableObjects/Attacks/Player/LightRanged/LightRangedAttack3.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ScriptableObjects/Attacks/Player/LightRanged/LightRangedAttack3.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ScriptableObjects/EffectPlayers/Enemies/RangedEnemy/RangedEnemyAttackEffect.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ScriptableObjects/EffectPlayers/Enemies/RangedEnemy/RangedEnemyAttackEffect.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Combat/Attacks/RangedAttack.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Combat/Attacks/RangedAttack.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Util/VerticalBob.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Util/VerticalBob.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Util/ToolTipWorldNote.cs.meta" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -209,7 +222,7 @@
   </component>
   <component name="RunManager" selected="Unity Attach To.Attach to">
     <configuration name="Standalone Player" type="RunUnityExe" factoryName="Unity Executable">
-      <option name="EXE_PATH" value="$PROJECT_DIR$/../WhiskersOfTheTideWin/7april/LinuxOfTheTide/WhiskersofTheTide7April.x86_64" />
+      <option name="EXE_PATH" value="$PROJECT_DIR$/../WhiskersOfTheTideWin/10apr/Linux/WhiskersofTheTide7April.x86_64" />
       <option name="PROGRAM_PARAMETERS" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../Builds" />
       <option name="PASS_PARENT_ENVS" value="1" />
@@ -327,7 +340,7 @@
       <workItem from="1775750702904" duration="8412000" />
       <workItem from="1775759303526" duration="16931000" />
       <workItem from="1775815131040" duration="13924000" />
-      <workItem from="1775834131827" duration="11471000" />
+      <workItem from="1775834131827" duration="14513000" />
     </task>
     <servers />
   </component>
