@@ -26,7 +26,7 @@ namespace DigDig2.Audio
 		[SerializeField] private AudioClipOverrideSetting[ ] audioClipCooldownOverrides;
 		private AudioSource source;
 
-        private void Start()
+        private void Awake()
         {
             source = GetComponent<AudioSource>( ); 
         }
@@ -53,5 +53,10 @@ namespace DigDig2.Audio
             source.PlayOneShot(audioClip);
             
         }
+
+		public void SetPlaybackVolume( float linearVolume )
+		{
+			source.volume = linearVolume;
+		}
 	}
 }

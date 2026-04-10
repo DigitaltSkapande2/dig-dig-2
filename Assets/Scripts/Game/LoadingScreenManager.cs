@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Linq;
 using Cysharp.Threading.Tasks;
+
+using DigDig2.Audio;
 using DigDig2.Debugging;
 using DigDig2.Util;
 
@@ -52,7 +54,7 @@ namespace DigDig2.Game
                 .DefaultIfEmpty(0f)
                 .Max();
 
-            await UniTask.WaitForSeconds(duration);
+            await UniTask.WaitForSeconds(duration, true);
 			
 			loadingIndicator.style.opacity = new( 1f );
 		}
@@ -66,7 +68,7 @@ namespace DigDig2.Game
                 .DefaultIfEmpty(0f)
                 .Max();
             
-            await UniTask.WaitForSeconds(loadingIndicatorDuration);
+            await UniTask.WaitForSeconds(loadingIndicatorDuration, true);
 			
 			screenCover.style.opacity = new( 0f );
 
@@ -75,7 +77,7 @@ namespace DigDig2.Game
                 .DefaultIfEmpty(0f)
                 .Max();
 
-            await UniTask.WaitForSeconds(duration);
+            await UniTask.WaitForSeconds(duration, true);
 			
 			screenCover.style.display = new( DisplayStyle.None );
 			screenCover.style.visibility = new( Visibility.Hidden );
