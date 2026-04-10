@@ -27,6 +27,7 @@ namespace DigDig2.Combat
 		{
 			attacker.PlayAnimation( chargeAnimationStateName );
 			attacker.AddMoveSpeedDebuff( chargeAnimationStateName, attacker.GetBaseMoveSpeed( ) * (1-chargingMoveSpeedFactor) );
+            onChargeEffect?.Play();
 		}
 
 		public override void Charge( Attacker attacker, AttackType attackType, float chargeTime )

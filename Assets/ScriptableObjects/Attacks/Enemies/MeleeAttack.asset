@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: MeleeAttack
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.MeleeAttack
   attackDuration: 1.125
-  onPerformEffect: {fileID: 0}
+  onPerformEffect: {fileID: 11400000, guid: 0af8498be39beb2c08066736673174dc, type: 2}
+  onChargeEffect: {fileID: 0}
   animationStateName: Attack
   damage: 1
   pushAmount: 30

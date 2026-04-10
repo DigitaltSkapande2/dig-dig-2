@@ -10,13 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 078f6059bad84650ac4c8bcaa0efc638, type: 3}
-  m_Name: MinisDashEffect
+  m_Name: RangedEnemyAttackEffect
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.EffectSystem.EffectPlayer
   spawnPrefab: 0
   spawnPrefabEffectData:
     prefabToSpawn: []
-  playSound: 0
-  audioClipsToPlay: []
+  playSound: 1
+  audioClipsToPlay:
+  - {fileID: 8300000, guid: c162e038c0ec89297999efd5116944e1, type: 3}
   screenShake: 0
   screenShakeEffectData:
     intensityCurve:
