@@ -1,10 +1,6 @@
-using System;
-using System.Collections;
 using System.Linq;
 using Cysharp.Threading.Tasks;
 
-using DigDig2.Audio;
-using DigDig2.Debugging;
 using DigDig2.Util;
 
 using UnityEngine;
@@ -40,7 +36,8 @@ namespace DigDig2.Game
 		{
 			await PlayFadeIn( );
             await SceneManager.LoadSceneAsync( sceneBuildIndex, LoadSceneMode.Single );
-			await UniTask.WaitForSeconds(5, true);
+			await UniTask.Yield( PlayerLoopTiming.Update );
+			await UniTask.WaitForSeconds(3, true);
 			await PlayFadeOut( );
 		}
 
