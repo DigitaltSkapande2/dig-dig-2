@@ -1,4 +1,6 @@
+using System;
 using DigDig2.SaveSystem;
+using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
@@ -7,10 +9,11 @@ using UnityEngine.Serialization;
 namespace DigDig2
 {
     [RequireComponent(typeof(Volume))]
-    public class DayCycle : MonoBehaviour
+    public class DayCycle : MonoBehaviour, ISaveable
     {
         Volume volume;
         ShadowsMidtonesHighlights smh;
+        [SerializeField] private string saveKey = "day_cycle_elapsed";
         [SerializeField] float dayDurationInMinutes;
         [FormerlySerializedAs("nightValue")] [SerializeField] Vector4 nightMidtones;
         [SerializeField] private Light sceneDirectionalLight;
@@ -32,17 +35,33 @@ namespace DigDig2
             startDirectionalLightIntensity = sceneDirectionalLight.intensity;
         }
 
+        private void Start()
+        {
+            SaveManager.Instance.RegisterSavable(saveKey, this);
+        }
+
         void Update()
         {
-            timeElapsed += Time.deltaTime;
+            timeElapsed =  (timeElapsed + Time.deltaTime) % (dayDurationInMinutes * 60);
             float lerpValue = (Mathf.Cos(Mathf.PI * timeElapsed / (dayDurationInMinutes * 30)) + 1) / 2;
             
             smh.midtones.value = Vector4.Lerp(startMidtones, nightMidtones, lerpValue);
 
             sceneDirectionalLight.intensity =
                 Mathf.Lerp(startDirectionalLightIntensity, nightDirectionalLightIntensity, lerpValue);
+        }
 
-            // smh.midtones.value = nightValue;
+        public object CollectData()
+        {
+            return timeElapsed;
+        }
+
+        public void RestoreState(object dataObject)
+        {
+            if (dataObject != null)
+            {
+                timeElapsed = JsonConvert.DeserializeObject<int>(dataObject.ToString());
+            }
         }
     }
 }

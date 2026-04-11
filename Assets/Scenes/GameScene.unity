@@ -8979,7 +8979,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 37c9f601cd65deb4a98a01f2035defcd, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.55
+  m_Volume: 0.309
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -19425,6 +19425,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38b616df533bebf48941c6b4f841478d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.DayCycle
+  saveKey: day_cycle_elapsed
   dayDurationInMinutes: 3
   nightMidtones: {x: 0.75, y: 0, z: 1.75, w: 0.15}
   sceneDirectionalLight: {fileID: 165320763}

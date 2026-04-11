@@ -86,6 +86,10 @@ namespace DigDig2.SaveSystem
                     else player.RecoverMaxHealth();
                 }
             }
+            else
+            {
+                GameManager.Instance.PlayerOne.RecoverMaxHealth();
+            }
             
             SaveManager.Instance.SaveAllAndWriteToFile();
         }

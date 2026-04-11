@@ -47,7 +47,7 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     duration: 0.5
-    intensity: 0.3
+    intensity: 0.1
   cameraZoom: 0
   cameraZoomEffectData:
     intensityCurve:
@@ -104,7 +104,7 @@ MonoBehaviour:
       m_RotationOrder: 4
     duration: 0.4
     intensity: 0.1
-  vignettePulse: 0
+  vignettePulse: 1
   vignettePulseEffectData:
     intensityCurve:
       serializedVersion: 2
@@ -131,8 +131,8 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     duration: 0.4
-    intensity: 1
-    color: {r: 0, g: 0, b: 0, a: 0}
+    intensity: 0.3
+    color: {r: 0.8103098, g: 0.508366, b: 0.9056604, a: 0}
   gamepadRumble: 0
   gamepadRumbleEffectData:
     intensityCurve:
