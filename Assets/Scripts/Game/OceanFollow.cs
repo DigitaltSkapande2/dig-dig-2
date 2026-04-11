@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace DigDig2.Game
 {
-	public class OceanFollow : Singleton<OceanFollow>
+	public class OceanFollow : Singleton<OceanFollow>, ISaveable
 	{
 		[SerializeField] private Transform plane;
 
@@ -28,6 +28,7 @@ namespace DigDig2.Game
         private void Start( )
 		{
 			targetY = transform.position.y;
+            SaveManager.Instance.RegisterSavable("ocean_target_y", this);
 		}
 
 		private void Update( )
@@ -75,5 +76,19 @@ namespace DigDig2.Game
 			}
 			waterParticlesPlaying = true;
 		}
-	}
+
+        public object CollectData()
+        {
+            return targetY;
+        }
+
+        public void RestoreState(object dataObject)
+        {
+            if (dataObject != null)
+            {
+                targetY = JsonConvert.DeserializeObject<float>(dataObject.ToString());
+                transform.position = new Vector3(transform.position.x, targetY, transform.position.z);
+            }
+        }
+    }
 }

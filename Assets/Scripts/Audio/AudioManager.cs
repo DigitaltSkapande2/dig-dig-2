@@ -25,7 +25,7 @@ namespace DigDig2.Audio
     public class AudioClipData
     {
         public AudioClip audioClip;
-        [Range(0.1f, 1f)] public float volume = 1f;
+        [Range(0.01f, 1f)] public float volume = 1f;
         public Vector2 pitchRange = Vector2.zero;
     }
     

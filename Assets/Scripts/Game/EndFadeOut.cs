@@ -47,11 +47,11 @@ namespace DigDig2.Game
 		private void Update()
 		{
 			if ( endTriggered ) return;
-
+            
 			Vector3 position;
 			if ( GameManager.Instance.IsMultiplayer && GameManager.Instance.hasCharacterBeenSelected )
 			{
-				GameObject maxCharacterObject = GameManager.Instance.playerMax.characterObject;
+				GameObject maxCharacterObject = GameManager.Instance.playerMax?.characterObject;
 				GameObject miniCharacterObject = GameManager.Instance.playerMinis.characterObject;
 				position = maxCharacterObject.transform.position + ( maxCharacterObject.transform.position - miniCharacterObject.transform.position ) / 2;
 			}

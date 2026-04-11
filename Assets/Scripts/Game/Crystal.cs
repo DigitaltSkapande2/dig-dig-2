@@ -197,7 +197,7 @@ namespace DigDig2.Game
         {
             if (myId < activeId)
             {
-                ocean.LowerWater(oceanLowerAmount, true);
+                //ocean.LowerWater(oceanLowerAmount, true);
                 foreach (var enemyConnection in enemyConnections)
                 {
                     Destroy(enemyConnection.enemy);
