@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Combat.BindableAttackHitbox
   shape: 0
+  onHitEffect: {fileID: 0}
   boxSize: {x: 0.05, y: 0.05, z: 0.05}
   sphereRadius: 1
   unitsPerIntermediateCheck: 0.001
@@ -408,8 +409,8 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 0
-      outSlope: 0
+      inSlope: 2
+      outSlope: 2
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
@@ -417,8 +418,8 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 2
-      outSlope: 2
+      inSlope: 0
+      outSlope: 0
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
@@ -432,7 +433,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  fadeDuration: 0.5
+  fadeDuration: 0.3
   isActive: 0
 --- !u!95 &4427047692297429573
 Animator:
