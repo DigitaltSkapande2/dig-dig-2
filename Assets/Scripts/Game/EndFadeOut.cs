@@ -49,7 +49,7 @@ namespace DigDig2.Game
 			if ( endTriggered ) return;
 
 			Vector3 position;
-			if ( GameManager.Instance.IsMultiplayer )
+			if ( GameManager.Instance.IsMultiplayer && GameManager.Instance.hasCharacterBeenSelected )
 			{
 				GameObject maxCharacterObject = GameManager.Instance.playerMax.characterObject;
 				GameObject miniCharacterObject = GameManager.Instance.playerMinis.characterObject;
