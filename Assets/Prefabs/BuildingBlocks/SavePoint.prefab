@@ -516,6 +516,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2368700195285796142, guid: cfd1baed424b6c8bc82560ab8d111760, type: 3}
+      propertyPath: m_Resource
+      value: 
+      objectReference: {fileID: 8300000, guid: 679e866e8a8b879e3814202ec4b11280, type: 3}
     - target: {fileID: 4950934811570952627, guid: cfd1baed424b6c8bc82560ab8d111760, type: 3}
       propertyPath: m_Name
       value: CampfireSFX
