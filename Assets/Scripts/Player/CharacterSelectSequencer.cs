@@ -310,7 +310,7 @@ namespace DigDig2
             playerOneReadyIcon.style.scale =
                 new StyleScale(playerOneReady ? new Vector2(1.5f, 1.5f) : new Vector2(1f, 1f));
 
-            playerTwoReadyInputSymbol.style.opacity = new StyleFloat(playerOneReady ? 0 : 100);
+            playerTwoReadyInputSymbol.style.opacity = new StyleFloat(playerTwoReady ? 0 : 100);
             playerTwoReadyIcon.style.opacity = new StyleFloat(playerTwoReady ? 100 : 0);
             playerTwoReadyIcon.style.scale =
                 new StyleScale(playerTwoReady ? new Vector2(1.5f, 1.5f) : new Vector2(1f, 1f));
