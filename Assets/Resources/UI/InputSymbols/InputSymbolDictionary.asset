@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b386da4816d489486eab02607a37db0, type: 3}
+  m_Name: InputSymbolDictionary
+  m_EditorClassIdentifier: Assembly-CSharp::DigDig2.UI.InputSymbolDictionary
+  dictionary:
+    m_keys:
+    - Keyboard/W
+    - Keyboard/A
+    - Keyboard/S
+    - Keyboard/D
+    - Playstation/Left Stick
+    - Xbox/Left Stick
+    - Mouse/Left Button
+    - Playstation/Button West
+    - Xbox/Button West
+    - Mouse/Right Button
+    - Playstation/Button East
+    - Xbox/Button East
+    - Keyboard/Shift
+    - Playstation/Button North
+    - Xbox/Button North
+    - 'Keyboard/ '
+    - Playstation/Button South
+    - Xbox/Button South
+    - Playstation/Left Trigger
+    - Xbox/Left Trigger
+    - "Keyboard/\t"
+    m_values:
+    - {fileID: 23553631, guid: e0a59c2ce73d9ef0eb936189cdcce3bc, type: 3}
+    - {fileID: -698434308, guid: e0a59c2ce73d9ef0eb936189cdcce3bc, type: 3}
+    - {fileID: -847005877, guid: e0a59c2ce73d9ef0eb936189cdcce3bc, type: 3}
+    - {fileID: 13925544, guid: e0a59c2ce73d9ef0eb936189cdcce3bc, type: 3}
+    - {fileID: 2027019553, guid: e0a59c2ce73d9ef0eb936189cdcce3bc, type: 3}
+    - {fileID: -363779861, guid: e0a59c2ce73d9ef0eb936189cdcce3bc, type: 3}
+    - {fileID: 1929108362, guid: e0a59c2ce73d9ef0eb936189cdcce3bc, type: 3}
+    - {fileID: -839464295, guid: e0a59c2ce73d9ef0eb936189cdcce3bc, type: 3}
+    - {fileID: -874101325, guid: e0a59c2ce73d9ef0eb936189cdcce3bc, type: 3}
+    - {fileID: -133219137, guid: e0a59c2ce73d9ef0eb936189cdcce3bc, type: 3}
+    - {fileID: -255223719, guid: e0a59c2ce73d9ef0eb936189cdcce3bc, type: 3}
+    - {fileID: 1448001145, guid: e0a59c2ce73d9ef0eb936189cdcce3bc, type: 3}
+    - {fileID: -1823682586, guid: e0a59c2ce73d9ef0eb936189cdcce3bc, type: 3}
+    - {fileID: -1564193029, guid: e0a59c2ce73d9ef0eb936189cdcce3bc, type: 3}
+    - {fileID: -1376758819, guid: e0a59c2ce73d9ef0eb936189cdcce3bc, type: 3}
+    - {fileID: 676170507, guid: e0a59c2ce73d9ef0eb936189cdcce3bc, type: 3}
+    - {fileID: 1897702734, guid: e0a59c2ce73d9ef0eb936189cdcce3bc, type: 3}
+    - {fileID: -389381271, guid: e0a59c2ce73d9ef0eb936189cdcce3bc, type: 3}
+    - {fileID: 2028335853, guid: e0a59c2ce73d9ef0eb936189cdcce3bc, type: 3}
+    - {fileID: -1266833116, guid: e0a59c2ce73d9ef0eb936189cdcce3bc, type: 3}
+    - {fileID: -17536972, guid: e0a59c2ce73d9ef0eb936189cdcce3bc, type: 3}

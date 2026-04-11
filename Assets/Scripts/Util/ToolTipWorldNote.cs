@@ -12,6 +12,8 @@ namespace DigDig2
         [SerializeField] private float activationRange = 10f;
         [SerializeField] private float scaleFadeSpeed = 1.5f;
 
+		[SerializeField] private bool bob = true;
+
         float timeOffset;
         private Vector3 initialPosition;
 
@@ -33,10 +35,13 @@ namespace DigDig2
         void Update()
         {
             // Bob
-            float cycleValue = Mathf.Sin(Time.time * speed + timeOffset);
-            transform.position = initialPosition + Vector3.up * cycleValue * range/2;
-            
-            // target scale
+			if ( bob )
+			{
+				float cycleValue = Mathf.Sin( Time.time * speed + timeOffset );
+				transform.position = initialPosition + Vector3.up * cycleValue * range / 2;
+			}
+
+			// target scale
             if (Vector3.Distance(transform.position, gameCamera.transform.position) <= activationRange) targetScale = 1;
             else targetScale = 0;
             
