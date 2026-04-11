@@ -162,7 +162,7 @@ MonoBehaviour:
     duration: 0.08
     intensity: 0
     inputPlayerId: 0
-    highFrequencyIntensity: 0.3
+    highFrequencyIntensity: 0.2
   greyscale: 0
   greyscaleEffectData:
     intensityCurve:

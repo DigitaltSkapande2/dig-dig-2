@@ -160,9 +160,9 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     duration: 0.08
-    intensity: 0
+    intensity: 0.1
     inputPlayerId: 0
-    highFrequencyIntensity: 0.3
+    highFrequencyIntensity: 0.4
   greyscale: 0
   greyscaleEffectData:
     intensityCurve:

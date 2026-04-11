@@ -15240,30 +15240,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 396767488812419074, guid: 6ee5d1c7d63d4d744add746a470f8a0b, type: 3}
-      propertyPath: ColorModule.gradient.maxGradient.key1.b
-      value: 0.89433956
-      objectReference: {fileID: 0}
-    - target: {fileID: 396767488812419074, guid: 6ee5d1c7d63d4d744add746a470f8a0b, type: 3}
-      propertyPath: ColorModule.gradient.maxGradient.key1.g
-      value: 0.5957034
-      objectReference: {fileID: 0}
-    - target: {fileID: 396767488812419074, guid: 6ee5d1c7d63d4d744add746a470f8a0b, type: 3}
-      propertyPath: ColorModule.gradient.maxGradient.key1.r
-      value: 0.37629753
-      objectReference: {fileID: 0}
-    - target: {fileID: 4307997523300434253, guid: 6ee5d1c7d63d4d744add746a470f8a0b, type: 3}
-      propertyPath: ColorModule.gradient.maxGradient.key1.b
-      value: 0.89433956
-      objectReference: {fileID: 0}
-    - target: {fileID: 4307997523300434253, guid: 6ee5d1c7d63d4d744add746a470f8a0b, type: 3}
-      propertyPath: ColorModule.gradient.maxGradient.key1.g
-      value: 0.5957034
-      objectReference: {fileID: 0}
-    - target: {fileID: 4307997523300434253, guid: 6ee5d1c7d63d4d744add746a470f8a0b, type: 3}
-      propertyPath: ColorModule.gradient.maxGradient.key1.r
-      value: 0.37629753
-      objectReference: {fileID: 0}
     - target: {fileID: 6104219192216164949, guid: 6ee5d1c7d63d4d744add746a470f8a0b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.4
@@ -15791,30 +15767,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 832999075705624290, guid: 089616541135d5146a3f22e635605a69, type: 3}
-      propertyPath: ColorModule.gradient.maxGradient.key1.b
-      value: 0.89433956
-      objectReference: {fileID: 0}
-    - target: {fileID: 832999075705624290, guid: 089616541135d5146a3f22e635605a69, type: 3}
-      propertyPath: ColorModule.gradient.maxGradient.key1.g
-      value: 0.5957034
-      objectReference: {fileID: 0}
-    - target: {fileID: 832999075705624290, guid: 089616541135d5146a3f22e635605a69, type: 3}
-      propertyPath: ColorModule.gradient.maxGradient.key1.r
-      value: 0.37629753
-      objectReference: {fileID: 0}
-    - target: {fileID: 4507170235053714984, guid: 089616541135d5146a3f22e635605a69, type: 3}
-      propertyPath: ColorModule.gradient.maxGradient.key1.b
-      value: 0.89433956
-      objectReference: {fileID: 0}
-    - target: {fileID: 4507170235053714984, guid: 089616541135d5146a3f22e635605a69, type: 3}
-      propertyPath: ColorModule.gradient.maxGradient.key1.g
-      value: 0.5957034
-      objectReference: {fileID: 0}
-    - target: {fileID: 4507170235053714984, guid: 089616541135d5146a3f22e635605a69, type: 3}
-      propertyPath: ColorModule.gradient.maxGradient.key1.r
-      value: 0.37629753
-      objectReference: {fileID: 0}
     - target: {fileID: 6931098926697571914, guid: 089616541135d5146a3f22e635605a69, type: 3}
       propertyPath: m_Name
       value: MinisLightAttackHit
