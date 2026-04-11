@@ -15,6 +15,7 @@ namespace DigDig2.Combat.Attacks
 		[SerializeField] private GameObject projectilePrefab;
 		[SerializeField] private GameObject chargeVFX;
         [SerializeField] private AudioClip chargeSFX;
+        [SerializeField] private AudioClip attackSFX;
  		[SerializeField] private float projectileSpeed;
 		[SerializeField] private float projectileLifetime;
         [SerializeField] private float projectileSpawnYOffset = 0f;
@@ -38,11 +39,11 @@ namespace DigDig2.Combat.Attacks
 				Destroy(chargeVFXInstance, 5);
 			}
             onChargeEffect?.Play();
-            
-            chargeAudioSourceInstance = new GameObject().AddComponent<AudioSource>();
-            chargeAudioSourceInstance.loop = false;
-            chargeAudioSourceInstance.clip = chargeSFX;
-            chargeAudioSourceInstance.Play();
+            if (chargeSFX)
+            {
+                chargeAudioSourceInstance = new GameObject().AddComponent<AudioSource>();
+                chargeAudioSourceInstance.PlayOneShot(chargeSFX);
+            }
 		}
 
         private async UniTask FadeAudio(AudioSource source, float from, float to, float time, bool destroyOnEnd)
@@ -71,7 +72,7 @@ namespace DigDig2.Combat.Attacks
 
 		public override void Trigger( Attacker attacker, AttackType attackGroup, float chargeTime )
 		{
-            
+            onPerformEffect?.Play();
 			attacker.PlayAnimation( triggerAnimationStateName );
 			attacker.AddMoveSpeedDebuff( triggerAnimationStateName, attacker.GetBaseMoveSpeed( ) / 2 );
 		}
@@ -80,7 +81,17 @@ namespace DigDig2.Combat.Attacks
 		{
 			if (animEventName == "Trigger")
 			{
-                onPerformEffect?.Play();
+                onHitEffect?.Play();
+
+                if (attackSFX)
+                {
+                    AudioSource attackSoundSource = new GameObject().AddComponent<AudioSource>();
+                    attackSoundSource.transform.SetParent(attacker.transform);
+                    attackSoundSource.PlayOneShot(attackSFX);
+                    Destroy(attackSoundSource,6f);
+                }
+
+                
 				Debug.Log( "Hello i am a ranged attack" );
 				Vector3 forward = attacker.GetComponent<EntityCharacterController>( ).GetForwardVector( );
                 Projectile projectile = null;
@@ -114,7 +125,6 @@ namespace DigDig2.Combat.Attacks
 
 		public override void Hit( Attacker attacker, Attackable attackable, Health healthComponent, EntityCharacterController entityCharacterController )
 		{
-            onHitEffect?.Play();
 			if ( healthComponent ) healthComponent.Damage( damage );
 		}
 	}

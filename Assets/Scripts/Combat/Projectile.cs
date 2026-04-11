@@ -31,6 +31,7 @@ namespace DigDig2.Combat
 			if (Physics.SphereCast(transform.position, sphericalRadius, transform.forward, out hit, speed * Time.deltaTime, layerMask))
 			{
 				transform.position = hit.point;
+                onHitEffect?.Play(hit.point);
 				ProjectileHit();
 				hasHit = true;
 				return;
@@ -53,6 +54,7 @@ namespace DigDig2.Combat
 			if (hasHit) return;
 
 			hit.Invoke();
+            
 
 			hitAttack.TriggerIndependent(attacker, transform.position, hitboxID, transform);
 			attacker.activeAttacks[hitboxID].Trigger(hitboxID);

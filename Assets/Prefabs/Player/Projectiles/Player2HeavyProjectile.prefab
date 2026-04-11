@@ -51,7 +51,7 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 3265
-  onHitEffect: {fileID: 11400000, guid: 1c44e8a50f645dfd491ad2613b2a54de, type: 2}
+  onHitEffect: {fileID: 11400000, guid: 5d23f0d93d7a21c1e93226843c2bbe29, type: 2}
   hit:
     m_PersistentCalls:
       m_Calls:

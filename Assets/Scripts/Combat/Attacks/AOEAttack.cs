@@ -64,6 +64,7 @@ namespace DigDig2.Combat
         {
 			if (animEventName != "TriggerAOE") return;
             
+            onHitEffect?.Play();
 			Vector3 forwardVector = attacker.GetComponent<EntityCharacterController>().GetForwardVector();
             Vector3 centerOffset = forwardVector * aoeForwardOffset;
 			Quaternion rotation = Quaternion.LookRotation(forwardVector, attacker.transform.up);
@@ -92,7 +93,6 @@ namespace DigDig2.Combat
 
 		public override void Hit( Attacker attacker, Attackable attackable, Health healthComponent, EntityCharacterController entityCharacterController )
 		{
-            onHitEffect?.Play();
 			if ( hitEffect ) Instantiate( hitEffect, attackable.transform.position, Quaternion.identity );
 			if ( healthComponent ) healthComponent.Damage( damage );
 			attackable.ApplyKnockback( ( attackable.transform.position - attacker.transform.position ).normalized, knockbackStrength );

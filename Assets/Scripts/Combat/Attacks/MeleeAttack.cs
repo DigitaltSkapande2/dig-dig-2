@@ -12,6 +12,7 @@ namespace DigDig2.Combat.Attacks
 		[SerializeField] private int bindableAttackHitboxIndex;
 		[SerializeField] private GameObject hitEffect;
 		[SerializeField] private GameObject attackVFX;
+        [SerializeField] private AudioClip attackSFX;
 		[SerializeField] private float vfxLifeTime;
 		[SerializeField] private float knockbackStrength = 50;
 
@@ -24,6 +25,15 @@ namespace DigDig2.Combat.Attacks
 		public override void Trigger( Attacker attacker, AttackType attackGroup, float chargeTime )
 		{
 			onPerformEffect?.Play();
+
+            if (attackSFX)
+            {
+                AudioSource attackSoundSource = new GameObject().AddComponent<AudioSource>();
+                attackSoundSource.transform.SetParent(attacker.transform);
+                attackSoundSource.PlayOneShot(attackSFX);
+                Destroy(attackSoundSource,6f);
+            }
+            
 			attacker.PlayAnimation( animationStateName );
 			attacker.StartHitboxAttack( this, animationStateName, attacker.GetBindableAttackHitbox( bindableAttackHitboxIndex ) );
 			attacker.AddMoveSpeedDebuff( animationStateName, attacker.GetBaseMoveSpeed( ) );
@@ -38,6 +48,7 @@ namespace DigDig2.Combat.Attacks
 
 			if (animEventName == "AttackVFX")
 			{	
+                onHitEffect?.Play();
 				Quaternion rotation = Quaternion.LookRotation(attacker.GetForwardVector(), attacker.transform.up);
 				Destroy(Instantiate(attackVFX, attacker.transform.position, rotation, attacker.transform), vfxLifeTime);
 			}
@@ -63,7 +74,6 @@ namespace DigDig2.Combat.Attacks
 
 		public override void Hit( Attacker attacker, Attackable attackable, Health healthComponent, EntityCharacterController entityCharacterController )
 		{
-            onHitEffect?.Play();
 			if ( hitEffect ) Instantiate( hitEffect, attackable.transform.position, Quaternion.identity );
 			if ( healthComponent ) healthComponent.Damage( damage );
 			attackable.ApplyKnockback( ( attackable.transform.position - attacker.transform.position ).normalized, knockbackStrength );
