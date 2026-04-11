@@ -28,18 +28,10 @@ namespace DigDig2.EffectSystem.Effects
             BetterDebug.Log("Added GamepadRuimble");
 
             List<InputDevice> affectedDevices;
-            if (id == -1)
-            {
-                InputManager inputManager = InputManager.Instance;
-                affectedDevices = GameManager.Instance.playerControllers.Where(p => p).Select(p => inputManager.GetInputPlayersDevices(p.inputPlayerIndex)[0]).ToList();
-            }
-            else
-            {
-                affectedDevices = InputManager.Instance.GetInputPlayersDevices(id);
-            }
+
+            affectedDevices = InputManager.Instance.GetInputPlayersDevices(id);
             
-            
-            
+
             foreach (InputDevice inputPlayersDevice in affectedDevices)
             {
                 if (!(inputPlayersDevice is Gamepad)) continue;
@@ -62,9 +54,26 @@ namespace DigDig2.EffectSystem.Effects
                     effectInstances.Add(gamePad, new List<GamepadRumbleEffectInstanceData>() { copy });
                 }
             }
-            
-            
         }
+
+        private void OnDestroy()
+        {
+            List<InputDevice> affectedDevices;
+
+            affectedDevices = InputManager.Instance.GetInputPlayersDevices(-1);
+            
+            foreach (InputDevice inputPlayersDevice in affectedDevices)
+            {
+                if (!(inputPlayersDevice is Gamepad)) continue;
+
+                Gamepad gamePad = (Gamepad)inputPlayersDevice;
+
+                gamePad.PauseHaptics();
+                        
+            }
+        }
+        
+
 
         internal override void OnEffectStart(CumulativeEffectInstanceData effect)
         {
