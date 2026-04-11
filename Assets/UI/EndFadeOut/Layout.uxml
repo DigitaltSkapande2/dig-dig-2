@@ -34,7 +34,7 @@
                     </ui:VisualElement>
                     <ui:VisualElement style="flex-grow: 1; width: 50%;">
                         <ui:Label text="Animator" name="" class="area"/>
-                        <ui:Label text="Music" name="" class="area"/>
+                        <ui:Label text="Composer" name="" class="area"/>
                     </ui:VisualElement>
                 </ui:VisualElement>
                 <ui:VisualElement style="flex-grow: 0; flex-direction: row; width: 100%; margin-bottom: 50px; flex-shrink: 0;">

@@ -29,11 +29,11 @@ AnimationClip:
       - serializedVersion: 3
         time: 1.5
         value: {x: 45, y: 540, z: 45}
-        inSlope: {x: 0, y: 90, z: 0}
+        inSlope: {x: 0, y: 85.3871, z: 0}
         outSlope: {x: 0, y: 90, z: 0}
         tangentMode: 0
         weightedMode: 0
-        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        inWeight: {x: 0.33333334, y: 0.2391324, z: 0.33333334}
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 2
@@ -63,11 +63,11 @@ AnimationClip:
       - serializedVersion: 3
         time: 1.5
         value: {x: -45, y: -675, z: -45}
-        inSlope: {x: 0, y: -90, z: 0}
+        inSlope: {x: 0, y: -54.886066, z: 0}
         outSlope: {x: 0, y: -90, z: 0}
         tangentMode: 0
         weightedMode: 0
-        inWeight: {x: 0, y: 0.33333334, z: 0.33333334}
+        inWeight: {x: 0, y: 0.09913484, z: 0.33333334}
         outWeight: {x: 0, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 2
@@ -179,11 +179,11 @@ AnimationClip:
       - serializedVersion: 3
         time: 1.5
         value: 540
-        inSlope: 90
+        inSlope: 85.3871
         outSlope: 90
-        tangentMode: 136
+        tangentMode: 65
         weightedMode: 0
-        inWeight: 0.33333334
+        inWeight: 0.2391324
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 2
@@ -269,11 +269,11 @@ AnimationClip:
       - serializedVersion: 3
         time: 1.5
         value: -675
-        inSlope: -90
+        inSlope: -54.886066
         outSlope: -90
-        tangentMode: 136
+        tangentMode: 65
         weightedMode: 0
-        inWeight: 0.33333334
+        inWeight: 0.09913484
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 2
@@ -322,7 +322,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: Core
+    path: Outer shell
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -334,19 +334,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: Core
-    classID: 4
-    script: {fileID: 0}
-    flags: 0
-  - serializedVersion: 2
-    curve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_LocalEulerAngles.x
-    path: Core
+    path: Outer shell
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -369,8 +357,20 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
+    attribute: m_LocalEulerAngles.x
+    path: Core
+    classID: 4
+    script: {fileID: 0}
+    flags: 0
+  - serializedVersion: 2
+    curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: Outer shell
+    path: Core
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -382,7 +382,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: Outer shell
+    path: Core
     classID: 4
     script: {fileID: 0}
     flags: 0

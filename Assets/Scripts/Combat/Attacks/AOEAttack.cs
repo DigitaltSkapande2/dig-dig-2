@@ -17,6 +17,7 @@ namespace DigDig2.Combat
         [SerializeField] private GameObject hitboxPrefab;
 		[SerializeField] private GameObject hitEffect;
 		[SerializeField] private GameObject attackVFX;
+		[SerializeField] private float vfxLifeTime;
 		[SerializeField] private float knockbackStrength = 50;
 
 		private float lastChargeTime;
@@ -46,7 +47,7 @@ namespace DigDig2.Combat
 			attacker.PushInDirection( Vector3.forward, 5 );
 
 			Quaternion rotation = Quaternion.LookRotation(attacker.GetForwardVector(), attacker.transform.up);
-			Destroy(Instantiate(attackVFX, attacker.transform.position, rotation, attacker.transform), 5);
+			Destroy(Instantiate(attackVFX, attacker.transform.position, rotation, attacker.transform), vfxLifeTime);
 		}
 
         public override void AnimationEvent(Attacker attacker, AttackType attackGroup, string animEventName)
@@ -58,7 +59,7 @@ namespace DigDig2.Combat
             Vector3 centerOffset = forwardVector * aoeForwardOffset;
 			Quaternion rotation = Quaternion.LookRotation(forwardVector, attacker.transform.up);
             BindableAttackHitbox hitbox = Instantiate(hitboxPrefab, attacker.transform.position + centerOffset, rotation).GetComponent<BindableAttackHitbox>();
-			Destroy(hitbox.gameObject, 5);
+			Destroy(hitbox.gameObject, 2);
 			float radius = Mathf.Lerp(minRaduis, maxRadius, lastChargeTime / attackGroup.chargeDuration);
 			hitbox.SetSphereRadius(radius);
 			attacker.StartHitboxAttack( this, triggerAnimationStateName, hitbox);
