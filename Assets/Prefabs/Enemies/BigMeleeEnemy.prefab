@@ -63,8 +63,9 @@ GameObject:
   - component: {fileID: 5976209809697749524}
   - component: {fileID: 6573185137410320209}
   - component: {fileID: 6435232985193985838}
-  - component: {fileID: 224380237672252267}
+  - component: {fileID: 3275052623064546667}
   - component: {fileID: 6762114074386312621}
+  - component: {fileID: 224380237672252267}
   - component: {fileID: 4427047692297429573}
   m_Layer: 10
   m_Name: BigMeleeEnemy
@@ -253,7 +254,7 @@ MonoBehaviour:
   hit:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 224380237672252267}
+      - m_Target: {fileID: 3275052623064546667}
         m_TargetAssemblyTypeName: DigDig2.Util.MaterialFloatToggler, Assembly-CSharp
         m_MethodName: ActivateForDuration
         m_Mode: 4
@@ -265,7 +266,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &224380237672252267
+--- !u!114 &3275052623064546667
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -354,14 +355,85 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Health
   maxHealthPoints: 12
   healthPoints: 12
+  damageThreshold: 1
   destroyOnDeath: 1
+  deathWaitTime: 0.5
   deathEffectPlayer: {fileID: 11400000, guid: 5510b994481a5bd43aaef299bedfd930, type: 2}
   death:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 224380237672252267}
+        m_TargetAssemblyTypeName: DigDig2.Util.MaterialFloatToggler, Assembly-CSharp
+        m_MethodName: Activate
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   healthChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &224380237672252267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5585277213094831744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bfcd0f7c8ff44aabcacf276aeaac72f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Util.MaterialFloatToggler
+  targetRenderers:
+  - {fileID: 2137410579156783422}
+  - {fileID: 4542195221131520252}
+  - {fileID: 8746853888906418828}
+  - {fileID: 8999145887715356764}
+  - {fileID: 9098271848706396101}
+  - {fileID: 5271302773460114125}
+  - {fileID: 562863734888771270}
+  - {fileID: 8613921757268246564}
+  - {fileID: 8310999074767427880}
+  floatVarName: _DissolveAmount
+  activatedValue: 1
+  deactivatedValue: 0
+  fadeActive:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  fadeUnactive:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  fadeDuration: 0.5
+  isActive: 0
 --- !u!95 &4427047692297429573
 Animator:
   serializedVersion: 7

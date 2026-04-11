@@ -59,7 +59,7 @@ namespace DigDig2.Combat
 
 			attacker.EndHitboxAttack( hitboxID );
 			speed = 0;
-			Invoke(nameof(DestroyProjectile), 5);
+			Invoke(nameof(DestroyProjectile), 1);
 		}
 
 		private void DestroyProjectile()

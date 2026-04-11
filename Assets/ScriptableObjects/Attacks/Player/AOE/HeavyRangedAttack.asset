@@ -14,15 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Combat.AOEAttack
   attackDuration: 0
   onPerformEffect: {fileID: 11400000, guid: 5d23f0d93d7a21c1e93226843c2bbe29, type: 2}
+  onHitEffect: {fileID: 0}
   onChargeEffect: {fileID: 0}
   chargeAnimationStateName: 
   triggerAnimationStateName: 
   minRaduis: 3
   maxRadius: 3
-  damage: 2
+  damage: 6
   aoeForwardOffset: 0
   chargingMoveSpeedFactor: 0
+  chargeSFX: {fileID: 0}
   hitboxPrefab: {fileID: 3511951452291022375, guid: 36ff10f7e4fc51842848d541d712975e, type: 3}
   hitEffect: {fileID: 6931098926697571914, guid: 3d36de908b6d4fc4cbed789d229020ac, type: 3}
-  attackVFX: {fileID: 3558728256003135093, guid: 77d39f5c63731f342882305422069799, type: 3}
+  attackVFX: {fileID: 0}
+  vfxLifeTime: 0
   knockbackStrength: 50

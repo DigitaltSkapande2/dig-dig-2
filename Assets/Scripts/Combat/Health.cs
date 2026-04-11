@@ -1,5 +1,5 @@
 using DigDig2.EffectSystem;
-
+using DigDig2.Entity;
 using UnityEditor;
 
 using UnityEngine;
@@ -21,6 +21,8 @@ namespace DigDig2.Combat
 
 		[FormerlySerializedAs( "DestroyOnDeath" )] [SerializeField]
 		private bool destroyOnDeath = true;
+
+		[SerializeField] float deathWaitTime;
 
 		[Tooltip( "Effects to be played when health is below 0." )]
 		[SerializeField] private EffectPlayer deathEffectPlayer;
@@ -70,12 +72,17 @@ namespace DigDig2.Combat
 		public void Kill( )
 		{
 			healthPoints = 0;
-            
 
 			death.Invoke(gameObject);
 			deathEffectPlayer?.Play( transform.position, Quaternion.identity, Vector3.one, transform.parent );
 			if ( destroyOnDeath )
-				Destroy( gameObject );
+			{
+				if (TryGetComponent(out EntityCharacterController entityCharacterController)) entityCharacterController.enabled = false;
+				if (TryGetComponent(out Animator animator)) animator.enabled = false;
+				GetComponent<Attackable>().enabled = false;
+				Destroy( gameObject, deathWaitTime );
+			}
+
 			else
 				enabled = false;
 		}
