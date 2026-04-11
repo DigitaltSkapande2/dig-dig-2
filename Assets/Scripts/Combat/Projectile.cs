@@ -1,7 +1,8 @@
-using System;
-using DigDig2.Debugging;
+using System.Collections.Generic;
+
 using DigDig2.EffectSystem;
-using NUnit.Framework;
+using DigDig2.Util;
+
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -9,33 +10,59 @@ namespace DigDig2.Combat
 {
 	public class Projectile : MonoBehaviour
 	{
+		private const int POSITION_STEPS = 10;
+		
 		[SerializeField] AOEAttack hitAttack;
         [SerializeField] private float sphericalRadius;
 		[SerializeField] private LayerMask layerMask;
         [SerializeField] private EffectPlayer onHitEffect;
 		[SerializeField] private UnityEvent hit;
+		
         
 
 		private Attacker attacker;
 		private string hitboxID;
 		private float speed;
 
-		bool hasHit;
-        
+		private TrailRenderer[ ] trails;
+		private Rotator[ ] rotators;
 
-        private void FixedUpdate( ) 
+		bool hasHit;
+
+		private void Awake( )
+		{
+			trails = GetComponentsInChildren<TrailRenderer>( );
+			rotators = GetComponentsInChildren<Rotator>( );
+		}
+
+		private void FixedUpdate( ) 
 		{
 			if (hasHit) return;
-			if (Physics.SphereCast(transform.position, sphericalRadius, transform.forward, out RaycastHit hit, speed * Time.deltaTime, layerMask))
+			if (Physics.SphereCast(transform.position, sphericalRadius, transform.forward, out RaycastHit raycastHit, speed * Time.deltaTime, layerMask))
 			{
-				transform.position = hit.point;
-                onHitEffect?.Play(hit.point);
+				transform.position = raycastHit.point;
+                onHitEffect?.Play(raycastHit.point);
 				ProjectileHit();
 				hasHit = true;
 				return;
 			}
 
-			transform.position += speed * Time.deltaTime * transform.forward;
+			Vector3 positionStep = speed * Time.fixedDeltaTime * transform.forward / POSITION_STEPS;
+			for ( int step = 0; step < POSITION_STEPS; step++ )
+			{
+				transform.position += positionStep;
+
+				foreach ( Rotator rotator in rotators )
+				{
+					if ( !rotator.handledExternally ) continue;
+					rotator.Rotate( 1 / (float)POSITION_STEPS, Time.fixedDeltaTime );
+				}
+
+				foreach ( TrailRenderer trail in trails )
+				{
+					trail.AddPosition( trail.transform.position );
+				}
+			}
 		}
 
         public void SetInfo( Attack attack, Attacker attacker, float speed, float lifeTime )

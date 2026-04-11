@@ -19737,7 +19737,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3281802970686987915}
-  - component: {fileID: 6496288118992653190}
+  - component: {fileID: 8711677333642783174}
   m_Layer: 0
   m_Name: Rotator
   m_TagString: Untagged
@@ -19764,28 +19764,20 @@ Transform:
   - {fileID: 4943898561253873644}
   m_Father: {fileID: 7179368598113500521}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &6496288118992653190
-Animator:
-  serializedVersion: 7
+--- !u!114 &8711677333642783174
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5585216104160518290}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 661246c99c779604890f8891e03d5a19, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e60c4bec5c6595bdda3899cff8256af8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Rotator
+  handledExternally: 1
+  rotationSpeed: 1000
 --- !u!1 &6331588880591750099
 GameObject:
   m_ObjectHideFlags: 0

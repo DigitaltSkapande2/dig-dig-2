@@ -12,15 +12,14 @@
   <component name="ChangeListManager">
     <list default="true" id="50c3eb56-0f37-4789-a838-f82a855a30c4" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.dig-dig-2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.dig-dig-2/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Materials/Crystal/BrokenCrystalMaterial.mat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Materials/Crystal/BrokenCrystalMaterial.mat.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Debris/BrokenCrystal.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Debris/BrokenCrystal.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Stages/Stage 1.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Stages/Stage 1.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Stages/Stage 2.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Stages/Stage 2.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/BrokenCrystalFade.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/BrokenCrystalFade.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Util/DayCycle.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Util/DayCycle.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/UI/Headshots/MaxHeadshot.png" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/UI/Headshots/MaxHeadshot.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Textures/UI/Headshots/MiniHeadshot.png" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Textures/UI/Headshots/MiniHeadshot.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animations/Projectile.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animations/Projectile/Player2HeavyProjectileRotator.controller" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animations/Projectile/Player2HeavyProjectileRotator.controller.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Projectiles/Player2HeavyProjectile.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Player/Projectiles/Player2HeavyProjectile.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player2ProjectileRotation.anim" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player2ProjectileRotation.anim.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/VFX/Player2/MinisHeavyAttackProjectile.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/VFX/Player2/MinisHeavyAttackProjectile.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Combat/Projectile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Combat/Projectile.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -164,6 +163,7 @@
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@57d0e36f6123/InputSystem/Plugins/PlayerInput/PlayerInputManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@57d0e36f6123/InputSystem/Plugins/PlayerInput/PlayerInputManagerEditor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@57d0e36f6123/Samples~/RebindingUI/Game/GameplayManager.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.core@27dd7aff58bb/Editor/Material/AssetReimportUtils.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.test-framework.performance@0840f58e4562/Runtime/PlayerCallbacks.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.test-framework@353f8d76a670/UnityEditor.TestRunner/GUI/Controls/GenericItemContentProvider.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.timeline@bfd27f8016ff/Editor/State/PlayRange.cs" root0="SKIP_HIGHLIGHTING" />
@@ -343,7 +343,7 @@
       <workItem from="1775834131827" duration="34312000" />
       <workItem from="1775899983920" duration="44000" />
       <workItem from="1775900042118" duration="7040000" />
-      <workItem from="1775909637867" duration="1805000" />
+      <workItem from="1775909637867" duration="6527000" />
     </task>
     <servers />
   </component>
