@@ -55,7 +55,7 @@ namespace DigDig2.Game
 				GameObject miniCharacterObject = GameManager.Instance.playerMinis.characterObject;
 				position = maxCharacterObject.transform.position + ( maxCharacterObject.transform.position - miniCharacterObject.transform.position ) / 2;
 			}
-			else { position = GameManager.Instance.PlayerOne.characterObject.transform.position; }
+			else { position = GameManager.Instance.PlayerOne?.characterObject.transform.position ?? Vector3.zero; }
 
 			Vector3 localPosition = ( position - transform.position );
 			if ( Vector3.Distance( transform.position, position ) > playerTriggerDistance ) return;
