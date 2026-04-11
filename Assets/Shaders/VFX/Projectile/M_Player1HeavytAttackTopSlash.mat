@@ -70,7 +70,7 @@ Material:
     - _QueueOffset: 0
     - _Strength: 136.17
     m_Colors:
-    - _Color1: {r: 1.1891397, g: 0.62656945, b: 0, a: 1}
+    - _Color1: {r: 1.4557946, g: 1.0118513, b: 0.5136483, a: 1}
     - _Color2: {r: 2.996079, g: 2.1370213, b: 1.0797192, a: 1}
     - _GradientTiling: {r: 1, g: 1, b: 0, a: 0}
     - _NoiseSpeed: {r: -0.2, g: 0, b: 0, a: 0}
