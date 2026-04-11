@@ -26,6 +26,8 @@ namespace DigDig2.SaveSystem
 
         public void RestoreState(object dataObject)
         {
+            BetterDebug.Log($"Hello im POrdered SAvable {name}");
+            BetterDebug.Log(dataObject);
             if (dataObject == null)
             {
                 activeIndex = 0;
@@ -34,6 +36,8 @@ namespace DigDig2.SaveSystem
             {
                 activeIndex = JsonConvert.DeserializeObject<int>(dataObject.ToString());
             }
+            
+            BetterDebug.Log($"Deserialized {activeIndex}");
             
             
             for (int i = orderedPropSaveables.Length-1; i >= 0; i--)

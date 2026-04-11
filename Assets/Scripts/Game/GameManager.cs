@@ -88,11 +88,7 @@ namespace DigDig2.Game
 
             gameHudController = GetComponentInChildren<GameHudController>();
         }
-
-        void OnDestroy()
-        {
-            if (SaveManager.Instance) SaveManager.Instance.Reset();
-        }
+        
         
         #endregion
         #region StartGame

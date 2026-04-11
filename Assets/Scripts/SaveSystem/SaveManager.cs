@@ -93,6 +93,7 @@ namespace DigDig2.SaveSystem
 
 		public void WriteSaveToFile( string saveName = "" )
 		{
+            BetterDebug.Log("WRITING TO FILE ");
 			loadedGameSave.saveName = saveName == string.Empty ? loadedGameSave.saveName : saveName;
 			loadedGameSave.version = Application.version;
 			FileSystem.WriteDataToFile( GetSaveFilePathFromName( loadedGameSave.saveName ), loadedGameSave );
@@ -100,10 +101,10 @@ namespace DigDig2.SaveSystem
 		}
 
 		public void SaveAll( )
-		{
+        {
+            BetterDebug.Log("SAVE ALL");
             foreach (KeyValuePair<string, ISaveable> saveablePair in registeredSavables)
             {
-                BetterDebug.Log($"Saving key [{saveablePair}] with Savable named [{saveablePair.Value}]");
                 WriteToSaveData( saveablePair.Key, saveablePair.Value.CollectData( ) );
             }
 		}
@@ -152,6 +153,7 @@ namespace DigDig2.SaveSystem
 
         public void GarbageCollectISavables()
         {
+            BetterDebug.Log("------ GARBAGE COLLECTING registeredSavvables ------ ");
             foreach (KeyValuePair<string, ISaveable> keyValuePair in registeredSavables)
             {
                 if (keyValuePair.Value == null)
@@ -163,6 +165,7 @@ namespace DigDig2.SaveSystem
         
 		public void Reset( )
 		{
+            BetterDebug.Log("------ RESET REGISTERED SAVABLES LIST ------ ");
 			registeredSavables.Clear( );
 		}
 
