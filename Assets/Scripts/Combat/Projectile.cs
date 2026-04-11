@@ -23,12 +23,10 @@ namespace DigDig2.Combat
 		bool hasHit;
         
 
-        private void Update( ) 
+        private void FixedUpdate( ) 
 		{
 			if (hasHit) return;
-
-			RaycastHit hit;
-			if (Physics.SphereCast(transform.position, sphericalRadius, transform.forward, out hit, speed * Time.deltaTime, layerMask))
+			if (Physics.SphereCast(transform.position, sphericalRadius, transform.forward, out RaycastHit hit, speed * Time.deltaTime, layerMask))
 			{
 				transform.position = hit.point;
                 onHitEffect?.Play(hit.point);
@@ -37,7 +35,7 @@ namespace DigDig2.Combat
 				return;
 			}
 
-			transform.position += speed * Time.deltaTime * transform.forward; 
+			transform.position += speed * Time.deltaTime * transform.forward;
 		}
 
         public void SetInfo( Attack attack, Attacker attacker, float speed, float lifeTime )
