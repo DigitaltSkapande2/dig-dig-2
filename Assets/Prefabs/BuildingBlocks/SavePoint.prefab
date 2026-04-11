@@ -93,7 +93,7 @@ MonoBehaviour:
   startSequenceDone:
     m_PersistentCalls:
       m_Calls: []
-  onReachedEffect: {fileID: 0}
+  onReachedEffect: {fileID: 11400000, guid: 0c38a9c5667b4bf69b89342d27099574, type: 2}
   timeUntilReleaseCamera: 1
 --- !u!1 &6038896450173204486
 GameObject:
