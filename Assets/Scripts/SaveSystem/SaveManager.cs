@@ -101,7 +101,11 @@ namespace DigDig2.SaveSystem
 
 		public void SaveAll( )
 		{
-			foreach ( KeyValuePair<string, ISaveable> saveablePair in registeredSavables ) { WriteToSaveData( saveablePair.Key, saveablePair.Value.CollectData( ) ); }
+            foreach (KeyValuePair<string, ISaveable> saveablePair in registeredSavables)
+            {
+                BetterDebug.Log($"Saving key [{saveablePair}] with Savable named [{saveablePair.Value}]");
+                WriteToSaveData( saveablePair.Key, saveablePair.Value.CollectData( ) );
+            }
 		}
 
 		public void WriteToSaveData( string uniqueName, object data )

@@ -142,23 +142,44 @@ namespace DigDig2.UI.Controllers
             ClearGrayTint(maxContainer);
             ClearGrayTint(minisContainer);
             
-            // Setup Health callbacks
-            Health maxHealthComponent = maxCharacterObj.health;
-            maxHealthComponent.healthChanged.AddListener( (health) => UpdateHealthBar( maxHealthBarImage, health) );
-            UpdateHealthBar( maxHealthBarImage, maxHealthComponent.HealthPoints );
-            
-            Health minisHealthComponent = minisCharacterObj.health;
-            minisHealthComponent.healthChanged.AddListener( (health) => UpdateHealthBar( minisHealthBarImage, health) );
-            UpdateHealthBar( maxHealthBarImage, minisHealthComponent.HealthPoints );
-
+            SetupPlayerCharacterConnectionsMax(maxCharacterObj);
+            SetupPlayerCharacterConnectionsMini(minisCharacterObj);
 
             foreach (var player in gameManager.playerControllers)
             {
-                player.health.death.AddListener( _ =>
-                {
-                    OnPlayerDeath(player);
-                });
+                player.characterObjectSet.AddListener(OnNewCharacterObject);
             }
+        }
+        
+        private void OnNewCharacterObject(PlayerController playerController)
+        {
+            if (playerController.characterType == CharacterType.Max) SetupPlayerCharacterConnectionsMax(playerController);
+            else SetupPlayerCharacterConnectionsMini(playerController);
+            OnPlayerHealthChanged(playerController);
+        }
+
+        private void SetupPlayerCharacterConnectionsMax(PlayerController playerController)
+        {
+            Health maxHealthComponent = playerController.health;
+            maxHealthComponent.healthChanged.AddListener( (health) => UpdateHealthBar( maxHealthBarImage, health) );
+            UpdateHealthBar( maxHealthBarImage, maxHealthComponent.HealthPoints );
+            
+            playerController.health.healthChanged.AddListener( _ =>
+            {
+                OnPlayerHealthChanged(playerController);
+            });
+        }
+
+        private void SetupPlayerCharacterConnectionsMini(PlayerController playerController)
+        {
+            Health minisHealthComponent = playerController.health;
+            minisHealthComponent.healthChanged.AddListener( (health) => UpdateHealthBar( minisHealthBarImage, health) );
+            UpdateHealthBar( maxHealthBarImage, minisHealthComponent.HealthPoints );
+            
+            playerController.health.healthChanged.AddListener( _ =>
+            {
+                OnPlayerHealthChanged(playerController);
+            });
         }
 
         private void ForEachChild(VisualElement rootElement, Action<VisualElement> func)
@@ -167,6 +188,15 @@ namespace DigDig2.UI.Controllers
             foreach (var child in rootElement.Children())
             {
                 func(child);
+            }
+        }
+
+        private void OnPlayerHealthChanged(PlayerController player)
+        {
+            if (player.health.HealthPoints <= 0) OnPlayerDeath(player);
+            else
+            {
+                ClearGrayTint(player.characterType == CharacterType.Max ? maxContainer : minisContainer);
             }
         }
 

@@ -83,6 +83,7 @@ namespace DigDig2.SaveSystem
                 foreach (PlayerController player in GameManager.Instance.playerControllers)
                 {
                     if (!player.IsAlive) player.ReSpawnCharacter(singlePlayerSpawnPoint.transform.position);
+                    else player.RecoverMaxHealth();
                 }
             }
             

@@ -13,6 +13,7 @@ using DigDig2.Game;
 using DigDig2.Input;
 using DigDig2.Player;
 using DigDig2.Entity;
+using DigDig2.UI.UxmlElements;
 
 
 namespace DigDig2
@@ -45,8 +46,10 @@ namespace DigDig2
         private VisualElement playerBoundingBox;
         private VisualElement playerOneCharacterImage;
         private VisualElement playerOneReadyIcon;
+        private InputSymbol playerOneReadyInputSymbol;
         private VisualElement playerTwoCharacterImage;
         private VisualElement playerTwoReadyIcon;
+        private InputSymbol playerTwoReadyInputSymbol;
         private Button startButton;
 
         private PlayerController playerOne;
@@ -91,9 +94,13 @@ namespace DigDig2
             playerBoundingBox = realRoot.Query("BoundBox");
 
             playerOneCharacterImage = playerBoundingBox.Query("PlayerOne");
-            playerOneReadyIcon = ((VisualElement)playerOneCharacterImage.Query("checkBox")).Query("ReadyIcon");
+            VisualElement playerOneCheckBox = playerOneCharacterImage.Query("checkBox");
+            playerOneReadyInputSymbol = playerOneCheckBox.Query<InputSymbol>("readyInputSymbol");
+            playerOneReadyIcon = playerOneCheckBox.Query("readyCheckMark");
             playerTwoCharacterImage = playerBoundingBox.Query("PlayerTwo");
-            playerTwoReadyIcon = ((VisualElement)playerTwoCharacterImage.Query("checkBox")).Query("ReadyIcon");
+            VisualElement playerTwoCheckBox = playerTwoCharacterImage.Query("checkBox");
+            playerTwoReadyInputSymbol = playerTwoCheckBox.Query<InputSymbol>("readyInputSymbol");
+            playerTwoReadyIcon = playerTwoCheckBox.Query("readyCheckMark");
 
             playerOneCharacterImage.visible = false;
             playerTwoCharacterImage.visible = false;
@@ -145,13 +152,14 @@ namespace DigDig2
                 Invoke(nameof(TryStartGame), secondsReadyUntilStart);
             }
 
-            UpdateReadyIcons();
+            
             
             // Check if new InputPlayer
             if ( playerOneInputPlayerindex == -1)
             {
                 playerOneInputPlayerindex = info.inputPlayerIndex;
                 playerOneCharacterImage.visible = true;
+                playerOneReadyInputSymbol.InputPlayerIndex = playerOneInputPlayerindex;
                 BetterDebug.Log( $"Player One is '{info.inputPlayerIndex}'" );
                 playerOneNavigation = 0;
             }
@@ -159,6 +167,7 @@ namespace DigDig2
             {
                 playerTwoInputPlayerindex = info.inputPlayerIndex;
                 playerTwoCharacterImage.visible = true;
+                playerTwoReadyInputSymbol.InputPlayerIndex = playerTwoInputPlayerindex;
                 playerTwoNavigation = 0;
                 BetterDebug.Log( $"Player Two is '{info.inputPlayerIndex}'" );
                 OnBothPlayersJoined( );
@@ -169,6 +178,7 @@ namespace DigDig2
                 return;
             }
             
+            UpdateReadyIcons();
             UpdatePlayerIconPositions();
         }
 
@@ -191,9 +201,6 @@ namespace DigDig2
                 else if (info.context.duration >= secondsToHoldToDissconnect)
                 {
                     // disconnect player one TODO: (make player two player one)
-                    playerOne = null;
-                    playerOneNavigation = -1;
-                    playerOneCharacterImage.visible = false;
 
                 }
             }
@@ -207,9 +214,6 @@ namespace DigDig2
                 else
                 {
                     // disconnect player two
-                    playerTwo = null;
-                    playerTwoNavigation = -1;
-                    playerTwoCharacterImage.visible = false;
                 }
             }
             
@@ -301,10 +305,12 @@ namespace DigDig2
 
         private void UpdateReadyIcons()
         {
+            playerOneReadyInputSymbol.style.opacity = new StyleFloat(playerOneReady ? 0 : 100);
             playerOneReadyIcon.style.opacity = new StyleFloat(playerOneReady ? 100 : 0);
             playerOneReadyIcon.style.scale =
                 new StyleScale(playerOneReady ? new Vector2(1.5f, 1.5f) : new Vector2(1f, 1f));
 
+            playerTwoReadyInputSymbol.style.opacity = new StyleFloat(playerOneReady ? 0 : 100);
             playerTwoReadyIcon.style.opacity = new StyleFloat(playerTwoReady ? 100 : 0);
             playerTwoReadyIcon.style.scale =
                 new StyleScale(playerTwoReady ? new Vector2(1.5f, 1.5f) : new Vector2(1f, 1f));

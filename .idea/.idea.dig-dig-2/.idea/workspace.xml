@@ -12,14 +12,11 @@
   <component name="ChangeListManager">
     <list default="true" id="50c3eb56-0f37-4789-a838-f82a855a30c4" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.dig-dig-2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.dig-dig-2/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Characters/Max/MaxPlayerCharacterController.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Player/Characters/Max/MaxPlayerCharacterController.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Characters/Mini/MiniPlayerCharacterController.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Player/Characters/Mini/MiniPlayerCharacterController.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ScriptableObjects/EffectPlayers/Player/SingleplayerDeathEffect.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ScriptableObjects/EffectPlayers/Player/SingleplayerDeathEffect.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/EffectSystem/CumulativeEffectBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/EffectSystem/CumulativeEffectBase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/EffectSystem/EffectPlayer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/EffectSystem/EffectPlayer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/EffectSystem/Effects/GamepadRumbleEffect.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/EffectSystem/Effects/GamepadRumbleEffect.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/EffectSystem/Effects/GrayscalePulseEffect.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/EffectSystem/Effects/GrayscalePulseEffect.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Util/DayCycle.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Util/DayCycle.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/CharacterSelectSequencer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/CharacterSelectSequencer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SaveSystem/SavePoint.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SaveSystem/SavePoint.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/Controllers/GameHudController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/Controllers/GameHudController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UI/CharacterSelect/Layout.uxml" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UI/CharacterSelect/Layout.uxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -337,7 +334,7 @@
       <workItem from="1775750702904" duration="8412000" />
       <workItem from="1775759303526" duration="16931000" />
       <workItem from="1775815131040" duration="13924000" />
-      <workItem from="1775834131827" duration="24187000" />
+      <workItem from="1775834131827" duration="28869000" />
     </task>
     <servers />
   </component>

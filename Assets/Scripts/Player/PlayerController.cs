@@ -11,6 +11,7 @@ using DigDig2.Player.Interaction;
 using DigDig2.Entity;
 
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using Quaternion = UnityEngine.Quaternion;
 using Vector3 = UnityEngine.Vector3;
@@ -37,9 +38,10 @@ namespace DigDig2.Player
         // Character Switching
         [Header("Character Switching")]
         [SerializeField] private float cooldown;
+
+        public UnityEvent<PlayerController> characterObjectSet;
         
         private float lastTimeSwitched;
-
         private GameObject characterPrefab;
         
 		// Interactors
@@ -97,6 +99,8 @@ namespace DigDig2.Player
             entityController = newCharacter.GetComponent<EntityCharacterController>();
             
             health = newCharacter.GetComponent<Health>();
+            
+            characterObjectSet.Invoke(this);
         }
 
         public void SetCharacterPrefab(GameObject newcharacterPrefab)
@@ -119,6 +123,11 @@ namespace DigDig2.Player
 
             SetCharacterObject(Instantiate(characterPrefab, position, Quaternion.identity));
             SetInputPlayerIDRecursive(transform, inputPlayerIndex);
+        }
+
+        public void RecoverMaxHealth()
+        {
+            health.SetHealth(health.MaxHealthPoints);
         }
         
         #endregion
