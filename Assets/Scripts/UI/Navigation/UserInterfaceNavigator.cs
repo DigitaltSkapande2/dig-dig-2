@@ -35,9 +35,15 @@ namespace DigDig2.UI.Navigation
 			set
 			{
 				hierarchy = value;
-				NavigateTo( initialNavigationUri, true );
-			}
+                StartCoroutine(DelayedNavigateTo(initialNavigationUri, true));
+            }
 		}
+
+        private IEnumerator DelayedNavigateTo(string navigationUri, bool forceRefresh)
+        {
+            yield return new WaitForSecondsRealtime(0.1f);
+            NavigateTo( initialNavigationUri, true );
+        }
 
 		public void NavigateTo( string uri, bool forceRefresh = false )
 		{
@@ -172,7 +178,7 @@ namespace DigDig2.UI.Navigation
 		private IEnumerator HideDisplay( NavigationNode node )
 		{
 			yield return new WaitForSecondsRealtime( node.closeDuration );
-
+            
 			if ( node.element != null && node.element.ClassListContains( closedElementClass ) ) node.element.style.display = DisplayStyle.None;
 		}
 	}

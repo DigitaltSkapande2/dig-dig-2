@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 
 using DigDig2.Game;
+using DigDig2.Input;
 using DigDig2.SaveSystem;
 using DigDig2.UI.Events;
 using DigDig2.UI.Navigation;
@@ -17,7 +18,8 @@ namespace DigDig2.UI.Controllers
 {
 	[RequireComponent( typeof( UIDocument ), typeof( UserInterfaceNavigator ) )]
 	public class MainMenuController : MonoBehaviour
-	{
+    {
+        [SerializeField] private InputContext mainMenuInputContext;
         [SerializeField] private int cutsceneSceneBuildIndex = 1;
 		[SerializeField] private int gameSceneBuildIndex = 2;
 
@@ -66,6 +68,7 @@ namespace DigDig2.UI.Controllers
 		private void Start( )
 		{
 			saveFiles = SaveManager.Instance.GetSaveFiles( );
+            InputManager.Instance.CurrentInputContext = mainMenuInputContext;
 
 			uiDocument.rootVisualElement.RegisterCallback<ClickEvent>( ButtonClick, TrickleDown.TrickleDown );
 			uiDocument.rootVisualElement.RegisterCallback<NavigationSubmitEvent>( ButtonClick, TrickleDown.TrickleDown );
@@ -179,7 +182,9 @@ namespace DigDig2.UI.Controllers
 					}
 				}
 			);
-
+            
+            
+            
 			navigator.Hierarchy = new(
 				"mainNavigation",
 				mainNavigationContainer,

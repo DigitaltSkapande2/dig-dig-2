@@ -1,0 +1,202 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 078f6059bad84650ac4c8bcaa0efc638, type: 3}
+  m_Name: CampfireLightEffect
+  m_EditorClassIdentifier: Assembly-CSharp::DigDig2.EffectSystem.EffectPlayer
+  spawnPrefab: 0
+  spawnPrefabEffectData:
+    prefabToSpawn: []
+  playSound: 1
+  audioClipsToPlay:
+  - audioClip: {fileID: 8300000, guid: 3b15577db594304e9bf4ad0632582f00, type: 3}
+    volume: 1
+    pitchRange: {x: 0.85, y: 1.15}
+  screenShake: 0
+  screenShakeEffectData:
+    intensityCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 6.7290096
+        outSlope: 6.7290096
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.06964286
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    duration: 1.4
+    intensity: 0.3
+  cameraZoom: 0
+  cameraZoomEffectData:
+    intensityCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    duration: 0.4
+    intensity: 1
+  timeSlow: 0
+  timeSlowEffectData:
+    intensityCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    duration: 0.4
+    intensity: 1
+  vignettePulse: 0
+  vignettePulseEffectData:
+    intensityCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    duration: 0.4
+    intensity: 1
+    color: {r: 0, g: 0, b: 0, a: 0}
+  gamepadRumble: 0
+  gamepadRumbleEffectData:
+    intensityCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    duration: 0.4
+    intensity: 1
+    inputPlayerId: 0
+    highFrequencyIntensity: 0
+  greyscale: 1
+  greyscaleEffectData:
+    intensityCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: -0.01426025
+        outSlope: -0.01426025
+        tangentMode: 0
+        weightedMode: 3
+        inWeight: 0
+        outWeight: 0.5978261
+      - serializedVersion: 3
+        time: 0.28892943
+        value: 1.0019608
+        inSlope: -0.01032055
+        outSlope: -0.01032055
+        tangentMode: 0
+        weightedMode: 3
+        inWeight: 0.5223214
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 3
+        inWeight: 0.5449907
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    duration: 2
+    intensity: -30
