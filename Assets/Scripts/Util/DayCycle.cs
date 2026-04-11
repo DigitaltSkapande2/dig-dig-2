@@ -15,6 +15,7 @@ namespace DigDig2
         ShadowsMidtonesHighlights smh;
         [SerializeField] private string saveKey = "day_cycle_elapsed";
         [SerializeField] float dayDurationInMinutes;
+        [SerializeField] private float cycleStartOffset = 0.5f;
         [FormerlySerializedAs("nightValue")] [SerializeField] Vector4 nightMidtones;
         [SerializeField] private Light sceneDirectionalLight;
         [SerializeField] private float nightDirectionalLightIntensity;
@@ -37,6 +38,7 @@ namespace DigDig2
 
         private void Start()
         {
+            timeElapsed = (dayDurationInMinutes * 60) * cycleStartOffset;
             SaveManager.Instance.RegisterSavable(saveKey, this);
         }
 
