@@ -8,7 +8,9 @@ using DigDig2.Util;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.DualShock;
 using UnityEngine.InputSystem.Utilities;
+using UnityEngine.InputSystem.XInput;
 
 namespace DigDig2.Input
 {
@@ -46,7 +48,7 @@ namespace DigDig2.Input
 		[SerializeField] [OnChangedCall( "RefreshInputModuleRegistrations" )]
 		private InputContext currentInputContext;
 
-		[SerializeField] private float inputSymbolCycleDuration = 1f;
+		[SerializeField] private float inputSymbolCycleDuration = 2f;
 
 		private readonly List<InputModule> activeInputModules = new( );
 		private readonly Dictionary<InputPlayer, Dictionary<string, List<InputModule>>> prioritizedInputModules = new( );
@@ -155,14 +157,11 @@ namespace DigDig2.Input
 
 		public string GetInputDeviceSymbolCategory( InputDevice inputDevice )
 		{
-			switch ( inputDevice.displayName )
-			{
-				case "Keyboard":
-				case "Mouse": return "Keyboard&Mouse";
-				case "PS4 Controller":
-				case "PS5 Controller": return "Playstation";
-				default: return "Xbox";
-			}
+			if ( inputDevice is Keyboard || inputDevice is Mouse ) return "Keyboard&Mouse";
+			if ( inputDevice is XInputController ) return "Xbox";
+			if ( inputDevice is DualShockGamepad ) return "Playstation";
+
+			return "Keyboard&Mouse";
 		}
 
 		private void RefreshValidActionMapNames( )
