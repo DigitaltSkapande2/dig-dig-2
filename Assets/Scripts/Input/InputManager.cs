@@ -8,9 +8,6 @@ using DigDig2.Util;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.DualShock;
-using UnityEngine.InputSystem.Utilities;
-using UnityEngine.InputSystem.XInput;
 
 namespace DigDig2.Input
 {
@@ -157,11 +154,25 @@ namespace DigDig2.Input
 
 		public string GetInputDeviceSymbolCategory( InputDevice inputDevice )
 		{
-			if ( inputDevice is Keyboard || inputDevice is Mouse ) return "Keyboard&Mouse";
-			if ( inputDevice is XInputController ) return "Xbox";
-			if ( inputDevice is DualShockGamepad ) return "Playstation";
+			BetterDebug.Log( inputDevice.description.manufacturer );
+			string deviceClass = inputDevice.description.deviceClass;
+			string productName = inputDevice.description.product;
+			switch ( deviceClass )
+			{
+				case "Keyboard" or "Mouse": return "Keyboard&Mouse";
+				case "Gamepad":
+					switch ( productName )
+					{
+						case "PS4 Controller": 
+						case "PS5 Controller": return "Playstation";
+					}
 
-			return "Keyboard&Mouse";
+					BetterDebug.Log( $"Could not determine device category, defaulting to Xbox. Device Class: {deviceClass}, Product: {productName}.", LogSeverity.Warning );
+					return "Xbox";
+				default:
+					BetterDebug.Log( $"Could not determine device category, defaulting to Keyboard&Mouse. Device Class: {deviceClass}, Product: {productName}.", LogSeverity.Warning );
+					return "Keyboard&Mouse";
+			}
 		}
 
 		private void RefreshValidActionMapNames( )

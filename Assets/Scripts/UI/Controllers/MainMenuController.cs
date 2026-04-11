@@ -25,39 +25,38 @@ namespace DigDig2.UI.Controllers
 
 		[SerializeField] private GameObject buttonHoverEffectPrefab;
 		[SerializeField] private GameObject buttonClickEffectPrefab;
-		private Button continueButton;
-
-		private HostingModeSelectionType hostingModeSelectionType = HostingModeSelectionType.None;
-		private VisualElement hostingSelectionAnimationContainer;
-		private Button joinGameButton;
-		private int loadedSaveFileIndex = -1;
-		private Button loadGameButton;
-
+		
 		private VisualElement mainNavigationContainer;
-		private Button multiplayerModeButton;
-		private UserInterfaceNavigator navigator;
+		private Button continueButton;
 		private Button newGameButton;
+		private Button loadGameButton;
+		private Button settingsButton;
 		private Button quitButton;
-		private Button saveDeleteButton;
+
+		private VisualElement saveMenu;
 		private SubmittableListView saveFileList;
-		private List<string> saveFiles;
-		private Button saveLoadButton;
 
 		private VisualElement saveManagement;
 		private Label saveManagementSaveName;
-
-		private VisualElement saveMenu;
+		private Button saveLoadButton;
 		private Button saveRenameButton;
-
-		private VisualElement screenCover;
-		private int selectedSaveFileIndex = -1;
-
-		private Button settingsButton;
+		private Button saveDeleteButton;
 
 		private VisualElement settingsMenu;
 		private Button singleplayerModeButton;
 
+		private VisualElement screenCover;
+		private VisualElement hostingSelectionAnimationContainer;
+		private Button multiplayerModeButton;
+		
+		private HostingModeSelectionType hostingModeSelectionType = HostingModeSelectionType.None;
+
+		private List<string> saveFiles;
+		private int loadedSaveFileIndex = -1;
+		private int selectedSaveFileIndex = -1;
+
 		private UIDocument uiDocument;
+		private UserInterfaceNavigator navigator;
 
 		private void Awake( )
 		{

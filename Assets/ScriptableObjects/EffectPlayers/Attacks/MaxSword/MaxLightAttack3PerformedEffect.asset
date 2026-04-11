@@ -18,7 +18,7 @@ MonoBehaviour:
   playSound: 1
   audioClipsToPlay:
   - audioClip: {fileID: 8300000, guid: 43f50c5d6127c2264b6004bababdaa96, type: 3}
-    volume: 1
+    volume: 0.5
     pitchRange: {x: 0, y: 0}
   screenShake: 0
   screenShakeEffectData:
