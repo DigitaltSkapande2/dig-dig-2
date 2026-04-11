@@ -128,10 +128,8 @@ namespace DigDig2.UI.UxmlElements
 				List<string> inputBindingControlSchemes = inputBinding.groups.Split( ";" ).ToList( );
 				bool hasMatchingControlScheme = false;
 				InputControlScheme matchingInputControlScheme;
-				BetterDebug.Log( inputBinding.groups );
 				foreach ( InputControlScheme inputControlScheme in inputPlayerControlSchemes )
 				{
-					BetterDebug.Log( $"{inputControlScheme.name}, {inputBindingControlSchemes.Contains( inputControlScheme.name )}" );
 					if ( !inputBindingControlSchemes.Contains( inputControlScheme.name ) ) continue;
 					hasMatchingControlScheme = true;
 					matchingInputControlScheme = inputControlScheme;

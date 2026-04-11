@@ -60,7 +60,7 @@ namespace DigDig2
         {
             if (dataObject != null)
             {
-                timeElapsed = JsonConvert.DeserializeObject<int>(dataObject.ToString());
+                timeElapsed = JsonConvert.DeserializeObject<float>(dataObject.ToString());
             }
         }
     }
