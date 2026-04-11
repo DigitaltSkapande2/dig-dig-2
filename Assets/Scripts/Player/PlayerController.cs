@@ -27,6 +27,7 @@ namespace DigDig2.Player
         public bool IsAlive => health?.IsAlive ?? false;
         [SerializeField] private EffectPlayer switchToMaxEffect;
         [SerializeField] private EffectPlayer switchToMinisEffect;
+        [SerializeField] private EffectPlayer playerHealEffect;
         [SerializeField] private float effectOffsetFromGround;
         
         // Character
@@ -122,12 +123,15 @@ namespace DigDig2.Player
             }
 
             SetCharacterObject(Instantiate(characterPrefab, position, Quaternion.identity));
+            playerCharacterController.shouldStartDissolved = true;
             SetInputPlayerIDRecursive(transform, inputPlayerIndex);
+            RecoverMaxHealth();
         }
 
         public void RecoverMaxHealth()
         {
             health.SetHealth(health.MaxHealthPoints);
+            playerHealEffect?.Play(characterObject.transform.position);
         }
         
         #endregion

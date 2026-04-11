@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 
 using DigDig2.Combat.Attacks;
-
+using DigDig2.EffectSystem;
 using UnityEngine;
 
 namespace DigDig2.Combat
@@ -10,6 +10,7 @@ namespace DigDig2.Combat
 	public class BindableAttackHitbox : MonoBehaviour
 	{
 		[SerializeField] private AttackHitboxShape shape = AttackHitboxShape.Box;
+        [SerializeField] private EffectPlayer onHitEffect;
 		[SerializeField] private Vector3 boxSize = Vector3.one;
 		[SerializeField] private float sphereRadius = 1.0f;
 		[SerializeField] private float unitsPerIntermediateCheck = 0.001f;

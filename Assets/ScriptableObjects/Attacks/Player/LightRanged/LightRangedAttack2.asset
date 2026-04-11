@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.RangedAttack
   attackDuration: 0.75
   onPerformEffect: {fileID: 11400000, guid: ab8164b4e2f232795a2c2767097d4386, type: 2}
+  onHitEffect: {fileID: 11400000, guid: 3c84497bb1bdfb610a1dbb61c9d0ed83, type: 2}
   onChargeEffect: {fileID: 0}
   chargeAnimationStateName: 
   triggerAnimationStateName: LightAttack2
@@ -21,6 +22,7 @@ MonoBehaviour:
   chargingMoveSpeedFactor: 0
   projectilePrefab: {fileID: 2449068539807903354, guid: b1163a9b5989b774a9d786deee2d82f8, type: 3}
   chargeVFX: {fileID: 0}
+  chargeSFX: {fileID: 0}
   projectileSpeed: 45
   projectileLifetime: 1
   projectileSpawnYOffset: -0.4

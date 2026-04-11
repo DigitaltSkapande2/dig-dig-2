@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: HeavyRangedAttack1
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.RangedAttack
   attackDuration: 1.8
-  onPerformEffect: {fileID: 11400000, guid: 26792db5970914f8caa4fcd2fef39cc8, type: 2}
+  onPerformEffect: {fileID: 0}
+  onHitEffect: {fileID: 11400000, guid: 26792db5970914f8caa4fcd2fef39cc8, type: 2}
   onChargeEffect: {fileID: 11400000, guid: 6bbec0bb7b675033c82c4a31c23c5e1e, type: 2}
   chargeAnimationStateName: Charge
   triggerAnimationStateName: Trigger
@@ -21,6 +22,7 @@ MonoBehaviour:
   chargingMoveSpeedFactor: 0
   projectilePrefab: {fileID: 2449068539807903354, guid: b706ac510b9907d428fd73fa63f09412, type: 3}
   chargeVFX: {fileID: 99340023945321762, guid: 30b355740bdb69f4897387d9e28b296d, type: 3}
+  chargeSFX: {fileID: 8300000, guid: 31530f86a0f448a61a5882c1fff0e06c, type: 3}
   projectileSpeed: 45
   projectileLifetime: 2
   projectileSpawnYOffset: 0

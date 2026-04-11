@@ -1,0 +1,11 @@
+VisualElement {
+}
+
+.minis-indicator {
+    -unity-background-image-tint-color: rgb(76, 214, 255);
+    scale: 0.9 0.9;
+}
+
+.max-indicator {
+    -unity-background-image-tint-color: rgb(233, 156, 52);
+}

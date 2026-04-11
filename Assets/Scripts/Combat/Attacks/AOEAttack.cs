@@ -14,6 +14,7 @@ namespace DigDig2.Combat
 		[SerializeField] private int damage = 1;
         [SerializeField] private float aoeForwardOffset;
 		[SerializeField] private float chargingMoveSpeedFactor;
+        [SerializeField] private AudioClip chargeSFX;
         [SerializeField] private GameObject hitboxPrefab;
 		[SerializeField] private GameObject hitEffect;
 		[SerializeField] private GameObject attackVFX;
@@ -22,12 +23,19 @@ namespace DigDig2.Combat
 
 		private float lastChargeTime;
 		private string independentID;
+        
+        private AudioSource chargeAudioSourceInstance;
 
 		public override void ChargeStart( Attacker attacker, AttackType attackType )
 		{
 			attacker.PlayAnimation( chargeAnimationStateName );
 			attacker.AddMoveSpeedDebuff( chargeAnimationStateName, attacker.GetBaseMoveSpeed( ) * (1-chargingMoveSpeedFactor) );
             onChargeEffect?.Play();
+            
+            chargeAudioSourceInstance = new GameObject().AddComponent<AudioSource>();
+            chargeAudioSourceInstance.loop = false;
+            chargeAudioSourceInstance.clip = chargeSFX;
+            chargeAudioSourceInstance.Play();
 		}
 
 		public override void Charge( Attacker attacker, AttackType attackType, float chargeTime )
@@ -37,11 +45,13 @@ namespace DigDig2.Combat
 
 		public override void ChargeFull( Attacker attacker, AttackType attackType )
 		{
-
+            
 		}
 
 		public override void Trigger( Attacker attacker, AttackType attackGroup, float chargeTime )
-		{
+        {
+            if (chargeAudioSourceInstance) Destroy(chargeAudioSourceInstance);
+            onPerformEffect?.Play();
 			lastChargeTime = chargeTime;
 			attacker.PlayAnimation( triggerAnimationStateName );
 			attacker.PushInDirection( Vector3.forward, 5 );
@@ -53,8 +63,7 @@ namespace DigDig2.Combat
         public override void AnimationEvent(Attacker attacker, AttackType attackGroup, string animEventName)
         {
 			if (animEventName != "TriggerAOE") return;
-			
-			onPerformEffect?.Play();
+            
 			Vector3 forwardVector = attacker.GetComponent<EntityCharacterController>().GetForwardVector();
             Vector3 centerOffset = forwardVector * aoeForwardOffset;
 			Quaternion rotation = Quaternion.LookRotation(forwardVector, attacker.transform.up);
@@ -76,12 +85,14 @@ namespace DigDig2.Combat
 
 		public override void Ended( Attacker attacker, AttackType attackGroup )
 		{
+            if (chargeAudioSourceInstance) Destroy(chargeAudioSourceInstance.gameObject);
 			attacker.EndHitboxAttack( triggerAnimationStateName );
 			attacker.RemoveMoveSpeedDebuff(chargeAnimationStateName);
 		}
 
 		public override void Hit( Attacker attacker, Attackable attackable, Health healthComponent, EntityCharacterController entityCharacterController )
 		{
+            onHitEffect?.Play();
 			if ( hitEffect ) Instantiate( hitEffect, attackable.transform.position, Quaternion.identity );
 			if ( healthComponent ) healthComponent.Damage( damage );
 			attackable.ApplyKnockback( ( attackable.transform.position - attacker.transform.position ).normalized, knockbackStrength );

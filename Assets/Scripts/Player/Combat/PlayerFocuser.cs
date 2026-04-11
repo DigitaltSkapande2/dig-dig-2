@@ -10,6 +10,8 @@ using DigDig2.Combat;
 using DigDig2.CinemaCamera;
 using DigDig2.Debugging;
 using DigDig2.Entity;
+using DigDig2.Game;
+using DigDig2.SaveSystem;
 using UnityEngine.UIElements;
 
 namespace DigDig2.Player.Combat
@@ -66,9 +68,15 @@ namespace DigDig2.Player.Combat
 
             singlePlayerFocusIndicator = uiDocument.rootVisualElement.Query("focusTargetIndicator");
             singlePlayerFocusTargetIndicatorImage = singlePlayerFocusIndicator.Query("image");
+            if (SaveManager.Instance.isMultiplayer)
+            {
+                if (targetPlayer.characterType == CharacterType.Max) singlePlayerFocusTargetIndicatorImage.AddToClassList(".max-indicator");
+                else singlePlayerFocusTargetIndicatorImage.AddToClassList(".minis-indicator");
+            }
 
             cameraEffector = gameObject.AddComponent<PartialCameraEffector>();
         }
+        
 
         private async UniTask ScanLoop(CancellationToken ct)
         {

@@ -15,7 +15,7 @@ MonoBehaviour:
   spawnPrefab: 0
   spawnPrefabEffectData:
     prefabToSpawn: []
-  playSound: 1
+  playSound: 0
   audioClipsToPlay:
   - audioClip: {fileID: 8300000, guid: bf3a3ac601da285ec9acc7adcd8ec9ee, type: 3}
     volume: 1
