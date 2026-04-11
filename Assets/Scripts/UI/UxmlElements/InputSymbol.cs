@@ -105,7 +105,7 @@ namespace DigDig2.UI.UxmlElements
 
 			if ( inputActionMap == null || inputAction == null )
 			{
-				BetterDebug.Log( $"Could not find input action from path \"{actionPath}\".", LogSeverity.Error );
+				if ( actionPath != "" ) BetterDebug.Log( $"Could not find input action from path \"{actionPath}\".", LogSeverity.Error );
 				return;
 			};
 			
