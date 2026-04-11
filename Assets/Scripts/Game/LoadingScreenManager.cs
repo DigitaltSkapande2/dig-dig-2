@@ -40,6 +40,7 @@ namespace DigDig2.Game
 		{
 			await PlayFadeIn( );
             await SceneManager.LoadSceneAsync( sceneBuildIndex, LoadSceneMode.Single );
+			await UniTask.WaitForSeconds(5, true);
 			await PlayFadeOut( );
 		}
 

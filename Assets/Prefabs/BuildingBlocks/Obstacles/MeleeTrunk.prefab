@@ -67,6 +67,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Combat.Health
   maxHealthPoints: 1
   healthPoints: 1
+  damageThreshold: 3
   destroyOnDeath: 1
   deathEffectPlayer: {fileID: 11400000, guid: 7b085fd1ea0d54649bef4370e59b2e65, type: 2}
   death:

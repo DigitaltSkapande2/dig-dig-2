@@ -17,6 +17,8 @@ namespace DigDig2.Combat
 		[Tooltip( "The entity's current health." )]
 		[SerializeField] private int healthPoints = 1;
 
+		[SerializeField] private int damageThreshold = 1;
+
 		[FormerlySerializedAs( "DestroyOnDeath" )] [SerializeField]
 		private bool destroyOnDeath = true;
 
@@ -46,6 +48,7 @@ namespace DigDig2.Combat
 		public void Damage( int damage )
 		{
 			if ( !enabled ) return;
+			if ( damage < damageThreshold) return;
 
 			SetHealth( healthPoints - damage );
 		}

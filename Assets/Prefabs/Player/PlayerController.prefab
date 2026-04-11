@@ -52,6 +52,7 @@ MonoBehaviour:
   - enemy
   - crystal
   - button
+  - melee only
   - environment
   focusScanRadius: 11
   yDifferenceTolerance: 2

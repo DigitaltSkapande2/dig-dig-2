@@ -23,3 +23,8 @@ MonoBehaviour:
   chargeVFX: {fileID: 99340023945321762, guid: 30b355740bdb69f4897387d9e28b296d, type: 3}
   projectileSpeed: 45
   projectileLifetime: 2
+  projectileSpawnYOffset: 0
+  ProjectileSpawnAheadDistance: 1
+  badLayerMasks:
+    serializedVersion: 2
+    m_Bits: 3265
