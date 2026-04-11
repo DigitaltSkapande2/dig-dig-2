@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 using DigDig2.Debugging;
 using DigDig2.Input;
@@ -40,12 +41,12 @@ namespace DigDig2.UI.UxmlElements
 			descriptorLabel.style.display = new( displayDescriptorLabel ? DisplayStyle.Flex : DisplayStyle.None );
 
 			UpdateAction( );
-			UpdateInputPlayerIndex( );
 			UpdateSymbol( );
 
 			if ( InputManager.Instance )
 			{
 				InputManager.Instance.inputSymbolCycled.AddListener( DisplaySymbol );
+				InputManager.Instance.devicesChanged.AddListener( UpdateSymbol );
 			}
 		}
 
@@ -98,11 +99,6 @@ namespace DigDig2.UI.UxmlElements
 			if ( inputAction == null ) return;
 		}
 
-		private void UpdateInputPlayerIndex( )
-		{
-			UpdateSymbol( );
-		}
-
 		private void UpdateSymbol( )
 		{
 			if ( !InputManager.Instance ) return;
@@ -125,20 +121,40 @@ namespace DigDig2.UI.UxmlElements
 			if ( !inputSymbolDictionary ) return new( );
 
 			List<Sprite> sprites = new( );
+			List<InputControlScheme> inputPlayerControlSchemes = InputManager.Instance.GetInputPlayersControlSchemes( inputPlayerIndex );
 			List<InputDevice> inputPlayerDevices = InputManager.Instance.GetInputPlayersDevices( inputPlayerIndex );
-			foreach ( InputControl inputControl in inputAction.controls )
+			foreach ( InputBinding inputBinding in inputAction.bindings )
 			{
-				if ( !inputPlayerDevices.Contains( inputControl.device ) ) continue;
-
-				string inputSymbolCategory = InputManager.Instance.GetInputDeviceSymbolCategory( inputControl.device );
-				string inputSymbolPath = $"{inputSymbolCategory}/{inputControl.displayName}";
-				if ( inputSymbolDictionary.dictionary.TryGetValue( inputSymbolPath, out Sprite sprite ) )
+				List<string> inputBindingControlSchemes = inputBinding.groups.Split( ";" ).ToList( );
+				bool hasMatchingControlScheme = false;
+				InputControlScheme matchingInputControlScheme;
+				BetterDebug.Log( inputBinding.groups );
+				foreach ( InputControlScheme inputControlScheme in inputPlayerControlSchemes )
 				{
-					sprites.Add( sprite );
+					BetterDebug.Log( $"{inputControlScheme.name}, {inputBindingControlSchemes.Contains( inputControlScheme.name )}" );
+					if ( !inputBindingControlSchemes.Contains( inputControlScheme.name ) ) continue;
+					hasMatchingControlScheme = true;
+					matchingInputControlScheme = inputControlScheme;
+					break;
 				}
-				else
+				if ( !hasMatchingControlScheme ) continue;
+
+				List<string> addedSymbols = new( );
+				InputControlScheme.MatchResult matchResult = matchingInputControlScheme.PickDevicesFrom( inputPlayerDevices );
+				foreach ( InputDevice inputDevice in matchResult.devices )
 				{
-					BetterDebug.Log( $"Could not find input symbol sprite for \"{inputSymbolPath}\"", LogSeverity.Warning );
+					string inputSymbolCategory = InputManager.Instance.GetInputDeviceSymbolCategory( inputDevice );
+					string inputSymbolPath = $"{inputSymbolCategory}/{inputBinding.effectivePath}";
+					if (addedSymbols.Contains( inputSymbolPath )) continue;
+					if ( inputSymbolDictionary.dictionary.TryGetValue( inputSymbolPath, out Sprite sprite ) )
+					{
+						addedSymbols.Add( inputSymbolPath );
+						sprites.Add( sprite );
+					}
+					else
+					{
+						BetterDebug.Log( $"Could not find input symbol sprite for \"{inputSymbolPath}\"", LogSeverity.Warning );
+					}
 				}
 			}
 
@@ -162,7 +178,6 @@ namespace DigDig2.UI.UxmlElements
 			set
 			{
 				inputPlayerIndex = value;
-				UpdateInputPlayerIndex( );
 				UpdateSymbol( );
 			}
 		}

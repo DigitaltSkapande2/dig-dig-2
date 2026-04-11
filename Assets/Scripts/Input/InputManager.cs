@@ -38,6 +38,7 @@ namespace DigDig2.Input
 		}
 
 		public UnityEvent<int> inputSymbolCycled;
+		public UnityEvent devicesChanged;
 		
 		[Header( "Input Manager" )]
 		[SerializeField] private InputPlayerManager inputPlayerManager;
@@ -106,20 +107,60 @@ namespace DigDig2.Input
 			CleanupInputMonitoring( );
 		}
 
-        public List<InputDevice> GetInputPlayersDevices(int index)
+        public List<InputDevice> GetInputPlayersDevices( int index )
         {
-            if ( index == -1 ) return InputSystem.devices.ToList();
+            if ( index == -1 ) return InputSystem.devices.ToList( );
 			if ( index >= inputPlayers.Count ) return new( );
-            return inputPlayers[index].connectedDevices;
+            return inputPlayers[ index ].connectedDevices;
         }
+
+		public Tuple<bool, InputControlScheme> GetInputPlayerControlScheme( InputPlayer inputPlayer )
+		{
+			foreach ( InputControlScheme controlScheme in InputSystem.actions.controlSchemes )
+			{
+				InputControlScheme.MatchResult matchResult = controlScheme.PickDevicesFrom( inputPlayer.connectedDevices );
+				if ( !matchResult.hasMissingRequiredDevices ) continue;
+
+				return new(true, controlScheme);
+			}
+
+			return new(false, new());
+		}
+
+		public Tuple<bool, InputControlScheme> GetInputPlayerControlScheme( int index )
+		{
+			return GetInputPlayerControlScheme( inputPlayers[ index ] );
+		}
+
+		public List<InputControlScheme> GetInputPlayersControlSchemes( int index )
+		{
+			List<InputControlScheme> matchingControlSchemes = new( );
+			if ( index == -1 )
+			{
+				foreach ( InputPlayer inputPlayer in inputPlayers )
+				{
+					(bool success, InputControlScheme controlScheme) = GetInputPlayerControlScheme( inputPlayer );
+					if (success) matchingControlSchemes.Add( controlScheme );
+				}
+			}
+			else if ( index >= inputPlayers.Count ) return new( );
+			else
+			{
+				(bool success, InputControlScheme controlScheme) = GetInputPlayerControlScheme( index );
+				if (success) matchingControlSchemes.Add( controlScheme );
+			}
+
+			return matchingControlSchemes;
+		}
 
 		public string GetInputDeviceSymbolCategory( InputDevice inputDevice )
 		{
 			switch ( inputDevice.displayName )
 			{
-				case "Keyboard": return "Keyboard";
-				case "Mouse": return "Mouse";
-				case "PS4 Controller": return "Playstation";
+				case "Keyboard":
+				case "Mouse": return "Keyboard&Mouse";
+				case "PS4 Controller":
+				case "PS5 Controller": return "Playstation";
 				default: return "Xbox";
 			}
 		}
@@ -199,6 +240,7 @@ namespace DigDig2.Input
                 }
                 BetterDebug.Log( $"Devices changed, {activeInputPlayers} InputPlayer(s) active. {change}" );
 				RefreshInputModulePrioritizationLists( );
+				devicesChanged.Invoke( );
 			}
 		}
 

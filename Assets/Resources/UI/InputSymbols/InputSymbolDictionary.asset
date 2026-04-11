@@ -14,27 +14,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.UI.InputSymbolDictionary
   dictionary:
     m_keys:
-    - Keyboard/W
-    - Keyboard/A
-    - Keyboard/S
-    - Keyboard/D
-    - Playstation/Left Stick
-    - Xbox/Left Stick
-    - Mouse/Left Button
-    - Playstation/Button West
-    - Xbox/Button West
-    - Mouse/Right Button
-    - Playstation/Button East
-    - Xbox/Button East
-    - Keyboard/Shift
-    - Playstation/Button North
-    - Xbox/Button North
-    - 'Keyboard/ '
-    - Playstation/Button South
-    - Xbox/Button South
-    - Playstation/Left Trigger
-    - Xbox/Left Trigger
-    - "Keyboard/\t"
+    - Keyboard&Mouse/<Keyboard>/w
+    - Keyboard&Mouse/<Keyboard>/a
+    - Keyboard&Mouse/<Keyboard>/s
+    - Keyboard&Mouse/<Keyboard>/d
+    - Playstation/<Gamepad>/leftStick
+    - Xbox/<Gamepad>/leftStick
+    - Keyboard&Mouse/<Mouse>/leftButton
+    - Playstation/<Gamepad>/buttonWest
+    - Xbox/<Gamepad>/buttonWest
+    - Keyboard&Mouse/<Mouse>/rightButton
+    - Playstation/<Gamepad>/buttonEast
+    - Xbox/<Gamepad>/buttonEast
+    - Keyboard&Mouse/<Keyboard>/shift
+    - Playstation/<Gamepad>/buttonNorth
+    - Xbox/<Gamepad>/buttonNorth
+    - Keyboard&Mouse/<Keyboard>/space
+    - Playstation/<Gamepad>/buttonSouth
+    - Xbox/<Gamepad>/buttonSouth
+    - Playstation/<Gamepad>/leftTrigger
+    - Xbox/<Gamepad>/leftTrigger
+    - Keyboard&Mouse/<Keyboard>/tab
     m_values:
     - {fileID: 23553631, guid: e0a59c2ce73d9ef0eb936189cdcce3bc, type: 3}
     - {fileID: -698434308, guid: e0a59c2ce73d9ef0eb936189cdcce3bc, type: 3}
