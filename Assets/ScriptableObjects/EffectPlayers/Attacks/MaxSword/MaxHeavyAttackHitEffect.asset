@@ -20,6 +20,9 @@ MonoBehaviour:
   - audioClip: {fileID: 8300000, guid: 750c80626fd5b7835b9e48c5f1367a1d, type: 3}
     volume: 1
     pitchRange: {x: 0, y: 0}
+  - audioClip: {fileID: 8300000, guid: 087889cff04623f039e9046df5646f26, type: 3}
+    volume: 1
+    pitchRange: {x: 0, y: 0}
   screenShake: 1
   screenShakeEffectData:
     intensityCurve:

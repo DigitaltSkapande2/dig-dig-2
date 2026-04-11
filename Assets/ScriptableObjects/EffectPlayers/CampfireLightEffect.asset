@@ -104,35 +104,44 @@ MonoBehaviour:
       m_RotationOrder: 4
     duration: 0.4
     intensity: 1
-  vignettePulse: 0
+  vignettePulse: 1
   vignettePulseEffectData:
     intensityCurve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
+        time: -0.0000017797574
+        value: 0
+        inSlope: -0
+        outSlope: -0
         tangentMode: 0
-        weightedMode: 0
+        weightedMode: 3
         inWeight: 0
-        outWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.1
+        value: 1
+        inSlope: -0.008050175
+        outSlope: -0.008050175
+        tangentMode: 0
+        weightedMode: 3
+        inWeight: 0.33333334
+        outWeight: 0.33333334
       - serializedVersion: 3
         time: 1
         value: 0
-        inSlope: 0
-        outSlope: 0
+        inSlope: -0.0040480145
+        outSlope: -0.0040480145
         tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
+        weightedMode: 3
+        inWeight: 0.6944445
         outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    duration: 0.4
-    intensity: 1
-    color: {r: 0, g: 0, b: 0, a: 0}
+    duration: 3
+    intensity: 0.3
+    color: {r: 0.60244817, g: 0.9150943, b: 0.45323068, a: 0}
   gamepadRumble: 0
   gamepadRumbleEffectData:
     intensityCurve:
@@ -199,4 +208,4 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     duration: 2
-    intensity: -30
+    intensity: -20
