@@ -102,8 +102,7 @@ namespace DigDig2.EffectSystem
 
 			if ( greyscale )
 			{
-				TimeSlowEffect fx = effectCore.timeSlowEffect;
-				if ( fx ) fx.PlayEffectInstance( greyscaleEffectData );
+                effectCore.greyscalePulseEffect.PlayEffectInstance(greyscaleEffectData);
 			}
 		}
 	}

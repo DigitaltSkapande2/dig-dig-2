@@ -38,8 +38,8 @@ namespace DigDig2.EffectSystem
 				// expired?
 				if ( effect.durationPassed > effect.duration )
 				{
+                    effectInstances.RemoveAt( i );
 					OnEffectEnd( effect );
-					effectInstances.RemoveAt( i );
 					continue;
 				}
 

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -5,6 +6,7 @@ using DigDig2.Debugging;
 using DigDig2.Util;
 
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
 
@@ -29,6 +31,13 @@ namespace DigDig2.Input
 				RefreshInputModuleRegistrations( );
 			}
 		}
+
+		public int InputSymbolCycle
+		{
+			get => inputSymbolCycle;
+		}
+
+		public UnityEvent<int> inputSymbolCycled;
 		
 		[Header( "Input Manager" )]
 		[SerializeField] private InputPlayerManager inputPlayerManager;
@@ -36,12 +45,17 @@ namespace DigDig2.Input
 		[SerializeField] [OnChangedCall( "RefreshInputModuleRegistrations" )]
 		private InputContext currentInputContext;
 
+		[SerializeField] private float inputSymbolCycleDuration = 1f;
+
 		private readonly List<InputModule> activeInputModules = new( );
 		private readonly Dictionary<InputPlayer, Dictionary<string, List<InputModule>>> prioritizedInputModules = new( );
 
 		private readonly List<string> validActionMapNames = new( );
 
         [SerializeField] private List<InputPlayer> inputPlayers = new( );
+
+		private float inputSymbolCycleTimer = 0f;
+		private int inputSymbolCycle = 0;
 
 		protected override void Awake( )
 		{
@@ -68,6 +82,17 @@ namespace DigDig2.Input
 			RefreshInputModuleRegistrations( );
 		}
 
+		private void Update( )
+		{
+			inputSymbolCycleTimer += Time.deltaTime;
+			if ( inputSymbolCycleTimer > inputSymbolCycleDuration )
+			{
+				inputSymbolCycleTimer -= inputSymbolCycleDuration;
+				inputSymbolCycle++;
+				inputSymbolCycled.Invoke( inputSymbolCycle );
+			}
+		}
+
 		private void OnEnable( )
 		{
 			SetupDeviceMonitoring( );
@@ -83,9 +108,21 @@ namespace DigDig2.Input
 
         public List<InputDevice> GetInputPlayersDevices(int index)
         {
-            if (index == -1) return InputSystem.devices.ToList();
+            if ( index == -1 ) return InputSystem.devices.ToList();
+			if ( index >= inputPlayers.Count ) return new( );
             return inputPlayers[index].connectedDevices;
         }
+
+		public string GetInputDeviceSymbolCategory( InputDevice inputDevice )
+		{
+			switch ( inputDevice.displayName )
+			{
+				case "Keyboard": return "Keyboard";
+				case "Mouse": return "Mouse";
+				case "PS4 Controller": return "Playstation";
+				default: return "Xbox";
+			}
+		}
 
 		private void RefreshValidActionMapNames( )
 		{
@@ -146,7 +183,6 @@ namespace DigDig2.Input
 
 		private void OnDeviceChanged( InputDevice device, InputDeviceChange change )
 		{
-            BetterDebug.Log($"Device Change: [{device.name}, {change}]");
 			inputPlayers = change switch
 			{
 				InputDeviceChange.Added => inputPlayerManager.AddDevice( inputPlayers, device ),

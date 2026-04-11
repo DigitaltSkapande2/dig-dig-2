@@ -16,6 +16,7 @@ namespace DigDig2
         [SerializeField] private float nightDirectionalLightIntensity;
         private Vector4 startMidtones;
         private float startDirectionalLightIntensity;
+        private float timeElapsed;
 
         void Awake( )
         {
@@ -32,7 +33,8 @@ namespace DigDig2
 
         void Update()
         {
-            float lerpValue = (Mathf.Cos(Mathf.PI * Time.time / (dayDurationInMinutes * 30)) + 1) / 2;
+            timeElapsed += Time.deltaTime;
+            float lerpValue = (Mathf.Cos(Mathf.PI * timeElapsed / (dayDurationInMinutes * 30)) + 1) / 2;
             
             smh.midtones.value = Vector4.Lerp(startMidtones, nightMidtones, lerpValue);
 

@@ -1,3 +1,4 @@
+using DigDig2.Debugging;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
@@ -24,13 +25,14 @@ namespace DigDig2.EffectSystem.Effects
 
 			// Store the default vignette settings
 			defaultColorAdjustments = ScriptableObject.CreateInstance<ColorAdjustments>( );
-			defaultColorAdjustments.saturation = colorAdjustments.saturation;
+			defaultColorAdjustments.saturation.value = colorAdjustments.saturation.value;
 		}
 
 		internal override void UpdateEffect( float curveValue ) { colorAdjustments.saturation.value = 1 - curveValue; }
 
 		internal override void OnEffectEnd( CumulativeEffectInstanceData effect )
 		{
+            BetterDebug.Log(effectInstances.Count);
 			if ( effectInstances.Count == 0 ) colorAdjustments.saturation.value = defaultColorAdjustments.saturation.value;
 		}
 	}

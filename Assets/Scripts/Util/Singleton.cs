@@ -18,11 +18,7 @@ namespace DigDig2.Util
 				if ( instance ) return instance;
 
 				T potentialFoundInstance = FindFirstObjectByType<T>( );
-				if ( !potentialFoundInstance )
-				{
-					BetterDebug.Log( $"Attempted to get instance of singleton \"{typeof( T ).Name}\" but none has been initialized.", LogSeverity.Error );
-					return null;
-				}
+				if ( !potentialFoundInstance ) return null;
 
 				instance = potentialFoundInstance;
 

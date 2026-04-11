@@ -82,8 +82,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 474e8449e51a47b3bb55263059c1e3ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Player.PlayerCharacterInput
-  singleplayerDeathEffectPlayer: {fileID: 0}
-  multiplayerDeathEffectPlayer: {fileID: 0}
+  singleplayerDeathEffectPlayer: {fileID: 11400000, guid: 614db5580d593ea9f8ba367eb53c9aa0, type: 2}
+  multiplayerDeathEffectPlayer: {fileID: 11400000, guid: b0410f23c3202cd039c46fd2a0bf2be1, type: 2}
   disolveWeight: 6
   targetMeshRenderers:
   - {fileID: 5498305180799135212}
