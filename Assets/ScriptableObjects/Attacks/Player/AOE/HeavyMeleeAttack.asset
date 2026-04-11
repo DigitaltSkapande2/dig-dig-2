@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: HeavyMeleeAttack
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Combat.AOEAttack
   attackDuration: 0.8
-  onPerformEffect: {fileID: 11400000, guid: 222e600ee2b1cb6cbb2f903a97cb3902, type: 2}
+  onPerformEffect: {fileID: 11400000, guid: 8249221cf92bf27878f571c007aedacc, type: 2}
+  onHitEffect: {fileID: 11400000, guid: 222e600ee2b1cb6cbb2f903a97cb3902, type: 2}
   onChargeEffect: {fileID: 11400000, guid: 1a5a598eb394f6aff80661422bca2cfa, type: 2}
   chargeAnimationStateName: Charge
   triggerAnimationStateName: Trigger
@@ -22,6 +23,7 @@ MonoBehaviour:
   damage: 3
   aoeForwardOffset: 3
   chargingMoveSpeedFactor: 0
+  chargeSFX: {fileID: 8300000, guid: 800bcc716aadb9aa882cfdfe62d5d8e1, type: 3}
   hitboxPrefab: {fileID: 3511951452291022375, guid: 271eb4979fe45df4f903237b96eb445e, type: 3}
   hitEffect: {fileID: 6931098926697571914, guid: 3d36de908b6d4fc4cbed789d229020ac, type: 3}
   attackVFX: {fileID: 3558728256003135093, guid: 77d39f5c63731f342882305422069799, type: 3}

@@ -14,7 +14,7 @@ namespace DigDig2.Combat.Attacks
 		[SerializeField] private float chargingMoveSpeedFactor;
 		[SerializeField] private GameObject projectilePrefab;
 		[SerializeField] private GameObject chargeVFX;
-        // [SerializeField] private AudioClip chargeSFX;
+        [SerializeField] private AudioClip chargeSFX;
  		[SerializeField] private float projectileSpeed;
 		[SerializeField] private float projectileLifetime;
         [SerializeField] private float projectileSpawnYOffset = 0f;
@@ -39,39 +39,39 @@ namespace DigDig2.Combat.Attacks
 			}
             onChargeEffect?.Play();
             
-            // chargeAudioSourceInstance = new GameObject().AddComponent<AudioSource>();
-            // chargeAudioSourceInstance.loop = true;
-            // chargeAudioSourceInstance.clip = chargeSFX;
-            // chargeAudioSourceInstance.Play();
-            // chargeAudioSourceInstance.volume = 0f;
-            // FadeAudio(chargeAudioSourceInstance, 0, 1, 1f, false).Forget();
+            chargeAudioSourceInstance = new GameObject().AddComponent<AudioSource>();
+            chargeAudioSourceInstance.loop = false;
+            chargeAudioSourceInstance.clip = chargeSFX;
+            chargeAudioSourceInstance.Play();
 		}
 
-        // private async UniTask FadeAudio(AudioSource source, float from, float to, float time, bool destroyOnEnd)
-        // {
-        //     float startTime = Time.time;
-        //     float elapsed = 0f;
-        //     while (elapsed < time)
-        //     {
-        //         await UniTask.Yield(PlayerLoopTiming.Update);
-        //         elapsed = Time.time - startTime;
-        //
-        //         source.volume = Mathf.Lerp(from, to, elapsed / time);
-        //     }
-        //
-        //     if (destroyOnEnd) Destroy(source.gameObject);
-        // }
+        private async UniTask FadeAudio(AudioSource source, float from, float to, float time, bool destroyOnEnd)
+        {
+            float startTime = Time.time;
+            float elapsed = 0f;
+            while (elapsed < time)
+            {
+                await UniTask.Yield(PlayerLoopTiming.Update);
+                elapsed = Time.time - startTime;
+        
+                source.volume = Mathf.Lerp(from, to, elapsed / time);
+            }
+        
+            if (destroyOnEnd) Destroy(source.gameObject);
+        }
 
 		public override void Charge( Attacker attacker, AttackType attackType, float chargeTime ) { }
 
 		public override void ChargeFull( Attacker attacker, AttackType attackType )
 		{
+            if (chargeAudioSourceInstance) Destroy(chargeAudioSourceInstance.gameObject);
 			attacker.RemoveMoveSpeedDebuff(chargeAnimationStateName);
 			attacker.AddMoveSpeedDebuff(chargeAnimationStateName, attacker.GetBaseMoveSpeed( ) / 2);
 		}
 
 		public override void Trigger( Attacker attacker, AttackType attackGroup, float chargeTime )
 		{
+            
 			attacker.PlayAnimation( triggerAnimationStateName );
 			attacker.AddMoveSpeedDebuff( triggerAnimationStateName, attacker.GetBaseMoveSpeed( ) / 2 );
 		}
@@ -80,8 +80,8 @@ namespace DigDig2.Combat.Attacks
 		{
 			if (animEventName == "Trigger")
 			{
+                onPerformEffect?.Play();
 				Debug.Log( "Hello i am a ranged attack" );
-				onPerformEffect?.Play();
 				Vector3 forward = attacker.GetComponent<EntityCharacterController>( ).GetForwardVector( );
                 Projectile projectile = null;
                 if (!Physics.Raycast(
@@ -106,13 +106,15 @@ namespace DigDig2.Combat.Attacks
 		public override void Ended( Attacker attacker, AttackType attackGroup ) 
 		{
 			if (chargeVFXInstance && chargeVFXInstance.transform.GetChild(0).TryGetComponent(out Animator animator)) animator.enabled = false; 
-
+            if (chargeAudioSourceInstance) FadeAudio(chargeAudioSourceInstance, 1, 0, 0.2f, true).Forget();
+            
 			attacker.RemoveMoveSpeedDebuff( chargeAnimationStateName ); 
 			attacker.RemoveMoveSpeedDebuff( triggerAnimationStateName );
 		}
 
 		public override void Hit( Attacker attacker, Attackable attackable, Health healthComponent, EntityCharacterController entityCharacterController )
 		{
+            onHitEffect?.Play();
 			if ( healthComponent ) healthComponent.Damage( damage );
 		}
 	}

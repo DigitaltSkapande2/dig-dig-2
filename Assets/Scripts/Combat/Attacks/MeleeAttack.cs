@@ -63,6 +63,7 @@ namespace DigDig2.Combat.Attacks
 
 		public override void Hit( Attacker attacker, Attackable attackable, Health healthComponent, EntityCharacterController entityCharacterController )
 		{
+            onHitEffect?.Play();
 			if ( hitEffect ) Instantiate( hitEffect, attackable.transform.position, Quaternion.identity );
 			if ( healthComponent ) healthComponent.Damage( damage );
 			attackable.ApplyKnockback( ( attackable.transform.position - attacker.transform.position ).normalized, knockbackStrength );

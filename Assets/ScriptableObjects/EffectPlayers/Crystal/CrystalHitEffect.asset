@@ -19,7 +19,7 @@ MonoBehaviour:
   audioClipsToPlay:
   - audioClip: {fileID: 8300000, guid: 55c7cd553503d9c10bd7ea924f49378e, type: 3}
     volume: 1
-    pitchRange: {x: 0, y: 0}
+    pitchRange: {x: 0.9, y: 1.1}
   screenShake: 1
   screenShakeEffectData:
     intensityCurve:
@@ -133,7 +133,7 @@ MonoBehaviour:
     duration: 0.4
     intensity: 0.3
     color: {r: 0.8103098, g: 0.508366, b: 0.9056604, a: 0}
-  gamepadRumble: 0
+  gamepadRumble: 1
   gamepadRumbleEffectData:
     intensityCurve:
       serializedVersion: 2
@@ -160,9 +160,9 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     duration: 0.4
-    intensity: 1
+    intensity: 0
     inputPlayerId: 0
-    highFrequencyIntensity: 0
+    highFrequencyIntensity: 0.1
   greyscale: 0
   greyscaleEffectData:
     intensityCurve:
