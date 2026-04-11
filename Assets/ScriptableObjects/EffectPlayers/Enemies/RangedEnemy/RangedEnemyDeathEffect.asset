@@ -15,8 +15,11 @@ MonoBehaviour:
   spawnPrefab: 0
   spawnPrefabEffectData:
     prefabToSpawn: []
-  playSound: 0
-  audioClipsToPlay: []
+  playSound: 1
+  audioClipsToPlay:
+  - audioClip: {fileID: 8300000, guid: 3cbd4e80be0b79c8eb672a3838d1e673, type: 3}
+    volume: 1
+    pitchRange: {x: 0, y: 0}
   screenShake: 0
   screenShakeEffectData:
     intensityCurve:
@@ -73,7 +76,7 @@ MonoBehaviour:
       m_RotationOrder: 4
     duration: 0.4
     intensity: 1
-  timeSlow: 0
+  timeSlow: 1
   timeSlowEffectData:
     intensityCurve:
       serializedVersion: 2
@@ -99,8 +102,8 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    duration: 0.2
-    intensity: 0.5
+    duration: 0.3
+    intensity: 0.8
   vignettePulse: 0
   vignettePulseEffectData:
     intensityCurve:

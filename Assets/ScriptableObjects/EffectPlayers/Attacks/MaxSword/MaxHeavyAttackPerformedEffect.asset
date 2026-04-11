@@ -15,12 +15,12 @@ MonoBehaviour:
   spawnPrefab: 0
   spawnPrefabEffectData:
     prefabToSpawn: []
-  playSound: 1
+  playSound: 0
   audioClipsToPlay:
   - audioClip: {fileID: 8300000, guid: 750c80626fd5b7835b9e48c5f1367a1d, type: 3}
     volume: 1
     pitchRange: {x: 0, y: 0}
-  screenShake: 1
+  screenShake: 0
   screenShakeEffectData:
     intensityCurve:
       serializedVersion: 2
@@ -133,7 +133,7 @@ MonoBehaviour:
     duration: 0.4
     intensity: 1
     color: {r: 0, g: 0, b: 0, a: 0}
-  gamepadRumble: 1
+  gamepadRumble: 0
   gamepadRumbleEffectData:
     intensityCurve:
       serializedVersion: 2

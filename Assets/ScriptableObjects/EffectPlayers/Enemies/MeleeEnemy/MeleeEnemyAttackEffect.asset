@@ -15,12 +15,12 @@ MonoBehaviour:
   spawnPrefab: 0
   spawnPrefabEffectData:
     prefabToSpawn: []
-  playSound: 1
+  playSound: 0
   audioClipsToPlay:
   - audioClip: {fileID: 8300000, guid: 6f79ddfe5c1d48df9aa0f9d3607c5db9, type: 3}
     volume: 1
     pitchRange: {x: 0, y: 0}
-  screenShake: 0
+  screenShake: 1
   screenShakeEffectData:
     intensityCurve:
       serializedVersion: 2
@@ -46,8 +46,8 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    duration: 0.4
-    intensity: 1
+    duration: 0.2
+    intensity: 0.05
   cameraZoom: 0
   cameraZoomEffectData:
     intensityCurve:

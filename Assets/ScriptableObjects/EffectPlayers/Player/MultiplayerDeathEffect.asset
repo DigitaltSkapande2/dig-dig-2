@@ -15,9 +15,12 @@ MonoBehaviour:
   spawnPrefab: 0
   spawnPrefabEffectData:
     prefabToSpawn: []
-  playSound: 0
-  audioClipsToPlay: []
-  screenShake: 0
+  playSound: 1
+  audioClipsToPlay:
+  - audioClip: {fileID: 8300000, guid: b26ce871298b4205b9e5a4897624cf89, type: 3}
+    volume: 1
+    pitchRange: {x: 0, y: 0}
+  screenShake: 1
   screenShakeEffectData:
     intensityCurve:
       serializedVersion: 2
@@ -44,7 +47,7 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     duration: 0.4
-    intensity: 1
+    intensity: 0.4
   cameraZoom: 0
   cameraZoomEffectData:
     intensityCurve:
@@ -73,14 +76,14 @@ MonoBehaviour:
       m_RotationOrder: 4
     duration: 0.4
     intensity: 1
-  timeSlow: 0
+  timeSlow: 1
   timeSlowEffectData:
     intensityCurve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 1
+        value: 0.5
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -89,19 +92,19 @@ MonoBehaviour:
         outWeight: 0
       - serializedVersion: 3
         time: 1
-        value: 0
-        inSlope: 0
-        outSlope: 0
+        value: 1
+        inSlope: 0.8937529
+        outSlope: 0.8937529
         tangentMode: 0
         weightedMode: 0
-        inWeight: 0
+        inWeight: 0.07678574
         outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    duration: 0.4
+    duration: 1
     intensity: 1
-  vignettePulse: 0
+  vignettePulse: 1
   vignettePulseEffectData:
     intensityCurve:
       serializedVersion: 2
@@ -127,9 +130,9 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    duration: 0.4
-    intensity: 1
-    color: {r: 0, g: 0, b: 0, a: 0}
+    duration: 2
+    intensity: 0.4
+    color: {r: 0.5, g: 0.0070754588, b: 0.0070754588, a: 0}
   gamepadRumble: 0
   gamepadRumbleEffectData:
     intensityCurve:
@@ -160,7 +163,7 @@ MonoBehaviour:
     intensity: 1
     inputPlayerId: 0
     highFrequencyIntensity: 0
-  greyscale: 0
+  greyscale: 1
   greyscaleEffectData:
     intensityCurve:
       serializedVersion: 2
@@ -187,4 +190,4 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     duration: 0.4
-    intensity: 1
+    intensity: 50

@@ -76,14 +76,14 @@ MonoBehaviour:
       m_RotationOrder: 4
     duration: 4
     intensity: 4
-  timeSlow: 0
+  timeSlow: 1
   timeSlowEffectData:
     intensityCurve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 1
+        value: 0.5
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -92,17 +92,17 @@ MonoBehaviour:
         outWeight: 0
       - serializedVersion: 3
         time: 1
-        value: 0
-        inSlope: 0
-        outSlope: 0
+        value: 1
+        inSlope: 0.96347994
+        outSlope: 0.96347994
         tangentMode: 0
         weightedMode: 0
-        inWeight: 0
+        inWeight: 0.04642856
         outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    duration: 0.4
+    duration: 1
     intensity: 1
   vignettePulse: 1
   vignettePulseEffectData:
@@ -133,7 +133,7 @@ MonoBehaviour:
     duration: 4
     intensity: 0.3
     color: {r: 0.735849, g: 0.05206478, b: 0.05206478, a: 0.9372549}
-  gamepadRumble: 0
+  gamepadRumble: 1
   gamepadRumbleEffectData:
     intensityCurve:
       serializedVersion: 2
@@ -141,26 +141,26 @@ MonoBehaviour:
       - serializedVersion: 3
         time: 0
         value: 1
-        inSlope: 0
-        outSlope: 0
+        inSlope: -0.008050175
+        outSlope: -0.008050175
         tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
+        weightedMode: 3
+        inWeight: 0.33333334
+        outWeight: 0.33333334
       - serializedVersion: 3
         time: 1
         value: 0
-        inSlope: 0
-        outSlope: 0
+        inSlope: -0.0040480145
+        outSlope: -0.0040480145
         tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
+        weightedMode: 3
+        inWeight: 0.6944445
         outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    duration: 0.4
-    intensity: 1
+    duration: 4
+    intensity: 0.1
     inputPlayerId: 0
     highFrequencyIntensity: 0
   greyscale: 1
@@ -190,4 +190,4 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     duration: 4
-    intensity: 1
+    intensity: 100

@@ -15,8 +15,11 @@ MonoBehaviour:
   spawnPrefab: 0
   spawnPrefabEffectData:
     prefabToSpawn: []
-  playSound: 0
-  audioClipsToPlay: []
+  playSound: 1
+  audioClipsToPlay:
+  - audioClip: {fileID: 8300000, guid: 3cbd4e80be0b79c8eb672a3838d1e673, type: 3}
+    volume: 1
+    pitchRange: {x: 0, y: 0}
   screenShake: 1
   screenShakeEffectData:
     intensityCurve:
@@ -101,7 +104,7 @@ MonoBehaviour:
       m_RotationOrder: 4
     duration: 0.2
     intensity: 0.5
-  vignettePulse: 0
+  vignettePulse: 1
   vignettePulseEffectData:
     intensityCurve:
       serializedVersion: 2
@@ -127,10 +130,10 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    duration: 0.4
-    intensity: 1
-    color: {r: 0, g: 0, b: 0, a: 0}
-  gamepadRumble: 0
+    duration: 0.8
+    intensity: 0.2
+    color: {r: 0.5, g: 0, b: 0, a: 0}
+  gamepadRumble: 1
   gamepadRumbleEffectData:
     intensityCurve:
       serializedVersion: 2
@@ -157,7 +160,7 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     duration: 0.4
-    intensity: 1
+    intensity: 0.6
     inputPlayerId: 0
     highFrequencyIntensity: 0
   greyscale: 0
