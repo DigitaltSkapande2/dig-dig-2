@@ -1,10 +1,11 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
 using DigDig2.Util;
 using DigDig2.Debugging;
-
+using DigDig2.Game;
 using UnityEngine;
 
 namespace DigDig2.SaveSystem
@@ -20,23 +21,26 @@ namespace DigDig2.SaveSystem
 		
 		public bool isMultiplayer;
 
+        private GameManager gameManager;
+
 		private bool HasLoadedSave
 		{
 			get => loadedGameSave != null;
 		}
 
-		private new void Awake( )
-		{
-			base.Awake( );
-			string saveDirectoryPath = GetSavesDirectoryPath( );
-			BetterDebug.Log( $"Saving files in: {saveDirectoryPath}" );
-			if ( !Directory.Exists( saveDirectoryPath ) ) Directory.CreateDirectory( saveDirectoryPath );
-		}
+        private new void Awake()
+        {
+            base.Awake();
+            string saveDirectoryPath = GetSavesDirectoryPath();
+            BetterDebug.Log($"Saving files in: {saveDirectoryPath}");
+            if (!Directory.Exists(saveDirectoryPath)) Directory.CreateDirectory(saveDirectoryPath);
+        }
 
-		public class GameSave
+        public class GameSave
 		{
 			public string saveName;
 			public Dictionary<string, object> stateData;
+            public float playTime;
 			public string version;
 		}
 
@@ -75,7 +79,8 @@ namespace DigDig2.SaveSystem
 			{
 				saveName = saveName,
 				version = Application.version,
-				stateData = new( )
+				stateData = new( ),
+                playTime = 0f
 			};
 		}
 
@@ -221,5 +226,15 @@ namespace DigDig2.SaveSystem
 		}
 
 		#endregion
+
+        public float GetPlayTime()
+        {
+            return loadedGameSave.playTime;
+        }
+        
+        public void AddPlaytime(float time)
+        {
+            loadedGameSave.playTime += time;
+        }
 	}
 }

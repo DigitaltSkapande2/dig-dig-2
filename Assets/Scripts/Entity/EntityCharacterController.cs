@@ -102,7 +102,7 @@ namespace DigDig2.Entity
 		// Movement
 		private CharacterController characterController;
 
-        private bool isDashing = false;
+        public bool isDashing = false;
 
 		private Vector3 dashVelocity;
 
@@ -411,8 +411,8 @@ namespace DigDig2.Entity
         {
             isDashing = true;
             SetAutomaticLookRotationLock(true);
-            visualsParent.transform.rotation = Quaternion.Euler(0f, TargetLookRotation, 0f);
-            
+            TargetLookRotation = Vector3.SignedAngle(transform.forward, inputMoveVector, transform.up);
+            RefreshVisualsRotation(false);
             
             Vector3 dashDirection = inputMoveVector == Vector3.zero ? GetForwardVector() : inputMoveVector;
             await dash.PerformDash(dashDirection, this);

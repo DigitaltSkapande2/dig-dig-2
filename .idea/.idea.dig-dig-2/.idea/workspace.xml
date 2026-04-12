@@ -11,8 +11,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="50c3eb56-0f37-4789-a838-f82a855a30c4" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Assets/Audio/Enviorment/Ambient/WaterWavesShort.mp3" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.dig-dig-2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.dig-dig-2/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animations/Cutscene/CutsceneTimeline.playable" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animations/Cutscene/CutsceneTimeline.playable" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Audio/Enviorment/Ambient/waterWavesFiltered.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Audio/Enviorment/Ambient/waterWavesFiltered.wav.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Audio/Enviorment/Ambient/WaterWavesShort.mp3.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Enemies/MeleeEnemy.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Enemies/MeleeEnemy.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Enemies/RangedEnemy.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Enemies/RangedEnemy.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ScriptableObjects/EffectPlayers/CampfireLightEffect.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ScriptableObjects/EffectPlayers/CampfireLightEffect.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ScriptableObjects/EffectPlayers/Door/DoorOpen.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ScriptableObjects/EffectPlayers/Door/DoorOpen.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Entity/EntityCharacterController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Entity/EntityCharacterController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/GameManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Input/InputManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Input/InputManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/Combat/PlayerFocuser.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/Combat/PlayerFocuser.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SaveSystem/SaveManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SaveSystem/SaveManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/UxmlElements/InputSymbol.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/UxmlElements/InputSymbol.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Util/DayCycle.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Util/DayCycle.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Settings/DefaultVolumeProfile.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Settings/DefaultVolumeProfile.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -215,7 +230,7 @@
   </component>
   <component name="RunManager" selected="Unity Attach To.Attach to">
     <configuration name="Standalone Player" type="RunUnityExe" factoryName="Unity Executable">
-      <option name="EXE_PATH" value="$PROJECT_DIR$/../WhiskersOfTheTideWin/Final/WhiskersOfTheTide/Whiskers of the Tide.exe" />
+      <option name="EXE_PATH" value="$PROJECT_DIR$/../WhiskersOfTheTideWin/FinalFinal/WhiskersOfTheTide/Whiskers of the Tide.exe" />
       <option name="PROGRAM_PARAMETERS" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../Builds" />
       <option name="PASS_PARENT_ENVS" value="1" />
@@ -338,7 +353,7 @@
       <workItem from="1775900042118" duration="7040000" />
       <workItem from="1775909637867" duration="13766000" />
       <workItem from="1775926137151" duration="1379000" />
-      <workItem from="1776018822601" duration="7327000" />
+      <workItem from="1776018822601" duration="11589000" />
     </task>
     <servers />
   </component>

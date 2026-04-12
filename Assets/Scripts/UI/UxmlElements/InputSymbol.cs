@@ -120,18 +120,18 @@ namespace DigDig2.UI.UxmlElements
 			if ( !InputManager.Instance ) return new( );
 			if ( !inputSymbolDictionary ) inputSymbolDictionary = Resources.Load<InputSymbolDictionary>( INPUT_SYMBOL_DICTIONARY_PATH );
 			if ( !inputSymbolDictionary ) return new( );
-            BetterDebug.Log($"GETTING SYMBOL SPRITES");
+            //BetterDebug.Log($"GETTING SYMBOL SPRITES");
 
 			List<Sprite> sprites = new( );
 			List<InputControlScheme> inputPlayerControlSchemes = InputManager.Instance.GetInputPlayersControlSchemes( inputPlayerIndex );
-            BetterDebug.Log($"InputPlayerControlSchemes = [{String.Join(", ", inputPlayerControlSchemes.Select(cs => cs.name))}]");
+            //BetterDebug.Log($"InputPlayerControlSchemes = [{String.Join(", ", inputPlayerControlSchemes.Select(cs => cs.name))}]");
 			List<InputDevice> inputPlayerDevices = InputManager.Instance.GetInputPlayersDevices( inputPlayerIndex );
-            BetterDebug.Log($"InputPlayerDevices = [{String.Join(", ", inputPlayerDevices.Select(cs => cs.name))}]");
+            //BetterDebug.Log($"InputPlayerDevices = [{String.Join(", ", inputPlayerDevices.Select(cs => cs.name))}]");
             
 			foreach ( InputBinding inputBinding in inputAction.bindings )
 			{
 				List<string> inputBindingControlSchemes = inputBinding.groups.Split( ";" ).ToList( );
-                BetterDebug.Log($"inputBindingControlSchemes = [{String.Join(", ", inputBindingControlSchemes)}]");
+                //BetterDebug.Log($"inputBindingControlSchemes = [{String.Join(", ", inputBindingControlSchemes)}]");
 				bool hasMatchingControlScheme = false;
 				InputControlScheme matchingInputControlScheme;
 
@@ -143,15 +143,15 @@ namespace DigDig2.UI.UxmlElements
 					break;
 				}
 				if ( !hasMatchingControlScheme ) continue;
-                BetterDebug.Log($"FoundMatching Control Scheme [{matchingInputControlScheme}]");
+                //BetterDebug.Log($"FoundMatching Control Scheme [{matchingInputControlScheme}]");
 
 				List<string> addedSymbols = new( );
 				InputControlScheme.MatchResult matchResult = matchingInputControlScheme.PickDevicesFrom( inputPlayerDevices );
 				foreach ( InputDevice inputDevice in matchResult.devices )
 				{
-                    BetterDebug.Log($"[{inputDevice}] is in InputPlayerDevices");
+                    //BetterDebug.Log($"[{inputDevice}] is in InputPlayerDevices");
 					string inputSymbolCategory = InputManager.Instance.GetInputDeviceSymbolCategory( inputDevice );
-                    BetterDebug.Log($"got inputSymbol Catagory: [{inputSymbolCategory}]");
+                    //BetterDebug.Log($"got inputSymbol Catagory: [{inputSymbolCategory}]");
 					string inputSymbolPath = $"{inputSymbolCategory}/{inputBinding.effectivePath}";
 					if (addedSymbols.Contains( inputSymbolPath )) continue;
 					if ( inputSymbolDictionary.dictionary.TryGetValue( inputSymbolPath, out Sprite sprite ) )

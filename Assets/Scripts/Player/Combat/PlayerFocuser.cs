@@ -104,13 +104,13 @@ namespace DigDig2.Player.Combat
             
             if ( currentlyFocusedAttackable )
             {
-                Vector3 enemyPosition = currentlyFocusedAttackable!.transform.position;
+                Vector3 enemyPosition = currentlyFocusedAttackable.transform.position;
                 UpdateFocusIndicatorPosition(enemyPosition);
             }
             
-            if (entityController)
+            if (entityController && !entityController.isDashing && currentlyFocusedAttackable)
             {
-                if ( currentlyFocusedAttackable ) entityController.LookTowards( currentlyFocusedAttackable!.transform.position );
+                entityController.LookTowards( currentlyFocusedAttackable.transform.position );
             }
         }
 
@@ -180,22 +180,24 @@ namespace DigDig2.Player.Combat
         
         public void BeginFocusing( )
         {
+            if (isFocusing) return;
             ScanForAttackables();
             isFocusing = true;
             cameraEffector.targetFrustumSize = cameraFocusFrustumSize;
+            entityController.SetAutomaticLookRotationLock( true );
             ReCalculateFocusTarget();
         }
 
         public void EndFocusing( )
         {
+            if (!isFocusing) return;
             isFocusing = false;
             cameraEffector.targetFrustumSize = 0f;
             cameraEffector.targetPosition = Vector3.zero;
             
             currentlyFocusedAttackable = null;
-            if (entityController) entityController.SetAutomaticLookRotationLock( currentlyFocusedAttackable );
             currentlyFocusedEnemyGroupIndex = -1;
-            if ( entityController ) entityController.SetAutomaticLookRotationLock( false );
+            entityController.SetAutomaticLookRotationLock( false );
             
             SetFocusIndicatorActive(false);
         }
@@ -216,7 +218,6 @@ namespace DigDig2.Player.Combat
             if (TryGetClosestEnemy(out var attackable) && IsAttackableVisibleOnScreen(attackable)) 
             {
                 currentlyFocusedAttackable = attackable;
-                if (entityController) entityController.SetAutomaticLookRotationLock( currentlyFocusedAttackable );
                 SetFocusIndicatorActive(true);
             }
             else

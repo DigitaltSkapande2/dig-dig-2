@@ -123,13 +123,13 @@ namespace DigDig2.Input
 
 		public Tuple<bool, InputControlScheme> GetInputPlayerControlScheme( InputPlayer inputPlayer )
 		{
-            BetterDebug.Log($"Getting Inputplayer [{inputPlayer.name}]'s ControllScheme");
-            BetterDebug.Log($"inputPlayer controllSchemes [{String.Join(", ", inputPlayer.connectedDevices.Select(d=>d.name))}]");
+            //BetterDebug.Log($"Getting Inputplayer [{inputPlayer.name}]'s ControllScheme");
+            //BetterDebug.Log($"inputPlayer controllSchemes [{String.Join(", ", inputPlayer.connectedDevices.Select(d=>d.name))}]");
 			foreach ( InputControlScheme controlScheme in InputSystem.actions.controlSchemes )
 			{
 				InputControlScheme.MatchResult matchResult = controlScheme.PickDevicesFrom( inputPlayer.connectedDevices );
 				if ( matchResult.hasMissingRequiredDevices ) continue;
-                BetterDebug.Log($"SUCESS: {controlScheme}");
+                //BetterDebug.Log($"SUCESS: {controlScheme}");
 				return new(true, controlScheme);
 			}
 
@@ -143,15 +143,15 @@ namespace DigDig2.Input
 
 		public List<InputControlScheme> GetInputPlayersControlSchemes( int index )
 		{
-            BetterDebug.Log("--------------- GetInputPlayersControlSchemes");
+            //BetterDebug.Log("--------------- GetInputPlayersControlSchemes");
 			List<InputControlScheme> matchingControlSchemes = new( );
 			if ( index == -1 )
             {
-                BetterDebug.Log("index = -1");
+                //BetterDebug.Log("index = -1");
 				foreach ( InputPlayer inputPlayer in inputPlayers )
 				{
 					(bool success, InputControlScheme controlScheme) = GetInputPlayerControlScheme( inputPlayer );
-                    BetterDebug.Log($"inputPlayer [{inputPlayer.name}] is sucess: [{success}]");
+                    //BetterDebug.Log($"inputPlayer [{inputPlayer.name}] is sucess: [{success}]");
 					if (success) matchingControlSchemes.Add( controlScheme );
 				}
 			}
@@ -162,7 +162,7 @@ namespace DigDig2.Input
 				if (success) matchingControlSchemes.Add( controlScheme );
 			}
             
-            BetterDebug.Log($"----- Controll Scheme Result: [{String.Join(", ", matchingControlSchemes.Select(cs => cs.name))}]");
+            //BetterDebug.Log($"----- Controll Scheme Result: [{String.Join(", ", matchingControlSchemes.Select(cs => cs.name))}]");
 			return matchingControlSchemes;
 		}
 
@@ -185,11 +185,11 @@ namespace DigDig2.Input
                     manufacturer.Contains("Sony", StringComparison.OrdinalIgnoreCase))
                     return "Playstation";
 
-                // XInput on Windows = almost always Xbox 
+                // XInput is almost always Xbox 
                 if (interfaceName == "XInput" || interfaceName == "DXInput")
                     return "Xbox";
 
-                // HID fallback - check product name
+                // Last line of defense :pray:
                 if (product.Contains("Xbox", StringComparison.OrdinalIgnoreCase) ||
                     product.Contains("Microsoft", StringComparison.OrdinalIgnoreCase))
                     return "Xbox";
