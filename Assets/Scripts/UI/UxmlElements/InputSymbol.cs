@@ -120,17 +120,20 @@ namespace DigDig2.UI.UxmlElements
 			if ( !InputManager.Instance ) return new( );
 			if ( !inputSymbolDictionary ) inputSymbolDictionary = Resources.Load<InputSymbolDictionary>( INPUT_SYMBOL_DICTIONARY_PATH );
 			if ( !inputSymbolDictionary ) return new( );
+            BetterDebug.Log($"GETTING SYMBOL SPRITES");
 
 			List<Sprite> sprites = new( );
 			List<InputControlScheme> inputPlayerControlSchemes = InputManager.Instance.GetInputPlayersControlSchemes( inputPlayerIndex );
 			List<InputDevice> inputPlayerDevices = InputManager.Instance.GetInputPlayersDevices( inputPlayerIndex );
+            BetterDebug.Log($"InputPlayerDevices = [{String.Join(", ", inputPlayerControlSchemes.Select(cs => cs.name))}]");
+            BetterDebug.Log($"InputPlayerControlSchemes = [{String.Join(", ", inputPlayerControlSchemes.Select(cs => cs.name))}]");
 			foreach ( InputBinding inputBinding in inputAction.bindings )
 			{
 				List<string> inputBindingControlSchemes = inputBinding.groups.Split( ";" ).ToList( );
+                BetterDebug.Log($"inputBindingControlSchemes = [{String.Join(", ", inputBindingControlSchemes)}]");
 				bool hasMatchingControlScheme = false;
 				InputControlScheme matchingInputControlScheme;
-                BetterDebug.Log($"inputBindingControlSchemes = [{String.Join(", ", inputBindingControlSchemes)}]");
-                BetterDebug.Log($"InputPlayerControllSchemes = [{String.Join(", ", inputPlayerControlSchemes.Select(cs => cs.name))}]");
+
 				foreach ( InputControlScheme inputControlScheme in inputPlayerControlSchemes )
 				{
 					if ( !inputBindingControlSchemes.Contains( inputControlScheme.name ) ) continue;
