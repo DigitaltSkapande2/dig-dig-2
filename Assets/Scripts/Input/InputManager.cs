@@ -166,34 +166,41 @@ namespace DigDig2.Input
 			return matchingControlSchemes;
 		}
 
-		public string GetInputDeviceSymbolCategory( InputDevice inputDevice )
-		{
-            BetterDebug.Log( $"InputDevice: {inputDevice.name}" );
-            BetterDebug.Log( $"InterfaceName: {inputDevice.description.interfaceName}" );
-			BetterDebug.Log( $"manufacturer: {inputDevice.description.manufacturer}" );
-			string deviceClass = inputDevice.description.deviceClass;
-			string productName = inputDevice.description.product;
-            
-            BetterDebug.Log( $"deviceClass: {inputDevice.description.deviceClass}" );
-            BetterDebug.Log( $"product: {inputDevice.description.product}" );
-            
-			switch ( deviceClass )
-			{
-				case "Keyboard" or "Mouse": return "Keyboard&Mouse";
-				case "Gamepad":
-					switch ( productName )
-					{
-						case "PS4 Controller": 
-						case "PS5 Controller": return "Playstation";
-					}
+        public string GetInputDeviceSymbolCategory(InputDevice inputDevice)
+        {
+            if (inputDevice is Keyboard || inputDevice is Mouse)
+                return "Keyboard&Mouse";
 
-					BetterDebug.Log( $"Could not determine device category, defaulting to Xbox. Device Class: {deviceClass}, Product: {productName}.", LogSeverity.Warning );
-					return "Xbox";
-				default:
-					BetterDebug.Log( $"Could not determine device category, defaulting to Keyboard&Mouse. Device Class: {deviceClass}, Product: {productName}.", LogSeverity.Warning );
-					return "Keyboard&Mouse";
-			}
-		}
+            if (inputDevice is Gamepad)
+            {
+                string interfaceName = inputDevice.description.interfaceName;
+                string product = inputDevice.description.product ?? "";
+                string manufacturer = inputDevice.description.manufacturer ?? "";
+
+                // PlayStation 
+                if (product.Contains("DualShock", StringComparison.OrdinalIgnoreCase) ||
+                    product.Contains("DualSense", StringComparison.OrdinalIgnoreCase) ||
+                    product.Contains("PS4", StringComparison.OrdinalIgnoreCase) ||
+                    product.Contains("PS5", StringComparison.OrdinalIgnoreCase) ||
+                    manufacturer.Contains("Sony", StringComparison.OrdinalIgnoreCase))
+                    return "Playstation";
+
+                // XInput on Windows = almost always Xbox 
+                if (interfaceName == "XInput" || interfaceName == "DXInput")
+                    return "Xbox";
+
+                // HID fallback - check product name
+                if (product.Contains("Xbox", StringComparison.OrdinalIgnoreCase) ||
+                    product.Contains("Microsoft", StringComparison.OrdinalIgnoreCase))
+                    return "Xbox";
+
+                BetterDebug.Log($"Could not determine gamepad category, defaulting to Xbox. Interface: {interfaceName}, Product: {product}", LogSeverity.Warning);
+                return "Xbox";
+            }
+
+            BetterDebug.Log($"Unknown device type: {inputDevice.GetType().Name}, defaulting to Keyboard&Mouse", LogSeverity.Warning);
+            return "Keyboard&Mouse";
+        }
 
 		private void RefreshValidActionMapNames( )
 		{
