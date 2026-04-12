@@ -124,9 +124,10 @@ namespace DigDig2.UI.UxmlElements
 
 			List<Sprite> sprites = new( );
 			List<InputControlScheme> inputPlayerControlSchemes = InputManager.Instance.GetInputPlayersControlSchemes( inputPlayerIndex );
-			List<InputDevice> inputPlayerDevices = InputManager.Instance.GetInputPlayersDevices( inputPlayerIndex );
-            BetterDebug.Log($"InputPlayerDevices = [{String.Join(", ", inputPlayerControlSchemes.Select(cs => cs.name))}]");
             BetterDebug.Log($"InputPlayerControlSchemes = [{String.Join(", ", inputPlayerControlSchemes.Select(cs => cs.name))}]");
+			List<InputDevice> inputPlayerDevices = InputManager.Instance.GetInputPlayersDevices( inputPlayerIndex );
+            BetterDebug.Log($"InputPlayerDevices = [{String.Join(", ", inputPlayerDevices.Select(cs => cs.name))}]");
+            
 			foreach ( InputBinding inputBinding in inputAction.bindings )
 			{
 				List<string> inputBindingControlSchemes = inputBinding.groups.Split( ";" ).ToList( );
