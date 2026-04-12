@@ -154,9 +154,15 @@ namespace DigDig2.Input
 
 		public string GetInputDeviceSymbolCategory( InputDevice inputDevice )
 		{
-			BetterDebug.Log( inputDevice.description.manufacturer );
+            BetterDebug.Log( $"InputDevice: {inputDevice.name}" );
+            BetterDebug.Log( $"InterfaceName: {inputDevice.description.interfaceName}" );
+			BetterDebug.Log( $"manufacturer: {inputDevice.description.manufacturer}" );
 			string deviceClass = inputDevice.description.deviceClass;
 			string productName = inputDevice.description.product;
+            
+            BetterDebug.Log( $"deviceClass: {inputDevice.description.deviceClass}" );
+            BetterDebug.Log( $"product: {inputDevice.description.product}" );
+            
 			switch ( deviceClass )
 			{
 				case "Keyboard" or "Mouse": return "Keyboard&Mouse";

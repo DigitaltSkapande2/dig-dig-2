@@ -90,7 +90,7 @@ namespace DigDig2.Entity
 		[SerializeField] private float visualsRotationSpeed = 15f;
 
 		[Tooltip( "Locks the automatic visuals rotation when input is detected." )]
-		[SerializeField] private bool automaticLookRotationLocked;
+		[SerializeField] private int automaticLookRotationLocked = 0;
 
         [Tooltip("the dash to use, leave empty if dont want a dash")]
         [SerializeField] private Dash dash;
@@ -411,6 +411,8 @@ namespace DigDig2.Entity
         {
             isDashing = true;
             SetAutomaticLookRotationLock(true);
+            visualsParent.transform.rotation = Quaternion.Euler(0f, TargetLookRotation, 0f);
+            
             
             Vector3 dashDirection = inputMoveVector == Vector3.zero ? GetForwardVector() : inputMoveVector;
             await dash.PerformDash(dashDirection, this);
@@ -495,7 +497,7 @@ namespace DigDig2.Entity
 
 		private void UpdateVisualsRotation( )
 		{
-			if ( inputMoveVector.magnitude > 0 && !automaticLookRotationLocked ) TargetLookRotation = Mathf.Lerp( TargetLookRotation, Vector3.SignedAngle( transform.forward, inputMoveVector, transform.up ), GetMoveSpeed( ) / moveSpeed );
+			if ( inputMoveVector.magnitude > 0 && !isDashing && automaticLookRotationLocked <= 0 ) TargetLookRotation = Mathf.Lerp( TargetLookRotation, Vector3.SignedAngle( transform.forward, inputMoveVector, transform.up ), GetMoveSpeed( ) / moveSpeed );
 		}
 
 		private void RefreshVisualsRotation( bool useLerp = true )
@@ -555,7 +557,7 @@ namespace DigDig2.Entity
 
 		public Vector3 GetForwardVector( ) => new( -Mathf.Cos( TargetLookRotation * Mathf.Deg2Rad + Mathf.PI / 2 ), 0, Mathf.Sin( TargetLookRotation * Mathf.Deg2Rad + Mathf.PI / 2 ) );
 
-		public void SetAutomaticLookRotationLock( bool isLocked ) { automaticLookRotationLocked = isLocked; }
+		public void SetAutomaticLookRotationLock( bool isLocked ) { automaticLookRotationLocked += isLocked ? 1 : -1; }
 
         public GameObject GetVisualsParent() => visualsParent;
 

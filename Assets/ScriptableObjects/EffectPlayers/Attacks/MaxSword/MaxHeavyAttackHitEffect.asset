@@ -79,14 +79,14 @@ MonoBehaviour:
       m_RotationOrder: 4
     duration: 0.4
     intensity: 1
-  timeSlow: 0
+  timeSlow: 1
   timeSlowEffectData:
     intensityCurve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 1
+        value: 0.5
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -95,7 +95,7 @@ MonoBehaviour:
         outWeight: 0
       - serializedVersion: 3
         time: 1
-        value: 0
+        value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -106,7 +106,7 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     duration: 0.4
-    intensity: 1
+    intensity: 0.8
   vignettePulse: 0
   vignettePulseEffectData:
     intensityCurve:
@@ -162,7 +162,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    duration: 0.08
+    duration: 0.14
     intensity: 0.1
     inputPlayerId: 0
     highFrequencyIntensity: 0.4
