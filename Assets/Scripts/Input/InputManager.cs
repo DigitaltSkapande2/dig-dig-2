@@ -99,6 +99,7 @@ namespace DigDig2.Input
 		}
 
 		private void OnDisable( ) { Cleanup( ); }
+		private void OnDestroy( ) { Cleanup( ); }
 
 		private void Cleanup( )
 		{
@@ -210,13 +211,7 @@ namespace DigDig2.Input
 
 		internal void OnActionTriggered(InputPlayer inputPlayer, InputAction.CallbackContext context )
 		{
-            //BetterDebug.Log(context.control.device.name + " " + context.action.name + " " + context.action.actionMap.name + " " + context.phase);
             int inputPlayerIndex = inputPlayers.IndexOf(inputPlayer);
-            
-            // BetterDebug.Log(inputPlayer.name +"  "+inputPlayer.GetHashCode());
-            // foreach(var gay in prioritizedInputModules.Keys)
-            //     BetterDebug.Log(gay.name + "  " + gay.GetHashCode());
-
 			foreach ( InputModule prioritizedInputModule in prioritizedInputModules[ inputPlayer ][ context.action.actionMap.name ] )
 			{
 				if ( prioritizedInputModule.AllowedInputPlayerIndex == -1 || prioritizedInputModule.AllowedInputPlayerIndex == inputPlayerIndex ) prioritizedInputModule.SendInput( context, inputPlayer, inputPlayerIndex );
@@ -274,13 +269,14 @@ namespace DigDig2.Input
 
 		public void RegisterInputModule( InputModule module )
 		{
+			if ( !Application.isPlaying ) return; // Should not register input modules when editor is not in play mode.
 			if ( !validActionMapNames.Contains( module.ActionMapName ) )
 			{
 				BetterDebug.Log( $"\"{module.ActionMapName}\" is not a valid InputActionMap, {module.name}'s InputModule did not get registered.", LogSeverity.Error );
 				return;
 			}
 
-			if ( activeInputModules.Contains( module ) )
+			if ( IsInputModuleRegistered( module ) )
 			{
 				BetterDebug.Log( $"{module.name}'s InputModule was already registered.", LogSeverity.Warning );
 				return;
@@ -308,11 +304,11 @@ namespace DigDig2.Input
 			}
 		}
 
-		public void DeregisterInputModule( InputModule module )
+		public void DeregisterInputModule( InputModule module, bool suppressRegistrationMessage = true )
 		{
-			if ( !activeInputModules.Contains( module ) )
+			if ( !IsInputModuleRegistered( module ) )
 			{
-				BetterDebug.Log( $"{module.name}'s InputModule is not registered, can't deregister.", LogSeverity.Warning );
+				if ( !suppressRegistrationMessage ) BetterDebug.Log( $"{module.name}'s InputModule is not registered, can't deregister.", LogSeverity.Warning );
 				return;
 			}
 
@@ -327,6 +323,14 @@ namespace DigDig2.Input
 				prioritizedInputModulesList.Remove( module );
 
 				RefillPriorityList( actionMapName, inputPlayerPrioritizedInputModules.Key );
+			}
+		}
+
+		public void DeregisterRegisteredInputModules( )
+		{
+			foreach ( InputModule inputModule in activeInputModules )
+			{
+				DeregisterInputModule( inputModule );
 			}
 		}
 

@@ -12,32 +12,143 @@
   <component name="ChangeListManager">
     <list default="true" id="50c3eb56-0f37-4789-a838-f82a855a30c4" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.dig-dig-2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.dig-dig-2/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/InputSystem_Actions.inputactions" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/InputSystem_Actions.inputactions" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ScriptableObjects/ConsoleCommands/ChangeArchivedDebugNotesVisibility.asset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ScriptableObjects/ConsoleCommands/ChangeArchivedDebugNotesVisibility.asset.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ScriptableObjects/ConsoleCommands/ChangeDebugNotesVisibility.asset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ScriptableObjects/ConsoleCommands/ChangeDebugNotesVisibility.asset.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ScriptableObjects/ConsoleCommands/EditDebugNote.asset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ScriptableObjects/ConsoleCommands/EditDebugNote.asset.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ScriptableObjects/EffectPlayers/Attacks/MaxSword/MaxLightAttack1PerformedEffect.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ScriptableObjects/EffectPlayers/Attacks/MaxSword/MaxLightAttack1PerformedEffect.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ScriptableObjects/EffectPlayers/Attacks/MaxSword/MaxLightAttack2PerformedEffect.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ScriptableObjects/EffectPlayers/Attacks/MaxSword/MaxLightAttack2PerformedEffect.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ScriptableObjects/EffectPlayers/Attacks/MaxSword/MaxLightAttack3PerformedEffect.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ScriptableObjects/EffectPlayers/Attacks/MaxSword/MaxLightAttack3PerformedEffect.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Debugging/Console/Commands/ChangeDebugNotesVisibility.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Debugging/Console/Commands/ChangeDebugNotesVisibility.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Debugging/Console/Commands/ManageDebugNote.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Debugging/Console/Commands/ManageDebugNote.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Debugging/Notes.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Debugging/Notes/DebugNoteBillboard.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Debugging/Notes/DebugNoteBillboard.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Debugging/Notes/DebugNotesManager.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Debugging/Notes/DebugNotesManager.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Debugging/Notes/DebugNotesStorage.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Debugging/Notes/DebugNotesStorage.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Materials/Environment/Ground/SG_Ground.shadergraph" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Materials/Environment/Ground/SG_Ground.shadergraph" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/Bushes/BushBigLight.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/Bushes/BushBigLight.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/Bushes/BushBigLightDark.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/Bushes/BushBigLightDark.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/Bushes/BushMiddleDark.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/Bushes/BushMiddleDark.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/Bushes/BushMiddleLight.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/Bushes/BushMiddleLight.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/Bushes/BushSmallDark.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/Bushes/BushSmallDark.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/Bushes/BushSmallLight.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/Bushes/BushSmallLight.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/Creatures/Fireflies.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/Creatures/Fireflies.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/Creatures/FireflyLight.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/Creatures/FireflyLight.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/Creatures/Fishes.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/Creatures/Fishes.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/Creatures/HammerSharks.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/Creatures/HammerSharks.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/Grass/GrassPatch1.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/Grass/GrassPatch1.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/Grass/GrassPatch2.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/Grass/GrassPatch2.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/Rocks/RockScatter1Stage1.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/Rocks/RockScatter1Stage1.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/Rocks/RockScatter1Stage2.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/Rocks/RockScatter1Stage2.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/Rocks/RockScatter1Stage3.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/Rocks/RockScatter1Stage3.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/Rocks/RockScatter2Stage1.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/Rocks/RockScatter2Stage1.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/Rocks/RockScatter2Stage2.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/Rocks/RockScatter2Stage2.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/Rocks/RockScatter2Stage3.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/Rocks/RockScatter2Stage3.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/Rocks/RockScatter3Stage1.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/Rocks/RockScatter3Stage1.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/Rocks/RockScatter3Stage2.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/Rocks/RockScatter3Stage2.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/Rocks/RockScatter3Stage3.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/Rocks/RockScatter3Stage3.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/Rocks/RockScatter4Stage1.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/Rocks/RockScatter4Stage1.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/Rocks/RockScatter4Stage2.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/Rocks/RockScatter4Stage2.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/Rocks/RockScatter4Stage3.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/Rocks/RockScatter4Stage3.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/Rocks/RockStage1.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/Rocks/RockStage1.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/Rocks/RockStage2.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/Rocks/RockStage2.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/Rocks/RockStage3.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/Rocks/RockStage3.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/SeaRelated/Coral1.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/SeaRelated/Coral1.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/SeaRelated/Coral2.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/SeaRelated/Coral2.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/SeaRelated/Seaweed 1.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/SeaRelated/Seaweed 1.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/SeaRelated/Seaweed.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/SeaRelated/Seaweed.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/StoneSlates/StoneSlateBig1Stage1.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/StoneSlates/StoneSlateBig1Stage1.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/StoneSlates/StoneSlateBig1Stage2.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/StoneSlates/StoneSlateBig1Stage2.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/StoneSlates/StoneSlateBig1Stage3.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/StoneSlates/StoneSlateBig1Stage3.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/StoneSlates/StoneSlateBig2Stage1.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/StoneSlates/StoneSlateBig2Stage1.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/StoneSlates/StoneSlateBig2Stage2.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/StoneSlates/StoneSlateBig2Stage2.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/StoneSlates/StoneSlateBig2Stage3.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/StoneSlates/StoneSlateBig2Stage3.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/StoneSlates/StoneSlateSmallStage1.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/StoneSlates/StoneSlateSmallStage1.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/StoneSlates/StoneSlateSmallStage2.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/StoneSlates/StoneSlateSmallStage2.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/StoneSlates/StoneSlateSmallStage3.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/StoneSlates/StoneSlateSmallStage3.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/Torches/Torch.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/Torches/Torch.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/Torches/TorchSpark.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/Torches/TorchSpark.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/Trees/TreeBigDark.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/Trees/TreeBigDark.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/Trees/TreeBigLight.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/Trees/TreeBigLight.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/Trees/TreeSmallDark.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/Trees/TreeSmallDark.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/Trees/TreeSmallLight.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Decorations/Trees/TreeSmallLight.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/GroundGrass/1x1.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/GroundGrass/1x1.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/GroundGrass/Corner1.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/GroundGrass/Corner1.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/GroundGrass/Corner2.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/GroundGrass/Corner2.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/GroundGrass/Diagonal_edge.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/GroundGrass/Diagonal_edge.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/GroundGrass/Diagonal_edge2.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/GroundGrass/Diagonal_edge2.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/GroundGrass/Edge Full.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/GroundGrass/Edge Full.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/GroundGrass/Edge.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/GroundGrass/Edge.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/GroundGrass/Edge2.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/GroundGrass/Edge2.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/GroundGrass/Edge_3_4.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/GroundGrass/Edge_3_4.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/GroundGrass/Middle.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/GroundGrass/Middle.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/GroundGrass/Only_corners.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/GroundGrass/Only_corners.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/SavePoint.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/SavePoint.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Bridges/BridgeEndStage1.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Bridges/BridgeEndStage1.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Bridges/BridgeEndStage2.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Bridges/BridgeEndStage2.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Bridges/BridgeEndStage3.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Bridges/BridgeEndStage3.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Bridges/BridgeMiddleStage1.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Bridges/BridgeMiddleStage1.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Bridges/BridgeMiddleStage2.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Bridges/BridgeMiddleStage2.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Bridges/BridgeMiddleStage3.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Bridges/BridgeMiddleStage3.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Bridges/BridgePillarStage1.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Bridges/BridgePillarStage1.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Bridges/BridgePillarStage2.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Bridges/BridgePillarStage2.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Bridges/BridgePillarStage3.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Bridges/BridgePillarStage3.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Bridges/BridgeStartStage1.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Bridges/BridgeStartStage1.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Bridges/BridgeStartStage2.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Bridges/BridgeStartStage2.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Bridges/BridgeStartStage3.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Bridges/BridgeStartStage3.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Bridges/CurvedBridgeStage1.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Bridges/CurvedBridgeStage1.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Bridges/CurvedBridgeStage2.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Bridges/CurvedBridgeStage2.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Bridges/CurvedBridgeStage3.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Bridges/CurvedBridgeStage3.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Stairs/StairsFullStage1.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Stairs/StairsFullStage1.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Stairs/StairsFullStage2.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Stairs/StairsFullStage2.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Stairs/StairsFullStage3.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Stairs/StairsFullStage3.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Stairs/StairsHalfStage1.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Stairs/StairsHalfStage1.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Stairs/StairsHalfStage2.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Stairs/StairsHalfStage2.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Stairs/StairsHalfStage3.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Stairs/StairsHalfStage3.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Structures/Brick1Stage1.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Structures/Brick1Stage1.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Structures/Brick1Stage2.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Structures/Brick1Stage2.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Structures/Brick1Stage3.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Structures/Brick1Stage3.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Structures/Brick2Stage1.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Structures/Brick2Stage1.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Structures/Brick2Stage2.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Structures/Brick2Stage2.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Structures/Brick2Stage3.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Structures/Brick2Stage3.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Structures/Brick3Stage1.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Structures/Brick3Stage1.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Structures/Brick3Stage2.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Structures/Brick3Stage2.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Structures/Brick3Stage3.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Structures/Brick3Stage3.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Structures/BrickArcStage1.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Structures/BrickArcStage1.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Structures/BrickArcStage2.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Structures/BrickArcStage2.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Structures/BrickArcStage3.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Structures/BrickArcStage3.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Structures/PillarBrickWall1Stage1.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Structures/PillarBrickWall1Stage1.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Structures/PillarBrickWall1Stage2.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Structures/PillarBrickWall1Stage2.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Structures/PillarBrickWall1Stage3.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Structures/PillarBrickWall1Stage3.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Structures/PillarBrickWall2Stage1.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Structures/PillarBrickWall2Stage1.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Structures/PillarBrickWall2Stage2.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Structures/PillarBrickWall2Stage2.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Structures/PillarBrickWall2Stage3.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Structures/PillarBrickWall2Stage3.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Structures/StonePillar1Stage1.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Structures/StonePillar1Stage1.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Structures/StonePillar1Stage2.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Structures/StonePillar1Stage2.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Structures/StonePillar1Stage3.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Structures/StonePillar1Stage3.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Structures/StonePillar2Stage1.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Structures/StonePillar2Stage1.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Structures/StonePillar2Stage2.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Structures/StonePillar2Stage2.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Structures/StonePillar2Stage3.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Structures/StonePillar2Stage3.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Structures/StonePillar3Stage1.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Structures/StonePillar3Stage1.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Structures/StonePillar3Stage2.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Structures/StonePillar3Stage2.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Structures/StonePillar3Stage3.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BuildingBlocks/Structures/Structures/StonePillar3Stage3.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Stages/Stage 1.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Stages/Stage 1.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Stages/Stage 2.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Stages/Stage 2.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/FeatureTestScene 1.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/FeatureTestScene 1/NavMesh-NavMesh.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/FeatureTestScene 1/NavMesh-NavMesh.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/GameScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/GameScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/MainMenu.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/MainMenu.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Audio/AudioManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Audio/AudioManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/CinemaCamera/CameraEffectors/TriggerZoneCameraEffectorBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CinemaCamera/CameraEffectors/TriggerZoneCameraEffectorBase.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/MergeMeshTool.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/MergeMeshTool.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Entity/BlinkDash.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Entity/BlinkDash.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Crystal.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Crystal.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/GameplayTrigger.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/GameplayTrigger.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Input/InputManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Input/InputManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/Controllers/MainMenuController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/Controllers/MainMenuController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Input/InputModule.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Input/InputModule.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Input/InputPlayerManagers/ControlSchemeDevicesInputPlayerManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Input/InputPlayerManagers/ControlSchemeDevicesInputPlayerManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/Combat/PlayerFocuser.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/Combat/PlayerFocuser.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Settings/PC_Renderer.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Settings/PC_Renderer.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/UI/MainMenu/Layout.uxml" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UI/MainMenu/Layout.uxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/UI/PauseMenu/Layout.uxml" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UI/PauseMenu/Layout.uxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UI/MainMenu/Style.uss" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UI/MainMenu/Style.uss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UI/TutorialBillboards/HeavyAttackHint.uxml" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UI/TutorialBillboards/HeavyAttackHint.uxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Recovery.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Recovery/0 (1).unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Recovery/0 (1).unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Recovery/0.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Recovery/0.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Packages/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/Packages/com.unity.probuilder/Settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/Packages/com.unity.probuilder/Settings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -86,8 +197,6 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Debugging/BetterDebug.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Debugging/Combat/AttackIndicator.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Debugging/Console/CommandSystem.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Debugging/Console/Commands/ChangeDebugNotesVisibility.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Debugging/Console/Commands/ManageDebugNote.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Debugging/Console/Commands/ManageSaves.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Debugging/Console/ConsoleCommand.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Debugging/Console/DebugConsole.cs" root0="FORCE_HIGHLIGHTING" />
@@ -95,9 +204,6 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Debugging/Interaction/InteractableIndicator.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Debugging/Menu/DebugMenu.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Debugging/Menu/DebugMenuElement.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Debugging/Notes/DebugNoteBillboard.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Debugging/Notes/DebugNotesManager.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Debugging/Notes/DebugNotesStorage.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/EffectSystem/CumulativeEffectBase.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/EffectSystem/EffectCleanup.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/EffectSystem/EffectCore.cs" root0="FORCE_HIGHLIGHTING" />
@@ -119,6 +225,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Game/GameplayTrigger.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Game/LoadingScreenManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Game/OceanFollow.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Game/ProBuilderEdgePainter.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Input/GameInputSystem.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Input/InputContext.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Input/InputManager.cs" root0="FORCE_HIGHLIGHTING" />
@@ -184,7 +291,6 @@
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.core@27dd7aff58bb/Editor/Material/AssetReimportUtils.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.test-framework.performance@0840f58e4562/Runtime/PlayerCallbacks.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.test-framework@353f8d76a670/UnityEditor.TestRunner/GUI/Controls/GenericItemContentProvider.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.timeline@bfd27f8016ff/Editor/State/PlayRange.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="McpProjectServerCommands">
     <commands />
@@ -192,7 +298,7 @@
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="Toolset" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 0
@@ -229,7 +335,7 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -240,7 +346,7 @@
   </component>
   <component name="RunManager" selected="Unity Attach To.Attach to">
     <configuration name="Standalone Player" type="RunUnityExe" factoryName="Unity Executable">
-      <option name="EXE_PATH" value="$PROJECT_DIR$/../WhiskersOfTheTideWindowsBuild/felix/WhiskersOfTheTide/Whiskers of the Tide.exe" />
+      <option name="EXE_PATH" value="$USER_HOME$/Builds/Unity/dig-dig-2/GaIA (Windows)/Whiskers of the Tide.exe" />
       <option name="PROGRAM_PARAMETERS" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../Builds" />
       <option name="PASS_PARENT_ENVS" value="1" />
@@ -363,6 +469,9 @@
       <workItem from="1775900042118" duration="7040000" />
       <workItem from="1775909637867" duration="13766000" />
       <workItem from="1775926137151" duration="1379000" />
+      <workItem from="1775984764734" duration="4853000" />
+      <workItem from="1775998920055" duration="3896000" />
+      <workItem from="1776003884062" duration="10234000" />
     </task>
     <servers />
   </component>

@@ -1,12 +1,8 @@
-using System;
-using System.Collections;
 using System.Linq;
 using Cysharp.Threading.Tasks;
-using DigDig2.Debugging;
 using DigDig2.EffectSystem;
 using DigDig2.Game;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace DigDig2.Entity
 {

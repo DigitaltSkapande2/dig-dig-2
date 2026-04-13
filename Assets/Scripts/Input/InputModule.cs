@@ -83,8 +83,7 @@ namespace DigDig2.Input
 
 
         #region Input
-
-		// ReSharper disable once MemberCanBeMadeStatic.Global
+		
 		public void SendInput( InputAction.CallbackContext context, InputPlayer inputPlayer, int inputPlayerIndex )
 		{
 			InputInfo inputInfo = new( )

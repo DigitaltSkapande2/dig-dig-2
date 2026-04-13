@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using DigDig2.Combat;
+using DigDig2.Debugging;
 using DigDig2.SaveSystem;
 using Unity.Mathematics;
 
@@ -18,7 +19,7 @@ namespace DigDig2.Game
 		private static readonly int crackStage = Shader.PropertyToID( "_CrackStage" );
 
 		[Tooltip( "Enemies connected to the crystal." )]
-		[SerializeField] private List<EnemyConnections> enemyConnections = new( );
+		[SerializeField] private List<EnemyConnection> enemyConnections = new( );
 
 		[Tooltip( "The crystal visual GameObject." )]
 		[SerializeField] private GameObject crystal;
@@ -45,9 +46,10 @@ namespace DigDig2.Game
 		[SerializeField] private float bobSpeed;
 
         [Header("Ocean")]
-        [SerializeField] private OceanFollow ocean;
         [SerializeField] private float oceanLowerAmount;
 
+        private OceanFollow ocean;
+		
 		private Attackable attackable;
 		private MeshRenderer crystalMeshRenderer;
         private MeshRenderer shieldMeshRenderer;
@@ -69,9 +71,12 @@ namespace DigDig2.Game
 
 		private void Start( )
 		{
-			if ( crystal == null )
+			ocean = FindFirstObjectByType<OceanFollow>( );
+			if ( !ocean ) BetterDebug.Log( "Could not find water! Water will not be lowered.", LogSeverity.Error );
+			
+			if ( !crystal )
 			{
-				Debug.LogError( "Crystal has not been assigned." );
+				BetterDebug.Log( "Crystal has not been assigned.", LogSeverity.Error );
 				return;
 			}
 
@@ -92,7 +97,7 @@ namespace DigDig2.Game
 
 			for ( int index = enemyConnections.Count - 1; index >= 0; index-- )
 			{
-				EnemyConnections enemyConnection = enemyConnections[ index ];
+				EnemyConnection enemyConnection = enemyConnections[ index ];
 				if ( !enemyConnection.lineDrawer && !enemyConnection.enemy ) continue;
 
 				if ( !enemyConnection.lineDrawer )
@@ -116,9 +121,18 @@ namespace DigDig2.Game
 			if ( enemyConnections.Count <= 0 ) DeactivateShield(false);
 		}
 
-        private void OnDeath(GameObject _)
+		private void OnDrawGizmos( )
+		{
+			Gizmos.color = Color.purple;
+			foreach ( EnemyConnection enemyConnection in enemyConnections )
+			{
+				if ( enemyConnection.enemy ) Gizmos.DrawLine( transform.position, enemyConnection.enemy.transform.position );
+			}
+		}
+
+		private void OnDeath(GameObject _)
         {
-            ocean.LowerWater(oceanLowerAmount);
+            if ( ocean ) ocean.LowerWater( oceanLowerAmount );
         }
 
 		private void OnHit( )
@@ -186,7 +200,7 @@ namespace DigDig2.Game
         }
 
 		[Serializable]
-		private struct EnemyConnections
+		private struct EnemyConnection
 		{
 			public GameObject enemy;
 			[NonSerialized] public GameObject lineDrawer;
@@ -197,8 +211,8 @@ namespace DigDig2.Game
         {
             if (myId < activeId)
             {
-                //ocean.LowerWater(oceanLowerAmount, true);
-                foreach (var enemyConnection in enemyConnections)
+                //if ( ocean ) ocean.LowerWater(oceanLowerAmount, true);
+                foreach (EnemyConnection enemyConnection in enemyConnections)
                 {
                     Destroy(enemyConnection.enemy);
                 }

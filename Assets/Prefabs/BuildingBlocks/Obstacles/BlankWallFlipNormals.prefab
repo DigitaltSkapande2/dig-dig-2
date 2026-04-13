@@ -63,7 +63,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 2c5be732e4b8e324bba92889bd8e1218, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 963170303a8c2ef4cb2c042385eb07cc, type: 2}
+      objectReference: {fileID: 2100000, guid: 53ee71a2137eeeb4ebc4e20e27d3459c, type: 2}
     - target: {fileID: 919132149155446097, guid: 2c5be732e4b8e324bba92889bd8e1218, type: 3}
       propertyPath: m_Name
       value: BlankWallFlipNormals

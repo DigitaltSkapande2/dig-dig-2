@@ -28,6 +28,10 @@ Material:
         m_Texture: {fileID: 2800000, guid: 2027e05eb37fd3143be60ce3e95f6a0e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _GunkNoiseMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _TextureMap:
         m_Texture: {fileID: 2800000, guid: 049f9b387d66d1940a3ab18f45ff086f, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -50,22 +54,33 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _EmissionStrength: 0
+    - _GunkAreaBottomY: 0
+    - _GunkAreaTopY: 0
+    - _GunkEnabled: 0
     - _Metallic: 0
     - _NoiseScale: 15
     - _NoiseStrength: 1
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Smoothness: 0
+    - _TextureBottomY: 1
+    - _TextureImpact: 1
     - _TextureIntensity: 1
     - _TextureStrength: 1
     - _TextureTiling: 2.76
+    - _TextureTopY: 0
     - _WindDensity: 0.25
     - _WindSpeed: 3
     - _WindStrength: 0.12
     m_Colors:
     - _BaseColor: {r: 0.0766247, g: 0.16226411, b: 0, a: 1}
+    - _EmissionColor: {r: 0.840306, g: 12.01979, b: 13.70345, a: 1}
     - _GlowColor: {r: 0, g: 27.67306, b: 32, a: 1}
+    - _GunkColor: {r: 0, g: 0.28301886, b: 0.050412685, a: 1}
+    - _TextureBottomColor: {r: 0, g: 0, b: 0, a: 1}
     - _TextureColor: {r: 0.0074759745, g: 0.2264151, b: 0.05823652, a: 1}
+    - _TextureTopColor: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &3190752926665027512

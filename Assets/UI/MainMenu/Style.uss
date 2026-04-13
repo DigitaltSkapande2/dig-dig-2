@@ -29,7 +29,7 @@
     margin-top: 0;
     background-color: rgba(255, 255, 255, 0);
     color: rgb(255, 255, 255);
-    text-shadow: 0 0 5px rgb(0, 0, 0);
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0);
     padding-left: 0;
     transition-property: padding-left, color;
     transition-duration: 0.1s, 0.1s;
@@ -126,4 +126,25 @@
 #modeSelection > #animationContainer.navigation-closed {
     translate: 0% 50px;
     opacity: 0;
+}
+
+.option {
+    font-size: 32px;
+    flex-direction: row;
+}
+
+.category {
+    flex-direction: row;
+    font-size: 24px;
+    align-items: center;
+}
+
+.category > VisualElement {
+    background-color: rgba(255, 255, 255, 0.5);
+    height: 10%;
+}
+
+.category > Label {
+    padding-left: 20px;
+    padding-right: 20px;
 }

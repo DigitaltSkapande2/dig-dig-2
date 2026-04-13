@@ -22,11 +22,11 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: M_stonesSlate_dark
   m_Shader: {fileID: -6465566751694194690, guid: 411568d35f6bd0c41966c3226ce7d340, type: 3}
-  m_Parent: {fileID: 0}
+  m_Parent: {fileID: 2100000, guid: 53ee71a2137eeeb4ebc4e20e27d3459c, type: 2}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords: []
-  m_LightmapFlags: 2
+  m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -36,48 +36,17 @@ Material:
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
-    m_TexEnvs:
-    - _EmissionMap:
-        m_Texture: {fileID: 2800000, guid: 2027e05eb37fd3143be60ce3e95f6a0e, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _TextureMap:
-        m_Texture: {fileID: 2800000, guid: 049f9b387d66d1940a3ab18f45ff086f, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _UV_Map:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - unity_Lightmaps:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - unity_LightmapsInd:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - unity_ShadowMasks:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
+    m_TexEnvs: []
     m_Ints: []
     m_Floats:
-    - _Metallic: 0
     - _NoiseScale: 15
-    - _NoiseStrength: 1
-    - _QueueControl: 0
-    - _QueueOffset: 0
-    - _Smoothness: 0
     - _TextureIntensity: 1.12
-    - _TextureStrength: 1
     - _TextureTiling: 2.2
-    - _WindDensity: 0.25
-    - _WindSpeed: 1.5
-    - _WindStrength: 0
     m_Colors:
     - _BaseColor: {r: 0.26415092, g: 0.16472054, b: 0.09843359, a: 1}
     - _GlowColor: {r: 0, g: 27.67306, b: 32, a: 1}
+    - _TextureBottomColor: {r: 0, g: 0, b: 0, a: 1}
     - _TextureColor: {r: 0.24528301, g: 0.23846786, b: 0.23718405, a: 1}
+    - _TextureTopColor: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

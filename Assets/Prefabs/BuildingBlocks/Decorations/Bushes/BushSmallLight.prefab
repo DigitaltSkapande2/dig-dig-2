@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2439054763033643394}
   - component: {fileID: 3760801628578617148}
   - component: {fileID: 4398359638341211827}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: BushSmallLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}

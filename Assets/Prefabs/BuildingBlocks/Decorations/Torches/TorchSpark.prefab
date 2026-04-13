@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3903673642140853699}
   - component: {fileID: 200279843707682184}
   - component: {fileID: 4049173530738558311}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Flames
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4908,7 +4908,7 @@ GameObject:
   - component: {fileID: 7168054477501138852}
   - component: {fileID: 5198478890459562172}
   - component: {fileID: 2711210306795582431}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Sparks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9809,7 +9809,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1474928653949921625}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: TorchSpark
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -36,8 +36,9 @@ namespace DigDig2.Audio
 		[SerializeField] private AudioClipOverrideSetting[ ] audioClipCooldownOverrides;
 		private AudioSource source;
 
-        private void Awake()
+        protected override void Awake()
         {
+			base.Awake( );
             source = GetComponent<AudioSource>( ); 
         }
 

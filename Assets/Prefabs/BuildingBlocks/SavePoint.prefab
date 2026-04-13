@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7165053757399966656}
   - component: {fileID: 5699424446975162705}
   - component: {fileID: 445666559586089679}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: SavePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -117,7 +117,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6465120459874542917}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: SinglePlayerSpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -149,7 +149,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3699966138620905476}
   - component: {fileID: 7971288690862353960}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: LockTargetCameraEffector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -379,6 +379,10 @@ PrefabInstance:
       value: FireplaceFire
       objectReference: {fileID: 0}
     - target: {fileID: 1446114678107710526, guid: ff74a4caeb436e44dbc993c2714d284f, type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 1446114678107710526, guid: ff74a4caeb436e44dbc993c2714d284f, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -458,9 +462,21 @@ PrefabInstance:
       propertyPath: InitialModule.gravityModifier.scalar
       value: 0.51
       objectReference: {fileID: 0}
+    - target: {fileID: 4974565658183739277, guid: ff74a4caeb436e44dbc993c2714d284f, type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
     - target: {fileID: 6386768035261720916, guid: ff74a4caeb436e44dbc993c2714d284f, type: 3}
       propertyPath: m_LocalPosition.y
       value: -0.305
+      objectReference: {fileID: 0}
+    - target: {fileID: 6832760160258506032, guid: ff74a4caeb436e44dbc993c2714d284f, type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 7565282677903112550, guid: ff74a4caeb436e44dbc993c2714d284f, type: 3}
+      propertyPath: m_Layer
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 7651705585541519395, guid: ff74a4caeb436e44dbc993c2714d284f, type: 3}
       propertyPath: m_LocalPosition.y
@@ -537,6 +553,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CampfireSFX
       objectReference: {fileID: 0}
+    - target: {fileID: 4950934811570952627, guid: cfd1baed424b6c8bc82560ab8d111760, type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -611,6 +631,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -8552880829525958858, guid: 1633b86493ee8335380a8fca58c9bd55, type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
     - target: {fileID: -7918335002988649766, guid: 1633b86493ee8335380a8fca58c9bd55, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -619,6 +643,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 53ee71a2137eeeb4ebc4e20e27d3459c, type: 2}
+    - target: {fileID: -7029948723529949830, guid: 1633b86493ee8335380a8fca58c9bd55, type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
     - target: {fileID: -5592419054433855823, guid: 1633b86493ee8335380a8fca58c9bd55, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -627,10 +655,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: BrickFirePlace
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1633b86493ee8335380a8fca58c9bd55, type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 2039683507788143969, guid: 1633b86493ee8335380a8fca58c9bd55, type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
     - target: {fileID: 2533528570578453725, guid: 1633b86493ee8335380a8fca58c9bd55, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 3d71025735569104e9169fb61bc3386c, type: 2}
+    - target: {fileID: 5109202456758520984, guid: 1633b86493ee8335380a8fca58c9bd55, type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -736,13 +776,25 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2648712211740921779, guid: e0b69a909ec59ea4480575170385982c, type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
     - target: {fileID: 3903673642140853699, guid: e0b69a909ec59ea4480575170385982c, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0.238
       objectReference: {fileID: 0}
+    - target: {fileID: 6027133004572343241, guid: e0b69a909ec59ea4480575170385982c, type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
     - target: {fileID: 8367957979486153713, guid: e0b69a909ec59ea4480575170385982c, type: 3}
       propertyPath: m_Name
       value: TorchSpark
+      objectReference: {fileID: 0}
+    - target: {fileID: 8367957979486153713, guid: e0b69a909ec59ea4480575170385982c, type: 3}
+      propertyPath: m_Layer
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 8367957979486153713, guid: e0b69a909ec59ea4480575170385982c, type: 3}
       propertyPath: m_IsActive

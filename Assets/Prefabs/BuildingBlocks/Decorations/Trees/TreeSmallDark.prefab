@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6712776512184469795}
   - component: {fileID: 376910484652727987}
   - component: {fileID: 2629194355546627499}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: StammLiten
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,7 +100,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7333276782698975638}
   - component: {fileID: 2433489464694178184}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: TreeSmallDark
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -158,7 +158,7 @@ GameObject:
   - component: {fileID: 3514354580381458865}
   - component: {fileID: 3389656104806276780}
   - component: {fileID: 4476286981142574033}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: BarrLiten
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5581490366637116045}
   - component: {fileID: 4433462069061955252}
   - component: {fileID: 4753302645815904963}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: HammerSharks
   m_TagString: Untagged
   m_Icon: {fileID: 0}

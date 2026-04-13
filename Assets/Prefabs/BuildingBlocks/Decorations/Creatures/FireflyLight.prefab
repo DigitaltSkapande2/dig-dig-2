@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2897253915965350977}
   - component: {fileID: 6497193099254485363}
   - component: {fileID: 1447388213773748064}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: FireflyLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}

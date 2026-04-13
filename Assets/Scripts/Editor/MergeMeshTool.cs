@@ -3,16 +3,16 @@ using DigDig2.Debugging;
 using UnityEditor;
 using UnityEngine;
 
-namespace DigDig2
+namespace DigDig2.Editor
 {
-    public class MergeMeshTool
+    public static class MergeMeshTool
     {
         [MenuItem("Tools/MergeMeshes")]
         public static void CombineMeshes()
         {
             BetterDebug.Log("Merging Meshes");
 
-            List<MeshFilter> meshFilters = new List<MeshFilter>();
+            List<MeshFilter> meshFilters = new( );
 
             foreach (Transform go in Selection.GetTransforms(SelectionMode.Deep | SelectionMode.Editable | SelectionMode.ExcludePrefab))
             {
@@ -27,7 +27,7 @@ namespace DigDig2
 
             for (int i = 0; i < meshFilters.Count; i++)
             {
-                var meshFilter = meshFilters[i];
+                MeshFilter meshFilter = meshFilters[i];
 
                 instances[i] = new CombineInstance
                 {
@@ -39,12 +39,10 @@ namespace DigDig2
                 
             }
 
-            Mesh combinedMesh = new Mesh();
+            Mesh combinedMesh = new( );
             combinedMesh.CombineMeshes(instances);
-
-            MeshFilter finalMeshFilter;
-            if (Selection.activeGameObject.TryGetComponent<MeshFilter>(out finalMeshFilter)) ;
-            else
+			
+            if (!Selection.activeGameObject.TryGetComponent(out MeshFilter finalMeshFilter))
             {
                 finalMeshFilter = Selection.activeGameObject.AddComponent<MeshFilter>();
             }

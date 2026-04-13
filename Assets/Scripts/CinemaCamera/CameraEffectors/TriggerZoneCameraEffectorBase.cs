@@ -8,8 +8,9 @@ namespace DigDig2.CinemaCamera.CameraEffectors
 		private new Collider collider;
 		private Transform target;
 
-		protected void Start( )
+		protected override void Start( )
 		{
+			base.Start( );
 			collider = GetComponent<Collider>( );
 			if ( collider == null ) BetterDebug.Log( "CinematicZoneEffector requires a Collider component.", LogSeverity.Error);
 

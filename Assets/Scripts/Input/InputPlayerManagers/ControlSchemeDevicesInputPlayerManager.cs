@@ -31,7 +31,6 @@ namespace DigDig2.Input.InputPlayerManagers
 			hasGeneratedList = true;
 
 			unusedDevices = InputSystem.devices.ToArray( ).ToList( );
-            BetterDebug.Log($"unUsedDevices = {String.Join(", ",unusedDevices.Select(d=>d.name))}");
 			
 			return ReconcileInputPlayers( );
 		}

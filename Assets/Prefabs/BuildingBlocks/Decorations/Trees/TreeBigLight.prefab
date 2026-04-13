@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 9107800405505123523}
   - component: {fileID: 8433721654008584609}
   - component: {fileID: 5495067166142410638}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: BarrStor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: 5612501034499372313}
   - component: {fileID: 8976042071699171675}
   - component: {fileID: 6159286044971989389}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: StammStor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -190,7 +190,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8526118038419934612}
   - component: {fileID: 1353909452988884858}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: TreeBigLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}

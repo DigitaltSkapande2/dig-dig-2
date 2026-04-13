@@ -56,16 +56,20 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Smoothness: 0
+    - _TextureBottomY: 1
     - _TextureIntensity: 1
     - _TextureStrength: 1
     - _TextureTiling: 2.76
+    - _TextureTopY: 0
     - _WindDensity: 0.25
     - _WindSpeed: 3
     - _WindStrength: 0.065
     m_Colors:
     - _BaseColor: {r: 0.0034892715, g: 0.084905684, b: 0, a: 1}
     - _GlowColor: {r: 0, g: 27.67306, b: 32, a: 1}
+    - _TextureBottomColor: {r: 0, g: 0, b: 0, a: 1}
     - _TextureColor: {r: 0.06448024, g: 0.21698111, b: 0.1677873, a: 1}
+    - _TextureTopColor: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &3190752926665027512

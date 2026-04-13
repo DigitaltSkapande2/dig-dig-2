@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 171217217852989178}
   - component: {fileID: 6264976121743691068}
   - component: {fileID: 7421661365032018587}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Diagonal_edge
   m_TagString: Untagged
   m_Icon: {fileID: 0}

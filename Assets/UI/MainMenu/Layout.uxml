@@ -3,12 +3,13 @@
     <Style src="project://database/Assets/UI/MainMenu/Style.uss?fileID=7433441132597879392&amp;guid=7b25c9c7deefb56afbed8e4df3da8aac&amp;type=3#Style"/>
     <Style src="project://database/Assets/UI/SaveFile/SaveFile.uss?fileID=7433441132597879392&amp;guid=971dc12079fc4f588813e0f119b3b0d4&amp;type=3#SaveFile"/>
     <ui:VisualElement name="cover" style="flex-grow: 1; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url(&quot;project://database/Assets/Textures/UI/MainMenu/Cover.png?fileID=2800000&amp;guid=fa054f674990081c7adf652397940fd1&amp;type=3#Cover&quot;); -unity-background-scale-mode: scale-and-crop;">
+        <ui:VisualElement name="" style="flex-grow: 1; position: absolute; top: 0; left: 0; bottom: 0; right: 40%; background-image: url(&quot;project://database/Assets/Textures/UI/Shapes/Gradient.png?fileID=2800000&amp;guid=f4040a376b4897cc99eb538318ae2869&amp;type=3#Gradient&quot;); -unity-background-image-tint-color: rgba(0, 0, 0, 0.69); background-size: 101% 100%;"/>
         <ui:Image source="project://database/Assets/Textures/UI/Title.png?fileID=-43304313&amp;guid=887d5d3fdebb0904b9db8ff257ddda45&amp;type=3#Title_0" style="top: 0; left: 60px; height: 502px; width: 1017px;"/>
         <ui:VisualElement name="mainNavigation" style="flex-grow: 1; width: 500px; justify-content: flex-end; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; flex-direction: column; padding-top: 0; position: absolute; left: 150px; bottom: 100px;">
-            <ui:Button text="Continue" enabled="false" name="continue" style="position: relative; top: 0; left: 0;"/>
-            <ui:Button text="Load Game" name="loadGame" style="position: relative; top: 0; left: 0;"/>
-            <ui:Button text="New Game" enabled="true" name="newGame" style="position: relative; top: 0; left: 0;"/>
-            <ui:Button text="Settings" name="settings" enabled="false" style="position: relative; top: 0; left: 0; display: none;"/>
+            <ui:Button text="Continue" name="continue" style="position: relative; top: 0; left: 0; display: none;"/>
+            <ui:Button text="Load Game" name="loadGame" style="position: relative; top: 0; left: 0; display: flex;"/>
+            <ui:Button text="New Game" name="newGame" style="position: relative; top: 0; left: 0;"/>
+            <ui:Button text="Settings" name="settings" style="position: relative; top: 0; left: 0;"/>
             <ui:Button text="Quit" name="quit" class="quit" style="position: relative; top: 0; left: 0;"/>
         </ui:VisualElement>
         <ui:VisualElement name="menuContainer" style="flex-grow: 1; position: absolute; right: 200px; height: 700px; width: 1000px; top: 50%; left: auto; bottom: 50%; transform-origin: center; align-content: center; translate: 0 -50%;">
@@ -22,17 +23,45 @@
                     <ui:Button text="Delete" name="delete" style="display: none; visibility: hidden;"/>
                 </ui:VisualElement>
             </ui:VisualElement>
-            <ui:VisualElement name="settingsMenu" enabled="true" class="menu" style="flex-grow: 1; position: absolute; top: 0; left: 0; bottom: 0; right: 0; width: 100%; height: 100%; display: none;">
+            <ui:VisualElement name="settingsMenu" enabled="true" class="menu" style="flex-grow: 1; position: absolute; top: 0; left: 0; bottom: 0; right: 0; width: 100%; height: 100%; display: flex;">
                 <ui:Label text="SETTINGS" name="" class="title"/>
-                <ui:Button text="hello"/>
-                <ui:Button text="hello" name="" class="navigationStart"/>
-                <ui:Button text="hello" name=""/>
-                <ui:Vector2Field label="Vec2 Field"/>
-                <ui:LongField label="Long Field" value="42"/>
-                <ui:IntegerField label="Integer Field" value="42"/>
-                <ui:FloatField label="Float Field" value="42.2"/>
-                <ui:DoubleField label="Double Field" value="42.2"/>
-                <ui:TextField label="Text Field" placeholder-text="filler text"/>
+                <ui:ScrollView horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Hidden" style="flex-grow: 1;">
+                    <ui:VisualElement name="" class="category" style="flex-grow: 0;">
+                        <ui:VisualElement style="flex-grow: 0; width: 50px;"/>
+                        <ui:Label text="Sound"/>
+                        <ui:VisualElement style="flex-grow: 1;"/>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="masterVolume" class="option" style="flex-grow: 0;">
+                        <ui:Label text="Master Volume"/>
+                        <ui:VisualElement style="flex-grow: 1;"/>
+                        <ui:SliderInt label="" value="42" high-value="100" style="width: 300px;"/>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="musicVolume" class="option" style="flex-grow: 0;">
+                        <ui:Label text="Music Volume"/>
+                        <ui:VisualElement style="flex-grow: 1;"/>
+                        <ui:SliderInt label="" value="42" high-value="100" style="width: 300px;"/>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="uiVolume" class="option" style="flex-grow: 0;">
+                        <ui:Label text="UI Volume"/>
+                        <ui:VisualElement style="flex-grow: 1;"/>
+                        <ui:SliderInt label="" value="42" high-value="100" style="width: 300px;"/>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="soundEffectsVolume" class="option" style="flex-grow: 0;">
+                        <ui:Label text="Sound Effects Volume"/>
+                        <ui:VisualElement style="flex-grow: 1;"/>
+                        <ui:SliderInt label="" value="42" high-value="100" style="width: 300px;"/>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="" class="category" style="flex-grow: 0;">
+                        <ui:VisualElement style="flex-grow: 0; width: 50px;"/>
+                        <ui:Label text="Input"/>
+                        <ui:VisualElement style="flex-grow: 1;"/>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="soundEffectsVolume" class="option" style="flex-grow: 0;">
+                        <ui:Label text="Sound Effects Volume"/>
+                        <ui:VisualElement style="flex-grow: 1;"/>
+                        <ui:SliderInt label="" value="42" high-value="100" style="width: 300px;"/>
+                    </ui:VisualElement>
+                </ui:ScrollView>
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>

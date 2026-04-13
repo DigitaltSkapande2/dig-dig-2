@@ -255,7 +255,6 @@ namespace DigDig2.Player.Combat
 
         private void ScanForAttackables()
         {
-            BetterDebug.Log("Attackable Scan :>");
             Vector3 myPos = targetPlayer.characterObject.transform.position;
             int colliderCount = Physics.OverlapSphereNonAlloc( myPos, focusScanRadius, _colliderBuffer );
             
@@ -279,16 +278,16 @@ namespace DigDig2.Player.Combat
             }
             
             // -- Update list
-            int highestPriorityIndex = priorityIndexSortedAttackables.Keys.Min();
+			int highestPriorityIndex = 0;
+			if ( priorityIndexSortedAttackables.Count > 0 ) highestPriorityIndex = priorityIndexSortedAttackables.Keys.Min();
             
             currentTargetableEnemies.Clear();
             currentTargetableEnemies.AddRange(priorityIndexSortedAttackables[highestPriorityIndex]);
-            if (currentlyFocusedEnemyGroupIndex != highestPriorityIndex)
-            {
-                currentlyFocusedEnemyGroupIndex = highestPriorityIndex;
-                ReCalculateFocusTarget();
-            }
-        }
+			if ( currentlyFocusedEnemyGroupIndex == highestPriorityIndex ) return;
+
+			currentlyFocusedEnemyGroupIndex = highestPriorityIndex;
+			ReCalculateFocusTarget();
+		}
 
 		public static bool IsAttackableVisibleOnScreen( Attackable attackable )
 		{
