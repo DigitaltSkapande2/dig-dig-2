@@ -263,7 +263,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Util.MaterialFloatToggler
   targetRenderers:
   - {fileID: 3871237785094674324}
-  colorVarName: _GlowColor
+  colorVarName: _EmissionColor
   activatedValue: {r: 0, g: 4.5111203, b: 5.216476, a: 1}
   deactivatedValue: {r: 0, g: 0.29978666, b: 0.34493518, a: 1}
   fadeActive:

@@ -59,8 +59,8 @@ Material:
     - _GunkAreaTopY: -10
     - _GunkEnabled: 1
     - _Metallic: 0
-    - _NoiseScale: 2
-    - _NoiseStrength: 0.5
+    - _NoiseScale: 6.7
+    - _NoiseStrength: 0.4
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Smoothness: 0
