@@ -20,7 +20,7 @@ MonoBehaviour:
   - audioClip: {fileID: 8300000, guid: 60cca65bf4b3c597eade2ffd2fb6aa47, type: 3}
     volume: 1
     pitchRange: {x: 0, y: 0}
-  screenShake: 0
+  screenShake: 1
   screenShakeEffectData:
     intensityCurve:
       serializedVersion: 2
@@ -47,7 +47,7 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     duration: 0.4
-    intensity: 1
+    intensity: 0.1
   cameraZoom: 0
   cameraZoomEffectData:
     intensityCurve:

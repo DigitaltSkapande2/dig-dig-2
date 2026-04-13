@@ -20,7 +20,9 @@ MonoBehaviour:
       lifetime: 0
   playSound: 1
   audioClipsToPlay:
-  - {fileID: 8300000, guid: b98b4afbe91f446de9da6ddf2f310bda, type: 3}
+  - audioClip: {fileID: 8300000, guid: b98b4afbe91f446de9da6ddf2f310bda, type: 3}
+    volume: 1
+    pitchRange: {x: 0.7, y: 0.7}
   screenShake: 1
   screenShakeEffectData:
     intensityCurve:

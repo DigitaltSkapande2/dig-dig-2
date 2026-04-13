@@ -72,6 +72,7 @@ namespace DigDig2.Game
         
         private PauseMenuController pauseMenuController;
         private GameHudController gameHudController;
+        private SaveManager saveManager;
         
         
         #region UnityCallbacks
@@ -87,9 +88,14 @@ namespace DigDig2.Game
             });
 
             gameHudController = GetComponentInChildren<GameHudController>();
+            saveManager = SaveManager.Instance;
         }
-        
-        
+
+        private void Update()
+        {
+            saveManager.AddPlaytime(Time.deltaTime);
+        }
+
         #endregion
         #region StartGame
         

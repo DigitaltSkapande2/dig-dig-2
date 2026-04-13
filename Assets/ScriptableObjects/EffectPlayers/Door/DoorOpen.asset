@@ -55,8 +55,8 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    duration: 3.5
-    intensity: 0.2
+    duration: 3
+    intensity: 0.1
   cameraZoom: 0
   cameraZoomEffectData:
     intensityCurve:

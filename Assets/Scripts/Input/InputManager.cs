@@ -109,18 +109,28 @@ namespace DigDig2.Input
 
         public List<InputDevice> GetInputPlayersDevices( int index )
         {
-            if ( index == -1 ) return InputSystem.devices.ToList( );
+            if ( index == -1 )
+            {
+                var g = InputSystem.devices.ToList();
+                foreach (var d in g)
+                {
+                    BetterDebug.Log($"  Device: type={d.GetType().Name}, name={d.name}, shortDisplayName='{d.shortDisplayName}', displayName='{d.displayName}'");
+                }
+                return g;
+            }
 			if ( index >= inputPlayers.Count ) return new( );
             return inputPlayers[ index ].connectedDevices;
         }
 
 		public Tuple<bool, InputControlScheme> GetInputPlayerControlScheme( InputPlayer inputPlayer )
 		{
+            //BetterDebug.Log($"Getting Inputplayer [{inputPlayer.name}]'s ControllScheme");
+            //BetterDebug.Log($"inputPlayer controllSchemes [{String.Join(", ", inputPlayer.connectedDevices.Select(d=>d.name))}]");
 			foreach ( InputControlScheme controlScheme in InputSystem.actions.controlSchemes )
 			{
 				InputControlScheme.MatchResult matchResult = controlScheme.PickDevicesFrom( inputPlayer.connectedDevices );
-				if ( !matchResult.hasMissingRequiredDevices ) continue;
-
+				if ( matchResult.hasMissingRequiredDevices ) continue;
+                //BetterDebug.Log($"SUCESS: {controlScheme}");
 				return new(true, controlScheme);
 			}
 
@@ -134,12 +144,15 @@ namespace DigDig2.Input
 
 		public List<InputControlScheme> GetInputPlayersControlSchemes( int index )
 		{
+            //BetterDebug.Log("--------------- GetInputPlayersControlSchemes");
 			List<InputControlScheme> matchingControlSchemes = new( );
 			if ( index == -1 )
-			{
+            {
+                //BetterDebug.Log("index = -1");
 				foreach ( InputPlayer inputPlayer in inputPlayers )
 				{
 					(bool success, InputControlScheme controlScheme) = GetInputPlayerControlScheme( inputPlayer );
+                    //BetterDebug.Log($"inputPlayer [{inputPlayer.name}] is sucess: [{success}]");
 					if (success) matchingControlSchemes.Add( controlScheme );
 				}
 			}
@@ -149,32 +162,46 @@ namespace DigDig2.Input
 				(bool success, InputControlScheme controlScheme) = GetInputPlayerControlScheme( index );
 				if (success) matchingControlSchemes.Add( controlScheme );
 			}
-
+            
+            //BetterDebug.Log($"----- Controll Scheme Result: [{String.Join(", ", matchingControlSchemes.Select(cs => cs.name))}]");
 			return matchingControlSchemes;
 		}
 
-		public string GetInputDeviceSymbolCategory( InputDevice inputDevice )
-		{
-			BetterDebug.Log( inputDevice.description.manufacturer );
-			string deviceClass = inputDevice.description.deviceClass;
-			string productName = inputDevice.description.product;
-			switch ( deviceClass )
-			{
-				case "Keyboard" or "Mouse": return "Keyboard&Mouse";
-				case "Gamepad":
-					switch ( productName )
-					{
-						case "PS4 Controller": 
-						case "PS5 Controller": return "Playstation";
-					}
+        public string GetInputDeviceSymbolCategory(InputDevice inputDevice)
+        {
+            if (inputDevice is Keyboard || inputDevice is Mouse)
+                return "Keyboard&Mouse";
 
-					BetterDebug.Log( $"Could not determine device category, defaulting to Xbox. Device Class: {deviceClass}, Product: {productName}.", LogSeverity.Warning );
-					return "Xbox";
-				default:
-					BetterDebug.Log( $"Could not determine device category, defaulting to Keyboard&Mouse. Device Class: {deviceClass}, Product: {productName}.", LogSeverity.Warning );
-					return "Keyboard&Mouse";
-			}
-		}
+            if (inputDevice is Gamepad)
+            {
+                string interfaceName = inputDevice.description.interfaceName;
+                string product = inputDevice.description.product ?? "";
+                string manufacturer = inputDevice.description.manufacturer ?? "";
+
+                // PlayStation 
+                if (product.Contains("DualShock", StringComparison.OrdinalIgnoreCase) ||
+                    product.Contains("DualSense", StringComparison.OrdinalIgnoreCase) ||
+                    product.Contains("PS4", StringComparison.OrdinalIgnoreCase) ||
+                    product.Contains("PS5", StringComparison.OrdinalIgnoreCase) ||
+                    manufacturer.Contains("Sony", StringComparison.OrdinalIgnoreCase))
+                    return "Playstation";
+
+                // XInput is almost always Xbox 
+                if (interfaceName == "XInput" || interfaceName == "DXInput")
+                    return "Xbox";
+
+                // Last line of defense :pray:
+                if (product.Contains("Xbox", StringComparison.OrdinalIgnoreCase) ||
+                    product.Contains("Microsoft", StringComparison.OrdinalIgnoreCase))
+                    return "Xbox";
+
+                BetterDebug.Log($"Could not determine gamepad category, defaulting to Xbox. Interface: {interfaceName}, Product: {product}", LogSeverity.Warning);
+                return "Xbox";
+            }
+
+            BetterDebug.Log($"Unknown device type: {inputDevice.GetType().Name}, defaulting to Keyboard&Mouse", LogSeverity.Warning);
+            return "Keyboard&Mouse";
+        }
 
 		private void RefreshValidActionMapNames( )
 		{

@@ -9,7 +9,7 @@ using UnityEngine.Serialization;
 namespace DigDig2
 {
     [RequireComponent(typeof(Volume))]
-    public class DayCycle : MonoBehaviour, ISaveable
+    public class DayCycle : MonoBehaviour
     {
         Volume volume;
         ShadowsMidtonesHighlights smh;
@@ -22,6 +22,9 @@ namespace DigDig2
         private Vector4 startMidtones;
         private float startDirectionalLightIntensity;
         private float timeElapsed;
+        private float bakedCycleOffset;
+
+        private SaveManager saveManager;
 
         void Awake( )
         {
@@ -34,36 +37,23 @@ namespace DigDig2
 
             startMidtones = smh.midtones.value;
             startDirectionalLightIntensity = sceneDirectionalLight.intensity;
+
+            saveManager = SaveManager.Instance;
         }
 
         private void Start()
         {
-            timeElapsed = (dayDurationInMinutes * 60) * cycleStartOffset;
-            SaveManager.Instance.RegisterSavable(saveKey, this);
+            bakedCycleOffset = (dayDurationInMinutes * 60) * cycleStartOffset;
         }
 
         void Update()
         {
-            timeElapsed =  (timeElapsed + Time.deltaTime) % (dayDurationInMinutes * 60);
-            float lerpValue = (Mathf.Cos(Mathf.PI * timeElapsed / (dayDurationInMinutes * 30)) + 1) / 2;
+            float lerpValue = (Mathf.Cos(Mathf.PI * (saveManager.GetPlayTime() + bakedCycleOffset) / (dayDurationInMinutes * 30)) + 1) / 2;
             
             smh.midtones.value = Vector4.Lerp(startMidtones, nightMidtones, lerpValue);
 
             sceneDirectionalLight.intensity =
                 Mathf.Lerp(startDirectionalLightIntensity, nightDirectionalLightIntensity, lerpValue);
-        }
-
-        public object CollectData()
-        {
-            return timeElapsed;
-        }
-
-        public void RestoreState(object dataObject)
-        {
-            if (dataObject != null)
-            {
-                timeElapsed = JsonConvert.DeserializeObject<float>(dataObject.ToString());
-            }
         }
     }
 }

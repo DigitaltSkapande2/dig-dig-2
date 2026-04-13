@@ -119,8 +119,8 @@ MonoBehaviour:
         inWeight: 0
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.1
-        value: 1
+        time: 0.14999999
+        value: 1.0099983
         inSlope: -0.008050175
         outSlope: -0.008050175
         tangentMode: 0
@@ -140,7 +140,7 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     duration: 3
-    intensity: 0.3
+    intensity: 0.42
     color: {r: 0.60244817, g: 0.9150943, b: 0.45323068, a: 0}
   gamepadRumble: 0
   gamepadRumbleEffectData:
@@ -208,4 +208,4 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     duration: 2
-    intensity: -20
+    intensity: -15
