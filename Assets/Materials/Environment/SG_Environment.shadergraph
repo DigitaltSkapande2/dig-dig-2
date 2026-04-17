@@ -560,20 +560,6 @@
         {
             "m_OutputSlot": {
                 "m_Node": {
-                    "m_Id": "6115d75f20554ea9acb5d149b96ee3cd"
-                },
-                "m_SlotId": 3
-            },
-            "m_InputSlot": {
-                "m_Node": {
-                    "m_Id": "273d274ec50249bda4f3a2ff36f510d7"
-                },
-                "m_SlotId": 2
-            }
-        },
-        {
-            "m_OutputSlot": {
-                "m_Node": {
                     "m_Id": "671d359a02a64960bc99452b90ec0149"
                 },
                 "m_SlotId": 0
@@ -9071,8 +9057,8 @@
     "m_ObjectId": "f85f420133174d19b57fa14ccc5ac7cd",
     "m_Title": "TEXTURE",
     "m_Position": {
-        "x": -2188.000244140625,
-        "y": -692.0001220703125
+        "x": -2188.0,
+        "y": -692.0
     }
 }
 
