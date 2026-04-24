@@ -38,7 +38,7 @@ namespace DigDig2.Player
 
         // Character Switching
         [Header("Character Switching")]
-        [SerializeField] private float cooldown;
+        [SerializeField] private float cooldown = 1f;
 
         public UnityEvent<PlayerController> characterObjectSet;
         
