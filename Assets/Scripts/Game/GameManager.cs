@@ -35,13 +35,7 @@ namespace DigDig2.Game
         [SerializeField] public UnityEvent<CharacterType, GameObject> characterSwitched = new();
         [SerializeField] public UnityEvent gameStarted = new();
 
-        public bool Paused
-        {
-            get
-            {
-                return pauseMenuController.Paused;
-            }
-        }
+        public bool Paused => pauseMenuController.Paused;
         [SerializeField] public UnityEvent<bool> pauseStateChanged;
         
         public bool IsMultiplayer => SaveManager.Instance.isMultiplayer;

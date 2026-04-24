@@ -9,7 +9,7 @@ using DigDig2.Game;
 using DigDig2.Input;
 using DigDig2.Player.Interaction;
 using DigDig2.Entity;
-
+using DigDig2.Player.Combat;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -183,19 +183,27 @@ namespace DigDig2.Player
         
         public void TransferCharacterData(GameObject oldObj, GameObject newObj) 
         {
-            if (newObj.TryGetComponent(out EntityCharacterController newEntityController) &&
+            if
+            (
+                newObj.TryGetComponent(out EntityCharacterController newEntityController) &&
                 newObj.TryGetComponent(out PlayerCharacterController newPlayerinput) && 
                 newObj.TryGetComponent(out Health newHealth) &&
                 oldObj.TryGetComponent(out EntityCharacterController oldEntityController) &&
                 oldObj.TryGetComponent(out PlayerCharacterController oldPlayerinput) && 
-                oldObj.TryGetComponent(out Health oldHealth))
+                oldObj.TryGetComponent(out Health oldHealth)
+            )
             {
                 newEntityController.LookTowards(newObj.transform.position + oldEntityController.GetForwardVector(), false);
                 newEntityController.inputMoveVector = oldEntityController.inputMoveVector;
+                newEntityController.SetAutomaticLookRotationLocks(oldEntityController.AutomaticLookRotationLocks);
                 
                 newPlayerinput.inputMoveVector = oldPlayerinput.inputMoveVector;
             
                 newHealth.HealthPoints = oldHealth.HealthPoints;
+            }
+            else
+            {
+                BetterDebug.Log("Failed to transfer character data, character has missing components.", LogSeverity.Error);
             }
         }
         

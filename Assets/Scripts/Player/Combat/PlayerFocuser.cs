@@ -184,7 +184,7 @@ namespace DigDig2.Player.Combat
             ScanForAttackables();
             isFocusing = true;
             cameraEffector.targetFrustumSize = cameraFocusFrustumSize;
-            entityController.SetAutomaticLookRotationLock( true );
+            entityController.SetAutomaticLookRotationLock( "focus", true );
             ReCalculateFocusTarget();
         }
 
@@ -197,7 +197,7 @@ namespace DigDig2.Player.Combat
             
             currentlyFocusedAttackable = null;
             currentlyFocusedEnemyGroupIndex = -1;
-            entityController.SetAutomaticLookRotationLock( false );
+            entityController.SetAutomaticLookRotationLock( "focus", false );
             
             SetFocusIndicatorActive(false);
         }
