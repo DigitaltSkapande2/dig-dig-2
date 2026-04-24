@@ -50,7 +50,7 @@ MonoBehaviour:
   sphericalRadius: 0.1
   layerMask:
     serializedVersion: 2
-    m_Bits: 3265
+    m_Bits: 36033
   onHitEffect: {fileID: 11400000, guid: 5d23f0d93d7a21c1e93226843c2bbe29, type: 2}
   hit:
     m_PersistentCalls:
