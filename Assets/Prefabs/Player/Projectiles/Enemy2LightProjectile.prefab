@@ -47,11 +47,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bac83335b7709d547b97a781863d5e00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.Projectile
-  hitAttack: {fileID: 11400000, guid: 7d59ff6f0e26afd4380fb42b0000d8bb, type: 2}
+  hitAttack: {fileID: 11400000, guid: 535d9ed462f6efa46bffc7419474293d, type: 2}
   sphericalRadius: 0.1
   layerMask:
     serializedVersion: 2
-    m_Bits: 1225
+    m_Bits: 33993
   onHitEffect: {fileID: 11400000, guid: 1c44e8a50f645dfd491ad2613b2a54de, type: 2}
   hit:
     m_PersistentCalls:
@@ -69,6 +69,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.BindableAttackHitbox
   shape: 0
+  onHitEffect: {fileID: 0}
   boxSize: {x: 1.2, y: 1.2, z: 1.2}
   sphereRadius: 1
   unitsPerIntermediateCheck: 0.05
