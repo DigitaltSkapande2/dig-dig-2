@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,6 @@ namespace DigDig2.Entity
 		private const string IDLE_ANIMATION_NAME = "Idle";
 		private const string SPRINT_ANIMATION_NAME = "Sprint";
 		private const string DASH_ANIMATION_NAME = "Dash";
-		private const string SWORD_ANIMATION_NAME_PREFIX = "Sword";
 		private static readonly int movementSpeed = Animator.StringToHash( "MovementSpeed" );
 
 		[Tooltip( "Freezes the entity (stops running ´CharacterController.Move()´) and disables the CharacterController component. Allows you to move the entity by setting their transform. Use EntityCharacterController.Teleport() for teleporting instead." )]
@@ -90,7 +90,7 @@ namespace DigDig2.Entity
 		[SerializeField] private float visualsRotationSpeed = 15f;
 
 		[Tooltip( "Locks the automatic visuals rotation when input is detected." )]
-		[SerializeField] private int automaticLookRotationLocked = 0;
+		[SerializeField] private List<String> automaticLookRotationLocks = new();
 
         [Tooltip("the dash to use, leave empty if dont want a dash")]
         [SerializeField] private Dash dash;
@@ -143,7 +143,9 @@ namespace DigDig2.Entity
 
 		public float TargetLookRotation { get; set; }
 
-		private void Awake( )
+        public List<string> AutomaticLookRotationLocks => automaticLookRotationLocks;
+
+        private void Awake( )
 		{
 			characterController = GetComponent<CharacterController>( );
 			animator = GetComponentInChildren<Animator>( );
@@ -188,9 +190,13 @@ namespace DigDig2.Entity
 			Vector3 centerRaycastEndPoint = transform.position + -transform.up * ( GetComponent<CharacterController>( ).height / 2f + edgeScanDistance );
 			Gizmos.color = Color.red;
 			Gizmos.DrawLine( transform.position, centerRaycastEndPoint );
-		}
 
-		private enum EntityState
+            if (!characterController) return;
+            Gizmos.color = IsAutomaticLookRotationLocked() ? Color.red : Color.green;
+            Gizmos.DrawSphere( transform.position + new Vector3(0f, characterController.height / 2f + 1f, 0f), 0.5f);
+        }
+
+        private enum EntityState
 		{
 			None,
 			Idle,
@@ -410,14 +416,14 @@ namespace DigDig2.Entity
         private async UniTask DashRoutine()
         {
             isDashing = true;
-            SetAutomaticLookRotationLock(true);
+            SetAutomaticLookRotationLock("dash", true);
             TargetLookRotation = Vector3.SignedAngle(transform.forward, inputMoveVector, transform.up);
             RefreshVisualsRotation(false);
             
             Vector3 dashDirection = inputMoveVector == Vector3.zero ? GetForwardVector() : inputMoveVector;
             await dash.PerformDash(dashDirection, this);
 
-            SetAutomaticLookRotationLock(false);
+            SetAutomaticLookRotationLock("dash", false);
             isDashing = false;
         }
 
@@ -497,7 +503,7 @@ namespace DigDig2.Entity
 
 		private void UpdateVisualsRotation( )
 		{
-			if ( inputMoveVector.magnitude > 0 && !isDashing && automaticLookRotationLocked <= 0 ) TargetLookRotation = Mathf.Lerp( TargetLookRotation, Vector3.SignedAngle( transform.forward, inputMoveVector, transform.up ), GetMoveSpeed( ) / moveSpeed );
+			if ( inputMoveVector.magnitude > 0 && !isDashing && !IsAutomaticLookRotationLocked() ) TargetLookRotation = Mathf.Lerp( TargetLookRotation, Vector3.SignedAngle( transform.forward, inputMoveVector, transform.up ), GetMoveSpeed( ) / moveSpeed );
 		}
 
 		private void RefreshVisualsRotation( bool useLerp = true )
@@ -557,7 +563,29 @@ namespace DigDig2.Entity
 
 		public Vector3 GetForwardVector( ) => new( -Mathf.Cos( TargetLookRotation * Mathf.Deg2Rad + Mathf.PI / 2 ), 0, Mathf.Sin( TargetLookRotation * Mathf.Deg2Rad + Mathf.PI / 2 ) );
 
-		public void SetAutomaticLookRotationLock( bool isLocked ) { automaticLookRotationLocked += isLocked ? 1 : -1; }
+        public void SetAutomaticLookRotationLock( string id, bool isLocked )
+        {
+            switch (isLocked)
+            {
+                case true when !automaticLookRotationLocks.Contains(id):
+                    automaticLookRotationLocks.Add(id);
+                    break;
+                case false when automaticLookRotationLocks.Contains(id):
+                    automaticLookRotationLocks.Remove(id);
+                    break;
+            }
+        }
+
+        public void SetAutomaticLookRotationLocks(List<String> locks)
+        {
+            automaticLookRotationLocks = locks;
+            BetterDebug.Log("FREAKTY!!");
+        } 
+
+        public bool IsAutomaticLookRotationLocked()
+        {
+            return automaticLookRotationLocks.Count > 0;
+        }
 
         public GameObject GetVisualsParent() => visualsParent;
 

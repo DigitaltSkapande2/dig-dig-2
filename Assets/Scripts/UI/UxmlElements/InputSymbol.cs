@@ -162,9 +162,30 @@ namespace DigDig2.UI.UxmlElements
 					else
 					{
 						BetterDebug.Log( $"Could not find input symbol sprite for \"{inputSymbolPath}\"", LogSeverity.Warning );
+                        if (inputSymbolDictionary.dictionary.TryGetValue("Unknown", out Sprite unknownSprite))
+                        {
+                            sprites.Add(unknownSprite);
+                        }
+                        else
+                        {
+                            BetterDebug.Log("There is no Unknown input symbol in the dictionary, please add one!", LogSeverity.Warning);
+                        }
 					}
 				}
 			}
+
+            if (sprites.Count <= 0)
+            {
+                BetterDebug.Log("Could not find any input symbols, defaulting to Unknown symbol in the dictionary.");
+                if (inputSymbolDictionary.dictionary.TryGetValue("Unknown", out Sprite unknownSprite))
+                {
+                    sprites.Add(unknownSprite);
+                }
+                else
+                {
+                    BetterDebug.Log("There is no Unknown input symbol in the dictionary, please add one!", LogSeverity.Warning);
+                }
+            }
 
 			return sprites;
 		}

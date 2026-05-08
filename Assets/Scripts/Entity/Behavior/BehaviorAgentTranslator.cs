@@ -175,7 +175,7 @@ namespace DigDig2.Entity.Behavior
 
 		public bool SetAutomaticLookRotationLock( bool isLocked )
 		{
-			entityCharacterController.SetAutomaticLookRotationLock( isLocked );
+			entityCharacterController.SetAutomaticLookRotationLock( "behavior", isLocked );
 
 			return true;
 		}
