@@ -1,5 +1,4 @@
-using System;
-using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using DigDig2.CinemaCamera;
 using DigDig2.CinemaCamera.CameraEffectors;
 using DigDig2.Debugging;
@@ -48,13 +47,13 @@ namespace DigDig2.SaveSystem
             GameManager.Instance.StartGame();
         }
 
-        public async void PlaySingleplayerStartSequence()
+        public async UniTask PlaySingleplayerStartSequence()
         {
             lockTargetEffector.enabled = true;
             BetterDebug.Log("Initializing singleplayer spawn...");
             GameManager.Instance.InitializeSingleplayerCharacter(singlePlayerSpawnPoint.position, singlePlayerSpawnPoint.rotation);
 
-            await Task.Delay((int)(timeUntilReleaseCamera * 1000));
+            await UniTask.Delay((int)(timeUntilReleaseCamera * 1000));
             lockTargetEffector.IsActive = false;
             startSequenceDone.Invoke();
             GameManager.Instance.StartGame();
@@ -112,7 +111,7 @@ namespace DigDig2.SaveSystem
                 }
                 else
                 {
-                    PlaySingleplayerStartSequence();
+                    PlaySingleplayerStartSequence().Forget();
                 }
             }
         }
