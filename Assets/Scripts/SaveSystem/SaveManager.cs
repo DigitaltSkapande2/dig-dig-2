@@ -28,12 +28,11 @@ namespace DigDig2.SaveSystem
 			get => loadedGameSave != null;
 		}
 
-        private new void Awake()
+        private void Start()
         {
-            base.Awake();
-            string saveDirectoryPath = GetSavesDirectoryPath();
-            BetterDebug.Log($"Saving files in: {saveDirectoryPath}");
-            if (!Directory.Exists(saveDirectoryPath)) Directory.CreateDirectory(saveDirectoryPath);
+	        string saveDirectoryPath = GetSavesDirectoryPath();
+	        BetterDebug.Log($"Saving files in: {saveDirectoryPath}");
+	        if (!Directory.Exists(saveDirectoryPath)) Directory.CreateDirectory(saveDirectoryPath);
         }
 
         public class GameSave
@@ -59,6 +58,7 @@ namespace DigDig2.SaveSystem
 			foreach ( string saveFilePath in saveFiles )
 			{
 				GameSave saveFileData = FileSystem.ReadDataFromFile<GameSave>( saveFilePath );
+				if (saveFileData == null) continue;
 				saveFileNames.Add( saveFileData.saveName );
 			}
 

@@ -16,6 +16,7 @@ namespace DigDig2.SaveSystem
 
 		public static void WriteDataToFile( string filePath, object data )
 		{
+			#if !PLATFORM_WEBGL
 			string extension = Path.GetExtension( filePath );
 			string dataString = "";
 			switch ( extension )
@@ -27,10 +28,13 @@ namespace DigDig2.SaveSystem
 			}
 
 			File.WriteAllText( filePath, dataString );
+
+			#endif
 		}
 
 		public static T ReadDataFromFile<T>( string filePath )
 		{
+		#if !PLATFORM_WEBGL
 			string extension = Path.GetExtension( filePath );
 			string dataString = File.ReadAllText( filePath );
 
@@ -41,8 +45,20 @@ namespace DigDig2.SaveSystem
 					return JsonConvert.DeserializeObject<T>( dataString );
 				default: return default;
 			}
+			#else
+
+			return default;
+
+			#endif
 		}
 
-		public static List<string> GetFilesInDirectory( string directoryPath ) => Directory.GetFiles( directoryPath ).ToList( );
+		public static List<string> GetFilesInDirectory( string directoryPath )
+		{
+#if !PLATFORM_WEBGL
+			return Directory.GetFiles(directoryPath).ToList();
+#else
+			return new();
+#endif
+		}
 	}
 }

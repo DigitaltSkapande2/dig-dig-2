@@ -18,11 +18,15 @@ namespace DigDig2.Debugging
 	{
 		public static void Log( object message, LogSeverity severity = LogSeverity.Debug )
 		{
+			#if UNITY_EDITOR
+
 			StackFrame lastStackFrame = new StackTrace( ).GetFrame( 1 );
 			Type reflectedType = lastStackFrame.GetMethod( ).ReflectedType;
 			if (reflectedType == null) { WriteLog(lastStackFrame.GetFileName(  ), message, severity); return; }
 			
 			WriteLog( reflectedType.Name, message, severity );
+
+			#endif
 		}
 
 		private static void WriteLog( string caller, object message, LogSeverity severity ) {
