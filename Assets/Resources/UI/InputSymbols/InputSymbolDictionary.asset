@@ -35,6 +35,14 @@ MonoBehaviour:
     - Playstation/<Gamepad>/leftTrigger
     - Xbox/<Gamepad>/leftTrigger
     - Keyboard&Mouse/<Keyboard>/tab
+    - Playstation/<Gamepad>/leftStick/x
+    - Xbox/<Gamepad>/leftStick/x
+    - Playstation/<Gamepad>/leftStick/y
+    - Xbox/<Gamepad>/leftStick/y
+    - Playstation/<Gamepad>/rightStick/x
+    - Xbox/<Gamepad>/rightStick/x
+    - Playstation/<Gamepad>/rightStick/y
+    - Xbox/<Gamepad>/rightStick/y
     - Unknown
     m_values:
     - {fileID: 23553631, guid: e0a59c2ce73d9ef0eb936189cdcce3bc, type: 3}
@@ -58,4 +66,12 @@ MonoBehaviour:
     - {fileID: 2028335853, guid: e0a59c2ce73d9ef0eb936189cdcce3bc, type: 3}
     - {fileID: -1266833116, guid: e0a59c2ce73d9ef0eb936189cdcce3bc, type: 3}
     - {fileID: -17536972, guid: e0a59c2ce73d9ef0eb936189cdcce3bc, type: 3}
+    - {fileID: 1683962245, guid: e0a59c2ce73d9ef0eb936189cdcce3bc, type: 3}
+    - {fileID: 466939350, guid: e0a59c2ce73d9ef0eb936189cdcce3bc, type: 3}
+    - {fileID: 2145531856, guid: e0a59c2ce73d9ef0eb936189cdcce3bc, type: 3}
+    - {fileID: -2047308616, guid: e0a59c2ce73d9ef0eb936189cdcce3bc, type: 3}
+    - {fileID: -1873740171, guid: e0a59c2ce73d9ef0eb936189cdcce3bc, type: 3}
+    - {fileID: 712419980, guid: e0a59c2ce73d9ef0eb936189cdcce3bc, type: 3}
+    - {fileID: 1705583021, guid: e0a59c2ce73d9ef0eb936189cdcce3bc, type: 3}
+    - {fileID: 989620010, guid: e0a59c2ce73d9ef0eb936189cdcce3bc, type: 3}
     - {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}

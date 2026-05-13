@@ -1081,7 +1081,7 @@
                     "name": "Move",
                     "type": "Value",
                     "id": "3245ccc5-f8dd-4c84-ac62-cd48863075b1",
-                    "expectedControlType": "Vector2",
+                    "expectedControlType": "Axis",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -1122,7 +1122,7 @@
                 {
                     "name": "WASD",
                     "id": "f4e434ad-8c9b-46d5-b2eb-6f6323ee088a",
-                    "path": "Dpad",
+                    "path": "1DAxis",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -1131,29 +1131,7 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "up",
-                    "id": "46630d99-96e7-4bf0-9c5e-20afe166169f",
-                    "path": "<Keyboard>/w",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "down",
-                    "id": "4757436e-8aa7-4f85-a322-1e1530472637",
-                    "path": "<Keyboard>/s",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "left",
+                    "name": "Negative",
                     "id": "3fcadac4-7cfa-4b5c-b63f-8cfbdda537d6",
                     "path": "<Keyboard>/a",
                     "interactions": "",
@@ -1164,7 +1142,7 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "right",
+                    "name": "Positive",
                     "id": "020f0bcc-6f4f-45ee-b553-98f56f9b3092",
                     "path": "<Keyboard>/d",
                     "interactions": "",
@@ -1177,7 +1155,7 @@
                 {
                     "name": "",
                     "id": "065ddb9a-0e19-42a7-9626-4d8feb53dcba",
-                    "path": "<Gamepad>/leftStick",
+                    "path": "<Gamepad>/leftStick/x",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",

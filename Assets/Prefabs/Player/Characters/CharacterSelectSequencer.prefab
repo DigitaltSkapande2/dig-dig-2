@@ -46,62 +46,42 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.CinemaCamera.LockTargetEffector
   startActive: 0
   priorityLevel: 10
-  overridesLowerPriority: 0
-  transitionFadeDuration: 3
+  overridePartials: 0
+  fadeOutCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  fadeOutDuration: 0.5
   positionLerpSpeed: 1
   rotationLerpSpeed: 1
   frustumSizeLerpSpeed: 1
   targetPosition: {x: 0, y: 0, z: 0}
   targetRotation: {x: 0, y: 0, z: 0, w: 1}
   targetFrustumSize: 10
-  easeInCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  easeOutCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
+  Weight: 0
+  isActive: 0
+  targetIsCurrentEffector: 0
+  activationOrder: 0
   targetTransform: {fileID: 1413771652208686820}
 --- !u!1 &2732685959610631463
 GameObject:
@@ -152,8 +132,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c795a7af6fc37549b2aac1abf17d192, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DigDig2.CharacterSelectSequencer
-  secondsToHoldToDissconnect: 1.5
-  secondsReadyUntilStart: 0.8
+  secondsReadyUntilStart: 1
   playerControllerPrefab: {fileID: 1517051220970631788, guid: 10bc798215f0ca1c09cb8ef8efb07d13, type: 3}
   maxPrefab: {fileID: 4442565222488509090, guid: d5a3d3276e47631bfb60f1dda5c99ef2, type: 3}
   minisPrefab: {fileID: 4442565222488509090, guid: f67aae0ed0287714d978db69befa66ce, type: 3}
@@ -161,7 +140,6 @@ MonoBehaviour:
   maxSpawnPoint: {fileID: 8097027346526215108}
   minisSpawnPoint: {fileID: 6100783926166531798}
   uiDocument: {fileID: 5406046794743086968}
-  verboseLogging: 1
 --- !u!114 &5406046794743086968
 MonoBehaviour:
   m_ObjectHideFlags: 0
