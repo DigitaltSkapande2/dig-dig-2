@@ -1,4 +1,3 @@
-
 using System;
 
 using DigDig2.Debugging;
@@ -16,14 +15,15 @@ using DigDig2.Entity;
 using DigDig2.UI.UxmlElements;
 
 
-namespace DigDig2
+
+namespace DigDig2.Player
 {
     public class CharacterSelectSequencer : MonoBehaviour
     {
         #region Variables
 
-        [Header("config")]
-        [SerializeField] private float secondsToHoldToDissconnect = 1.5f;
+        [Header("Config")]
+        [FormerlySerializedAs("secondsToHoldToDissconnect")] [SerializeField] private float secondsToHoldToDisconnect = 1.5f;
         [SerializeField] private float secondsReadyUntilStart = 0.8f;
 
         [Header("Prefabs")]
@@ -41,24 +41,30 @@ namespace DigDig2
         
         private GameObject maxInstance;
         private GameObject minisInstance;
-
-        private VisualElement realRoot; // For Opacity Transition
-        private VisualElement playerBoundingBox;
-        private VisualElement playerOneCharacterImage;
-        private VisualElement playerOneReadyIcon;
-        private InputSymbol playerOneReadyInputSymbol;
-        private VisualElement playerTwoCharacterImage;
-        private VisualElement playerTwoReadyIcon;
-        private InputSymbol playerTwoReadyInputSymbol;
+        
+        private VisualElement playerContainer;
+        
+        private VisualElement playerOneBox;
+        private VisualElement playerOneBoxLegend;
+        private InputSymbol playerOneBoxLegendMove;
+        private InputSymbol playerOneBoxLegendReady;
+        private VisualElement playerOneBoxReady;
+        
+        private VisualElement playerTwoBox;
+        private VisualElement playerTwoBoxLegend;
+        private InputSymbol playerTwoBoxLegendMove;
+        private InputSymbol playerTwoBoxLegendReady;
+        private VisualElement playerTwoBoxReady;
+        
         private Button startButton;
 
         private PlayerController playerOne;
-        private int playerOneInputPlayerindex = -1;
+        private int playerOneInputPlayerIndex = -1;
         private bool playerOneReady = false;
         private int playerOneNavigation = 2;
 
         private PlayerController playerTwo;
-        private int playerTwoInputPlayerindex = -1;
+        private int playerTwoInputPlayerIndex = -1;
         private bool playerTwoReady = false;
         private int playerTwoNavigation = 2;
         
@@ -89,21 +95,23 @@ namespace DigDig2
                 .Teleport(minisSpawnPoint.position, minisSpawnPoint.rotation.eulerAngles.y);
 
             InputManager.Instance.CurrentInputContext = characterSelectContext;
+            
+            playerContainer = uiDocument.rootVisualElement.Query<VisualElement>("playerContainer");
 
-            realRoot = uiDocument.rootVisualElement.Query("RealRoot");
-            playerBoundingBox = realRoot.Query("BoundBox");
+            playerOneBox = playerContainer.Query<VisualElement>("playerOne");
+            playerOneBoxLegend = playerOneBox.Query<VisualElement>("legend");
+            playerOneBoxLegendMove = playerOneBoxLegend.Query<InputSymbol>("move");
+            playerOneBoxLegendReady = playerOneBoxLegend.Query<InputSymbol>("ready");
+            playerOneBoxReady = playerOneBox.Query<VisualElement>("ready");
+            
+            playerTwoBox = playerContainer.Query<VisualElement>("playerTwo");
+            playerTwoBoxLegend = playerTwoBox.Query<VisualElement>("legend");
+            playerTwoBoxLegendMove = playerTwoBoxLegend.Query<InputSymbol>("move");
+            playerTwoBoxLegendReady = playerTwoBoxLegend.Query<InputSymbol>("ready");
+            playerTwoBoxReady = playerTwoBox.Query<VisualElement>("ready");
 
-            playerOneCharacterImage = playerBoundingBox.Query("PlayerOne");
-            VisualElement playerOneCheckBox = playerOneCharacterImage.Query("checkBox");
-            playerOneReadyInputSymbol = playerOneCheckBox.Query<InputSymbol>("readyInputSymbol");
-            playerOneReadyIcon = playerOneCheckBox.Query("readyCheckMark");
-            playerTwoCharacterImage = playerBoundingBox.Query("PlayerTwo");
-            VisualElement playerTwoCheckBox = playerTwoCharacterImage.Query("checkBox");
-            playerTwoReadyInputSymbol = playerTwoCheckBox.Query<InputSymbol>("readyInputSymbol");
-            playerTwoReadyIcon = playerTwoCheckBox.Query("readyCheckMark");
-
-            playerOneCharacterImage.visible = false;
-            playerTwoCharacterImage.visible = false;
+            playerOneBox.visible = false;
+            playerTwoBox.visible = false;
 
             if (GameManager.Instance.maxPlayerID == -1 || GameManager.Instance.minisPlayerID == -1)
             {
@@ -112,15 +120,15 @@ namespace DigDig2
 
             if (GameManager.Instance.maxPlayerID == 0)
             {
-                playerOneInputPlayerindex = GameManager.Instance.maxInputPlayerIndex;
-                playerTwoInputPlayerindex = GameManager.Instance.minisInputPlayerIndex;
+                playerOneInputPlayerIndex = GameManager.Instance.maxInputPlayerIndex;
+                playerTwoInputPlayerIndex = GameManager.Instance.minisInputPlayerIndex;
                 playerOneNavigation = 1;
                 playerTwoNavigation = -1;
             }
             else
             {
-                playerOneInputPlayerindex = GameManager.Instance.minisInputPlayerIndex;
-                playerTwoInputPlayerindex = GameManager.Instance.maxInputPlayerIndex;
+                playerOneInputPlayerIndex = GameManager.Instance.minisInputPlayerIndex;
+                playerTwoInputPlayerIndex = GameManager.Instance.maxInputPlayerIndex;
                 playerOneNavigation = -1;
                 playerTwoNavigation = 1;
             }
@@ -138,11 +146,11 @@ namespace DigDig2
             if (!info.context.started) return;
             BetterDebug.Log(info.inputPlayerIndex);
             // Check for ready
-            if (!playerOneReady && info.inputPlayerIndex == playerOneInputPlayerindex)
+            if (!playerOneReady && info.inputPlayerIndex == playerOneInputPlayerIndex)
             {
                 playerOneReady = playerOneNavigation != 0;
             }
-            else if (!playerTwoReady && info.inputPlayerIndex == playerTwoInputPlayerindex)
+            else if (!playerTwoReady && info.inputPlayerIndex == playerTwoInputPlayerIndex)
             {
                 playerTwoReady = playerTwoNavigation != 0;
             }
@@ -152,27 +160,27 @@ namespace DigDig2
                 Invoke(nameof(TryStartGame), secondsReadyUntilStart);
             }
 
-            
+            BetterDebug.Log($"Player One is: \"{playerOneInputPlayerIndex}\", Player Two is: \"{playerTwoInputPlayerIndex}\"");
             
             // Check if new InputPlayer
-            if ( playerOneInputPlayerindex == -1)
+            if ( playerOneInputPlayerIndex == -1)
             {
-                playerOneInputPlayerindex = info.inputPlayerIndex;
-                playerOneCharacterImage.visible = true;
-                playerOneReadyInputSymbol.InputPlayerIndex = playerOneInputPlayerindex;
-                BetterDebug.Log( $"Player One is '{info.inputPlayerIndex}'" );
+                playerOneInputPlayerIndex = info.inputPlayerIndex;
+                playerOneBox.visible = true;
+                playerOneBoxLegendMove.InputPlayerIndex = playerOneInputPlayerIndex;
+                playerOneBoxLegendReady.InputPlayerIndex = playerOneInputPlayerIndex;
                 playerOneNavigation = 0;
             }
-            else if ( playerTwoInputPlayerindex == -1 && playerOneInputPlayerindex != info.inputPlayerIndex )
+            else if ( playerTwoInputPlayerIndex == -1 && playerOneInputPlayerIndex != info.inputPlayerIndex )
             {
-                playerTwoInputPlayerindex = info.inputPlayerIndex;
-                playerTwoCharacterImage.visible = true;
-                playerTwoReadyInputSymbol.InputPlayerIndex = playerTwoInputPlayerindex;
+                playerTwoInputPlayerIndex = info.inputPlayerIndex;
+                playerTwoBox.visible = true;
+                playerTwoBoxLegendMove.InputPlayerIndex = playerTwoInputPlayerIndex;
+                playerTwoBoxLegendReady.InputPlayerIndex = playerTwoInputPlayerIndex;
                 playerTwoNavigation = 0;
-                BetterDebug.Log( $"Player Two is '{info.inputPlayerIndex}'" );
                 OnBothPlayersJoined( );
             }
-            else if (info.inputPlayerIndex != playerTwoInputPlayerindex && info.inputPlayerIndex != playerOneInputPlayerindex)
+            else if (info.inputPlayerIndex != playerTwoInputPlayerIndex && info.inputPlayerIndex != playerOneInputPlayerIndex)
             {
                 BetterDebug.Log($"More than 2 InputPlayers trying to connect. InputPlayerIndex: [{info.inputPlayerIndex}]", LogSeverity.Warning);
                 return;
@@ -191,20 +199,20 @@ namespace DigDig2
         {
             if (!info.context.started) return;
             
-            if (info.inputPlayerIndex == playerOneInputPlayerindex)
+            if (info.inputPlayerIndex == playerOneInputPlayerIndex)
             {
                 if (playerOneReady)
                 {
                     // Unready
                     playerOneReady = false;
                 }
-                else if (info.context.duration >= secondsToHoldToDissconnect)
+                else if (info.context.duration >= secondsToHoldToDisconnect)
                 {
                     // disconnect player one TODO: (make player two player one)
 
                 }
             }
-            else if (info.inputPlayerIndex == playerTwoInputPlayerindex)
+            else if (info.inputPlayerIndex == playerTwoInputPlayerIndex)
             {
                 if (playerTwoReady) 
                 {
@@ -225,13 +233,13 @@ namespace DigDig2
         {
             if (!info.context.started) return;
             print(info.context.ReadValue<Vector2>());
-            if (info.inputPlayerIndex == playerOneInputPlayerindex && !playerOneReady)
+            if (info.inputPlayerIndex == playerOneInputPlayerIndex && !playerOneReady)
             {
                 Vector2 input = info.context.ReadValue<Vector2>();
                 playerOneNavigation += Math.Sign(input.x);
                 playerOneNavigation = Math.Clamp(playerOneNavigation, -1, 1);
             }
-            else if (info.inputPlayerIndex == playerTwoInputPlayerindex && !playerTwoReady)
+            else if (info.inputPlayerIndex == playerTwoInputPlayerIndex && !playerTwoReady)
             {
                 Vector2 input = info.context.ReadValue<Vector2>();
                 playerTwoNavigation += Math.Sign(input.x);
@@ -242,7 +250,6 @@ namespace DigDig2
         }
 
         #endregion
-
 
         private void TryStartGame()
         {
@@ -265,7 +272,7 @@ namespace DigDig2
             playerOneController.characterType = playerOneIsMax ? CharacterType.Max : CharacterType.Minis;
             playerOneController.SetCharacterPrefab(playerOneIsMax ? maxPrefab : minisPrefab);
             playerOneController.name = $"PlayerOneController {playerOneController.characterType}";
-            playerOneController.SetInputPlayerIDRecursive(playerOneInputPlayerindex);
+            playerOneController.SetInputPlayerIDRecursive(playerOneInputPlayerIndex);
             
             // Player Two
             playerTwoCharacterInstance.transform.SetParent(playerTwoController.transform);
@@ -273,20 +280,20 @@ namespace DigDig2
             playerTwoController.characterType = playerOneIsMax ? CharacterType.Minis : CharacterType.Max;
             playerTwoController.SetCharacterPrefab(playerOneIsMax ? minisPrefab : maxPrefab);
             playerTwoController.name = $"PlayerTwoController {playerTwoController.characterType}";
-            playerTwoController.SetInputPlayerIDRecursive(playerTwoInputPlayerindex);
+            playerTwoController.SetInputPlayerIDRecursive(playerTwoInputPlayerIndex);
             
             // finalize
             GameManager.Instance.RegisterMultiplayerPlayers(
                 playerOneController, 
-                playerOneInputPlayerindex,
+                playerOneInputPlayerIndex,
                 playerTwoController,
-                playerTwoInputPlayerindex
+                playerTwoInputPlayerIndex
             );
             
             playerOneController.entityController.Frozen = false;
             playerTwoController.entityController.Frozen = false;
 
-            realRoot.style.opacity = new StyleFloat(0f);
+            uiDocument.rootVisualElement.style.opacity = new StyleFloat(0f);
             Invoke(nameof(Die), 0.5f);
             gameStartedEvent?.Invoke();
         }
@@ -305,32 +312,27 @@ namespace DigDig2
 
         private void UpdateReadyIcons()
         {
-            playerOneReadyInputSymbol.style.opacity = new StyleFloat(playerOneReady ? 0 : 100);
-            playerOneReadyIcon.style.opacity = new StyleFloat(playerOneReady ? 100 : 0);
-            playerOneReadyIcon.style.scale =
-                new StyleScale(playerOneReady ? new Vector2(1.5f, 1.5f) : new Vector2(1f, 1f));
-
-            playerTwoReadyInputSymbol.style.opacity = new StyleFloat(playerTwoReady ? 0 : 100);
-            playerTwoReadyIcon.style.opacity = new StyleFloat(playerTwoReady ? 100 : 0);
-            playerTwoReadyIcon.style.scale =
-                new StyleScale(playerTwoReady ? new Vector2(1.5f, 1.5f) : new Vector2(1f, 1f));
+            playerOneBoxLegend.style.display = new StyleEnum<DisplayStyle>(playerOneReady ? DisplayStyle.None : DisplayStyle.Flex);
+            playerOneBoxReady.style.display = new StyleEnum<DisplayStyle>(playerOneReady ? DisplayStyle.Flex : DisplayStyle.None);
+            
+            playerTwoBoxLegend.style.display = new StyleEnum<DisplayStyle>(playerTwoReady ? DisplayStyle.None : DisplayStyle.Flex);
+            playerTwoBoxReady.style.display = new StyleEnum<DisplayStyle>(playerTwoReady ? DisplayStyle.Flex : DisplayStyle.None);
         }
 
         private void UpdatePlayerIconPositions()
         {
-            BetterDebug.Log(playerOneCharacterImage.name);
-            playerOneCharacterImage.style.translate = new StyleTranslate(
+            playerOneBox.style.translate = new StyleTranslate(
                 new Translate(
-                    new Length(playerOneNavigation * playerBoundingBox.resolvedStyle.width * 0.5f, LengthUnit.Pixel),
-                    new Length(playerOneNavigation == playerTwoNavigation ? playerBoundingBox.resolvedStyle.height * 0.5f : 0, LengthUnit.Pixel)
+                    new Length(playerOneNavigation * playerContainer.resolvedStyle.width * 0.5f, LengthUnit.Pixel),
+                    new Length(playerOneNavigation == playerTwoNavigation ? playerContainer.resolvedStyle.height * 0.5f : 0, LengthUnit.Pixel)
                 )
             );
             
             
-            playerTwoCharacterImage.style.translate = new StyleTranslate(
+            playerTwoBox.style.translate = new StyleTranslate(
                 new Translate(
-                    new Length(playerTwoNavigation * playerBoundingBox.resolvedStyle.width * 0.5f, LengthUnit.Pixel),
-                    new Length(playerTwoNavigation == playerOneNavigation ? -(playerBoundingBox.resolvedStyle.height * 0.5f) : 0, LengthUnit.Pixel)
+                    new Length(playerTwoNavigation * playerContainer.resolvedStyle.width * 0.5f, LengthUnit.Pixel),
+                    new Length(playerTwoNavigation == playerOneNavigation ? -(playerContainer.resolvedStyle.height * 0.5f) : 0, LengthUnit.Pixel)
                 )
             );
         }
